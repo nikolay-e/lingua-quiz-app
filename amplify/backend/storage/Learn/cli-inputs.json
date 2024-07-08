@@ -1,0 +1,10 @@
+{
+  "resourceName": "Learn",
+  "tableName": "Learn",
+  "partitionKey": {
+    "fieldName": "userId",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

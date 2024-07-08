@@ -1,0 +1,140 @@
+name: Deploy to AWS Amplify
+
+on:
+  push:
+    branches:
+      - main  # or your default branch
+  pull_request:
+    branches:
+      - main  # or your default branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+      issues: write
+      pull-requests: write
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1  # replace with your AWS region
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build
+      run: npm run build
+
+    - name: Install jq
+      run: sudo apt-get install jq
+
+    - name: Set branch name
+      run: echo "GITHUB_REF_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
+
+    - name: Deploy to Amplify and wait for completion
+      env:
+        APP_ID: ${{ secrets.AMPLIFY_APP_ID }}
+      run: |
+        JOB_INFO=$(aws amplify start-job --app-id $APP_ID --branch-name $GITHUB_REF_NAME --job-type RELEASE)
+        JOB_ID=$(echo $JOB_INFO | jq -r '.jobSummary.jobId')
+        echo "Deployment started. Job ID: $JOB_ID"
+        
+        while true; do
+          STATUS=$(aws amplify get-job --app-id $APP_ID --branch-name $GITHUB_REF_NAME --job-id $JOB_ID --query 'job.summary.status' --output text)
+          echo "Current status: $STATUS"
+          if [ "$STATUS" == "SUCCEED" ]; then
+            echo "Deployment succeeded"
+            break
+          elif [ "$STATUS" == "FAILED" ]; then
+            echo "Deployment failed"
+            exit 1
+          fi
+          sleep 30
+        done
+
+    - name: Get deployment URL
+      env:
+        APP_ID: ${{ secrets.AMPLIFY_APP_ID }}
+        CUSTOM_DOMAIN: ${{ secrets.CUSTOM_DOMAIN }}
+      run: |
+        if [ -n "$CUSTOM_DOMAIN" ]; then
+          if [ "$GITHUB_REF_NAME" == "main" ]; then
+            DEPLOY_URL="https://$CUSTOM_DOMAIN"
+          else
+            DEPLOY_URL="https://$GITHUB_REF_NAME.$CUSTOM_DOMAIN"
+          fi
+        else
+          DOMAIN=$(aws amplify get-app --app-id $APP_ID --query 'app.defaultDomain' --output text)
+          DEPLOY_URL="https://$GITHUB_REF_NAME.$DOMAIN"
+        fi
+        echo "Deployment URL: $DEPLOY_URL"
+        echo "DEPLOY_URL=$DEPLOY_URL" >> $GITHUB_ENV
+
+    - name: Comment PR
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: `Deployed to: ${process.env.DEPLOY_URL}`
+          })
+
+    - name: Create deployment
+      id: create_deployment
+      uses: actions/github-script@v6
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          try {
+            const deployment = await github.rest.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.sha,
+              environment: 'production',
+              auto_merge: false,
+              required_contexts: [],
+              description: 'Deployment via GitHub Actions'
+            });
+            console.log('Deployment created:', deployment.data);
+            return deployment.data.id;
+          } catch (error) {
+            console.error('Error creating deployment:', error);
+            return null;
+          }
+
+    - name: Update deployment status
+      if: steps.create_deployment.outputs.result
+      uses: actions/github-script@v6
+      with:
+        github-token: ${{secrets.GITHUB_TOKEN}}
+        script: |
+          const deploymentId = ${{ steps.create_deployment.outputs.result }};
+          if (deploymentId) {
+            try {
+              await github.rest.repos.createDeploymentStatus({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                deployment_id: deploymentId,
+                state: 'success',
+                environment_url: process.env.DEPLOY_URL,
+                description: 'Deployed successfully'
+              });
+              console.log('Deployment status updated successfully');
+            } catch (error) {
+              console.error('Error updating deployment status:', error);
+            }
+          } else {
+            console.log('No deployment ID available, skipping status update');
+          }

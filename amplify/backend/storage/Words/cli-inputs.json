@@ -1,0 +1,10 @@
+{
+  "resourceName": "Words",
+  "tableName": "Word",
+  "partitionKey": {
+    "fieldName": "wordPairId",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

@@ -1,0 +1,17 @@
+{
+  "name": "@linguaquiz/frontend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "live-server src",
+    "build": "rm -rf dist && cp -R src dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "live-server": "^1.2.2"
+  }
+}
