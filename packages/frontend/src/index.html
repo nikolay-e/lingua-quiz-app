@@ -18,6 +18,7 @@
                 <input type="file" id="file-input" accept=".csv" hidden onchange="handleFileUpload()">
                 <button onclick="document.getElementById('file-input').click()"><i class="fas fa-upload"></i> Choose & Upload File</button>
                 <button id="spanish-english"><i class="fas fa-book"></i> Use Default Spanish-English Set</button>
+                <button id="spanish-russian"><i class="fas fa-book"></i> Use Default Spanish-Russian Set</button>
                 <button id="german-russian"><i class="fas fa-book"></i> Use Default German-Russian Set</button>
                 <button id="treasure-island-english-russian"><i class="fas fa-book"></i> Use Treasure Island English-Russian Set</button>
                 <button id="download-quiz"><i class="fas fa-download"></i> Download Quiz</button>
@@ -25,15 +26,24 @@
         </section>
         <section aria-labelledby="quiz-section" class="quiz-section">
             <h2 id="quiz-section">Quiz</h2>
-            <div class="question">
-                <span id="word"></span>
+            <div class="direction-toggle">
+    <label for="direction-switch" class="switch">
+        <input type="checkbox" id="direction-switch">
+        <span class="slider round"></span>
+    </label>
+    <span id="direction-label">Normal</span>
+</div>
+            <div class="quiz-content">
+                <div class="question">
+                    <span id="word"></span>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="answer" aria-label="Your translation" placeholder="Your translation">
+                    <button id="submit"><i class="fas fa-check"></i> Submit</button>
+                </div>
             </div>
-            <div class="input-group">
-                <input type="text" id="answer" aria-label="Your translation" placeholder="Your translation">
-                <button id="submit"><i class="fas fa-check"></i> Submit</button>
-            </div>
+            <p id="feedback" class="feedback-text"></p>
         </section>
-        <p id="feedback" class="feedback-text"></p>
         <section aria-labelledby="learning-section" class="learning-section">
             <h2 id="learning-section">Learning Progress</h2>
             <div class="progress-container">

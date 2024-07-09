@@ -100,6 +100,7 @@ button:hover {
     flex-direction: column;
     align-items: stretch;
     width: 100%;
+    margin-top: 20px;
 }
 
 ol {
@@ -114,10 +115,6 @@ li {
 .info-text {
     font-style: italic;
     color: var(--primary-color);
-}
-
-.feedback-text {
-    font-weight: bold;
 }
 
 .quiz-section, .learning-section {
@@ -142,6 +139,131 @@ li {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
+}
+
+.quiz-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.question {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    min-height: 80px;
+}
+
+#word {
+    font-size: 2em;
+    font-weight: bold;
+    color: var(--primary-color);
+    padding: 15px 25px;
+    background-color: rgba(0, 123, 255, 0.1);
+    border-radius: 8px;
+    transition: all var(--transition-speed) ease;
+    text-align: center;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 200px;
+}
+
+#word:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.feedback-text {
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 6px;
+    transition: all var(--transition-speed) ease;
+    width: 100%;
+}
+
+.feedback-text.success {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: var(--success-color);
+}
+
+.feedback-text.error {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: var(--error-color);
+}
+
+.direction-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-right: 10px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+#direction-label {
+    font-weight: bold;
+    color: var(--primary-color);
 }
 
 @media (max-width: 768px) {
