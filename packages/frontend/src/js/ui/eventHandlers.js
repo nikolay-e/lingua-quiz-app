@@ -91,3 +91,15 @@ if (isAnswerCorrect) {
     continueQuiz();
     document.getElementById('answer').focus();
 }
+
+
+document.getElementById('direction-switch').addEventListener('change', function() {
+    const label = document.getElementById('direction-label');
+    if (this.checked) {
+        label.textContent = 'Reverse';
+        direction = false;
+    } else {
+        label.textContent = 'Normal';
+        direction = true;
+    }
+});
