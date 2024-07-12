@@ -75,9 +75,17 @@ function submitAnswer() {
     const originalWord = document.getElementById('word').textContent;
     const isAnswerCorrect = verifyAnswer(userAnswer);
 
-    document.getElementById('feedback').textContent = isAnswerCorrect
-        ? 'Correct!'
-        : `Wrong. The correct answer for '${originalWord}' was '${quizWords[originalWord]}'.`;
+    const feedbackElement = document.getElementById('feedback');
+
+if (isAnswerCorrect) {
+    feedbackElement.textContent = 'Correct!';
+    feedbackElement.classList.remove('error');
+    feedbackElement.classList.add('success');
+} else {
+    feedbackElement.textContent = `Wrong. The correct answer for '${originalWord}' was '${quizWords[originalWord]}'.`;
+    feedbackElement.classList.remove('success');
+    feedbackElement.classList.add('error');
+}
 
     document.getElementById('answer').value = '';
     continueQuiz();
