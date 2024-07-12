@@ -2,6 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('spanish-english').addEventListener('click', loadSpanishEnglishWords);
+    document.getElementById('spanish-russian').addEventListener('click', loadSpanishRussianWords);
     document.getElementById('german-russian').addEventListener('click', loadGermanRussianWords);
     document.getElementById('treasure-island-english-russian').addEventListener('click', loadTreasureIslandEnglishRussianWords);
     document.getElementById('file-input').addEventListener('change', handleFileUpload);
@@ -13,6 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
 async function loadSpanishEnglishWords() {
     try {
         const response = await fetch('data/SpanishEnglish.csv');
+        const data = await response.text();
+        initializeQuiz(data);
+    } catch (error) {
+        console.error('Error loading quizWords:', error);
+    }
+}
+
+async function loadSpanishRussianWords() {
+    try {
+        const response = await fetch('data/SpanishRussian.csv');
         const data = await response.text();
         initializeQuiz(data);
     } catch (error) {
