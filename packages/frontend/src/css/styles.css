@@ -100,6 +100,7 @@ button:hover {
     flex-direction: column;
     align-items: stretch;
     width: 100%;
+    margin-top: 20px;
 }
 
 ol {
@@ -114,10 +115,6 @@ li {
 .info-text {
     font-style: italic;
     color: var(--primary-color);
-}
-
-.feedback-text {
-    font-weight: bold;
 }
 
 .quiz-section, .learning-section {
@@ -144,12 +141,20 @@ li {
     gap: 15px;
 }
 
+.quiz-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
 .question {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 30px; /* Увеличиваем отступ снизу */
+    margin-bottom: 30px;
     min-height: 80px;
 }
 
@@ -157,7 +162,7 @@ li {
     font-size: 2em;
     font-weight: bold;
     color: var(--primary-color);
-    padding: 15px 25px; /* Немного увеличиваем внутренние отступы */
+    padding: 15px 25px;
     background-color: rgba(0, 123, 255, 0.1);
     border-radius: 8px;
     transition: all var(--transition-speed) ease;
@@ -173,23 +178,6 @@ li {
     box-shadow: 0 2px 8px var(--shadow-color);
 }
 
-.input-group {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    width: 100%;
-    margin-top: 20px; 
-}
-
-
-.quiz-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 30px; 
-}
-
 .feedback-text {
     font-weight: bold;
     text-align: center;
@@ -197,6 +185,7 @@ li {
     margin-top: 10px;
     border-radius: 6px;
     transition: all var(--transition-speed) ease;
+    width: 100%;
 }
 
 .feedback-text.success {
