@@ -1,0 +1,46 @@
+name: ESLint Auto-Fix
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  lint:
+    name: Auto-fix ESLint errors
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run ESLint and auto-fix
+      run: npm run lint
+      env:
+        CI: true
+
+    - name: Check for changes
+      id: git-check
+      run: |
+        git diff
+        if [ -n "$(git diff)" ]; then
+          echo "::set-output name=changed::true"
+        fi
+
+    - name: Commit auto-fixes
+      if: steps.git-check.outputs.changed == 'true'
+      run: |
+        git config --global user.name 'github-actions'
+        git config --global user.email 'github-actions@github.com'
+        git add -u
+        git commit -m "Apply ESLint fixes"
+        git push

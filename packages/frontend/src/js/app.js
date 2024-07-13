@@ -1,7 +1,25 @@
-// js/app.js
+// app.js
 
-// This file can be used to initialize the application and handle any global setup
+import BidirectionalMap from './utils/BidirectionalMap.js';
+
+export const quizWords = new BidirectionalMap();
+export const focusWordsSet = new Set();
+export const masteredOneDirectionSet = new Set();
+export const masteredVocabularySet = new Set();
+export const upcomingWordsSet = new Set();
+
+export let currentWord = '';
+export let direction = true;
+
+export function setCurrentWord(word) {
+  currentWord = word;
+}
+
+export function setDirection(newDirection) {
+  direction = newDirection;
+}
+
+// Initialize the quiz
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('LinguaQuiz application initialized');
-    // Any additional initialization code can go here
+  // Add initialization code here
 });

@@ -1,25 +1,26 @@
-// js/quiz/wordSetManager.js
+// wordSetManager.js
 
-let focusWordsSet = new Set();
-let masteredVocabularySet = new Set();
-let upcomingWordsSet = new Set();
-let quizWords = {};
-let lastAskedWords = [];
+import { getIncorrectPerWord } from '../utils/statsManager.js';
 
-function getRandomWordFromTopFew(wordSet) {
-    let sortedWords = Array.from(wordSet).map(word => [word, stats.incorrectPerWord[word] || 0]);
-    sortedWords.sort((a, b) => a[1] - b[1]);
-    let topFewWords = sortedWords.slice(0, 10).map(item => item[0]);
-    let availableWords = topFewWords.filter(word => !lastAskedWords.includes(word));
+const lastAskedWords = [];
 
-    if (availableWords.length > 0) {
-        let selectedWord = availableWords[Math.floor(Math.random() * availableWords.length)];
-        lastAskedWords.push(selectedWord);
-        if (lastAskedWords.length > 7) {
-            lastAskedWords.shift();
-        }
-        return selectedWord;
-    } else {
-        return topFewWords[Math.floor(Math.random() * topFewWords.length)];
-    }
+export default function getRandomWordFromTopFew(wordSet) {
+  const stats = getIncorrectPerWord();
+  const sortedWords = Array.from(wordSet).map((word) => [word, stats[word] || 0]);
+  sortedWords.sort((a, b) => a[1] - b[1]);
+  const topFewWords = sortedWords.slice(0, 10).map((item) => item[0]);
+  const availableWords = topFewWords.filter((word) => !lastAskedWords.includes(word));
+
+  let selectedWord;
+  if (availableWords.length > 0) {
+    selectedWord = availableWords[Math.floor(Math.random() * availableWords.length)];
+  } else {
+    selectedWord = topFewWords[Math.floor(Math.random() * topFewWords.length)];
+  }
+
+  lastAskedWords.push(selectedWord);
+  if (lastAskedWords.length > 7) {
+    lastAskedWords.shift();
+  }
+  return selectedWord;
 }

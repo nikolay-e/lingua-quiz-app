@@ -1,58 +1,72 @@
-// js/quiz/quizManager.js
+// quizManager.js
 
-let currentWord;
-let direction = true;
-let startTime;
-
-function initializeQuiz(data) {
-    try {
-        parseCSV(data);
-        askQuestion();
-        updateWordSetsDisplay();
-    } catch(error) {
-        console.error('Error initializing quiz:', error);
-    }
-}
-
-function continueQuiz() {
-    askQuestion();
-    updateWordSetsDisplay();
-    updateStatsDisplay();
-}
+import { parseCSV } from './csvHandler.js';
+import getRandomWordFromTopFew from './wordSetManager.js';
+import { updateWordSetsDisplay } from '../ui/displayManager.js';
+import { updateStats, getIncorrectPerWord } from '../utils/statsManager.js';
+import {
+  quizWords,
+  focusWordsSet,
+  masteredOneDirectionSet,
+  setCurrentWord,
+  direction,
+  setDirection,
+} from '../app.js';
 
 function askQuestion() {
-    if (focusWordsSet.size === 0) initializeFocusWordsSet();
-    currentWord = getRandomWordFromTopFew(focusWordsSet);
-    document.getElementById('word').textContent = direction ? currentWord : quizWords[currentWord];
-    startTime = new Date();
+  const wordSet = direction ? focusWordsSet : masteredOneDirectionSet;
+  const newWord = getRandomWordFromTopFew(wordSet, getIncorrectPerWord());
+  setCurrentWord(newWord);
+  document.getElementById('word').textContent = direction ? newWord : quizWords.get(newWord);
+  return new Date();
 }
 
-function verifyAnswer(userAnswer) {
-    currentWord = document.getElementById('word').textContent;
-    const correctAnswer = direction ? quizWords[currentWord] : Object.keys(quizWords).find(key => quizWords[key] === currentWord);
-    const originalWord = direction ? currentWord : correctAnswer;
-
-    let normalizedUserAnswer = normalizeAndSortAnswer(userAnswer);
-    let normalizedCorrectAnswer = normalizeAndSortAnswer(correctAnswer);
-
-    const isAnswerCorrect = compareAnswers(normalizedUserAnswer, normalizedCorrectAnswer);
-    updateStats(isAnswerCorrect, originalWord);
-
-    return isAnswerCorrect;
+export function initializeQuiz(data) {
+  try {
+    parseCSV(data);
+    const startTime = askQuestion();
+    updateWordSetsDisplay();
+    return startTime;
+  } catch (error) {
+    console.error('Error initializing quiz:', error);
+    return null;
+  }
 }
 
-function initializeFocusWordsSet() {
-    // Implementation needed
+export function continueQuiz() {
+  const startTime = askQuestion();
+  updateWordSetsDisplay();
+  return startTime;
 }
 
 function normalizeAndSortAnswer(answer) {
-    return answer.toLowerCase()
-                 .split(',')
-                 .map(item => item.trim().replace(/[^\p{Letter}]/gu, ''))
-                 .filter(item => item.length > 0)
-                 .sort();
+  return answer
+    .toLowerCase()
+    .split(',')
+    .map((item) => item.trim().replace(/[^\p{Letter}]/gu, ''))
+    .filter((item) => item.length > 0)
+    .sort();
 }
 
 function compareAnswers(arr1, arr2) {
-    return arr1.length === arr2.length && arr1.every((value, index) => value === arr2[index]);
+  return arr1.length === arr2.length && arr1.every((value, index) => value === arr2[index]);
+}
+
+export function verifyAnswer(userAnswer, startTime) {
+  const displayedWord = document.getElementById('word').textContent;
+  const correctAnswer = direction ? quizWords.get(displayedWord) : quizWords.getKey(displayedWord);
+  const originalWord = direction ? displayedWord : correctAnswer;
+
+  const normalizedUserAnswer = normalizeAndSortAnswer(userAnswer);
+  const normalizedCorrectAnswer = normalizeAndSortAnswer(correctAnswer);
+
+  const isAnswerCorrect = compareAnswers(normalizedUserAnswer, normalizedCorrectAnswer);
+  updateStats(isAnswerCorrect, originalWord, startTime, direction);
+
+  return isAnswerCorrect;
+}
+
+export function toggleDirection() {
+  setDirection(!direction);
+  return direction;
 }
