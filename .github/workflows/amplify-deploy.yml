@@ -3,10 +3,9 @@ name: Deploy to AWS Amplify
 on:
   push:
     branches:
-      - main  # or your default branch
-  pull_request:
-    branches:
-      - main  # or your default branch
+      - main
+    paths-ignore:
+      - 'packages/backend/**'
 
 jobs:
   deploy:

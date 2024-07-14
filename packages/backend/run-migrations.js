@@ -1,5 +1,3 @@
-// packages/backend/run-migrations.js
-
 const fs = require('fs');
 const path = require('path');
 const { Pool } = require('pg');
@@ -13,20 +11,25 @@ const pool = new Pool({
 });
 
 async function runMigrations() {
-  const migrationFiles = fs.readdirSync(path.join(__dirname, 'migrations'))
+  const migrationFiles = fs
+    .readdirSync(path.join(__dirname, 'migrations'))
     .sort((a, b) => a.localeCompare(b));
 
-  for (const file of migrationFiles) {
+  const runMigration = async (file) => {
     if (path.extname(file) === '.sql') {
       const filePath = path.join(__dirname, 'migrations', file);
       const sql = fs.readFileSync(filePath, 'utf8');
-      console.log(`Running migration: ${file}`);
+      process.stdout.write(`Running migration: ${file}\n`);
       await pool.query(sql);
-      console.log(`Completed migration: ${file}`);
+      process.stdout.write(`Completed migration: ${file}\n`);
     }
-  }
+  };
 
+  await Promise.all(migrationFiles.map(runMigration));
   await pool.end();
 }
 
-runMigrations().catch(console.error);
+runMigrations().catch((error) => {
+  process.stderr.write(`${error}\n`);
+  process.exit(1);
+});

@@ -16,23 +16,25 @@
             <h2 id="file-upload-section">Upload or Select Quiz</h2>
             <div class="input-group">
                 <input type="file" id="file-input" accept=".csv" hidden onchange="handleFileUpload()">
-                <button onclick="document.getElementById('file-input').click()"><i class="fas fa-upload"></i> Choose & Upload File</button>
+                <button onclick="document.getElementById('file-input').click()"><i class="fas fa-upload"></i> Choose &
+                    Upload File</button>
                 <button id="spanish-english"><i class="fas fa-book"></i> Use Default Spanish-English Set</button>
                 <button id="spanish-russian"><i class="fas fa-book"></i> Use Default Spanish-Russian Set</button>
                 <button id="german-russian"><i class="fas fa-book"></i> Use Default German-Russian Set</button>
-                <button id="treasure-island-english-russian"><i class="fas fa-book"></i> Use Treasure Island English-Russian Set</button>
+                <button id="treasure-island-english-russian"><i class="fas fa-book"></i> Use Treasure Island
+                    English-Russian Set</button>
                 <button id="download-quiz"><i class="fas fa-download"></i> Download Quiz</button>
             </div>
         </section>
         <section aria-labelledby="quiz-section" class="quiz-section">
             <h2 id="quiz-section">Quiz</h2>
             <div class="direction-toggle">
-    <label for="direction-switch" class="switch">
-        <input type="checkbox" id="direction-switch">
-        <span class="slider round"></span>
-    </label>
-    <span id="direction-label">Normal</span>
-</div>
+                <label for="direction-switch" class="switch">
+                    <input type="checkbox" id="direction-switch">
+                    <span class="slider round"></span>
+                </label>
+                <span id="direction-label">Normal</span>
+            </div>
             <div class="quiz-content">
                 <div class="question">
                     <span id="word"></span>
@@ -50,6 +52,10 @@
                 <div id="focus-words">
                     <h3><i class="fas fa-tasks"></i> Focus Words</h3>
                     <ol id="focus-words-list"></ol>
+                </div>
+                <div id="mastered-one-direction">
+                    <h3><i class="fas fa-check-circle"></i> Mastered One Direction</h3>
+                    <ol id="mastered-one-direction-list"></ol>
                 </div>
                 <div id="mastered-vocabulary">
                     <h3><i class="fas fa-check-circle"></i> Mastered Vocabulary</h3>
@@ -72,13 +78,14 @@
             </div>
         </section>
     </main>
-    <script src="js/utils/helpers.js"></script>
-    <script src="js/utils/statsManager.js"></script>
-    <script src="js/quiz/csvHandler.js"></script>
-    <script src="js/quiz/wordSetManager.js"></script>
-    <script src="js/quiz/quizManager.js"></script>
-    <script src="js/ui/displayManager.js"></script>
-    <script src="js/ui/eventHandlers.js"></script>
-    <script src="js/app.js"></script>
+    <script type="module" src="./js/app.js"></script>
+    <script type="module" src="./js/utils/BidirectionalMap.js"></script>
+    <script type="module" src="./js/utils/statsManager.js"></script>
+    <script type="module" src="./js/quiz/csvHandler.js"></script>
+    <script type="module" src="./js/quiz/wordSetManager.js"></script>
+    <script type="module" src="./js/quiz/quizManager.js"></script>
+    <script type="module" src="./js/ui/displayManager.js"></script>
+    <script type="module" src="./js/ui/eventHandlers.js"></script>
 </body>
+
 </html>
