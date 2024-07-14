@@ -1,8 +1,9 @@
 import os
 import logging
-from typing import List, Dict
+from typing import List, Dict, Optional
 import github
 from openai import OpenAI
+import html
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -31,9 +32,16 @@ def init_github_client() -> github.PullRequest.PullRequest:
     repo_name = get_env_variable("GITHUB_REPOSITORY")
     pr_number = parse_pr_number(get_env_variable("GITHUB_REF"))
 
-    g = github.Github(github_token)
-    repo = g.get_repo(repo_name)
-    return repo.get_pull(pr_number)
+    try:
+        g = github.Github(github_token)
+        repo = g.get_repo(repo_name)
+        return repo.get_pull(pr_number)
+    except github.GithubException as e:
+        logger.error(f"GitHub API error: {str(e)}")
+        raise
+    except Exception as e:
+        logger.error(f"Unexpected error when initializing GitHub client: {str(e)}")
+        raise
 
 def parse_pr_number(github_ref: str) -> int:
     """Parse PR number from GITHUB_REF safely."""
@@ -45,24 +53,57 @@ def parse_pr_number(github_ref: str) -> int:
 def get_files_content(pull_request: github.PullRequest.PullRequest) -> str:
     """Extract content from files in the pull request."""
     files_content = ""
-    for file in pull_request.get_files():
-        if file.filename.endswith(SUPPORTED_FILE_TYPES):
-            if file.status != "removed" and file.patch:
-                files_content += f"File: {file.filename}\n```\n{file.patch}\n```\n\n"
-    return files_content
+    try:
+        for file in pull_request.get_files():
+            if file.filename.endswith(SUPPORTED_FILE_TYPES):
+                if file.status != "removed" and file.patch:
+                    files_content += f"File: {file.filename}\n```\n{file.patch}\n```\n\n"
+        return files_content
+    except github.GithubException as e:
+        logger.error(f"GitHub API error when fetching files: {str(e)}")
+        raise
+    except Exception as e:
+        logger.error(f"Unexpected error when fetching files: {str(e)}")
+        raise
 
-def review_code(client: OpenAI, files_content: str) -> str:
-    """Perform AI code review using OpenAI API."""
+def sanitize_input(text: Optional[str]) -> str:
+    """Sanitize input to prevent potential injection issues."""
+    if text is None:
+        return ""
+    return html.escape(text)
+
+def review_code(client: OpenAI, files_content: str, pr_title: str, pr_body: Optional[str]) -> str:
+    """Perform AI code review using OpenAI API, and decide on merge readiness."""
+    sanitized_title = sanitize_input(pr_title)
+    sanitized_body = sanitize_input(pr_body)
+    
     prompt = f"""
-    Please review the following code changes and provide feedback on:
-    1. Code style and formatting
-    2. Potential bugs or errors
-    3. Suggestions for improvement
-    4. Any security concerns
-    5. Overall design and architecture considerations
+    Please review the following code changes and provide:
+
+    1. Feedback on:
+       a. Code style and formatting
+       b. Potential bugs or errors
+       c. Suggestions for improvement
+       d. Any security concerns
+       e. Overall design and architecture considerations
+    2. A suggested better short commit message based on the changes and the provided PR title and body
+    3. A decision on whether the code is ready to be merged (YES/NO) with a brief explanation
+
+    PR Title: {sanitized_title}
+    PR Body: {sanitized_body}
 
     Code changes:
     {files_content}
+
+    Please structure your response as follows:
+    Code Review:
+    [Your detailed review here]
+
+    Suggested Short Commit Message:
+    [Your suggested short commit message here]
+
+    Merge Decision:
+    [YES/NO]: [Brief explanation for the decision]
 
     Review:
     """
@@ -71,17 +112,14 @@ def review_code(client: OpenAI, files_content: str) -> str:
         response = client.chat.completions.create(
             model=OPENAI_MODEL,
             messages=[
-                {"role": "system", "content": "You are an expert code reviewer. Provide concise, actionable feedback."},
+                {"role": "system", "content": "You are an expert code reviewer. Provide concise, actionable feedback, suggest a better short commit message, and make a merge decision."},
                 {"role": "user", "content": prompt}
             ]
         )
         return response.choices[0].message.content
-    except OpenAI.APIError as e:
-        logger.error(f"OpenAI API error: {str(e)}")
-        return "Error occurred during code review due to API issues."
     except Exception as e:
-        logger.error(f"Unexpected error during OpenAI API call: {str(e)}")
-        return "Unexpected error occurred during code review."
+        logger.error(f"OpenAI API error: {str(e)}")
+        return f"Error occurred during code review: {str(e)}"
 
 def post_review(pull_request: github.PullRequest.PullRequest, review: str) -> None:
     """Post the review as a comment on the pull request."""
@@ -97,10 +135,12 @@ def main():
         openai_client = init_openai_client()
         pull_request = init_github_client()
         files_content = get_files_content(pull_request)
-        review = review_code(openai_client, files_content)
+        review = review_code(openai_client, files_content, pull_request.title, pull_request.body)
         post_review(pull_request, review)
     except ValueError as e:
         logger.error(f"Configuration error: {str(e)}")
+    except github.GithubException as e:
+        logger.error(f"GitHub API error: {str(e)}")
     except Exception as e:
         logger.error(f"An unexpected error occurred: {str(e)}")
 
