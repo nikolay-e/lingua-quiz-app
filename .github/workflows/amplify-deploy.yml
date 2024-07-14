@@ -6,6 +6,16 @@ on:
       - main
     paths-ignore:
       - 'packages/backend/**'
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+    paths-ignore:
+      - 'packages/backend/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -24,30 +34,72 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1  # replace with your AWS region
+        aws-region: us-east-1
 
     - name: Install dependencies
       run: npm ci
 
+    - name: Verify npm scripts
+      run: |
+        # Check if the required build script exists
+        if ! npm run | grep -q "build:frontend"; then
+          echo "Error: build:frontend script not found in package.json"
+          exit 1
+        fi
+
     - name: Build
-      run: npm run build:frontend
+      run: |
+        npm run build:frontend
+        if [ $? -ne 0 ]; then
+          echo "Error: Build failed"
+          exit 1
+        fi
 
     - name: Install jq
       run: sudo apt-get install jq
 
-    - name: Set branch name
-      run: echo "GITHUB_REF_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
+    - name: Set environment, domain, and branch name
+      run: |
+        # Set environment variables based on the event type
+        if [ "${{ github.event_name }}" == "push" ]; then
+          echo "ENVIRONMENT=production" >> $GITHUB_ENV
+          echo "DOMAIN=${{ secrets.CUSTOM_DOMAIN }}" >> $GITHUB_ENV
+          echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_ENV
+        elif [ "${{ github.event_name }}" == "pull_request" ]; then
+          echo "ENVIRONMENT=preview" >> $GITHUB_ENV
+          echo "DOMAIN=${{ secrets.PR_CUSTOM_DOMAIN }}" >> $GITHUB_ENV
+          echo "BRANCH_NAME=${{ github.head_ref }}" >> $GITHUB_ENV
+        else
+          echo "Unsupported event type: ${{ github.event_name }}"
+          exit 1
+        fi
+
+    - name: Ensure branch exists in Amplify
+      env:
+        APP_ID: ${{ secrets.AMPLIFY_APP_ID }}
+      run: |
+        # Create or update the branch in Amplify
+        if ! aws amplify get-branch --app-id $APP_ID --branch-name $BRANCH_NAME &>/dev/null; then
+          echo "Branch $BRANCH_NAME does not exist in Amplify. Creating it..."
+          aws amplify create-branch --app-id $APP_ID --branch-name $BRANCH_NAME --enable-auto-build false
+        else
+          echo "Branch $BRANCH_NAME already exists in Amplify."
+        fi
 
     - name: Deploy to Amplify and wait for completion
       env:
         APP_ID: ${{ secrets.AMPLIFY_APP_ID }}
       run: |
-        JOB_INFO=$(aws amplify start-job --app-id $APP_ID --branch-name $GITHUB_REF_NAME --job-type RELEASE)
+        # Start the deployment job
+        JOB_INFO=$(aws amplify start-job --app-id $APP_ID --branch-name $BRANCH_NAME --job-type RELEASE)
         JOB_ID=$(echo $JOB_INFO | jq -r '.jobSummary.jobId')
         echo "Deployment started. Job ID: $JOB_ID"
         
-        while true; do
-          STATUS=$(aws amplify get-job --app-id $APP_ID --branch-name $GITHUB_REF_NAME --job-id $JOB_ID --query 'job.summary.status' --output text)
+        # Wait for deployment to complete or timeout after 30 minutes
+        TIMEOUT=$((30 * 60))
+        ELAPSED=0
+        while [ $ELAPSED -lt $TIMEOUT ]; do
+          STATUS=$(aws amplify get-job --app-id $APP_ID --branch-name $BRANCH_NAME --job-id $JOB_ID --query 'job.summary.status' --output text)
           echo "Current status: $STATUS"
           if [ "$STATUS" == "SUCCEED" ]; then
             echo "Deployment succeeded"
@@ -57,25 +109,28 @@ jobs:
             exit 1
           fi
           sleep 30
+          ELAPSED=$((ELAPSED + 30))
         done
+        
+        if [ $ELAPSED -ge $TIMEOUT ]; then
+          echo "Deployment timed out after 30 minutes"
+          exit 1
+        fi
 
     - name: Get deployment URL
       env:
         APP_ID: ${{ secrets.AMPLIFY_APP_ID }}
-        CUSTOM_DOMAIN: ${{ secrets.CUSTOM_DOMAIN }}
+        CUSTOM_DOMAIN_URL: ${{ vars.CUSTOM_DOMAIN_URL }}
+        PR_CUSTOM_DOMAIN_URL: ${{ vars.PR_CUSTOM_DOMAIN_URL }}
       run: |
-        if [ -n "$CUSTOM_DOMAIN" ]; then
-          if [ "$GITHUB_REF_NAME" == "main" ]; then
-            DEPLOY_URL="https://$CUSTOM_DOMAIN"
-          else
-            DEPLOY_URL="https://$GITHUB_REF_NAME.$CUSTOM_DOMAIN"
-          fi
+        if [ "$ENVIRONMENT" == "production" ]; then
+          DEPLOY_URL="https://${CUSTOM_DOMAIN_URL}"
         else
-          DOMAIN=$(aws amplify get-app --app-id $APP_ID --query 'app.defaultDomain' --output text)
-          DEPLOY_URL="https://$GITHUB_REF_NAME.$DOMAIN"
+          DEPLOY_URL="https://${BRANCH_NAME}.${PR_CUSTOM_DOMAIN_URL}"
         fi
         echo "Deployment URL: $DEPLOY_URL"
         echo "DEPLOY_URL=$DEPLOY_URL" >> $GITHUB_ENV
+
 
     - name: Comment PR
       if: github.event_name == 'pull_request'
@@ -101,15 +156,17 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: context.sha,
-              environment: 'production',
+              environment: '${{ env.ENVIRONMENT }}',
               auto_merge: false,
               required_contexts: [],
-              description: 'Deployment via GitHub Actions'
+              description: 'Deployment via GitHub Actions',
+              transient_environment: ${{ env.ENVIRONMENT != 'production' }}
             });
             console.log('Deployment created:', deployment.data);
             return deployment.data.id;
           } catch (error) {
             console.error('Error creating deployment:', error);
+            core.setFailed('Failed to create deployment');
             return null;
           }
 
@@ -127,7 +184,7 @@ jobs:
                 repo: context.repo.repo,
                 deployment_id: deploymentId,
                 state: 'success',
-                environment_url: process.env.DEPLOY_URL,
+                environment_url: '${{ env.DEPLOY_URL }}',
                 description: 'Deployed successfully'
               });
               console.log('Deployment status updated successfully');

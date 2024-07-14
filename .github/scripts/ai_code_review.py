@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Configuration
-SUPPORTED_FILE_TYPES = ('.py', '.js', '.ts', '.html', '.css')
+SUPPORTED_FILE_TYPES = ('.py', '.js', '.ts', '.html', '.css', '.yml', '.yaml', '.json', '.md', '.txt')
 MAX_LINE_LENGTH = 100
 OPENAI_MODEL = "gpt-4-turbo"
 
