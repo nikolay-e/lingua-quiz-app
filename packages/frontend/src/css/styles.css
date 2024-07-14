@@ -261,6 +261,19 @@ input:checked + .slider:before {
     border-radius: 50%;
 }
 
+.loading-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.loading-indicator i {
+    margin-right: 10px;
+}
+
 #direction-label {
     font-weight: bold;
     color: var(--primary-color);
