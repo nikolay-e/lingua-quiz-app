@@ -50,20 +50,50 @@ def parse_pr_number(github_ref: str) -> int:
     except (IndexError, ValueError):
         raise ValueError(f"Invalid GITHUB_REF format: {github_ref}")
 
-def get_files_content(pull_request: github.PullRequest.PullRequest) -> str:
-    """Extract content from files in the pull request."""
-    files_content = ""
+def get_repo_content(repo: github.Repository.Repository, branch: str) -> str:
+    """Get the content of all files in the repository."""
+    content = ""
     try:
-        for file in pull_request.get_files():
-            if file.filename.endswith(SUPPORTED_FILE_TYPES):
-                if file.status != "removed" and file.patch:
-                    files_content += f"File: {file.filename}\n```\n{file.patch}\n```\n\n"
-        return files_content
+        contents = repo.get_contents("", ref=branch)
+        while contents:
+            file_content = contents.pop(0)
+            if file_content.type == "dir":
+                contents.extend(repo.get_contents(file_content.path, ref=branch))
+            else:
+                if file_content.name.endswith(SUPPORTED_FILE_TYPES):
+                    content += f"File: {file_content.path}\n```\n{file_content.decoded_content.decode('utf-8')}\n```\n\n"
     except github.GithubException as e:
-        logger.error(f"GitHub API error when fetching files: {str(e)}")
+        logger.error(f"GitHub API error when fetching repo content: {str(e)}")
         raise
     except Exception as e:
-        logger.error(f"Unexpected error when fetching files: {str(e)}")
+        logger.error(f"Unexpected error when fetching repo content: {str(e)}")
+        raise
+    return content
+
+def get_pr_diff(pull_request: github.PullRequest.PullRequest) -> str:
+    """Get the diff of the pull request."""
+    try:
+        # Get the comparison between base and head
+        comparison = pull_request.base.repo.compare(
+            pull_request.base.sha, pull_request.head.sha
+        )
+        
+        # Construct the diff
+        diff = ""
+        for file in comparison.files:
+            diff += f"File: {file.filename}\n"
+            diff += f"Status: {file.status}\n"
+            diff += f"Changes: +{file.additions} -{file.deletions}\n"
+            if file.patch:
+                diff += f"Patch:\n{file.patch}\n"
+            diff += "\n"
+        
+        return diff
+    except github.GithubException as e:
+        logger.error(f"GitHub API error when fetching PR diff: {str(e)}")
+        raise
+    except Exception as e:
+        logger.error(f"Unexpected error when fetching PR diff: {str(e)}")
         raise
 
 def sanitize_input(text: Optional[str]) -> str:
@@ -72,13 +102,13 @@ def sanitize_input(text: Optional[str]) -> str:
         return ""
     return html.escape(text)
 
-def review_code(client: OpenAI, files_content: str, pr_title: str, pr_body: Optional[str]) -> str:
+def review_code(client: OpenAI, repo_content: str, pr_diff: str, pr_title: str, pr_body: Optional[str]) -> str:
     """Perform AI code review using OpenAI API, and decide on merge readiness."""
     sanitized_title = sanitize_input(pr_title)
     sanitized_body = sanitize_input(pr_body)
     
     prompt = f"""
-    Please review the following code changes and provide:
+    Please review the following code changes in the context of the entire codebase and provide:
 
     1. Feedback on:
        a. Code style and formatting
@@ -92,8 +122,11 @@ def review_code(client: OpenAI, files_content: str, pr_title: str, pr_body: Opti
     PR Title: {sanitized_title}
     PR Body: {sanitized_body}
 
-    Code changes:
-    {files_content}
+    Entire Codebase:
+    {repo_content}
+
+    Pull Request Diff:
+    {pr_diff}
 
     Please structure your response as follows:
     Code Review:
@@ -134,8 +167,10 @@ def main():
     try:
         openai_client = init_openai_client()
         pull_request = init_github_client()
-        files_content = get_files_content(pull_request)
-        review = review_code(openai_client, files_content, pull_request.title, pull_request.body)
+        repo = pull_request.base.repo
+        repo_content = get_repo_content(repo, pull_request.base.ref)
+        pr_diff = get_pr_diff(pull_request)
+        review = review_code(openai_client, repo_content, pr_diff, pull_request.title, pull_request.body)
         post_review(pull_request, review)
     except ValueError as e:
         logger.error(f"Configuration error: {str(e)}")
