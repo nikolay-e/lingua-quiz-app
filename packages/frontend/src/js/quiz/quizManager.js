@@ -1,6 +1,5 @@
 // quizManager.js
 
-import { parseCSV } from './csvHandler.js';
 import getRandomWordFromTopFew from './wordSetManager.js';
 import { updateWordSetsDisplay } from '../ui/displayManager.js';
 import { updateStats, getIncorrectPerWord } from '../utils/statsManager.js';
@@ -21,9 +20,8 @@ function askQuestion() {
   return new Date();
 }
 
-export function initializeQuiz(data) {
+export function initializeQuiz() {
   try {
-    parseCSV(data);
     const startTime = askQuestion();
     updateWordSetsDisplay();
     return startTime;

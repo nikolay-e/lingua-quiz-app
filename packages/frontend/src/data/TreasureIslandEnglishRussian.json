@@ -1,0 +1,6767 @@
+{
+    "Focus Words": [],
+    "Mastered One Direction": [],
+    "Mastered Vocabulary": [],
+    "Upcoming Words": [
+        {
+            "english": "unsquared",
+            "russian": "не квадратный"
+        },
+        {
+            "english": "woodenheaded",
+            "russian": "деревянный, тупой"
+        },
+        {
+            "english": "maynt",
+            "russian": "не может, не вправе"
+        },
+        {
+            "english": "stridelegs",
+            "russian": "длинноногий, шагающий широко"
+        },
+        {
+            "english": "unweariedly",
+            "russian": "неутомимо"
+        },
+        {
+            "english": "wheer",
+            "russian": "где"
+        },
+        {
+            "english": "oaklike",
+            "russian": "дубовый"
+        },
+        {
+            "english": "headforemost",
+            "russian": "головой вперед"
+        },
+        {
+            "english": "truculently",
+            "russian": "агрессивно"
+        },
+        {
+            "english": "agoing",
+            "russian": "в процессе"
+        },
+        {
+            "english": "stumblingly",
+            "russian": "спотыкаясь"
+        },
+        {
+            "english": "norard",
+            "russian": "на север"
+        },
+        {
+            "english": "unsteered",
+            "russian": "неуправляемый"
+        },
+        {
+            "english": "bloodguilty",
+            "russian": "виновный в убийстве, кровожадный"
+        },
+        {
+            "english": "unbailed",
+            "russian": "невычерпанный"
+        },
+        {
+            "english": "deadlight",
+            "russian": "иллюминатор с толстым стеклом"
+        },
+        {
+            "english": "sailorly",
+            "russian": "морской, матросский"
+        },
+        {
+            "english": "wots",
+            "russian": "знает"
+        },
+        {
+            "english": "ajangle",
+            "russian": "звенящий, дребезжащий, раздраженный"
+        },
+        {
+            "english": "pluckily",
+            "russian": "отважно, смело"
+        },
+        {
+            "english": "seamanly",
+            "russian": "морской, матросский"
+        },
+        {
+            "english": "teetotum",
+            "russian": "волчок, юла"
+        },
+        {
+            "english": "unwearying",
+            "russian": "неутомимый"
+        },
+        {
+            "english": "encrimson",
+            "russian": "окрасить в малиновый цвет"
+        },
+        {
+            "english": "gallipot",
+            "russian": "аптечная банка, глиняный горшок для мазей"
+        },
+        {
+            "english": "midleg",
+            "russian": "середина ноги"
+        },
+        {
+            "english": "duskily",
+            "russian": "сумрачно, темно"
+        },
+        {
+            "english": "ashiver",
+            "russian": "дрожащий, трясущийся"
+        },
+        {
+            "english": "tallowy",
+            "russian": "сальный, жирный"
+        },
+        {
+            "english": "handbarrow",
+            "russian": "ручная тачка"
+        },
+        {
+            "english": "accurse",
+            "russian": "проклинать, предавать анафеме"
+        },
+        {
+            "english": "rumpuncheon",
+            "russian": "большой бочонок рома"
+        },
+        {
+            "english": "unsteadied",
+            "russian": "нестабильный"
+        },
+        {
+            "english": "needlessness",
+            "russian": "ненужность"
+        },
+        {
+            "english": "lillibullero",
+            "russian": "ирландская песня-марш 17 века"
+        },
+        {
+            "english": "emboldener",
+            "russian": "тот кто вдохновляет или ободряет"
+        },
+        {
+            "english": "afterpart",
+            "russian": "задняя часть"
+        },
+        {
+            "english": "truantry",
+            "russian": "прогул, уклонение от обязанностей"
+        },
+        {
+            "english": "rosily",
+            "russian": "розово"
+        },
+        {
+            "english": "mistily",
+            "russian": "туманно"
+        },
+        {
+            "english": "cannikin",
+            "russian": "кружка, маленькая банка (особенно для алкоголя), небольшой сосуд"
+        },
+        {
+            "english": "blear",
+            "russian": "слезиться, мутный"
+        },
+        {
+            "english": "musingly",
+            "russian": "задумчиво, размышляя"
+        },
+        {
+            "english": "spiling",
+            "russian": "установка свай, шпунтовое ограждение, просачивание"
+        },
+        {
+            "english": "stoutish",
+            "russian": "крепкий, плотный"
+        },
+        {
+            "english": "messmate",
+            "russian": "товарищ по обеду"
+        },
+        {
+            "english": "disaffect",
+            "russian": "вызывать недовольство, отчуждать, настраивать против"
+        },
+        {
+            "english": "supervene",
+            "russian": "последовать, наступить неожиданно, присоединиться"
+        },
+        {
+            "english": "steepen",
+            "russian": "стать круче"
+        },
+        {
+            "english": "bulrush",
+            "russian": "камыш, рогоз"
+        },
+        {
+            "english": "contrariety",
+            "russian": "противоречие, противоположность"
+        },
+        {
+            "english": "trebly",
+            "russian": "втройне, в три раза, трехголосно"
+        },
+        {
+            "english": "hawse",
+            "russian": "якорная цепь, клюз (отверстие для якорной цепи), пространство перед носом судна"
+        },
+        {
+            "english": "grogshop",
+            "russian": "питейное заведение"
+        },
+        {
+            "english": "besieger",
+            "russian": "осаждающий"
+        },
+        {
+            "english": "impend",
+            "russian": "нависать, угрожать, предстоять"
+        },
+        {
+            "english": "volubly",
+            "russian": "бойко, многословно"
+        },
+        {
+            "english": "overbold",
+            "russian": "слишком дерзкий"
+        },
+        {
+            "english": "younker",
+            "russian": "юноша, молодой матрос"
+        },
+        {
+            "english": "pignut",
+            "russian": "земляной орех, свиной орех, арахис"
+        },
+        {
+            "english": "hisn",
+            "russian": "его (диалектное, разговорное)"
+        },
+        {
+            "english": "openhanded",
+            "russian": "щедрый"
+        },
+        {
+            "english": "comeliness",
+            "russian": "привлекательность"
+        },
+        {
+            "english": "workpeople",
+            "russian": "рабочие"
+        },
+        {
+            "english": "circumspectly",
+            "russian": "осмотрительно"
+        },
+        {
+            "english": "pannikin",
+            "russian": "кружка, маленькая металлическая миска, котелок"
+        },
+        {
+            "english": "shoreward",
+            "russian": "к берегу"
+        },
+        {
+            "english": "tottery",
+            "russian": "шаткий, неустойчивый, дрожащий"
+        },
+        {
+            "english": "lection",
+            "russian": "чтение, вариант текста, урок"
+        },
+        {
+            "english": "rudiment",
+            "russian": "основа, элемент, зачаток"
+        },
+        {
+            "english": "imprecation",
+            "russian": "проклятие, ругательство"
+        },
+        {
+            "english": "backstay",
+            "russian": "ахтерштаг (в морском деле)"
+        },
+        {
+            "english": "warnt",
+            "russian": "не был"
+        },
+        {
+            "english": "miry",
+            "russian": "грязный, илистый, топкий"
+        },
+        {
+            "english": "dolefully",
+            "russian": "печально"
+        },
+        {
+            "english": "agone",
+            "russian": "давно, прошедший"
+        },
+        {
+            "english": "howsomever",
+            "russian": "однако, диалектная форма however"
+        },
+        {
+            "english": "daddle",
+            "russian": "медлить, тратить время впустую, нянчиться"
+        },
+        {
+            "english": "easting",
+            "russian": "движение на восток, восточная составляющая, восточное отклонение"
+        },
+        {
+            "english": "shoreside",
+            "russian": "береговая линия, прибрежная зона, находящийся на берегу"
+        },
+        {
+            "english": "hummock",
+            "russian": "холмик, бугор, торосистый лед"
+        },
+        {
+            "english": "hoarfrost",
+            "russian": "иней"
+        },
+        {
+            "english": "handspike",
+            "russian": "рукоятка, вымбовка (рычаг для поворота орудий)"
+        },
+        {
+            "english": "volubility",
+            "russian": "бойкость, разговорчивость, словоохотливость"
+        },
+        {
+            "english": "pestiferous",
+            "russian": "заразный, вредный, надоедливый"
+        },
+        {
+            "english": "drub",
+            "russian": "бить, колотить, разгромить"
+        },
+        {
+            "english": "overhung",
+            "russian": "нависший"
+        },
+        {
+            "english": "supercargo",
+            "russian": "суперкарго (представитель грузовладельца на судне)"
+        },
+        {
+            "english": "southard",
+            "russian": "на юг, southward"
+        },
+        {
+            "english": "chickenhearted",
+            "russian": "трусливый"
+        },
+        {
+            "english": "huzza",
+            "russian": "ура (восклицание), приветствовать возгласами"
+        },
+        {
+            "english": "severally",
+            "russian": "по отдельности, порознь, каждый в отдельности"
+        },
+        {
+            "english": "marish",
+            "russian": "болотистый, заболоченный, топкий"
+        },
+        {
+            "english": "disquietude",
+            "russian": "беспокойство, тревога"
+        },
+        {
+            "english": "fourpenny",
+            "russian": "четырехпенсовый, дешевый, незначительный"
+        },
+        {
+            "english": "fleabite",
+            "russian": "укус блохи, пустяк, мелочь"
+        },
+        {
+            "english": "elate",
+            "russian": "воодушевлять, поднимать настроение, окрылять"
+        },
+        {
+            "english": "musketry",
+            "russian": "мушкетный огонь, стрельба из ручного огнестрельного оружия"
+        },
+        {
+            "english": "unlooked",
+            "russian": "неожиданный, непредвиденный, нежеланный"
+        },
+        {
+            "english": "bandoleer",
+            "russian": "бандольер (перевязь для патронов), патронташ"
+        },
+        {
+            "english": "softheaded",
+            "russian": "слабоумный, наивный, простодушный, легковерный"
+        },
+        {
+            "english": "coltish",
+            "russian": "игривый, резвый, необузданный"
+        },
+        {
+            "english": "bumboat",
+            "russian": "лодка торговца припасами, шаланда"
+        },
+        {
+            "english": "enow",
+            "russian": "достаточно (устаревшее, диалектное)"
+        },
+        {
+            "english": "exclamatory",
+            "russian": "восклицательный, выражающий восклицание"
+        },
+        {
+            "english": "raggedness",
+            "russian": "оборванность, неровность, неряшливость"
+        },
+        {
+            "english": "steepness",
+            "russian": "крутизна, крутой подъем, резкость"
+        },
+        {
+            "english": "liker",
+            "russian": "более похожий, вероятнее, более вероятный"
+        },
+        {
+            "english": "blackhearted",
+            "russian": "черствый, злой, коварный"
+        },
+        {
+            "english": "irresolute",
+            "russian": "нерешительный, колеблющийся"
+        },
+        {
+            "english": "becalm",
+            "russian": "остановить, успокоить (о ветре), оказаться в штиле"
+        },
+        {
+            "english": "nimbleness",
+            "russian": "проворство, ловкость, быстрота"
+        },
+        {
+            "english": "ringlet",
+            "russian": "локон, завиток, колечко"
+        },
+        {
+            "english": "unprovided",
+            "russian": "неподготовленный, необеспеченный, незащищенный"
+        },
+        {
+            "english": "impulsion",
+            "russian": "побуждение, импульс, толчок"
+        },
+        {
+            "english": "gunwale",
+            "russian": "планшир (верхний край борта судна), привальный брус"
+        },
+        {
+            "english": "infallibly",
+            "russian": "непогрешимо, безошибочно"
+        },
+        {
+            "english": "sourly",
+            "russian": "кисло, угрюмо, раздраженно"
+        },
+        {
+            "english": "tatter",
+            "russian": "лохмотья, обрывок, изнашивать"
+        },
+        {
+            "english": "fiddlestick",
+            "russian": "скрипичный смычок, чепуха, вздор"
+        },
+        {
+            "english": "singlehanded",
+            "russian": "в одиночку, самостоятельно, одной рукой"
+        },
+        {
+            "english": "cordage",
+            "russian": "веревки, такелаж, канаты"
+        },
+        {
+            "english": "environ",
+            "russian": "окружать, обступать, окрестности"
+        },
+        {
+            "english": "superintend",
+            "russian": "надзирать, руководить, заведовать"
+        },
+        {
+            "english": "roughen",
+            "russian": "делать шероховатым, огрублять, становиться неровным"
+        },
+        {
+            "english": "manlike",
+            "russian": "мужественно, по-мужски, подобно мужчине"
+        },
+        {
+            "english": "dilapidation",
+            "russian": "разрушение, обветшание, ветхость"
+        },
+        {
+            "english": "dogwatch",
+            "russian": "собачья вахта (короткая вахта между 16 и 20 часами на корабле)"
+        },
+        {
+            "english": "beggarman",
+            "russian": "нищий, попрошайка, бедняк"
+        },
+        {
+            "english": "apologetically",
+            "russian": "извиняюще, оправдываясь"
+        },
+        {
+            "english": "blandly",
+            "russian": "мягко, вежливо, бесстрастно"
+        },
+        {
+            "english": "adjoin",
+            "russian": "примыкать, граничить, присоединять"
+        },
+        {
+            "english": "confoundedly",
+            "russian": "чертовски, ужасно"
+        },
+        {
+            "english": "coracle",
+            "russian": "коракл (круглая лодка из кожи), челнок"
+        },
+        {
+            "english": "streamlet",
+            "russian": "ручеек, маленький поток, речушка"
+        },
+        {
+            "english": "broadcloth",
+            "russian": "сукно, тонкое сукно, широкое сукно"
+        },
+        {
+            "english": "quaver",
+            "russian": "дрожать, вибрировать (о голосе), трель"
+        },
+        {
+            "english": "largeness",
+            "russian": "величина, размер, великодушие"
+        },
+        {
+            "english": "sward",
+            "russian": "газон, дерн, луговина"
+        },
+        {
+            "english": "admiringly",
+            "russian": "восхищенно, с восхищением"
+        },
+        {
+            "english": "forefoot",
+            "russian": "форштевень (передняя часть киля), передняя лапа"
+        },
+        {
+            "english": "afterdeck",
+            "russian": "ют, кормовая палуба, квартердек"
+        },
+        {
+            "english": "doorpost",
+            "russian": "дверной косяк, дверной столб"
+        },
+        {
+            "english": "plentifully",
+            "russian": "обильно, в изобилии"
+        },
+        {
+            "english": "passably",
+            "russian": "приемлемо, сносно"
+        },
+        {
+            "english": "miscellany",
+            "russian": "смесь, сборник, собрание"
+        },
+        {
+            "english": "append",
+            "russian": "добавить, приложить, присоединить"
+        },
+        {
+            "english": "manufactory",
+            "russian": "фабрика, завод, мануфактура"
+        },
+        {
+            "english": "placidly",
+            "russian": "мирно, спокойно, безмятежно"
+        },
+        {
+            "english": "steersman",
+            "russian": "кормчий, рулевой"
+        },
+        {
+            "english": "destine",
+            "russian": "предназначить, предопределять"
+        },
+        {
+            "english": "lipping",
+            "russian": "выступающий край, захлестывание волн, окаймление"
+        },
+        {
+            "english": "alow",
+            "russian": "внизу, в нижней части (морской термин)"
+        },
+        {
+            "english": "halfheartedly",
+            "russian": "без энтузиазма, нерешительно"
+        },
+        {
+            "english": "mell",
+            "russian": "вмешиваться, ввязываться, общаться"
+        },
+        {
+            "english": "airily",
+            "russian": "легко, воздушно, беззаботно"
+        },
+        {
+            "english": "effectual",
+            "russian": "действенный, эффективный"
+        },
+        {
+            "english": "athwart",
+            "russian": "поперек, наперекор, поперёк судна"
+        },
+        {
+            "english": "seadog",
+            "russian": "морской волк, опытный моряк, тюлень"
+        },
+        {
+            "english": "slyness",
+            "russian": "хитрость, лукавство"
+        },
+        {
+            "english": "foolhardiness",
+            "russian": "безрассудство, безрассудная смелость"
+        },
+        {
+            "english": "straggle",
+            "russian": "разбрести, отставать, тянуться вереницей"
+        },
+        {
+            "english": "craftily",
+            "russian": "хитро, искусно"
+        },
+        {
+            "english": "protestation",
+            "russian": "протест, заверение"
+        },
+        {
+            "english": "girt",
+            "russian": "окруженный, опоясанный, обхват"
+        },
+        {
+            "english": "quadrilateral",
+            "russian": "четырехугольник, четырехсторонний, четырехсторонняя фигура"
+        },
+        {
+            "english": "contortion",
+            "russian": "искривление, извращение, искажение"
+        },
+        {
+            "english": "oilskin",
+            "russian": "прорезиненная ткань, непромокаемая одежда, клеенка"
+        },
+        {
+            "english": "abeam",
+            "russian": "на траверзе, сбоку (морской термин)"
+        },
+        {
+            "english": "puncheon",
+            "russian": "большая бочка, пуансон, короткий брус"
+        },
+        {
+            "english": "unfitness",
+            "russian": "непригодность, неподготовленность, неприспособленность"
+        },
+        {
+            "english": "quire",
+            "russian": "стопка бумаги, тетрадь"
+        },
+        {
+            "english": "cession",
+            "russian": "уступка, передача прав, отказ от территории"
+        },
+        {
+            "english": "goodish",
+            "russian": "довольно хороший, порядочный, изрядный"
+        },
+        {
+            "english": "hailstone",
+            "russian": "градина, град"
+        },
+        {
+            "english": "oilcloth",
+            "russian": "клеенка, промасленная ткань"
+        },
+        {
+            "english": "bareheaded",
+            "russian": "без шляпы, с непокрытой головой"
+        },
+        {
+            "english": "bewilder",
+            "russian": "сбивать с толку, озадачивать, ставить в тупик"
+        },
+        {
+            "english": "lugger",
+            "russian": "люгер (небольшое парусное судно)"
+        },
+        {
+            "english": "moneybag",
+            "russian": "кошелек, денежный мешок, богач"
+        },
+        {
+            "english": "tyrannize",
+            "russian": "тиранить, деспотически править, угнетать"
+        },
+        {
+            "english": "redden",
+            "russian": "краснеть, румяниться"
+        },
+        {
+            "english": "cannonade",
+            "russian": "канонада, артиллерийский обстрел, обстреливать"
+        },
+        {
+            "english": "cheerily",
+            "russian": "весело, бодро"
+        },
+        {
+            "english": "admixture",
+            "russian": "примесь, смешение, добавка"
+        },
+        {
+            "english": "seaway",
+            "russian": "морской путь, волнение на море, рейд"
+        },
+        {
+            "english": "deadeye",
+            "russian": "юферс (блок без шкива), мертвый глаз"
+        },
+        {
+            "english": "splutter",
+            "russian": "брызгать слюной, говорить быстро и бессвязно, шипеть"
+        },
+        {
+            "english": "incivility",
+            "russian": "невежливость, грубость, неучтивость"
+        },
+        {
+            "english": "mizzenmast",
+            "russian": "бизань-мачта (третья мачта на корабле)"
+        },
+        {
+            "english": "niggardly",
+            "russian": "скупо, скаредно, убого"
+        },
+        {
+            "english": "giddily",
+            "russian": "головокружительно, легкомысленно, беспечно"
+        },
+        {
+            "english": "leafless",
+            "russian": "безлистный, оголенный"
+        },
+        {
+            "english": "bowsprit",
+            "russian": "бушприт (наклонная мачта в носовой части судна)"
+        },
+        {
+            "english": "avow",
+            "russian": "признавать, открыто заявлять, исповедовать"
+        },
+        {
+            "english": "bowstring",
+            "russian": "тетива лука, струна, гарротта"
+        },
+        {
+            "english": "hawser",
+            "russian": "швартовый трос, толстый канат, буксир"
+        },
+        {
+            "english": "noiseless",
+            "russian": "бесшумный, тихий"
+        },
+        {
+            "english": "haft",
+            "russian": "рукоятка, эфес, черенок"
+        },
+        {
+            "english": "thundercloud",
+            "russian": "грозовая туча, громовая туча"
+        },
+        {
+            "english": "assize",
+            "russian": "судебное заседание, ассизы, размер"
+        },
+        {
+            "english": "grizzle",
+            "russian": "седеть, становиться серым, хныкать"
+        },
+        {
+            "english": "undulate",
+            "russian": "волнообразно двигаться, колебаться, волноваться"
+        },
+        {
+            "english": "contemptuously",
+            "russian": "презрительно, пренебрежительно"
+        },
+        {
+            "english": "fainthearted",
+            "russian": "малодушный, трусливый"
+        },
+        {
+            "english": "sharer",
+            "russian": "делитель, участник, соучастник"
+        },
+        {
+            "english": "burnish",
+            "russian": "полировать, шлифовать, блестеть"
+        },
+        {
+            "english": "prodigiously",
+            "russian": "чрезвычайно, удивительно"
+        },
+        {
+            "english": "paleness",
+            "russian": "бледность, блеклость, бесцветность"
+        },
+        {
+            "english": "reassuringly",
+            "russian": "успокаивающе, обнадеживающе, ободряюще"
+        },
+        {
+            "english": "perplexity",
+            "russian": "недоумение, замешательство, растерянность"
+        },
+        {
+            "english": "coarsely",
+            "russian": "грубо, неотесанно"
+        },
+        {
+            "english": "vehemence",
+            "russian": "страстность, горячность, сила"
+        },
+        {
+            "english": "snorer",
+            "russian": "храпун, человек, который храпит"
+        },
+        {
+            "english": "tremulous",
+            "russian": "дрожащий, трепетный, неуверенный"
+        },
+        {
+            "english": "threateningly",
+            "russian": "угрожающе, грозно"
+        },
+        {
+            "english": "mainmast",
+            "russian": "грот-мачта (главная мачта корабля)"
+        },
+        {
+            "english": "tragical",
+            "russian": "трагический, печальный, трагичный"
+        },
+        {
+            "english": "connive",
+            "russian": "потворствовать, закрывать глаза на что-либо, тайно способствовать"
+        },
+        {
+            "english": "lubber",
+            "russian": "неуклюжий человек, сухопутная крыса, увалень"
+        },
+        {
+            "english": "palisade",
+            "russian": "частокол, палисад, изгородь из кольев"
+        },
+        {
+            "english": "foremast",
+            "russian": "фок-мачта (передняя мачта корабля)"
+        },
+        {
+            "english": "howsoever",
+            "russian": "как бы ни, каким бы образом ни, насколько бы ни"
+        },
+        {
+            "english": "thimbleful",
+            "russian": "наперсток (малое количество жидкости), капля"
+        },
+        {
+            "english": "dillydally",
+            "russian": "медлить, тянуть время, бездельничать"
+        },
+        {
+            "english": "reverberation",
+            "russian": "отражение звука, эхо, отголосок"
+        },
+        {
+            "english": "doit",
+            "russian": "мелкая монета, грош, ничтожная сумма"
+        },
+        {
+            "english": "contort",
+            "russian": "искажать, извращать, искривлять"
+        },
+        {
+            "english": "qualm",
+            "russian": "угрызение совести, сомнение, приступ тошноты"
+        },
+        {
+            "english": "leadin",
+            "russian": "вводный, вступительный, вводная часть"
+        },
+        {
+            "english": "irreverence",
+            "russian": "неуважение, непочтительность, кощунство"
+        },
+        {
+            "english": "keelhaul",
+            "russian": "протаскивать под килем, сурово наказывать"
+        },
+        {
+            "english": "capstan",
+            "russian": "шпиль, кабестан (механизм для подъема якоря)"
+        },
+        {
+            "english": "mayhap",
+            "russian": "возможно, может быть (устаревшее)"
+        },
+        {
+            "english": "hornpipe",
+            "russian": "хорнпайп (матросский танец), волынка"
+        },
+        {
+            "english": "stiffly",
+            "russian": "жестко, чопорно, натянуто"
+        },
+        {
+            "english": "babby",
+            "russian": "младенец (диалектное, детское)"
+        },
+        {
+            "english": "faintness",
+            "russian": "слабость, головокружение, нечеткость"
+        },
+        {
+            "english": "acquiescence",
+            "russian": "молчаливое согласие, уступчивость, покорность"
+        },
+        {
+            "english": "repugnance",
+            "russian": "отвращение, антипатия, несовместимость"
+        },
+        {
+            "english": "ure",
+            "russian": "употребление, обычай (устаревшее), приучать"
+        },
+        {
+            "english": "warily",
+            "russian": "осторожно, бдительно, настороженно"
+        },
+        {
+            "english": "totter",
+            "russian": "шататься, колебаться, идти неверной походкой"
+        },
+        {
+            "english": "obstinately",
+            "russian": "упрямо, упорно"
+        },
+        {
+            "english": "subaltern",
+            "russian": "младший офицер, подчиненный, подчиненный офицер"
+        },
+        {
+            "english": "outstrip",
+            "russian": "опережать, превосходить, обгонять"
+        },
+        {
+            "english": "recommence",
+            "russian": "возобновлять, начинать снова, возобновляться"
+        },
+        {
+            "english": "gabble",
+            "russian": "болтать быстро и невнятно, тараторить"
+        },
+        {
+            "english": "seaward",
+            "russian": "в сторону моря, мористее, морской"
+        },
+        {
+            "english": "slunk",
+            "russian": "прокрался, проскользнул (от slink), трусливо убежал"
+        },
+        {
+            "english": "shrewdness",
+            "russian": "проницательность, хитрость, сообразительность"
+        },
+        {
+            "english": "mutineer",
+            "russian": "мятежник, бунтовщик, участник мятежа"
+        },
+        {
+            "english": "derisively",
+            "russian": "насмешливо, издевательски, презрительно"
+        },
+        {
+            "english": "carouse",
+            "russian": "кутить, пировать, веселиться"
+        },
+        {
+            "english": "careen",
+            "russian": "крениться, килевать (судно), мчаться"
+        },
+        {
+            "english": "goatskin",
+            "russian": "козья шкура, бурдюк, мех для вина"
+        },
+        {
+            "english": "redcap",
+            "russian": "носильщик (в красной фуражке), солдат военной полиции"
+        },
+        {
+            "english": "thousandfold",
+            "russian": "тысячекратно, в тысячу раз, тысячекратный"
+        },
+        {
+            "english": "ague",
+            "russian": "лихорадка, озноб, малярия"
+        },
+        {
+            "english": "forelock",
+            "russian": "чуб, локон на лбу, чека"
+        },
+        {
+            "english": "swelter",
+            "russian": "изнывать от жары, париться, томиться"
+        },
+        {
+            "english": "unconquered",
+            "russian": "непокоренный, непобежденный, несломленный"
+        },
+        {
+            "english": "dogger",
+            "russian": "рыболовное судно для ловли трески, голландское рыболовное судно"
+        },
+        {
+            "english": "luff",
+            "russian": "приводить к ветру, увалить, наветренная сторона паруса"
+        },
+        {
+            "english": "eatable",
+            "russian": "съедобный, годный в пищу, съестное"
+        },
+        {
+            "english": "arrant",
+            "russian": "отъявленный, законченный"
+        },
+        {
+            "english": "variously",
+            "russian": "по-разному, различно"
+        },
+        {
+            "english": "languor",
+            "russian": "вялость, апатия"
+        },
+        {
+            "english": "welter",
+            "russian": "беспорядок, хаос"
+        },
+        {
+            "english": "inexpressible",
+            "russian": "невыразимый, несказанный"
+        },
+        {
+            "english": "surmount",
+            "russian": "преодолеть, превзойти"
+        },
+        {
+            "english": "ungainly",
+            "russian": "неуклюжий, нескладный"
+        },
+        {
+            "english": "roundly",
+            "russian": "решительно, резко"
+        },
+        {
+            "english": "billow",
+            "russian": "большая волна, вздыматься"
+        },
+        {
+            "english": "wearisome",
+            "russian": "утомительный, надоедливый"
+        },
+        {
+            "english": "rebuff",
+            "russian": "резкий отказ, отпор"
+        },
+        {
+            "english": "inboard",
+            "russian": "внутри борта, в корпусе судна"
+        },
+        {
+            "english": "doggedly",
+            "russian": "упорно, настойчиво"
+        },
+        {
+            "english": "rapidity",
+            "russian": "быстрота, стремительность"
+        },
+        {
+            "english": "foresail",
+            "russian": "фок (парус на передней мачте)"
+        },
+        {
+            "english": "purposeless",
+            "russian": "бесцельный, бессмысленный"
+        },
+        {
+            "english": "cutwater",
+            "russian": "водорез (часть форштевня)"
+        },
+        {
+            "english": "bigness",
+            "russian": "величина, размер"
+        },
+        {
+            "english": "foolery",
+            "russian": "глупость, дурачество"
+        },
+        {
+            "english": "forecastle",
+            "russian": "бак (носовая часть палубы)"
+        },
+        {
+            "english": "grudgingly",
+            "russian": "неохотно, с неудовольствием"
+        },
+        {
+            "english": "reawaken",
+            "russian": "пробуждать вновь, возрождать"
+        },
+        {
+            "english": "snuffbox",
+            "russian": "табакерка, нюхательная коробка"
+        },
+        {
+            "english": "accustom",
+            "russian": "приучать, привыкать"
+        },
+        {
+            "english": "phosphorescent",
+            "russian": "фосфоресцирующий, светящийся"
+        },
+        {
+            "english": "longish",
+            "russian": "длинноватый, довольно длинный"
+        },
+        {
+            "english": "apoplectic",
+            "russian": "апоплексический, склонный к апоплексии"
+        },
+        {
+            "english": "nearness",
+            "russian": "близость, сходство"
+        },
+        {
+            "english": "morass",
+            "russian": "болото, трясина"
+        },
+        {
+            "english": "retold",
+            "russian": "пересказанный, рассказанный заново"
+        },
+        {
+            "english": "singly",
+            "russian": "поодиночке, по отдельности"
+        },
+        {
+            "english": "sheepishly",
+            "russian": "застенчиво, робко"
+        },
+        {
+            "english": "thickly",
+            "russian": "густо, плотно"
+        },
+        {
+            "english": "feebly",
+            "russian": "слабо, немощно"
+        },
+        {
+            "english": "subsist",
+            "russian": "существовать, жить"
+        },
+        {
+            "english": "footfall",
+            "russian": "звук шагов, поступь"
+        },
+        {
+            "english": "scupper",
+            "russian": "шпигат (отверстие для стока воды)"
+        },
+        {
+            "english": "explanatory",
+            "russian": "пояснительный, объяснительный"
+        },
+        {
+            "english": "brier",
+            "russian": "шиповник, колючий кустарник"
+        },
+        {
+            "english": "halloo",
+            "russian": "окрик, оклик"
+        },
+        {
+            "english": "anywheres",
+            "russian": "где угодно (неправильно, разговорное)"
+        },
+        {
+            "english": "revengeful",
+            "russian": "мстительный, жаждущий мести"
+        },
+        {
+            "english": "thereupon",
+            "russian": "вслед за этим, после этого"
+        },
+        {
+            "english": "islet",
+            "russian": "островок, малый остров"
+        },
+        {
+            "english": "monstrously",
+            "russian": "чудовищно, ужасно"
+        },
+        {
+            "english": "gibbet",
+            "russian": "виселица, казнить через повешение"
+        },
+        {
+            "english": "chine",
+            "russian": "хребет, спинная часть"
+        },
+        {
+            "english": "sunshiny",
+            "russian": "солнечный, яркий"
+        },
+        {
+            "english": "halyard",
+            "russian": "фал (снасть для подъема парусов)"
+        },
+        {
+            "english": "mizzen",
+            "russian": "бизань (кормовая мачта)"
+        },
+        {
+            "english": "pickax",
+            "russian": "кирка, мотыга"
+        },
+        {
+            "english": "sinewy",
+            "russian": "жилистый, мускулистый"
+        },
+        {
+            "english": "furtively",
+            "russian": "украдкой, тайком"
+        },
+        {
+            "english": "eyeless",
+            "russian": "безглазый, слепой"
+        },
+        {
+            "english": "whiten",
+            "russian": "белить, отбеливать"
+        },
+        {
+            "english": "leeward",
+            "russian": "подветренный, в подветренную сторону"
+        },
+        {
+            "english": "clamber",
+            "russian": "карабкаться, взбираться"
+        },
+        {
+            "english": "fastening",
+            "russian": "крепление, застежка"
+        },
+        {
+            "english": "noonday",
+            "russian": "полдень, полуденный"
+        },
+        {
+            "english": "calumny",
+            "russian": "клевета, ложное обвинение"
+        },
+        {
+            "english": "slacken",
+            "russian": "ослаблять, замедлять"
+        },
+        {
+            "english": "unheeded",
+            "russian": "незамеченный, оставленный без внимания"
+        },
+        {
+            "english": "reedy",
+            "russian": "тростниковый, изобилующий тростником"
+        },
+        {
+            "english": "horrify",
+            "russian": "ужасать, приводить в ужас"
+        },
+        {
+            "english": "amidships",
+            "russian": "посредине корабля, на миделе"
+        },
+        {
+            "english": "torchlight",
+            "russian": "свет факела, освещение факелами"
+        },
+        {
+            "english": "unmanly",
+            "russian": "немужественный, недостойный мужчины"
+        },
+        {
+            "english": "sequin",
+            "russian": "блестка, пайетка"
+        },
+        {
+            "english": "preen",
+            "russian": "прихорашиваться, чистить перья"
+        },
+        {
+            "english": "landsman",
+            "russian": "сухопутный человек, новичок на море"
+        },
+        {
+            "english": "gaskin",
+            "russian": "гаскойн (часть ноги лошади)"
+        },
+        {
+            "english": "overhang",
+            "russian": "нависать, выступать"
+        },
+        {
+            "english": "greedily",
+            "russian": "жадно, алчно"
+        },
+        {
+            "english": "hurtle",
+            "russian": "мчаться, нестись"
+        },
+        {
+            "english": "waterline",
+            "russian": "ватерлиния, уровень воды"
+        },
+        {
+            "english": "reverently",
+            "russian": "почтительно, благоговейно"
+        },
+        {
+            "english": "preponderance",
+            "russian": "преобладание, перевес"
+        },
+        {
+            "english": "sodden",
+            "russian": "промокший, пропитанный водой"
+        },
+        {
+            "english": "slyly",
+            "russian": "хитро, лукаво"
+        },
+        {
+            "english": "smit",
+            "russian": "пораженный, очарованный (устаревшее от smite)"
+        },
+        {
+            "english": "supplication",
+            "russian": "мольба, просьба"
+        },
+        {
+            "english": "promontory",
+            "russian": "мыс, выступ"
+        },
+        {
+            "english": "leastways",
+            "russian": "по крайней мере (разговорное)"
+        },
+        {
+            "english": "sparsely",
+            "russian": "редко, скудно"
+        },
+        {
+            "english": "gruffly",
+            "russian": "грубо, резко"
+        },
+        {
+            "english": "bulwark",
+            "russian": "бульварк (верхняя часть борта судна), оплот"
+        },
+        {
+            "english": "uppermost",
+            "russian": "самый верхний, главнейший"
+        },
+        {
+            "english": "redouble",
+            "russian": "удваивать, усиливать"
+        },
+        {
+            "english": "easterly",
+            "russian": "восточный, с востока"
+        },
+        {
+            "english": "leaden",
+            "russian": "свинцовый, тяжелый"
+        },
+        {
+            "english": "hearken",
+            "russian": "прислушиваться, внимать (устаревшее)"
+        },
+        {
+            "english": "ironical",
+            "russian": "иронический, насмешливый"
+        },
+        {
+            "english": "gammon",
+            "russian": "окорок, обман"
+        },
+        {
+            "english": "larboard",
+            "russian": "левый борт (устаревшее)"
+        },
+        {
+            "english": "purchaser",
+            "russian": "покупатель, приобретатель"
+        },
+        {
+            "english": "deform",
+            "russian": "деформировать, уродовать"
+        },
+        {
+            "english": "coinage",
+            "russian": "чеканка монет, новое слово"
+        },
+        {
+            "english": "rigger",
+            "russian": "такелажник, монтажник"
+        },
+        {
+            "english": "crag",
+            "russian": "скала, утес"
+        },
+        {
+            "english": "unobserved",
+            "russian": "незамеченный, скрытый"
+        },
+        {
+            "english": "conical",
+            "russian": "конический, конусообразный"
+        },
+        {
+            "english": "incongruous",
+            "russian": "несоответствующий, неуместный"
+        },
+        {
+            "english": "ashen",
+            "russian": "пепельный, мертвенно-бледный"
+        },
+        {
+            "english": "briskly",
+            "russian": "бодро, энергично"
+        },
+        {
+            "english": "thumbnail",
+            "russian": "миниатюра, эскиз"
+        },
+        {
+            "english": "apoplexy",
+            "russian": "апоплексия, паралич"
+        },
+        {
+            "english": "topsail",
+            "russian": "марсель (парус над нижним парусом)"
+        },
+        {
+            "english": "mainstay",
+            "russian": "основная опора, главная поддержка"
+        },
+        {
+            "english": "nohow",
+            "russian": "никоим образом, никак (разговорное)"
+        },
+        {
+            "english": "marshy",
+            "russian": "болотистый, топкий"
+        },
+        {
+            "english": "modulate",
+            "russian": "модулировать"
+        },
+        {
+            "english": "doubloon",
+            "russian": "дублон"
+        },
+        {
+            "english": "tallow",
+            "russian": "сало"
+        },
+        {
+            "english": "wretchedness",
+            "russian": "несчастье"
+        },
+        {
+            "english": "unburied",
+            "russian": "незахороненный"
+        },
+        {
+            "english": "devoutly",
+            "russian": "благочестиво"
+        },
+        {
+            "english": "postscript",
+            "russian": "послесловие"
+        },
+        {
+            "english": "reappearance",
+            "russian": "повторное появление"
+        },
+        {
+            "english": "prettily",
+            "russian": "мило"
+        },
+        {
+            "english": "forbear",
+            "russian": "воздерживаться"
+        },
+        {
+            "english": "doldrums",
+            "russian": "штиль"
+        },
+        {
+            "english": "tiptop",
+            "russian": "верхушка"
+        },
+        {
+            "english": "thunderstruck",
+            "russian": "ошеломленный"
+        },
+        {
+            "english": "solemnity",
+            "russian": "торжественность"
+        },
+        {
+            "english": "obsequious",
+            "russian": "подобострастный"
+        },
+        {
+            "english": "quoth",
+            "russian": "сказал"
+        },
+        {
+            "english": "pigtail",
+            "russian": "косичка"
+        },
+        {
+            "english": "peculiarly",
+            "russian": "особенно"
+        },
+        {
+            "english": "landlocked",
+            "russian": "внутренний"
+        },
+        {
+            "english": "speedily",
+            "russian": "быстро"
+        },
+        {
+            "english": "wrest",
+            "russian": "вырывать"
+        },
+        {
+            "english": "hotly",
+            "russian": "горячо"
+        },
+        {
+            "english": "dwindle",
+            "russian": "уменьшаться"
+        },
+        {
+            "english": "signboard",
+            "russian": "вывеска"
+        },
+        {
+            "english": "sternly",
+            "russian": "строго"
+        },
+        {
+            "english": "firelight",
+            "russian": "свет огня"
+        },
+        {
+            "english": "serviceable",
+            "russian": "пригодный к использованию"
+        },
+        {
+            "english": "yardarm",
+            "russian": "рея"
+        },
+        {
+            "english": "wot",
+            "russian": "знает"
+        },
+        {
+            "english": "trundle",
+            "russian": "катить"
+        },
+        {
+            "english": "lancet",
+            "russian": "ланцет"
+        },
+        {
+            "english": "skulk",
+            "russian": "скрываться"
+        },
+        {
+            "english": "umber",
+            "russian": "умбра"
+        },
+        {
+            "english": "craggy",
+            "russian": "скалистый"
+        },
+        {
+            "english": "trice",
+            "russian": "мгновение"
+        },
+        {
+            "english": "thatch",
+            "russian": "соломенная крыша"
+        },
+        {
+            "english": "downhearted",
+            "russian": "удрученный"
+        },
+        {
+            "english": "coxswain",
+            "russian": "кокс"
+        },
+        {
+            "english": "rheumatic",
+            "russian": "ревматичный"
+        },
+        {
+            "english": "cliffy",
+            "russian": "скалистый"
+        },
+        {
+            "english": "southward",
+            "russian": "на юг"
+        },
+        {
+            "english": "resolutely",
+            "russian": "решительно"
+        },
+        {
+            "english": "envelop",
+            "russian": "обертывать"
+        },
+        {
+            "english": "spyglass",
+            "russian": "подзорная труба"
+        },
+        {
+            "english": "ingratiate",
+            "russian": "внушать симпатию"
+        },
+        {
+            "english": "smote",
+            "russian": "поразил"
+        },
+        {
+            "english": "fieldwork",
+            "russian": "полевые работы"
+        },
+        {
+            "english": "contrive",
+            "russian": "изобретать"
+        },
+        {
+            "english": "cloudless",
+            "russian": "безоблачный"
+        },
+        {
+            "english": "fainter",
+            "russian": "слабее"
+        },
+        {
+            "english": "bramble",
+            "russian": "ежевика"
+        },
+        {
+            "english": "tarpaulin",
+            "russian": "брезент"
+        },
+        {
+            "english": "dimly",
+            "russian": "тускло"
+        },
+        {
+            "english": "glisten",
+            "russian": "блестеть"
+        },
+        {
+            "english": "derision",
+            "russian": "насмешка"
+        },
+        {
+            "english": "shipmate",
+            "russian": "корабельный товарищ"
+        },
+        {
+            "english": "disbelieve",
+            "russian": "не верить"
+        },
+        {
+            "english": "tonnage",
+            "russian": "тоннаж"
+        },
+        {
+            "english": "reparation",
+            "russian": "возмещение"
+        },
+        {
+            "english": "amuck",
+            "russian": "амок"
+        },
+        {
+            "english": "grandly",
+            "russian": "величественно"
+        },
+        {
+            "english": "sojourn",
+            "russian": "пребывание"
+        },
+        {
+            "english": "desirous",
+            "russian": "желающий"
+        },
+        {
+            "english": "neatness",
+            "russian": "аккуратность"
+        },
+        {
+            "english": "lowland",
+            "russian": "низина"
+        },
+        {
+            "english": "unmoved",
+            "russian": "невозмутимый"
+        },
+        {
+            "english": "personage",
+            "russian": "персона"
+        },
+        {
+            "english": "horseplay",
+            "russian": "шалости"
+        },
+        {
+            "english": "bungle",
+            "russian": "недоработка"
+        },
+        {
+            "english": "broadside",
+            "russian": "залп"
+        },
+        {
+            "english": "duplicity",
+            "russian": "двуличие"
+        },
+        {
+            "english": "boozy",
+            "russian": "пьяный"
+        },
+        {
+            "english": "obediently",
+            "russian": "послушно"
+        },
+        {
+            "english": "writhe",
+            "russian": "извиваться"
+        },
+        {
+            "english": "windward",
+            "russian": "подветренный"
+        },
+        {
+            "english": "steerage",
+            "russian": "трюм"
+        },
+        {
+            "english": "ruination",
+            "russian": "разрушение"
+        },
+        {
+            "english": "deplore",
+            "russian": "осуждать"
+        },
+        {
+            "english": "capsize",
+            "russian": "перевернуться"
+        },
+        {
+            "english": "seaworthy",
+            "russian": "мореходный"
+        },
+        {
+            "english": "mainsail",
+            "russian": "грот"
+        },
+        {
+            "english": "treetop",
+            "russian": "верхушка дерева"
+        },
+        {
+            "english": "yaw",
+            "russian": "уклонение"
+        },
+        {
+            "english": "paler",
+            "russian": "бледнее"
+        },
+        {
+            "english": "headpiece",
+            "russian": "головной убор"
+        },
+        {
+            "english": "laborious",
+            "russian": "трудоемкий"
+        },
+        {
+            "english": "computation",
+            "russian": "расчет"
+        },
+        {
+            "english": "rammer",
+            "russian": "трамбовка"
+        },
+        {
+            "english": "leant",
+            "russian": "опирался"
+        },
+        {
+            "english": "bungling",
+            "russian": "неуклюжий"
+        },
+        {
+            "english": "toon",
+            "russian": "тик (дерево)"
+        },
+        {
+            "english": "plod",
+            "russian": "тяжело шагать"
+        },
+        {
+            "english": "mightily",
+            "russian": "мощно"
+        },
+        {
+            "english": "displace",
+            "russian": "вытеснить"
+        },
+        {
+            "english": "nondescript",
+            "russian": "неописуемый"
+        },
+        {
+            "english": "amass",
+            "russian": "накапливать"
+        },
+        {
+            "english": "avast",
+            "russian": "стоп"
+        },
+        {
+            "english": "forefinger",
+            "russian": "указательный палец"
+        },
+        {
+            "english": "retort",
+            "russian": "возражение"
+        },
+        {
+            "english": "hotheaded",
+            "russian": "вспыльчивый"
+        },
+        {
+            "english": "buccaneer",
+            "russian": "корсар"
+        },
+        {
+            "english": "stirrup",
+            "russian": "стремя"
+        },
+        {
+            "english": "hoarsely",
+            "russian": "хрипло"
+        },
+        {
+            "english": "eastward",
+            "russian": "на восток"
+        },
+        {
+            "english": "roundhouse",
+            "russian": "круглый дом"
+        },
+        {
+            "english": "condescend",
+            "russian": "снисходить"
+        },
+        {
+            "english": "gladness",
+            "russian": "радость"
+        },
+        {
+            "english": "feint",
+            "russian": "финт"
+        },
+        {
+            "english": "azalea",
+            "russian": "азалия"
+        },
+        {
+            "english": "lanyard",
+            "russian": "шнурок"
+        },
+        {
+            "english": "strode",
+            "russian": "шагнул"
+        },
+        {
+            "english": "earshot",
+            "russian": "слышимость"
+        },
+        {
+            "english": "buoyant",
+            "russian": "плавучий, жизнерадостный"
+        },
+        {
+            "english": "northward",
+            "russian": "на север"
+        },
+        {
+            "english": "coolly",
+            "russian": "хладнокровно"
+        },
+        {
+            "english": "breathlessly",
+            "russian": "запыхавшись"
+        },
+        {
+            "english": "quicken",
+            "russian": "ускорить"
+        },
+        {
+            "english": "peal",
+            "russian": "перезвон"
+        },
+        {
+            "english": "desperado",
+            "russian": "отчаянный"
+        },
+        {
+            "english": "spurn",
+            "russian": "отвергать"
+        },
+        {
+            "english": "sundry",
+            "russian": "разнообразный"
+        },
+        {
+            "english": "squall",
+            "russian": "шквал"
+        },
+        {
+            "english": "wisp",
+            "russian": "клок"
+        },
+        {
+            "english": "indomitable",
+            "russian": "неукротимый"
+        },
+        {
+            "english": "droop",
+            "russian": "увядать"
+        },
+        {
+            "english": "scull",
+            "russian": "весло"
+        },
+        {
+            "english": "piped",
+            "russian": "пропищал"
+        },
+        {
+            "english": "extricate",
+            "russian": "освободить"
+        },
+        {
+            "english": "seafaring",
+            "russian": "мореплавание"
+        },
+        {
+            "english": "whereupon",
+            "russian": "после чего"
+        },
+        {
+            "english": "deary",
+            "russian": "дорогой, милый"
+        },
+        {
+            "english": "blacken",
+            "russian": "чернеть"
+        },
+        {
+            "english": "gilt",
+            "russian": "золоченый"
+        },
+        {
+            "english": "outboard",
+            "russian": "внешний"
+        },
+        {
+            "english": "hawker",
+            "russian": "торговец"
+        },
+        {
+            "english": "sicken",
+            "russian": "болеть"
+        },
+        {
+            "english": "miscreant",
+            "russian": "негодяй"
+        },
+        {
+            "english": "repulse",
+            "russian": "отражение (атаки)"
+        },
+        {
+            "english": "hobble",
+            "russian": "прихрамывать"
+        },
+        {
+            "english": "sprawl",
+            "russian": "раскидываться"
+        },
+        {
+            "english": "skylark",
+            "russian": "жаворонок"
+        },
+        {
+            "english": "rove",
+            "russian": "странствовать"
+        },
+        {
+            "english": "dislodge",
+            "russian": "вытеснить"
+        },
+        {
+            "english": "absurdly",
+            "russian": "абсурдно"
+        },
+        {
+            "english": "leer",
+            "russian": "коситься"
+        },
+        {
+            "english": "dereliction",
+            "russian": "заброшенность"
+        },
+        {
+            "english": "sunbeam",
+            "russian": "солнечный луч, луч солнца"
+        },
+        {
+            "english": "enclose",
+            "russian": "огородить"
+        },
+        {
+            "english": "slung",
+            "russian": "подвешенный"
+        },
+        {
+            "english": "captor",
+            "russian": "пленитель"
+        },
+        {
+            "english": "ornamental",
+            "russian": "декоративный"
+        },
+        {
+            "english": "studious",
+            "russian": "усердный"
+        },
+        {
+            "english": "annoyingly",
+            "russian": "раздражающе"
+        },
+        {
+            "english": "drench",
+            "russian": "промокнуть"
+        },
+        {
+            "english": "dram",
+            "russian": "глоток"
+        },
+        {
+            "english": "whisker",
+            "russian": "ус"
+        },
+        {
+            "english": "unearthly",
+            "russian": "неземной, сверхъестественный"
+        },
+        {
+            "english": "detestable",
+            "russian": "отвратительный"
+        },
+        {
+            "english": "genteel",
+            "russian": "вежливый"
+        },
+        {
+            "english": "tint",
+            "russian": "оттенок"
+        },
+        {
+            "english": "weariness",
+            "russian": "усталость"
+        },
+        {
+            "english": "plumage",
+            "russian": "оперение"
+        },
+        {
+            "english": "conspirator",
+            "russian": "заговорщик"
+        },
+        {
+            "english": "thither",
+            "russian": "туда"
+        },
+        {
+            "english": "aperture",
+            "russian": "отверстие"
+        },
+        {
+            "english": "shrub",
+            "russian": "кустарник"
+        },
+        {
+            "english": "moonbeam",
+            "russian": "лунный луч"
+        },
+        {
+            "english": "scowl",
+            "russian": "нахмуриться"
+        },
+        {
+            "english": "densely",
+            "russian": "плотно"
+        },
+        {
+            "english": "thicket",
+            "russian": "заросли"
+        },
+        {
+            "english": "shirk",
+            "russian": "уклоняться"
+        },
+        {
+            "english": "vise",
+            "russian": "тиски"
+        },
+        {
+            "english": "skiff",
+            "russian": "лодка"
+        },
+        {
+            "english": "congregate",
+            "russian": "собираться"
+        },
+        {
+            "english": "nettle",
+            "russian": "крапива"
+        },
+        {
+            "english": "spire",
+            "russian": "шпиль"
+        },
+        {
+            "english": "impatiently",
+            "russian": "нетерпеливо"
+        },
+        {
+            "english": "flit",
+            "russian": "порхать"
+        },
+        {
+            "english": "homeward",
+            "russian": "домой"
+        },
+        {
+            "english": "rout",
+            "russian": "разгром"
+        },
+        {
+            "english": "fairway",
+            "russian": "фарватер, игровое поле (в гольфе)"
+        },
+        {
+            "english": "visibly",
+            "russian": "видимо"
+        },
+        {
+            "english": "agitate",
+            "russian": "волновать"
+        },
+        {
+            "english": "tarry",
+            "russian": "медлить"
+        },
+        {
+            "english": "clove",
+            "russian": "гвоздика (пряность), долька (чеснока)"
+        },
+        {
+            "english": "patchwork",
+            "russian": "лоскутное одеяло"
+        },
+        {
+            "english": "stave",
+            "russian": "дощечка, строфа (в стихах)"
+        },
+        {
+            "english": "shipshape",
+            "russian": "аккуратный"
+        },
+        {
+            "english": "flighty",
+            "russian": "легкомысленный"
+        },
+        {
+            "english": "southwestern",
+            "russian": "юго-западный"
+        },
+        {
+            "english": "legged",
+            "russian": "ногастый"
+        },
+        {
+            "english": "narrower",
+            "russian": "уже"
+        },
+        {
+            "english": "estuary",
+            "russian": "устье"
+        },
+        {
+            "english": "smartly",
+            "russian": "быстро"
+        },
+        {
+            "english": "tenfold",
+            "russian": "в десять раз"
+        },
+        {
+            "english": "unsteady",
+            "russian": "неустойчивый"
+        },
+        {
+            "english": "eagerness",
+            "russian": "рвение"
+        },
+        {
+            "english": "mechanically",
+            "russian": "механически"
+        },
+        {
+            "english": "equip",
+            "russian": "оснащать"
+        },
+        {
+            "english": "dexterity",
+            "russian": "ловкость"
+        },
+        {
+            "english": "boatswain",
+            "russian": "боцман"
+        },
+        {
+            "english": "farthing",
+            "russian": "фартинг"
+        },
+        {
+            "english": "grapple",
+            "russian": "борьба"
+        },
+        {
+            "english": "mutilate",
+            "russian": "увечье"
+        },
+        {
+            "english": "missis",
+            "russian": "миссис"
+        },
+        {
+            "english": "bygone",
+            "russian": "прошлый"
+        },
+        {
+            "english": "beheld",
+            "russian": "увидел"
+        },
+        {
+            "english": "thence",
+            "russian": "оттуда"
+        },
+        {
+            "english": "slough",
+            "russian": "трясина, болото, сбрасывать (кожу)"
+        },
+        {
+            "english": "innumerable",
+            "russian": "бесчисленный"
+        },
+        {
+            "english": "insubordinate",
+            "russian": "неподчиненный"
+        },
+        {
+            "english": "incline",
+            "russian": "склон"
+        },
+        {
+            "english": "staunch",
+            "russian": "верный"
+        },
+        {
+            "english": "cutlass",
+            "russian": "сабля"
+        },
+        {
+            "english": "lopsided",
+            "russian": "косой"
+        },
+        {
+            "english": "idleness",
+            "russian": "безделье"
+        },
+        {
+            "english": "hitherto",
+            "russian": "до сих пор"
+        },
+        {
+            "english": "swampy",
+            "russian": "болотистый"
+        },
+        {
+            "english": "wooded",
+            "russian": "лесистый"
+        },
+        {
+            "english": "blacker",
+            "russian": "чернее"
+        },
+        {
+            "english": "millstone",
+            "russian": "жернов"
+        },
+        {
+            "english": "cockerel",
+            "russian": "петушок, молодой петух"
+        },
+        {
+            "english": "figurehead",
+            "russian": "фигурная голова"
+        },
+        {
+            "english": "afire",
+            "russian": "в огне"
+        },
+        {
+            "english": "glint",
+            "russian": "вспышка"
+        },
+        {
+            "english": "headlong",
+            "russian": "напролом"
+        },
+        {
+            "english": "earnestly",
+            "russian": "серьезно"
+        },
+        {
+            "english": "astonishment",
+            "russian": "изумление"
+        },
+        {
+            "english": "escapade",
+            "russian": "выходка"
+        },
+        {
+            "english": "inlet",
+            "russian": "залив"
+        },
+        {
+            "english": "bolus",
+            "russian": "пилюля"
+        },
+        {
+            "english": "catechism",
+            "russian": "катехизис"
+        },
+        {
+            "english": "bloodstained",
+            "russian": "кровавый"
+        },
+        {
+            "english": "weevil",
+            "russian": "долгоносик"
+        },
+        {
+            "english": "unintentional",
+            "russian": "непреднамеренный"
+        },
+        {
+            "english": "keenly",
+            "russian": "остро"
+        },
+        {
+            "english": "cask",
+            "russian": "бочка"
+        },
+        {
+            "english": "diagonal",
+            "russian": "диагональный"
+        },
+        {
+            "english": "rekindle",
+            "russian": "возобновить"
+        },
+        {
+            "english": "scuttle",
+            "russian": "люк"
+        },
+        {
+            "english": "dingle",
+            "russian": "долина"
+        },
+        {
+            "english": "bellow",
+            "russian": "рев"
+        },
+        {
+            "english": "shoal",
+            "russian": "мель"
+        },
+        {
+            "english": "cleverness",
+            "russian": "сообразительность"
+        },
+        {
+            "english": "boarder",
+            "russian": "постоялец"
+        },
+        {
+            "english": "miscalculation",
+            "russian": "недоразумение, просчет"
+        },
+        {
+            "english": "waken",
+            "russian": "пробудиться"
+        },
+        {
+            "english": "forage",
+            "russian": "фураж, корм, добывать пропитание"
+        },
+        {
+            "english": "depose",
+            "russian": "свергнуть"
+        },
+        {
+            "english": "molestation",
+            "russian": "домогательство"
+        },
+        {
+            "english": "outlandish",
+            "russian": "чудной"
+        },
+        {
+            "english": "thimble",
+            "russian": "наперсток"
+        },
+        {
+            "english": "ditty",
+            "russian": "песенка"
+        },
+        {
+            "english": "mariner",
+            "russian": "моряк"
+        },
+        {
+            "english": "admirably",
+            "russian": "восхитительно"
+        },
+        {
+            "english": "broach",
+            "russian": "начать обсуждение, поднять вопрос"
+        },
+        {
+            "english": "repaint",
+            "russian": "перекрасить"
+        },
+        {
+            "english": "recklessness",
+            "russian": "безрассудство"
+        },
+        {
+            "english": "villainous",
+            "russian": "злодейский"
+        },
+        {
+            "english": "batten",
+            "russian": "обшивка"
+        },
+        {
+            "english": "astern",
+            "russian": "по корме"
+        },
+        {
+            "english": "civility",
+            "russian": "вежливость"
+        },
+        {
+            "english": "subside",
+            "russian": "утихать"
+        },
+        {
+            "english": "volition",
+            "russian": "воля"
+        },
+        {
+            "english": "frigate",
+            "russian": "фрегат"
+        },
+        {
+            "english": "aback",
+            "russian": "назад, врасплох"
+        },
+        {
+            "english": "coolness",
+            "russian": "хладнокровие"
+        },
+        {
+            "english": "fatherless",
+            "russian": "без отца"
+        },
+        {
+            "english": "prim",
+            "russian": "аккуратный"
+        },
+        {
+            "english": "glade",
+            "russian": "поляна"
+        },
+        {
+            "english": "mirth",
+            "russian": "веселье"
+        },
+        {
+            "english": "stealthy",
+            "russian": "скрытный"
+        },
+        {
+            "english": "lather",
+            "russian": "пена"
+        },
+        {
+            "english": "tattered",
+            "russian": "обветшалый"
+        },
+        {
+            "english": "ruffle",
+            "russian": "рябь, смущение, взъерошить"
+        },
+        {
+            "english": "logbook",
+            "russian": "судовой журнал"
+        },
+        {
+            "english": "trod",
+            "russian": "шагал"
+        },
+        {
+            "english": "alteration",
+            "russian": "изменение"
+        },
+        {
+            "english": "sneer",
+            "russian": "насмешка"
+        },
+        {
+            "english": "ambiguity",
+            "russian": "двусмысленность"
+        },
+        {
+            "english": "taut",
+            "russian": "натянутый, напряженный"
+        },
+        {
+            "english": "furiously",
+            "russian": "яростно"
+        },
+        {
+            "english": "stagnant",
+            "russian": "застойный"
+        },
+        {
+            "english": "prodigious",
+            "russian": "чудовищный"
+        },
+        {
+            "english": "bough",
+            "russian": "ветвь"
+        },
+        {
+            "english": "schooner",
+            "russian": "шхуна"
+        },
+        {
+            "english": "dolt",
+            "russian": "дурак"
+        },
+        {
+            "english": "foolhardy",
+            "russian": "безрассудный"
+        },
+        {
+            "english": "prophetic",
+            "russian": "пророческий"
+        },
+        {
+            "english": "narrowly",
+            "russian": "едва"
+        },
+        {
+            "english": "bade",
+            "russian": "велел"
+        },
+        {
+            "english": "extravagance",
+            "russian": "расточительность, излишество, чрезмерность"
+        },
+        {
+            "english": "westward",
+            "russian": "на запад"
+        },
+        {
+            "english": "cleft",
+            "russian": "расщелина, расщепленный"
+        },
+        {
+            "english": "thrifty",
+            "russian": "экономный"
+        },
+        {
+            "english": "gamekeeper",
+            "russian": "егерь"
+        },
+        {
+            "english": "patter",
+            "russian": "стук"
+        },
+        {
+            "english": "glossy",
+            "russian": "глянцевый"
+        },
+        {
+            "english": "ebb",
+            "russian": "отлив"
+        },
+        {
+            "english": "disapproval",
+            "russian": "неодобрение"
+        },
+        {
+            "english": "volley",
+            "russian": "залп"
+        },
+        {
+            "english": "stupor",
+            "russian": "оцепенение"
+        },
+        {
+            "english": "whither",
+            "russian": "куда"
+        },
+        {
+            "english": "continual",
+            "russian": "непрерывный"
+        },
+        {
+            "english": "recoil",
+            "russian": "отдача"
+        },
+        {
+            "english": "quay",
+            "russian": "пристань"
+        },
+        {
+            "english": "livery",
+            "russian": "ливрея, окраска (животных)"
+        },
+        {
+            "english": "evergreen",
+            "russian": "вечнозеленый"
+        },
+        {
+            "english": "hilltop",
+            "russian": "вершина холма"
+        },
+        {
+            "english": "tiller",
+            "russian": "руль"
+        },
+        {
+            "english": "incessant",
+            "russian": "неустанно"
+        },
+        {
+            "english": "reiterate",
+            "russian": "повторять"
+        },
+        {
+            "english": "uncouth",
+            "russian": "неуклюжий"
+        },
+        {
+            "english": "sullen",
+            "russian": "угрюмый"
+        },
+        {
+            "english": "belay",
+            "russian": "закрепить"
+        },
+        {
+            "english": "numbness",
+            "russian": "онемение"
+        },
+        {
+            "english": "airy",
+            "russian": "воздушный"
+        },
+        {
+            "english": "annoyance",
+            "russian": "раздражение"
+        },
+        {
+            "english": "shockingly",
+            "russian": "шокирующе"
+        },
+        {
+            "english": "bilge",
+            "russian": "трюм, льяльные воды"
+        },
+        {
+            "english": "nostril",
+            "russian": "ноздря"
+        },
+        {
+            "english": "plucky",
+            "russian": "смелый"
+        },
+        {
+            "english": "illustration",
+            "russian": "иллюстрация"
+        },
+        {
+            "english": "swivel",
+            "russian": "вращающийся"
+        },
+        {
+            "english": "sidle",
+            "russian": "подкрасться"
+        },
+        {
+            "english": "gravestone",
+            "russian": "надгробная плита"
+        },
+        {
+            "english": "leeway",
+            "russian": "запас прочности, свобода действий"
+        },
+        {
+            "english": "comparative",
+            "russian": "сравнительный"
+        },
+        {
+            "english": "clench",
+            "russian": "стиснуть"
+        },
+        {
+            "english": "confidant",
+            "russian": "доверенное лицо"
+        },
+        {
+            "english": "thwart",
+            "russian": "помешать"
+        },
+        {
+            "english": "frayed",
+            "russian": "потертый"
+        },
+        {
+            "english": "bustling",
+            "russian": "оживленный"
+        },
+        {
+            "english": "disarray",
+            "russian": "беспорядок"
+        },
+        {
+            "english": "breech",
+            "russian": "затылок, казенная часть (оружия)"
+        },
+        {
+            "english": "haggard",
+            "russian": "изможденный"
+        },
+        {
+            "english": "wriggle",
+            "russian": "извиваться"
+        },
+        {
+            "english": "ricochet",
+            "russian": "рикошет"
+        },
+        {
+            "english": "anecdote",
+            "russian": "анекдот"
+        },
+        {
+            "english": "intermittent",
+            "russian": "прерывистый"
+        },
+        {
+            "english": "unaffected",
+            "russian": "неподдельный"
+        },
+        {
+            "english": "outset",
+            "russian": "начало"
+        },
+        {
+            "english": "radiance",
+            "russian": "сияние"
+        },
+        {
+            "english": "doze",
+            "russian": "дремать"
+        },
+        {
+            "english": "wily",
+            "russian": "хитрый"
+        },
+        {
+            "english": "odious",
+            "russian": "отвратительный"
+        },
+        {
+            "english": "stifle",
+            "russian": "подавлять"
+        },
+        {
+            "english": "waver",
+            "russian": "колебаться"
+        },
+        {
+            "english": "snipe",
+            "russian": "бекас"
+        },
+        {
+            "english": "cleanly",
+            "russian": "аккуратно"
+        },
+        {
+            "english": "quartermaster",
+            "russian": "квартирмейстер"
+        },
+        {
+            "english": "stockade",
+            "russian": "частокол"
+        },
+        {
+            "english": "strewn",
+            "russian": "разбросанный"
+        },
+        {
+            "english": "clump",
+            "russian": "клумба, группа деревьев"
+        },
+        {
+            "english": "shrug",
+            "russian": "пожимать плечами"
+        },
+        {
+            "english": "stagger",
+            "russian": "шататься"
+        },
+        {
+            "english": "ungodly",
+            "russian": "богомерзкий"
+        },
+        {
+            "english": "stately",
+            "russian": "величественный"
+        },
+        {
+            "english": "musketeer",
+            "russian": "мушкетер"
+        },
+        {
+            "english": "knoll",
+            "russian": "холмик"
+        },
+        {
+            "english": "clawed",
+            "russian": "когтистый"
+        },
+        {
+            "english": "clapped",
+            "russian": "хлопнул"
+        },
+        {
+            "english": "indescribable",
+            "russian": "невыразимый"
+        },
+        {
+            "english": "fatally",
+            "russian": "смертельно"
+        },
+        {
+            "english": "eyelid",
+            "russian": "веко"
+        },
+        {
+            "english": "afresh",
+            "russian": "заново"
+        },
+        {
+            "english": "fen",
+            "russian": "болото"
+        },
+        {
+            "english": "durst",
+            "russian": "осмеливался"
+        },
+        {
+            "english": "ember",
+            "russian": "уголек"
+        },
+        {
+            "english": "onslaught",
+            "russian": "нападение"
+        },
+        {
+            "english": "workman",
+            "russian": "рабочий"
+        },
+        {
+            "english": "christen",
+            "russian": "крестить"
+        },
+        {
+            "english": "foliage",
+            "russian": "листва"
+        },
+        {
+            "english": "slant",
+            "russian": "наклон"
+        },
+        {
+            "english": "chieftain",
+            "russian": "вождь"
+        },
+        {
+            "english": "lurk",
+            "russian": "таиться"
+        },
+        {
+            "english": "shortness",
+            "russian": "краткость"
+        },
+        {
+            "english": "overhaul",
+            "russian": "капитальный ремонт"
+        },
+        {
+            "english": "aloft",
+            "russian": "наверху"
+        },
+        {
+            "english": "swig",
+            "russian": "глоток"
+        },
+        {
+            "english": "gleam",
+            "russian": "блеск"
+        },
+        {
+            "english": "grope",
+            "russian": "нащупывать"
+        },
+        {
+            "english": "bookcase",
+            "russian": "книжный шкаф"
+        },
+        {
+            "english": "motionless",
+            "russian": "неподвижный"
+        },
+        {
+            "english": "securely",
+            "russian": "надежно"
+        },
+        {
+            "english": "baffling",
+            "russian": "непостижимый"
+        },
+        {
+            "english": "livid",
+            "russian": "бледно-синий"
+        },
+        {
+            "english": "composure",
+            "russian": "самообладание"
+        },
+        {
+            "english": "silvery",
+            "russian": "серебристый"
+        },
+        {
+            "english": "sheath",
+            "russian": "ножны"
+        },
+        {
+            "english": "indignation",
+            "russian": "возмущение"
+        },
+        {
+            "english": "unmistakable",
+            "russian": "неоспоримый"
+        },
+        {
+            "english": "drunkenness",
+            "russian": "пьянство"
+        },
+        {
+            "english": "trinket",
+            "russian": "безделушка"
+        },
+        {
+            "english": "noggin",
+            "russian": "кружка"
+        },
+        {
+            "english": "lodger",
+            "russian": "квартирант"
+        },
+        {
+            "english": "spoonful",
+            "russian": "ложка"
+        },
+        {
+            "english": "grumble",
+            "russian": "ворчать"
+        },
+        {
+            "english": "twentieth",
+            "russian": "двадцатый"
+        },
+        {
+            "english": "precipice",
+            "russian": "обрыв"
+        },
+        {
+            "english": "hoard",
+            "russian": "запас"
+        },
+        {
+            "english": "quiver",
+            "russian": "колчан"
+        },
+        {
+            "english": "moonlit",
+            "russian": "лунный"
+        },
+        {
+            "english": "unbroken",
+            "russian": "непрерывный"
+        },
+        {
+            "english": "outnumber",
+            "russian": "превосходить численно"
+        },
+        {
+            "english": "cheaply",
+            "russian": "дешево"
+        },
+        {
+            "english": "gunnery",
+            "russian": "артиллерия"
+        },
+        {
+            "english": "hoarse",
+            "russian": "хриплый"
+        },
+        {
+            "english": "vividly",
+            "russian": "ярко"
+        },
+        {
+            "english": "cocked",
+            "russian": "прицелился"
+        },
+        {
+            "english": "loom",
+            "russian": "маячить"
+        },
+        {
+            "english": "anchorage",
+            "russian": "якорная стоянка"
+        },
+        {
+            "english": "laughable",
+            "russian": "смешной"
+        },
+        {
+            "english": "clung",
+            "russian": "прилипший"
+        },
+        {
+            "english": "confound",
+            "russian": "смешать"
+        },
+        {
+            "english": "leisurely",
+            "russian": "неторопливо"
+        },
+        {
+            "english": "jangle",
+            "russian": "звон"
+        },
+        {
+            "english": "overturn",
+            "russian": "перевернуться"
+        },
+        {
+            "english": "nutmeg",
+            "russian": "мускатный орех"
+        },
+        {
+            "english": "dysentery",
+            "russian": "дизентерия"
+        },
+        {
+            "english": "creeper",
+            "russian": "вьющееся растение"
+        },
+        {
+            "english": "uninhabited",
+            "russian": "необитаемый"
+        },
+        {
+            "english": "grog",
+            "russian": "грог"
+        },
+        {
+            "english": "scour",
+            "russian": "тщательно искать"
+        },
+        {
+            "english": "fable",
+            "russian": "басня"
+        },
+        {
+            "english": "reappear",
+            "russian": "появиться снова"
+        },
+        {
+            "english": "mercilessly",
+            "russian": "безжалостно"
+        },
+        {
+            "english": "revolve",
+            "russian": "вращаться"
+        },
+        {
+            "english": "politeness",
+            "russian": "вежливость"
+        },
+        {
+            "english": "scuffle",
+            "russian": "потасовка"
+        },
+        {
+            "english": "douse",
+            "russian": "тушить"
+        },
+        {
+            "english": "humbug",
+            "russian": "обман"
+        },
+        {
+            "english": "curiously",
+            "russian": "любопытно"
+        },
+        {
+            "english": "wasteful",
+            "russian": "расточительный"
+        },
+        {
+            "english": "bustle",
+            "russian": "суета"
+        },
+        {
+            "english": "squint",
+            "russian": "щуриться, косоглазие, косой взгляд"
+        },
+        {
+            "english": "ruffian",
+            "russian": "головорез"
+        },
+        {
+            "english": "discontent",
+            "russian": "недовольство"
+        },
+        {
+            "english": "enchantment",
+            "russian": "очарование"
+        },
+        {
+            "english": "strait",
+            "russian": "пролив"
+        },
+        {
+            "english": "exclaim",
+            "russian": "восклицать"
+        },
+        {
+            "english": "headway",
+            "russian": "прогресс"
+        },
+        {
+            "english": "carelessly",
+            "russian": "небрежно"
+        },
+        {
+            "english": "desertion",
+            "russian": "дезертирство"
+        },
+        {
+            "english": "notable",
+            "russian": "заметный"
+        },
+        {
+            "english": "topple",
+            "russian": "опрокидываться"
+        },
+        {
+            "english": "shrill",
+            "russian": "пронзительный"
+        },
+        {
+            "english": "piety",
+            "russian": "благочестие"
+        },
+        {
+            "english": "enclosure",
+            "russian": "ограждение"
+        },
+        {
+            "english": "warmly",
+            "russian": "тепло"
+        },
+        {
+            "english": "gully",
+            "russian": "овраг"
+        },
+        {
+            "english": "daze",
+            "russian": "оцепенение"
+        },
+        {
+            "english": "recapture",
+            "russian": "перехват"
+        },
+        {
+            "english": "impatience",
+            "russian": "нетерпение"
+        },
+        {
+            "english": "clack",
+            "russian": "треск"
+        },
+        {
+            "english": "scamp",
+            "russian": "мошенник, плут, негодяй"
+        },
+        {
+            "english": "simultaneous",
+            "russian": "одновременный"
+        },
+        {
+            "english": "flowery",
+            "russian": "цветочный"
+        },
+        {
+            "english": "marksman",
+            "russian": "стрелок"
+        },
+        {
+            "english": "hastily",
+            "russian": "поспешно"
+        },
+        {
+            "english": "apprehension",
+            "russian": "тревога"
+        },
+        {
+            "english": "pointer",
+            "russian": "указка"
+        },
+        {
+            "english": "husky",
+            "russian": "хриплый"
+        },
+        {
+            "english": "flicker",
+            "russian": "мерцание"
+        },
+        {
+            "english": "alight",
+            "russian": "осветить"
+        },
+        {
+            "english": "stony",
+            "russian": "каменистый"
+        },
+        {
+            "english": "fairer",
+            "russian": "более справедливый"
+        },
+        {
+            "english": "feasible",
+            "russian": "выполнимый"
+        },
+        {
+            "english": "header",
+            "russian": "заголовок"
+        },
+        {
+            "english": "wrought",
+            "russian": "кованый"
+        },
+        {
+            "english": "tinder",
+            "russian": "трут"
+        },
+        {
+            "english": "brisk",
+            "russian": "энергичный"
+        },
+        {
+            "english": "befall",
+            "russian": "случиться"
+        },
+        {
+            "english": "doubly",
+            "russian": "вдвойне"
+        },
+        {
+            "english": "ablaze",
+            "russian": "в огне"
+        },
+        {
+            "english": "quart",
+            "russian": "кварта"
+        },
+        {
+            "english": "resin",
+            "russian": "смола"
+        },
+        {
+            "english": "comical",
+            "russian": "комический"
+        },
+        {
+            "english": "jib",
+            "russian": "стаксель"
+        },
+        {
+            "english": "inkling",
+            "russian": "намек"
+        },
+        {
+            "english": "grievance",
+            "russian": "обида"
+        },
+        {
+            "english": "ringleader",
+            "russian": "вожак"
+        },
+        {
+            "english": "leapt",
+            "russian": "прыгнул"
+        },
+        {
+            "english": "singsong",
+            "russian": "монотонный"
+        },
+        {
+            "english": "tether",
+            "russian": "привязь"
+        },
+        {
+            "english": "apparition",
+            "russian": "призрак"
+        },
+        {
+            "english": "hilt",
+            "russian": "рукоять"
+        },
+        {
+            "english": "swish",
+            "russian": "шелест"
+        },
+        {
+            "english": "crouch",
+            "russian": "присесть"
+        },
+        {
+            "english": "retrace",
+            "russian": "проследить заново"
+        },
+        {
+            "english": "hearth",
+            "russian": "очаг"
+        },
+        {
+            "english": "gymnast",
+            "russian": "гимнаст"
+        },
+        {
+            "english": "relinquish",
+            "russian": "отказаться"
+        },
+        {
+            "english": "grovel",
+            "russian": "ползти"
+        },
+        {
+            "english": "sprang",
+            "russian": "вскочил"
+        },
+        {
+            "english": "unearthed",
+            "russian": "раскопанный"
+        },
+        {
+            "english": "configuration",
+            "russian": "конфигурация"
+        },
+        {
+            "english": "darken",
+            "russian": "затемнять"
+        },
+        {
+            "english": "idly",
+            "russian": "праздно"
+        },
+        {
+            "english": "heartily",
+            "russian": "сердечно"
+        },
+        {
+            "english": "blackness",
+            "russian": "чернота"
+        },
+        {
+            "english": "unruly",
+            "russian": "неуправляемый"
+        },
+        {
+            "english": "anxiously",
+            "russian": "тревожно"
+        },
+        {
+            "english": "sorely",
+            "russian": "очень"
+        },
+        {
+            "english": "illustrate",
+            "russian": "иллюстрировать"
+        },
+        {
+            "english": "piracy",
+            "russian": "пиратство"
+        },
+        {
+            "english": "seam",
+            "russian": "шов"
+        },
+        {
+            "english": "ascent",
+            "russian": "подъем"
+        },
+        {
+            "english": "inclination",
+            "russian": "склонность"
+        },
+        {
+            "english": "finely",
+            "russian": "изысканно"
+        },
+        {
+            "english": "helplessness",
+            "russian": "беспомощность"
+        },
+        {
+            "english": "afoot",
+            "russian": "на ногах"
+        },
+        {
+            "english": "fowl",
+            "russian": "птица, домашняя птица, курица"
+        },
+        {
+            "english": "desist",
+            "russian": "прекратить"
+        },
+        {
+            "english": "bulkhead",
+            "russian": "переборка"
+        },
+        {
+            "english": "countenance",
+            "russian": "выражение лица"
+        },
+        {
+            "english": "cruelly",
+            "russian": "жестоко"
+        },
+        {
+            "english": "draught",
+            "russian": "сквозняк"
+        },
+        {
+            "english": "taint",
+            "russian": "порча"
+        },
+        {
+            "english": "enlarge",
+            "russian": "увеличивать"
+        },
+        {
+            "english": "nautical",
+            "russian": "морской"
+        },
+        {
+            "english": "displeased",
+            "russian": "недовольный"
+        },
+        {
+            "english": "blot",
+            "russian": "пятно"
+        },
+        {
+            "english": "connoisseur",
+            "russian": "знаток"
+        },
+        {
+            "english": "dainty",
+            "russian": "изящный"
+        },
+        {
+            "english": "hasten",
+            "russian": "спешить"
+        },
+        {
+            "english": "girdle",
+            "russian": "пояс"
+        },
+        {
+            "english": "cordial",
+            "russian": "сердечный"
+        },
+        {
+            "english": "foghorn",
+            "russian": "туманный горн"
+        },
+        {
+            "english": "diminish",
+            "russian": "уменьшать"
+        },
+        {
+            "english": "longitude",
+            "russian": "долгота"
+        },
+        {
+            "english": "farthest",
+            "russian": "самый дальний"
+        },
+        {
+            "english": "usage",
+            "russian": "использование"
+        },
+        {
+            "english": "pinnacle",
+            "russian": "вершина"
+        },
+        {
+            "english": "forearm",
+            "russian": "предплечье"
+        },
+        {
+            "english": "slew",
+            "russian": "убил"
+        },
+        {
+            "english": "lament",
+            "russian": "оплакивать"
+        },
+        {
+            "english": "shudder",
+            "russian": "дрожать"
+        },
+        {
+            "english": "glimmer",
+            "russian": "мерцание"
+        },
+        {
+            "english": "fro",
+            "russian": "туда-сюда"
+        },
+        {
+            "english": "foolishly",
+            "russian": "глупо"
+        },
+        {
+            "english": "maroon",
+            "russian": "заточить (на острове)"
+        },
+        {
+            "english": "skim",
+            "russian": "скользить"
+        },
+        {
+            "english": "prematurely",
+            "russian": "преждевременно"
+        },
+        {
+            "english": "hinder",
+            "russian": "мешать"
+        },
+        {
+            "english": "musket",
+            "russian": "мушкет"
+        },
+        {
+            "english": "readiness",
+            "russian": "готовность"
+        },
+        {
+            "english": "correspond",
+            "russian": "соответствовать"
+        },
+        {
+            "english": "chink",
+            "russian": "щель"
+        },
+        {
+            "english": "shipwreck",
+            "russian": "кораблекрушение"
+        },
+        {
+            "english": "dismount",
+            "russian": "спешиться"
+        },
+        {
+            "english": "multitude",
+            "russian": "множество"
+        },
+        {
+            "english": "divinity",
+            "russian": "божественность"
+        },
+        {
+            "english": "repetition",
+            "russian": "повторение"
+        },
+        {
+            "english": "bitterly",
+            "russian": "горько"
+        },
+        {
+            "english": "fawn",
+            "russian": "олень, льстить"
+        },
+        {
+            "english": "exceedingly",
+            "russian": "чрезвычайно"
+        },
+        {
+            "english": "inexplicable",
+            "russian": "необъяснимый"
+        },
+        {
+            "english": "standstill",
+            "russian": "застой"
+        },
+        {
+            "english": "oar",
+            "russian": "весло"
+        },
+        {
+            "english": "keyhole",
+            "russian": "замочная скважина"
+        },
+        {
+            "english": "bombardment",
+            "russian": "бомбардировка"
+        },
+        {
+            "english": "imaginable",
+            "russian": "представимый"
+        },
+        {
+            "english": "gravely",
+            "russian": "серьезно"
+        },
+        {
+            "english": "boasting",
+            "russian": "хвастовство"
+        },
+        {
+            "english": "lain",
+            "russian": "лежал"
+        },
+        {
+            "english": "dissatisfied",
+            "russian": "недовольный"
+        },
+        {
+            "english": "hearted",
+            "russian": "сердечный"
+        },
+        {
+            "english": "provision",
+            "russian": "снабжение"
+        },
+        {
+            "english": "dreadfully",
+            "russian": "ужасно"
+        },
+        {
+            "english": "wickedness",
+            "russian": "злоба"
+        },
+        {
+            "english": "antelope",
+            "russian": "антилопа"
+        },
+        {
+            "english": "instinctively",
+            "russian": "инстинктивно"
+        },
+        {
+            "english": "ascertain",
+            "russian": "установить"
+        },
+        {
+            "english": "perilous",
+            "russian": "опасный"
+        },
+        {
+            "english": "atop",
+            "russian": "наверху"
+        },
+        {
+            "english": "upstream",
+            "russian": "вверх по течению"
+        },
+        {
+            "english": "talon",
+            "russian": "коготь"
+        },
+        {
+            "english": "framework",
+            "russian": "каркас"
+        },
+        {
+            "english": "feverish",
+            "russian": "лихорадочный"
+        },
+        {
+            "english": "atrocious",
+            "russian": "ужасающий"
+        },
+        {
+            "english": "armchair",
+            "russian": "кресло"
+        },
+        {
+            "english": "grate",
+            "russian": "решетка"
+        },
+        {
+            "english": "stow",
+            "russian": "укладывать"
+        },
+        {
+            "english": "unchanged",
+            "russian": "неизменный"
+        },
+        {
+            "english": "callous",
+            "russian": "бесчувственный"
+        },
+        {
+            "english": "flung",
+            "russian": "бросил"
+        },
+        {
+            "english": "excavation",
+            "russian": "раскопки"
+        },
+        {
+            "english": "abominable",
+            "russian": "отвратительный"
+        },
+        {
+            "english": "brightness",
+            "russian": "яркость"
+        },
+        {
+            "english": "crept",
+            "russian": "полз"
+        },
+        {
+            "english": "whence",
+            "russian": "откуда"
+        },
+        {
+            "english": "loophole",
+            "russian": "лазейка"
+        },
+        {
+            "english": "matey",
+            "russian": "товарищеский"
+        },
+        {
+            "english": "tiff",
+            "russian": "ссора, небольшая размолвка"
+        },
+        {
+            "english": "trample",
+            "russian": "топтать"
+        },
+        {
+            "english": "unaccounted",
+            "russian": "неучтенный"
+        },
+        {
+            "english": "tipsy",
+            "russian": "пьяный"
+        },
+        {
+            "english": "grievous",
+            "russian": "тяжелый"
+        },
+        {
+            "english": "crutch",
+            "russian": "костыль"
+        },
+        {
+            "english": "lofty",
+            "russian": "высокий"
+        },
+        {
+            "english": "ticklish",
+            "russian": "щекотливый"
+        },
+        {
+            "english": "nutritious",
+            "russian": "питательный"
+        },
+        {
+            "english": "varied",
+            "russian": "разнообразный"
+        },
+        {
+            "english": "blunder",
+            "russian": "промах"
+        },
+        {
+            "english": "sulk",
+            "russian": "дуться"
+        },
+        {
+            "english": "refreshment",
+            "russian": "освежение"
+        },
+        {
+            "english": "agile",
+            "russian": "ловкий"
+        },
+        {
+            "english": "amiss",
+            "russian": "неправильно"
+        },
+        {
+            "english": "spout",
+            "russian": "струя"
+        },
+        {
+            "english": "berth",
+            "russian": "спальное место"
+        },
+        {
+            "english": "variable",
+            "russian": "переменчивый"
+        },
+        {
+            "english": "gallop",
+            "russian": "галоп"
+        },
+        {
+            "english": "prolong",
+            "russian": "продлить"
+        },
+        {
+            "english": "hammock",
+            "russian": "гамак"
+        },
+        {
+            "english": "sentinel",
+            "russian": "сентинел"
+        },
+        {
+            "english": "cache",
+            "russian": "тайник"
+        },
+        {
+            "english": "fiercely",
+            "russian": "яростно"
+        },
+        {
+            "english": "crucifix",
+            "russian": "крест"
+        },
+        {
+            "english": "watcher",
+            "russian": "наблюдатель"
+        },
+        {
+            "english": "raisin",
+            "russian": "изюм"
+        },
+        {
+            "english": "hazy",
+            "russian": "туманный"
+        },
+        {
+            "english": "hanger",
+            "russian": "вешалка"
+        },
+        {
+            "english": "adrift",
+            "russian": "по течению"
+        },
+        {
+            "english": "croak",
+            "russian": "каркать"
+        },
+        {
+            "english": "ripple",
+            "russian": "рябь"
+        },
+        {
+            "english": "overhear",
+            "russian": "подслушать"
+        },
+        {
+            "english": "readily",
+            "russian": "охотно"
+        },
+        {
+            "english": "tract",
+            "russian": "тракт"
+        },
+        {
+            "english": "smother",
+            "russian": "задушить"
+        },
+        {
+            "english": "perch",
+            "russian": "насест"
+        },
+        {
+            "english": "walrus",
+            "russian": "морж"
+        },
+        {
+            "english": "willingness",
+            "russian": "готовность"
+        },
+        {
+            "english": "unintelligible",
+            "russian": "непонятный"
+        },
+        {
+            "english": "interval",
+            "russian": "интервал"
+        },
+        {
+            "english": "hillside",
+            "russian": "склон холма"
+        },
+        {
+            "english": "demolish",
+            "russian": "разрушить"
+        },
+        {
+            "english": "incomprehensible",
+            "russian": "непостижимый"
+        },
+        {
+            "english": "bran",
+            "russian": "отруби"
+        },
+        {
+            "english": "buoy",
+            "russian": "буй"
+        },
+        {
+            "english": "armpit",
+            "russian": "подмышка"
+        },
+        {
+            "english": "cavalier",
+            "russian": "кавалер"
+        },
+        {
+            "english": "bale",
+            "russian": "тюк"
+        },
+        {
+            "english": "swagger",
+            "russian": "кичиться"
+        },
+        {
+            "english": "thoughtless",
+            "russian": "бездумный"
+        },
+        {
+            "english": "ascend",
+            "russian": "подниматься"
+        },
+        {
+            "english": "nigh",
+            "russian": "близко"
+        },
+        {
+            "english": "emissary",
+            "russian": "эмиссар"
+        },
+        {
+            "english": "keel",
+            "russian": "киль"
+        },
+        {
+            "english": "nationality",
+            "russian": "национальность"
+        },
+        {
+            "english": "wring",
+            "russian": "выжимать"
+        },
+        {
+            "english": "arose",
+            "russian": "возник"
+        },
+        {
+            "english": "smitten",
+            "russian": "пораженный, влюбленный, очарованный"
+        },
+        {
+            "english": "occurrence",
+            "russian": "происшествие"
+        },
+        {
+            "english": "hither",
+            "russian": "сюда"
+        },
+        {
+            "english": "prompt",
+            "russian": "незамедлительный"
+        },
+        {
+            "english": "candlelight",
+            "russian": "свет свечи"
+        },
+        {
+            "english": "smelt",
+            "russian": "плавить"
+        },
+        {
+            "english": "remainder",
+            "russian": "остаток"
+        },
+        {
+            "english": "pang",
+            "russian": "приступ"
+        },
+        {
+            "english": "pedestal",
+            "russian": "пьедестал"
+        },
+        {
+            "english": "bestow",
+            "russian": "даровать"
+        },
+        {
+            "english": "stout",
+            "russian": "крепкий"
+        },
+        {
+            "english": "crumb",
+            "russian": "крошка"
+        },
+        {
+            "english": "sentry",
+            "russian": "часовой"
+        },
+        {
+            "english": "stutter",
+            "russian": "заикаться"
+        },
+        {
+            "english": "scorn",
+            "russian": "презрение"
+        },
+        {
+            "english": "vary",
+            "russian": "варьировать"
+        },
+        {
+            "english": "fainting",
+            "russian": "обморок"
+        },
+        {
+            "english": "brood",
+            "russian": "выводок"
+        },
+        {
+            "english": "moonshine",
+            "russian": "самогон"
+        },
+        {
+            "english": "plunder",
+            "russian": "грабить"
+        },
+        {
+            "english": "plump",
+            "russian": "пухлый"
+        },
+        {
+            "english": "shone",
+            "russian": "светил"
+        },
+        {
+            "english": "hornet",
+            "russian": "шершень"
+        },
+        {
+            "english": "smoky",
+            "russian": "дымчатый"
+        },
+        {
+            "english": "recharge",
+            "russian": "перезарядить"
+        },
+        {
+            "english": "viceroy",
+            "russian": "вице-король"
+        },
+        {
+            "english": "nightcap",
+            "russian": "ночной колпак"
+        },
+        {
+            "english": "duff",
+            "russian": "мука, пудинг"
+        },
+        {
+            "english": "fathom",
+            "russian": "сяжина"
+        },
+        {
+            "english": "flutter",
+            "russian": "трепет"
+        },
+        {
+            "english": "plough",
+            "russian": "плуг"
+        },
+        {
+            "english": "faintly",
+            "russian": "слабо"
+        },
+        {
+            "english": "evenly",
+            "russian": "равномерно"
+        },
+        {
+            "english": "shroud",
+            "russian": "покрывало"
+        },
+        {
+            "english": "angrily",
+            "russian": "сердито"
+        },
+        {
+            "english": "galley",
+            "russian": "камбуз"
+        },
+        {
+            "english": "hover",
+            "russian": "парить"
+        },
+        {
+            "english": "bead",
+            "russian": "бусина"
+        },
+        {
+            "english": "knuckle",
+            "russian": "костяшка пальца"
+        },
+        {
+            "english": "arouse",
+            "russian": "возбуждать"
+        },
+        {
+            "english": "rejoin",
+            "russian": "возражать"
+        },
+        {
+            "english": "unprotected",
+            "russian": "незащищенный"
+        },
+        {
+            "english": "sprout",
+            "russian": "росток"
+        },
+        {
+            "english": "glare",
+            "russian": "сверкание"
+        },
+        {
+            "english": "preservation",
+            "russian": "сохранение"
+        },
+        {
+            "english": "infernal",
+            "russian": "адский"
+        },
+        {
+            "english": "unexplained",
+            "russian": "необъяснимый"
+        },
+        {
+            "english": "conceited",
+            "russian": "тщеславный"
+        },
+        {
+            "english": "imposter",
+            "russian": "самозванец"
+        },
+        {
+            "english": "sweetly",
+            "russian": "сладко"
+        },
+        {
+            "english": "footing",
+            "russian": "основание"
+        },
+        {
+            "english": "conspicuous",
+            "russian": "заметный"
+        },
+        {
+            "english": "outward",
+            "russian": "наружный"
+        },
+        {
+            "english": "stronghold",
+            "russian": "крепость"
+        },
+        {
+            "english": "awoke",
+            "russian": "проснулся"
+        },
+        {
+            "english": "whirl",
+            "russian": "вихрь"
+        },
+        {
+            "english": "hark",
+            "russian": "внимание"
+        },
+        {
+            "english": "brighten",
+            "russian": "осветить"
+        },
+        {
+            "english": "fir",
+            "russian": "ель"
+        },
+        {
+            "english": "startle",
+            "russian": "испугать, вздрогнуть"
+        },
+        {
+            "english": "slop",
+            "russian": "разлиться"
+        },
+        {
+            "english": "consort",
+            "russian": "супруг, компания"
+        },
+        {
+            "english": "topped",
+            "russian": "возглавляемый"
+        },
+        {
+            "english": "embark",
+            "russian": "отправиться"
+        },
+        {
+            "english": "pew",
+            "russian": "церковная скамья"
+        },
+        {
+            "english": "trough",
+            "russian": "корыто"
+        },
+        {
+            "english": "traveller",
+            "russian": "путешественник"
+        },
+        {
+            "english": "recollection",
+            "russian": "воспоминание"
+        },
+        {
+            "english": "sup",
+            "russian": "ужинать"
+        },
+        {
+            "english": "sledge",
+            "russian": "сани, кувалда"
+        },
+        {
+            "english": "latitude",
+            "russian": "широта"
+        },
+        {
+            "english": "sever",
+            "russian": "разрезать"
+        },
+        {
+            "english": "insolence",
+            "russian": "наглость"
+        },
+        {
+            "english": "hoof",
+            "russian": "копыто"
+        },
+        {
+            "english": "campfire",
+            "russian": "костер"
+        },
+        {
+            "english": "outright",
+            "russian": "откровенно"
+        },
+        {
+            "english": "unwilling",
+            "russian": "нежелающий"
+        },
+        {
+            "english": "eyebrow",
+            "russian": "бровь"
+        },
+        {
+            "english": "profoundly",
+            "russian": "глубоко"
+        },
+        {
+            "english": "diabolical",
+            "russian": "дьявольский"
+        },
+        {
+            "english": "unkind",
+            "russian": "недобрый"
+        },
+        {
+            "english": "undertaking",
+            "russian": "предприятие"
+        },
+        {
+            "english": "adversary",
+            "russian": "противник"
+        },
+        {
+            "english": "daybreak",
+            "russian": "рассвет"
+        },
+        {
+            "english": "wad",
+            "russian": "комок"
+        },
+        {
+            "english": "immensely",
+            "russian": "огромно"
+        },
+        {
+            "english": "propulsion",
+            "russian": "привод"
+        },
+        {
+            "english": "concession",
+            "russian": "уступка"
+        },
+        {
+            "english": "reload",
+            "russian": "перезарядить"
+        },
+        {
+            "english": "sprinkle",
+            "russian": "посыпать"
+        },
+        {
+            "english": "darby",
+            "russian": "кандалы, штукатурный инструмент"
+        },
+        {
+            "english": "meditate",
+            "russian": "медитировать"
+        },
+        {
+            "english": "muzzle",
+            "russian": "морда"
+        },
+        {
+            "english": "underwood",
+            "russian": "подлесок"
+        },
+        {
+            "english": "desolate",
+            "russian": "пустынный"
+        },
+        {
+            "english": "duly",
+            "russian": "должным образом"
+        },
+        {
+            "english": "glide",
+            "russian": "скользить"
+        },
+        {
+            "english": "neatly",
+            "russian": "аккуратно"
+        },
+        {
+            "english": "spur",
+            "russian": "шпора"
+        },
+        {
+            "english": "plainly",
+            "russian": "ясно"
+        },
+        {
+            "english": "jiffy",
+            "russian": "мгновение"
+        },
+        {
+            "english": "yarn",
+            "russian": "пряжа, байка (история)"
+        },
+        {
+            "english": "upward",
+            "russian": "вверх"
+        },
+        {
+            "english": "twitch",
+            "russian": "подергивание"
+        },
+        {
+            "english": "mast",
+            "russian": "мачта"
+        },
+        {
+            "english": "afloat",
+            "russian": "на плаву"
+        },
+        {
+            "english": "cannibal",
+            "russian": "каннибал"
+        },
+        {
+            "english": "huddle",
+            "russian": "толпиться"
+        },
+        {
+            "english": "continually",
+            "russian": "непрерывно"
+        },
+        {
+            "english": "haze",
+            "russian": "дымка"
+        },
+        {
+            "english": "lurch",
+            "russian": "крен"
+        },
+        {
+            "english": "shiver",
+            "russian": "дрожь"
+        },
+        {
+            "english": "sewn",
+            "russian": "сшитый"
+        },
+        {
+            "english": "faraway",
+            "russian": "далекий"
+        },
+        {
+            "english": "plucked",
+            "russian": "сорванный"
+        },
+        {
+            "english": "dreary",
+            "russian": "унылый"
+        },
+        {
+            "english": "painfully",
+            "russian": "болезненно"
+        },
+        {
+            "english": "enjoyment",
+            "russian": "наслаждение"
+        },
+        {
+            "english": "flattery",
+            "russian": "лесть"
+        },
+        {
+            "english": "bland",
+            "russian": "мягкий"
+        },
+        {
+            "english": "mistook",
+            "russian": "ошибся"
+        },
+        {
+            "english": "emphasis",
+            "russian": "акцент"
+        },
+        {
+            "english": "hoist",
+            "russian": "поднимать, подъемник"
+        },
+        {
+            "english": "mouthful",
+            "russian": "глоток"
+        },
+        {
+            "english": "swoop",
+            "russian": "налет"
+        },
+        {
+            "english": "patiently",
+            "russian": "терпеливо"
+        },
+        {
+            "english": "weaken",
+            "russian": "ослаблять"
+        },
+        {
+            "english": "ballad",
+            "russian": "баллада"
+        },
+        {
+            "english": "aroma",
+            "russian": "аромат"
+        },
+        {
+            "english": "rebellious",
+            "russian": "мятежный"
+        },
+        {
+            "english": "vegetation",
+            "russian": "растительность"
+        },
+        {
+            "english": "promptly",
+            "russian": "незамедлительно"
+        },
+        {
+            "english": "compact",
+            "russian": "компактный"
+        },
+        {
+            "english": "earnest",
+            "russian": "серьезный"
+        },
+        {
+            "english": "talker",
+            "russian": "оратор"
+        },
+        {
+            "english": "accomplishment",
+            "russian": "достижение"
+        },
+        {
+            "english": "lash",
+            "russian": "хлестать"
+        },
+        {
+            "english": "pretext",
+            "russian": "предлог"
+        },
+        {
+            "english": "intolerable",
+            "russian": "невыносимый"
+        },
+        {
+            "english": "smuggler",
+            "russian": "контрабандист"
+        },
+        {
+            "english": "fore",
+            "russian": "впереди"
+        },
+        {
+            "english": "trio",
+            "russian": "тройка"
+        },
+        {
+            "english": "ample",
+            "russian": "обширный"
+        },
+        {
+            "english": "trot",
+            "russian": "рысь"
+        },
+        {
+            "english": "coil",
+            "russian": "катушка"
+        },
+        {
+            "english": "cowardice",
+            "russian": "трусость"
+        },
+        {
+            "english": "quaint",
+            "russian": "причудливый"
+        },
+        {
+            "english": "downright",
+            "russian": "прямо"
+        },
+        {
+            "english": "linger",
+            "russian": "задерживаться"
+        },
+        {
+            "english": "pious",
+            "russian": "благочестивый"
+        },
+        {
+            "english": "morrow",
+            "russian": "завтра"
+        },
+        {
+            "english": "infectious",
+            "russian": "заразный"
+        },
+        {
+            "english": "proceeds",
+            "russian": "выручка"
+        },
+        {
+            "english": "newcomer",
+            "russian": "новичок"
+        },
+        {
+            "english": "deuce",
+            "russian": "черт"
+        },
+        {
+            "english": "youngster",
+            "russian": "юноша"
+        },
+        {
+            "english": "delicacy",
+            "russian": "деликатес"
+        },
+        {
+            "english": "tumble",
+            "russian": "падение"
+        },
+        {
+            "english": "agreeable",
+            "russian": "приятный"
+        },
+        {
+            "english": "consultation",
+            "russian": "консультация"
+        },
+        {
+            "english": "aft",
+            "russian": "корма"
+        },
+        {
+            "english": "onward",
+            "russian": "вперед"
+        },
+        {
+            "english": "commentary",
+            "russian": "комментарий"
+        },
+        {
+            "english": "assurance",
+            "russian": "уверенность"
+        },
+        {
+            "english": "hearty",
+            "russian": "сердечный"
+        },
+        {
+            "english": "foggy",
+            "russian": "туманный"
+        },
+        {
+            "english": "slab",
+            "russian": "плита"
+        },
+        {
+            "english": "racer",
+            "russian": "гонщик"
+        },
+        {
+            "english": "seaman",
+            "russian": "моряк"
+        },
+        {
+            "english": "stride",
+            "russian": "шаг"
+        },
+        {
+            "english": "rudder",
+            "russian": "руль"
+        },
+        {
+            "english": "predicament",
+            "russian": "затруднительное положение"
+        },
+        {
+            "english": "accordance",
+            "russian": "соответствие"
+        },
+        {
+            "english": "invaluable",
+            "russian": "бесценный"
+        },
+        {
+            "english": "partridge",
+            "russian": "куропатка"
+        },
+        {
+            "english": "solemnly",
+            "russian": "торжественно"
+        },
+        {
+            "english": "freshly",
+            "russian": "свежо"
+        },
+        {
+            "english": "scarcely",
+            "russian": "едва"
+        },
+        {
+            "english": "frosty",
+            "russian": "морозный"
+        },
+        {
+            "english": "tack",
+            "russian": "галс"
+        },
+        {
+            "english": "blindness",
+            "russian": "слепота"
+        },
+        {
+            "english": "boast",
+            "russian": "хвастать"
+        },
+        {
+            "english": "perjury",
+            "russian": "лжесвидетельство"
+        },
+        {
+            "english": "outline",
+            "russian": "контур"
+        },
+        {
+            "english": "feeble",
+            "russian": "слабый"
+        },
+        {
+            "english": "doubtful",
+            "russian": "сомнительный"
+        },
+        {
+            "english": "bog",
+            "russian": "болото"
+        },
+        {
+            "english": "swarm",
+            "russian": "рой"
+        },
+        {
+            "english": "humane",
+            "russian": "гуманный"
+        },
+        {
+            "english": "snuff",
+            "russian": "нюхать"
+        },
+        {
+            "english": "prosperous",
+            "russian": "процветающий"
+        },
+        {
+            "english": "gall",
+            "russian": "желчь"
+        },
+        {
+            "english": "plateau",
+            "russian": "плато"
+        },
+        {
+            "english": "disperse",
+            "russian": "рассеиваться"
+        },
+        {
+            "english": "discomfort",
+            "russian": "дискомфорт"
+        },
+        {
+            "english": "exhaustion",
+            "russian": "истощение"
+        },
+        {
+            "english": "frown",
+            "russian": "хмуриться"
+        },
+        {
+            "english": "fern",
+            "russian": "папоротник"
+        },
+        {
+            "english": "whit",
+            "russian": "крупица"
+        },
+        {
+            "english": "unhealthy",
+            "russian": "нездоровый"
+        },
+        {
+            "english": "knit",
+            "russian": "вязать"
+        },
+        {
+            "english": "swung",
+            "russian": "размахивал"
+        },
+        {
+            "english": "latter",
+            "russian": "последний"
+        },
+        {
+            "english": "inquire",
+            "russian": "спрашивать, осведомляться, расследовать"
+        },
+        {
+            "english": "imitation",
+            "russian": "имитация"
+        },
+        {
+            "english": "barrow",
+            "russian": "тачка"
+        },
+        {
+            "english": "gunner",
+            "russian": "артиллерист"
+        },
+        {
+            "english": "disposition",
+            "russian": "расположение"
+        },
+        {
+            "english": "giddy",
+            "russian": "головокружительный"
+        },
+        {
+            "english": "unharmed",
+            "russian": "невредимый"
+        },
+        {
+            "english": "overload",
+            "russian": "перегрузка"
+        },
+        {
+            "english": "spun",
+            "russian": "закрученный"
+        },
+        {
+            "english": "assailant",
+            "russian": "нападающий"
+        },
+        {
+            "english": "fringe",
+            "russian": "край"
+        },
+        {
+            "english": "whiff",
+            "russian": "дуновение"
+        },
+        {
+            "english": "frenzy",
+            "russian": "безумие"
+        },
+        {
+            "english": "mound",
+            "russian": "насыпь"
+        },
+        {
+            "english": "spat",
+            "russian": "ссора"
+        },
+        {
+            "english": "carcass",
+            "russian": "туша"
+        },
+        {
+            "english": "swab",
+            "russian": "швабра"
+        },
+        {
+            "english": "tat",
+            "russian": "кружево, татуировка, наносить татуировку"
+        },
+        {
+            "english": "blindfold",
+            "russian": "повязка на глаза"
+        },
+        {
+            "english": "affectionate",
+            "russian": "ласковый"
+        },
+        {
+            "english": "fleeting",
+            "russian": "мимолетный"
+        },
+        {
+            "english": "bonfire",
+            "russian": "костер"
+        },
+        {
+            "english": "meddle",
+            "russian": "вмешиваться"
+        },
+        {
+            "english": "steadily",
+            "russian": "стабильно"
+        },
+        {
+            "english": "seaweed",
+            "russian": "морская водоросль"
+        },
+        {
+            "english": "murderous",
+            "russian": "убийственный"
+        },
+        {
+            "english": "gill",
+            "russian": "жабры, мера объема"
+        },
+        {
+            "english": "brow",
+            "russian": "бровь, лоб"
+        },
+        {
+            "english": "lumber",
+            "russian": "древесина"
+        },
+        {
+            "english": "mantle",
+            "russian": "мантия"
+        },
+        {
+            "english": "plank",
+            "russian": "доска"
+        },
+        {
+            "english": "ahoy",
+            "russian": "агой, эй (приветствие на море)"
+        },
+        {
+            "english": "humbly",
+            "russian": "смиренно"
+        },
+        {
+            "english": "upwards",
+            "russian": "вверх"
+        },
+        {
+            "english": "midday",
+            "russian": "полдень"
+        },
+        {
+            "english": "reassure",
+            "russian": "успокоить"
+        },
+        {
+            "english": "meddling",
+            "russian": "вмешательство"
+        },
+        {
+            "english": "malaria",
+            "russian": "малярия"
+        },
+        {
+            "english": "keg",
+            "russian": "бочонок"
+        },
+        {
+            "english": "finer",
+            "russian": "более тонкий"
+        },
+        {
+            "english": "stormy",
+            "russian": "бурный"
+        },
+        {
+            "english": "drunkard",
+            "russian": "пьяница"
+        },
+        {
+            "english": "bubbling",
+            "russian": "пузырящийся"
+        },
+        {
+            "english": "distressed",
+            "russian": "огорченный"
+        },
+        {
+            "english": "horrid",
+            "russian": "ужасный"
+        },
+        {
+            "english": "diversity",
+            "russian": "разнообразие"
+        },
+        {
+            "english": "dell",
+            "russian": "долина"
+        },
+        {
+            "english": "tilt",
+            "russian": "наклон"
+        },
+        {
+            "english": "continuously",
+            "russian": "непрерывно"
+        },
+        {
+            "english": "narrative",
+            "russian": "повествование"
+        },
+        {
+            "english": "hostility",
+            "russian": "враждебность"
+        },
+        {
+            "english": "bodily",
+            "russian": "физический"
+        },
+        {
+            "english": "ironically",
+            "russian": "иронически"
+        },
+        {
+            "english": "pinpoint",
+            "russian": "точно определить"
+        },
+        {
+            "english": "peril",
+            "russian": "опасность"
+        },
+        {
+            "english": "widely",
+            "russian": "широко"
+        },
+        {
+            "english": "fiend",
+            "russian": "демон"
+        },
+        {
+            "english": "snail",
+            "russian": "улитка"
+        },
+        {
+            "english": "trifle",
+            "russian": "пустяк"
+        },
+        {
+            "english": "eel",
+            "russian": "угорь"
+        },
+        {
+            "english": "anticipation",
+            "russian": "ожидание"
+        },
+        {
+            "english": "radiant",
+            "russian": "сияющий"
+        },
+        {
+            "english": "stoop",
+            "russian": "наклоняться"
+        },
+        {
+            "english": "crave",
+            "russian": "жаждать"
+        },
+        {
+            "english": "blinking",
+            "russian": "мигание"
+        },
+        {
+            "english": "navigate",
+            "russian": "навигировать"
+        },
+        {
+            "english": "ration",
+            "russian": "рацион"
+        },
+        {
+            "english": "curl",
+            "russian": "завиток"
+        },
+        {
+            "english": "lawful",
+            "russian": "законный"
+        },
+        {
+            "english": "slain",
+            "russian": "убитый"
+        },
+        {
+            "english": "mingle",
+            "russian": "смешиваться"
+        },
+        {
+            "english": "perceive",
+            "russian": "воспринимать"
+        },
+        {
+            "english": "accuracy",
+            "russian": "точность"
+        },
+        {
+            "english": "flourish",
+            "russian": "процветать"
+        },
+        {
+            "english": "morally",
+            "russian": "морально"
+        },
+        {
+            "english": "apiece",
+            "russian": "за штуку"
+        },
+        {
+            "english": "stump",
+            "russian": "пень"
+        },
+        {
+            "english": "posture",
+            "russian": "поза"
+        },
+        {
+            "english": "peer",
+            "russian": "сверстник"
+        },
+        {
+            "english": "gravel",
+            "russian": "гравий"
+        },
+        {
+            "english": "rave",
+            "russian": "бредить, восторгаться"
+        },
+        {
+            "english": "sprung",
+            "russian": "возникший"
+        },
+        {
+            "english": "basin",
+            "russian": "бассейн"
+        },
+        {
+            "english": "stretcher",
+            "russian": "носилки"
+        },
+        {
+            "english": "incense",
+            "russian": "благовоние"
+        },
+        {
+            "english": "folly",
+            "russian": "глупость"
+        },
+        {
+            "english": "disclose",
+            "russian": "раскрывать"
+        },
+        {
+            "english": "treachery",
+            "russian": "предательство"
+        },
+        {
+            "english": "starvation",
+            "russian": "голодание"
+        },
+        {
+            "english": "wedge",
+            "russian": "клин"
+        },
+        {
+            "english": "summons",
+            "russian": "вызов"
+        },
+        {
+            "english": "violently",
+            "russian": "жестоко"
+        },
+        {
+            "english": "chaplain",
+            "russian": "капеллан"
+        },
+        {
+            "english": "oriental",
+            "russian": "восточный"
+        },
+        {
+            "english": "aloud",
+            "russian": "вслух"
+        },
+        {
+            "english": "grin",
+            "russian": "усмешка"
+        },
+        {
+            "english": "forfeit",
+            "russian": "штраф"
+        },
+        {
+            "english": "humility",
+            "russian": "скромность"
+        },
+        {
+            "english": "fatigue",
+            "russian": "усталость"
+        },
+        {
+            "english": "refrain",
+            "russian": "воздерживаться"
+        },
+        {
+            "english": "gauge",
+            "russian": "мерить"
+        },
+        {
+            "english": "ghastly",
+            "russian": "ужасный"
+        },
+        {
+            "english": "ninety",
+            "russian": "девяносто"
+        },
+        {
+            "english": "poll",
+            "russian": "опрос, голосование"
+        },
+        {
+            "english": "seventy",
+            "russian": "семьдесят"
+        },
+        {
+            "english": "rung",
+            "russian": "ступенька"
+        },
+        {
+            "english": "wisely",
+            "russian": "мудро"
+        },
+        {
+            "english": "slimy",
+            "russian": "слизистый"
+        },
+        {
+            "english": "trader",
+            "russian": "торговец"
+        },
+        {
+            "english": "comprehend",
+            "russian": "понимать"
+        },
+        {
+            "english": "foremost",
+            "russian": "первый"
+        },
+        {
+            "english": "swam",
+            "russian": "плавал"
+        },
+        {
+            "english": "sleeper",
+            "russian": "спящий"
+        },
+        {
+            "english": "rightly",
+            "russian": "правильно"
+        },
+        {
+            "english": "scarce",
+            "russian": "дефицитный"
+        },
+        {
+            "english": "accordingly",
+            "russian": "соответственно"
+        },
+        {
+            "english": "ledge",
+            "russian": "выступ"
+        },
+        {
+            "english": "scarecrow",
+            "russian": "пугало"
+        },
+        {
+            "english": "firewood",
+            "russian": "дрова"
+        },
+        {
+            "english": "plunge",
+            "russian": "погружение"
+        },
+        {
+            "english": "suffice",
+            "russian": "хватить"
+        },
+        {
+            "english": "slumber",
+            "russian": "сон"
+        },
+        {
+            "english": "oracle",
+            "russian": "оракул"
+        },
+        {
+            "english": "presently",
+            "russian": "вскоре"
+        },
+        {
+            "english": "isle",
+            "russian": "остров"
+        },
+        {
+            "english": "wildly",
+            "russian": "дико"
+        },
+        {
+            "english": "cleanse",
+            "russian": "очищать"
+        },
+        {
+            "english": "wonderfully",
+            "russian": "замечательно"
+        },
+        {
+            "english": "encouragement",
+            "russian": "ободрение"
+        },
+        {
+            "english": "breaker",
+            "russian": "волна"
+        },
+        {
+            "english": "hedge",
+            "russian": "изгородь"
+        },
+        {
+            "english": "helm",
+            "russian": "руль"
+        },
+        {
+            "english": "watchman",
+            "russian": "сторож"
+        },
+        {
+            "english": "flap",
+            "russian": "клапан, закрылок, махать (крыльями)"
+        },
+        {
+            "english": "admiration",
+            "russian": "восхищение"
+        },
+        {
+            "english": "obscure",
+            "russian": "темный, неясный, затемнять"
+        },
+        {
+            "english": "spade",
+            "russian": "лопата, пиковая масть"
+        },
+        {
+            "english": "fearful",
+            "russian": "страшный"
+        },
+        {
+            "english": "archbishop",
+            "russian": "архиепископ"
+        },
+        {
+            "english": "oyster",
+            "russian": "устрица"
+        },
+        {
+            "english": "seemingly",
+            "russian": "по-видимому"
+        },
+        {
+            "english": "cling",
+            "russian": "прилипать"
+        },
+        {
+            "english": "transparent",
+            "russian": "прозрачный"
+        },
+        {
+            "english": "diver",
+            "russian": "водолаз"
+        },
+        {
+            "english": "indoors",
+            "russian": "в помещении"
+        },
+        {
+            "english": "dusk",
+            "russian": "сумерки"
+        },
+        {
+            "english": "budge",
+            "russian": "сдвинуть"
+        },
+        {
+            "english": "fraction",
+            "russian": "доля"
+        },
+        {
+            "english": "gallows",
+            "russian": "виселица"
+        },
+        {
+            "english": "proportion",
+            "russian": "пропорция"
+        },
+        {
+            "english": "superstition",
+            "russian": "суеверие"
+        },
+        {
+            "english": "margin",
+            "russian": "край"
+        },
+        {
+            "english": "navigation",
+            "russian": "навигация"
+        },
+        {
+            "english": "removal",
+            "russian": "удаление"
+        },
+        {
+            "english": "porridge",
+            "russian": "каша"
+        },
+        {
+            "english": "mellow",
+            "russian": "мягкий"
+        },
+        {
+            "english": "bending",
+            "russian": "изгиб"
+        },
+        {
+            "english": "timber",
+            "russian": "древесина"
+        },
+        {
+            "english": "dirk",
+            "russian": "кортик"
+        },
+        {
+            "english": "mutiny",
+            "russian": "мятеж"
+        },
+        {
+            "english": "nightfall",
+            "russian": "наступление ночи"
+        },
+        {
+            "english": "providence",
+            "russian": "провидение"
+        },
+        {
+            "english": "trend",
+            "russian": "тенденция"
+        },
+        {
+            "english": "quadrant",
+            "russian": "квадрант"
+        },
+        {
+            "english": "superstitious",
+            "russian": "суеверный"
+        },
+        {
+            "english": "clause",
+            "russian": "пункт"
+        },
+        {
+            "english": "clash",
+            "russian": "столкновение"
+        },
+        {
+            "english": "oddly",
+            "russian": "странно"
+        },
+        {
+            "english": "exploration",
+            "russian": "исследование"
+        },
+        {
+            "english": "continuous",
+            "russian": "непрерывный"
+        },
+        {
+            "english": "twinkle",
+            "russian": "мерцание"
+        },
+        {
+            "english": "defender",
+            "russian": "защитник"
+        },
+        {
+            "english": "alarmed",
+            "russian": "обеспокоенный"
+        },
+        {
+            "english": "bosom",
+            "russian": "грудь"
+        },
+        {
+            "english": "backward",
+            "russian": "назад"
+        },
+        {
+            "english": "nip",
+            "russian": "укус"
+        },
+        {
+            "english": "blaze",
+            "russian": "пламя"
+        },
+        {
+            "english": "sundown",
+            "russian": "закат"
+        },
+        {
+            "english": "rejoice",
+            "russian": "радоваться"
+        },
+        {
+            "english": "cockroach",
+            "russian": "таракан"
+        },
+        {
+            "english": "senseless",
+            "russian": "бессмысленный"
+        },
+        {
+            "english": "simultaneously",
+            "russian": "одновременно"
+        },
+        {
+            "english": "melancholy",
+            "russian": "меланхолия"
+        },
+        {
+            "english": "horribly",
+            "russian": "ужасно"
+        },
+        {
+            "english": "blur",
+            "russian": "размытие"
+        },
+        {
+            "english": "unfaithful",
+            "russian": "неверный"
+        },
+        {
+            "english": "tar",
+            "russian": "деготь"
+        },
+        {
+            "english": "respectful",
+            "russian": "уважительный"
+        },
+        {
+            "english": "nineteen",
+            "russian": "девятнадцать"
+        },
+        {
+            "english": "remarkably",
+            "russian": "замечательно"
+        },
+        {
+            "english": "cluster",
+            "russian": "кластер"
+        },
+        {
+            "english": "hesitation",
+            "russian": "колебание"
+        },
+        {
+            "english": "portable",
+            "russian": "портативный"
+        },
+        {
+            "english": "marrow",
+            "russian": "мозг (костный), тыква"
+        },
+        {
+            "english": "heath",
+            "russian": "вереск"
+        },
+        {
+            "english": "pip",
+            "russian": "косточка (фрукта), очко (на игральной кости), зародыш (в яйце)"
+        },
+        {
+            "english": "unnatural",
+            "russian": "неестественный"
+        },
+        {
+            "english": "revive",
+            "russian": "оживить"
+        },
+        {
+            "english": "foe",
+            "russian": "враг"
+        },
+        {
+            "english": "conquest",
+            "russian": "завоевание"
+        },
+        {
+            "english": "competent",
+            "russian": "компетентный"
+        },
+        {
+            "english": "laden",
+            "russian": "нагруженный"
+        },
+        {
+            "english": "audible",
+            "russian": "слышимый"
+        },
+        {
+            "english": "squire",
+            "russian": "помещик"
+        },
+        {
+            "english": "wrestle",
+            "russian": "бороться"
+        },
+        {
+            "english": "detour",
+            "russian": "объезд"
+        },
+        {
+            "english": "goodwill",
+            "russian": "добрая воля"
+        },
+        {
+            "english": "heave",
+            "russian": "поднять"
+        },
+        {
+            "english": "lass",
+            "russian": "девушка"
+        },
+        {
+            "english": "windy",
+            "russian": "ветреный"
+        },
+        {
+            "english": "brew",
+            "russian": "варить, заваривать, назревать"
+        },
+        {
+            "english": "northeast",
+            "russian": "северо-восток"
+        },
+        {
+            "english": "treacherous",
+            "russian": "коварный"
+        },
+        {
+            "english": "downhill",
+            "russian": "вниз по склону"
+        },
+        {
+            "english": "surge",
+            "russian": "волна"
+        },
+        {
+            "english": "silently",
+            "russian": "молча"
+        },
+        {
+            "english": "pluck",
+            "russian": "выщипывать"
+        },
+        {
+            "english": "stench",
+            "russian": "вонь"
+        },
+        {
+            "english": "flea",
+            "russian": "блоха"
+        },
+        {
+            "english": "contrast",
+            "russian": "контраст"
+        },
+        {
+            "english": "formidable",
+            "russian": "внушительный"
+        },
+        {
+            "english": "uneasy",
+            "russian": "беспокойный"
+        },
+        {
+            "english": "dart",
+            "russian": "дротик, стрела, метнуться"
+        },
+        {
+            "english": "infamous",
+            "russian": "печально известный"
+        },
+        {
+            "english": "monstrous",
+            "russian": "чудовищный"
+        },
+        {
+            "english": "offender",
+            "russian": "правонарушитель"
+        },
+        {
+            "english": "southwest",
+            "russian": "юго-запад"
+        },
+        {
+            "english": "revolt",
+            "russian": "восстание"
+        },
+        {
+            "english": "tighten",
+            "russian": "затягивать"
+        },
+        {
+            "english": "admirable",
+            "russian": "восхитительный"
+        },
+        {
+            "english": "holler",
+            "russian": "кричать"
+        },
+        {
+            "english": "precaution",
+            "russian": "предосторожность"
+        },
+        {
+            "english": "plaster",
+            "russian": "штукатурка"
+        },
+        {
+            "english": "bulk",
+            "russian": "объем"
+        },
+        {
+            "english": "override",
+            "russian": "перекрывать"
+        },
+        {
+            "english": "solemn",
+            "russian": "торжественный"
+        },
+        {
+            "english": "muddy",
+            "russian": "грязный"
+        },
+        {
+            "english": "doorway",
+            "russian": "дверной проем"
+        },
+        {
+            "english": "napkin",
+            "russian": "салфетка"
+        },
+        {
+            "english": "wrench",
+            "russian": "гаечный ключ"
+        },
+        {
+            "english": "cove",
+            "russian": "бухта"
+        },
+        {
+            "english": "cognac",
+            "russian": "коньяк"
+        },
+        {
+            "english": "mischief",
+            "russian": "проделки"
+        },
+        {
+            "english": "fiddle",
+            "russian": "скрипка, подделывать"
+        },
+        {
+            "english": "frequent",
+            "russian": "частый"
+        },
+        {
+            "english": "revenue",
+            "russian": "доход"
+        },
+        {
+            "english": "slope",
+            "russian": "склон"
+        },
+        {
+            "english": "sovereign",
+            "russian": "суверен, монарх, суверенный, независимый"
+        },
+        {
+            "english": "paddle",
+            "russian": "весло"
+        },
+        {
+            "english": "southeast",
+            "russian": "юго-восток"
+        },
+        {
+            "english": "sank",
+            "russian": "затонул"
+        },
+        {
+            "english": "valet",
+            "russian": "камердинер"
+        },
+        {
+            "english": "gloomy",
+            "russian": "мрачный"
+        },
+        {
+            "english": "wiser",
+            "russian": "мудрее"
+        },
+        {
+            "english": "ere",
+            "russian": "прежде чем (архаичное)"
+        },
+        {
+            "english": "threshold",
+            "russian": "порог"
+        },
+        {
+            "english": "prejudice",
+            "russian": "предвзятость"
+        },
+        {
+            "english": "eddy",
+            "russian": "водоворот"
+        },
+        {
+            "english": "tightly",
+            "russian": "плотно"
+        },
+        {
+            "english": "haste",
+            "russian": "спешка"
+        },
+        {
+            "english": "ensign",
+            "russian": "флаг"
+        },
+        {
+            "english": "probable",
+            "russian": "вероятный"
+        },
+        {
+            "english": "bullying",
+            "russian": "запугивание"
+        },
+        {
+            "english": "heed",
+            "russian": "внимание"
+        },
+        {
+            "english": "dependent",
+            "russian": "зависимый"
+        },
+        {
+            "english": "risen",
+            "russian": "поднялся"
+        },
+        {
+            "english": "privileged",
+            "russian": "привилегированный"
+        },
+        {
+            "english": "northwest",
+            "russian": "северо-запад"
+        },
+        {
+            "english": "repent",
+            "russian": "раскаиваться"
+        },
+        {
+            "english": "solitude",
+            "russian": "уединение"
+        },
+        {
+            "english": "shaggy",
+            "russian": "кудрявый, лохматый, косматый"
+        },
+        {
+            "english": "uncovered",
+            "russian": "обнаженный"
+        },
+        {
+            "english": "squat",
+            "russian": "приседать"
+        },
+        {
+            "english": "glee",
+            "russian": "восторг"
+        },
+        {
+            "english": "reel",
+            "russian": "катушка, барабан, пошатываться, кружиться"
+        },
+        {
+            "english": "upright",
+            "russian": "вертикально"
+        },
+        {
+            "english": "certainty",
+            "russian": "уверенность"
+        },
+        {
+            "english": "distinct",
+            "russian": "отчетливый"
+        },
+        {
+            "english": "notch",
+            "russian": "выемка, зарубка"
+        },
+        {
+            "english": "cowardly",
+            "russian": "трусливый"
+        },
+        {
+            "english": "sideways",
+            "russian": "боком"
+        },
+        {
+            "english": "presumably",
+            "russian": "предположительно"
+        },
+        {
+            "english": "peck",
+            "russian": "клевать"
+        },
+        {
+            "english": "quack",
+            "russian": "шарлатан"
+        },
+        {
+            "english": "ax",
+            "russian": "топор"
+        },
+        {
+            "english": "fling",
+            "russian": "бросок"
+        },
+        {
+            "english": "accidental",
+            "russian": "случайный"
+        },
+        {
+            "english": "hash",
+            "russian": "хэш, мешанина, рубленое мясо, путаница"
+        },
+        {
+            "english": "dispose",
+            "russian": "распоряжаться"
+        },
+        {
+            "english": "steep",
+            "russian": "крутой, резкий (подъем цен), замачивать, настаивать"
+        },
+        {
+            "english": "damp",
+            "russian": "влажный"
+        },
+        {
+            "english": "remedy",
+            "russian": "средство"
+        },
+        {
+            "english": "prospect",
+            "russian": "перспектива"
+        },
+        {
+            "english": "babbling",
+            "russian": "бормотание"
+        },
+        {
+            "english": "revelation",
+            "russian": "откровение"
+        },
+        {
+            "english": "tavern",
+            "russian": "таверна"
+        },
+        {
+            "english": "tread",
+            "russian": "шагать"
+        },
+        {
+            "english": "mend",
+            "russian": "чинить"
+        },
+        {
+            "english": "occasional",
+            "russian": "случайный"
+        },
+        {
+            "english": "cruelty",
+            "russian": "жестокость"
+        },
+        {
+            "english": "external",
+            "russian": "внешний"
+        },
+        {
+            "english": "clearer",
+            "russian": "более ясный"
+        },
+        {
+            "english": "eminence",
+            "russian": "выдающаяся личность"
+        },
+        {
+            "english": "willingly",
+            "russian": "добровольно"
+        },
+        {
+            "english": "trim",
+            "russian": "стрижка, обрезка, в хорошей форме, аккуратный, подрезать"
+        },
+        {
+            "english": "harbour",
+            "russian": "гавань"
+        },
+        {
+            "english": "apprentice",
+            "russian": "ученик"
+        },
+        {
+            "english": "specimen",
+            "russian": "образец"
+        },
+        {
+            "english": "deception",
+            "russian": "обман"
+        },
+        {
+            "english": "lantern",
+            "russian": "фонарь"
+        },
+        {
+            "english": "evidently",
+            "russian": "очевидно"
+        },
+        {
+            "english": "lace",
+            "russian": "кружево"
+        },
+        {
+            "english": "perish",
+            "russian": "погибнуть"
+        },
+        {
+            "english": "gale",
+            "russian": "шторм"
+        },
+        {
+            "english": "flint",
+            "russian": "кремень, кремниевый"
+        },
+        {
+            "english": "dense",
+            "russian": "густой"
+        },
+        {
+            "english": "wink",
+            "russian": "мигание"
+        },
+        {
+            "english": "stem",
+            "russian": "стебель, ствол, сдерживать"
+        },
+        {
+            "english": "bathe",
+            "russian": "купаться"
+        },
+        {
+            "english": "arch",
+            "russian": "арка, свод, выгибать(ся), лукавый"
+        },
+        {
+            "english": "sway",
+            "russian": "колебаться"
+        },
+        {
+            "english": "cutter",
+            "russian": "резец"
+        },
+        {
+            "english": "merit",
+            "russian": "заслуга"
+        },
+        {
+            "english": "mist",
+            "russian": "туман"
+        },
+        {
+            "english": "overhead",
+            "russian": "над головой"
+        },
+        {
+            "english": "nay",
+            "russian": "нет"
+        },
+        {
+            "english": "swollen",
+            "russian": "опухший"
+        },
+        {
+            "english": "weary",
+            "russian": "усталый"
+        },
+        {
+            "english": "immense",
+            "russian": "огромный"
+        },
+        {
+            "english": "shameful",
+            "russian": "позорный"
+        },
+        {
+            "english": "calmly",
+            "russian": "спокойно"
+        },
+        {
+            "english": "garrison",
+            "russian": "гарнизон"
+        },
+        {
+            "english": "starboard",
+            "russian": "правый борт"
+        },
+        {
+            "english": "bundle",
+            "russian": "связка"
+        },
+        {
+            "english": "bind",
+            "russian": "связывать"
+        },
+        {
+            "english": "brute",
+            "russian": "животное"
+        },
+        {
+            "english": "coral",
+            "russian": "коралл"
+        },
+        {
+            "english": "ale",
+            "russian": "эль"
+        },
+        {
+            "english": "verge",
+            "russian": "грань"
+        },
+        {
+            "english": "truce",
+            "russian": "перемирие"
+        },
+        {
+            "english": "heap",
+            "russian": "куча, груда, нагромождать"
+        },
+        {
+            "english": "packet",
+            "russian": "пакет"
+        },
+        {
+            "english": "homemade",
+            "russian": "домашнего приготовления"
+        },
+        {
+            "english": "chimney",
+            "russian": "дымоход"
+        },
+        {
+            "english": "tailor",
+            "russian": "портной"
+        },
+        {
+            "english": "merciful",
+            "russian": "милосердный"
+        },
+        {
+            "english": "severely",
+            "russian": "строго"
+        },
+        {
+            "english": "likewise",
+            "russian": "также"
+        },
+        {
+            "english": "idle",
+            "russian": "бездействующий"
+        },
+        {
+            "english": "allowance",
+            "russian": "пособие"
+        },
+        {
+            "english": "calf",
+            "russian": "теленок, икра (ноги)"
+        },
+        {
+            "english": "sponge",
+            "russian": "губка"
+        },
+        {
+            "english": "openly",
+            "russian": "открыто"
+        },
+        {
+            "english": "seventeen",
+            "russian": "семнадцать"
+        },
+        {
+            "english": "pike",
+            "russian": "щука, пика"
+        },
+        {
+            "english": "briefly",
+            "russian": "кратко"
+        },
+        {
+            "english": "baking",
+            "russian": "выпечка"
+        },
+        {
+            "english": "streak",
+            "russian": "полоса"
+        },
+        {
+            "english": "midst",
+            "russian": "среди"
+        },
+        {
+            "english": "monthly",
+            "russian": "ежемесячно"
+        },
+        {
+            "english": "moss",
+            "russian": "мох"
+        },
+        {
+            "english": "liberal",
+            "russian": "либеральный, щедрый, обильный"
+        },
+        {
+            "english": "longing",
+            "russian": "тоска"
+        },
+        {
+            "english": "partly",
+            "russian": "частично"
+        },
+        {
+            "english": "positively",
+            "russian": "положительно"
+        },
+        {
+            "english": "considerable",
+            "russian": "значительный"
+        },
+        {
+            "english": "dine",
+            "russian": "обедать"
+        },
+        {
+            "english": "unarmed",
+            "russian": "безоружный"
+        },
+        {
+            "english": "tropical",
+            "russian": "тропический"
+        },
+        {
+            "english": "shaken",
+            "russian": "потрясенный"
+        },
+        {
+            "english": "banner",
+            "russian": "знамя"
+        },
+        {
+            "english": "lighten",
+            "russian": "осветить"
+        },
+        {
+            "english": "handkerchief",
+            "russian": "носовой платок"
+        },
+        {
+            "english": "embarrassment",
+            "russian": "смущение"
+        },
+        {
+            "english": "absent",
+            "russian": "отсутствующий"
+        },
+        {
+            "english": "ashore",
+            "russian": "на берегу"
+        },
+        {
+            "english": "willow",
+            "russian": "ива"
+        },
+        {
+            "english": "ox",
+            "russian": "вол"
+        },
+        {
+            "english": "broom",
+            "russian": "метла"
+        },
+        {
+            "english": "grim",
+            "russian": "мрачный"
+        },
+        {
+            "english": "bluff",
+            "russian": "обрыв, блеф"
+        },
+        {
+            "english": "carpenter",
+            "russian": "плотник"
+        },
+        {
+            "english": "sunk",
+            "russian": "затонул"
+        },
+        {
+            "english": "newly",
+            "russian": "недавно"
+        },
+        {
+            "english": "thrust",
+            "russian": "толчок"
+        },
+        {
+            "english": "compass",
+            "russian": "компас, охват, объем"
+        },
+        {
+            "english": "hull",
+            "russian": "корпус (судна), шелуха"
+        },
+        {
+            "english": "sane",
+            "russian": "здравомыслящий"
+        },
+        {
+            "english": "kettle",
+            "russian": "чайник"
+        },
+        {
+            "english": "flock",
+            "russian": "стая"
+        },
+        {
+            "english": "numerous",
+            "russian": "многочисленный"
+        },
+        {
+            "english": "foam",
+            "russian": "пена"
+        },
+        {
+            "english": "gulf",
+            "russian": "залив"
+        },
+        {
+            "english": "lookout",
+            "russian": "дозор"
+        },
+        {
+            "english": "bidding",
+            "russian": "предложение"
+        },
+        {
+            "english": "stern",
+            "russian": "корма, строгий"
+        },
+        {
+            "english": "peacefully",
+            "russian": "мирно"
+        },
+        {
+            "english": "wrath",
+            "russian": "гнев"
+        },
+        {
+            "english": "turf",
+            "russian": "газон, дерн, территория"
+        },
+        {
+            "english": "tipped",
+            "russian": "с наконечником"
+        },
+        {
+            "english": "telescope",
+            "russian": "телескоп"
+        },
+        {
+            "english": "humour",
+            "russian": "юмор, настроение, нрав"
+        },
+        {
+            "english": "vile",
+            "russian": "подлый"
+        },
+        {
+            "english": "housekeeper",
+            "russian": "экономка"
+        },
+        {
+            "english": "hamlet",
+            "russian": "деревушка"
+        },
+        {
+            "english": "grove",
+            "russian": "роща"
+        },
+        {
+            "english": "ungrateful",
+            "russian": "неблагодарный"
+        },
+        {
+            "english": "roughly",
+            "russian": "грубо"
+        },
+        {
+            "english": "gardener",
+            "russian": "садовник"
+        },
+        {
+            "english": "countless",
+            "russian": "бесчисленный"
+        },
+        {
+            "english": "fourteen",
+            "russian": "четырнадцать"
+        },
+        {
+            "english": "mild",
+            "russian": "мягкий"
+        },
+        {
+            "english": "biting",
+            "russian": "колючий, кусающий, едкий, пронизывающий (о холоде)"
+        },
+        {
+            "english": "loosen",
+            "russian": "ослаблять"
+        },
+        {
+            "english": "elaborate",
+            "russian": "детализировать"
+        },
+        {
+            "english": "overboard",
+            "russian": "за борт"
+        },
+        {
+            "english": "poisonous",
+            "russian": "ядовитый"
+        },
+        {
+            "english": "swift",
+            "russian": "быстрый"
+        },
+        {
+            "english": "lent",
+            "russian": "одолженный, пост (религиозный)"
+        },
+        {
+            "english": "summit",
+            "russian": "вершина"
+        },
+        {
+            "english": "utter",
+            "russian": "произносить, полный, абсолютный, крайний"
+        },
+        {
+            "english": "strangely",
+            "russian": "странно"
+        },
+        {
+            "english": "bunk",
+            "russian": "койка"
+        },
+        {
+            "english": "bitten",
+            "russian": "укушенный"
+        },
+        {
+            "english": "agony",
+            "russian": "агония"
+        },
+        {
+            "english": "magistrate",
+            "russian": "магистрат, судья"
+        },
+        {
+            "english": "gradually",
+            "russian": "постепенно"
+        },
+        {
+            "english": "crooked",
+            "russian": "кривой"
+        },
+        {
+            "english": "interference",
+            "russian": "вмешательство"
+        },
+        {
+            "english": "transportation",
+            "russian": "транспортировка"
+        },
+        {
+            "english": "thirteen",
+            "russian": "тринадцать"
+        },
+        {
+            "english": "flown",
+            "russian": "пролетел"
+        },
+        {
+            "english": "cunning",
+            "russian": "хитрый"
+        },
+        {
+            "english": "thirst",
+            "russian": "жажда"
+        },
+        {
+            "english": "booty",
+            "russian": "добыча"
+        },
+        {
+            "english": "careless",
+            "russian": "небрежный"
+        },
+        {
+            "english": "elderly",
+            "russian": "пожилой"
+        },
+        {
+            "english": "greatly",
+            "russian": "значительно"
+        },
+        {
+            "english": "employment",
+            "russian": "занятость"
+        },
+        {
+            "english": "sheer",
+            "russian": "чистый, отвесный, прозрачный, полный, абсолютный"
+        },
+        {
+            "english": "cant",
+            "russian": "жаргон, наклон, лицемерие, косой"
+        },
+        {
+            "english": "sufficient",
+            "russian": "достаточный"
+        },
+        {
+            "english": "caution",
+            "russian": "осторожность"
+        },
+        {
+            "english": "swept",
+            "russian": "подметенный"
+        },
+        {
+            "english": "peculiar",
+            "russian": "особенный, странный"
+        },
+        {
+            "english": "alongside",
+            "russian": "рядом"
+        },
+        {
+            "english": "shook",
+            "russian": "тряс"
+        },
+        {
+            "english": "unlucky",
+            "russian": "неудачливый"
+        },
+        {
+            "english": "greed",
+            "russian": "жадность"
+        },
+        {
+            "english": "ammunition",
+            "russian": "боеприпасы"
+        },
+        {
+            "english": "clumsy",
+            "russian": "неуклюжий"
+        },
+        {
+            "english": "porch",
+            "russian": "крыльцо"
+        },
+        {
+            "english": "thoroughly",
+            "russian": "тщательно"
+        },
+        {
+            "english": "wretched",
+            "russian": "жалкий"
+        },
+        {
+            "english": "skipper",
+            "russian": "капитан, шкипер"
+        },
+        {
+            "english": "farther",
+            "russian": "дальше"
+        },
+        {
+            "english": "utterly",
+            "russian": "совершенно"
+        },
+        {
+            "english": "probation",
+            "russian": "испытательный срок"
+        },
+        {
+            "english": "sunlight",
+            "russian": "солнечный свет"
+        },
+        {
+            "english": "shipping",
+            "russian": "доставка"
+        }
+    ]
+}

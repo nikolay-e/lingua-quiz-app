@@ -6,153 +6,20 @@ import github
 from openai import OpenAI
 import html
 import tiktoken
+from utils import (
+    get_env_variable, init_github_client, get_repo_content, get_pr_diff,
+    sanitize_input, post_review, count_tokens, split_codebase
+)
+from config import OPENAI_MODEL, TOKEN_RESET_PERIOD, MAX_CHUNK_SIZE
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Configuration
-SUPPORTED_FILE_TYPES = ('.py', '.js', '.ts', '.html', '.css', '.yml', '.yaml', '.json', '.md', '.txt')
-OPENAI_MODEL = "gpt-4-turbo"
-TOKEN_RESET_PERIOD = 60  # seconds
-MAX_CHUNK_SIZE = 25000  # Leave some room for system message and response
-
-def get_env_variable(name: str) -> str:
-    """Safely retrieve environment variables."""
-    value = os.environ.get(name)
-    if not value:
-        raise ValueError(f"{name} environment variable is not set")
-    return value
-
 def init_openai_client() -> OpenAI:
     """Initialize and return the OpenAI client."""
     api_key = get_env_variable("OPENAI_API_KEY")
     return OpenAI(api_key=api_key)
-
-def init_github_client() -> github.PullRequest.PullRequest:
-    """Initialize GitHub client and return the current pull request."""
-    github_token = get_env_variable("GITHUB_TOKEN")
-    repo_name = get_env_variable("GITHUB_REPOSITORY")
-    pr_number = parse_pr_number(get_env_variable("GITHUB_REF"))
-
-    try:
-        g = github.Github(github_token)
-        repo = g.get_repo(repo_name)
-        return repo.get_pull(pr_number)
-    except github.GithubException as e:
-        logger.error(f"GitHub API error: {str(e)}")
-        raise
-    except Exception as e:
-        logger.error(f"Unexpected error when initializing GitHub client: {str(e)}")
-        raise
-
-def parse_pr_number(github_ref: str) -> int:
-    """Parse PR number from GITHUB_REF safely."""
-    try:
-        return int(github_ref.split("/")[-2])
-    except (IndexError, ValueError):
-        raise ValueError(f"Invalid GITHUB_REF format: {github_ref}")
-
-def get_repo_content(repo: github.Repository.Repository, branch: str) -> str:
-    """Get the content of all files in the repository."""
-    content = ""
-    try:
-        contents = repo.get_contents("", ref=branch)
-        while contents:
-            file_content = contents.pop(0)
-            if file_content.type == "dir":
-                contents.extend(repo.get_contents(file_content.path, ref=branch))
-            else:
-                if file_content.name.endswith(SUPPORTED_FILE_TYPES):
-                    content += f"File: {file_content.path}\n```\n{file_content.decoded_content.decode('utf-8')}\n```\n\n"
-    except github.GithubException as e:
-        logger.error(f"GitHub API error when fetching repo content: {str(e)}")
-        raise
-    except Exception as e:
-        logger.error(f"Unexpected error when fetching repo content: {str(e)}")
-        raise
-    return content
-
-def get_pr_diff(pull_request: github.PullRequest.PullRequest) -> str:
-    """Get the diff of the pull request."""
-    try:
-        comparison = pull_request.base.repo.compare(
-            pull_request.base.sha, pull_request.head.sha
-        )
-        
-        diff = ""
-        for file in comparison.files:
-            diff += f"File: {file.filename}\n"
-            diff += f"Status: {file.status}\n"
-            diff += f"Changes: +{file.additions} -{file.deletions}\n"
-            if file.patch:
-                diff += f"Patch:\n{file.patch}\n"
-            diff += "\n"
-        
-        return diff
-    except github.GithubException as e:
-        logger.error(f"GitHub API error when fetching PR diff: {str(e)}")
-        raise
-    except Exception as e:
-        logger.error(f"Unexpected error when fetching PR diff: {str(e)}")
-        raise
-
-def sanitize_input(text: Optional[str]) -> str:
-    """Sanitize input to prevent potential injection issues."""
-    if text is None:
-        return ""
-    return html.escape(text)
-
-def split_codebase(repo_content: str, chunk_size: int = 4000) -> List[str]:
-    """Split the codebase into chunks of specified size."""
-    chunks = []
-    current_chunk = ""
-    for line in repo_content.split('\n'):
-        if len(current_chunk) + len(line) + 1 > chunk_size:
-            chunks.append(current_chunk)
-            current_chunk = line + '\n'
-        else:
-            current_chunk += line + '\n'
-    if current_chunk:
-        chunks.append(current_chunk)
-    return chunks
-
-def post_review(pull_request: github.PullRequest.PullRequest, review: str) -> None:
-    """Post the review as a comment on the pull request."""
-    try:
-        pull_request.create_issue_comment(f"AI Code Review:\n\n{review}")
-    except github.GithubException as e:
-        logger.error(f"GitHub API error when posting review: {str(e)}")
-    except Exception as e:
-        logger.error(f"Unexpected error when posting review: {str(e)}")
-
-def split_codebase(repo_content: str) -> List[str]:
-    """Split the codebase into chunks, respecting the larger context window."""
-    encoding = tiktoken.encoding_for_model(OPENAI_MODEL)
-    total_tokens = len(encoding.encode(repo_content))
-
-    if total_tokens <= MAX_CHUNK_SIZE:
-        logger.info("Entire codebase fits within one chunk")
-        return [repo_content]
-
-    chunks = []
-    current_chunk = ""
-    current_chunk_tokens = 0
-
-    for line in repo_content.split('\n'):
-        line_tokens = len(encoding.encode(line))
-        if current_chunk_tokens + line_tokens > MAX_CHUNK_SIZE and current_chunk:
-            chunks.append(current_chunk)
-            current_chunk = ""
-            current_chunk_tokens = 0
-        current_chunk += line + '\n'
-        current_chunk_tokens += line_tokens
-
-    if current_chunk:
-        chunks.append(current_chunk)
-
-    logger.info(f"Split codebase into {len(chunks)} chunks")
-    return chunks
 
 def analyze_codebase(client: OpenAI, repo_content: str) -> str:
     """Analyze the entire codebase or large chunks of it."""
@@ -197,45 +64,50 @@ def analyze_codebase(client: OpenAI, repo_content: str) -> str:
 
 def review_code(client: OpenAI, repo_content: str, pr_diff: str, pr_title: str, pr_body: Optional[str]) -> str:
     """Perform AI code review using OpenAI API, and decide on merge readiness."""
-    logger.info("Starting codebase analysis")
-    codebase_analysis = analyze_codebase(client, repo_content)
-    logger.info("Completed codebase analysis")
+    total_tokens = count_tokens(repo_content) + count_tokens(pr_diff)
+    
+    if total_tokens <= MAX_CHUNK_SIZE:
+        logger.info("Entire codebase and PR diff fit within token limit. Proceeding with direct review.")
+        content_to_review = f"Codebase:\n{repo_content}\n\nPR Diff:\n{pr_diff}"
+    else:
+        logger.info("Codebase and PR diff exceed token limit. Performing separate analysis.")
+        logger.info("Starting codebase analysis")
+        codebase_analysis = analyze_codebase(client, repo_content)
+        logger.info("Completed codebase analysis")
+        content_to_review = f"Codebase Analysis:\n{codebase_analysis}\n\nPR Diff:\n{pr_diff}"
     
     sanitized_title = sanitize_input(pr_title)
     sanitized_body = sanitize_input(pr_body)
     
     final_review_prompt = f"""
-    Based on the following analysis of the codebase:
+    Based on the following information:
 
-    {codebase_analysis}
+    {content_to_review}
 
     Please review this pull request:
 
     PR Title: {sanitized_title}
     PR Body: {sanitized_body}
 
-    Pull Request Diff:
-    {pr_diff}
-
     Provide:
     1. Feedback on:
-       a. Code style and formatting
+       a. Code style and formatting status OK or NOT OK, add short review if NOT OK
        b. Potential bugs or errors
        c. Suggestions for improvement
        d. Any security concerns
-       e. Overall design and architecture considerations
+       e. Overall design and architecture considerations - dont mention documentation
     2. A suggested better short commit message based on the changes and the provided PR title and body
-    3. A decision on whether the code is ready to be merged (YES/NO) with a brief explanation
+    3. A decision on whether the code is ready to be merged (YES/NO) with a brief explanation. Be consise. Always add file name. Be specific!!!
 
     Structure your response as follows:
     Code Review:
-    [Your detailed review here]
+    [Your review here]
 
     Suggested Short Commit Message:
     [Your suggested short commit message here]
 
     Merge Decision:
-    [YES/NO]: [Brief explanation for the decision]
+    [YES/NO]: [Brief explanation for the decision. Be consise. Always add file name. Be specific!!!]
     """
 
     try:        

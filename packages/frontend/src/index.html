@@ -9,15 +9,17 @@
 </head>
 <body>
     <main class="container">
+        <div id="loading-indicator" class="loading-indicator" style="display: none;">
+            <i class="fas fa-spinner fa-spin"></i> Loading...
+        </div>
         <header>
             <h1><i class="fas fa-language"></i> LinguaQuiz</h1>
         </header>
         <section aria-labelledby="file-upload-section">
             <h2 id="file-upload-section">Upload or Select Quiz</h2>
             <div class="input-group">
-                <input type="file" id="file-input" accept=".csv" hidden onchange="handleFileUpload()">
-                <button onclick="document.getElementById('file-input').click()"><i class="fas fa-upload"></i> Choose &
-                    Upload File</button>
+                <input type="file" id="file-input" accept=".json" hidden>
+                <button onclick="document.getElementById('file-input').click()"><i class="fas fa-upload"></i> Choose & Upload File</button>
                 <button id="spanish-english"><i class="fas fa-book"></i> Use Default Spanish-English Set</button>
                 <button id="spanish-russian"><i class="fas fa-book"></i> Use Default Spanish-Russian Set</button>
                 <button id="german-russian"><i class="fas fa-book"></i> Use Default German-Russian Set</button>
@@ -81,7 +83,7 @@
     <script type="module" src="./js/app.js"></script>
     <script type="module" src="./js/utils/BidirectionalMap.js"></script>
     <script type="module" src="./js/utils/statsManager.js"></script>
-    <script type="module" src="./js/quiz/csvHandler.js"></script>
+    <script type="module" src="./js/quiz/dataHandler.js"></script>
     <script type="module" src="./js/quiz/wordSetManager.js"></script>
     <script type="module" src="./js/quiz/quizManager.js"></script>
     <script type="module" src="./js/ui/displayManager.js"></script>
