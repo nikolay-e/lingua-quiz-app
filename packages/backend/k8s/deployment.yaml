@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: LINGUA_QUIZ_BACKEND_PLACEHOLDER
+        image: lingua-quiz-backend
         ports:
         - containerPort: 3000
         resources:
@@ -43,15 +43,21 @@ spec:
           value: "postgres"
         - name: DB_PORT
           value: "5432"
-        - name: DB_NAME
-          value: "linguaquiz"
-        - name: DB_USER
-          value: "postgres"
-        - name: DB_PASSWORD
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_DB
+        - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
               name: postgres-secret
               key: POSTGRES_PASSWORD
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_USER
         - name: JWT_SECRET
           valueFrom:
             secretKeyRef:
