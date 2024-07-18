@@ -81,7 +81,7 @@ jobs:
         # Create or update the branch in Amplify
         if ! aws amplify get-branch --app-id $APP_ID --branch-name $BRANCH_NAME &>/dev/null; then
           echo "Branch $BRANCH_NAME does not exist in Amplify. Creating it..."
-          aws amplify create-branch --app-id $APP_ID --branch-name $BRANCH_NAME --enable-auto-build false
+          aws amplify create-branch --app-id $APP_ID --branch-name $BRANCH_NAME --no-enable-auto-build
         else
           echo "Branch $BRANCH_NAME already exists in Amplify."
         fi
