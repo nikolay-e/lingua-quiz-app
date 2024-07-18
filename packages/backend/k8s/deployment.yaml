@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: lingua-quiz-backend:latest
+        image: LINGUA_QUIZ_BACKEND_PLACEHOLDER
         ports:
         - containerPort: 3000
         resources:
