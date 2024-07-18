@@ -19,15 +19,24 @@ spec:
         - containerPort: 5432
         env:
         - name: POSTGRES_DB
-          value: linguaquiz
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_DB
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_USER
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
               name: postgres-secret
-              key: postgres-password
+              key: POSTGRES_PASSWORD
         volumeMounts:
         - name: postgres-storage
           mountPath: /var/lib/postgresql/data
+          subPath: postgres  # Uses a subdirectory to prevent overwriting the entire volume
       volumes:
       - name: postgres-storage
         emptyDir: {}
