@@ -1,5 +1,3 @@
-// dataHandler.js
-
 import {
   quizWords,
   focusWordsSet,

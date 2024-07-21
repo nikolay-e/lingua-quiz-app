@@ -8,7 +8,11 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
+RUN if [ "$BUILD_ENV" = "prod" ]; then \
+        npm run build:prod; \
+    else \
+        npm run build:dev; \
+    fi
 
 FROM nginx:alpine
 

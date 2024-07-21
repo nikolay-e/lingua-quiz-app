@@ -59,12 +59,12 @@ h1 { font-size: 2.5em; }
 h2 { font-size: 2em; }
 h3 { font-size: 1.5em; }
 
-p, button, input[type="text"], ol, li {
+p, button, input[type="text"], input[type="password"], input[type="email"], ol, li {
     width: 100%;
     margin-bottom: 15px;
 }
 
-input[type="text"], button {
+input[type="text"], input[type="password"], input[type="email"], button {
     padding: 12px;
     border-radius: 6px;
     height: 44px;
@@ -72,11 +72,11 @@ input[type="text"], button {
     transition: all var(--transition-speed) ease;
 }
 
-input[type="text"] {
+input[type="text"], input[type="password"], input[type="email"] {
     border: 1px solid var(--input-border-color);
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
@@ -279,15 +279,53 @@ input:checked + .slider:before {
     color: var(--primary-color);
 }
 
+/* Styles for login and registration functionality */
+.login-section, .register-section {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--container-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.login-section h2, .register-section h2 {
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+#user-status {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+#login-logout-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+#login-message, #register-message {
+    text-align: center;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
 @media (max-width: 768px) {
-    .container, .stats-container {
+    .container, .stats-container, .login-section, .register-section {
         width: 95%;
         padding: 20px;
+    }
+
+    #user-status {
+        position: static;
+        text-align: center;
+        margin-bottom: 20px;
     }
 }
 
 @media (max-width: 480px) {
-    body, p, button, input[type="text"] {
+    body, p, button, input[type="text"], input[type="password"], input[type="email"] {
         font-size: 14px;
     }
     
@@ -299,7 +337,7 @@ input:checked + .slider:before {
         padding-left: 20px;
     }
     
-    .container, .stats-container {
+    .container, .stats-container, .login-section, .register-section {
         padding: 15px;
     }
     

@@ -1,6 +1,7 @@
 // app.js
 
 import BidirectionalMap from './utils/BidirectionalMap.js';
+import initAuth from './ui/loginManager.js';
 
 export const quizWords = new BidirectionalMap();
 export const focusWordsSet = new Set();
@@ -31,7 +32,4 @@ export function setTargetLanguage(language) {
   targetLanguage = language;
 }
 
-// Initialize the quiz
-document.addEventListener('DOMContentLoaded', () => {
-  // Add initialization code here
-});
+document.addEventListener('DOMContentLoaded', initAuth);

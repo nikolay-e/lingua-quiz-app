@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start:frontend": "cd packages/frontend && npm run start",
-    "build:frontend": "cd packages/frontend && npm run build",
     "lint": "eslint . --fix --max-warnings=0",
     "depcheck": "depcheck"
   },
