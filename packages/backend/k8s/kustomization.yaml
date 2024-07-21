@@ -2,11 +2,12 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+  - postgres-deployment.yaml
   - deployment.yaml
   - service.yaml
-  - postgres-deployment.yaml
+
 
 images:
 - name: lingua-quiz-backend
-  newName: ${{ secrets.DOCKERHUB_USERNAME }}/lingua-quiz-backend
+  newName: IMAGE_NAME_PLACEHOLDER
   newTag: latest

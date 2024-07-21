@@ -4,8 +4,6 @@ import time
 from typing import List, Dict, Optional
 import github
 from openai import OpenAI
-import html
-import tiktoken
 from utils import (
     get_env_variable, init_github_client, get_repo_content, get_pr_diff,
     sanitize_input, post_review, count_tokens, split_codebase
@@ -104,10 +102,10 @@ def review_code(client: OpenAI, repo_content: str, pr_diff: str, pr_title: str, 
     [Your review here]
 
     Suggested Short Commit Message:
-    [Your suggested short commit message here]
+    [Your suggested short commit message here, max 8 words, dont use buzz words, be consise, be specific]
 
-    Merge Decision:
-    [YES/NO]: [Brief explanation for the decision. Be consise. Always add file name. Be specific!!!]
+    Merge Decision:[YES/NO]
+        - [file path]: [Brief explanation for the decision. Be consise. Be specific!!!]
     """
 
     try:        
@@ -125,6 +123,11 @@ def review_code(client: OpenAI, repo_content: str, pr_diff: str, pr_title: str, 
         logger.error(f"OpenAI API error during final review: {str(e)}")
         return f"Error occurred during code review: {str(e)}"
 
+def extract_merge_decision(review: str) -> bool:
+    merge_decision_section = review.split("Merge Decision:")[-1].strip()
+    decision = merge_decision_section.split(":")[0].strip().upper()
+    return decision == "YES"
+
 def main():
     try:
         logger.info("Starting code review process")
@@ -140,12 +143,16 @@ def main():
         logger.info("Posting review")
         post_review(pull_request, review)
         logger.info("Code review process completed successfully")
+        return extract_merge_decision(review)
     except ValueError as e:
         logger.error(f"Configuration error: {str(e)}")
+        return False
     except github.GithubException as e:
         logger.error(f"GitHub API error: {str(e)}")
+        return False
     except Exception as e:
         logger.error(f"An unexpected error occurred: {str(e)}")
+        return False
 
 if __name__ == "__main__":
     main()

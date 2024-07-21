@@ -14,6 +14,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
 
     - name: Set up Node.js
       uses: actions/setup-node@v2
@@ -31,16 +33,13 @@ jobs:
     - name: Check for changes
       id: git-check
       run: |
-        git diff
-        if [ -n "$(git diff)" ]; then
-          echo "::set-output name=changed::true"
-        fi
+        git diff --exit-code || echo "::set-output name=changed::true"
 
-    - name: Commit auto-fixes
+    - name: Commit and push if changes exist
       if: steps.git-check.outputs.changed == 'true'
       run: |
         git config --global user.name 'github-actions'
         git config --global user.email 'github-actions@github.com'
-        git add -u
+        git add -A
         git commit -m "Apply ESLint fixes"
-        git push
+        git push origin HEAD:${{ github.head_ref }}
