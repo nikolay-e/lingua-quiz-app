@@ -2,6 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
+    mocha: true,
   },
   extends: ['airbnb-base', 'plugin:prettier/recommended'],
   overrides: [],
@@ -9,7 +10,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['prettier'],
+  plugins: ['prettier', 'mocha'],
   rules: {
     'prettier/prettier': [
       'error',

@@ -2,7 +2,7 @@ name: AI Code Review
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [ready_for_review, synchronize]
 
 jobs:
   review:
@@ -33,18 +33,33 @@ jobs:
 
     - name: Set PR status
       uses: actions/github-script@v6
+      env:
+        MERGE_DECISION: ${{ steps.ai_review.outputs.merge_decision }}
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
         script: |
-          const mergeDecision = '${{ steps.ai_review.outputs.merge_decision }}';
+          const mergeDecision = process.env.MERGE_DECISION.trim().toLowerCase();
+          console.log(`Merge decision: ${mergeDecision}`);
+          
+          let state, description;
+          if (mergeDecision === 'success') {
+            state = 'success';
+            description = 'AI review passed';
+          } else {
+            state = 'failure';
+            description = 'AI review failed';
+          }
+          
           github.rest.repos.createCommitStatus({
             owner: context.repo.owner,
             repo: context.repo.repo,
             sha: context.sha,
-            state: mergeDecision,
-            description: mergeDecision === 'success' ? 'AI review passed' : 'AI review failed',
+            state: state,
+            description: description,
             context: 'AI Code Review'
           });
+          
+          console.log(`Set PR status to: ${state}`);
 
     - name: Comment PR on failure
       uses: actions/github-script@v6

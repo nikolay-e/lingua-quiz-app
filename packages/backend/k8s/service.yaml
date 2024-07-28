@@ -7,6 +7,6 @@ spec:
     app: lingua-quiz-backend
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 3000
+      port: 443
+      targetPort: 3000  # This should match the PORT env variable in your deployment
   type: LoadBalancer

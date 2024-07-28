@@ -68,4 +68,8 @@ amplifytools.xcconfig
 .secret-*
 *.secret
 **.sample
+*.key
+*.csr
+*.crt
+*.cnf
 #amplify-do-not-edit-end
