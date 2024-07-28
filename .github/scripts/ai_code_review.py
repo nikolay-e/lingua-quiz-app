@@ -89,11 +89,10 @@ def review_code(client: OpenAI, repo_content: str, pr_diff: str, pr_title: str, 
 
     Provide:
     1. Feedback on:
-       a. Code style and formatting status OK or NOT OK, add short review if NOT OK
-       b. Potential bugs or errors
-       c. Suggestions for improvement
-       d. Any security concerns
-       e. Overall design and architecture considerations - dont mention documentation
+       a. Potential bugs or errors
+       b. Suggestions for improvement
+       c. Any security concerns
+       d. Overall design and architecture considerations - dont mention documentation
     2. A suggested better short commit message based on the changes and the provided PR title and body
     3. A decision on whether the code is ready to be merged (YES/NO) with a brief explanation. Be consise. Always add file name. Be specific!!!
 
@@ -102,10 +101,10 @@ def review_code(client: OpenAI, repo_content: str, pr_diff: str, pr_title: str, 
     [Your review here]
 
     Suggested Short Commit Message:
-    [Your suggested short commit message here, max 8 words, dont use buzz words, be consise, be specific]
+    [Your suggested short commit message here, max 8 words, dont use buzz words, be consise, be specific, keep it short]
 
     Merge Decision:[YES/NO]
-        - [file path]: [Brief explanation for the decision. Be consise. Be specific!!!]
+        - [file path]: [Brief explanation what should be fixed. Be consise. Be specific!!!]
     """
 
     try:        
@@ -119,6 +118,7 @@ def review_code(client: OpenAI, repo_content: str, pr_diff: str, pr_title: str, 
         )
         logger.info("Received final review response from OpenAI")
         return response.choices[0].message.content
+
     except Exception as e:
         logger.error(f"OpenAI API error during final review: {str(e)}")
         return f"Error occurred during code review: {str(e)}"
@@ -143,7 +143,9 @@ def main():
         logger.info("Posting review")
         post_review(pull_request, review)
         logger.info("Code review process completed successfully")
-        return extract_merge_decision(review)
+        merge_decision = extract_merge_decision(review)
+        print(f"MERGE_DECISION={'success' if merge_decision else 'failure'}")
+        return merge_decision
     except ValueError as e:
         logger.error(f"Configuration error: {str(e)}")
         return False

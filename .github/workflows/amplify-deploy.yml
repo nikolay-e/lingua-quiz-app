@@ -8,9 +8,6 @@ on:
       - 'packages/frontend/**'
       - '.github/workflows/amplify-deploy.yml'
   pull_request:
-    types: [opened, synchronize, reopened]
-    branches:
-      - main
     paths:
       - 'packages/frontend/**'
       - '.github/workflows/amplify-deploy.yml'

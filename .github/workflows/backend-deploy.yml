@@ -1,42 +1,14 @@
-name: Backend CI/CD
+name: Deploy Backend
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'packages/backend/**'
-      - '.github/workflows/backend-ci-cd.yml'
-  pull_request:
-    branches:
-      - main
-    types: [opened, synchronize, reopened]
-    paths:
-      - 'packages/backend/**'
-      - '.github/workflows/backend-ci-cd.yml'
+  workflow_call:
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v2
-    
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-    
-    - name: Login to DockerHub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-    
-    - name: Build and push
-      uses: docker/build-push-action@v2
-      with:
-        context: ./packages/backend
-        push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/lingua-quiz-backend:${{ github.sha }}
     
     - name: Set up kubectl
       uses: azure/setup-kubectl@v1
@@ -64,13 +36,16 @@ jobs:
       run: |
         if [[ "${{ github.event_name }}" == "pull_request" ]]; then
           echo "DEPLOY_NAMESPACE=test" >> $GITHUB_ENV
-          echo "SERVICE_PORT=8080" >> $GITHUB_ENV
-          echo "CONTAINER_PORT=3001" >> $GITHUB_ENV
         else
           echo "DEPLOY_NAMESPACE=default" >> $GITHUB_ENV
-          echo "SERVICE_PORT=80" >> $GITHUB_ENV
-          echo "CONTAINER_PORT=3000" >> $GITHUB_ENV
         fi
+
+    - name: Cleanup before deployment
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const script = require('./.github/scripts/cleanup-cluster.js')
+          await script({github, context, core, exec})
 
     - name: Create namespace if not exists
       run: |
@@ -82,6 +57,13 @@ jobs:
           --namespace ${{ env.DEPLOY_NAMESPACE }} \
           --from-literal=JWT_SECRET=${{ secrets.JWT_SECRET }} \
           --dry-run=client -o yaml | kubectl apply -f -
+
+    - name: Create Server TLS Secret
+      run: |
+        kubectl create secret tls tls-secret \
+          --cert=<(echo "${{ secrets.TLS_SERVER_CERT }}") \
+          --key=<(echo "${{ secrets.TLS_SERVER_KEY }}") \
+          --namespace=${{ env.DEPLOY_NAMESPACE }}
 
     - name: Create PostgreSQL Secret
       run: |
@@ -109,13 +91,6 @@ jobs:
         yq e '.images[0].newTag = "${{ github.sha }}"' -i kustomization.yaml
         yq e '.metadata.namespace = "${{ env.DEPLOY_NAMESPACE }}"' -i deployment.yaml
         yq e '.metadata.namespace = "${{ env.DEPLOY_NAMESPACE }}"' -i postgres-deployment.yaml
-        yq e '.metadata.namespace = "${{ env.DEPLOY_NAMESPACE }}"' -i service.yaml
-        yq e '.spec.ports[0].port = ${{ env.SERVICE_PORT }}' -i service.yaml
-        yq e '.spec.ports[0].targetPort = ${{ env.CONTAINER_PORT }}' -i service.yaml
-        yq e '.spec.template.spec.containers[0].env += {"name": "PORT", "value": "${{ env.CONTAINER_PORT }}"}' -i deployment.yaml
-        yq e '.spec.template.spec.containers[0].livenessProbe.httpGet.port = ${{ env.CONTAINER_PORT }}' -i deployment.yaml
-        yq e '.spec.template.spec.containers[0].ports[0].containerPort = ${{ env.CONTAINER_PORT }}' -i deployment.yaml
-        yq e '.spec.template.spec.containers[0].readinessProbe.httpGet.port = ${{ env.CONTAINER_PORT }}' -i deployment.yaml
 
     - name: Deploy to Kubernetes
       run: |
@@ -141,30 +116,10 @@ jobs:
               POSTGRES_PASSWORD=$(kubectl get secret postgres-secret -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.data.POSTGRES_PASSWORD}" | base64 --decode) \
           npm run migrate
 
-    - name: Output Service URL
-      run: |
-        if [[ "${{ env.DEPLOY_NAMESPACE }}" == "test" ]]; then
-          echo "Test Service URL: http://test-lingua-quiz-backend.${{ secrets.DOMAIN }}:8080"
-          echo "Test Environment Variables:"
-          echo "PORT=${{ env.CONTAINER_PORT }}"
-        else
-          echo "Production Service URL: http://lingua-quiz-backend.${{ secrets.DOMAIN }}"
-          echo "Production Environment Variables:"
-          echo "PORT=${{ env.CONTAINER_PORT }}"
-        fi
-
     - name: Cleanup on failure
       if: failure()
-      run: |
-        echo "Deployment failed. Cleaning up resources..."
-        kubectl delete deployment lingua-quiz-backend -n ${{ env.DEPLOY_NAMESPACE }} --ignore-not-found
-        kubectl delete service lingua-quiz-backend -n ${{ env.DEPLOY_NAMESPACE }} --ignore-not-found
-
-        if [[ "${{ env.DEPLOY_NAMESPACE }}" == "test" ]]; then
-          kubectl delete deployment postgres -n test --ignore-not-found
-          kubectl delete service postgres -n test --ignore-not-found
-          kubectl delete secret postgres-secret -n test --ignore-not-found
-          kubectl delete secret jwt-secret -n test --ignore-not-found
-          kubectl delete namespace test --ignore-not-found
-        fi
-        echo "Cleanup completed."
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const script = require('./.github/scripts/cleanup-cluster.js')
+          await script({github, context, core, exec})

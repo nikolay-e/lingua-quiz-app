@@ -6,6 +6,8 @@ const dotenv = require('dotenv');
 const rateLimit = require('express-rate-limit');
 const { body, validationResult } = require('express-validator');
 const winston = require('winston');
+const https = require('https');
+const fs = require('fs');
 
 dotenv.config();
 
@@ -67,16 +69,22 @@ function authenticateToken(req, res, next) {
 }
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  skip: (req) => req.path === '/healthz',
 });
 
 app.use(limiter);
 
 // Healthz endpoint for K8s probes
-app.get('/healthz', (req, res) => {
-  logger.info('Health check request received');
-  res.status(200).json({ status: 'ok' });
+app.get('/healthz', async (req, res) => {
+  try {
+    await pool.query('SELECT 1'); // Basic DB check
+    res.status(200).json({ status: 'ok' });
+  } catch (error) {
+    logger.error('Health check failed', { error });
+    res.status(500).json({ status: 'error', message: 'Database connection failed' });
+  }
 });
 
 app.post(
@@ -158,22 +166,88 @@ app.post(
   }
 );
 
-app.get('/protected', authenticateToken, (req, res) => {
-  logger.info('Protected route accessed', { userId: req.userId });
-  res.json({ message: 'This is a protected route', userId: req.userId });
+app.delete('/delete-account', authenticateToken, async (req, res) => {
+  const { userId } = req;
+
+  try {
+    // Delete the user from the database
+    const result = await pool.query('DELETE FROM users WHERE id = $1 RETURNING email', [userId]);
+
+    if (result.rows.length === 0) {
+      logger.warn('Account deletion failed: User not found', { userId });
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const deletedUserEmail = result.rows[0].email;
+    logger.info('User account deleted successfully', { userId, email: deletedUserEmail });
+
+    return res.status(200).json({ message: 'Account deleted successfully' });
+  } catch (error) {
+    logger.error('Account deletion error', { userId, error });
+    return res.status(500).json({ message: 'Server error' });
+  }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  logger.info(`Server running on port ${PORT}`);
-});
+function getSSLOptions() {
+  const keyPath = process.env.SSL_KEY_PATH || '/etc/tls/tls.key';
+  const certPath = process.env.SSL_CERT_PATH || '/etc/tls/tls.crt';
 
-// Log unhandled promise rejections
+  if (!fs.existsSync(keyPath)) {
+    throw new Error(`SSL key file not found: ${keyPath}`);
+  }
+  if (!fs.existsSync(certPath)) {
+    throw new Error(`SSL certificate file not found: ${certPath}`);
+  }
+
+  try {
+    return {
+      key: fs.readFileSync(keyPath),
+      cert: fs.readFileSync(certPath),
+    };
+  } catch (readError) {
+    throw new Error(`Failed to read SSL files: ${readError.message}`);
+  }
+}
+
+function startServer() {
+  const PORT = process.env.PORT || 3000;
+
+  try {
+    const sslOptions = getSSLOptions();
+    const server = https.createServer(sslOptions, app);
+
+    server.listen(PORT, () => {
+      logger.info(`HTTPS Server running on port ${PORT}`);
+    });
+
+    server.on('error', (serverError) => {
+      logger.error('Server error:', serverError);
+      process.exit(1);
+    });
+  } catch (sslError) {
+    logger.error('Failed to start HTTPS server:', sslError);
+    if (process.env.NODE_ENV === 'production') {
+      process.exit(1);
+    } else {
+      logger.warn('Falling back to HTTP server in non-production environment');
+      const httpServer = app.listen(PORT, () => {
+        logger.info(`HTTP Server running on port ${PORT}`);
+      });
+
+      httpServer.on('error', (httpError) => {
+        logger.error('HTTP Server error:', httpError);
+        process.exit(1);
+      });
+    }
+  }
+}
+
+startServer();
+
 process.on('unhandledRejection', (reason, promise) => {
   logger.error('Unhandled Rejection at:', promise, 'reason:', reason);
 });
 
-// Log uncaught exceptions
 process.on('uncaughtException', (error) => {
   logger.error('Uncaught Exception:', error);
   process.exit(1);
