@@ -3,11 +3,8 @@ const https = require('https');
 const { expect } = require('chai');
 
 const API_URL = process.env.API_URL || 'https://localhost:3000';
-const { CA_CERT } = process.env;
 
-// Create a custom HTTPS agent that uses the CA certificate
 const httpsAgent = new https.Agent({
-  ca: CA_CERT,
 });
 
 // Create an Axios instance with the custom agent

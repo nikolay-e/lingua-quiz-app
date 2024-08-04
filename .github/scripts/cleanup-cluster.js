@@ -1,5 +1,5 @@
 module.exports = async ({github, context, core, exec}) => {
-  console.log("Deployment failed. Cleaning up resources...");
+  console.log("Cleaning up resources...");
 
   await exec.exec('kubectl', ['delete', 'deployment', 'lingua-quiz-backend', '-n', process.env.DEPLOY_NAMESPACE, '--ignore-not-found']);
 
