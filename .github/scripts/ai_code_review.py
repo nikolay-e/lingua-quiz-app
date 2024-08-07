@@ -94,7 +94,7 @@ def review_code(client: OpenAI, repo_content: str, pr_diff: str, pr_title: str, 
        c. Any security concerns
        d. Overall design and architecture considerations - dont mention documentation
     2. A suggested better short commit message based on the changes and the provided PR title and body
-    3. A decision on whether the code is ready to be merged (YES/NO) with a brief explanation. Be consise. Always add file name. Be specific!!!
+    3. A decision on whether the code is ready to be merged (YES/NO) with a brief explanation. Be consise. Always add file name. Be specific. Before suggestions recheck yourself it what you want to suggest makes sense
 
     Structure your response as follows:
     Code Review:
@@ -104,7 +104,7 @@ def review_code(client: OpenAI, repo_content: str, pr_diff: str, pr_title: str, 
     [Your suggested short commit message here, max 8 words, dont use buzz words, be consise, be specific, keep it short]
 
     Merge Decision:[YES/NO]
-        - [file path]: [Brief explanation what should be fixed. Be consise. Be specific!!!]
+        - [file path]: [Brief explanation what should be fixed. Be consise. Be specific. Before suggestions recheck yourself it what you want to suggest makes sense. Dont deny the PR if only documentation is missing.]
     """
 
     try:        

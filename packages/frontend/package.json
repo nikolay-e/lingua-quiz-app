@@ -3,15 +3,20 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "test": "jest",
-    "start": "live-server src",
-    "build": "rm -rf dist && cp -R src dist"
+    "start": "vite",
+    "build:dev": "vite build --mode development",
+    "build:prod": "vite build --mode production",
+    "preview": "vite preview"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "live-server": "^1.2.2"
+    "axios": "^1.7.3",
+    "https": "^1.0.0",
+    "live-server": "^1.2.2",
+    "vite": "^5.3.5",
+    "vite-plugin-static-copy": "^1.0.6"
   },
   "description": ""
 }

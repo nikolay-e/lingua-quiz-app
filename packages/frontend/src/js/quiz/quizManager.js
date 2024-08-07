@@ -1,5 +1,3 @@
-// quizManager.js
-
 import getRandomWordFromTopFew from './wordSetManager.js';
 import { updateWordSetsDisplay } from '../ui/displayManager.js';
 import { updateStats, getIncorrectPerWord } from '../utils/statsManager.js';

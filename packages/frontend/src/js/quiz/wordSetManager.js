@@ -1,5 +1,3 @@
-// wordSetManager.js
-
 import { getIncorrectPerWord } from '../utils/statsManager.js';
 
 const lastAskedWords = [];

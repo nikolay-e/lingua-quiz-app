@@ -4,8 +4,7 @@ const { expect } = require('chai');
 
 const API_URL = process.env.API_URL || 'https://localhost:3000';
 
-const httpsAgent = new https.Agent({
-});
+const httpsAgent = new https.Agent({});
 
 // Create an Axios instance with the custom agent
 const axiosInstance = axios.create({

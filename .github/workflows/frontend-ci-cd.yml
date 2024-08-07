@@ -41,12 +41,22 @@ jobs:
           echo "TAGS=${{ secrets.DOCKERHUB_USERNAME }}/lingua-quiz-frontend:dev-latest,${{ secrets.DOCKERHUB_USERNAME }}/lingua-quiz-frontend:dev-${{ github.sha }}" >> $GITHUB_OUTPUT
         fi
 
+    - name: Set build environment
+      run: |
+        if [ "${{ github.event_name }}" = "push" ] && [ "${{ github.ref }}" = "refs/heads/main" ]; then
+          echo "BUILD_ENV=prod" >> $GITHUB_ENV
+        else
+          echo "BUILD_ENV=test" >> $GITHUB_ENV
+        fi
+
     - name: Build and push
       uses: docker/build-push-action@v4
       with:
         context: packages/frontend
         push: true
         tags: ${{ steps.set_tags.outputs.TAGS }}
+        build-args: |
+          BUILD_ENV=${{ env.BUILD_ENV }}
 
   prepare-vps:
     runs-on: ubuntu-latest

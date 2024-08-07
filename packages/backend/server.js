@@ -8,6 +8,7 @@ const { body, validationResult } = require('express-validator');
 const winston = require('winston');
 const https = require('https');
 const fs = require('fs');
+const cors = require('cors');
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ const logger = winston.createLogger({
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 const pool = new Pool({
   host: process.env.DB_HOST,
@@ -170,7 +172,6 @@ app.delete('/delete-account', authenticateToken, async (req, res) => {
   const { userId } = req;
 
   try {
-    // Delete the user from the database
     const result = await pool.query('DELETE FROM users WHERE id = $1 RETURNING email', [userId]);
 
     if (result.rows.length === 0) {
