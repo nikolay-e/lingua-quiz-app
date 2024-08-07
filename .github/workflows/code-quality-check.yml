@@ -4,8 +4,8 @@ on:
   pull_request:
 
 jobs:
-  lint:
-    name: Running ESLint
+  eslint:
+    name: ESLint
     runs-on: ubuntu-latest
 
     steps:
@@ -23,4 +23,25 @@ jobs:
       run: npm install
 
     - name: Run ESLint
-      run: npm run lint
+      run: npm run eslint
+
+    - name: Run ESLint
+      run: npm run depcheck
+
+  codeql:
+    name: CodeQL
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        language: [ 'javascript' ]
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: ${{ matrix.language }}
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v2
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2

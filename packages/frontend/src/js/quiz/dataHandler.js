@@ -130,7 +130,7 @@ export function validateJSONStructure(data) {
     'Mastered Vocabulary',
     'Upcoming Words',
   ];
-  // eslint-disable-next-line no-restricted-syntax
+
   for (const category of requiredCategories) {
     if (!Array.isArray(data[category])) {
       throw new Error(`Invalid JSON structure: '${category}' should be an array`);

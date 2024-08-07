@@ -7,7 +7,7 @@ function redirectToLogin() {
 function logout() {
   localStorage.removeItem('token');
   localStorage.removeItem('email');
-  // eslint-disable-next-line no-use-before-define
+
   updateLoginStatus();
   window.location.href = 'login.html';
 }
