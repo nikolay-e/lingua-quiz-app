@@ -1,5 +1,3 @@
-// ui/displayManager.js
-
 import { stats } from '../utils/statsManager.js';
 import {
   quizWords,

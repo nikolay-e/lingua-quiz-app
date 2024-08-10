@@ -6,7 +6,6 @@ const API_URL = process.env.API_URL || 'https://localhost:3000';
 
 const httpsAgent = new https.Agent({});
 
-// Create an Axios instance with the custom agent
 const axiosInstance = axios.create({
   httpsAgent,
 });
@@ -49,7 +48,10 @@ describe('Backend API Tests', () => {
 
     it('should not login with incorrect credentials', async () => {
       try {
-        await axiosInstance.post(`${API_URL}/login`, { ...testUser, password: 'wrongPassword' });
+        await axiosInstance.post(`${API_URL}/login`, {
+          ...testUser,
+          password: 'wrongPassword',
+        });
       } catch (error) {
         expect(error.response.status).to.equal(401);
         expect(error.response.data.message).to.equal('Invalid credentials');

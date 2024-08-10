@@ -12,7 +12,6 @@ const cors = require('cors');
 
 dotenv.config();
 
-// Configure Winston logger
 const logger = winston.createLogger({
   level: 'info',
   format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
@@ -35,7 +34,6 @@ const pool = new Pool({
   password: process.env.POSTGRES_PASSWORD,
 });
 
-// Log database connection
 pool.on('connect', () => {
   logger.info('Connected to the database');
 });
@@ -78,7 +76,6 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
-// Healthz endpoint for K8s probes
 app.get('/healthz', async (req, res) => {
   try {
     await pool.query('SELECT 1'); // Basic DB check
@@ -180,7 +177,10 @@ app.delete('/delete-account', authenticateToken, async (req, res) => {
     }
 
     const deletedUserEmail = result.rows[0].email;
-    logger.info('User account deleted successfully', { userId, email: deletedUserEmail });
+    logger.info('User account deleted successfully', {
+      userId,
+      email: deletedUserEmail,
+    });
 
     return res.status(200).json({ message: 'Account deleted successfully' });
   } catch (error) {

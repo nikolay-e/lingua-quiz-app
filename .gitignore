@@ -73,4 +73,4 @@ amplifytools.xcconfig
 *.crt
 !ca.crt
 *.cnf
-#amplify-do-not-edit-end
+*.pem

@@ -6,8 +6,7 @@ resources:
   - deployment.yaml
   - service.yaml
 
-
 images:
-- name: lingua-quiz-backend
-  newName: IMAGE_NAME_PLACEHOLDER
-  newTag: latest
+  - name: lingua-quiz-backend
+    newName: IMAGE_NAME_PLACEHOLDER
+    newTag: latest

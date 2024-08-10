@@ -1,5 +1,3 @@
-// statsManager.js
-
 import {
   focusWordsSet,
   masteredOneDirectionSet,
@@ -25,7 +23,11 @@ export function updateStats(isTheAnswerCorrect, originalWord, startTime, directi
   stats.timePerQuestion.push(timeTaken);
 
   if (!stats.attemptsPerWord[originalWord]) {
-    stats.attemptsPerWord[originalWord] = { attempts: 0, correct: 0, incorrect: 0 };
+    stats.attemptsPerWord[originalWord] = {
+      attempts: 0,
+      correct: 0,
+      incorrect: 0,
+    };
     stats.timePerWord[originalWord] = [];
   }
 

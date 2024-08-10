@@ -13,33 +13,33 @@ spec:
         app: postgres
     spec:
       containers:
-      - name: postgres
-        image: postgres:13
-        ports:
-        - containerPort: 5432
-        env:
-        - name: POSTGRES_DB
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: POSTGRES_DB
-        - name: POSTGRES_USER
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: POSTGRES_USER
-        - name: POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: postgres-secret
-              key: POSTGRES_PASSWORD
-        volumeMounts:
-        - name: postgres-storage
-          mountPath: /var/lib/postgresql/data
-          subPath: postgres  # Uses a subdirectory to prevent overwriting the entire volume
+        - name: postgres
+          image: postgres:13
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_DB
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+              subPath: postgres # Uses a subdirectory to prevent overwriting the entire volume
       volumes:
-      - name: postgres-storage
-        emptyDir: {}
+        - name: postgres-storage
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service

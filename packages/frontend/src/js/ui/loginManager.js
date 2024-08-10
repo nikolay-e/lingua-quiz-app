@@ -1,4 +1,4 @@
-const SERVER_ADDRESS = process.env.SERVER_ADDRESS;
+const { SERVER_ADDRESS } = process.env;
 
 function redirectToLogin() {
   window.location.href = '/login.html';
