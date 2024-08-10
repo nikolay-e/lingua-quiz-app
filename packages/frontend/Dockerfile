@@ -8,6 +8,7 @@ RUN npm install
 
 COPY . .
 
+ARG BUILD_ENV
 RUN if [ "$BUILD_ENV" = "prod" ]; then \
         npm run build:prod; \
     else \
