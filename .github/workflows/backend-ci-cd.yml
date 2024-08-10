@@ -92,10 +92,14 @@ jobs:
 
     - name: Create Server TLS Secret
       run: |
-        kubectl create secret tls tls-secret \
-          --cert=<(echo "${{ secrets.SSL_CERT }}") \
-          --key=<(echo "${{ secrets.SSL_KEY }}") \
-          --namespace=${{ env.DEPLOY_NAMESPACE }}
+        if ! kubectl get secret tls-secret --namespace=${{ env.DEPLOY_NAMESPACE }} >/dev/null 2>&1; then
+          kubectl create secret tls tls-secret \
+            --cert=<(echo "${{ secrets.SSL_CERT }}") \
+            --key=<(echo "${{ secrets.SSL_KEY }}") \
+            --namespace=${{ env.DEPLOY_NAMESPACE }};
+        else
+          echo "Secret tls-secret already exists, skipping creation.";
+        fi
 
     - name: Create PostgreSQL Secret
       run: |
