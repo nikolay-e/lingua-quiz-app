@@ -8,5 +8,5 @@ spec:
   ports:
     - protocol: TCP
       port: 443
-      targetPort: 3000  # This should match the PORT env variable in your deployment
+      targetPort: 3000 # This should match the PORT env variable in your deployment
   type: LoadBalancer

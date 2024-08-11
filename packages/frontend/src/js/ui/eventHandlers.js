@@ -1,5 +1,3 @@
-// js/ui/eventHandlers.js
-
 import { initializeQuiz, verifyAnswer, continueQuiz } from '../quiz/quizManager.js';
 import { generateJSON, parseJSON, validateJSONStructure } from '../quiz/dataHandler.js';
 import { quizWords, setDirection, direction } from '../app.js';

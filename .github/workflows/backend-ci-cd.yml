@@ -15,180 +15,178 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
-    
-    - name: Login to DockerHub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
-    
-    - name: Build and push
-      uses: docker/build-push-action@v2
-      with:
-        context: ./packages/backend
-        push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/lingua-quiz-backend:${{ github.sha }}
+      - uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: ./packages/backend
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/lingua-quiz-backend:${{ github.sha }}
 
   deploy:
     needs: [build-and-push]
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: Set up kubectl
-      uses: azure/setup-kubectl@v1
-    
-    - name: Install kustomize
-      run: |
-        curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
-        sudo mv kustomize /usr/local/bin/
+      - uses: actions/checkout@v2
 
-    - name: Set up kubeconfig
-      run: |
-        mkdir -p $HOME/.kube
-        echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
-        chmod 600 $HOME/.kube/config
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v1
 
-    - name: Install yq
-      run: |
-        sudo wget -O /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/v4.25.1/yq_linux_amd64
-        sudo chmod +x /usr/local/bin/yq
+      - name: Install kustomize
+        run: |
+          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+          sudo mv kustomize /usr/local/bin/
 
-    - name: Verify kubectl configuration
-      run: kubectl cluster-info
+      - name: Set up kubeconfig
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
+          chmod 600 $HOME/.kube/config
 
-    - name: Set deployment namespace and ports
-      run: |
-        if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-          echo "DEPLOY_NAMESPACE=test" >> $GITHUB_ENV
-        else
-          echo "DEPLOY_NAMESPACE=default" >> $GITHUB_ENV
-        fi
+      - name: Install yq
+        run: |
+          sudo wget -O /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/v4.25.1/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
 
-    - name: Cleanup before deployment
-      uses: actions/github-script@v6
-      with:
-        script: |
-          const script = require('./.github/scripts/cleanup-cluster.js')
-          await script({github, context, core, exec})
+      - name: Verify kubectl configuration
+        run: kubectl cluster-info
 
-    - name: Create namespace if not exists
-      run: |
-        kubectl create namespace ${{ env.DEPLOY_NAMESPACE }} --dry-run=client -o yaml | kubectl apply -f -
+      - name: Set deployment namespace and ports
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "DEPLOY_NAMESPACE=test" >> $GITHUB_ENV
+          else
+            echo "DEPLOY_NAMESPACE=default" >> $GITHUB_ENV
+          fi
 
-    - name: Create or update JWT secret
-      run: |
-        kubectl create secret generic jwt-secret \
-          --namespace ${{ env.DEPLOY_NAMESPACE }} \
-          --from-literal=JWT_SECRET=${{ secrets.JWT_SECRET }} \
-          --dry-run=client -o yaml | kubectl apply -f -
+      - name: Cleanup before deployment
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const script = require('./.github/scripts/cleanup-cluster.js')
+            await script({github, context, core, exec})
 
-    - name: Create Server TLS Secret
-      run: |
-        if ! kubectl get secret tls-secret --namespace=${{ env.DEPLOY_NAMESPACE }} >/dev/null 2>&1; then
-          kubectl create secret tls tls-secret \
-            --cert=<(echo "${{ secrets.SSL_CERT }}") \
-            --key=<(echo "${{ secrets.SSL_KEY }}") \
-            --namespace=${{ env.DEPLOY_NAMESPACE }};
-        else
-          echo "Secret tls-secret already exists, skipping creation.";
-        fi
+      - name: Create namespace if not exists
+        run: |
+          kubectl create namespace ${{ env.DEPLOY_NAMESPACE }} --dry-run=client -o yaml | kubectl apply -f -
 
-    - name: Create PostgreSQL Secret
-      run: |
-        kubectl create secret generic postgres-secret \
-          --namespace=${{ env.DEPLOY_NAMESPACE }} \
-          --from-literal=POSTGRES_DB=linguaquiz \
-          --from-literal=POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
-          --from-literal=POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
-          --dry-run=client -o yaml | kubectl apply -f -
+      - name: Create or update JWT secret
+        run: |
+          kubectl create secret generic jwt-secret \
+            --namespace ${{ env.DEPLOY_NAMESPACE }} \
+            --from-literal=JWT_SECRET=${{ secrets.JWT_SECRET }} \
+            --dry-run=client -o yaml | kubectl apply -f -
 
-    - name: Wait for PostgreSQL Secret
-      run: |
-        timeout 30s bash -c 'while ! kubectl get secret postgres-secret --namespace ${{ env.DEPLOY_NAMESPACE }} &>/dev/null; do echo "Waiting for PostgreSQL secret..."; sleep 2; done' || (echo "Timed out waiting for PostgreSQL secret" && exit 1)
-      shell: bash
+      - name: Create Server TLS Secret
+        run: |
+          if ! kubectl get secret tls-secret --namespace=${{ env.DEPLOY_NAMESPACE }} >/dev/null 2>&1; then
+            kubectl create secret tls tls-secret \
+              --cert=<(echo "${{ secrets.SSL_CERT }}") \
+              --key=<(echo "${{ secrets.SSL_KEY }}") \
+              --namespace=${{ env.DEPLOY_NAMESPACE }};
+          else
+            echo "Secret tls-secret already exists, skipping creation.";
+          fi
 
-    - name: Wait for JWT Secret
-      run: |
-        timeout 30s bash -c 'while ! kubectl get secret jwt-secret --namespace ${{ env.DEPLOY_NAMESPACE }} &>/dev/null; do echo "Waiting for JWT secret..."; sleep 2; done' || (echo "Timed out waiting for JWT secret" && exit 1)
-      shell: bash
+      - name: Create PostgreSQL Secret
+        run: |
+          kubectl create secret generic postgres-secret \
+            --namespace=${{ env.DEPLOY_NAMESPACE }} \
+            --from-literal=POSTGRES_DB=linguaquiz \
+            --from-literal=POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
+            --from-literal=POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
+            --dry-run=client -o yaml | kubectl apply -f -
 
-    - name: Update manifests
-      run: |
-        cd packages/backend/k8s
-        yq e '.images[0].newName = "${{ secrets.DOCKERHUB_USERNAME }}/lingua-quiz-backend"' -i kustomization.yaml
-        yq e '.images[0].newTag = "${{ github.sha }}"' -i kustomization.yaml
-        yq e '.metadata.namespace = "${{ env.DEPLOY_NAMESPACE }}"' -i deployment.yaml
-        yq e '.metadata.namespace = "${{ env.DEPLOY_NAMESPACE }}"' -i postgres-deployment.yaml
+      - name: Wait for PostgreSQL Secret
+        run: |
+          timeout 30s bash -c 'while ! kubectl get secret postgres-secret --namespace ${{ env.DEPLOY_NAMESPACE }} &>/dev/null; do echo "Waiting for PostgreSQL secret..."; sleep 2; done' || (echo "Timed out waiting for PostgreSQL secret" && exit 1)
+        shell: bash
 
-    - name: Deploy to Kubernetes
-      run: |
-        cd packages/backend/k8s
-        kustomize build | kubectl apply -f -
+      - name: Wait for JWT Secret
+        run: |
+          timeout 30s bash -c 'while ! kubectl get secret jwt-secret --namespace ${{ env.DEPLOY_NAMESPACE }} &>/dev/null; do echo "Waiting for JWT secret..."; sleep 2; done' || (echo "Timed out waiting for JWT secret" && exit 1)
+        shell: bash
 
-    - name: Wait for postgres deployment to be ready
-      run: |
-        kubectl rollout status deployment/postgres -n ${{ env.DEPLOY_NAMESPACE }} --timeout=300s
+      - name: Update manifests
+        run: |
+          cd packages/backend/k8s
+          yq e '.images[0].newName = "${{ secrets.DOCKERHUB_USERNAME }}/lingua-quiz-backend"' -i kustomization.yaml
+          yq e '.images[0].newTag = "${{ github.sha }}"' -i kustomization.yaml
+          yq e '.metadata.namespace = "${{ env.DEPLOY_NAMESPACE }}"' -i deployment.yaml
+          yq e '.metadata.namespace = "${{ env.DEPLOY_NAMESPACE }}"' -i postgres-deployment.yaml
 
-    - name: Wait for app deployment to be ready
-      run: |
-        kubectl rollout status deployment/lingua-quiz-backend -n ${{ env.DEPLOY_NAMESPACE }} --timeout=300s
+      - name: Deploy to Kubernetes
+        run: |
+          cd packages/backend/k8s
+          kustomize build | kubectl apply -f -
 
-    - name: Run Database Migrations
-      run: |
-        BACKEND_POD=$(kubectl get pods -l app=lingua-quiz-backend -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.items[0].metadata.name}")
-        kubectl exec $BACKEND_POD -n ${{ env.DEPLOY_NAMESPACE }} -- \
-          env DB_HOST=postgres \
-              DB_PORT=5432 \
-              POSTGRES_DB=$(kubectl get secret postgres-secret -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.data.POSTGRES_DB}" | base64 --decode) \
-              POSTGRES_USER=$(kubectl get secret postgres-secret -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.data.POSTGRES_USER}" | base64 --decode) \
-              POSTGRES_PASSWORD=$(kubectl get secret postgres-secret -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.data.POSTGRES_PASSWORD}" | base64 --decode) \
-          npm run migrate
+      - name: Wait for postgres deployment to be ready
+        run: |
+          kubectl rollout status deployment/postgres -n ${{ env.DEPLOY_NAMESPACE }} --timeout=300s
 
-    - name: Cleanup on failure
-      if: failure()
-      uses: actions/github-script@v6
-      with:
-        script: |
-          const script = require('./.github/scripts/cleanup-cluster.js')
-          await script({github, context, core, exec})
+      - name: Wait for app deployment to be ready
+        run: |
+          kubectl rollout status deployment/lingua-quiz-backend -n ${{ env.DEPLOY_NAMESPACE }} --timeout=300s
+
+      - name: Run Database Migrations
+        run: |
+          BACKEND_POD=$(kubectl get pods -l app=lingua-quiz-backend -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.items[0].metadata.name}")
+          kubectl exec $BACKEND_POD -n ${{ env.DEPLOY_NAMESPACE }} -- \
+            env DB_HOST=postgres \
+                DB_PORT=5432 \
+                POSTGRES_DB=$(kubectl get secret postgres-secret -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.data.POSTGRES_DB}" | base64 --decode) \
+                POSTGRES_USER=$(kubectl get secret postgres-secret -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.data.POSTGRES_USER}" | base64 --decode) \
+                POSTGRES_PASSWORD=$(kubectl get secret postgres-secret -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.data.POSTGRES_PASSWORD}" | base64 --decode) \
+            npm run migrate
+
+      - name: Cleanup on failure
+        if: failure()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const script = require('./.github/scripts/cleanup-cluster.js')
+            await script({github, context, core, exec})
   test:
     needs: [build-and-push, deploy]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: Use Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '16'
-    - name: Install dependencies
-      run: |
-        cd packages/backend
-        npm ci
+      - uses: actions/checkout@v2
 
-    - name: Determine API URL and Run tests
-      run: |
-        if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-          API_URL="https://test-api-lingua-quiz.nikolay-eremeev.com"
-        else
-          API_URL="https://api-lingua-quiz.nikolay-eremeev.com"
-        fi
-        
-        cd packages/backend
-        npm install --save-dev @babel/core @babel/preset-env babel-jest
-        API_URL=$API_URL npm test
-  
-    - name: Upload test results
-      uses: actions/upload-artifact@v2
-      if: failure()
-      with:
-        name: test-results
-        path: packages/backend/test-results
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm install --save-dev @babel/core @babel/preset-env babel-jest
+
+      - name: Determine API URL and Run tests
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            API_URL="https://test-api-lingua-quiz.nikolay-eremeev.com"
+          else
+            API_URL="https://api-lingua-quiz.nikolay-eremeev.com"
+          fi
+
+          API_URL=$API_URL npm run test --workspace=@linguaquiz/backend
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: test-results
+          path: packages/backend/test-results

@@ -1,5 +1,3 @@
-// js/utils/BidirectionalMap.js
-
 export default class BidirectionalMap {
   constructor() {
     this.map = new Map();

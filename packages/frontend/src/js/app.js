@@ -1,5 +1,3 @@
-// app.js
-
 import BidirectionalMap from './utils/BidirectionalMap.js';
 import initAuth from './ui/loginManager.js';
 

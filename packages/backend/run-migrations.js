@@ -3,7 +3,6 @@ const path = require('path');
 const { Pool } = require('pg');
 const winston = require('winston');
 
-// Configure Winston logger
 const logger = winston.createLogger({
   level: 'info',
   format: winston.format.combine(
@@ -58,7 +57,11 @@ async function runMigrations() {
   };
 
   try {
-    await Promise.all(migrationFiles.map(runMigration));
+    await migrationFiles.reduce(async (previousPromise, file) => {
+      await previousPromise;
+      return runMigration(file);
+    }, Promise.resolve());
+
     logger.info('All migrations completed successfully');
   } catch (error) {
     logger.error('Error during migrations:', error);
