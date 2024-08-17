@@ -1,4 +1,7 @@
-const { SERVER_ADDRESS } = process.env;
+const SERVER_ADDRESS =
+  process.env.NODE_ENV === 'production'
+    ? 'https://api-lingua-quiz.nikolay-eremeev.com:443'
+    : 'https://test-api-lingua-quiz.nikolay-eremeev.com:443';
 
 function redirectToLogin() {
   window.location.href = '/login.html';
@@ -58,7 +61,7 @@ async function handleLogin(e) {
         window.location.href = '/'; // Redirect to the home page
       }, 1500);
     } else {
-      loginMessage.textContent = data.message || 'Invalid email or password';
+      loginMessage.textContent = data.message || 'Invalid credentials';
     }
   } catch (error) {
     console.error('Login error:', error);

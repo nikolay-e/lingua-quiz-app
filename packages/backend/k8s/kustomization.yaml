@@ -9,4 +9,4 @@ resources:
 images:
   - name: lingua-quiz-backend
     newName: IMAGE_NAME_PLACEHOLDER
-    newTag: latest
+    newTag: IMAGE_TAG_PLACEHOLDER
