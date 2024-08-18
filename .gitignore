@@ -74,3 +74,5 @@ amplifytools.xcconfig
 !ca.crt
 *.cnf
 *.pem
+
+cypress/screenshots

@@ -15,7 +15,6 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -32,15 +31,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Set Docker tags
-        id: set_tags
-        run: |
-          if [ "${{ github.event_name }}" = "push" ] && [ "${{ github.ref }}" = "refs/heads/main" ]; then
-            echo "TAGS=${{ secrets.DOCKERHUB_USERNAME }}/lingua-quiz-frontend:latest,${{ secrets.DOCKERHUB_USERNAME }}/lingua-quiz-frontend:${{ github.sha }}" >> $GITHUB_OUTPUT
-          else
-            echo "TAGS=${{ secrets.DOCKERHUB_USERNAME }}/lingua-quiz-frontend:dev-latest,${{ secrets.DOCKERHUB_USERNAME }}/lingua-quiz-frontend:dev-${{ github.sha }}" >> $GITHUB_OUTPUT
-          fi
-
       - name: Set build environment
         run: |
           if [ "${{ github.event_name }}" = "push" ] && [ "${{ github.ref }}" = "refs/heads/main" ]; then
@@ -54,7 +44,7 @@ jobs:
         with:
           context: packages/frontend
           push: true
-          tags: ${{ steps.set_tags.outputs.TAGS }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/lingua-quiz-frontend:${{ github.head_ref || github.ref_name }}-${{ github.run_number }}
           build-args: |
             BUILD_ENV=${{ env.BUILD_ENV }}
 
@@ -117,7 +107,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: [build-and-push, prepare-vps]
-
     steps:
       - name: Deploy to VPS
         env:
@@ -126,8 +115,9 @@ jobs:
           USER: ${{ secrets.SERVER_USER }}
           SSL_CERT: ${{ secrets.SSL_CERT }}
           SSL_KEY: ${{ secrets.SSL_KEY }}
-          HTTPS_PORT: ${{ github.event_name == 'pull_request' && '8443' || '443' }}
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          HTTPS_PORT: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && '443' || '8443' }}
+          NODE_ENV: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'production' || 'development' }}
+          IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/lingua-quiz-frontend:${{ github.head_ref || github.ref_name }}-${{ github.run_number }}
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
 
@@ -149,25 +139,16 @@ jobs:
             sudo mv /tmp/key.pem /etc/nginx/ssl/key.pem
             sudo chmod 600 /etc/nginx/ssl/cert.pem /etc/nginx/ssl/key.pem
             
-            HTTPS_PORT=${HTTPS_PORT}
-            DOCKERHUB_USERNAME=${DOCKERHUB_USERNAME}
+            echo \"Using image: ${IMAGE_NAME}\"
 
-            if [ \"\${HTTPS_PORT}\" = \"443\" ]; then
-              IMAGE_HASH=\${DOCKERHUB_USERNAME}/lingua-quiz-frontend:latest
-            else
-              IMAGE_HASH=\${DOCKERHUB_USERNAME}/lingua-quiz-frontend:dev-latest
-            fi
-
-            echo \"Using image: \${IMAGE_HASH}\"
-
-            # Pull and run Docker container with specific image hash
-            docker pull \${IMAGE_HASH}
-            docker stop website-container-\${HTTPS_PORT} || true
-            docker rm website-container-\${HTTPS_PORT} || true
-            docker run -d --name website-container-\${HTTPS_PORT} \
-              -p \${HTTPS_PORT}:\${HTTPS_PORT} \
+            # Pull and run Docker container with specific image
+            docker pull ${IMAGE_NAME}
+            docker stop website-container-${HTTPS_PORT} || true
+            docker rm website-container-${HTTPS_PORT} || true
+            docker run -d --name website-container-${HTTPS_PORT} \
+              -p ${HTTPS_PORT}:${HTTPS_PORT} \
               -v /etc/nginx/ssl/cert.pem:/etc/nginx/ssl/cert.pem:ro \
               -v /etc/nginx/ssl/key.pem:/etc/nginx/ssl/key.pem:ro \
-              -e HTTPS_PORT=\${HTTPS_PORT} \
-              \${IMAGE_HASH}
+              -e NODE_ENV=${NODE_ENV} \
+              ${IMAGE_NAME}
           "

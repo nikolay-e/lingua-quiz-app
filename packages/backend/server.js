@@ -189,6 +189,28 @@ app.delete('/delete-account', authenticateToken, async (req, res) => {
   }
 });
 
+app.get('/word-list/:name', authenticateToken, async (req, res) => {
+  const { name } = req.params;
+
+  try {
+    const result = await pool.query(
+      `
+          SELECT * FROM get_words_and_translations_by_list_name($1)
+      `,
+      [name]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Word list not found' });
+    }
+
+    return res.status(200).json(result.rows);
+  } catch (error) {
+    logger.error('Error fetching word list', { error });
+    return res.status(500).json({ message: 'Server error' });
+  }
+});
+
 function getSSLOptions() {
   const keyPath = process.env.SSL_KEY_PATH || '/etc/tls/tls.key';
   const certPath = process.env.SSL_CERT_PATH || '/etc/tls/tls.crt';

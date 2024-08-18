@@ -33,7 +33,7 @@ jobs:
         with:
           context: ./packages/backend
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/lingua-quiz-backend:${{ github.sha }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/lingua-quiz-backend:${{ github.head_ref || github.ref_name }}-${{ github.run_number }}
 
   deploy:
     needs: [build-and-push]
@@ -121,12 +121,18 @@ jobs:
         shell: bash
 
       - name: Update manifests
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          IMAGE_TAG: ${{ github.head_ref || github.ref_name }}-${{ github.run_number }}
+          IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/lingua-quiz-backend
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+          DEPLOY_NAMESPACE: ${{ env.DEPLOY_NAMESPACE }}
         run: |
           cd packages/backend/k8s
-          yq e '.images[0].newName = "${{ secrets.DOCKERHUB_USERNAME }}/lingua-quiz-backend"' -i kustomization.yaml
-          yq e '.images[0].newTag = "${{ github.sha }}"' -i kustomization.yaml
-          yq e '.metadata.namespace = "${{ env.DEPLOY_NAMESPACE }}"' -i deployment.yaml
-          yq e '.metadata.namespace = "${{ env.DEPLOY_NAMESPACE }}"' -i postgres-deployment.yaml
+          yq e ".images[0].newName = \"${IMAGE_NAME}\"" -i kustomization.yaml
+          yq e ".images[0].newTag = \"${IMAGE_TAG}\"" -i kustomization.yaml
+          yq e ".metadata.namespace = \"${DEPLOY_NAMESPACE}\"" -i deployment.yaml
+          yq e ".metadata.namespace = \"${DEPLOY_NAMESPACE}\"" -i postgres-deployment.yaml
 
       - name: Deploy to Kubernetes
         run: |
@@ -190,3 +196,47 @@ jobs:
         with:
           name: test-results
           path: packages/backend/test-results
+
+      - name: Trigger Cypress Tests
+        if: ${{ success() }}
+        run: |
+          curl -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          https://api.github.com/repos/${{ github.repository }}/dispatches \
+          -d '{"event_type":"backend_completed"}'
+
+  cypress-e2e-tests:
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+
+      - name: Install required system dependencies
+        run: sudo apt-get install -y libnss3 libgbm1 libgtk-3-0 libxss1 libasound2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Determine API URL and Run tests
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            LINGUA_QUIZ_URL="https://lingua-quiz.nikolay-eremeev.com:8443"
+          else
+            LINGUA_QUIZ_URL="https://lingua-quiz.nikolay-eremeev.com"
+          fi
+
+          LINGUA_QUIZ_URL=$LINGUA_QUIZ_URL npx cypress run
+
+      - name: Archive Cypress results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-results
+          path: cypress/results

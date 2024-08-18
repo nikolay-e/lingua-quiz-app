@@ -7,5 +7,19 @@
   "semi": true,
   "singleQuote": true,
   "bracketSpacing": true,
-  "plugins": ["prettier-plugin-sql"]
+  "plugins": ["prettier-plugin-sql", "prettier-plugin-sh"],
+  "overrides": [
+    {
+      "files": "*.sql",
+      "options": {
+        "language": "postgresql"
+      }
+    },
+    {
+      "files": "*.sh",
+      "options": {
+        "parser": "sh"
+      }
+    }
+  ]
 }
