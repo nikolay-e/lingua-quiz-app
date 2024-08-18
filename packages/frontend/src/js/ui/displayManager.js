@@ -1,15 +1,14 @@
 import { stats } from '../utils/statsManager.js';
 import {
-  quizWords,
-  focusWordsSet,
-  masteredOneDirectionSet,
-  masteredVocabularySet,
-  upcomingWordsSet,
-  currentWord,
-  direction,
+  quizTranslations,
+  focusTranslationIds,
+  masteredOneDirectionTranslationIds,
+  masteredVocabularyTranslationIds,
+  upcomingTranslationIds,
+  currentTranslationId,
 } from '../app.js';
 
-function updateSetDisplay(elementId, wordSet) {
+function updateSetDisplay(elementId, translationSet) {
   const container = document.getElementById(elementId);
   if (!container) {
     console.error('updateSetDisplay: Failed to find element with ID', elementId);
@@ -18,20 +17,14 @@ function updateSetDisplay(elementId, wordSet) {
 
   container.innerHTML = '';
 
-  const wordsArray = Array.from(wordSet);
-  if (elementId === 'focus-words-list' && stats && stats.incorrectPerWord) {
-    wordsArray.sort((a, b) => (stats.incorrectPerWord[a] || 0) - (stats.incorrectPerWord[b] || 0));
-  }
-
-  wordsArray.forEach((word) => {
+  const translationArray = Array.from(translationSet);
+  translationArray.forEach((id) => {
+    const translation = quizTranslations.get(id);
     const listItem = document.createElement('li');
-    const translation = direction
-      ? quizWords.get(word)
-      : quizWords.getKey(word) || 'No translation available';
     const displayText =
-      elementId === 'focus-words-list' && word === currentWord
-        ? `${word} (translation hidden)`
-        : `${word} (${translation})`;
+      elementId === 'focus-words-list' && id === currentTranslationId
+        ? `${translation.source_word} (translation hidden)`
+        : `${translation.source_word} (${translation.target_word})`;
     listItem.textContent = displayText;
     container.appendChild(listItem);
   });
@@ -54,8 +47,8 @@ export function updateStatsDisplay() {
 }
 
 export function updateWordSetsDisplay() {
-  updateSetDisplay('focus-words-list', focusWordsSet);
-  updateSetDisplay('mastered-one-direction-list', masteredOneDirectionSet);
-  updateSetDisplay('mastered-vocabulary-list', masteredVocabularySet);
-  updateSetDisplay('upcoming-words-list', upcomingWordsSet);
+  updateSetDisplay('focus-words-list', focusTranslationIds);
+  updateSetDisplay('mastered-one-direction-list', masteredOneDirectionTranslationIds);
+  updateSetDisplay('mastered-vocabulary-list', masteredVocabularyTranslationIds);
+  updateSetDisplay('upcoming-words-list', upcomingTranslationIds);
 }

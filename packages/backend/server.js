@@ -43,25 +43,25 @@ pool.on('error', (err) => {
 });
 
 async function userExists(email) {
-  const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+  const result = await pool.query('SELECT * FROM "user" WHERE email = $1', [email]);
   return result.rows.length > 0;
 }
 
+// eslint-disable-next-line consistent-return
 function authenticateToken(req, res, next) {
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.split(' ')[1];
 
   if (token == null) {
     logger.warn('Authentication failed: No token provided');
-    res.sendStatus(401);
-    return;
+    return res.sendStatus(401);
   }
 
+  // eslint-disable-next-line consistent-return
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
       logger.warn('Authentication failed: Invalid token', { error: err });
-      res.sendStatus(403);
-      return;
+      return res.sendStatus(403);
     }
     req.userId = user.userId;
     next();
@@ -78,7 +78,7 @@ app.use(limiter);
 
 app.get('/healthz', async (req, res) => {
   try {
-    await pool.query('SELECT 1'); // Basic DB check
+    await pool.query('SELECT 1');
     res.status(200).json({ status: 'ok' });
   } catch (error) {
     logger.error('Health check failed', { error });
@@ -110,7 +110,7 @@ app.post(
         Number(process.env.BCRYPT_SALT_ROUNDS) || 10
       );
 
-      await pool.query('INSERT INTO users (email, password) VALUES ($1, $2)', [
+      await pool.query('INSERT INTO "user" (email, password) VALUES ($1, $2)', [
         email,
         hashedPassword,
       ]);
@@ -138,7 +138,7 @@ app.post(
     const { email, password } = req.body;
 
     try {
-      const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+      const result = await pool.query('SELECT * FROM "user" WHERE email = $1', [email]);
       if (result.rows.length === 0) {
         logger.warn('Login failed: User not found', { email });
         return res.status(401).json({ message: 'Invalid credentials' });
@@ -169,7 +169,7 @@ app.delete('/delete-account', authenticateToken, async (req, res) => {
   const { userId } = req;
 
   try {
-    const result = await pool.query('DELETE FROM users WHERE id = $1 RETURNING email', [userId]);
+    const result = await pool.query('DELETE FROM "user" WHERE id = $1 RETURNING email', [userId]);
 
     if (result.rows.length === 0) {
       logger.warn('Account deletion failed: User not found', { userId });
@@ -189,24 +189,54 @@ app.delete('/delete-account', authenticateToken, async (req, res) => {
   }
 });
 
-app.get('/word-list/:name', authenticateToken, async (req, res) => {
-  const { name } = req.params;
+app.get('/user/word-sets', authenticateToken, async (req, res) => {
+  const { userId } = req;
+  const { wordListName } = req.query;
+
+  if (!wordListName) {
+    logger.warn('Word list name not provided');
+    return res.status(400).json({ message: 'Word list name is required' });
+  }
 
   try {
-    const result = await pool.query(
-      `
-          SELECT * FROM get_words_and_translations_by_list_name($1)
-      `,
-      [name]
-    );
+    const result = await pool.query('SELECT * FROM get_user_word_sets($1, $2)', [
+      userId,
+      wordListName,
+    ]);
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ message: 'Word list not found' });
+      logger.info('No word sets found', { userId, wordListName });
+      return res.status(404).json({ message: 'No word sets found' });
     }
 
+    logger.info('Word sets retrieved successfully', { userId, wordListName });
     return res.status(200).json(result.rows);
   } catch (error) {
-    logger.error('Error fetching word list', { error });
+    logger.error('Error retrieving word sets', { userId, wordListName, error });
+    return res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.post('/user/word-sets', authenticateToken, async (req, res) => {
+  const { userId } = req;
+  const { status, wordPairIds } = req.body;
+
+  if (!status || !Array.isArray(wordPairIds)) {
+    logger.warn('Invalid input for updating word sets', { userId, status, wordPairIds });
+    return res.status(400).json({ message: 'Status and wordPairIds are required' });
+  }
+
+  try {
+    await pool.query('SELECT update_user_word_set_status($1, $2, $3::translation_status)', [
+      userId,
+      wordPairIds,
+      status,
+    ]);
+
+    logger.info('User word sets updated successfully', { userId, status });
+    return res.status(200).json({ message: 'Word sets updated successfully' });
+  } catch (error) {
+    logger.error('Error updating user word sets', { userId, status, error });
     return res.status(500).json({ message: 'Server error' });
   }
 });

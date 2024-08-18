@@ -1,5 +1,5 @@
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo soy estudiante',
     'Я студент',
     'es',
@@ -8,7 +8,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo soy de Rusia',
     'Я из России',
     'es',
@@ -17,7 +17,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo soy alto',
     'Я высокий',
     'es',
@@ -26,7 +26,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú eres amable',
     'Ты добрый',
     'es',
@@ -35,7 +35,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú eres inteligente',
     'Ты умный',
     'es',
@@ -44,7 +44,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú eres mi amigo',
     'Ты мой друг',
     'es',
@@ -53,7 +53,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él es médico',
     'Он врач',
     'es',
@@ -62,7 +62,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él es simpático',
     'Он приятный',
     'es',
@@ -71,7 +71,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él es de España',
     'Он из Испании',
     'es',
@@ -80,7 +80,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella es profesora',
     'Она учительница',
     'es',
@@ -89,7 +89,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella es bonita',
     'Она красивая',
     'es',
@@ -98,7 +98,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella es mi hermana',
     'Она моя сестра',
     'es',
@@ -107,7 +107,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros somos familia',
     'Мы семья',
     'es',
@@ -116,7 +116,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros somos estudiantes',
     'Мы студенты',
     'es',
@@ -125,7 +125,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros somos amigos',
     'Мы друзья',
     'es',
@@ -134,7 +134,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros sois españoles',
     'Вы испанцы',
     'es',
@@ -143,7 +143,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros sois divertidos',
     'Вы веселые',
     'es',
@@ -152,7 +152,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros sois trabajadores',
     'Вы трудолюбивые',
     'es',
@@ -161,7 +161,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos son hermanos',
     'Они братья',
     'es',
@@ -170,7 +170,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos son altos',
     'Они высокие',
     'es',
@@ -179,7 +179,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos son de México',
     'Они из Мексики',
     'es',
@@ -188,7 +188,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo estoy en casa',
     'Я дома',
     'es',
@@ -197,7 +197,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo estoy feliz',
     'Я счастлив',
     'es',
@@ -206,7 +206,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo estoy ocupado',
     'Я занят',
     'es',
@@ -215,7 +215,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú estás en la escuela',
     'Ты в школе',
     'es',
@@ -224,7 +224,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú estás cansado',
     'Ты уставший',
     'es',
@@ -233,7 +233,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú estás enfermo',
     'Ты болен',
     'es',
@@ -242,7 +242,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él está en el trabajo',
     'Он на работе',
     'es',
@@ -251,7 +251,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él está contento',
     'Он доволен',
     'es',
@@ -260,7 +260,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él está nervioso',
     'Он нервничает',
     'es',
@@ -269,7 +269,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella está en el parque',
     'Она в парке',
     'es',
@@ -278,7 +278,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella está triste',
     'Она грустная',
     'es',
@@ -287,7 +287,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella está enojada',
     'Она сердитая',
     'es',
@@ -296,7 +296,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros estamos en la playa',
     'Мы на пляже',
     'es',
@@ -305,7 +305,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros estamos listos',
     'Мы готовы',
     'es',
@@ -314,7 +314,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros estamos aburridos',
     'Мы скучаем',
     'es',
@@ -323,7 +323,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros estáis en casa',
     'Вы дома',
     'es',
@@ -332,7 +332,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros estáis contentos',
     'Вы довольны',
     'es',
@@ -341,7 +341,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros estáis ocupados',
     'Вы заняты',
     'es',
@@ -350,7 +350,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos están en el cine',
     'Они в кино',
     'es',
@@ -359,7 +359,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos están cansados',
     'Они уставшие',
     'es',
@@ -368,7 +368,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos están felices',
     'Они счастливы',
     'es',
@@ -377,7 +377,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo voy al mercado',
     'Я иду на рынок',
     'es',
@@ -386,7 +386,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo voy a estudiar',
     'Я собираюсь учиться',
     'es',
@@ -395,7 +395,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo voy con mis amigos',
     'Я иду с друзьями',
     'es',
@@ -404,7 +404,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú vas a la tienda',
     'Ты идешь в магазин',
     'es',
@@ -413,7 +413,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú vas a trabajar',
     'Ты идешь на работу',
     'es',
@@ -422,7 +422,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú vas en autobús',
     'Ты едешь на автобусе',
     'es',
@@ -431,7 +431,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él va al gimnasio',
     'Он идет в спортзал',
     'es',
@@ -440,7 +440,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él va a dormir',
     'Он собирается спать',
     'es',
@@ -449,7 +449,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él va en coche',
     'Он едет на машине',
     'es',
@@ -458,7 +458,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella va a la playa',
     'Она идет на пляж',
     'es',
@@ -467,7 +467,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella va a cocinar',
     'Она собирается готовить',
     'es',
@@ -476,7 +476,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella va en bicicleta',
     'Она едет на велосипеде',
     'es',
@@ -485,7 +485,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros vamos al parque',
     'Мы идем в парк',
     'es',
@@ -494,7 +494,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros vamos a cenar',
     'Мы собираемся ужинать',
     'es',
@@ -503,7 +503,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros vamos en tren',
     'Мы едем на поезде',
     'es',
@@ -512,7 +512,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros vais a la fiesta',
     'Вы идете на вечеринку',
     'es',
@@ -521,7 +521,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros vais a cantar',
     'Вы собираетесь петь',
     'es',
@@ -530,7 +530,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros vais en avión',
     'Вы летите на самолете',
     'es',
@@ -539,7 +539,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos van al museo',
     'Они идут в музей',
     'es',
@@ -548,7 +548,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos van a jugar',
     'Они собираются играть',
     'es',
@@ -557,7 +557,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos van en metro',
     'Они едут на метро',
     'es',
@@ -566,7 +566,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'A mí me gusta el café',
     'Мне нравится кофе',
     'es',
@@ -575,7 +575,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'A mí me gusta leer',
     'Мне нравится читать',
     'es',
@@ -584,7 +584,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'A mí me gusta viajar',
     'Мне нравится путешествовать',
     'es',
@@ -593,7 +593,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'A ti te gusta la música',
     'Тебе нравится музыка',
     'es',
@@ -602,7 +602,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'A ti te gusta bailar',
     'Тебе нравится танцевать',
     'es',
@@ -611,7 +611,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'A ti te gusta el deporte',
     'Тебе нравится спорт',
     'es',
@@ -620,7 +620,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'A él le gusta cocinar',
     'Ему нравится готовить',
     'es',
@@ -629,7 +629,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'A él le gusta el cine',
     'Ему нравится кино',
     'es',
@@ -638,7 +638,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'A él le gusta dormir',
     'Ему нравится спать',
     'es',
@@ -647,7 +647,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'A ella le gusta cantar',
     'Ей нравится петь',
     'es',
@@ -656,7 +656,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'A ella le gusta la playa',
     'Ей нравится пляж',
     'es',
@@ -665,7 +665,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'A ella le gusta estudiar',
     'Ей нравится учиться',
     'es',
@@ -674,7 +674,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'A nosotros nos gusta viajar',
     'Нам нравится путешествовать',
     'es',
@@ -683,7 +683,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'A nosotros nos gusta la comida',
     'Нам нравится еда',
     'es',
@@ -692,7 +692,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'A nosotros nos gusta el fútbol',
     'Нам нравится футбол',
     'es',
@@ -701,7 +701,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'A vosotros os gusta bailar',
     'Вам нравится танцевать',
     'es',
@@ -710,7 +710,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'A vosotros os gusta el teatro',
     'Вам нравится театр',
     'es',
@@ -719,7 +719,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'A vosotros os gusta la naturaleza',
     'Вам нравится природа',
     'es',
@@ -728,7 +728,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'A ellos les gusta la fiesta',
     'Им нравятся вечеринки',
     'es',
@@ -737,7 +737,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'A ellos les gusta el arte',
     'Им нравится искусство',
     'es',
@@ -746,7 +746,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'A ellos les gusta nadar',
     'Им нравится плавать',
     'es',
@@ -755,7 +755,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo tengo un libro',
     'У меня есть книга',
     'es',
@@ -764,7 +764,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo tengo hambre',
     'Я голоден',
     'es',
@@ -773,7 +773,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo tengo 20 años',
     'Мне 20 лет',
     'es',
@@ -782,7 +782,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú tienes un perro',
     'У тебя есть собака',
     'es',
@@ -791,7 +791,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú tienes razón',
     'Ты прав',
     'es',
@@ -800,7 +800,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú tienes tiempo',
     'У тебя есть время',
     'es',
@@ -809,7 +809,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él tiene una casa',
     'У него есть дом',
     'es',
@@ -818,7 +818,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él tiene miedo',
     'Ему страшно',
     'es',
@@ -827,7 +827,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él tiene trabajo',
     'У него есть работа',
     'es',
@@ -836,7 +836,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella tiene un coche',
     'У нее есть машина',
     'es',
@@ -845,7 +845,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella tiene frío',
     'Ей холодно',
     'es',
@@ -854,7 +854,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella tiene una idea',
     'У нее есть идея',
     'es',
@@ -863,7 +863,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros tenemos una familia',
     'У нас есть семья',
     'es',
@@ -872,7 +872,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros tenemos planes',
     'У нас есть планы',
     'es',
@@ -881,7 +881,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros tenemos suerte',
     'Нам везет',
     'es',
@@ -890,7 +890,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros tenéis amigos',
     'У вас есть друзья',
     'es',
@@ -899,7 +899,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros tenéis razón',
     'Вы правы',
     'es',
@@ -908,7 +908,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros tenéis talento',
     'У вас есть талант',
     'es',
@@ -917,7 +917,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos tienen dinero',
     'У них есть деньги',
     'es',
@@ -926,7 +926,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos tienen sueños',
     'У них есть мечты',
     'es',
@@ -935,7 +935,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos tienen problemas',
     'У них есть проблемы',
     'es',
@@ -944,7 +944,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo hago mi tarea',
     'Я делаю свое домашнее задание',
     'es',
@@ -953,7 +953,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo hago ejercicio',
     'Я делаю упражнения',
     'es',
@@ -962,7 +962,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo hago la cena',
     'Я готовлю ужин',
     'es',
@@ -971,7 +971,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú haces un pastel',
     'Ты делаешь торт',
     'es',
@@ -980,7 +980,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú haces preguntas',
     'Ты задаешь вопросы',
     'es',
@@ -989,7 +989,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú haces deporte',
     'Ты занимаешься спортом',
     'es',
@@ -998,7 +998,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él hace su cama',
     'Он застилает свою кровать',
     'es',
@@ -1007,7 +1007,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos hacen un esfuerzo',
     'Они прилагают усилие',
     'es',
@@ -1016,7 +1016,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos hacen una película',
     'Они снимают фильм',
     'es',
@@ -1025,7 +1025,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos hacen negocios',
     'Они занимаются бизнесом',
     'es',
@@ -1034,7 +1034,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo puedo nadar',
     'Я могу плавать',
     'es',
@@ -1043,7 +1043,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo puedo ayudarte',
     'Я могу тебе помочь',
     'es',
@@ -1052,7 +1052,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo puedo cantar',
     'Я могу петь',
     'es',
@@ -1061,7 +1061,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú puedes correr',
     'Ты можешь бегать',
     'es',
@@ -1070,7 +1070,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú puedes aprender',
     'Ты можешь учиться',
     'es',
@@ -1079,7 +1079,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú puedes ganar',
     'Ты можешь выиграть',
     'es',
@@ -1088,7 +1088,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él puede cocinar',
     'Он может готовить',
     'es',
@@ -1097,7 +1097,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él puede trabajar',
     'Он может работать',
     'es',
@@ -1106,7 +1106,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él puede viajar',
     'Он может путешествовать',
     'es',
@@ -1115,7 +1115,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella puede bailar',
     'Она может танцевать',
     'es',
@@ -1124,7 +1124,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella puede enseñar',
     'Она может учить',
     'es',
@@ -1133,7 +1133,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella puede conducir',
     'Она может водить машину',
     'es',
@@ -1142,7 +1142,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros podemos jugar',
     'Мы можем играть',
     'es',
@@ -1151,7 +1151,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros podemos estudiar',
     'Мы можем учиться',
     'es',
@@ -1160,7 +1160,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros podemos cambiar',
     'Мы можем измениться',
     'es',
@@ -1169,7 +1169,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros podéis venir',
     'Вы можете прийти',
     'es',
@@ -1178,7 +1178,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros podéis elegir',
     'Вы можете выбирать',
     'es',
@@ -1187,7 +1187,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros podéis ganar',
     'Вы можете выиграть',
     'es',
@@ -1196,7 +1196,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos pueden leer',
     'Они могут читать',
     'es',
@@ -1205,7 +1205,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos pueden volar',
     'Они могут летать',
     'es',
@@ -1214,7 +1214,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos pueden entender',
     'Они могут понимать',
     'es',
@@ -1223,7 +1223,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo digo la verdad',
     'Я говорю правду',
     'es',
@@ -1232,7 +1232,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo digo hola',
     'Я говорю привет',
     'es',
@@ -1241,7 +1241,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo digo gracias',
     'Я говорю спасибо',
     'es',
@@ -1250,7 +1250,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú dices mentiras',
     'Ты говоришь ложь',
     'es',
@@ -1259,7 +1259,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú dices adiós',
     'Ты говоришь пока',
     'es',
@@ -1268,7 +1268,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú dices perdón',
     'Ты говоришь извини',
     'es',
@@ -1277,7 +1277,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él dice su nombre',
     'Он говорит свое имя',
     'es',
@@ -1286,7 +1286,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él dice la hora',
     'Он говорит время',
     'es',
@@ -1295,7 +1295,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él dice un secreto',
     'Он говорит секрет',
     'es',
@@ -1304,7 +1304,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella dice la verdad',
     'Она говорит правду',
     'es',
@@ -1313,7 +1313,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella dice una historia',
     'Она рассказывает историю',
     'es',
@@ -1322,7 +1322,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella dice un chiste',
     'Она рассказывает шутку',
     'es',
@@ -1331,7 +1331,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros decimos sí',
     'Мы говорим да',
     'es',
@@ -1340,7 +1340,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros decimos no',
     'Мы говорим нет',
     'es',
@@ -1349,7 +1349,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros decimos por favor',
     'Мы говорим пожалуйста',
     'es',
@@ -1358,7 +1358,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros decís la respuesta',
     'Вы говорите ответ',
     'es',
@@ -1367,7 +1367,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros decís buenos días',
     'Вы говорите доброе утро',
     'es',
@@ -1376,7 +1376,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros decís buenas noches',
     'Вы говорите спокойной ночи',
     'es',
@@ -1385,7 +1385,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos dicen tonterías',
     'Они говорят глупости',
     'es',
@@ -1394,7 +1394,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos dicen la verdad',
     'Они говорят правду',
     'es',
@@ -1403,7 +1403,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos dicen mentiras',
     'Они говорят ложь',
     'es',
@@ -1412,7 +1412,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo sé cocinar',
     'Я умею готовить',
     'es',
@@ -1421,7 +1421,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo sé nadar',
     'Я умею плавать',
     'es',
@@ -1430,7 +1430,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo sé la respuesta',
     'Я знаю ответ',
     'es',
@@ -1439,7 +1439,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú sabes cantar',
     'Ты умеешь петь',
     'es',
@@ -1448,7 +1448,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú sabes bailar',
     'Ты умеешь танцевать',
     'es',
@@ -1457,7 +1457,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú sabes la verdad',
     'Ты знаешь правду',
     'es',
@@ -1466,7 +1466,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él sabe conducir',
     'Он умеет водить машину',
     'es',
@@ -1475,7 +1475,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él sabe hablar inglés',
     'Он умеет говорить по-английски',
     'es',
@@ -1484,7 +1484,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él sabe la dirección',
     'Он знает адрес',
     'es',
@@ -1493,7 +1493,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella sabe tocar el piano',
     'Она умеет играть на пианино',
     'es',
@@ -1502,7 +1502,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella sabe cocinar',
     'Она умеет готовить',
     'es',
@@ -1511,7 +1511,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella sabe la historia',
     'Она знает историю',
     'es',
@@ -1520,7 +1520,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros sabemos la respuesta',
     'Мы знаем ответ',
     'es',
@@ -1529,7 +1529,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros sabemos jugar al fútbol',
     'Мы умеем играть в футбол',
     'es',
@@ -1538,7 +1538,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros sabemos la verdad',
     'Мы знаем правду',
     'es',
@@ -1547,7 +1547,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros sabéis la lección',
     'Вы знаете урок',
     'es',
@@ -1556,7 +1556,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros sabéis bailar',
     'Вы умеете танцевать',
     'es',
@@ -1565,7 +1565,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros sabéis la noticia',
     'Вы знаете новость',
     'es',
@@ -1574,7 +1574,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos saben la verdad',
     'Они знают правду',
     'es',
@@ -1583,7 +1583,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos saben tocar la guitarra',
     'Они умеют играть на гитаре',
     'es',
@@ -1592,7 +1592,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos saben el camino',
     'Они знают дорогу',
     'es',
@@ -1601,7 +1601,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo quiero un café',
     'Я хочу кофе',
     'es',
@@ -1610,7 +1610,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo quiero estudiar',
     'Я хочу учиться',
     'es',
@@ -1619,7 +1619,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo quiero viajar',
     'Я хочу путешествовать',
     'es',
@@ -1628,7 +1628,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú quieres ayuda',
     'Ты хочешь помощи',
     'es',
@@ -1637,7 +1637,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú quieres dormir',
     'Ты хочешь спать',
     'es',
@@ -1646,7 +1646,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú quieres comer',
     'Ты хочешь есть',
     'es',
@@ -1655,7 +1655,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él quiere trabajar',
     'Он хочет работать',
     'es',
@@ -1664,7 +1664,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él quiere descansar',
     'Он хочет отдохнуть',
     'es',
@@ -1673,7 +1673,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él quiere un coche',
     'Он хочет машину',
     'es',
@@ -1682,7 +1682,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella quiere bailar',
     'Она хочет танцевать',
     'es',
@@ -1691,7 +1691,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella quiere cantar',
     'Она хочет петь',
     'es',
@@ -1700,7 +1700,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella quiere una casa',
     'Она хочет дом',
     'es',
@@ -1709,7 +1709,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros queremos aprender',
     'Мы хотим учиться',
     'es',
@@ -1718,7 +1718,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros queremos viajar',
     'Мы хотим путешествовать',
     'es',
@@ -1727,7 +1727,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros queremos paz',
     'Мы хотим мира',
     'es',
@@ -1736,7 +1736,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros queréis salir',
     'Вы хотите выйти',
     'es',
@@ -1745,7 +1745,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros queréis jugar',
     'Вы хотите играть',
     'es',
@@ -1754,7 +1754,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros queréis ganar',
     'Вы хотите выиграть',
     'es',
@@ -1763,7 +1763,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos quieren dinero',
     'Они хотят денег',
     'es',
@@ -1772,7 +1772,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos quieren tiempo',
     'Они хотят времени',
     'es',
@@ -1781,7 +1781,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos quieren amor',
     'Они хотят любви',
     'es',
@@ -1790,7 +1790,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo veo la televisión',
     'Я смотрю телевизор',
     'es',
@@ -1799,7 +1799,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo veo un pájaro',
     'Я вижу птицу',
     'es',
@@ -1808,7 +1808,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo veo las estrellas',
     'Я вижу звезды',
     'es',
@@ -1817,7 +1817,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú ves un coche',
     'Ты видишь машину',
     'es',
@@ -1826,7 +1826,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú ves una película',
     'Ты смотришь фильм',
     'es',
@@ -1835,7 +1835,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú ves el problema',
     'Ты видишь проблему',
     'es',
@@ -1844,7 +1844,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él ve un gato',
     'Он видит кошку',
     'es',
@@ -1853,7 +1853,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él ve las noticias',
     'Он смотрит новости',
     'es',
@@ -1862,7 +1862,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él ve el futuro',
     'Он видит будущее',
     'es',
@@ -1871,7 +1871,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella ve un perro',
     'Она видит собаку',
     'es',
@@ -1880,7 +1880,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella ve una flor',
     'Она видит цветок',
     'es',
@@ -1889,7 +1889,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella ve la solución',
     'Она видит решение',
     'es',
@@ -1898,7 +1898,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros vemos el mar',
     'Мы видим море',
     'es',
@@ -1907,7 +1907,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros vemos un partido',
     'Мы смотрим матч',
     'es',
@@ -1916,7 +1916,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros vemos la verdad',
     'Мы видим правду',
     'es',
@@ -1925,7 +1925,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros veis una obra',
     'Вы смотрите спектакль',
     'es',
@@ -1934,7 +1934,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros veis las montañas',
     'Вы видите горы',
     'es',
@@ -1943,7 +1943,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros veis el error',
     'Вы видите ошибку',
     'es',
@@ -1952,7 +1952,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos ven un concierto',
     'Они смотрят концерт',
     'es',
@@ -1961,7 +1961,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos ven el cielo',
     'Они видят небо',
     'es',
@@ -1970,7 +1970,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos ven la oportunidad',
     'Они видят возможность',
     'es',
@@ -1979,7 +1979,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo doy un regalo',
     'Я дарю подарок',
     'es',
@@ -1988,7 +1988,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo doy las gracias',
     'Я благодарю',
     'es',
@@ -1997,7 +1997,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo doy una clase',
     'Я веду урок',
     'es',
@@ -2006,7 +2006,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú das una fiesta',
     'Ты устраиваешь вечеринку',
     'es',
@@ -2015,7 +2015,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú das un consejo',
     'Ты даешь совет',
     'es',
@@ -2024,7 +2024,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú das un paseo',
     'Ты гуляешь',
     'es',
@@ -2033,7 +2033,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él da un beso',
     'Он целует',
     'es',
@@ -2042,7 +2042,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él da una orden',
     'Он отдает приказ',
     'es',
@@ -2051,7 +2051,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él da un discurso',
     'Он произносит речь',
     'es',
@@ -2060,7 +2060,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella da una respuesta',
     'Она дает ответ',
     'es',
@@ -2069,7 +2069,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella da un abrazo',
     'Она обнимает',
     'es',
@@ -2078,7 +2078,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella da una conferencia',
     'Она читает лекцию',
     'es',
@@ -2087,7 +2087,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros damos dinero',
     'Мы даем деньги',
     'es',
@@ -2096,7 +2096,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros damos una fiesta',
     'Мы устраиваем вечеринку',
     'es',
@@ -2105,7 +2105,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros damos las gracias',
     'Мы благодарим',
     'es',
@@ -2114,7 +2114,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros dais un ejemplo',
     'Вы подаете пример',
     'es',
@@ -2123,7 +2123,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros dais una explicación',
     'Вы даете объяснение',
     'es',
@@ -2132,7 +2132,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros dais un concierto',
     'Вы даете концерт',
     'es',
@@ -2141,7 +2141,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos dan un paso',
     'Они делают шаг',
     'es',
@@ -2150,7 +2150,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos dan una noticia',
     'Они сообщают новость',
     'es',
@@ -2159,7 +2159,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos dan un regalo',
     'Они дарят подарок',
     'es',
@@ -2168,7 +2168,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo pongo la mesa',
     'Я накрываю на стол',
     'es',
@@ -2177,7 +2177,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo pongo música',
     'Я включаю музыку',
     'es',
@@ -2186,7 +2186,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo pongo atención',
     'Я обращаю внимание',
     'es',
@@ -2195,7 +2195,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú pones un ejemplo',
     'Ты приводишь пример',
     'es',
@@ -2204,7 +2204,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú pones la televisión',
     'Ты включаешь телевизор',
     'es',
@@ -2213,7 +2213,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú pones sal a la comida',
     'Ты солишь еду',
     'es',
@@ -2222,7 +2222,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él pone un libro en la mesa',
     'Он кладет книгу на стол',
     'es',
@@ -2231,7 +2231,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él pone una película',
     'Он включает фильм',
     'es',
@@ -2240,7 +2240,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él pone una excusa',
     'Он придумывает оправдание',
     'es',
@@ -2249,7 +2249,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella pone la ropa a secar',
     'Она вешает одежду сушиться',
     'es',
@@ -2258,7 +2258,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella pone flores en el jarrón',
     'Она ставит цветы в вазу',
     'es',
@@ -2267,7 +2267,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella pone una condición',
     'Она ставит условие',
     'es',
@@ -2276,7 +2276,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros ponemos la mesa',
     'Мы накрываем на стол',
     'es',
@@ -2285,7 +2285,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros ponemos un anuncio',
     'Мы размещаем объявление',
     'es',
@@ -2294,7 +2294,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros ponemos reglas',
     'Мы устанавливаем правила',
     'es',
@@ -2303,7 +2303,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros ponéis un ejemplo',
     'Вы приводите пример',
     'es',
@@ -2312,7 +2312,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros ponéis orden',
     'Вы наводите порядок',
     'es',
@@ -2321,7 +2321,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros ponéis la fecha',
     'Вы назначаете дату',
     'es',
@@ -2330,7 +2330,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos ponen la música',
     'Они включают музыку',
     'es',
@@ -2339,7 +2339,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos ponen carteles',
     'Они вешают плакаты',
     'es',
@@ -2348,7 +2348,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos ponen un negocio',
     'Они открывают бизнес',
     'es',
@@ -2357,7 +2357,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo salgo de casa',
     'Я выхожу из дома',
     'es',
@@ -2366,7 +2366,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo salgo con amigos',
     'Я гуляю с друзьями',
     'es',
@@ -2375,7 +2375,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo salgo en la foto',
     'Я получаюсь на фото',
     'es',
@@ -2384,7 +2384,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú sales del trabajo',
     'Ты выходишь с работы',
     'es',
@@ -2393,7 +2393,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú sales de compras',
     'Ты идешь за покупками',
     'es',
@@ -2402,7 +2402,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú sales por la noche',
     'Ты выходишь вечером',
     'es',
@@ -2411,7 +2411,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él sale temprano',
     'Он выходит рано',
     'es',
@@ -2420,7 +2420,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él sale en televisión',
     'Он появляется на телевидении',
     'es',
@@ -2429,7 +2429,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él sale de viaje',
     'Он отправляется в путешествие',
     'es',
@@ -2438,7 +2438,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella sale a correr',
     'Она выходит на пробежку',
     'es',
@@ -2447,7 +2447,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella sale bien en el examen',
     'Она хорошо сдает экзамен',
     'es',
@@ -2456,7 +2456,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella sale con un chico',
     'Она встречается с парнем',
     'es',
@@ -2465,7 +2465,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros salimos de fiesta',
     'Мы идем на вечеринку',
     'es',
@@ -2474,7 +2474,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros salimos de vacaciones',
     'Мы уезжаем в отпуск',
     'es',
@@ -2483,7 +2483,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros salimos en el periódico',
     'Мы появляемся в газете',
     'es',
@@ -2492,7 +2492,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros salís del cine',
     'Вы выходите из кинотеатра',
     'es',
@@ -2501,7 +2501,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros salís a cenar',
     'Вы идете ужинать',
     'es',
@@ -2510,7 +2510,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros salís ganando',
     'Вы выигрываете',
     'es',
@@ -2519,7 +2519,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos salen del país',
     'Они уезжают из страны',
     'es',
@@ -2528,7 +2528,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos salen a bailar',
     'Они идут танцевать',
     'es',
@@ -2537,7 +2537,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos salen en la revista',
     'Они появляются в журнале',
     'es',
@@ -2546,7 +2546,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo vengo de la escuela',
     'Я прихожу из школы',
     'es',
@@ -2555,7 +2555,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo vengo a la fiesta',
     'Я прихожу на вечеринку',
     'es',
@@ -2564,7 +2564,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo vengo en tren',
     'Я приезжаю на поезде',
     'es',
@@ -2573,7 +2573,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú vienes a mi casa',
     'Ты приходишь ко мне домой',
     'es',
@@ -2582,7 +2582,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú vienes conmigo',
     'Ты идешь со мной',
     'es',
@@ -2591,7 +2591,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú vienes de lejos',
     'Ты приезжаешь издалека',
     'es',
@@ -2600,7 +2600,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él viene a trabajar',
     'Он приходит на работу',
     'es',
@@ -2609,7 +2609,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él viene del supermercado',
     'Он приходит из супермаркета',
     'es',
@@ -2618,7 +2618,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él viene en coche',
     'Он приезжает на машине',
     'es',
@@ -2627,7 +2627,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella viene a la reunión',
     'Она приходит на встречу',
     'es',
@@ -2636,7 +2636,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella viene de vacaciones',
     'Она возвращается из отпуска',
     'es',
@@ -2645,7 +2645,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella viene con su familia',
     'Она приходит со своей семьей',
     'es',
@@ -2654,7 +2654,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros venimos al concierto',
     'Мы приходим на концерт',
     'es',
@@ -2663,7 +2663,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros venimos de la playa',
     'Мы приезжаем с пляжа',
     'es',
@@ -2672,7 +2672,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros venimos en autobús',
     'Мы приезжаем на автобусе',
     'es',
@@ -2681,7 +2681,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros venís a cenar',
     'Вы приходите ужинать',
     'es',
@@ -2690,7 +2690,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros venís de España',
     'Вы приезжаете из Испании',
     'es',
@@ -2699,7 +2699,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros venís temprano',
     'Вы приходите рано',
     'es',
@@ -2708,7 +2708,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos vienen a la fiesta',
     'Они приходят на вечеринку',
     'es',
@@ -2717,7 +2717,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos vienen del trabajo',
     'Они приходят с работы',
     'es',
@@ -2726,7 +2726,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos vienen en avión',
     'Они прилетают на самолете',
     'es',
@@ -2735,7 +2735,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo he comido',
     'Я поел',
     'es',
@@ -2744,7 +2744,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo he viajado',
     'Я путешествовал',
     'es',
@@ -2753,7 +2753,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Yo he aprendido',
     'Я выучил',
     'es',
@@ -2762,7 +2762,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú has dormido',
     'Ты поспал',
     'es',
@@ -2771,7 +2771,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú has cantado',
     'Ты спел',
     'es',
@@ -2780,7 +2780,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Tú has trabajado',
     'Ты поработал',
     'es',
@@ -2789,7 +2789,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él ha llegado',
     'Он прибыл',
     'es',
@@ -2798,7 +2798,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él ha estudiado',
     'Он поучился',
     'es',
@@ -2807,7 +2807,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Él ha ganado',
     'Он выиграл',
     'es',
@@ -2816,7 +2816,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella ha salido',
     'Она вышла',
     'es',
@@ -2825,7 +2825,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella ha leído',
     'Она прочитала',
     'es',
@@ -2834,7 +2834,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ella ha cocinado',
     'Она приготовила',
     'es',
@@ -2843,7 +2843,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros hemos jugado',
     'Мы поиграли',
     'es',
@@ -2852,7 +2852,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros hemos hablado',
     'Мы поговорили',
     'es',
@@ -2861,7 +2861,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Nosotros hemos vivido',
     'Мы пожили',
     'es',
@@ -2870,7 +2870,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros habéis comido',
     'Вы поели',
     'es',
@@ -2879,7 +2879,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros habéis bailado',
     'Вы потанцевали',
     'es',
@@ -2888,7 +2888,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Vosotros habéis escrito',
     'Вы написали',
     'es',
@@ -2897,7 +2897,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos han viajado',
     'Они путешествовали',
     'es',
@@ -2906,7 +2906,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos han terminado',
     'Они закончили',
     'es',
@@ -2915,7 +2915,7 @@ SELECT
   );
 
 SELECT
-  insert_word_and_translation (
+  insert_word_pair_and_add_to_list (
     'Ellos han comprado',
     'Они купили',
     'es',

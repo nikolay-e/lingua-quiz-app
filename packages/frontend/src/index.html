@@ -21,26 +21,15 @@
       <header>
         <h1><i class="fas fa-language"></i> LinguaQuiz</h1>
       </header>
-      <section aria-labelledby="file-upload-section">
-        <h2 id="file-upload-section">Upload or Select Quiz</h2>
+      <section aria-labelledby="quiz-choice-section">
+        <h2 id="quiz-choice-section">Select Quiz</h2>
         <div class="input-group">
-          <input type="file" id="file-input" accept=".json" hidden />
-          <button onclick="document.getElementById('file-input').click()">
-            <i class="fas fa-upload"></i> Choose & Upload File
-          </button>
-          <button id="spanish-english">
-            <i class="fas fa-book"></i> Use Default Spanish-English Set
-          </button>
-          <button id="spanish-russian">
-            <i class="fas fa-book"></i> Use Default Spanish-Russian Set
-          </button>
-          <button id="german-russian">
-            <i class="fas fa-book"></i> Use Default German-Russian Set
-          </button>
+          <button id="spanish-russian"><i class="fas fa-book"></i> Use Spanish-Russian Set</button>
+          <button id="test-spanish"><i class="fas fa-book"></i> Use Test Spanish Set</button>
           <button id="treasure-island-english-russian">
             <i class="fas fa-book"></i> Use Treasure Island English-Russian Set
           </button>
-          <button id="download-quiz"><i class="fas fa-download"></i> Download Quiz</button>
+          <button id="save-quiz"><i class="fas fa-save"></i> Save Quiz State</button>
         </div>
       </section>
       <section aria-labelledby="quiz-section" class="quiz-section">

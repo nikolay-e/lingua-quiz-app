@@ -1,70 +1,95 @@
 import {
-  focusWordsSet,
-  masteredOneDirectionSet,
-  upcomingWordsSet,
-  masteredVocabularySet,
+  quizTranslations,
+  focusTranslationIds,
+  masteredOneDirectionTranslationIds,
+  masteredVocabularyTranslationIds,
+  upcomingTranslationIds,
 } from '../app.js';
 
 export const stats = {
   totalAttempts: 0,
   correctAnswers: 0,
   incorrectAnswers: 0,
-  attemptsPerWord: {},
-  correctPerWord: {},
-  incorrectPerWord: {},
-  timePerWord: {},
+  attemptsPerTranslationId: {},
+  incorrectPerTranslationId: {},
+  timePerTranslationId: {},
   timePerQuestion: [],
 };
 
-export function updateStats(isTheAnswerCorrect, originalWord, startTime, direction) {
+function moveFromUpcomingToFocus() {
+  if (upcomingTranslationIds.size > 0) {
+    const nextTranslationId = upcomingTranslationIds.values().next().value;
+    focusTranslationIds.add(nextTranslationId);
+    upcomingTranslationIds.delete(nextTranslationId);
+    const wordPair = quizTranslations.get(nextTranslationId);
+    if (wordPair) {
+      wordPair.status = 'Focus Words';
+    }
+  }
+}
+
+function moveFromMasteredOneDirectionToFocus() {
+  if (masteredOneDirectionTranslationIds.size > 0) {
+    const nextTranslationId = masteredOneDirectionTranslationIds.values().next().value;
+    focusTranslationIds.add(nextTranslationId);
+    masteredOneDirectionTranslationIds.delete(nextTranslationId);
+    const wordPair = quizTranslations.get(nextTranslationId);
+    if (wordPair) {
+      wordPair.status = 'Focus Words';
+    }
+  }
+}
+
+export function updateStats(isTheAnswerCorrect, translationId, startTime, direction) {
   const endTime = new Date();
   const timeTaken = (endTime - startTime) / 1000;
   stats.totalAttempts += 1;
   stats.timePerQuestion.push(timeTaken);
 
-  if (!stats.attemptsPerWord[originalWord]) {
-    stats.attemptsPerWord[originalWord] = {
+  if (!stats.attemptsPerTranslationId[translationId]) {
+    stats.attemptsPerTranslationId[translationId] = {
       attempts: 0,
       correct: 0,
       incorrect: 0,
     };
-    stats.timePerWord[originalWord] = [];
+    stats.timePerTranslationId[translationId] = [];
   }
 
-  const wordStats = stats.attemptsPerWord[originalWord];
-  wordStats.attempts += 1;
-  stats.timePerWord[originalWord].push(timeTaken);
+  const translationStats = stats.attemptsPerTranslationId[translationId];
+  translationStats.attempts += 1;
+  stats.timePerTranslationId[translationId].push(timeTaken);
 
   if (isTheAnswerCorrect) {
     stats.correctAnswers += 1;
-    wordStats.correct += 1;
+    translationStats.correct += 1;
 
-    if (direction) {
-      if (wordStats.correct === 3 && focusWordsSet.has(originalWord)) {
-        masteredOneDirectionSet.add(originalWord);
-        focusWordsSet.delete(originalWord);
-        if (upcomingWordsSet.size > 0) {
-          const newWord = upcomingWordsSet.values().next().value;
-          focusWordsSet.add(newWord);
-          upcomingWordsSet.delete(newWord);
+    const wordPair = quizTranslations.get(translationId);
+    if (wordPair) {
+      if (direction) {
+        if (translationStats.correct === 3 && focusTranslationIds.has(translationId)) {
+          masteredOneDirectionTranslationIds.add(translationId);
+          focusTranslationIds.delete(translationId);
+          wordPair.status = 'Mastered One Direction';
+          moveFromUpcomingToFocus();
         }
-      }
-    } else if (wordStats.correct === 6 && masteredOneDirectionSet.has(originalWord)) {
-      masteredVocabularySet.add(originalWord);
-      masteredOneDirectionSet.delete(originalWord);
-      if (masteredOneDirectionSet.size > 0) {
-        const newWord = masteredOneDirectionSet.values().next().value;
-        focusWordsSet.add(newWord);
-        masteredOneDirectionSet.delete(newWord);
+      } else if (
+        translationStats.correct === 6 &&
+        masteredOneDirectionTranslationIds.has(translationId)
+      ) {
+        masteredVocabularyTranslationIds.add(translationId);
+        masteredOneDirectionTranslationIds.delete(translationId);
+        wordPair.status = 'Mastered Vocabulary';
+        moveFromMasteredOneDirectionToFocus();
       }
     }
   } else {
     stats.incorrectAnswers += 1;
-    wordStats.incorrect += 1;
-    stats.incorrectPerWord[originalWord] = (stats.incorrectPerWord[originalWord] || 0) + 1;
+    translationStats.incorrect += 1;
+    stats.incorrectPerTranslationId[translationId] =
+      (stats.incorrectPerTranslationId[translationId] || 0) + 1;
   }
 }
 
 export function getIncorrectPerWord() {
-  return stats.incorrectPerWord;
+  return stats.incorrectPerTranslationId;
 }

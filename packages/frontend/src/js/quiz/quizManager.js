@@ -1,20 +1,24 @@
-import getRandomWordFromTopFew from './wordSetManager.js';
+import getRandomTranslationIdFromTopFew from './wordSetManager.js';
 import { updateWordSetsDisplay } from '../ui/displayManager.js';
-import { updateStats, getIncorrectPerWord } from '../utils/statsManager.js';
+import { updateStats } from '../utils/statsManager.js';
 import {
-  quizWords,
-  focusWordsSet,
-  masteredOneDirectionSet,
-  setCurrentWord,
+  quizTranslations,
+  focusTranslationIds,
+  masteredOneDirectionTranslationIds,
+  currentTranslationId,
+  setCurrentTranslationId,
   direction,
   setDirection,
 } from '../app.js';
 
 function askQuestion() {
-  const wordSet = direction ? focusWordsSet : masteredOneDirectionSet;
-  const newWord = getRandomWordFromTopFew(wordSet, getIncorrectPerWord());
-  setCurrentWord(newWord);
-  document.getElementById('word').textContent = direction ? newWord : quizWords.get(newWord);
+  const translationSet = direction ? focusTranslationIds : masteredOneDirectionTranslationIds;
+  const newTranslationId = getRandomTranslationIdFromTopFew(translationSet);
+  setCurrentTranslationId(newTranslationId);
+  const translation = quizTranslations.get(newTranslationId);
+  document.getElementById('word').textContent = direction
+    ? translation.source_word
+    : translation.target_word;
   return new Date();
 }
 
@@ -49,15 +53,14 @@ function compareAnswers(arr1, arr2) {
 }
 
 export function verifyAnswer(userAnswer, startTime) {
-  const displayedWord = document.getElementById('word').textContent;
-  const correctAnswer = direction ? quizWords.get(displayedWord) : quizWords.getKey(displayedWord);
-  const originalWord = direction ? displayedWord : correctAnswer;
+  const translation = quizTranslations.get(currentTranslationId);
+  const correctAnswer = direction ? translation.target_word : translation.source_word;
 
   const normalizedUserAnswer = normalizeAndSortAnswer(userAnswer);
   const normalizedCorrectAnswer = normalizeAndSortAnswer(correctAnswer);
 
   const isAnswerCorrect = compareAnswers(normalizedUserAnswer, normalizedCorrectAnswer);
-  updateStats(isAnswerCorrect, originalWord, startTime, direction);
+  updateStats(isAnswerCorrect, currentTranslationId, startTime, direction);
 
   return isAnswerCorrect;
 }

@@ -39,5 +39,11 @@ module.exports = {
         argsIgnorePattern: '^_',
       },
     ],
+    camelcase: [
+      'error',
+      {
+        allow: ['translation_ids'],
+      },
+    ],
   },
 };
