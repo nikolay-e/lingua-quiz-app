@@ -31,22 +31,12 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Set build environment
-        run: |
-          if [ "${{ github.event_name }}" = "push" ] && [ "${{ github.ref }}" = "refs/heads/main" ]; then
-            echo "BUILD_ENV=prod" >> $GITHUB_ENV
-          else
-            echo "BUILD_ENV=test" >> $GITHUB_ENV
-          fi
-
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
           context: packages/frontend
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/lingua-quiz-frontend:${{ github.head_ref || github.ref_name }}-${{ github.run_number }}
-          build-args: |
-            BUILD_ENV=${{ env.BUILD_ENV }}
 
   prepare-vps:
     runs-on: ubuntu-latest

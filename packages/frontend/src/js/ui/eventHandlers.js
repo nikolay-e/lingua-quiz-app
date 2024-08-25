@@ -1,6 +1,6 @@
 import { initializeQuiz, verifyAnswer, continueQuiz } from '../quiz/quizManager.js';
-import { generateJSON, parseJSON, validateJSONStructure } from '../quiz/dataHandler.js';
-import { quizWords, setDirection, direction } from '../app.js';
+import { saveQuizState, fetchWordSets } from '../quiz/dataHandler.js';
+import { quizTranslations, setDirection, currentTranslationId } from '../app.js';
 import { updateStatsDisplay, updateWordSetsDisplay } from './displayManager.js';
 
 function setFeedback(message, isError = false) {
@@ -23,61 +23,44 @@ function setLoadingState(isLoading) {
   }
 }
 
-async function loadWords(filename) {
+async function loadWordsFromAPI(wordListName) {
   setLoadingState(true);
   try {
-    const response = await fetch(`data/${filename}`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('User is not authenticated');
     }
-    const data = await response.json();
-    validateJSONStructure(data);
-    parseJSON(JSON.stringify(data));
-    const startTime = initializeQuiz(data);
+
+    await fetchWordSets(token, wordListName);
+    const startTime = initializeQuiz();
     if (startTime) {
       updateStatsDisplay();
       updateWordSetsDisplay();
     }
   } catch (error) {
-    console.error(`Error loading ${filename}:`, error);
-    setFeedback(`Failed to load ${filename}. Please try again.`, true);
+    console.error(`Error loading words for ${wordListName}:`, error);
+    setFeedback(`Failed to load word set. Please try again.`, true);
   } finally {
     setLoadingState(false);
   }
 }
 
-async function handleFileUpload() {
-  const fileInput = document.getElementById('file-input');
-  if (!fileInput) {
-    console.error('File input element not found');
-    return;
-  }
+async function handleSaveQuiz() {
+  setLoadingState(true);
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('User is not authenticated');
+    }
 
-  const file = fileInput.files[0];
-  if (file) {
-    if (file.type !== 'application/json') {
-      setFeedback('Please upload a JSON file.', true);
-      fileInput.value = ''; // Clear the file input
-      return;
-    }
-    setLoadingState(true);
-    try {
-      const data = await file.text();
-      const jsonData = JSON.parse(data);
-      validateJSONStructure(jsonData);
-      parseJSON(data);
-      const startTime = initializeQuiz(jsonData);
-      if (startTime) {
-        updateStatsDisplay();
-        updateWordSetsDisplay();
-      }
-    } catch (error) {
-      console.error('Error reading file:', error);
-      setFeedback(`Error reading file: ${error.message}`, true);
-    } finally {
-      setLoadingState(false);
-      fileInput.value = ''; // Clear the file input
-    }
+    const wordSets = Array.from(quizTranslations.values());
+    await saveQuizState(token, wordSets);
+    setFeedback('Quiz state saved successfully.', false);
+  } catch (error) {
+    console.error('Error saving quiz state:', error);
+    setFeedback('Failed to save quiz state. Please try again.', true);
+  } finally {
+    setLoadingState(false);
   }
 }
 
@@ -95,23 +78,21 @@ function handleEnterKey(event) {
 
 function submitAnswer() {
   const answerInput = document.getElementById('answer');
-  const wordElement = document.getElementById('word');
 
-  if (!answerInput || !wordElement) {
-    console.error('Answer input or word element not found');
+  if (!answerInput) {
+    console.error('Answer input not found');
     return;
   }
 
   const userAnswer = answerInput.value;
-  const originalWord = wordElement.textContent;
   const startTime = new Date();
   const isAnswerCorrect = verifyAnswer(userAnswer, startTime);
 
   if (isAnswerCorrect) {
     setFeedback('Correct!', false);
   } else {
-    const translation = direction ? quizWords.get(originalWord) : quizWords.getKey(originalWord);
-    setFeedback(`Wrong. '${originalWord}' - '${translation}'`, true);
+    const translation = quizTranslations.get(currentTranslationId);
+    setFeedback(`Wrong. '${translation.source_word}' - '${translation.target_word}'`, true);
   }
 
   answerInput.value = '';
@@ -139,14 +120,12 @@ function handleDirectionSwitch() {
 
 document.addEventListener('DOMContentLoaded', () => {
   const elements = {
-    'spanish-english': () => loadWords('SpanishEnglish.json'),
-    'spanish-russian': () => loadWords('SpanishRussian.json'),
-    'german-russian': () => loadWords('GermanRussian.json'),
-    'treasure-island-english-russian': () => loadWords('TreasureIslandEnglishRussian.json'),
-    'file-input': handleFileUpload,
+    'spanish-russian': () => loadWordsFromAPI('spanish-russian'),
+    'test-spanish': () => loadWordsFromAPI('Test Spanish'),
+    'treasure-island-english-russian': () => loadWordsFromAPI('treasure-island-english-russian'),
     answer: (e) => handleEnterKey(e),
     submit: submitAnswer,
-    'download-quiz': generateJSON,
+    'save-quiz': handleSaveQuiz,
     'direction-switch': handleDirectionSwitch,
   };
 

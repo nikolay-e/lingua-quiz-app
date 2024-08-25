@@ -2,7 +2,7 @@ import { getIncorrectPerWord } from '../utils/statsManager.js';
 
 const lastAskedWords = [];
 
-export default function getRandomWordFromTopFew(wordSet) {
+export default function getRandomTranslationIdFromTopFew(wordSet) {
   const stats = getIncorrectPerWord();
   const sortedWords = Array.from(wordSet).map((word) => [word, stats[word] || 0]);
   sortedWords.sort((a, b) => a[1] - b[1]);
