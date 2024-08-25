@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the list of files and directories to ignore, with support for wildcards
-IGNORE_LIST=(".git" "package-lock.json" "node_modules" "dist" "data" "*.log" "*.tmp" "*.crt" "*.key" "*.secret" "LICENSE" "print_tree.sh" "*_data.sql")
+IGNORE_LIST=(".git" "package-lock.json" "node_modules" "dist" "data" "*.log" "*.tmp" "*.crt" "*.key" "*.secret" "LICENSE" "print_tree.sh" "*_data.sql" "*_data.csv")
 
 # Function to check if a file should be ignored
 should_ignore() {

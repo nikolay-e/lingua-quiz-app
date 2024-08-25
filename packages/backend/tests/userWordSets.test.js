@@ -51,6 +51,8 @@ describe('User Word Sets Endpoint', () => {
     expect(initialUpcomingWords.length).to.equal(30);
     response.data.forEach((set) => {
       expect(set.status).to.equal('Upcoming Words');
+      expect(set.source_word_usage_example).to.be.a('string');
+      expect(set.target_word_usage_example).to.be.a('string');
     });
   });
 
@@ -105,6 +107,11 @@ describe('User Word Sets Endpoint', () => {
     expect(statusCounts['Focus Words']).to.equal(10);
     expect(statusCounts['Mastered One Direction']).to.equal(10);
     expect(statusCounts['Mastered Vocabulary']).to.equal(10);
+
+    response.data.forEach((set) => {
+      expect(set.source_word_usage_example).to.be.a('string');
+      expect(set.target_word_usage_example).to.be.a('string');
+    });
   });
 
   it('should handle an empty wordPairIds array for all statuses gracefully', async () => {
@@ -148,6 +155,8 @@ describe('User Word Sets Endpoint', () => {
     // Instead of expecting exact equality, we'll check that all words are now "Upcoming Words"
     finalResponse.data.forEach((wordSet) => {
       expect(wordSet.status).to.equal('Upcoming Words');
+      expect(wordSet.source_word_usage_example).to.be.a('string');
+      expect(wordSet.target_word_usage_example).to.be.a('string');
     });
 
     // Check that the word sets are the same except for the status

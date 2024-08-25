@@ -88,12 +88,17 @@ function submitAnswer() {
   const startTime = new Date();
   const isAnswerCorrect = verifyAnswer(userAnswer, startTime);
 
+  const translation = quizTranslations.get(currentTranslationId);
   if (isAnswerCorrect) {
     setFeedback('Correct!', false);
   } else {
-    const translation = quizTranslations.get(currentTranslationId);
     setFeedback(`Wrong. '${translation.source_word}' - '${translation.target_word}'`, true);
   }
+
+  document.getElementById('source-word-usage').textContent =
+    translation.source_word_usage_example || 'No example available';
+  document.getElementById('target-word-usage').textContent =
+    translation.target_word_usage_example || 'No example available';
 
   answerInput.value = '';
   continueQuiz();
