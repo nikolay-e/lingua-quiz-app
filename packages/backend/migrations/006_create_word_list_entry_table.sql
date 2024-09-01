@@ -6,6 +6,6 @@ CREATE TABLE word_list_entry (
   UNIQUE (word_id, word_list_id)
 );
 
-CREATE INDEX idx_word_list_entry_word ON word_list_entry (word_id);
+CREATE INDEX IF NOT EXISTS idx_word_list_entry_word ON word_list_entry (word_id);
 
-CREATE INDEX idx_word_list_entry_list ON word_list_entry (word_list_id);
+CREATE INDEX IF NOT EXISTS idx_word_list_entry_list ON word_list_entry (word_list_id);

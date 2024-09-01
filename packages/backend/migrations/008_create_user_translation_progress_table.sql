@@ -8,6 +8,6 @@ CREATE TABLE user_translation_progress (
   UNIQUE (user_id, word_pair_id)
 );
 
-CREATE INDEX idx_user_translation_progress_user ON user_translation_progress (user_id);
+CREATE INDEX IF NOT EXISTS idx_user_translation_progress_user ON user_translation_progress (user_id);
 
-CREATE INDEX idx_user_translation_progress_word_pair ON user_translation_progress (word_pair_id);
+CREATE INDEX IF NOT EXISTS idx_user_translation_progress_word_pair ON user_translation_progress (word_pair_id);
