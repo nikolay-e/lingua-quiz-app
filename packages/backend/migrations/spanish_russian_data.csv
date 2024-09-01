@@ -1,139 +1,139 @@
 translation_id,source_word_id,target_word_id,source_word,target_word,source_word_example,target_word_example
-1000000,1000001,1000002,Yo soy estudiante,Я студент,Yo soy estudiante en la universidad.,Я студент в университете.
-1000001,1000003,1000004,Yo soy de Rusia,Я из России,Yo soy de Rusia y hablo ruso.,Я из России и говорю по-русски.
-1000002,1000005,1000006,Yo soy alto,Я высокий,Yo soy alto y fuerte.,Я высокий и сильный.
-1000003,1000007,1000008,Tú eres amable,Ты добрый,Tú eres muy amable con todos.,Ты очень добрый ко всем.
-1000004,1000009,1000010,Tú eres inteligente,Ты умный,"Tú eres muy inteligente, siempre tienes хорошие идеи.","Ты очень умный, у тебя всегда хорошие идеи."
-1000005,1000011,1000012,Tú eres mi amigo,Ты мой друг,Tú eres mi mejor amigo.,Ты мой лучший друг.
-1000006,1000013,1000014,Él es médico,Он врач,Él es médico en un hospital.,Он врач в больнице.
-1000007,1000015,1000016,Él es simpático,Он приятный,Él es muy simpático y todos lo quieren.,"Он очень приятный, и все его любят."
-1000008,1000017,1000018,Él es de España,Он из Испании,Él es de España и le gusta el fútbol.,Он из Испании и любит футбол.
-1000009,1000019,1000020,Ella es bonita,Она красивая,Ella es muy bonita y simpática.,Она очень красивая и приятная.
-1000010,1000021,1000022,Ella es mi hermana,Она моя сестра,Ella es mi hermana mayor.,Она моя старшая сестра.
-1000011,1000023,1000024,Nosotros somos familia,Мы семья,Nosotros somos una familia unida.,Мы дружная семья.
-1000012,1000025,1000026,Nosotros somos estudiantes,Мы студенты,Nosotros somos estudiantes de ingeniería.,Мы студенты инженерного факультета.
-1000013,1000027,1000028,Nosotros somos amigos,Мы друзья,Nosotros somos amigos desde la infancia.,Мы друзья с детства.
-1000014,1000029,1000030,Vosotros sois españoles,Вы испанцы,"Vosotros sois españoles, ¿verdad?","Вы испанцы, правда?"
-1000015,1000031,1000032,Vosotros sois divertidos,Вы весёлые,Vosotros sois muy divertidos en las fiestas.,Вы очень весёлые на вечеринках.
-1000016,1000033,1000034,Vosotros sois trabajadores,Вы трудолюбивые,Vosotros sois muy trabajadores y dedicados.,Вы очень трудолюбивые и преданные.
-1000017,1000035,1000036,Ellos son hermanos,Они братья,Ellos son hermanos gemelos.,Они братья-близнецы.
-1000018,1000037,1000038,Ellos son altos,Они высокие,Ellos son altos y juegan al baloncesto.,Они высокие и играют в баскетбол.
-1000019,1000039,1000040,Ellos son de México,Они из Мексики,Ellos son de México y les gusta la comida picante.,Они из Мексики и любят острую еду.
-1000020,1000041,1000042,Yo estoy en casa,Я дома,"Yo estoy en casa, relajándome.","Я дома, расслабляюсь."
-1000021,1000043,1000044,Yo estoy feliz,Я счастлив,Yo estoy feliz de verte.,Я счастлив тебя видеть.
-1000022,1000045,1000046,Yo estoy ocupado,Я занят,Yo estoy ocupado con el trabajo.,Я занят работой.
-1000023,1000047,1000048,Tú estás en la escuela,Ты в школе,Tú estás en la escuela ahora mismo.,Ты сейчас в школе.
-1000024,1000049,1000050,Tú estás cansado,Ты устал,Tú estás cansado después del entrenamiento.,Ты устал после тренировки.
-1000025,1000051,1000052,Tú estás enfermo,Ты болен,"Tú estás enfermo, necesitas descansar.","Ты болен, тебе нужно отдохнуть."
-1000026,1000053,1000054,Él está en el trabajo,Он на работе,Él está en el trabajo hasta tarde.,Он работает допоздна.
-1000027,1000055,1000056,Él está contento,Он доволен,Él está contento con su nuevo trabajo.,Он доволен своей новой работой.
-1000028,1000057,1000058,Él está nervioso,Он нервничает,Él está nervioso por la presentación.,Он нервничает из-за презентации.
-1000029,1000059,1000060,Ella está en el parque,Она в парке,Ella está en el parque con sus amigos.,Она в парке с друзьями.
-1000030,1000061,1000062,Ella está triste,Она грустная,Ella está triste porque extraña a su familia.,"Она грустная, потому что скучает по семье."
-1000031,1000063,1000064,Ella está enojada,Она злится,Ella está enojada porque perdió su teléfono.,"Она злится, потому что потеряла телефон."
-1000032,1000065,1000066,Nosotros estamos en la playa,Мы на пляже,Nosotros estamos en la playa disfrutando del sol.,"Мы на пляже, наслаждаемся солнцем."
-1000033,1000067,1000068,Nosotros estamos listos,Мы готовы,Nosotros estamos listos para salir.,Мы готовы выйти.
-1000034,1000069,1000070,Nosotros estamos aburridos,Нам скучно,"Nosotros estamos aburridos, no hay nada que hacer.","Нам скучно, нечем заняться."
-1000035,1000071,1000072,Vosotros estáis en casa,Вы дома,Vosotros estáis en casa después de la escuela.,Вы дома после школы.
-1000036,1000073,1000074,Vosotros estáis contentos,Вы довольны,Vosotros estáis contentos con los resultados.,Вы довольны результатами.
-1000037,1000075,1000076,Vosotros estáis ocupados,Вы заняты,Vosotros estáis ocupados toda la semana.,Вы заняты всю неделю.
-1000038,1000077,1000078,Ellos están en el cine,Они в кино,Ellos están en el cine viendo una película.,Они в кино смотрят фильм.
-1000039,1000079,1000080,Ellos están cansados,Они устали,Ellos están cansados después del trabajo.,Они устали после работы.
-1000040,1000081,1000082,Ellos están felices,Они счастливы,Ellos están felices por su éxito.,Они счастливы из-за своего успеха.
-1000041,1000083,1000084,Yo voy al mercado,Я иду на рынок,Yo voy al mercado a comprar frutas.,Я иду на рынок покупать фрукты.
-1000042,1000085,1000086,Yo voy a estudiar,Я собираюсь учиться,Yo voy a estudiar para el examen mañana.,Я собираюсь учиться к экзамену завтра.
-1000043,1000087,1000088,Yo voy con mis amigos,Я иду с друзьями,Yo voy con mis amigos al cine.,Я иду с друзьями в кино.
-1000044,1000089,1000090,Tú vas a la tienda,Ты идешь в магазин,Tú vas a la tienda a comprar pan.,Ты идешь в магазин за хлебом.
-1000045,1000091,1000092,Tú vas a trabajar,Ты идешь на работу,Tú vas a trabajar todos los días.,Ты ходишь на работу каждый день.
-1000046,1000093,1000094,Tú vas en autobús,Ты едешь на автобусе,Tú vas en autobús al colegio.,Ты едешь на автобусе в школу.
-1000047,1000095,1000096,Él va al gimnasio,Он идет в спортзал,Él va al gimnasio todas las mañanas.,Он ходит в спортзал каждое утро.
-1000048,1000097,1000098,Él va a dormir,Он идет спать,Él va a dormir temprano.,Он ложится спать рано.
-1000049,1000099,1000100,Él va en coche,Он едет на машине,Él va en coche al trabajo.,Он едет на машине на работу.
-1000050,1000101,1000102,Ella va a la playa,Она идет на пляж,Ella va a la playa los fines de semana.,Она ходит на пляж по выходным.
-1000051,1000103,1000104,Ella va a cocinar,Она собирается готовить,Ella va a cocinar para la familia.,Она собирается готовить для семьи.
-1000052,1000105,1000106,Ella va en bicicleta,Она едет на велосипеде,Ella va en bicicleta al parque.,Она едет на велосипеде в парк.
-1000053,1000107,1000108,Nosotros vamos al parque,Мы идем в парк,Nosotros vamos al parque para jugar.,Мы идем в парк поиграть.
-1000054,1000109,1000110,Nosotros vamos a cenar,Мы идем ужинать,Nosotros vamos a cenar a un restaurante.,Мы идем ужинать в ресторан.
-1000055,1000111,1000112,Nosotros vamos en tren,Мы едем на поезде,Nosotros vamos en tren a la ciudad.,Мы едем на поезде в город.
-1000056,1000113,1000114,Vosotros vais a la fiesta,Вы идете на вечеринку,Vosotros vais a la fiesta de cumpleaños.,Вы идете на день рождения.
-1000057,1000115,1000116,Vosotros vais a cantar,Вы будете петь,Vosotros vais a cantar en el concierto.,Вы будете петь на концерте.
+1000000,1000001,1000002,Yo soy estudiante,Я студент,Yo soy estudiante de medicina en la Universidad de Barcelona.,Я студент медицинского факультета в Барселонском университете.
+1000001,1000003,1000004,Yo soy de Rusia,Я из России,Yo soy de Rusia pero llevo viviendo en España cinco años.,"Я из России, но живу в Испании уже пять лет."
+1000002,1000005,1000006,Yo soy alto,Я высокий,Yo soy alto; siempre llego a los estantes más altos.,Я высокий; всегда достаю до самых верхних полок.
+1000003,1000007,1000008,Tú eres amable,Ты добрый,Tú eres amable por ayudar a esa anciana con sus compras.,"Ты добрый, что помог той пожилой женщине с покупками."
+1000004,1000009,1000010,Tú eres inteligente,Ты умный,Tú eres inteligente; siempre encuentras soluciones creativas.,Ты умный; ты всегда находишь креативные решения.
+1000005,1000011,1000012,Tú eres mi amigo,Ты мой друг,Tú eres mi amigo desde que éramos niños.,Ты мой друг с детства.
+1000006,1000013,1000014,Él es médico,Он врач,Él es médico especializado en cardiología.,"Он врач, специализирующийся на кардиологии."
+1000007,1000015,1000016,Él es simpático,Он приятный,Él es simpático; siempre tiene una sonrisa para todos.,Он приятный; у него всегда есть улыбка для каждого.
+1000008,1000017,1000018,Él es de España,Он из Испании,Él es de España y habla catalán y castellano con fluidez.,Он из Испании и свободно говорит на каталанском и кастильском языках.
+1000009,1000019,1000020,Ella es bonita,Она красивая,Ella es bonita y siempre tiene una sonrisa.,Она красивая и всегда улыбается.
+1000010,1000021,1000022,Ella es mi hermana,Она моя сестра,Ella es mi hermana mayor y siempre me da buenos consejos.,Она моя старшая сестра и всегда дает мне хорошие советы.
+1000011,1000023,1000024,Nosotros somos familia,Мы семья,Nosotros somos familia y siempre nos apoyamos mutuamente.,Мы семья и всегда поддерживаем друг друга.
+1000012,1000025,1000026,Nosotros somos estudiantes,Мы студенты,Nosotros somos estudiantes de ingeniería en la Universidad Politécnica.,Мы студенты инженерного факультета в Политехническом университете.
+1000013,1000027,1000028,Nosotros somos amigos,Мы друзья,Nosotros somos amigos desde la escuela primaria.,Мы друзья со времен начальной школы.
+1000014,1000029,1000030,Vosotros sois españoles,Вы испанцы,Vosotros sois españoles y conocéis bien la cultura mediterránea.,Вы испанцы и хорошо знаете средиземноморскую культуру.
+1000015,1000031,1000032,Vosotros sois divertidos,Вы весёлые,Vosotros sois divertidos; siempre animáis las fiestas.,Вы весёлые; вы всегда оживляете вечеринки.
+1000016,1000033,1000034,Vosotros sois trabajadores,Вы трудолюбивые,Vosotros sois trabajadores y siempre cumplís con los plazos.,Вы трудолюбивые и всегда выполняете работу в срок.
+1000017,1000035,1000036,Ellos son hermanos,Они братья,Ellos son hermanos gemelos y tienen gustos muy parecidos.,Они братья-близнецы и у них очень похожие вкусы.
+1000018,1000037,1000038,Ellos son altos,Они высокие,Ellos son altos; destacan en cualquier grupo.,Они высокие; выделяются в любой группе.
+1000019,1000039,1000040,Ellos son de México,Они из Мексики,Ellos son de México y preparan los mejores tacos que he probado.,"Они из Мексики и готовят лучшие тако, которые я когда-либо пробовал."
+1000020,1000041,1000042,Yo estoy en casa,Я дома,Yo estoy en casa trabajando en mi proyecto final.,Я дома и работаю над своим дипломным проектом.
+1000021,1000043,1000044,Yo estoy feliz,Я счастлив,Yo estoy feliz porque acabo de graduarme de la universidad.,"Я счастлив, потому что только что окончил университет."
+1000022,1000045,1000046,Yo estoy ocupado,Я занят,Yo estoy ocupado preparando una presentación importante.,Я занят подготовкой важной презентации.
+1000023,1000047,1000048,Tú estás en la escuela,Ты в школе,Tú estás en la escuela aprendiendo un nuevo idioma.,Ты в школе и изучаешь новый язык.
+1000024,1000049,1000050,Tú estás cansado,Ты устал,Tú estás cansado después de correr el maratón.,Ты устал после марафонского забега.
+1000025,1000051,1000052,Tú estás enfermo,Ты болен,Tú estás enfermo y deberías quedarte en cama hoy.,Ты болен и тебе следует остаться сегодня в постели.
+1000026,1000053,1000054,Él está en el trabajo,Он на работе,Él está en el trabajo preparando un informe importante.,Он на работе и готовит важный отчет.
+1000027,1000055,1000056,Él está contento,Он доволен,Él está contento porque consiguió un ascenso en su trabajo.,"Он доволен, потому что получил повышение на работе."
+1000028,1000057,1000058,Él está nervioso,Он нервничает,Él está nervioso porque tiene una entrevista de trabajo mañana.,"Он нервничает, потому что завтра у него собеседование на работу."
+1000029,1000059,1000060,Ella está en el parque,Она в парке,Ella está en el parque haciendo yoga con sus amigos.,Она в парке и занимается йогой с друзьями.
+1000030,1000061,1000062,Ella está triste,Она грустная,Ella está triste porque su mejor amiga se muda a otra ciudad.,"Она грустная, потому что ее лучшая подруга переезжает в другой город."
+1000031,1000063,1000064,Ella está enojada,Она злится,Ella está enojada porque perdió su teléfono en el autobús.,"Она злится, потому что потеряла свой телефон в автобусе."
+1000032,1000065,1000066,Nosotros estamos en la playa,Мы на пляже,Nosotros estamos en la playa disfrutando del sol y del mar.,Мы на пляже и наслаждаемся солнцем и морем.
+1000033,1000067,1000068,Nosotros estamos listos,Мы готовы,Nosotros estamos listos para empezar nuestro viaje por Europa.,Мы готовы начать наше путешествие по Европе.
+1000034,1000069,1000070,Nosotros estamos aburridos,Нам скучно,Nosotros estamos aburridos porque no hay nada interesante en la televisión.,"Нам скучно, потому что по телевизору нет ничего интересного."
+1000035,1000071,1000072,Vosotros estáis en casa,Вы дома,Vosotros estáis en casa preparando la cena para los invitados.,Вы дома и готовите ужин для гостей.
+1000036,1000073,1000074,Vosotros estáis contentos,Вы довольны,Vosotros estáis contentos con los resultados del examen final.,Вы довольны результатами выпускного экзамена.
+1000037,1000075,1000076,Vosotros estáis ocupados,Вы заняты,Vosotros estáis ocupados organizando la conferencia internacional.,Вы заняты организацией международной конференции.
+1000038,1000077,1000078,Ellos están en el cine,Они в кино,Ellos están en el cine viendo la última película de ciencia ficción.,Они в кино и смотрят последний научно-фантастический фильм.
+1000039,1000079,1000080,Ellos están cansados,Они устали,Ellos están cansados después de un largo día de excursión.,Они устали после долгого дня экскурсии.
+1000040,1000081,1000082,Ellos están felices,Они счастливы,Ellos están felices porque acaban de comprar su primera casa.,"Они счастливы, потому что только что купили свой первый дом."
+1000041,1000083,1000084,Yo voy al mercado,Я иду на рынок,Yo voy al mercado a comprar frutas y verduras frescas.,"Я иду на рынок, чтобы купить свежие фрукты и овощи."
+1000042,1000085,1000086,Yo voy a estudiar,Я собираюсь учиться,Yo voy a estudiar toda la noche para el examen de mañana.,Я собираюсь учиться всю ночь перед завтрашним экзаменом.
+1000043,1000087,1000088,Yo voy con mis amigos,Я иду с друзьями,Yo voy con mis amigos a un concierto de rock esta noche.,Я иду с друзьями на рок-концерт сегодня вечером.
+1000044,1000089,1000090,Tú vas a la tienda,Ты идешь в магазин,Tú vas a la tienda a comprar leche y pan para el desayuno.,Ты идешь в магазин за молоком и хлебом для завтрака.
+1000045,1000091,1000092,Tú vas a trabajar,Ты идешь на работу,Tú vas a trabajar en bicicleta todos los días.,Ты ездишь на работу на велосипеде каждый день.
+1000046,1000093,1000094,Tú vas en autobús,Ты едешь на автобусе,Tú vas en autobús al centro de la ciudad para evitar el tráfico.,"Ты едешь на автобусе в центр города, чтобы избежать пробок."
+1000047,1000095,1000096,Él va al gimnasio,Он идет в спортзал,Él va al gimnasio tres veces por semana para mantenerse en forma.,"Он ходит в спортзал три раза в неделю, чтобы поддерживать форму."
+1000048,1000097,1000098,Él va a dormir,Он идет спать,Él va a dormir temprano porque tiene una reunión importante mañana.,"Он ложится спать рано, потому что у него завтра важная встреча."
+1000049,1000099,1000100,Él va en coche,Он едет на машине,Él va en coche al trabajo porque vive en las afueras de la ciudad.,"Он ездит на работу на машине, потому что живет в пригороде."
+1000050,1000101,1000102,Ella va a la playa,Она идет на пляж,Ella va a la playa todos los fines de semana para relajarse.,"Она ходит на пляж каждые выходные, чтобы расслабиться."
+1000051,1000103,1000104,Ella va a cocinar,Она собирается готовить,Ella va a cocinar una paella para sus amigos esta noche.,Она собирается приготовить паэлью для своих друзей сегодня вечером.
+1000052,1000105,1000106,Ella va en bicicleta,Она едет на велосипеде,Ella va en bicicleta al trabajo para hacer ejercicio y evitar el tráfico.,"Она ездит на работу на велосипеде, чтобы заниматься спортом и избегать пробок."
+1000053,1000107,1000108,Nosotros vamos al parque,Мы идем в парк,Nosotros vamos al parque a hacer un picnic con la familia.,Мы идем в парк на семейный пикник.
+1000054,1000109,1000110,Nosotros vamos a cenar,Мы идем ужинать,Nosotros vamos a cenar a un restaurante italiano para celebrar mi cumpleaños.,"Мы идем ужинать в итальянский ресторан, чтобы отпраздновать мой день рождения."
+1000055,1000111,1000112,Nosotros vamos en tren,Мы едем на поезде,Nosotros vamos en tren a París para nuestras vacaciones de verano.,Мы едем на поезде в Париж на летние каникулы.
+1000056,1000113,1000114,Vosotros vais a la fiesta,Вы идете на вечеринку,Vosotros vais a la fiesta de graduación de la universidad.,Вы идете на выпускной вечер в университете.
+1000057,1000115,1000116,Vosotros vais a cantar,Вы будете петь,Vosotros vais a cantar en el coro de la iglesia este domingo.,Вы будете петь в церковном хоре в это воскресенье.
 1000058,1000117,1000118,Vosotros vais en avión,Вы летите на самолете,Vosotros vais en avión a París.,Вы летите на самолете в Париж.
-1000059,1000119,1000120,Ellos van al museo,Они идут в музей,Ellos van al museo a ver la exposición.,Они идут в музей посмотреть выставку.
-1000060,1000121,1000122,Ellos van a jugar,Они собираются играть,Ellos van a jugar al fútbol.,Они собираются играть в футбол.
-1000061,1000123,1000124,Ellos van en metro,Они едут на метро,Ellos van en metro al centro.,Они едут на метро в центр.
-1000062,1000125,1000126,A mí me gusta el café,Мне нравится кофе,A mí me gusta el café por las mañanas.,Мне нравится кофе по утрам.
-1000063,1000127,1000128,A mí me gusta leer,Мне нравится читать,A mí me gusta leer novelas.,Мне нравится читать романы.
-1000064,1000129,1000130,A mí me gusta viajar,Мне нравится путешествовать,A mí me gusta viajar a diferentes países.,Мне нравится путешествовать по разным странам.
-1000065,1000131,1000132,A ti te gusta la música,Тебе нравится музыка,A ti te gusta la música clásica.,Тебе нравится классическая музыка.
-1000066,1000133,1000134,A ti te gusta bailar,Тебе нравится танцевать,A ti te gusta bailar salsa.,Тебе нравится танцевать сальсу.
-1000067,1000135,1000136,A ti te gusta el deporte,Тебе нравится спорт,A ti te gusta el deporte al aire libre.,Тебе нравится спорт на свежем воздухе.
-1000068,1000137,1000138,A él le gusta cocinar,Ему нравится готовить,A él le gusta cocinar platos nuevos.,Ему нравится готовить новые блюда.
-1000069,1000139,1000140,A él le gusta el cine,Ему нравится кино,A él le gusta el cine de acción.,Ему нравятся боевики.
-1000070,1000141,1000142,A él le gusta dormir,Ему нравится спать,A él le gusta dormir hasta tarde.,Ему нравится спать до позднего утра.
-1000071,1000143,1000144,A ella le gusta cantar,Ей нравится петь,A ella le gusta cantar en la ducha.,Ей нравится петь в душе.
-1000072,1000145,1000146,A ella le gusta la playa,Ей нравится пляж,A ella le gusta la playa en verano.,Ей нравится пляж летом.
-1000073,1000147,1000148,A ella le gusta estudiar,Ей нравится учиться,A ella le gusta estudiar idiomas.,Ей нравится изучать языки.
-1000074,1000149,1000150,A nosotros nos gusta viajar,Нам нравится путешествовать,A nosotros nos gusta viajar en grupo.,Нам нравится путешествовать в группе.
-1000075,1000151,1000152,A nosotros nos gusta la comida,Нам нравится еда,A nosotros nos gusta la comida italiana.,Нам нравится итальянская еда.
-1000076,1000153,1000154,A nosotros nos gusta el fútbol,Нам нравится футбол,A nosotros nos gusta el fútbol en equipo.,Нам нравится командный футбол.
-1000077,1000155,1000156,A vosotros os gusta bailar,Вам нравится танцевать,A vosotros os gusta bailar en las fiestas.,Вам нравится танцевать на вечеринках.
-1000078,1000157,1000158,A vosotros os gusta el teatro,Вам нравится театр,A vosotros os gusta el teatro clásico.,Вам нравится классический театр.
-1000079,1000159,1000160,A vosotros os gusta la naturaleza,Вам нравится природа,A vosotros os gusta la naturaleza y el senderismo.,Вам нравится природа и пешие походы.
-1000080,1000161,1000162,A ellos les gusta la fiesta,Им нравится вечеринка,A ellos les gusta la fiesta hasta tarde.,Им нравится вечеринка до поздней ночи.
-1000081,1000163,1000164,A ellos les gusta el arte,Им нравится искусство,A ellos les gusta el arte moderno.,Им нравится современное искусство.
-1000082,1000165,1000166,A ellos les gusta nadar,Им нравится плавать,A ellos les gusta nadar en el mar.,Им нравится плавать в море.
-1000083,1000167,1000168,Yo tengo un libro,У меня есть книга,Yo tengo un libro de aventuras.,У меня есть книга приключений.
-1000084,1000169,1000170,Yo tengo hambre,Я голоден,"Yo tengo hambre, quiero comer algo.","Я голоден, хочу что-нибудь поесть."
-1000085,1000171,1000172,Yo tengo 20 años,Мне 20 лет,Yo tengo 20 años y estudio en la universidad.,"Мне 20 лет, и я учусь в университете."
-1000086,1000173,1000174,Tú tienes un perro,У тебя есть собака,Tú tienes un perro muy bonito.,У тебя очень красивая собака.
-1000087,1000175,1000176,Tú tienes razón,Ты прав,Tú tienes razón en lo que dices.,"Ты прав в том, что говоришь."
-1000088,1000177,1000178,Tú tienes tiempo,У тебя есть время,Tú tienes tiempo para terminar el trabajo.,У тебя есть время закончить работу.
-1000089,1000179,1000180,Él tiene una casa,У него есть дом,Él tiene una casa en el campo.,У него есть дом в деревне.
-1000090,1000181,1000182,Él tiene miedo,Он боится,Él tiene miedo de la oscuridad.,Он боится темноты.
-1000091,1000183,1000184,Él tiene trabajo,У него есть работа,Él tiene trabajo como ingeniero.,Он работает инженером.
-1000092,1000185,1000186,Ella tiene un coche,У нее есть машина,Ella tiene un coche rojo.,У нее красная машина.
-1000093,1000187,1000188,Ella tiene frío,Ей холодно,Ella tiene frío y necesita una chaqueta.,"Ей холодно, ей нужна куртка."
-1000094,1000189,1000190,Ella tiene una idea,У нее есть идея,Ella tiene una idea para un nuevo proyecto.,У нее есть идея для нового проекта.
-1000095,1000191,1000192,Nosotros tenemos una familia,У нас есть семья,Nosotros tenemos una familia grande.,У нас большая семья.
-1000096,1000193,1000194,Nosotros tenemos planes,У нас есть планы,Nosotros tenemos planes para el fin de semana.,У нас есть планы на выходные.
-1000097,1000195,1000196,Nosotros tenemos suerte,Нам повезло,Nosotros tenemos suerte de estar aquí.,Нам повезло быть здесь.
-1000098,1000197,1000198,Vosotros tenéis amigos,У вас есть друзья,Vosotros tenéis amigos en todas partes.,У вас есть друзья повсюду.
-1000099,1000199,1000200,Vosotros tenéis razón,Вы правы,Vosotros tenéis razón sobre el problema.,Вы правы по поводу проблемы.
-1000100,1000201,1000202,Vosotros tenéis talento,У вас есть талант,Vosotros tenéis talento para la música.,У вас есть талант к музыке.
-1000101,1000203,1000204,Ellos tienen dinero,У них есть деньги,Ellos tienen dinero para comprar una casa.,У них есть деньги на покупку дома.
-1000102,1000205,1000206,Ellos tienen sueños,У них есть мечты,Ellos tienen sueños de viajar por el mundo.,У них есть мечты путешествовать по миру.
-1000103,1000207,1000208,Ellos tienen problemas,У них есть проблемы,Ellos tienen problemas en el trabajo.,У них проблемы на работе.
-1000104,1000209,1000210,Yo hago mi tarea,Я делаю домашнее задание,Yo hago mi tarea todos los días.,Я делаю домашнее задание каждый день.
-1000105,1000211,1000212,Yo hago ejercicio,Я занимаюсь спортом,Yo hago ejercicio por la mañana.,Я занимаюсь спортом по утрам.
-1000106,1000213,1000214,Yo hago la cena,Я готовлю ужин,Yo hago la cena para toda la familia.,Я готовлю ужин для всей семьи.
-1000107,1000215,1000216,Tú haces un pastel,Ты делаешь торт,Tú haces un pastel delicioso.,Ты делаешь вкусный торт.
-1000108,1000217,1000218,Tú haces preguntas,Ты задаешь вопросы,Tú haces muchas preguntas en clase.,Ты задаешь много вопросов на уроке.
-1000109,1000219,1000220,Tú haces deporte,Ты занимаешься спортом,Tú haces deporte todos los días.,Ты занимаешься спортом каждый день.
-1000110,1000221,1000222,Él hace su cama,Он заправляет свою постель,Él hace su cama todas las mañanas.,Он заправляет свою постель каждое утро.
-1000111,1000223,1000224,Ellos hacen un esfuerzo,Они делают усилие,Ellos hacen un esfuerzo para mejorar.,"Они делают усилие, чтобы стать лучше."
-1000112,1000225,1000226,Ellos hacen una película,Они снимают фильм,Ellos hacen una película sobre la historia.,Они снимают фильм о истории.
-1000113,1000227,1000228,Ellos hacen negocios,Они ведут бизнес,Ellos hacen negocios en todo el mundo.,Они ведут бизнес по всему миру.
-1000114,1000229,1000230,Yo puedo nadar,Я могу плавать,Yo puedo nadar muy bien.,Я умею хорошо плавать.
-1000115,1000231,1000232,Yo puedo ayudarte,Я могу помочь тебе,Yo puedo ayudarte con el proyecto.,Я могу помочь тебе с проектом.
-1000116,1000233,1000234,Yo puedo cantar,Я могу петь,Yo puedo cantar en el coro.,Я могу петь в хоре.
-1000117,1000235,1000236,Tú puedes correr,Ты можешь бегать,Tú puedes correr rápido.,Ты можешь бегать быстро.
-1000118,1000237,1000238,Tú puedes aprender,Ты можешь учиться,Tú puedes aprender un nuevo idioma.,Ты можешь выучить новый язык.
-1000119,1000239,1000240,Tú puedes ganar,Ты можешь победить,Tú puedes ganar el juego.,Ты можешь выиграть игру.
-1000120,1000241,1000242,Él puede cocinar,Он может готовить,Él puede cocinar platos muy sabrosos.,Он умеет готовить очень вкусные блюда.
-1000121,1000243,1000244,Él puede trabajar,Он может работать,Él puede trabajar desde casa.,Он может работать из дома.
-1000122,1000245,1000246,Él puede viajar,Он может путешествовать,Él puede viajar por todo el mundo.,Он может путешествовать по всему миру.
-1000123,1000247,1000248,Ella puede bailar,Она может танцевать,Ella puede bailar flamenco.,Она умеет танцевать фламенко.
-1000124,1000249,1000250,Ella puede enseñar,Она может преподавать,Ella puede enseñar inglés.,Она может преподавать английский язык.
-1000125,1000251,1000252,Ella puede conducir,Она может водить машину,Ella puede conducir por la ciudad.,Она может водить машину по городу.
-1000126,1000253,1000254,Nosotros podemos jugar,Мы можем играть,Nosotros podemos jugar al fútbol.,Мы можем играть в футбол.
-1000127,1000255,1000256,Nosotros podemos estudiar,Мы можем учиться,Nosotros podemos estudiar juntos.,Мы можем учиться вместе.
-1000128,1000257,1000258,Nosotros podemos cambiar,Мы можем измениться,Nosotros podemos cambiar el mundo.,Мы можем изменить мир.
-1000129,1000259,1000260,Vosotros podéis venir,Вы можете прийти,Vosotros podéis venir a la fiesta.,Вы можете прийти на вечеринку.
-1000130,1000261,1000262,Vosotros podéis elegir,Вы можете выбрать,Vosotros podéis elegir entre varias opciones.,Вы можете выбрать из нескольких вариантов.
+1000059,1000119,1000120,Ellos van al museo,Они идут в музей,Ellos van al museo para ver la exposición de arte.,"Они идут в музей, чтобы посмотреть выставку искусства."
+1000060,1000121,1000122,Ellos van a jugar,Они собираются играть,Ellos van a jugar al fútbol en el parque.,Они собираются играть в футбол в парке.
+1000061,1000123,1000124,Ellos van en metro,Они едут на метро,Ellos van en metro al centro de la ciudad.,Они едут на метро в центр города.
+1000062,1000125,1000126,A mí me gusta el café,Мне нравится кофе,A mí me gusta el café por las mañanas con un poco de azúcar.,Мне нравится кофе по утрам с небольшим количеством сахара.
+1000063,1000127,1000128,A mí me gusta leer,Мне нравится читать,A mí me gusta leer novelas de misterio.,Мне нравится читать детективные романы.
+1000064,1000129,1000130,A mí me gusta viajar,Мне нравится путешествовать,A mí me gusta viajar a diferentes países durante las vacaciones.,Мне нравится путешествовать по разным странам в отпуске.
+1000065,1000131,1000132,A ti te gusta la música,Тебе нравится музыка,A ti te gusta la música clásica y los conciertos en vivo.,Тебе нравится классическая музыка и живые концерты.
+1000066,1000133,1000134,A ti te gusta bailar,Тебе нравится танцевать,A ti te gusta bailar salsa los fines de semana.,Тебе нравится танцевать сальсу по выходным.
+1000067,1000135,1000136,A ti te gusta el deporte,Тебе нравится спорт,"A ti te gusta el deporte al aire libre, especialmente correr.","Тебе нравится спорт на свежем воздухе, особенно бег."
+1000068,1000137,1000138,A él le gusta cocinar,Ему нравится готовить,A él le gusta cocinar platos nuevos y experimentar en la cocina.,Ему нравится готовить новые блюда и экспериментировать на кухне.
+1000069,1000139,1000140,A él le gusta el cine,Ему нравится кино,A él le gusta el cine de acción y las películas de superhéroes.,Ему нравятся боевики и фильмы о супергероях.
+1000070,1000141,1000142,A él le gusta dormir,Ему нравится спать,A él le gusta dormir hasta tarde los fines de semana.,Ему нравится спать до позднего утра по выходным.
+1000071,1000143,1000144,A ella le gusta cantar,Ей нравится петь,A ella le gusta cantar en la ducha y en casa.,Ей нравится петь в душе и дома.
+1000072,1000145,1000146,A ella le gusta la playa,Ей нравится пляж,A ella le gusta la playa en verano para tomar el sol.,"Ей нравится пляж летом, чтобы загорать."
+1000073,1000147,1000148,A ella le gusta estudiar,Ей нравится учиться,A ella le gusta estudiar idiomas y aprender sobre diferentes culturas.,Ей нравится изучать языки и узнавать о разных культурах.
+1000074,1000149,1000150,A nosotros nos gusta viajar,Нам нравится путешествовать,A nosotros nos gusta viajar en grupo y descubrir nuevos lugares.,Нам нравится путешествовать в группе и открывать новые места.
+1000075,1000151,1000152,A nosotros nos gusta la comida,Нам нравится еда,"A nosotros nos gusta la comida italiana, especialmente la pasta.","Нам нравится итальянская еда, особенно паста."
+1000076,1000153,1000154,A nosotros nos gusta el fútbol,Нам нравится футбол,A nosotros nos gusta el fútbol en equipo y jugar los domingos.,Нам нравится командный футбол и играть по воскресеньям.
+1000077,1000155,1000156,A vosotros os gusta bailar,Вам нравится танцевать,A vosotros os gusta bailar en las fiestas de cumpleaños.,Вам нравится танцевать на днях рождения.
+1000078,1000157,1000158,A vosotros os gusta el teatro,Вам нравится театр,A vosotros os gusta el teatro clásico y asistir a las obras en el centro.,Вам нравится классический театр и посещать спектакли в центре.
+1000079,1000159,1000160,A vosotros os gusta la naturaleza,Вам нравится природа,A vosotros os gusta la naturaleza y el senderismo en las montañas.,Вам нравится природа и пешие походы в горах.
+1000080,1000161,1000162,A ellos les gusta la fiesta,Им нравится вечеринка,"A ellos les gusta la fiesta hasta tarde, especialmente en verano.","Им нравится вечеринка до поздней ночи, особенно летом."
+1000081,1000163,1000164,A ellos les gusta el arte,Им нравится искусство,A ellos les gusta el arte moderno y visitar museos.,Им нравится современное искусство и посещение музеев.
+1000082,1000165,1000166,A ellos les gusta nadar,Им нравится плавать,A ellos les gusta nadar en el mar y en la piscina.,Им нравится плавать в море и в бассейне.
+1000083,1000167,1000168,Yo tengo un libro,У меня есть книга,Yo tengo un libro de aventuras que me encanta.,"У меня есть книга приключений, которая мне очень нравится."
+1000084,1000169,1000170,Yo tengo hambre,Я голоден,"Yo tengo hambre, quiero comer algo ahora mismo.","Я голоден, хочу что-нибудь поесть прямо сейчас."
+1000085,1000171,1000172,Yo tengo 20 años,Мне 20 лет,Yo tengo 20 años y estudio en la universidad en la facultad de medicina.,"Мне 20 лет, и я учусь в университете на медицинском факультете."
+1000086,1000173,1000174,Tú tienes un perro,У тебя есть собака,Tú tienes un perro muy bonito que siempre te sigue.,"У тебя очень красивая собака, которая всегда за тобой следует."
+1000087,1000175,1000176,Tú tienes razón,Ты прав,Tú tienes razón en lo que dices sobre la situación.,"Ты прав в том, что говоришь о ситуации."
+1000088,1000177,1000178,Tú tienes tiempo,У тебя есть время,Tú tienes tiempo para terminar el trabajo antes de la fecha límite.,У тебя есть время закончить работу до крайнего срока.
+1000089,1000179,1000180,Él tiene una casa,У него есть дом,Él tiene una casa en el campo con un gran jardín.,У него есть дом в деревне с большим садом.
+1000090,1000181,1000182,Él tiene miedo,Он боится,Él tiene miedo de la oscuridad y de quedarse solo.,Он боится темноты и остаться один.
+1000091,1000183,1000184,Él tiene trabajo,У него есть работа,Él tiene trabajo como ingeniero en una empresa internacional.,Он работает инженером в международной компании.
+1000092,1000185,1000186,Ella tiene un coche,У нее есть машина,Ella tiene un coche rojo que compró el año pasado.,"У нее красная машина, которую она купила в прошлом году."
+1000093,1000187,1000188,Ella tiene frío,Ей холодно,Ella tiene frío y necesita una chaqueta más abrigada.,"Ей холодно, ей нужна более теплая куртка."
+1000094,1000189,1000190,Ella tiene una idea,У нее есть идея,Ella tiene una idea para un nuevo proyecto de arte.,У нее есть идея для нового художественного проекта.
+1000095,1000191,1000192,Nosotros tenemos una familia,У нас есть семья,Nosotros tenemos una familia grande y muy unida.,У нас большая и очень дружная семья.
+1000096,1000193,1000194,Nosotros tenemos planes,У нас есть планы,Nosotros tenemos planes para el fin de semana en la playa.,У нас есть планы на выходные на пляже.
+1000097,1000195,1000196,Nosotros tenemos suerte,Нам повезло,Nosotros tenemos suerte de estar aquí juntos.,Нам повезло быть здесь вместе.
+1000098,1000197,1000198,Vosotros tenéis amigos,У вас есть друзья,"Vosotros tenéis amigos en todas partes, incluso en el extranjero.","У вас есть друзья повсюду, даже за границей."
+1000099,1000199,1000200,Vosotros tenéis razón,Вы правы,Vosotros tenéis razón sobre el problema y debemos solucionarlo.,"Вы правы по поводу проблемы, и нам нужно её решить."
+1000100,1000201,1000202,Vosotros tenéis talento,У вас есть талант,Vosotros tenéis talento para la música y para tocar varios instrumentos.,У вас есть талант к музыке и игре на нескольких инструментах.
+1000101,1000203,1000204,Ellos tienen dinero,У них есть деньги,Ellos tienen dinero para comprar una casa en la ciudad.,У них есть деньги на покупку дома в городе.
+1000102,1000205,1000206,Ellos tienen sueños,У них есть мечты,Ellos tienen sueños de viajar por el mundo y conocer nuevas culturas.,У них есть мечты путешествовать по миру и знакомиться с новыми культурами.
+1000103,1000207,1000208,Ellos tienen problemas,У них есть проблемы,Ellos tienen problemas en el trabajo con su jefe.,У них проблемы на работе с начальником.
+1000104,1000209,1000210,Yo hago mi tarea,Я делаю домашнее задание,Yo hago mi tarea todos los días después de la escuela.,Я делаю домашнее задание каждый день после школы.
+1000105,1000211,1000212,Yo hago ejercicio,Я занимаюсь спортом,Yo hago ejercicio por la mañana antes de desayunar.,Я занимаюсь спортом по утрам перед завтраком.
+1000106,1000213,1000214,Yo hago la cena,Я готовлю ужин,Yo hago la cena para toda la familia todos los días.,Я готовлю ужин для всей семьи каждый день.
+1000107,1000215,1000216,Tú haces un pastel,Ты делаешь торт,Tú haces un pastel delicioso con fresas y crema.,Ты делаешь вкусный торт с клубникой и кремом.
+1000108,1000217,1000218,Tú haces preguntas,Ты задаешь вопросы,Tú haces muchas preguntas en clase sobre los temas difíciles.,Ты задаешь много вопросов на уроке по сложным темам.
+1000109,1000219,1000220,Tú haces deporte,Ты занимаешься спортом,Tú haces deporte todos los días para mantenerte en forma.,"Ты занимаешься спортом каждый день, чтобы поддерживать форму."
+1000110,1000221,1000222,Él hace su cama,Он заправляет свою постель,Él hace su cama todas las mañanas antes de salir.,Он заправляет свою постель каждое утро перед выходом.
+1000111,1000223,1000224,Ellos hacen un esfuerzo,Они делают усилие,Ellos hacen un esfuerzo para mejorar en su trabajo.,"Они делают усилие, чтобы стать лучше в своей работе."
+1000112,1000225,1000226,Ellos hacen una película,Они снимают фильм,Ellos hacen una película sobre la historia del cine.,Они снимают фильм о истории кино.
+1000113,1000227,1000228,Ellos hacen negocios,Они ведут бизнес,Ellos hacen negocios en todo el mundo y tienen muchas conexiones.,Они ведут бизнес по всему миру и имеют много связей.
+1000114,1000229,1000230,Yo puedo nadar,Я могу плавать,Yo puedo nadar muy bien en el mar y en la piscina.,Я умею хорошо плавать в море и в бассейне.
+1000115,1000231,1000232,Yo puedo ayudarte,Я могу помочь тебе,Yo puedo ayudarte con el proyecto que tienes que entregar mañana.,"Я могу помочь тебе с проектом, который тебе нужно сдать завтра."
+1000116,1000233,1000234,Yo puedo cantar,Я могу петь,Yo puedo cantar en el coro de la iglesia.,Я могу петь в церковном хоре.
+1000117,1000235,1000236,Tú puedes correr,Ты можешь бегать,Tú puedes correr rápido y participar en competiciones.,Ты можешь бегать быстро и участвовать в соревнованиях.
+1000118,1000237,1000238,Tú puedes aprender,Ты можешь учиться,Tú puedes aprender un nuevo idioma si practicas todos los días.,"Ты можешь выучить новый язык, если будешь заниматься каждый день."
+1000119,1000239,1000240,Tú puedes ganar,Ты можешь победить,Tú puedes ganar el juego si sigues las reglas.,"Ты можешь выиграть игру, если будешь следовать правилам."
+1000120,1000241,1000242,Él puede cocinar,Он может готовить,Él puede cocinar platos muy sabrosos para toda la familia.,Он умеет готовить очень вкусные блюда для всей семьи.
+1000121,1000243,1000244,Él puede trabajar,Он может работать,Él puede trabajar desde casa y ser igual de productivo.,Он может работать из дома и быть таким же продуктивным.
+1000122,1000245,1000246,Él puede viajar,Он может путешествовать,Él puede viajar por todo el mundo y conocer nuevas culturas.,Он может путешествовать по всему миру и знакомиться с новыми культурами.
+1000123,1000247,1000248,Ella puede bailar,Она может танцевать,Ella puede bailar flamenco como una profesional.,Она умеет танцевать фламенко как профессионал.
+1000124,1000249,1000250,Ella puede enseñar,Она может преподавать,Ella puede enseñar inglés a estudiantes de diferentes niveles.,Она может преподавать английский язык студентам разного уровня.
+1000125,1000251,1000252,Ella puede conducir,Она может водить машину,Ella puede conducir por la ciudad y también en carretera.,Она может водить машину по городу и также на трассе.
+1000126,1000253,1000254,Nosotros podemos jugar,Мы можем играть,Nosotros podemos jugar al fútbol en el parque los domingos.,Мы можем играть в футбол в парке по воскресеньям.
+1000127,1000255,1000256,Nosotros podemos estudiar,Мы можем учиться,Nosotros podemos estudiar juntos para los exámenes.,Мы можем учиться вместе для экзаменов.
+1000128,1000257,1000258,Nosotros podemos cambiar,Мы можем измениться,Nosotros podemos cambiar el mundo si trabajamos unidos.,"Мы можем изменить мир, если будем работать вместе."
+1000129,1000259,1000260,Vosotros podéis venir,Вы можете прийти,Vosotros podéis venir a la fiesta el sábado por la noche.,Вы можете прийти на вечеринку в субботу вечером.
+1000130,1000261,1000262,Vosotros podéis elegir,Вы можете выбрать,Vosotros podéis elegir entre varias opciones interesantes.,Вы можете выбрать из нескольких интересных вариантов.
 1000131,1000263,1000264,Vosotros podéis ganar,Вы можете победить,Vosotros podéis ganar el campeonato.,Вы можете выиграть чемпионат.
 1000132,1000265,1000266,Ellos pueden leer,Они могут читать,Ellos pueden leer muy rápido.,Они могут читать очень быстро.
-1000133,1000267,1000268,Ellos pueden volar,Они могут летать,Ellos pueden volar en avión.,Они могут летать на самолете.
-1000134,1000269,1000270,Ellos pueden entender,Они могут понять,Ellos pueden entender el problema.,Они могут понять проблему.
+1000133,1000267,1000268,Ellos pueden volar,Они могут летать,Ellos pueden volar en avión a cualquier lugar.,Они могут летать на самолете куда угодно.
+1000134,1000269,1000270,Ellos pueden entender,Они могут понять,Ellos pueden entender el problema y buscar soluciones.,Они могут понять проблему и искать решения.
 1000135,1000271,1000272,Yo digo la verdad,Я говорю правду,Yo siempre digo la verdad.,Я всегда говорю правду.
 1000136,1000273,1000274,Yo digo hola,Я говорю привет,Yo digo hola a todos mis amigos.,Я говорю привет всем своим друзьям.
 1000137,1000275,1000276,Yo digo gracias,Я говорю спасибо,Yo digo gracias por la ayuda.,Я говорю спасибо за помощь.
@@ -349,7 +349,7 @@ translation_id,source_word_id,target_word_id,source_word,target_word,source_word
 1000347,1000695,1000696,el poema,стихотворение,Escribí un poema para ti.,Я написал для тебя стихотворение.
 1000348,1000697,1000698,el drama,драма,Me gusta ver dramas en la televisión.,Мне нравится смотреть драмы по телевизору.
 1000349,1000699,1000700,el problema,проблема,Tenemos un problema que resolver.,"У нас есть проблема, которую нужно решить."
-1000350,1000701,1000702,el idioma,язык,El español es un idioma hermoso.,Испанский - это красивый язык.
+1000350,1000701,1000702,el idioma,язык,Aprender un nuevo idioma abre muchas puertas en la vida.,Изучение нового языка открывает много дверей в жизни.
 1000351,1000703,1000704,el programa,программа,Veo el programa todas las noches.,Я смотрю программу каждую ночь.
 1000352,1000705,1000706,el mapa,карта,Necesitamos un mapa para encontrar el camino.,"Нам нужна карта, чтобы найти дорогу."
 1000353,1000707,1000708,el sistema,система,El sistema necesita ser actualizado.,Система нуждается в обновлении.
@@ -441,7 +441,7 @@ translation_id,source_word_id,target_word_id,source_word,target_word,source_word
 1000439,1000879,1000880,la mujer hermosa,красивая женщина,La mujer hermosa es una modelo famosa.,Красивая женщина - известная модель.
 1000440,1000881,1000882,el libro excelente,отличная книга,Este es un libro excelente.,Это отличная книга.
 1000441,1000883,1000884,la comida excelente,отличная еда,La comida en este restaurante es excelente.,Еда в этом ресторане отличная.
-1000442,1000885,1000886,el perro horrible,ужасная собака,El perro horrible me asustó.,Ужасная собака напугала меня.
+1000442,1000885,1000886,el perro horrible,ужасная собака,El perro horrible me persiguió por todo el parque.,Ужасная собака преследовала меня по всему парку.
 1000443,1000887,1000888,la cucaracha horrible,ужасный таракан,La cucaracha horrible estaba en la cocina.,Ужасный таракан был на кухне.
 1000444,1000889,1000890,el poema difícil,трудное стихотворение,El poema difícil fue un reto para mí.,Трудное стихотворение было для меня вызовом.
 1000445,1000891,1000892,la lección difícil,трудный урок,La lección difícil me tomó mucho tiempo.,Трудный урок занял у меня много времени.
@@ -450,7 +450,7 @@ translation_id,source_word_id,target_word_id,source_word,target_word,source_word
 1000448,1000897,1000898,el baño verde,зеленая ванная,El baño verde necesita ser renovado.,Зеленая ванная нуждается в ремонте.
 1000449,1000899,1000900,la cama verde,зеленая кровать,Tengo una cama verde en mi habitación.,У меня в комнате зеленая кровать.
 1000450,1000901,1000902,el tren gris,серый поезд,El tren gris es muy rápido.,Серый поезд очень быстрый.
-1000451,1000903,1000904,la mesa gris,серый стол,La mesa gris es perfecta para mi oficina.,Серый стол идеально подходит для моего офиса.
+1000451,1000903,1000904,la mesa gris,серый стол,La mesa gris en la oficina refleja un estilo moderno y minimalista.,Серый стол в офисе отражает современный и минималистский стиль.
 1000452,1000905,1000906,el tema interesante,интересная тема,El tema interesante fue discutido en la clase.,Интересная тема обсуждалась на уроке.
 1000453,1000907,1000908,la idea interesante,интересная идея,Tuviste una idea interesante ayer.,Вчера у тебя была интересная идея.
 1000454,1000909,1000910,el hombre fuerte,сильный мужчина,El hombre fuerte trabaja en la construcción.,Сильный мужчина работает на стройке.
@@ -483,10 +483,10 @@ translation_id,source_word_id,target_word_id,source_word,target_word,source_word
 1000481,1000963,1000964,los barcos marrones,коричневые корабли,Los barcos marrones navegan en el río.,Коричневые корабли плывут по реке.
 1000482,1000965,1000966,los trenes grises,серые поезда,Los trenes grises son muy eficientes.,Серые поезда очень эффективны.
 1000483,1000967,1000968,los tiquetes caros,дорогие билеты,Los tiquetes caros se venden rápido.,Дорогие билеты быстро распродаются.
-1000484,1000969,1000970,las casas blancas,белые дома,Las casas blancas son muy bonitas.,Белые дома очень красивые.
+1000484,1000969,1000970,las casas blancas,белые дома,Las casas blancas destacan en el vecindario.,Белые дома выделяются в районе.
 1000485,1000971,1000972,las personas simpáticas,милые люди,Las personas simpáticas me ayudaron con la dirección.,Милые люди помогли мне с направлением.
 1000486,1000973,1000974,las mujeres hermosas,красивые женщины,Las mujeres hermosas están en la portada de la revista.,Красивые женщины на обложке журнала.
-1000487,1000975,1000976,las comidas excelentes,отличная еда,Las comidas excelentes son servidas en este restaurante.,Отличная еда подается в этом ресторане.
+1000487,1000975,1000976,las comidas excelentes,отличная еда,Las comidas excelentes son el resultado de años de experiencia culinaria.,Отличная еда - результат многолетнего кулинарного опыта.
 1000488,1000977,1000978,las lecciones fáciles,легкие уроки,Las lecciones fáciles me ayudaron a entender mejor el tema.,Легкие уроки помогли мне лучше понять тему.
 1000489,1000979,1000980,las muchachas fuertes,сильные девушки,Las muchachas fuertes compiten en el torneo.,Сильные девушки соревнуются в турнире.
 1000490,1000981,1000982,las tiendas viejas,старые магазины,Las tiendas viejas tienen mucho carácter.,Старые магазины обладают большим характером.
@@ -502,7 +502,7 @@ translation_id,source_word_id,target_word_id,source_word,target_word,source_word
 1000500,1001001,1001002,el estudio,кабинет,El estudio está lleno de libros.,Кабинет полон книг.
 1000501,1001003,1001004,la pared,стена,La pared está pintada de azul.,Стена покрашена в синий цвет.
 1000502,1001005,1001006,el gabinete,шкаф,El gabinete es de madera.,Шкаф из дерева.
-1000503,1001007,1001008,la madera,дерево,La madera es un material natural.,Дерево - это природный материал.
+1000503,1001007,1001008,la madera,дерево,La madera es un recurso natural muy utilizado.,Дерево — это широко используемый природный ресурс.
 1000504,1001009,1001010,la cortina,штора,La cortina es de seda.,Штора из шелка.
 1000505,1001011,1001012,el patio,двор,El patio es grande y tiene muchas plantas.,Двор большой и в нем много растений.
 1000506,1001013,1001014,la sala,гостиная,La sala es espaciosa y luminosa.,Гостиная просторная и светлая.

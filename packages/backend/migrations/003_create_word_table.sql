@@ -6,4 +6,4 @@ CREATE TABLE IF NOT EXISTS word (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_word_language ON word (language_id);
+CREATE INDEX IF NOT EXISTS idx_word_language ON word (language_id);
