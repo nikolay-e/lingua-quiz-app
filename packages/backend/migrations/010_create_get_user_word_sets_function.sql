@@ -5,7 +5,9 @@ OR REPLACE FUNCTION get_user_word_sets (p_user_id INTEGER, p_word_list_name VARC
   source_word VARCHAR(255),
   target_word VARCHAR(255),
   source_language_id VARCHAR(10),
-  target_language_id VARCHAR(10)
+  target_language_id VARCHAR(10),
+  source_word_usage_example TEXT,
+  target_word_usage_example TEXT
 ) AS $$
 BEGIN
   RETURN QUERY
@@ -16,7 +18,9 @@ BEGIN
       sw.text AS source_word,
       tw.text AS target_word,
       sw.language_id AS source_language_id,
-      tw.language_id AS target_language_id
+      tw.language_id AS target_language_id,
+      sw.usage_example AS source_word_usage_example,
+      tw.usage_example AS target_word_usage_example
     FROM 
       word_list_entry wle
     JOIN 
@@ -41,6 +45,6 @@ BEGIN
       WHEN user_words.status = 'Mastered Vocabulary' THEN 4
       ELSE 5
     END,
-    user_words.source_word;
+    word_pair_id;
 END;
 $$ LANGUAGE plpgsql;

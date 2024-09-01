@@ -1,0 +1,31 @@
+translation_id,source_word_id,target_word_id,source_word,target_word,source_word_example,target_word_example
+0,1,2,hello,привет,Hello! How are you?,Привет! Как дела?
+1,3,4,goodbye,до свидания,He said goodbye and left the room.,Он сказал до свидания и вышел из комнаты.
+2,5,6,thank you,спасибо,Thank you for your help.,Спасибо за вашу помощь.
+3,7,8,please,пожалуйста,Please close the door.,"Пожалуйста, закрой дверь."
+4,9,10,sorry,извините,Sorry for the mistake.,Извините за ошибку.
+5,11,12,yes,да,"Yes, I agree with you.","Да, я согласен с вами."
+6,13,14,no,нет,"No, I don't think so.","Нет, я так не думаю."
+7,15,16,water,вода,Can I have a glass of water?,Можно мне стакан воды?
+8,17,18,food,еда,The food was delicious.,Еда была вкусной.
+9,19,20,time,время,What time is it?,Который час?
+10,21,22,day,день,It was a beautiful day.,Это был прекрасный день.
+11,23,24,night,ночь,Good night!,Спокойной ночи!
+12,25,26,friend,друг,He's my best friend.,Он мой лучший друг.
+13,27,28,family,семья,Family is very important.,Семья очень важна.
+14,29,30,love,любовь,Love is in the air.,Любовь витает в воздухе.
+15,31,32,hate,ненависть,Hate is a strong emotion.,Ненависть — это сильное чувство.
+16,33,34,happy,счастливый,She was very happy.,Она была очень счастлива.
+17,35,36,sad,грустный,He felt sad after the movie.,Он чувствовал себя грустным после фильма.
+18,37,38,angry,сердитый,She was angry with him.,Она была сердита на него.
+19,39,40,tired,уставший,I'm so tired after work.,Я так устал после работы.
+20,41,42,hungry,голодный,Are you hungry?,Ты голоден?
+21,43,44,thirsty,жаждущий,She was thirsty after the run.,Она была жаждущей после пробежки.
+22,45,46,hot,жаркий,It was a hot day.,Это был жаркий день.
+23,47,48,cold,холодный,The water is cold.,Вода холодная.
+24,49,50,big,большой,The house is big.,Дом большой.
+25,51,52,small,маленький,The room is small.,Комната маленькая.
+26,53,54,fast,быстрый,He is a fast runner.,Он быстрый бегун.
+27,55,56,slow,медленный,The internet is slow today.,Сегодня интернет медленный.
+28,57,58,good,хороший,She is a good person.,Она хороший человек.
+29,59,60,bad,плохой,He made a bad decision.,Он принял плохое решение.

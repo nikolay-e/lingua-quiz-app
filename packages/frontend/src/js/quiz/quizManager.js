@@ -19,6 +19,7 @@ function askQuestion() {
   document.getElementById('word').textContent = direction
     ? translation.source_word
     : translation.target_word;
+
   return new Date();
 }
 

@@ -320,6 +320,24 @@ input:checked + .slider:before {
   color: var(--primary-color);
 }
 
+.usage-examples {
+  width: 100%;
+  background-color: rgba(0, 123, 255, 0.05);
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.usage-examples h3 {
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+.usage-examples p {
+  margin-bottom: 5px;
+  color: var(--text-color);
+}
+
 #user-status {
   position: absolute;
   top: 20px;
