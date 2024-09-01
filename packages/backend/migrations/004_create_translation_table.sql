@@ -6,6 +6,6 @@ CREATE TABLE IF NOT EXISTS translation (
   UNIQUE (source_word_id, target_word_id)
 );
 
-CREATE INDEX idx_translation_source ON translation (source_word_id);
+CREATE INDEX IF NOT EXISTS idx_translation_source ON translation (source_word_id);
 
-CREATE INDEX idx_translation_target ON translation (target_word_id);
+CREATE INDEX IF NOT EXISTS idx_translation_target ON translation (target_word_id);
