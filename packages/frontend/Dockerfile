@@ -12,11 +12,5 @@ FROM nginx:alpine
 
 COPY --from=builder /site/dist /usr/share/nginx/html
 
-RUN mkdir -p /etc/nginx/ssl
-
-COPY nginx.conf.template /etc/nginx/nginx.conf.template
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
+EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
