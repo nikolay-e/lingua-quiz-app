@@ -76,3 +76,4 @@ amplifytools.xcconfig
 *.pem
 
 cypress/screenshots
+cypress/videos

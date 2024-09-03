@@ -1,4 +1,3 @@
-import { stats } from '../utils/statsManager.js';
 import {
   quizTranslations,
   focusTranslationIds,
@@ -30,22 +29,7 @@ function updateSetDisplay(elementId, translationSet) {
   });
 }
 
-export function updateStatsDisplay() {
-  const elements = {
-    'total-attempts': stats.totalAttempts,
-    'correct-answers': stats.correctAnswers,
-    'incorrect-answers': stats.incorrectAnswers,
-    'correct-percentage': `${((stats.correctAnswers / stats.totalAttempts) * 100).toFixed(2)}%`,
-    'average-time': (
-      stats.timePerQuestion.reduce((a, b) => a + b, 0) / stats.timePerQuestion.length
-    ).toFixed(2),
-  };
-
-  Object.entries(elements).forEach(([id, value]) => {
-    document.getElementById(id).textContent = value;
-  });
-}
-
+// eslint-disable-next-line import/prefer-default-export
 export function updateWordSetsDisplay() {
   updateSetDisplay('focus-words-list', focusTranslationIds);
   updateSetDisplay('mastered-one-direction-list', masteredOneDirectionTranslationIds);

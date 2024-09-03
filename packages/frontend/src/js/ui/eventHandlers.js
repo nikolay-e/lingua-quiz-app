@@ -1,7 +1,13 @@
 import { initializeQuiz, verifyAnswer, continueQuiz } from '../quiz/quizManager.js';
 import { saveQuizState, fetchWordSets } from '../quiz/dataHandler.js';
-import { quizTranslations, setDirection, currentTranslationId } from '../app.js';
-import { updateStatsDisplay, updateWordSetsDisplay } from './displayManager.js';
+import {
+  currentTranslationId,
+  quizTranslations,
+  toggleDirection,
+  getDirectionText,
+  updateDirectionToggleTitle,
+} from '../app.js';
+import { updateWordSetsDisplay } from './displayManager.js';
 
 function setFeedback(message, isError = false) {
   const feedbackElement = document.getElementById('feedback');
@@ -14,17 +20,7 @@ function setFeedback(message, isError = false) {
   }
 }
 
-function setLoadingState(isLoading) {
-  const loadingElement = document.getElementById('loading-indicator');
-  if (loadingElement) {
-    loadingElement.style.display = isLoading ? 'block' : 'none';
-  } else {
-    console.error('Loading indicator element not found');
-  }
-}
-
 async function loadWordsFromAPI(wordListName) {
-  setLoadingState(true);
   try {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -34,33 +30,25 @@ async function loadWordsFromAPI(wordListName) {
     await fetchWordSets(token, wordListName);
     const startTime = initializeQuiz();
     if (startTime) {
-      updateStatsDisplay();
       updateWordSetsDisplay();
     }
   } catch (error) {
     console.error(`Error loading words for ${wordListName}:`, error);
     setFeedback(`Failed to load word set. Please try again.`, true);
-  } finally {
-    setLoadingState(false);
   }
 }
 
 async function handleSaveQuiz() {
-  setLoadingState(true);
   try {
     const token = localStorage.getItem('token');
     if (!token) {
       throw new Error('User is not authenticated');
     }
 
-    const wordSets = Array.from(quizTranslations.values());
-    await saveQuizState(token, wordSets);
-    setFeedback('Quiz state saved successfully.', false);
+    await saveQuizState(token);
   } catch (error) {
     console.error('Error saving quiz state:', error);
     setFeedback('Failed to save quiz state. Please try again.', true);
-  } finally {
-    setLoadingState(false);
   }
 }
 
@@ -76,7 +64,7 @@ function handleEnterKey(event) {
   }
 }
 
-function submitAnswer() {
+async function submitAnswer() {
   const answerInput = document.getElementById('answer');
 
   if (!answerInput) {
@@ -101,37 +89,44 @@ function submitAnswer() {
     translation.target_word_usage_example || 'No example available';
 
   answerInput.value = '';
-  continueQuiz();
-  updateStatsDisplay();
+
+  answerInput.blur();
+  setTimeout(() => {
+    answerInput.focus();
+  }, 0);
+
+  await continueQuiz();
   updateWordSetsDisplay();
   answerInput.focus();
+
+  // Automatically save quiz state after each answer
+  await handleSaveQuiz();
 }
 
-function handleDirectionSwitch() {
-  const switchElement = document.getElementById('direction-switch');
-  const label = document.getElementById('direction-label');
-
-  if (!switchElement || !label) {
-    console.error('Direction switch or label not found');
-    return;
+function handleDirectionToggle() {
+  const oldDirection = getDirectionText();
+  const newDirection = toggleDirection();
+  if (oldDirection !== newDirection) {
+    // eslint-disable-next-line max-len
+    updateDirectionToggleTitle();
+    continueQuiz();
+    updateWordSetsDisplay();
   }
+}
 
-  const newDirection = switchElement.checked;
-  setDirection(!newDirection); // Reverse the direction
-  label.textContent = newDirection ? 'Reverse' : 'Normal';
-  continueQuiz();
-  updateWordSetsDisplay();
+function handleQuizSelect(event) {
+  const selectedQuiz = event.target.value;
+  if (selectedQuiz) {
+    loadWordsFromAPI(selectedQuiz);
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   const elements = {
-    'spanish-russian': () => loadWordsFromAPI('spanish-russian'),
-    'test-spanish': () => loadWordsFromAPI('Test Spanish'),
-    'treasure-island-english-russian': () => loadWordsFromAPI('treasure-island-english-russian'),
+    'quiz-select': (e) => handleQuizSelect(e),
     answer: (e) => handleEnterKey(e),
     submit: submitAnswer,
-    'save-quiz': handleSaveQuiz,
-    'direction-switch': handleDirectionSwitch,
+    'direction-toggle': handleDirectionToggle,
   };
 
   Object.entries(elements).forEach(([id, handler]) => {
@@ -139,8 +134,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (element) {
       if (id === 'answer') {
         element.addEventListener('keydown', handler);
-      } else if (id === 'direction-switch') {
-        element.addEventListener('change', handler);
+      } else if (id === 'direction-toggle' || id === 'quiz-select') {
+        element.addEventListener('click', handler);
       } else {
         element.addEventListener('click', handler);
       }
@@ -148,4 +143,11 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error(`Element with id '${id}' not found`);
     }
   });
+
+  // Set initial direction text
+  const directionToggleBtn = document.getElementById('direction-toggle');
+  if (directionToggleBtn) {
+    // eslint-disable-next-line max-len
+    directionToggleBtn.innerHTML = `<i class="fas fa-exchange-alt"></i> ${getDirectionText()} Direction`;
+  }
 });
