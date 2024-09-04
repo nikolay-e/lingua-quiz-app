@@ -9,46 +9,60 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
-
   <body>
-    <main class="container">
-      <header>
-        <h1><i class="fas fa-language"></i> LinguaQuiz</h1>
-      </header>
-      <section aria-labelledby="login-section" class="login-section">
-        <h2 id="login-section">Login</h2>
-        <form id="login-form">
-          <div class="input-group">
-            <input type="email" id="email" name="email" required placeholder="Email" />
-          </div>
-          <div class="input-group">
-            <input type="password" id="password" name="password" required placeholder="Password" />
-          </div>
-          <button type="submit"><i class="fas fa-sign-in-alt"></i> Login</button>
-        </form>
-        <p id="login-message"></p>
-      </section>
+    <main class="container login-container">
+      <div class="left-sidebar">
+        <header>
+          <h1><i class="fas fa-language"></i> LinguaQuiz</h1>
+        </header>
+      </div>
+      <div class="main-content login-content">
+        <section aria-labelledby="login-section" class="sidebar-section">
+          <h2 id="login-section">Login</h2>
+          <form id="login-form">
+            <div class="input-group">
+              <input type="email" id="email" name="email" required placeholder="Email" />
+            </div>
+            <div class="input-group">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                placeholder="Password"
+              />
+            </div>
+            <button type="submit"><i class="fas fa-sign-in-alt"></i> Login</button>
+          </form>
+          <p id="login-message"></p>
+        </section>
 
-      <section aria-labelledby="register-section" class="register-section">
-        <h2 id="register-section">Register</h2>
-        <form id="register-form">
-          <div class="input-group">
-            <input type="email" id="register-email" name="email" required placeholder="Email" />
-          </div>
-          <div class="input-group">
-            <input
-              type="password"
-              id="register-password"
-              name="password"
-              required
-              placeholder="Password"
-            />
-          </div>
-          <button type="submit"><i class="fas fa-user-plus"></i> Register</button>
-        </form>
-        <p id="register-message"></p>
-      </section>
+        <section aria-labelledby="register-section" class="sidebar-section">
+          <h2 id="register-section">Register</h2>
+          <form id="register-form">
+            <div class="input-group">
+              <input type="email" id="register-email" name="email" required placeholder="Email" />
+            </div>
+            <div class="input-group">
+              <input
+                type="password"
+                id="register-password"
+                name="password"
+                required
+                placeholder="Password"
+              />
+            </div>
+            <button type="submit"><i class="fas fa-user-plus"></i> Register</button>
+          </form>
+          <p id="register-message"></p>
+        </section>
+      </div>
+      <div class="right-sidebar"></div>
     </main>
     <script type="module">
       import initAuth from './js/ui/loginManager.js';

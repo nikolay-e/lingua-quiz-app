@@ -6,6 +6,7 @@ import {
   upcomingTranslationIds,
   setSourceLanguage,
   setTargetLanguage,
+  updateDirectionToggleTitle,
 } from '../app.js';
 import serverAddress from '../config.js';
 
@@ -39,7 +40,7 @@ export function parseData(data) {
 
   setSourceLanguage(detectedLanguages[0]);
   setTargetLanguage(detectedLanguages[1]);
-
+  updateDirectionToggleTitle();
   data.forEach((entry) => {
     if (typeof entry === 'object') {
       const existingStatus = existingStatuses.get(entry.word_pair_id);

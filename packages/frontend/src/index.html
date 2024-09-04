@@ -9,62 +9,69 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (function () {
+        var token = localStorage.getItem('token');
+        if (!token && window.location.pathname !== '/login.html') {
+          window.location.href = '/login.html';
+        }
+      })();
+    </script>
   </head>
   <body>
     <main class="container">
-      <div id="loading-indicator" class="loading-indicator" style="display: none">
-        <i class="fas fa-spinner fa-spin"></i> Loading...
+      <div class="main-content">
+        <header>
+          <h1><i class="fas fa-language"></i> LinguaQuiz</h1>
+        </header>
+        <section aria-labelledby="quiz-section" class="quiz-section">
+          <h2 id="quiz-section">
+            Quiz -
+            <select id="quiz-select">
+              <option value="">Select a quiz</option>
+              <option value="spanish-russian">Spanish-Russian Set</option>
+              <option value="Test Spanish">Test Spanish Set</option>
+              <option value="treasure-island-english-russian">Treasure Island Set</option>
+            </select>
+          </h2>
+          <div class="quiz-content">
+            <div class="question">
+              <span id="word"></span>
+            </div>
+            <div class="input-group">
+              <input
+                type="text"
+                id="answer"
+                aria-label="Your translation"
+                placeholder="Your translation"
+              />
+              <button id="submit"><i class="fas fa-check"></i> Submit</button>
+            </div>
+          </div>
+          <p id="feedback" class="feedback-text"></p>
+          <div id="usage-examples" class="usage-examples">
+            <h3>Usage Examples</h3>
+            <p><span id="source-word-usage">No example available</span></p>
+            <p><span id="target-word-usage">No example available</span></p>
+          </div>
+        </section>
       </div>
-      <div id="user-status">
-        <button id="login-logout-btn"><i class="fas fa-sign-in-alt"></i> <span>Login</span></button>
-      </div>
-      <header>
-        <h1><i class="fas fa-language"></i> LinguaQuiz</h1>
-      </header>
-      <section aria-labelledby="quiz-choice-section">
-        <h2 id="quiz-choice-section">Select Quiz</h2>
-        <div class="input-group">
-          <button id="spanish-russian"><i class="fas fa-book"></i> Use Spanish-Russian Set</button>
-          <button id="test-spanish"><i class="fas fa-book"></i> Use Test Spanish Set</button>
-          <button id="treasure-island-english-russian">
-            <i class="fas fa-book"></i> Use Treasure Island English-Russian Set
+
+      <div class="right-sidebar">
+        <div id="user-status">
+          <button id="login-logout-btn">
+            <i class="fas fa-sign-in-alt"></i> <span>Login</span>
           </button>
-          <button id="save-quiz"><i class="fas fa-save"></i> Save Quiz State</button>
         </div>
-      </section>
-      <section aria-labelledby="quiz-section" class="quiz-section">
-        <h2 id="quiz-section">Quiz</h2>
-        <div class="direction-toggle">
-          <label for="direction-switch" class="switch">
-            <input type="checkbox" id="direction-switch" />
-            <span class="slider round"></span>
-          </label>
-          <span id="direction-label">Normal</span>
-        </div>
-        <div class="quiz-content">
-          <div class="question">
-            <span id="word"></span>
-          </div>
-          <div class="input-group">
-            <input
-              type="text"
-              id="answer"
-              aria-label="Your translation"
-              placeholder="Your translation"
-            />
-            <button id="submit"><i class="fas fa-check"></i> Submit</button>
-          </div>
-        </div>
-        <p id="feedback" class="feedback-text"></p>
-        <div id="usage-examples" class="usage-examples">
-          <h3>Usage Examples</h3>
-          <p><span id="source-word-usage">No example available</span></p>
-          <p><span id="target-word-usage">No example available</span></p>
-        </div>
-      </section>
-      <section aria-labelledby="learning-section" class="learning-section">
-        <h2 id="learning-section">Learning Progress</h2>
-        <div class="progress-container">
+        <button id="direction-toggle" class="direction-toggle-btn">
+          <i class="fas fa-exchange-alt"></i> Direction
+        </button>
+        <section aria-labelledby="learning-section" class="sidebar-section learning-progress">
+          <h2 id="learning-section">Learning Progress</h2>
           <div id="focus-words">
             <h3><i class="fas fa-tasks"></i> Focus Words</h3>
             <ol id="focus-words-list"></ol>
@@ -81,21 +88,10 @@
             <h3><i class="fas fa-list"></i> Upcoming Words</h3>
             <ol id="upcoming-words-list"></ol>
           </div>
-        </div>
-      </section>
-      <section aria-labelledby="stats-section" class="stats-section">
-        <h2 id="stats-section"><i class="fas fa-chart-bar"></i> Quiz Stats</h2>
-        <div class="stats-grid">
-          <p>Total Attempts: <span id="total-attempts">0</span></p>
-          <p>Correct Answers: <span id="correct-answers">0</span></p>
-          <p>Incorrect Answers: <span id="incorrect-answers">0</span></p>
-          <p>Correct Answer Percentage: <span id="correct-percentage">0%</span></p>
-          <p>Average Time per Question: <span id="average-time">0</span> seconds</p>
-        </div>
-      </section>
+        </section>
+      </div>
     </main>
     <script type="module" src="./js/app.js"></script>
-    <script type="module" src="./js/utils/BidirectionalMap.js"></script>
     <script type="module" src="./js/utils/statsManager.js"></script>
     <script type="module" src="./js/quiz/dataHandler.js"></script>
     <script type="module" src="./js/quiz/wordSetManager.js"></script>

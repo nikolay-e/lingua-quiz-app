@@ -8,10 +8,15 @@ import {
   currentTranslationId,
   setCurrentTranslationId,
   direction,
-  setDirection,
+  toggleDirection,
+  getDirectionText,
 } from '../app.js';
 
 function askQuestion() {
+  if (getDirectionText() === 'Reverse' && masteredOneDirectionTranslationIds.size === 0) {
+    toggleDirection();
+  }
+
   const translationSet = direction ? focusTranslationIds : masteredOneDirectionTranslationIds;
   const newTranslationId = getRandomTranslationIdFromTopFew(translationSet);
   setCurrentTranslationId(newTranslationId);
@@ -64,9 +69,4 @@ export function verifyAnswer(userAnswer, startTime) {
   updateStats(isAnswerCorrect, currentTranslationId, startTime, direction);
 
   return isAnswerCorrect;
-}
-
-export function toggleDirection() {
-  setDirection(!direction);
-  return direction;
 }
