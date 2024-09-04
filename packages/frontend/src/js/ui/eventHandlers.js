@@ -1,22 +1,22 @@
-import { initializeQuiz, verifyAnswer, continueQuiz } from '../quiz/quizManager.js';
-import { saveQuizState, fetchWordSets } from '../quiz/dataHandler.js';
+import { QuizManager } from '../quiz/quizManager.js';
+import { fetchWordSets, fetchWordLists } from '../quiz/dataHandler.js';
 import {
-  currentTranslationId,
-  quizTranslations,
-  toggleDirection,
-  getDirectionText,
+  displayQuestion,
   updateDirectionToggleTitle,
-} from '../app.js';
-import { updateWordSetsDisplay } from './displayManager.js';
+  updateWordSetsDisplay,
+} from './displayManager.js';
+import { appInstance } from '../app.js';
 
-function setFeedback(message, isError = false) {
+const quizManager = new QuizManager(appInstance);
+
+function setFeedback(message, isSuccess = true) {
   const feedbackElement = document.getElementById('feedback');
-  if (feedbackElement) {
-    feedbackElement.textContent = message;
-    feedbackElement.classList.toggle('error', isError);
-    feedbackElement.classList.toggle('success', !isError);
+  const feedbackMessage = feedbackElement.querySelector('.feedback-message');
+  if (feedbackElement && feedbackMessage) {
+    feedbackMessage.textContent = message;
+    feedbackElement.className = isSuccess ? 'feedback-text success' : 'feedback-text error';
   } else {
-    console.error('Feedback element not found');
+    console.error('Feedback element or message not found');
   }
 }
 
@@ -27,28 +27,15 @@ async function loadWordsFromAPI(wordListName) {
       throw new Error('User is not authenticated');
     }
 
-    await fetchWordSets(token, wordListName);
-    const startTime = initializeQuiz();
-    if (startTime) {
-      updateWordSetsDisplay();
-    }
+    await fetchWordSets(appInstance, token, wordListName);
+
+    updateDirectionToggleTitle(appInstance);
+    const questionData = quizManager.getNextQuestion();
+    displayQuestion(questionData);
+    updateWordSetsDisplay(appInstance);
   } catch (error) {
     console.error(`Error loading words for ${wordListName}:`, error);
-    setFeedback(`Failed to load word set. Please try again.`, true);
-  }
-}
-
-async function handleSaveQuiz() {
-  try {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      throw new Error('User is not authenticated');
-    }
-
-    await saveQuizState(token);
-  } catch (error) {
-    console.error('Error saving quiz state:', error);
-    setFeedback('Failed to save quiz state. Please try again.', true);
+    setFeedback('Failed to load word set. Please try again.', false);
   }
 }
 
@@ -65,52 +52,54 @@ function handleEnterKey(event) {
 }
 
 async function submitAnswer() {
-  const answerInput = document.getElementById('answer');
+  try {
+    const answerInput = document.getElementById('answer');
 
-  if (!answerInput) {
-    console.error('Answer input not found');
-    return;
-  }
+    if (!answerInput) {
+      console.error('Answer input not found');
+      return;
+    }
 
-  const userAnswer = answerInput.value;
-  const startTime = new Date();
-  const isAnswerCorrect = verifyAnswer(userAnswer, startTime);
+    const userAnswer = answerInput.value;
+    const startTime = new Date();
 
-  const translation = quizTranslations.get(currentTranslationId);
-  if (isAnswerCorrect) {
-    setFeedback('Correct!', false);
-  } else {
-    setFeedback(`Wrong. '${translation.source_word}' - '${translation.target_word}'`, true);
-  }
+    const isAnswerCorrect = quizManager.verifyAnswer(userAnswer, startTime);
+    const translation = appInstance.quizTranslations.get(appInstance.currentTranslationId);
+    if (isAnswerCorrect) {
+      setFeedback('Correct!', true);
+    } else {
+      setFeedback(`Wrong. '${translation.sourceWord}' - '${translation.targetWord}'`, false);
+    }
 
-  document.getElementById('source-word-usage').textContent =
-    translation.source_word_usage_example || 'No example available';
-  document.getElementById('target-word-usage').textContent =
-    translation.target_word_usage_example || 'No example available';
+    document.getElementById('source-word-usage').textContent =
+      translation.sourceWordUsageExample || 'No example available';
+    document.getElementById('target-word-usage').textContent =
+      translation.targetWordUsageExample || 'No example available';
 
-  answerInput.value = '';
+    answerInput.value = '';
+    answerInput.blur();
+    setTimeout(() => {
+      answerInput.focus();
+    }, 0);
 
-  answerInput.blur();
-  setTimeout(() => {
+    const questionData = quizManager.getNextQuestion();
+    displayQuestion(questionData);
+    updateWordSetsDisplay(appInstance);
     answerInput.focus();
-  }, 0);
-
-  await continueQuiz();
-  updateWordSetsDisplay();
-  answerInput.focus();
-
-  // Automatically save quiz state after each answer
-  await handleSaveQuiz();
+  } catch (error) {
+    console.error('Error submitting answer:', error);
+    setFeedback('An error occurred. Please try again.', false);
+  }
 }
 
 function handleDirectionToggle() {
-  const oldDirection = getDirectionText();
-  const newDirection = toggleDirection();
+  const oldDirection = appInstance.getDirectionText();
+  const newDirection = appInstance.toggleDirection();
   if (oldDirection !== newDirection) {
-    // eslint-disable-next-line max-len
-    updateDirectionToggleTitle();
-    continueQuiz();
-    updateWordSetsDisplay();
+    updateDirectionToggleTitle(appInstance);
+    const questionData = quizManager.getNextQuestion();
+    displayQuestion(questionData);
+    updateWordSetsDisplay(appInstance);
   }
 }
 
@@ -121,33 +110,52 @@ function handleQuizSelect(event) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const elements = {
-    'quiz-select': (e) => handleQuizSelect(e),
-    answer: (e) => handleEnterKey(e),
-    submit: submitAnswer,
-    'direction-toggle': handleDirectionToggle,
-  };
-
-  Object.entries(elements).forEach(([id, handler]) => {
-    const element = document.getElementById(id);
-    if (element) {
-      if (id === 'answer') {
-        element.addEventListener('keydown', handler);
-      } else if (id === 'direction-toggle' || id === 'quiz-select') {
-        element.addEventListener('click', handler);
-      } else {
-        element.addEventListener('click', handler);
-      }
-    } else {
-      console.error(`Element with id '${id}' not found`);
+export async function populateWordLists() {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('User is not authenticated');
     }
-  });
 
-  // Set initial direction text
+    const wordLists = await fetchWordLists(token);
+    const quizSelect = document.getElementById('quiz-select');
+
+    wordLists.forEach((list) => {
+      const option = document.createElement('option');
+      option.value = list.name;
+      option.textContent = list.name;
+      quizSelect.appendChild(option);
+    });
+  } catch (error) {
+    console.error('Error populating word lists:', error);
+    setFeedback('Failed to load word lists. Please try again.', false);
+  }
+}
+
+export function initEventHandlers() {
+  const answerInput = document.getElementById('answer');
+  if (answerInput) {
+    answerInput.addEventListener('keydown', handleEnterKey);
+  }
+
+  const submitButton = document.getElementById('submit');
+  if (submitButton) {
+    submitButton.addEventListener('click', submitAnswer);
+  }
+
   const directionToggleBtn = document.getElementById('direction-toggle');
   if (directionToggleBtn) {
-    // eslint-disable-next-line max-len
-    directionToggleBtn.innerHTML = `<i class="fas fa-exchange-alt"></i> ${getDirectionText()} Direction`;
+    directionToggleBtn.addEventListener('click', handleDirectionToggle);
   }
-});
+
+  const quizSelect = document.getElementById('quiz-select');
+  if (quizSelect) {
+    quizSelect.addEventListener('change', handleQuizSelect);
+  }
+
+  // Set initial direction text
+  updateDirectionToggleTitle(appInstance);
+
+  // Populate word lists when the page loads
+  populateWordLists();
+}

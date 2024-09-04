@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the list of files and directories to ignore, with support for wildcards
-IGNORE_LIST=(".git" "package-lock.json" "node_modules" "dist" "data" "*.log" "*.tmp" "*.crt" "*.key" "*.secret" "LICENSE" "print_tree.sh" "*_data.sql" "*.csv" "*.txt")
+IGNORE_LIST=(".git" "package-lock.json" "node_modules" "dist" "data" "*.log" "*.tmp" "*.crt" "*.key" "*.secret" "LICENSE" "print_tree.sh" "*_data.sql" "*.csv" "*.txt" "coverage" "Generated -- *" "word_processing_scripts")
 
 # Function to check if a file should be ignored
 should_ignore() {
@@ -67,10 +67,10 @@ print_tree() {
 
     # Determine if the current file is the last in the directory
     if [ $i -eq $((${#files[@]} - 1)) ]; then
-      echo "${prefix}└── ${base_dir}/${relative_path}":
+      echo "${prefix}└── ${base_dir}/${relative_path}:" >> "$output_file"
       new_prefix="${prefix}    "
     else
-      echo "${prefix}├── ${base_dir}/${relative_path}":
+      echo "${prefix}├── ${base_dir}/${relative_path}:" >> "$output_file"
       new_prefix="${prefix}│   "
     fi
 
@@ -79,11 +79,11 @@ print_tree() {
       print_tree "$path" "$new_prefix" "$base_dir"
     else
       if is_binary "$path"; then
-        echo "${new_prefix}(Binary file)"
+        echo "${new_prefix}(Binary file)" >> "$output_file"
       else
-        echo "${new_prefix}"
-        sed "s/^/${new_prefix}    /" "$path"
-        echo "${new_prefix}"
+        echo "${new_prefix}" >> "$output_file"
+        sed "s/^/${new_prefix}    /" "$path" >> "$output_file"
+        echo "${new_prefix}" >> "$output_file"
       fi
     fi
   done
@@ -100,6 +100,12 @@ root_dir="$1"
 # Remove any trailing slash from the root_dir to avoid double slashes
 root_dir=$(echo "$root_dir" | sed 's:/*$::')
 
+# Define the output file name (fixed name)
+output_file="directory_tree.txt"
+
 # Print the directory tree starting from the root directory
-echo "$root_dir"
+echo "$root_dir" > "$output_file"
 print_tree "$root_dir" "" "$root_dir"
+
+# Notify the user where the output was written
+echo "Directory tree saved to $output_file"

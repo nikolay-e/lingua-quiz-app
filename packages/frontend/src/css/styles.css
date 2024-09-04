@@ -151,22 +151,79 @@ button:hover {
   margin: 20px 0;
 }
 
+.feedback-container {
+  margin-top: 20px;
+  background-color: var(--container-bg);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--shadow-color);
+  overflow: hidden;
+}
+
 .feedback-text {
-  text-align: center;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
   font-weight: bold;
+  text-align: center;
+  transition: all 0.3s ease;
 }
 
 .feedback-text.success {
-  background-color: rgba(39, 174, 96, 0.2);
-  color: var(--success-color);
+  background-color: #e8f5e9;
+  color: #2e7d32;
 }
 
 .feedback-text.error {
-  background-color: rgba(231, 76, 60, 0.2);
-  color: var(--error-color);
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.feedback-icon {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.feedback-text.success .feedback-icon::before {
+  content: '✓';
+  color: #4caf50;
+}
+
+.feedback-text.error .feedback-icon::before {
+  content: '✗';
+  color: #f44336;
+}
+
+.feedback-message {
+  font-size: 18px;
+}
+
+.usage-examples {
+  padding: 15px;
+  border-top: 1px solid var(--input-border-color);
+}
+
+.usage-examples h3 {
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.example-container p {
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 6px;
+  margin: 0;
+}
+
+.example-container strong {
+  color: var(--primary-color);
+  margin-right: 5px;
 }
 
 .stats-grid {
@@ -229,8 +286,8 @@ button:hover {
 }
 
 #quiz-select option {
-  background-color: var(--primary-color);
-  color: white;
+  background-color: var(--container-bg);
+  color: var(--text-color);
   padding: 8px;
 }
 

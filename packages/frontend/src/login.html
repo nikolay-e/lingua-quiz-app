@@ -2,17 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>LinguaQuiz - Login/Register</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <link href="css/styles.css" rel="stylesheet" />
     <link
-      rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
     />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <script type="importmap">
+      {
+        "imports": {
+          "lodash": "https://cdn.jsdelivr.net/npm/lodash-es@4.17.21/lodash.js",
+          "jwt-decode": "https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.esm.js"
+        }
+      }
+    </script>
   </head>
   <body>
     <main class="container login-container">
@@ -26,15 +34,15 @@
           <h2 id="login-section">Login</h2>
           <form id="login-form">
             <div class="input-group">
-              <input type="email" id="email" name="email" required placeholder="Email" />
+              <input id="email" name="email" placeholder="Email" required type="email" />
             </div>
             <div class="input-group">
               <input
-                type="password"
                 id="password"
                 name="password"
-                required
                 placeholder="Password"
+                required
+                type="password"
               />
             </div>
             <button type="submit"><i class="fas fa-sign-in-alt"></i> Login</button>
@@ -46,15 +54,15 @@
           <h2 id="register-section">Register</h2>
           <form id="register-form">
             <div class="input-group">
-              <input type="email" id="register-email" name="email" required placeholder="Email" />
+              <input id="register-email" name="email" placeholder="Email" required type="email" />
             </div>
             <div class="input-group">
               <input
-                type="password"
                 id="register-password"
                 name="password"
-                required
                 placeholder="Password"
+                required
+                type="password"
               />
             </div>
             <button type="submit"><i class="fas fa-user-plus"></i> Register</button>
@@ -65,8 +73,11 @@
       <div class="right-sidebar"></div>
     </main>
     <script type="module">
-      import initAuth from './js/ui/loginManager.js';
-      initAuth();
+      import { initAuth } from './js/ui/loginManager.js';
+
+      document.addEventListener('DOMContentLoaded', () => {
+        initAuth();
+      });
     </script>
   </body>
 </html>

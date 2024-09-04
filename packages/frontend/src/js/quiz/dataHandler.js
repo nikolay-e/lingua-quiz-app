@@ -1,84 +1,64 @@
-import {
-  quizTranslations,
-  focusTranslationIds,
-  masteredOneDirectionTranslationIds,
-  masteredVocabularyTranslationIds,
-  upcomingTranslationIds,
-  setSourceLanguage,
-  setTargetLanguage,
-  updateDirectionToggleTitle,
-} from '../app.js';
 import serverAddress from '../config.js';
+import { moveToFocusWords } from './wordSetManager.js';
 
-function detectLanguages(data) {
-  const firstElement = data[0];
-  return [firstElement.source_language_id, firstElement.target_language_id];
-}
-
-export function parseData(data) {
+export function parseData(appState, data) {
   if (!data || !Array.isArray(data)) {
     throw new Error('Invalid data structure in JSON');
   }
 
   const existingStatuses = new Map();
-  quizTranslations.forEach((value, key) => {
+  appState.quizTranslations.forEach((value, key) => {
     existingStatuses.set(key, value.status);
   });
 
-  quizTranslations.clear();
+  // Clear current state
+  appState.quizTranslations.clear();
   [
-    focusTranslationIds,
-    masteredOneDirectionTranslationIds,
-    masteredVocabularyTranslationIds,
-    upcomingTranslationIds,
+    appState.focusTranslationIds,
+    appState.masteredOneDirectionTranslationIds,
+    appState.masteredVocabularyTranslationIds,
+    appState.upcomingTranslationIds,
   ].forEach((set) => set.clear());
 
-  const detectedLanguages = detectLanguages(data);
-  if (detectedLanguages.length < 2) {
+  if (data.length < 1) {
     throw new Error('At least two supported languages must be present in the data');
   }
 
-  setSourceLanguage(detectedLanguages[0]);
-  setTargetLanguage(detectedLanguages[1]);
-  updateDirectionToggleTitle();
-  data.forEach((entry) => {
-    if (typeof entry === 'object') {
-      const existingStatus = existingStatuses.get(entry.word_pair_id);
-      // eslint-disable-next-line no-param-reassign
-      entry.status = existingStatus || entry.status;
+  appState.setSourceLanguage(data[0].sourceLanguage);
+  appState.setTargetLanguage(data[0].targetLanguage);
 
-      quizTranslations.set(entry.word_pair_id, entry);
+  data.forEach((originalEntry) => {
+    if (typeof originalEntry === 'object') {
+      const existingStatus = existingStatuses.get(originalEntry.wordPairId);
+      const updatedEntry = { ...originalEntry, status: existingStatus || originalEntry.status };
+
+      appState.quizTranslations.set(updatedEntry.wordPairId, updatedEntry);
 
       const currentSet = {
-        'Focus Words': focusTranslationIds,
-        'Mastered One Direction': masteredOneDirectionTranslationIds,
-        'Mastered Vocabulary': masteredVocabularyTranslationIds,
-        'Upcoming Words': upcomingTranslationIds,
-      }[entry.status];
+        'Focus Words': appState.focusTranslationIds,
+        'Mastered One Direction': appState.masteredOneDirectionTranslationIds,
+        'Mastered Vocabulary': appState.masteredVocabularyTranslationIds,
+        'Upcoming Words': appState.upcomingTranslationIds,
+      }[updatedEntry.status];
 
-      if (currentSet) currentSet.add(entry.word_pair_id);
+      if (currentSet) currentSet.add(updatedEntry.wordPairId);
     } else {
-      console.warn('Invalid word entry:', entry);
+      console.warn('Invalid word entry:', originalEntry);
     }
   });
 
-  if (quizTranslations.size === 0) {
+  if (appState.quizTranslations.size === 0) {
     throw new Error('No valid entries added to quizTranslations');
   }
 
   // Ensure Focus Words has at least 20 words if possible
-  while (focusTranslationIds.size < 20 && upcomingTranslationIds.size > 0) {
-    const idToMove = upcomingTranslationIds.values().next().value;
-    focusTranslationIds.add(idToMove);
-    upcomingTranslationIds.delete(idToMove);
-    const wordPair = quizTranslations.get(idToMove);
-    if (wordPair) {
-      wordPair.status = 'Focus Words';
-    }
+  while (appState.focusTranslationIds.size < 20 && appState.upcomingTranslationIds.size > 0) {
+    const idToMove = appState.upcomingTranslationIds.values().next().value;
+    moveToFocusWords(appState, idToMove);
   }
 }
 
-export async function fetchWordSets(token, wordListName) {
+export async function fetchWordSets(appState, token, wordListName) {
   try {
     const response = await fetch(
       `${serverAddress}/user/word-sets?wordListName=${encodeURIComponent(wordListName)}`,
@@ -95,50 +75,30 @@ export async function fetchWordSets(token, wordListName) {
     }
 
     const data = await response.json();
-    return parseData(data);
+    parseData(appState, data);
   } catch (error) {
     console.error('Error fetching word sets:', error);
     throw error;
   }
 }
 
-export async function saveQuizState(token) {
-  const statusSets = {
-    'Focus Words': new Set(),
-    'Mastered One Direction': new Set(),
-    'Mastered Vocabulary': new Set(),
-  };
-
-  quizTranslations.forEach((translation, id) => {
-    if (statusSets[translation.status]) {
-      statusSets[translation.status].add(id);
-    }
-  });
-
+export async function fetchWordLists(token) {
   try {
-    const promises = Object.entries(statusSets).map(([status, set]) => {
-      const wordPairIds = Array.from(set);
-
-      return fetch(`${serverAddress}/user/word-sets`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          status,
-          wordPairIds,
-        }),
-      }).then((response) => {
-        if (!response.ok) {
-          throw new Error(`Failed to save quiz state for ${status}`);
-        }
-      });
+    const response = await fetch(`${serverAddress}/word-lists`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
-    await Promise.all(promises);
+    if (!response.ok) {
+      throw new Error('Failed to fetch word lists');
+    }
+
+    const data = await response.json();
+    return data;
   } catch (error) {
-    console.error('Error saving quiz state:', error);
+    console.error('Error fetching word lists:', error);
     throw error;
   }
 }

@@ -3,6 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
     mocha: true,
+    jest: true,
     'cypress/globals': true,
   },
   extends: ['airbnb-base', 'plugin:prettier/recommended', 'plugin:cypress/recommended'],
@@ -14,11 +15,12 @@ module.exports = {
       },
     },
   ],
+  ignorePatterns: ['**/tests/**/*'],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['prettier', 'mocha', 'cypress'],
+  plugins: ['prettier', 'mocha', 'cypress', 'jest'],
   rules: {
     'prettier/prettier': [
       'error',

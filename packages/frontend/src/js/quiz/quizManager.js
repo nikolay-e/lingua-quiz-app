@@ -1,72 +1,95 @@
-import getRandomTranslationIdFromTopFew from './wordSetManager.js';
-import { updateWordSetsDisplay } from '../ui/displayManager.js';
-import { updateStats } from '../utils/statsManager.js';
 import {
-  quizTranslations,
-  focusTranslationIds,
-  masteredOneDirectionTranslationIds,
-  currentTranslationId,
-  setCurrentTranslationId,
-  direction,
-  toggleDirection,
-  getDirectionText,
-} from '../app.js';
+  getRandomTranslationIdFromTopFew,
+  moveToMasteredOneDirection,
+  moveToMasteredVocabulary,
+  stats,
+  updateStats,
+} from './wordSetManager.js';
 
-function askQuestion() {
-  if (getDirectionText() === 'Reverse' && masteredOneDirectionTranslationIds.size === 0) {
-    toggleDirection();
+// eslint-disable-next-line import/prefer-default-export
+export class QuizManager {
+  constructor(appState) {
+    this.appState = appState;
+    this.lastAskedWords = [];
   }
 
-  const translationSet = direction ? focusTranslationIds : masteredOneDirectionTranslationIds;
-  const newTranslationId = getRandomTranslationIdFromTopFew(translationSet);
-  setCurrentTranslationId(newTranslationId);
-  const translation = quizTranslations.get(newTranslationId);
-  document.getElementById('word').textContent = direction
-    ? translation.source_word
-    : translation.target_word;
+  getNextQuestion() {
+    if (
+      this.appState.getDirectionText() === 'Reverse' &&
+      this.appState.masteredOneDirectionTranslationIds.size === 0
+    ) {
+      this.appState.toggleDirection();
+    }
 
-  return new Date();
-}
+    const translationSet = this.appState.direction
+      ? this.appState.focusTranslationIds
+      : this.appState.masteredOneDirectionTranslationIds;
 
-export function initializeQuiz() {
-  try {
-    const startTime = askQuestion();
-    updateWordSetsDisplay();
-    return startTime;
-  } catch (error) {
-    console.error('Error initializing quiz:', error);
-    return null;
+    const newTranslationId = getRandomTranslationIdFromTopFew(
+      translationSet,
+      this.lastAskedWords,
+      this.appState.quizTranslations
+    );
+    this.appState.setCurrentTranslationId(newTranslationId);
+    const translation = this.appState.quizTranslations.get(newTranslationId);
+
+    // Update last asked words
+    this.lastAskedWords.push(newTranslationId);
+    if (this.lastAskedWords.length > 7) {
+      this.lastAskedWords.shift();
+    }
+
+    return {
+      word: this.appState.direction ? translation.sourceWord : translation.targetWord,
+      translationId: newTranslationId,
+    };
+  }
+
+  verifyAnswer(userAnswer, startTime) {
+    const translation = this.appState.quizTranslations.get(this.appState.currentTranslationId);
+    const correctAnswer = this.appState.direction ? translation.targetWord : translation.sourceWord;
+    // eslint-disable-next-line no-use-before-define
+    const isAnswerCorrect = compareAnswers(userAnswer, correctAnswer);
+    updateStats(
+      isAnswerCorrect,
+      this.appState.currentTranslationId,
+      startTime,
+      this.appState.direction
+    );
+
+    if (isAnswerCorrect) {
+      const normalKey = `${this.appState.currentTranslationId}-normal`;
+      const reverseKey = `${this.appState.currentTranslationId}-reverse`;
+      const normalCorrect = stats.attemptsPerTranslationIdAndDirection[normalKey]?.correct || 0;
+      const reverseCorrect = stats.attemptsPerTranslationIdAndDirection[reverseKey]?.correct || 0;
+      if (normalCorrect >= 3) {
+        if (reverseCorrect >= 3) {
+          moveToMasteredVocabulary(this.appState, this.appState.currentTranslationId);
+        } else {
+          moveToMasteredOneDirection(this.appState, this.appState.currentTranslationId);
+        }
+      }
+    }
+
+    return isAnswerCorrect;
   }
 }
 
-export function continueQuiz() {
-  const startTime = askQuestion();
-  updateWordSetsDisplay();
-  return startTime;
-}
+// Helper function to compare answers
+function compareAnswers(userAnswer, correctAnswer) {
+  const normalizeAndSort = (answer) =>
+    answer
+      .toLowerCase()
+      .split(',')
+      .map((item) => item.trim().replace(/[^\p{Letter}]/gu, ''))
+      .filter((item) => item.length > 0)
+      .sort();
 
-function normalizeAndSortAnswer(answer) {
-  return answer
-    .toLowerCase()
-    .split(',')
-    .map((item) => item.trim().replace(/[^\p{Letter}]/gu, ''))
-    .filter((item) => item.length > 0)
-    .sort();
-}
+  const normalizedUserAnswer = normalizeAndSort(userAnswer);
+  const normalizedCorrectAnswer = normalizeAndSort(correctAnswer);
 
-function compareAnswers(arr1, arr2) {
-  return arr1.length === arr2.length && arr1.every((value, index) => value === arr2[index]);
-}
-
-export function verifyAnswer(userAnswer, startTime) {
-  const translation = quizTranslations.get(currentTranslationId);
-  const correctAnswer = direction ? translation.target_word : translation.source_word;
-
-  const normalizedUserAnswer = normalizeAndSortAnswer(userAnswer);
-  const normalizedCorrectAnswer = normalizeAndSortAnswer(correctAnswer);
-
-  const isAnswerCorrect = compareAnswers(normalizedUserAnswer, normalizedCorrectAnswer);
-  updateStats(isAnswerCorrect, currentTranslationId, startTime, direction);
-
-  return isAnswerCorrect;
+  return (
+    normalizedUserAnswer.length === normalizedCorrectAnswer.length &&
+    normalizedUserAnswer.every((value, index) => value === normalizedCorrectAnswer[index])
+  );
 }
