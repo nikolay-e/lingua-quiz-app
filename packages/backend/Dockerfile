@@ -9,6 +9,6 @@ COPY server.js .
 COPY run-migrations.js .
 COPY migrations ./migrations
 
-EXPOSE 3000
+EXPOSE 443
 
 CMD ["node", "server.js"]

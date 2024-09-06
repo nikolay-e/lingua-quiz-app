@@ -5,7 +5,7 @@ module.exports = async ({ github, context, core, exec }) => {
     await exec.exec('kubectl', [
       'delete',
       'deployment',
-      'lingua-quiz-backend',
+      'lingua-quiz',
       '-n',
       'test',
       '--ignore-not-found',
@@ -22,6 +22,14 @@ module.exports = async ({ github, context, core, exec }) => {
       'delete',
       'service',
       'postgres',
+      '-n',
+      'test',
+      '--ignore-not-found',
+    ]);
+    await exec.exec('kubectl', [
+      'delete',
+      'service',
+      'lingua-quiz-service',
       '-n',
       'test',
       '--ignore-not-found',
@@ -50,11 +58,19 @@ module.exports = async ({ github, context, core, exec }) => {
       'test',
       '--ignore-not-found',
     ]);
+    await exec.exec('kubectl', [
+      'delete',
+      'ingress',
+      'lingua-quiz-ingress',
+      '-n',
+      'test',
+      '--ignore-not-found',
+    ]);
   } else if (process.env.DEPLOY_NAMESPACE === 'default') {
     await exec.exec('kubectl', [
       'delete',
       'deployment',
-      'lingua-quiz-backend',
+      'lingua-quiz',
       '-n',
       'default',
       '--ignore-not-found',

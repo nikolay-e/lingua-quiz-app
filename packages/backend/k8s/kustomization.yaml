@@ -5,8 +5,9 @@ resources:
   - postgres-deployment.yaml
   - deployment.yaml
   - service.yaml
+  - ingress.yaml
 
 images:
-  - name: lingua-quiz-backend
+  - name: lingua-quiz
     newName: IMAGE_NAME_PLACEHOLDER
     newTag: IMAGE_TAG_PLACEHOLDER

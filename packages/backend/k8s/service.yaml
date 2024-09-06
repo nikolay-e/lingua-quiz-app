@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: lingua-quiz-backend-service
+  name: lingua-quiz-service
 spec:
   selector:
-    app: lingua-quiz-backend
+    app: lingua-quiz
   ports:
     - protocol: TCP
       port: 443
-      targetPort: 3000 # This should match the PORT env variable in your deployment
-  type: LoadBalancer
+      targetPort: 443
+  type: ClusterIP

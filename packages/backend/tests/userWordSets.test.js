@@ -6,7 +6,7 @@ const axios = require('axios');
 const https = require('https');
 const { expect } = require('chai');
 
-const API_URL = process.env.API_URL || 'https://localhost:3000';
+const API_URL = process.env.API_URL || 'https://localhost:443';
 
 const httpsAgent = new https.Agent();
 

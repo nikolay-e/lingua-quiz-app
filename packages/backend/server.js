@@ -26,6 +26,22 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.use((req, _res, next) => {
+  logger.info(`Incoming request: ${req.method} ${req.url}`);
+  next();
+});
+
+app.use((req, res, next) => {
+  const oldSend = res.send;
+  // eslint-disable-next-line func-names
+  res.send = function (_data) {
+    logger.info(`Response status: ${res.statusCode} for ${req.method} ${req.url}`);
+    // eslint-disable-next-line prefer-rest-params
+    oldSend.apply(res, arguments);
+  };
+  next();
+});
+
 const pool = new Pool({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
@@ -79,6 +95,7 @@ app.use(limiter);
 app.get('/healthz', async (req, res) => {
   try {
     await pool.query('SELECT 1');
+    logger.info('Health check passed');
     res.status(200).json({ status: 'ok' });
   } catch (error) {
     logger.error('Health check failed', { error });
@@ -241,6 +258,16 @@ app.post('/user/word-sets', authenticateToken, async (req, res) => {
   }
 });
 
+app.all('*', (req, res) => {
+  logger.warn(`Unhandled route: ${req.method} ${req.url}`);
+  res.status(404).json({ message: 'Not Found' });
+});
+
+app.use((err, req, res, _next) => {
+  logger.error(`Error occurred during request: ${req.method} ${req.url}`, { error: err });
+  res.status(500).json({ message: 'Internal Server Error' });
+});
+
 function getSSLOptions() {
   const keyPath = process.env.SSL_KEY_PATH || '/etc/tls/tls.key';
   const certPath = process.env.SSL_CERT_PATH || '/etc/tls/tls.crt';
@@ -263,7 +290,7 @@ function getSSLOptions() {
 }
 
 function startServer() {
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT || 443;
 
   try {
     const sslOptions = getSSLOptions();

@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: lingua-quiz-backend
+  name: lingua-quiz
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: lingua-quiz-backend
+      app: lingua-quiz
   template:
     metadata:
       labels:
-        app: lingua-quiz-backend
+        app: lingua-quiz
     spec:
       containers:
         - name: backend
-          image: lingua-quiz-backend
+          image: lingua-quiz
           ports:
-            - containerPort: 3000
+            - containerPort: 443
           resources:
             limits:
               cpu: '500m'
@@ -27,7 +27,7 @@ spec:
           livenessProbe:
             httpGet:
               path: /healthz
-              port: 3000
+              port: 443
               scheme: HTTPS
             initialDelaySeconds: 30
             periodSeconds: 10
@@ -36,7 +36,7 @@ spec:
           readinessProbe:
             httpGet:
               path: /healthz
-              port: 3000
+              port: 443
               scheme: HTTPS
             initialDelaySeconds: 5
             periodSeconds: 5
@@ -46,7 +46,7 @@ spec:
           startupProbe:
             httpGet:
               path: /healthz
-              port: 3000
+              port: 443
               scheme: HTTPS
             failureThreshold: 30
             periodSeconds: 10
@@ -83,7 +83,7 @@ spec:
             - name: SSL_CERT_PATH
               value: '/etc/tls/tls.crt'
             - name: PORT
-              value: '3000'
+              value: '443'
           volumeMounts:
             - name: tls
               mountPath: '/etc/tls'
