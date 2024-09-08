@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lingua-quiz-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/passthrough-tls: 'true'
+    traefik.ingress.kubernetes.io/service-ssl-insecure-skip-verify: 'true'
+spec:
+  tls:
+    - hosts:
+        - HOST_PLACEHOLDER
+      secretName: tls-secret
+  rules:
+    - host: HOST_PLACEHOLDER
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: lingua-quiz-service
+                port:
+                  number: 443

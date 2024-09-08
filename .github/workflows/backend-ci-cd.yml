@@ -53,7 +53,7 @@ jobs:
       - name: Set up kubeconfig
         run: |
           mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
+          echo "${{ secrets.KUBE_CONFIG_NEW }}" > $HOME/.kube/config
           chmod 600 $HOME/.kube/config
 
       - name: Install yq
@@ -127,12 +127,17 @@ jobs:
           IMAGE_NAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backend
           GITHUB_RUN_NUMBER: ${{ github.run_number }}
           DEPLOY_NAMESPACE: ${{ env.DEPLOY_NAMESPACE }}
+          API_HOST: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'api-lingua-quiz.nikolay-eremeev.com' || 'test-api-lingua-quiz.nikolay-eremeev.com' }}
         run: |
           cd packages/backend/k8s
           yq e ".images[0].newName = \"${IMAGE_NAME}\"" -i kustomization.yaml
           yq e ".images[0].newTag = \"${IMAGE_TAG}\"" -i kustomization.yaml
           yq e ".metadata.namespace = \"${DEPLOY_NAMESPACE}\"" -i deployment.yaml
+          yq e ".metadata.namespace = \"${DEPLOY_NAMESPACE}\"" -i ingress.yaml
           yq e ".metadata.namespace = \"${DEPLOY_NAMESPACE}\"" -i postgres-deployment.yaml
+          yq e ".metadata.namespace = \"${DEPLOY_NAMESPACE}\"" -i service.yaml
+          yq e ".spec.tls[0].hosts[0] = \"${API_HOST}\"" -i ingress.yaml
+          yq e ".spec.rules[0].host = \"${API_HOST}\"" -i ingress.yaml
 
       - name: Deploy to Kubernetes
         run: |
@@ -145,11 +150,12 @@ jobs:
 
       - name: Wait for app deployment to be ready!
         run: |
-          kubectl rollout status deployment/lingua-quiz-backend -n ${{ env.DEPLOY_NAMESPACE }} --timeout=300s
+          kubectl rollout status deployment/lingua-quiz -n ${{ env.DEPLOY_NAMESPACE }} --timeout=300s
+          sleep 5s
 
       - name: Run Database Migrations
         run: |
-          BACKEND_POD=$(kubectl get pods -l app=lingua-quiz-backend -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.items[0].metadata.name}")
+          BACKEND_POD=$(kubectl get pods -l app=lingua-quiz -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.items[0].metadata.name}")
           kubectl exec $BACKEND_POD -n ${{ env.DEPLOY_NAMESPACE }} -- \
             env DB_HOST=postgres \
                 DB_PORT=5432 \
