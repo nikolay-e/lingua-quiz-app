@@ -2,17 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>LinguaQuiz</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <link href="css/styles.css" rel="stylesheet" />
     <link
-      rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
     />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <script type="importmap">
+      {
+        "imports": {
+          "lodash": "https://cdn.jsdelivr.net/npm/lodash-es@4.17.21/lodash.js",
+          "jwt-decode": "https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.esm.js"
+        }
+      }
+    </script>
     <script>
       (function () {
         var token = localStorage.getItem('token');
@@ -31,11 +39,9 @@
         <section aria-labelledby="quiz-section" class="quiz-section">
           <h2 id="quiz-section">
             Quiz -
-            <select id="quiz-select">
+            <label for="quiz-select"></label
+            ><select id="quiz-select">
               <option value="">Select a quiz</option>
-              <option value="spanish-russian">Spanish-Russian Set</option>
-              <option value="Test Spanish">Test Spanish Set</option>
-              <option value="treasure-island-english-russian">Treasure Island Set</option>
             </select>
           </h2>
           <div class="quiz-content">
@@ -44,19 +50,30 @@
             </div>
             <div class="input-group">
               <input
-                type="text"
-                id="answer"
                 aria-label="Your translation"
+                id="answer"
                 placeholder="Your translation"
+                type="text"
               />
               <button id="submit"><i class="fas fa-check"></i> Submit</button>
             </div>
           </div>
-          <p id="feedback" class="feedback-text"></p>
-          <div id="usage-examples" class="usage-examples">
-            <h3>Usage Examples</h3>
-            <p><span id="source-word-usage">No example available</span></p>
-            <p><span id="target-word-usage">No example available</span></p>
+          <div class="feedback-container">
+            <div class="feedback-text" id="feedback">
+              <span class="feedback-icon"></span>
+              <span class="feedback-message"></span>
+            </div>
+            <div class="usage-examples" id="usage-examples">
+              <h3>Usage Examples</h3>
+              <div class="example-container">
+                <p>
+                  <strong>Source:</strong> <span id="source-word-usage">No example available</span>
+                </p>
+                <p>
+                  <strong>Target:</strong> <span id="target-word-usage">No example available</span>
+                </p>
+              </div>
+            </div>
           </div>
         </section>
       </div>
@@ -67,7 +84,7 @@
             <i class="fas fa-sign-in-alt"></i> <span>Login</span>
           </button>
         </div>
-        <button id="direction-toggle" class="direction-toggle-btn">
+        <button class="direction-toggle-btn" id="direction-toggle">
           <i class="fas fa-exchange-alt"></i> Direction
         </button>
         <section aria-labelledby="learning-section" class="sidebar-section learning-progress">
@@ -91,13 +108,21 @@
         </section>
       </div>
     </main>
-    <script type="module" src="./js/app.js"></script>
-    <script type="module" src="./js/utils/statsManager.js"></script>
-    <script type="module" src="./js/quiz/dataHandler.js"></script>
-    <script type="module" src="./js/quiz/wordSetManager.js"></script>
-    <script type="module" src="./js/quiz/quizManager.js"></script>
-    <script type="module" src="./js/ui/displayManager.js"></script>
-    <script type="module" src="./js/ui/eventHandlers.js"></script>
-    <script type="module" src="./js/ui/loginManager.js"></script>
+    <script src="./js/app.js" type="module"></script>
+    <script src="./js/quiz/dataHandler.js" type="module"></script>
+    <script src="./js/quiz/wordSetManager.js" type="module"></script>
+    <script src="./js/quiz/quizManager.js" type="module"></script>
+    <script src="./js/ui/displayManager.js" type="module"></script>
+    <script src="./js/ui/eventHandlers.js" type="module"></script>
+    <script src="./js/ui/loginManager.js" type="module"></script>
+    <script type="module">
+      import { initEventHandlers } from './js/ui/eventHandlers.js';
+      import { initAuth } from './js/ui/loginManager.js';
+
+      document.addEventListener('DOMContentLoaded', () => {
+        initEventHandlers();
+        initAuth();
+      });
+    </script>
   </body>
 </html>

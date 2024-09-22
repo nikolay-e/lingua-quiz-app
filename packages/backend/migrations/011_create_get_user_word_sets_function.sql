@@ -4,8 +4,8 @@ OR REPLACE FUNCTION get_user_word_sets (p_user_id INTEGER, p_word_list_name VARC
   status VARCHAR,
   source_word VARCHAR(255),
   target_word VARCHAR(255),
-  source_language_id VARCHAR(10),
-  target_language_id VARCHAR(10),
+  source_language VARCHAR(50),
+  target_language VARCHAR(50),
   source_word_usage_example TEXT,
   target_word_usage_example TEXT
 ) AS $$
@@ -17,18 +17,22 @@ BEGIN
       COALESCE(utp.status::VARCHAR, 'Upcoming Words') AS status,
       sw.text AS source_word,
       tw.text AS target_word,
-      sw.language_id AS source_language_id,
-      tw.language_id AS target_language_id,
+      sl.name AS source_language,
+      tl.name AS target_language,
       sw.usage_example AS source_word_usage_example,
       tw.usage_example AS target_word_usage_example
     FROM 
       word_list_entry wle
     JOIN 
-      word sw ON wle.word_id = sw.id
+      translation t ON wle.translation_id = t.id
     JOIN 
-      translation t ON sw.id = t.source_word_id
+      word sw ON t.source_word_id = sw.id
     JOIN 
       word tw ON t.target_word_id = tw.id
+    JOIN 
+      language sl ON sw.language_id = sl.id
+    JOIN 
+      language tl ON tw.language_id = tl.id
     JOIN 
       word_list wl ON wle.word_list_id = wl.id
     LEFT JOIN 

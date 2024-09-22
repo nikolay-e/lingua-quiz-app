@@ -1,16 +1,32 @@
+/* eslint-disable consistent-return */
 const express = require('express');
 const { Pool } = require('pg');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const rateLimit = require('express-rate-limit');
-const { body, validationResult } = require('express-validator');
+const { body, param, query, validationResult } = require('express-validator');
 const winston = require('winston');
 const https = require('https');
+const _ = require('lodash');
 const fs = require('fs');
 const cors = require('cors');
 
 dotenv.config();
+
+function convertKeysToCamelCase(obj) {
+  if (Array.isArray(obj)) {
+    return obj.map((item) => convertKeysToCamelCase(item));
+  }
+  if (obj !== null && typeof obj === 'object') {
+    return Object.entries(obj).reduce((acc, [key, value]) => {
+      const newKey = _.camelCase(key);
+      acc[newKey] = convertKeysToCamelCase(value);
+      return acc;
+    }, {});
+  }
+  return obj;
+}
 
 const logger = winston.createLogger({
   level: 'info',
@@ -33,11 +49,9 @@ app.use((req, _res, next) => {
 
 app.use((req, res, next) => {
   const oldSend = res.send;
-  // eslint-disable-next-line func-names
-  res.send = function (_data) {
+  res.send = function send(...args) {
     logger.info(`Response status: ${res.statusCode} for ${req.method} ${req.url}`);
-    // eslint-disable-next-line prefer-rest-params
-    oldSend.apply(res, arguments);
+    oldSend.apply(res, args);
   };
   next();
 });
@@ -59,11 +73,12 @@ pool.on('error', (err) => {
 });
 
 async function userExists(email) {
-  const result = await pool.query('SELECT * FROM "user" WHERE email = $1', [email]);
+  const result = convertKeysToCamelCase(
+    await pool.query('SELECT * FROM "user" WHERE email = $1', [email])
+  );
   return result.rows.length > 0;
 }
 
-// eslint-disable-next-line consistent-return
 function authenticateToken(req, res, next) {
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.split(' ')[1];
@@ -73,20 +88,19 @@ function authenticateToken(req, res, next) {
     return res.sendStatus(401);
   }
 
-  // eslint-disable-next-line consistent-return
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) {
-      logger.warn('Authentication failed: Invalid token', { error: err });
-      return res.sendStatus(403);
-    }
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET);
     req.userId = user.userId;
     next();
-  });
+  } catch (err) {
+    logger.warn('Authentication failed: Invalid token', { error: err });
+    res.sendStatus(403);
+  }
 }
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 100,
+  max: 10000,
   skip: (req) => req.path === '/healthz',
 });
 
@@ -95,7 +109,6 @@ app.use(limiter);
 app.get('/healthz', async (req, res) => {
   try {
     await pool.query('SELECT 1');
-    logger.info('Health check passed');
     res.status(200).json({ status: 'ok' });
   } catch (error) {
     logger.error('Health check failed', { error });
@@ -133,10 +146,10 @@ app.post(
       ]);
 
       logger.info('User registered successfully', { email });
-      return res.status(201).json({ message: 'User registered successfully' });
+      res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
       logger.error('Registration error', { error });
-      return res.status(500).json({ message: 'Server error' });
+      res.status(500).json({ message: 'Server error' });
     }
   }
 );
@@ -155,7 +168,9 @@ app.post(
     const { email, password } = req.body;
 
     try {
-      const result = await pool.query('SELECT * FROM "user" WHERE email = $1', [email]);
+      const result = convertKeysToCamelCase(
+        await pool.query('SELECT * FROM "user" WHERE email = $1', [email])
+      );
       if (result.rows.length === 0) {
         logger.warn('Login failed: User not found', { email });
         return res.status(401).json({ message: 'Invalid credentials' });
@@ -174,10 +189,10 @@ app.post(
       });
 
       logger.info('User logged in successfully', { email });
-      return res.json({ token });
+      res.json({ token });
     } catch (error) {
       logger.error('Login error', { error });
-      return res.status(500).json({ message: 'Server error' });
+      res.status(500).json({ message: 'Server error' });
     }
   }
 );
@@ -186,7 +201,9 @@ app.delete('/delete-account', authenticateToken, async (req, res) => {
   const { userId } = req;
 
   try {
-    const result = await pool.query('DELETE FROM "user" WHERE id = $1 RETURNING email', [userId]);
+    const result = convertKeysToCamelCase(
+      await pool.query('DELETE FROM "user" WHERE id = $1 RETURNING email', [userId])
+    );
 
     if (result.rows.length === 0) {
       logger.warn('Account deletion failed: User not found', { userId });
@@ -199,62 +216,206 @@ app.delete('/delete-account', authenticateToken, async (req, res) => {
       email: deletedUserEmail,
     });
 
-    return res.status(200).json({ message: 'Account deleted successfully' });
+    res.status(200).json({ message: 'Account deleted successfully' });
   } catch (error) {
     logger.error('Account deletion error', { userId, error });
-    return res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
-app.get('/user/word-sets', authenticateToken, async (req, res) => {
-  const { userId } = req;
-  const { wordListName } = req.query;
-
-  if (!wordListName) {
-    logger.warn('Word list name not provided');
-    return res.status(400).json({ message: 'Word list name is required' });
-  }
-
-  try {
-    const result = await pool.query('SELECT * FROM get_user_word_sets($1, $2)', [
-      userId,
-      wordListName,
-    ]);
-
-    if (result.rows.length === 0) {
-      logger.info('No word sets found', { userId, wordListName });
-      return res.status(404).json({ message: 'No word sets found' });
+app.get(
+  '/user/word-sets',
+  authenticateToken,
+  query('wordListName').isString().notEmpty(),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      logger.warn('Validation failed for word sets retrieval', { errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() });
     }
 
-    logger.info('Word sets retrieved successfully', { userId, wordListName });
-    return res.status(200).json(result.rows);
-  } catch (error) {
-    logger.error('Error retrieving word sets', { userId, wordListName, error });
-    return res.status(500).json({ message: 'Server error' });
+    const { userId } = req;
+    const { wordListName } = req.query;
+
+    try {
+      const result = convertKeysToCamelCase(
+        await pool.query('SELECT * FROM get_user_word_sets($1, $2)', [userId, wordListName])
+      );
+
+      if (result.rows.length === 0) {
+        logger.info('No word sets found', { userId, wordListName });
+        return res.status(404).json({ message: 'No word sets found' });
+      }
+
+      logger.info('Word sets retrieved successfully', { userId, wordListName });
+      res.status(200).json(result.rows);
+    } catch (error) {
+      logger.error('Error retrieving word sets', { userId, wordListName, error });
+      res.status(500).json({ message: 'Server error' });
+    }
   }
-});
+);
 
-app.post('/user/word-sets', authenticateToken, async (req, res) => {
-  const { userId } = req;
-  const { status, wordPairIds } = req.body;
+app.post(
+  '/user/word-sets',
+  authenticateToken,
+  [body('status').isString().notEmpty(), body('wordPairIds').isArray()],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      logger.warn('Validation failed for updating word sets', { errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-  if (!status || !Array.isArray(wordPairIds)) {
-    logger.warn('Invalid input for updating word sets', { userId, status, wordPairIds });
-    return res.status(400).json({ message: 'Status and wordPairIds are required' });
+    const { userId } = req;
+    const { status, wordPairIds } = req.body;
+
+    try {
+      await pool.query('SELECT update_user_word_set_status($1, $2, $3::translation_status)', [
+        userId,
+        wordPairIds,
+        status,
+      ]);
+
+      logger.info('User word sets updated successfully', { userId, status, wordPairIds });
+      res.status(200).json({ message: 'Word sets updated successfully' });
+    } catch (error) {
+      if (error.message.includes('Invalid status transition')) {
+        logger.warn('Invalid status transition attempted', {
+          userId,
+          status,
+          wordPairIds,
+          error: error.message,
+        });
+        return res.status(400).json({ message: 'Invalid status transition', error: error.message });
+      }
+      logger.error('Error updating user word sets', { userId, status, wordPairIds, error });
+      res.status(500).json({ message: 'Server error' });
+    }
   }
+);
 
+app.post(
+  '/word-pair',
+  authenticateToken,
+  [
+    body('translationId').isInt(),
+    body('sourceWordId').isInt(),
+    body('targetWordId').isInt(),
+    body('sourceWord').isString().notEmpty(),
+    body('targetWord').isString().notEmpty(),
+    body('sourceLanguageName').isString().notEmpty(),
+    body('targetLanguageName').isString().notEmpty(),
+    body('wordListName').isString().notEmpty(),
+    body('sourceWordUsageExample').optional().isString(),
+    body('targetWordUsageExample').optional().isString(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      logger.warn('Validation failed for insert word pair', { errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const {
+      translationId,
+      sourceWordId,
+      targetWordId,
+      sourceWord,
+      targetWord,
+      sourceLanguageName,
+      targetLanguageName,
+      wordListName,
+      sourceWordUsageExample,
+      targetWordUsageExample,
+    } = req.body;
+
+    try {
+      await pool.query(
+        'SELECT insert_word_pair_and_add_to_list($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
+        [
+          translationId,
+          sourceWordId,
+          targetWordId,
+          sourceWord,
+          targetWord,
+          sourceLanguageName,
+          targetLanguageName,
+          wordListName,
+          sourceWordUsageExample,
+          targetWordUsageExample,
+        ]
+      );
+
+      logger.info('Word pair inserted successfully', {
+        translationId,
+        sourceWord,
+        targetWord,
+        wordListName,
+      });
+
+      res.status(201).json({ message: 'Word pair inserted successfully' });
+    } catch (error) {
+      logger.error('Error inserting word pair', { error, ...req.body });
+      res.status(500).json({ message: 'Server error' });
+    }
+  }
+);
+
+app.delete(
+  '/word-pair/:translationId',
+  authenticateToken,
+  [param('translationId').isInt()],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      logger.warn('Validation failed for remove word pair', { errors: errors.array() });
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { translationId } = req.params;
+
+    try {
+      const result = await pool.query('SELECT remove_word_pair_and_list_entry($1)', [
+        translationId,
+      ]);
+
+      if (result.rowCount === 0) {
+        logger.warn('Word pair removal failed: Word pair not found', { translationId });
+        return res.status(404).json({ message: 'Word pair not found' });
+      }
+
+      logger.info('Word pair and associated data removed successfully', { translationId });
+
+      res.status(200).json({ message: 'Word pair and associated data removed successfully' });
+    } catch (error) {
+      logger.error('Error removing word pair and associated data', { error, translationId });
+      res.status(500).json({ message: 'Server error' });
+    }
+  }
+);
+
+app.get('/word-lists', authenticateToken, async (req, res) => {
   try {
-    await pool.query('SELECT update_user_word_set_status($1, $2, $3::translation_status)', [
-      userId,
-      wordPairIds,
-      status,
-    ]);
+    const result = await pool.query('SELECT * FROM get_word_lists()');
 
-    logger.info('User word sets updated successfully', { userId, status });
-    return res.status(200).json({ message: 'Word sets updated successfully' });
+    if (result.rows.length === 0) {
+      logger.info('No word lists found');
+      return res.status(404).json({ message: 'No word lists found' });
+    }
+
+    const wordLists = result.rows.map((row) => ({
+      id: row.id,
+      name: row.name,
+      createdAt: row.created_at,
+      updatedAt: row.updated_at,
+    }));
+
+    logger.info('Word lists retrieved successfully');
+    res.status(200).json(wordLists);
   } catch (error) {
-    logger.error('Error updating user word sets', { userId, status, error });
-    return res.status(500).json({ message: 'Server error' });
+    logger.error('Error retrieving word lists', { error });
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
@@ -289,12 +450,15 @@ function getSSLOptions() {
   }
 }
 
+// Declare server variable at the top-level scope
+let server;
+
 function startServer() {
   const PORT = process.env.PORT || 443;
 
   try {
     const sslOptions = getSSLOptions();
-    const server = https.createServer(sslOptions, app);
+    server = https.createServer(sslOptions, app);
 
     server.listen(PORT, () => {
       logger.info(`HTTPS Server running on port ${PORT}`);
@@ -310,11 +474,11 @@ function startServer() {
       process.exit(1);
     } else {
       logger.warn('Falling back to HTTP server in non-production environment');
-      const httpServer = app.listen(PORT, () => {
+      server = app.listen(PORT, () => {
         logger.info(`HTTP Server running on port ${PORT}`);
       });
 
-      httpServer.on('error', (httpError) => {
+      server.on('error', (httpError) => {
         logger.error('HTTP Server error:', httpError);
         process.exit(1);
       });
@@ -332,3 +496,6 @@ process.on('uncaughtException', (error) => {
   logger.error('Uncaught Exception:', error);
   process.exit(1);
 });
+
+// Export the server instance
+module.exports = server;

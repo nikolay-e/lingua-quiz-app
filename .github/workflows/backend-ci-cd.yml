@@ -164,13 +164,6 @@ jobs:
                 POSTGRES_PASSWORD=$(kubectl get secret postgres-secret -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.data.POSTGRES_PASSWORD}" | base64 --decode) \
             npm run migrate
 
-      - name: Cleanup on failure
-        if: failure()
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const script = require('./.github/scripts/cleanup-cluster.js')
-            await script({github, context, core, exec})
   test:
     needs: [build-and-push, deploy]
     runs-on: ubuntu-latest
@@ -181,27 +174,26 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '16'
+
       - name: Install dependencies
         run: |
           npm ci
           npm install --save-dev @babel/core @babel/preset-env babel-jest
 
-      - name: Determine API URL and Run tests
+      - name: Set environment variables
         run: |
+          echo "TEST_ENV=test" >> $GITHUB_ENV
+          echo "NODE_ENV=production" >> $GITHUB_ENV
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            API_URL="https://test-api-lingua-quiz.nikolay-eremeev.com"
+            echo "API_URL=https://test-api-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
           else
-            API_URL="https://api-lingua-quiz.nikolay-eremeev.com"
+            echo "API_URL=https://api-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
           fi
 
-          API_URL=$API_URL npm run test --workspace=@linguaquiz/backend
-
-      - name: Upload test results
-        uses: actions/upload-artifact@v2
-        if: failure()
-        with:
-          name: test-results
-          path: packages/backend/test-results
+      - name: Run tests
+        env:
+          API_URL: ${{ env.API_URL }}
+        run: npm run test --workspace=@linguaquiz/backend
 
   cypress-e2e-tests:
     runs-on: ubuntu-latest
@@ -221,15 +213,20 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Determine API URL and Run tests
+      - name: Set environment variables
         run: |
+          echo "TEST_ENV=test" >> $GITHUB_ENV
+          echo "NODE_ENV=production" >> $GITHUB_ENV
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            LINGUA_QUIZ_URL="https://test-lingua-quiz.nikolay-eremeev.com"
+            echo "LINGUA_QUIZ_URL=https://test-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
           else
-            LINGUA_QUIZ_URL="https://lingua-quiz.nikolay-eremeev.com"
+            echo "LINGUA_QUIZ_URL=https://lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
           fi
 
-          LINGUA_QUIZ_URL=$LINGUA_QUIZ_URL npx cypress run
+      - name: Run Cypress tests
+        env:
+          LINGUA_QUIZ_URL: ${{ env.LINGUA_QUIZ_URL }}
+        run: npx cypress run
 
       - name: Archive Cypress results
         if: always()

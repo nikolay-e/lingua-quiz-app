@@ -1,51 +1,47 @@
-import initAuth from './ui/loginManager.js';
+export class App {
+  constructor() {
+    this.quizTranslations = new Map();
+    this.focusTranslationIds = new Set();
+    this.masteredOneDirectionTranslationIds = new Set();
+    this.masteredVocabularyTranslationIds = new Set();
+    this.upcomingTranslationIds = new Set();
 
-export const quizTranslations = new Map();
-export const focusTranslationIds = new Set();
-export const masteredOneDirectionTranslationIds = new Set();
-export const masteredVocabularyTranslationIds = new Set();
-export const upcomingTranslationIds = new Set();
-
-export let currentTranslationId = null;
-export let sourceLanguage = '';
-export let targetLanguage = '';
-export let direction = true;
-
-export function setCurrentTranslationId(id) {
-  currentTranslationId = id;
-}
-
-export function setDirection(newDirection) {
-  direction = newDirection;
-}
-
-export function updateDirectionToggleTitle() {
-  const directionToggleBtn = document.getElementById('direction-toggle');
-  // eslint-disable-next-line max-len
-  directionToggleBtn.innerHTML = `<i class="fas fa-exchange-alt"></i> ${direction ? `${sourceLanguage} -> ${targetLanguage}` : `${targetLanguage} -> ${sourceLanguage}`}`;
-}
-
-export function toggleDirection() {
-  if (masteredOneDirectionTranslationIds.size === 0) {
-    direction = true;
-    return 'Normal';
+    this.currentTranslationId = null;
+    this.sourceLanguage = '';
+    this.targetLanguage = '';
+    this.direction = true;
   }
 
-  direction = !direction;
-  updateDirectionToggleTitle();
-  return direction ? 'Normal' : 'Reverse';
+  setCurrentTranslationId(id) {
+    this.currentTranslationId = id;
+  }
+
+  setDirection(newDirection) {
+    this.direction = newDirection;
+  }
+
+  toggleDirection() {
+    if (this.masteredOneDirectionTranslationIds.size === 0) {
+      this.direction = true;
+      return 'Normal';
+    }
+
+    this.direction = !this.direction;
+    return this.getDirectionText();
+  }
+
+  getDirectionText() {
+    return this.direction ? 'Normal' : 'Reverse';
+  }
+
+  setSourceLanguage(language) {
+    this.sourceLanguage = language;
+  }
+
+  setTargetLanguage(language) {
+    this.targetLanguage = language;
+  }
 }
 
-export function getDirectionText() {
-  return direction ? 'Normal' : 'Reverse';
-}
-
-export function setSourceLanguage(language) {
-  sourceLanguage = language;
-}
-
-export function setTargetLanguage(language) {
-  targetLanguage = language;
-}
-
-document.addEventListener('DOMContentLoaded', initAuth);
+// Export a singleton instance of App
+export const appInstance = new App();

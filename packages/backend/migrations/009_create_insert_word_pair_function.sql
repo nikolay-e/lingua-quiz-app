@@ -5,8 +5,6 @@ OR REPLACE FUNCTION insert_word_pair_and_add_to_list (
   p_target_word_id INTEGER,
   p_source_word VARCHAR(255),
   p_target_word VARCHAR(255),
-  p_source_language_id VARCHAR(10),
-  p_target_language_id VARCHAR(10),
   p_source_language_name VARCHAR(50),
   p_target_language_name VARCHAR(50),
   p_word_list_name VARCHAR(255),
@@ -15,20 +13,24 @@ OR REPLACE FUNCTION insert_word_pair_and_add_to_list (
 ) RETURNS VOID AS $$
 DECLARE
   v_word_list_id INTEGER;
+  v_source_language_id INTEGER;
+  v_target_language_id INTEGER;
 BEGIN
   -- Insert or update the source language
-  INSERT INTO language (id, name)
-  VALUES (p_source_language_id, p_source_language_name)
-  ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name;
+  INSERT INTO language (name)
+  VALUES (p_source_language_name)
+  ON CONFLICT (name) DO UPDATE SET name = EXCLUDED.name
+  RETURNING id INTO v_source_language_id;
   
   -- Insert or update the target language
-  INSERT INTO language (id, name)
-  VALUES (p_target_language_id, p_target_language_name)
-  ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name;
+  INSERT INTO language (name)
+  VALUES (p_target_language_name)
+  ON CONFLICT (name) DO UPDATE SET name = EXCLUDED.name
+  RETURNING id INTO v_target_language_id;
 
   -- Insert or update the source word
   INSERT INTO word (id, text, language_id, usage_example)
-  VALUES (p_source_word_id, p_source_word, p_source_language_id, p_source_word_usage_example)
+  VALUES (p_source_word_id, p_source_word, v_source_language_id, p_source_word_usage_example)
   ON CONFLICT (id) DO UPDATE 
   SET text = EXCLUDED.text, 
       language_id = EXCLUDED.language_id, 
@@ -36,7 +38,7 @@ BEGIN
 
   -- Insert or update the target word
   INSERT INTO word (id, text, language_id, usage_example)
-  VALUES (p_target_word_id, p_target_word, p_target_language_id, p_target_word_usage_example)
+  VALUES (p_target_word_id, p_target_word, v_target_language_id, p_target_word_usage_example)
   ON CONFLICT (id) DO UPDATE 
   SET text = EXCLUDED.text, 
       language_id = EXCLUDED.language_id, 
@@ -55,15 +57,10 @@ BEGIN
   ON CONFLICT (name) DO UPDATE SET name = EXCLUDED.name
   RETURNING id INTO v_word_list_id;
 
-  -- Insert or update the source word in the word list
-  INSERT INTO word_list_entry (word_id, word_list_id)
-  VALUES (p_source_word_id, v_word_list_id)
-  ON CONFLICT (word_id, word_list_id) DO NOTHING;
-
-  -- Insert or update the target word in the word list
-  INSERT INTO word_list_entry (word_id, word_list_id)
-  VALUES (p_target_word_id, v_word_list_id)
-  ON CONFLICT (word_id, word_list_id) DO NOTHING;
+  -- Insert or update the translation in the word list
+  INSERT INTO word_list_entry (translation_id, word_list_id)
+  VALUES (p_translation_id, v_word_list_id)
+  ON CONFLICT (translation_id, word_list_id) DO NOTHING;
 
 END;
 $$ LANGUAGE plpgsql;
