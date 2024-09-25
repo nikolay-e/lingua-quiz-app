@@ -1,11 +1,10 @@
-// packages/frontend/tests/quizManager.test.js
-
 import { QuizManager } from '../src/js/quiz/quizManager.js';
 import { App } from '../src/js/app.js';
 import {
   getRandomTranslationIdFromTopFew,
   moveToMasteredOneDirection,
   moveToMasteredVocabulary,
+  stats,
 } from '../src/js/quiz/wordSetManager.js';
 
 // Mock the wordSetManager functions
@@ -22,6 +21,16 @@ describe('QuizManager Class', () => {
 
   beforeEach(() => {
     appState = new App();
+
+    // Reset stats
+    stats.totalAttempts = 0;
+    stats.correctAnswers = 0;
+    stats.incorrectAnswers = 0;
+    stats.attemptsPerTranslationIdAndDirection = {};
+    stats.incorrectPerTranslationIdAndDirection = {};
+    stats.timePerTranslationIdAndDirection = {};
+    stats.timePerQuestion = [];
+
     quizManager = new QuizManager(appState);
 
     // Set up quizTranslations and focusTranslationIds

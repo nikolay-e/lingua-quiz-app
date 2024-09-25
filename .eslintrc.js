@@ -15,7 +15,7 @@ module.exports = {
       },
     },
   ],
-  ignorePatterns: ['**/tests/**/*'],
+  ignorePatterns: ['**/tests/**/*', '**/cypress/**/*'],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
