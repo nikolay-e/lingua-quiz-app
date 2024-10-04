@@ -33,7 +33,8 @@ coverage/
 .grunt
 
 # IDE and editor folders
-.idea/
+.idea
+.vscode
 *.swp
 *.swo
 *.sublime-workspace
@@ -55,8 +56,6 @@ amplify/mock-data
 amplify/mock-api-resources
 amplify/backend/amplify-meta.json
 amplify/backend/.temp
-dist/
-node_modules/
 aws-exports.js
 awsconfiguration.json
 amplifyconfiguration.json

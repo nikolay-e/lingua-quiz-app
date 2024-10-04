@@ -6,6 +6,7 @@ import {
   updateWordSetsDisplay,
 } from './displayManager.js';
 import { appInstance } from '../app.js';
+import { moveToMasteredOneDirection, moveToMasteredVocabulary } from '../quiz/wordSetManager.js';
 
 const quizManager = new QuizManager(appInstance);
 
@@ -64,6 +65,30 @@ async function submitAnswer() {
     const startTime = new Date();
 
     const isAnswerCorrect = quizManager.verifyAnswer(userAnswer, startTime);
+
+    if (isAnswerCorrect) {
+      const normalKey = `${appInstance.currentTranslationId}-normal`;
+      const reverseKey = `${appInstance.currentTranslationId}-reverse`;
+      const normalCorrect =
+        appInstance.stats.attemptsPerTranslationIdAndDirection[normalKey]?.correct || 0;
+      const reverseCorrect =
+        appInstance.stats.attemptsPerTranslationIdAndDirection[reverseKey]?.correct || 0;
+
+      if (
+        appInstance.focusTranslationIds.has(appInstance.currentTranslationId) &&
+        normalCorrect >= 3
+      ) {
+        moveToMasteredOneDirection(appInstance, appInstance.currentTranslationId);
+      }
+
+      if (
+        appInstance.masteredOneDirectionTranslationIds.has(appInstance.currentTranslationId) &&
+        reverseCorrect >= 3
+      ) {
+        moveToMasteredVocabulary(appInstance, appInstance.currentTranslationId);
+      }
+    }
+
     const translation = appInstance.quizTranslations.get(appInstance.currentTranslationId);
     if (isAnswerCorrect) {
       setFeedback('Correct!', true);

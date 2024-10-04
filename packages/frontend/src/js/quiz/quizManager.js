@@ -1,10 +1,5 @@
-import {
-  getRandomTranslationIdFromTopFew,
-  moveToMasteredOneDirection,
-  moveToMasteredVocabulary,
-  stats,
-  updateStats,
-} from './wordSetManager.js';
+import { getRandomTranslationIdFromTopFew, updateStats } from './wordSetManager.js';
+import { appInstance } from '../app.js';
 
 // eslint-disable-next-line import/prefer-default-export
 export class QuizManager {
@@ -26,6 +21,7 @@ export class QuizManager {
       : this.appState.masteredOneDirectionTranslationIds;
 
     const newTranslationId = getRandomTranslationIdFromTopFew(
+      appInstance.stats,
       translationSet,
       this.lastAskedWords,
       this.appState.quizTranslations
@@ -51,26 +47,12 @@ export class QuizManager {
     // eslint-disable-next-line no-use-before-define
     const isAnswerCorrect = compareAnswers(userAnswer, correctAnswer);
     updateStats(
+      appInstance.stats,
       isAnswerCorrect,
       this.appState.currentTranslationId,
       startTime,
       this.appState.direction
     );
-
-    if (isAnswerCorrect) {
-      const normalKey = `${this.appState.currentTranslationId}-normal`;
-      const reverseKey = `${this.appState.currentTranslationId}-reverse`;
-      const normalCorrect = stats.attemptsPerTranslationIdAndDirection[normalKey]?.correct || 0;
-      const reverseCorrect = stats.attemptsPerTranslationIdAndDirection[reverseKey]?.correct || 0;
-      if (normalCorrect >= 3) {
-        if (reverseCorrect >= 3) {
-          moveToMasteredVocabulary(this.appState, this.appState.currentTranslationId);
-        } else {
-          moveToMasteredOneDirection(this.appState, this.appState.currentTranslationId);
-        }
-      }
-    }
-
     return isAnswerCorrect;
   }
 }

@@ -10,6 +10,15 @@ export class App {
     this.sourceLanguage = '';
     this.targetLanguage = '';
     this.direction = true;
+    this.stats = {
+      totalAttempts: 0,
+      correctAnswers: 0,
+      incorrectAnswers: 0,
+      attemptsPerTranslationIdAndDirection: {},
+      incorrectPerTranslationIdAndDirection: {},
+      timePerTranslationIdAndDirection: {},
+      timePerQuestion: [],
+    };
   }
 
   setCurrentTranslationId(id) {

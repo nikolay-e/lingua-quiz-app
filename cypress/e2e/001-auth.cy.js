@@ -1,6 +1,6 @@
 describe('User Authentication', () => {
-  const testUser = `test${Cypress.env('TEST_USER_EMAIL') || `test${Date.now()}@example.com`}`;
-  const testPassword = Cypress.env('TEST_USER_PASSWORD') || 'testPassword123!';
+  const testUser = `test${Date.now()}@example.com`;
+  const testPassword = 'testPassword123!';
 
   beforeEach(() => {
     cy.visit('/login.html');
@@ -19,6 +19,10 @@ describe('User Authentication', () => {
   it('should login with valid credentials', () => {
     cy.login(testUser, testPassword);
     cy.url().should('eq', `${Cypress.config().baseUrl}/`);
+  });
+
+  it('should login with valid credentials via api', () => {
+    cy.apiLogin(testUser, testPassword);
   });
 
   it('should not login with invalid credentials', () => {

@@ -1,27 +1,18 @@
+/* eslint-disable no-param-reassign */
 import serverAddress from '../config.js';
 
-export const stats = {
-  totalAttempts: 0,
-  correctAnswers: 0,
-  incorrectAnswers: 0,
-  attemptsPerTranslationIdAndDirection: {},
-  incorrectPerTranslationIdAndDirection: {},
-  timePerTranslationIdAndDirection: {},
-  timePerQuestion: [],
-};
-
-export function getIncorrectPerWord(statsData) {
+export function getIncorrectPerWord(stats) {
   const incorrectPerWord = {};
-  Object.entries(statsData.incorrectPerTranslationIdAndDirection).forEach(([key, value]) => {
+  Object.entries(stats.incorrectPerTranslationIdAndDirection).forEach(([key, value]) => {
     const [translationId] = key.split('-');
     incorrectPerWord[translationId] = (incorrectPerWord[translationId] || 0) + value;
   });
   return incorrectPerWord;
 }
 
-export function getRandomTranslationIdFromTopFew(wordSet, lastAskedWords) {
-  const sstats = getIncorrectPerWord(stats);
-  const sortedWords = Array.from(wordSet).map((word) => [word, sstats[word] || 0]);
+export function getRandomTranslationIdFromTopFew(stats, wordSet, lastAskedWords) {
+  const incorrectPerWord = getIncorrectPerWord(stats);
+  const sortedWords = Array.from(wordSet).map((word) => [word, incorrectPerWord[word] || 0]);
 
   sortedWords.sort((a, b) => a[1] - b[1]);
 
@@ -40,9 +31,9 @@ export function getRandomTranslationIdFromTopFew(wordSet, lastAskedWords) {
 
 export async function saveQuizState(appState, token) {
   const statusSets = {
-    'Focus Words': new Set(),
-    'Mastered One Direction': new Set(),
     'Mastered Vocabulary': new Set(),
+    'Mastered One Direction': new Set(),
+    'Focus Words': new Set(),
   };
 
   appState.quizTranslations.forEach((translation, id) => {
@@ -84,9 +75,9 @@ export function moveToFocusWords(appState, translationId) {
     appState.focusTranslationIds.add(translationId);
     appState.upcomingTranslationIds.delete(translationId);
     const wordPair = appState.quizTranslations.get(translationId);
-    if (wordPair) {
-      wordPair.status = 'Focus Words';
-    }
+    wordPair.status = 'Focus Words';
+    const token = localStorage.getItem('token');
+    saveQuizState(appState, token);
   }
 }
 
@@ -112,7 +103,7 @@ export function moveToMasteredVocabulary(appState, translationId) {
   }
 }
 
-export function updateStats(isCorrect, translationId, startTime, direction) {
+export function updateStats(stats, isCorrect, translationId, startTime, direction) {
   const endTime = new Date();
   const timeTaken = (endTime - startTime) / 1000;
   stats.totalAttempts += 1;

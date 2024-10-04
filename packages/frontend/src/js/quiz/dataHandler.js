@@ -1,5 +1,5 @@
 import serverAddress from '../config.js';
-import { moveToFocusWords } from './wordSetManager.js';
+import { moveToFocusWords, saveQuizState } from './wordSetManager.js';
 
 export function parseData(appState, data) {
   if (!data || !Array.isArray(data)) {
@@ -56,6 +56,9 @@ export function parseData(appState, data) {
     const idToMove = appState.upcomingTranslationIds.values().next().value;
     moveToFocusWords(appState, idToMove);
   }
+
+  const token = localStorage.getItem('token');
+  saveQuizState(appState, token);
 }
 
 export async function fetchWordSets(appState, token, wordListName) {
