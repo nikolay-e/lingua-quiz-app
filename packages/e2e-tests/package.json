@@ -1,0 +1,11 @@
+{
+  "name": "@linguaquiz/e2e-tests",
+  "version": "1.0.0",
+  "description": "E2E tests for your monorepo",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.32.0"
+  }
+}

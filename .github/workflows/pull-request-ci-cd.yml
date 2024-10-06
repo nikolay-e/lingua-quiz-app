@@ -1,0 +1,111 @@
+name: Pull Request CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  depcheck:
+    name: Depcheck
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm install
+      - name: Run depcheck
+        run: npm run depcheck
+
+  eslint:
+    name: ESLint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm install
+      - name: Run ESLint
+        run: npm run lint
+
+  codeql:
+    name: CodeQL
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        language: ['javascript']
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: ${{ matrix.language }}
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2
+
+  frontend:
+    uses: nikolay-e/reusable-workflows/.github/workflows/docker-build-deploy-vps.yml@main
+    with:
+      image_name: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'lingua-quiz-com' || 'test-lingua-quiz-com' }}
+      container_port: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 8444 || 8445 }}
+      domain: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'lingua-quiz.nikolay-eremeev.com' || 'test-lingua-quiz.nikolay-eremeev.com' }}
+      docker_context: packages/frontend
+      docker_file: packages/frontend/Dockerfile
+    secrets:
+      DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+      DOCKER_REGISTRY_TOKEN: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
+      VPS_SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+      VPS_USER: ${{ secrets.VPS_USER }}
+      SSL_CERT: ${{ secrets.SSL_CERT }}
+      SSL_KEY: ${{ secrets.SSL_KEY }}
+
+  backend:
+    uses: ./.github/workflows/backend-workflow.yml
+    secrets: inherit
+#
+#  e2e-tests:
+#    runs-on: ubuntu-latest
+#    needs: [backend, frontend]
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v3
+#
+#      - name: Set up Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: '16.x'
+#
+#      - name: Install dependencies
+#        run: npm install
+#
+#      - name: Set environment variables
+#        run: |
+#          echo "TEST_ENV=test" >> $GITHUB_ENV
+#          echo "NODE_ENV=production" >> $GITHUB_ENV
+#          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+#            echo "LINGUA_QUIZ_URL=https://test-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
+#          else
+#            echo "LINGUA_QUIZ_URL=https://lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
+#          fi
+#
+#      - name: Run E2E Tests
+#        env:
+#          LINGUA_QUIZ_URL: ${{ env.LINGUA_QUIZ_URL }}
+#        run: npm run test --workspace=@linguaquiz/e2e-tests

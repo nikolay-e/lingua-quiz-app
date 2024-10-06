@@ -1,22 +1,13 @@
-const axios = require('axios');
-const https = require('https');
 const { expect } = require('chai');
+const { registerTestUser, deleteTestUser, axiosInstance, generateInt32 } = require('./testHelpers');
 
-// Access environment variables
-const { API_URL, JWT_TOKEN } = process.env;
+const API_URL = process.env.API_URL;
 
-const httpsAgent = new https.Agent();
-
-const axiosInstance = axios.create({
-  httpsAgent,
-});
-
-const delay = (ms) =>
-  new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('User Word Sets Endpoint', () => {
+  let testUser;
+  let jwtToken;
   const insertedWordPairs = [];
   const wordSetsByStatus = {
     'Upcoming Words': [],
@@ -25,15 +16,23 @@ describe('User Word Sets Endpoint', () => {
     'Mastered Vocabulary': [],
   };
 
-  // No need to register and login; JWT_TOKEN is obtained from the environment variables
+  beforeAll(async () => {
+    const testData = await registerTestUser("userWordSets");
+    testUser = testData.user;
+    jwtToken = testData.token;
+  });
+
+  afterAll(async () => {
+    await deleteTestUser(jwtToken);
+  });
 
   it('should insert test word pairs', async function () {
-    const wordListName = 'Test';
+    const wordListName = 'TestUserWordSets';
     for (let i = 0; i < 30; i += 1) {
       const wordPairData = {
-        translationId: Math.floor(Date.now() / 1000) + i,
-        sourceWordId: Math.floor(Date.now() / 1000) + i * 2,
-        targetWordId: Math.floor(Date.now() / 1000) + i * 2 + 1,
+        translationId: generateInt32(),
+        sourceWordId: generateInt32(),
+        targetWordId: generateInt32(),
         sourceWord: `SourceWord${i}`,
         targetWord: `TargetWord${i}`,
         sourceLanguageName: 'English',
@@ -44,7 +43,7 @@ describe('User Word Sets Endpoint', () => {
       };
 
       const response = await axiosInstance.post(`${API_URL}/word-pair`, wordPairData, {
-        headers: { Authorization: `Bearer ${JWT_TOKEN}` },
+        headers: { Authorization: `Bearer ${jwtToken}` },
       });
 
       expect(response.status).to.equal(201);
@@ -56,9 +55,9 @@ describe('User Word Sets Endpoint', () => {
   });
 
   it('should retrieve the word sets and verify inserted pairs are present', async function () {
-    const wordListName = 'Test';
+    const wordListName = 'TestUserWordSets';
     const response = await axiosInstance.get(`${API_URL}/user/word-sets`, {
-      headers: { Authorization: `Bearer ${JWT_TOKEN}` },
+      headers: { Authorization: `Bearer ${jwtToken}` },
       params: { wordListName },
     });
 
@@ -94,7 +93,7 @@ describe('User Word Sets Endpoint', () => {
       const updateResponse = await axiosInstance.post(
         `${API_URL}/user/word-sets`,
         { status, wordPairIds },
-        { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
+        { headers: { Authorization: `Bearer ${jwtToken}` } }
       );
       expect(updateResponse.status).to.equal(200);
 
@@ -107,8 +106,8 @@ describe('User Word Sets Endpoint', () => {
     }
 
     const finalResponse = await axiosInstance.get(`${API_URL}/user/word-sets`, {
-      headers: { Authorization: `Bearer ${JWT_TOKEN}` },
-      params: { wordListName: 'Test' },
+      headers: { Authorization: `Bearer ${jwtToken}` },
+      params: { wordListName: 'TestUserWordSets' },
     });
 
     const ourUpdatedPairs = finalResponse.data.filter((set) =>
@@ -153,13 +152,13 @@ describe('User Word Sets Endpoint', () => {
               status: to,
               wordPairIds: [wordSetsByStatus[from][0]],
             },
-            { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
+            { headers: { Authorization: `Bearer ${jwtToken}` } }
           );
           // If the request doesn't throw, fail the test
           expect.fail('Expected request to fail');
         } catch (error) {
           expect(error.response.status).to.equal(400);
-          expect(error.response.data.message).to.equal('Invalid status transition');
+          expect(error.response.data.message).to.equal('Invalid request. Please check your input and try again.');
         }
       }
     }
@@ -174,13 +173,13 @@ describe('User Word Sets Endpoint', () => {
           status: 'Upcoming Words',
           wordPairIds: [wordPairId],
         },
-        { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
+        { headers: { Authorization: `Bearer ${jwtToken}` } }
       );
       expect(updateResponse.status).to.equal(200);
 
       const finalResponse = await axiosInstance.get(`${API_URL}/user/word-sets`, {
-        headers: { Authorization: `Bearer ${JWT_TOKEN}` },
-        params: { wordListName: 'Test' },
+        headers: { Authorization: `Bearer ${jwtToken}` },
+        params: { wordListName: 'TestUserWordSets' },
       });
 
       const updatedWord = finalResponse.data.find((set) => set.wordPairId === wordPairId);
@@ -205,14 +204,14 @@ describe('User Word Sets Endpoint', () => {
       const updateResponse = await axiosInstance.post(
         `${API_URL}/user/word-sets`,
         { status, wordPairIds: [] },
-        { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
+        { headers: { Authorization: `Bearer ${jwtToken}` } }
       );
       expect(updateResponse.status).to.equal(200);
     }
 
     const finalResponse = await axiosInstance.get(`${API_URL}/user/word-sets`, {
-      headers: { Authorization: `Bearer ${JWT_TOKEN}` },
-      params: { wordListName: 'Test' },
+      headers: { Authorization: `Bearer ${jwtToken}` },
+      params: { wordListName: 'TestUserWordSets' },
     });
 
     const ourPairs = finalResponse.data.filter((set) =>
@@ -227,7 +226,7 @@ describe('User Word Sets Endpoint', () => {
       const response = await axiosInstance.delete(
         `${API_URL}/word-pair/${wordPair.translationId}`,
         {
-          headers: { Authorization: `Bearer ${JWT_TOKEN}` },
+          headers: { Authorization: `Bearer ${jwtToken}` },
         }
       );
       expect(response.status).to.equal(200);
@@ -237,10 +236,10 @@ describe('User Word Sets Endpoint', () => {
   });
 
   it('should verify that inserted word pairs are removed', async function () {
-    const wordListName = 'Test';
+    const wordListName = 'TestUserWordSets';
     try {
       await axiosInstance.get(`${API_URL}/user/word-sets`, {
-        headers: { Authorization: `Bearer ${JWT_TOKEN}` },
+        headers: { Authorization: `Bearer ${jwtToken}` },
         params: { wordListName },
       });
       // If we reach this point, it means no error was thrown (i.e., we didn't get a 404)
@@ -257,3 +256,4 @@ describe('User Word Sets Endpoint', () => {
     }
   });
 });
+

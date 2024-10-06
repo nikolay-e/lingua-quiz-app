@@ -2,6 +2,7 @@
 import jwtDecode from 'jwt-decode';
 import serverAddress from '../config.js';
 import { populateWordLists } from './eventHandlers.js';
+import { errorHandler } from '../utils/errorHandler.js';
 
 export class AuthManager {
   constructor() {
@@ -56,15 +57,14 @@ export class AuthManager {
           await populateWordLists();
         } catch (error) {
           console.error('Error loading word lists:', error);
-          loginMessage.textContent =
-            'Login successful, but failed to load word lists. Please refresh the page.';
+          errorHandler.handleApiError(error);
         }
       } else {
-        loginMessage.textContent = data.message || 'Invalid credentials';
+        errorHandler.showError(data.message || 'Invalid credentials');
       }
     } catch (error) {
       console.error('Login error:', error);
-      loginMessage.textContent = `An error occurred: ${error.message}. Please try again.`;
+      errorHandler.handleApiError(error);
     }
   }
 
@@ -115,11 +115,11 @@ export class AuthManager {
         registerMessage.textContent = 'Registration successful. You can now log in.';
       } else {
         console.warn(`Registration failed: ${data.message || 'Registration failed'}`);
-        registerMessage.textContent = data.message || 'Registration failed. Please try again.';
+        errorHandler.showError(data.message || 'Registration failed. Please try again.');
       }
     } catch (error) {
       console.error('Registration error:', error);
-      registerMessage.textContent = `An error occurred: ${error.message}. Please try again.`;
+      errorHandler.handleApiError(error);
     }
   }
 
@@ -143,6 +143,7 @@ export class AuthManager {
 }
 
 export function initAuth() {
+  errorHandler.init();
   const authManager = new AuthManager();
   authManager.initializeForms();
   authManager.updateLoginStatus();

@@ -1,27 +1,21 @@
-const axios = require('axios');
-const https = require('https');
 const { expect } = require('chai');
+const { registerTestUser, deleteTestUser, axiosInstance } = require('./testHelpers');
 
 const API_URL = process.env.API_URL;
 
-const httpsAgent = new https.Agent({});
-
-let jwtToken;
-
-const axiosInstance = axios.create({
-  httpsAgent,
-});
-
 describe('Registration and Login', () => {
-  const testUser = {
-    email: `test${Date.now()}@example.com`,
-    password: 'testPassword123!',
-  };
+  let testUser;
+  let jwtToken;
 
-  it('should register a new user', async () => {
-    const response = await axiosInstance.post(`${API_URL}/register`, testUser);
-    expect(response.status).to.equal(201);
-    expect(response.data.message).to.equal('User registered successfully');
+  it('should register test user', async () => {
+    testUser = {
+      email: `authTest${Date.now()}@example.com`,
+      password: 'testPassword123!',
+    };
+
+    await axiosInstance.post(`${API_URL}/register`, testUser);
+    const loginResponse = await axiosInstance.post(`${API_URL}/login`, testUser);
+    jwtToken = loginResponse.data.token;
   });
 
   it('should not register an existing user', async () => {
@@ -29,7 +23,7 @@ describe('Registration and Login', () => {
       await axiosInstance.post(`${API_URL}/register`, testUser);
     } catch (error) {
       expect(error.response.status).to.equal(400);
-      expect(error.response.data.message).to.equal('User already exists');
+      expect(error.response.data.message).to.equal('Invalid request. Please check your input and try again.');
     }
   });
 
@@ -37,7 +31,6 @@ describe('Registration and Login', () => {
     const response = await axiosInstance.post(`${API_URL}/login`, testUser);
     expect(response.status).to.equal(200);
     expect(response.data).to.have.property('token');
-    jwtToken = response.data.token;
   });
 
   it('should not login with incorrect credentials', async () => {
@@ -48,7 +41,7 @@ describe('Registration and Login', () => {
       });
     } catch (error) {
       expect(error.response.status).to.equal(401);
-      expect(error.response.data.message).to.equal('Invalid credentials');
+      expect(error.response.data.message).to.equal('Authentication failed.');
     }
   });
 

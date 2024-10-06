@@ -1,5 +1,6 @@
 import serverAddress from '../config.js';
 import { moveToFocusWords, saveQuizState } from './wordSetManager.js';
+import { errorHandler } from '../utils/errorHandler.js';
 
 export function parseData(appState, data) {
   if (!data || !Array.isArray(data)) {
@@ -81,6 +82,7 @@ export async function fetchWordSets(appState, token, wordListName) {
     parseData(appState, data);
   } catch (error) {
     console.error('Error fetching word sets:', error);
+    errorHandler.handleApiError(error);
     throw error;
   }
 }
@@ -102,6 +104,7 @@ export async function fetchWordLists(token) {
     return data;
   } catch (error) {
     console.error('Error fetching word lists:', error);
+    errorHandler.handleApiError(error);
     throw error;
   }
 }

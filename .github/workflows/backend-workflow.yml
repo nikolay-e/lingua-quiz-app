@@ -1,33 +1,20 @@
-name: Backend CI/CD
+name: Backend Workflow
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'packages/backend/**'
-      - '.github/workflows/backend*.yml'
-  pull_request:
-    paths:
-      - 'packages/backend/**'
-      - '.github/workflows/backend*.yml'
+  workflow_call:
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
-
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
@@ -38,32 +25,25 @@ jobs:
   deploy:
     needs: [build-and-push]
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
-
       - name: Set up kubectl
         uses: azure/setup-kubectl@v1
-
       - name: Install kustomize
         run: |
           curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
           sudo mv kustomize /usr/local/bin/
-
       - name: Set up kubeconfig
         run: |
           mkdir -p $HOME/.kube
           echo "${{ secrets.KUBE_CONFIG_NEW }}" > $HOME/.kube/config
           chmod 600 $HOME/.kube/config
-
       - name: Install yq
         run: |
           sudo wget -O /usr/local/bin/yq https://github.com/mikefarah/yq/releases/download/v4.25.1/yq_linux_amd64
           sudo chmod +x /usr/local/bin/yq
-
       - name: Verify kubectl configuration
         run: kubectl cluster-info
-
       - name: Set deployment namespace and ports
         run: |
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
@@ -71,25 +51,21 @@ jobs:
           else
             echo "DEPLOY_NAMESPACE=default" >> $GITHUB_ENV
           fi
-
       - name: Cleanup before deployment
         uses: actions/github-script@v6
         with:
           script: |
             const script = require('./.github/scripts/cleanup-cluster.js')
             await script({github, context, core, exec})
-
       - name: Create namespace if not exists
         run: |
           kubectl create namespace ${{ env.DEPLOY_NAMESPACE }} --dry-run=client -o yaml | kubectl apply -f -
-
       - name: Create or update JWT secret
         run: |
           kubectl create secret generic jwt-secret \
             --namespace ${{ env.DEPLOY_NAMESPACE }} \
             --from-literal=JWT_SECRET=${{ secrets.JWT_SECRET }} \
             --dry-run=client -o yaml | kubectl apply -f -
-
       - name: Create Server TLS Secret
         run: |
           if ! kubectl get secret tls-secret --namespace=${{ env.DEPLOY_NAMESPACE }} >/dev/null 2>&1; then
@@ -100,7 +76,6 @@ jobs:
           else
             echo "Secret tls-secret already exists, skipping creation.";
           fi
-
       - name: Create PostgreSQL Secret
         run: |
           kubectl create secret generic postgres-secret \
@@ -109,17 +84,14 @@ jobs:
             --from-literal=POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
             --from-literal=POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
             --dry-run=client -o yaml | kubectl apply -f -
-
       - name: Wait for PostgreSQL Secret
         run: |
           timeout 30s bash -c 'while ! kubectl get secret postgres-secret --namespace ${{ env.DEPLOY_NAMESPACE }} &>/dev/null; do echo "Waiting for PostgreSQL secret..."; sleep 2; done' || (echo "Timed out waiting for PostgreSQL secret" && exit 1)
         shell: bash
-
       - name: Wait for JWT Secret
         run: |
           timeout 30s bash -c 'while ! kubectl get secret jwt-secret --namespace ${{ env.DEPLOY_NAMESPACE }} &>/dev/null; do echo "Waiting for JWT secret..."; sleep 2; done' || (echo "Timed out waiting for JWT secret" && exit 1)
         shell: bash
-
       - name: Update manifests
         env:
           DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
@@ -138,21 +110,17 @@ jobs:
           yq e ".metadata.namespace = \"${DEPLOY_NAMESPACE}\"" -i service.yaml
           yq e ".spec.tls[0].hosts[0] = \"${API_HOST}\"" -i ingress.yaml
           yq e ".spec.rules[0].host = \"${API_HOST}\"" -i ingress.yaml
-
       - name: Deploy to Kubernetes
         run: |
           cd packages/backend/k8s
           kustomize build | kubectl apply -f -
-
       - name: Wait for postgres deployment to be ready
         run: |
           kubectl rollout status deployment/postgres -n ${{ env.DEPLOY_NAMESPACE }} --timeout=300s
-
       - name: Wait for app deployment to be ready!
         run: |
           kubectl rollout status deployment/lingua-quiz -n ${{ env.DEPLOY_NAMESPACE }} --timeout=300s
           sleep 5s
-
       - name: Run Database Migrations
         run: |
           BACKEND_POD=$(kubectl get pods -l app=lingua-quiz -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.items[0].metadata.name}")
@@ -165,21 +133,18 @@ jobs:
             npm run migrate
 
   test:
-    needs: [build-and-push, deploy]
+    needs: [deploy]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
           node-version: '16'
-
       - name: Install dependencies
         run: |
           npm ci
           npm install --save-dev @babel/core @babel/preset-env babel-jest
-
       - name: Set environment variables
         run: |
           echo "TEST_ENV=test" >> $GITHUB_ENV
@@ -189,48 +154,7 @@ jobs:
           else
             echo "API_URL=https://api-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
           fi
-
       - name: Run tests
         env:
           API_URL: ${{ env.API_URL }}
         run: npm run test --workspace=@linguaquiz/backend
-
-  cypress-e2e-tests:
-    runs-on: ubuntu-latest
-    needs: [test]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16.x'
-
-      - name: Install required system dependencies
-        run: sudo apt-get install -y libnss3 libgbm1 libgtk-3-0 libxss1 libasound2
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Set environment variables
-        run: |
-          echo "TEST_ENV=test" >> $GITHUB_ENV
-          echo "NODE_ENV=production" >> $GITHUB_ENV
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            echo "LINGUA_QUIZ_URL=https://test-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
-          else
-            echo "LINGUA_QUIZ_URL=https://lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
-          fi
-
-      - name: Run Cypress tests
-        env:
-          LINGUA_QUIZ_URL: ${{ env.LINGUA_QUIZ_URL }}
-        run: npx cypress run
-
-      - name: Archive Cypress results
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: cypress-results
-          path: cypress/results

@@ -1,21 +1,25 @@
-// wordLists.test.js
-
-const axios = require('axios');
-const https = require('https');
 const { expect } = require('chai');
+const { registerTestUser, deleteTestUser, axiosInstance } = require('./testHelpers');
 
-const { API_URL, JWT_TOKEN } = process.env;
-
-const httpsAgent = new https.Agent({});
-
-const axiosInstance = axios.create({
-  httpsAgent,
-});
+const API_URL = process.env.API_URL;
 
 describe('Word Lists Endpoint', () => {
+  let testUser;
+  let jwtToken;
+
+  beforeAll(async () => {
+    const testData = await registerTestUser("wordLists");
+    testUser = testData.user;
+    jwtToken = testData.token;
+  });
+
+  afterAll(async () => {
+    await deleteTestUser(jwtToken);
+  });
+
   it('should retrieve the list of word lists', async function () {
     const response = await axiosInstance.get(`${API_URL}/word-lists`, {
-      headers: { Authorization: `Bearer ${JWT_TOKEN}` },
+      headers: { Authorization: `Bearer ${jwtToken}` },
     });
 
     expect(response.status).to.equal(200);

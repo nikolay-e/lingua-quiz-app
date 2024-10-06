@@ -77,9 +77,13 @@
       <div class="right-sidebar"></div>
     </main>
     <script type="module">
+      import { initEventHandlers } from './js/ui/eventHandlers.js';
       import { initAuth } from './js/ui/loginManager.js';
+      import { errorHandler } from './js/utils/errorHandler.js';
 
       document.addEventListener('DOMContentLoaded', () => {
+        errorHandler.init();
+        initEventHandlers();
         initAuth();
       });
     </script>

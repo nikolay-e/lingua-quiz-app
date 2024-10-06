@@ -1,4 +1,3 @@
-// globalSetup.js
 const { PostgreSqlContainer } = require('@testcontainers/postgresql');
 const { Pool } = require('pg');
 const axios = require('axios');
@@ -38,17 +37,6 @@ module.exports = async () => {
     // Wait for the server to start
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    // Create test user and obtain JWT token
-    const testUser = {
-      email: `test${Date.now()}@example.com`,
-      password: 'testPassword123!',
-    };
-
-    const axiosInstance = axios.create();
-    await axiosInstance.post(`${process.env.API_URL}/register`, testUser);
-    const loginResponse = await axiosInstance.post(`${process.env.API_URL}/login`, testUser);
-    const jwtToken = loginResponse.data.token;
-
     // Write environment variables to a file
     const envVars = `
 DB_HOST=${process.env.DB_HOST}
@@ -61,9 +49,6 @@ JWT_EXPIRES_IN=${process.env.JWT_EXPIRES_IN}
 NODE_ENV=${process.env.NODE_ENV}
 PORT=${process.env.PORT}
 API_URL=${process.env.API_URL}
-JWT_TOKEN=${jwtToken}
-TEST_USER_EMAIL=${testUser.email}
-TEST_USER_PASSWORD=${testUser.password}
 `;
 
     fs.writeFileSync(path.resolve(__dirname, '.test.env'), envVars);
@@ -76,28 +61,11 @@ TEST_USER_PASSWORD=${testUser.password}
     // Set API_URL based on the environment
     process.env.API_URL = process.env.API_URL;
 
-    // Create test user and obtain JWT token
-    const testUser = {
-      email: `test${Date.now()}@example.com`,
-      password: 'testPassword123!',
-    };
-
-    const axiosInstance = axios.create();
-    await axiosInstance.post(`${process.env.API_URL}/register`, testUser);
-    const loginResponse = await axiosInstance.post(`${process.env.API_URL}/login`, testUser);
-    const jwtToken = loginResponse.data.token;
-
     // Write environment variables to a file
     const envVars = `
 API_URL=${process.env.API_URL}
-JWT_TOKEN=${jwtToken}
-TEST_USER_EMAIL=${testUser.email}
-TEST_USER_PASSWORD=${testUser.password}
 `;
 
     fs.writeFileSync(path.resolve(__dirname, '.test.env'), envVars);
-
-    global.__TEST_USER_EMAIL__ = testUser.email;
-    global.__JWT_TOKEN__ = jwtToken;
   }
 };
