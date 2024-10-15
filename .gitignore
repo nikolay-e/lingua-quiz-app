@@ -77,6 +77,8 @@ amplifytools.xcconfig
 
 cypress/screenshots
 cypress/videos
-directory_tree.txt
+directory_tree.*
 *_data.sql
 Generated -- *
+test-results
+playwright-report

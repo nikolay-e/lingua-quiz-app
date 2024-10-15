@@ -8,12 +8,10 @@ jobs:
   review:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
@@ -22,21 +20,26 @@ jobs:
           python -m pip install --upgrade pip
           pip install openai PyGithub tiktoken
 
+      - name: Extract PR Number
+        run: echo "PR_NUMBER=${{ github.event.pull_request.number }}" >> $GITHUB_ENV
+
       - name: Run AI Code Review
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          PR_NUMBER: ${{ env.PR_NUMBER }}
         id: ai_review
         run: |
-          output=$(python .github/scripts/ai_code_review.py)
-          echo "::set-output name=merge_decision::$(echo "$output" | grep MERGE_DECISION | cut -d'=' -f2)"
+          python .github/scripts/ai_code_review.py > output.log
+          cat output.log
+          echo "merge_decision=$(grep MERGE_DECISION output.log | cut -d'=' -f2)" >> $GITHUB_OUTPUT
 
       - name: Set PR status
         uses: actions/github-script@v6
         env:
           MERGE_DECISION: ${{ steps.ai_review.outputs.merge_decision }}
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const mergeDecision = process.env.MERGE_DECISION.trim().toLowerCase();
             console.log(`Merge decision: ${mergeDecision}`);
@@ -50,10 +53,10 @@ jobs:
               description = 'AI review failed';
             }
 
-            github.rest.repos.createCommitStatus({
+            await github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              sha: context.sha,
+              sha: context.payload.pull_request.head.sha,
               state: state,
               description: description,
               context: 'AI Code Review'
@@ -62,12 +65,12 @@ jobs:
             console.log(`Set PR status to: ${state}`);
 
       - name: Comment PR on failure
-        uses: actions/github-script@v6
         if: failure()
+        uses: actions/github-script@v6
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            github.rest.issues.createComment({
+            await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,

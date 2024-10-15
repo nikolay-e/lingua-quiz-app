@@ -7,6 +7,7 @@ import {
 } from './displayManager.js';
 import { appInstance } from '../app.js';
 import { moveToMasteredOneDirection, moveToMasteredVocabulary } from '../quiz/wordSetManager.js';
+import { errorHandler } from '../utils/errorHandler.js';
 
 const quizManager = new QuizManager(appInstance);
 
@@ -36,7 +37,7 @@ async function loadWordsFromAPI(wordListName) {
     updateWordSetsDisplay(appInstance);
   } catch (error) {
     console.error(`Error loading words for ${wordListName}:`, error);
-    setFeedback('Failed to load word set. Please try again.', false);
+    errorHandler.handleApiError(error);
   }
 }
 
@@ -153,11 +154,13 @@ export async function populateWordLists() {
     });
   } catch (error) {
     console.error('Error populating word lists:', error);
-    setFeedback('Failed to load word lists. Please try again.', false);
+    errorHandler.handleApiError(error);
   }
 }
 
 export function initEventHandlers() {
+  errorHandler.init();
+
   const answerInput = document.getElementById('answer');
   if (answerInput) {
     answerInput.addEventListener('keydown', handleEnterKey);

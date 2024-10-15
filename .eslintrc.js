@@ -4,23 +4,14 @@ module.exports = {
     es2021: true,
     mocha: true,
     jest: true,
-    'cypress/globals': true,
   },
-  extends: ['airbnb-base', 'plugin:prettier/recommended', 'plugin:cypress/recommended'],
-  overrides: [
-    {
-      files: ['cypress.config.js'],
-      rules: {
-        'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-      },
-    },
-  ],
-  ignorePatterns: ['**/tests/**/*', '**/cypress/**/*'],
+  extends: ['airbnb-base', 'plugin:prettier/recommended'],
+  ignorePatterns: ['**/tests/**/*'],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['prettier', 'mocha', 'cypress', 'jest'],
+  plugins: ['prettier', 'mocha', 'jest'],
   rules: {
     'prettier/prettier': [
       'error',

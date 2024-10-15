@@ -1,12 +1,12 @@
 import os
 import logging
 import time
-from typing import List, Dict, Optional
+from typing import Optional
 import github
 from openai import OpenAI
 from utils import (
-    get_env_variable, init_github_client, get_repo_content, get_pr_diff,
-    sanitize_input, post_review, count_tokens, split_codebase
+    get_env_variable, init_github_client, get_pr_diff,
+    sanitize_input, post_review, count_tokens, split_diff
 )
 from config import OPENAI_MODEL, TOKEN_RESET_PERIOD, MAX_CHUNK_SIZE
 
@@ -19,100 +19,75 @@ def init_openai_client() -> OpenAI:
     api_key = get_env_variable("OPENAI_API_KEY")
     return OpenAI(api_key=api_key)
 
-def analyze_codebase(client: OpenAI, repo_content: str) -> str:
-    """Analyze the entire codebase or large chunks of it."""
-    chunks = split_codebase(repo_content)
-    analyses = []
-
-    for i, chunk in enumerate(chunks):
-        try:           
-            system_message = """You are an expert code analyzer preparing information for a pull request review. Analyze the given code and provide:
-            1. A concise summary of key aspects.
-            2. Main functions, classes, or components and their purposes.
-            3. Important patterns, architectural decisions, or coding styles.
-            4. Potential areas of interest for a code review (e.g., complex logic, security-sensitive parts).
-            5. Any other observations relevant for reviewing changes in a pull request context."""
-
-            user_message = f"""Analyze the following code and provide a structured summary:
-
-            {chunk}
-
-            Structure your response as follows:
-            1. Overview
-            2. Key Components
-            3. Notable Patterns/Decisions
-            4. Review Focus Areas
-            5. Additional Notes"""
-
-            response = client.chat.completions.create(
-                model=OPENAI_MODEL,
-                messages=[
-                    {"role": "system", "content": system_message},
-                    {"role": "user", "content": user_message}
-                ]
-            )
-            analyses.append(response.choices[0].message.content)
-            logger.info(f"Completed analysis of chunk {i+1}/{len(chunks)}")
-            time.sleep(TOKEN_RESET_PERIOD)
-        except Exception as e:
-            logger.error(f"OpenAI API error during chunk {i+1} analysis: {str(e)}")
-            analyses.append(f"Error occurred during analysis of chunk {i+1}: {str(e)}")
-
-    return "\n\n".join(analyses)
-
-def review_code(client: OpenAI, repo_content: str, pr_diff: str, pr_title: str, pr_body: Optional[str]) -> str:
+def review_code(client: OpenAI, pr_diff: str, pr_title: str, pr_body: Optional[str]) -> str:
     """Perform AI code review using OpenAI API, and decide on merge readiness."""
-    total_tokens = count_tokens(repo_content) + count_tokens(pr_diff)
-    
+    total_tokens = count_tokens(pr_diff)
+
     if total_tokens <= MAX_CHUNK_SIZE:
-        logger.info("Entire codebase and PR diff fit within token limit. Proceeding with direct review.")
-        content_to_review = f"Codebase:\n{repo_content}\n\nPR Diff:\n{pr_diff}"
+        logger.info("PR diff fits within token limit. Proceeding with direct review.")
+        content_to_review = f"PR Diff:\n{pr_diff}"
     else:
-        logger.info("Codebase and PR diff exceed token limit. Performing separate analysis.")
-        logger.info("Starting codebase analysis")
-        codebase_analysis = analyze_codebase(client, repo_content)
-        logger.info("Completed codebase analysis")
-        content_to_review = f"Codebase Analysis:\n{codebase_analysis}\n\nPR Diff:\n{pr_diff}"
-    
+        logger.info("PR diff exceeds token limit. Splitting into chunks.")
+        diff_chunks = split_diff(pr_diff)
+        analyses = []
+        for i, chunk in enumerate(diff_chunks):
+            try:
+                response = client.chat.completions.create(
+                    model=OPENAI_MODEL,
+                    messages=[
+                        {"role": "system", "content": "You are an expert code reviewer."},
+                        {"role": "user", "content": f"Please review the following code changes:\n\n{chunk}"}
+                    ]
+                )
+                analyses.append(response.choices[0].message.content)
+                logger.info(f"Completed review of chunk {i+1}/{len(diff_chunks)}")
+                time.sleep(TOKEN_RESET_PERIOD)
+            except Exception as e:
+                logger.error(f"OpenAI API error during chunk {i+1} review: {str(e)}")
+                analyses.append(f"Error occurred during review of chunk {i+1}: {str(e)}")
+        content_to_review = "\n\n".join(analyses)
+
     sanitized_title = sanitize_input(pr_title)
     sanitized_body = sanitize_input(pr_body)
-    
+
     final_review_prompt = f"""
-    Based on the following information:
+Based on the following pull request changes:
 
-    {content_to_review}
+{content_to_review}
 
-    Please review this pull request:
+PR Title: {sanitized_title}
+PR Body: {sanitized_body}
 
-    PR Title: {sanitized_title}
-    PR Body: {sanitized_body}
+Please provide a code review that includes:
 
-    Provide:
-    1. Feedback on:
-       a. Potential bugs or errors
-       b. Suggestions for improvement
-       c. Any security concerns
-       d. Overall design and architecture considerations - dont mention documentation
-    2. A suggested better short commit message based on the changes and the provided PR title and body
-    3. A decision on whether the code is ready to be merged (YES/NO) with a brief explanation. Be consise. Always add file name. Be specific. Before suggestions recheck yourself it what you want to suggest makes sense
+1. Feedback on:
+   - Potential bugs or errors
+   - Suggestions for improvement
+   - Security concerns
+   - Design and architecture considerations
 
-    Structure your response as follows:
-    Code Review:
-    [Your review here]
+2. A suggested short commit message (max 8 words) that accurately describes the changes.
 
-    Suggested Short Commit Message:
-    [Your suggested short commit message here, max 8 words, dont use buzz words, be consise, be specific, keep it short]
+3. A merge decision (YES/NO) with a brief explanation for your choice.
 
-    Merge Decision:[YES/NO]
-        - [file path]: [Brief explanation what should be fixed. Be consise. Be specific. Before suggestions recheck yourself it what you want to suggest makes sense. Dont deny the PR if only documentation is missing.]
-    """
+Structure your response as follows:
 
-    try:        
+Code Review:
+[Your detailed review]
+
+Suggested Short Commit Message:
+[Your commit message]
+
+Merge Decision: [YES/NO]
+[Brief explanation]
+"""
+
+    try:
         logger.info("Sending final review request to OpenAI")
         response = client.chat.completions.create(
             model=OPENAI_MODEL,
             messages=[
-                {"role": "system", "content": "You are an expert code reviewer. Provide a comprehensive review based on the provided codebase analysis and pull request details."},
+                {"role": "system", "content": "You are an expert code reviewer. Provide a comprehensive review based on the provided pull request details."},
                 {"role": "user", "content": final_review_prompt}
             ]
         )
@@ -124,37 +99,55 @@ def review_code(client: OpenAI, repo_content: str, pr_diff: str, pr_title: str, 
         return f"Error occurred during code review: {str(e)}"
 
 def extract_merge_decision(review: str) -> bool:
-    merge_decision_section = review.split("Merge Decision:")[-1].strip()
-    decision = merge_decision_section.split(":")[0].strip().upper()
-    return decision == "YES"
+    """Extract the merge decision ('YES' or 'NO') from the review."""
+    try:
+        lines = review.splitlines()
+        decision = ""
+        found_merge_decision = False
+
+        for line in lines:
+            if "Merge Decision:" in line:
+                # Check if 'YES' or 'NO' is on the same line after the colon
+                parts = line.split(":", 1)
+                if len(parts) > 1 and parts[1].strip().upper() in ("YES", "NO"):
+                    decision = parts[1].strip().upper()
+                    return decision == "YES"
+                else:
+                    found_merge_decision = True  # Set flag to check the next line
+            elif found_merge_decision:
+                # Check the next line after 'Merge Decision:'
+                stripped_line = line.strip().upper()
+                if stripped_line in ("YES", "NO"):
+                    decision = stripped_line
+                    return decision == "YES"
+                else:
+                    found_merge_decision = False  # Reset if next line is not 'YES' or 'NO'
+        # If 'Merge Decision:' not found or decision not recognized, default to False
+        return False
+    except Exception as e:
+        logger.error(f"Error extracting merge decision: {str(e)}")
+        return False
 
 def main():
     try:
         logger.info("Starting code review process")
         openai_client = init_openai_client()
         pull_request = init_github_client()
-        repo = pull_request.base.repo
-        logger.info("Fetching repository content")
-        repo_content = get_repo_content(repo, pull_request.base.ref)
         logger.info("Fetching pull request diff")
         pr_diff = get_pr_diff(pull_request)
         logger.info("Starting code review")
-        review = review_code(openai_client, repo_content, pr_diff, pull_request.title, pull_request.body)
+        review = review_code(openai_client, pr_diff, pull_request.title, pull_request.body)
         logger.info("Posting review")
         post_review(pull_request, review)
         logger.info("Code review process completed successfully")
         merge_decision = extract_merge_decision(review)
         print(f"MERGE_DECISION={'success' if merge_decision else 'failure'}")
-        return merge_decision
     except ValueError as e:
         logger.error(f"Configuration error: {str(e)}")
-        return False
     except github.GithubException as e:
         logger.error(f"GitHub API error: {str(e)}")
-        return False
     except Exception as e:
         logger.error(f"An unexpected error occurred: {str(e)}")
-        return False
 
 if __name__ == "__main__":
     main()
