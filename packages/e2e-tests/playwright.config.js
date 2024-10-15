@@ -8,7 +8,7 @@ module.exports = defineConfig({
     timeout: 5000,
   },
   use: {
-    baseURL: 'https://test-lingua-quiz.nikolay-eremeev.com/',
+    baseURL: process.env.LINGUA_QUIZ_URL || 'https://test-lingua-quiz.nikolay-eremeev.com/',
     trace: 'on-first-retry',
     screenshot: 'on',
     video: 'on-first-retry',

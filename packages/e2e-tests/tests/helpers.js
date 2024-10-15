@@ -21,21 +21,14 @@ async function apiLogin(request, email, password) {
   expect(response.ok()).toBeTruthy();
   const body = await response.json();
   expect(body).toHaveProperty('token');
-  // Note: In Playwright, you can't directly set localStorage.
-  // You'll need to handle this in your application code or use a custom command.
+  return body;
 }
 
 async function logout(page) {
   const logoutButton = page.locator('#login-logout-btn');
-  if (await logoutButton.textContent() === 'Logout') {
-    await logoutButton.click();
-    await expect(page).toHaveURL(/.*login.html/);
-    await expect(page.locator('#login-form')).toBeVisible();
-    // Note: In Playwright, you can't directly check localStorage.
-    // You'll need to handle this in your application code or use a custom command.
-  } else {
-    console.log('User was not logged in, skipping logout process');
-  }
+  await logoutButton.click();
+  await expect(page).toHaveURL(/.*login.html/);
+  await expect(page.locator('#login-form')).toBeVisible();
 }
 
 async function selectQuiz(page, quizName) {
