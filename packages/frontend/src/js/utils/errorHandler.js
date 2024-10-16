@@ -1,5 +1,3 @@
-import DOMPurify from 'dompurify';
-
 class ErrorHandler {
   constructor() {
     this.errorContainer = null;
@@ -32,7 +30,7 @@ class ErrorHandler {
         font-family: 'Roboto', Arial, sans-serif;
         font-size: 14px;
       ">
-        <strong>Error:</strong> ${DOMPurify.sanitize(message)}
+        <strong>Error:</strong> ${message}
       </div>
     `;
 
