@@ -11,7 +11,7 @@ module.exports = defineConfig({
     baseURL: process.env.LINGUA_QUIZ_URL || 'https://test-lingua-quiz.nikolay-eremeev.com/',
     trace: 'on-first-retry',
     screenshot: 'on',
-    video: 'on-first-retry',
+    video: 'on',
   },
   reporter: [['html'], ['list']],
 });

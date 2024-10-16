@@ -17,7 +17,7 @@ describe('User Word Sets Endpoint', () => {
   };
 
   beforeAll(async () => {
-    const testData = await registerTestUser("userWordSets");
+    const testData = await registerTestUser('userWordSets');
     testUser = testData.user;
     jwtToken = testData.token;
   });
@@ -80,16 +80,16 @@ describe('User Word Sets Endpoint', () => {
     wordSetsByStatus['Upcoming Words'] = ourInsertedPairs.map((set) => set.wordPairId);
   });
 
-  it('should update word sets following the correct transition order', async function () {
+  it('should update word sets with any status transition', async function () {
     const wordUpdates = [
-      { prevStatus: 'Upcoming Words', status: 'Focus Words', count: 10 },
-      { prevStatus: 'Focus Words', status: 'Mastered One Direction', count: 5 },
-      { prevStatus: 'Mastered One Direction', status: 'Mastered Vocabulary', count: 3 },
-      { prevStatus: 'Mastered Vocabulary', status: 'Upcoming Words', count: 2 },
+      { status: 'Focus Words', count: 10 },
+      { status: 'Mastered One Direction', count: 5 },
+      { status: 'Mastered Vocabulary', count: 3 },
+      { status: 'Upcoming Words', count: 2 },
     ];
 
-    for (const { prevStatus, status, count } of wordUpdates) {
-      const wordPairIds = wordSetsByStatus[prevStatus].slice(0, count);
+    for (const { status, count } of wordUpdates) {
+      const wordPairIds = wordSetsByStatus['Upcoming Words'].slice(0, count);
       const updateResponse = await axiosInstance.post(
         `${API_URL}/user/word-sets`,
         { status, wordPairIds },
@@ -98,7 +98,7 @@ describe('User Word Sets Endpoint', () => {
       expect(updateResponse.status).to.equal(200);
 
       wordSetsByStatus[status] = [...wordSetsByStatus[status], ...wordPairIds];
-      wordSetsByStatus[prevStatus] = wordSetsByStatus[prevStatus].filter(
+      wordSetsByStatus['Upcoming Words'] = wordSetsByStatus['Upcoming Words'].filter(
         (id) => !wordPairIds.includes(id)
       );
 
@@ -121,10 +121,10 @@ describe('User Word Sets Endpoint', () => {
       return acc;
     }, {});
 
-    expect(statusCounts['Focus Words']).to.equal(5);
-    expect(statusCounts['Mastered One Direction']).to.equal(2);
-    expect(statusCounts['Mastered Vocabulary']).to.equal(1);
-    expect(statusCounts['Upcoming Words']).to.equal(22);
+    expect(statusCounts['Focus Words']).to.equal(10);
+    expect(statusCounts['Mastered One Direction']).to.equal(5);
+    expect(statusCounts['Mastered Vocabulary']).to.equal(3);
+    expect(statusCounts['Upcoming Words']).to.equal(12);
 
     for (const [status, ids] of Object.entries(wordSetsByStatus)) {
       ids.forEach((id) => {
@@ -135,60 +135,39 @@ describe('User Word Sets Endpoint', () => {
     }
   });
 
-  it('should reject invalid state transitions', async function () {
-    const invalidTransitions = [
-      { from: 'Upcoming Words', to: 'Mastered One Direction' },
-      { from: 'Focus Words', to: 'Mastered Vocabulary' },
+  it('should allow any state transition', async function () {
+    const transitions = [
+      { from: 'Upcoming Words', to: 'Mastered Vocabulary' },
+      { from: 'Focus Words', to: 'Upcoming Words' },
       { from: 'Mastered One Direction', to: 'Focus Words' },
-      { from: 'Mastered Vocabulary', to: 'Focus Words' },
+      { from: 'Mastered Vocabulary', to: 'Mastered One Direction' },
     ];
 
-    for (const { from, to } of invalidTransitions) {
+    for (const { from, to } of transitions) {
       if (wordSetsByStatus[from].length > 0) {
-        try {
-          await axiosInstance.post(
-            `${API_URL}/user/word-sets`,
-            {
-              status: to,
-              wordPairIds: [wordSetsByStatus[from][0]],
-            },
-            { headers: { Authorization: `Bearer ${jwtToken}` } }
-          );
-          // If the request doesn't throw, fail the test
-          expect.fail('Expected request to fail');
-        } catch (error) {
-          expect(error.response.status).to.equal(400);
-          expect(error.response.data.message).to.equal('Invalid request. Please check your input and try again.');
-        }
+        const wordPairId = wordSetsByStatus[from][0];
+        const updateResponse = await axiosInstance.post(
+          `${API_URL}/user/word-sets`,
+          {
+            status: to,
+            wordPairIds: [wordPairId],
+          },
+          { headers: { Authorization: `Bearer ${jwtToken}` } }
+        );
+        expect(updateResponse.status).to.equal(200);
+
+        // Update our local tracking
+        wordSetsByStatus[to].push(wordPairId);
+        wordSetsByStatus[from] = wordSetsByStatus[from].filter((id) => id !== wordPairId);
+
+        // Verify the change
+        const verifyResponse = await axiosInstance.get(`${API_URL}/user/word-sets`, {
+          headers: { Authorization: `Bearer ${jwtToken}` },
+          params: { wordListName: 'TestUserWordSets' },
+        });
+        const updatedWord = verifyResponse.data.find((set) => set.wordPairId === wordPairId);
+        expect(updatedWord.status).to.equal(to);
       }
-    }
-  });
-
-  it('should allow cycling back to Upcoming Words from Mastered Vocabulary', async function () {
-    if (wordSetsByStatus['Mastered Vocabulary'].length > 0) {
-      const wordPairId = wordSetsByStatus['Mastered Vocabulary'][0];
-      const updateResponse = await axiosInstance.post(
-        `${API_URL}/user/word-sets`,
-        {
-          status: 'Upcoming Words',
-          wordPairIds: [wordPairId],
-        },
-        { headers: { Authorization: `Bearer ${jwtToken}` } }
-      );
-      expect(updateResponse.status).to.equal(200);
-
-      const finalResponse = await axiosInstance.get(`${API_URL}/user/word-sets`, {
-        headers: { Authorization: `Bearer ${jwtToken}` },
-        params: { wordListName: 'TestUserWordSets' },
-      });
-
-      const updatedWord = finalResponse.data.find((set) => set.wordPairId === wordPairId);
-      expect(updatedWord.status).to.equal('Upcoming Words');
-
-      wordSetsByStatus['Mastered Vocabulary'] = wordSetsByStatus['Mastered Vocabulary'].filter(
-        (id) => id !== wordPairId
-      );
-      wordSetsByStatus['Upcoming Words'].push(wordPairId);
     }
   });
 
@@ -256,4 +235,3 @@ describe('User Word Sets Endpoint', () => {
     }
   });
 });
-

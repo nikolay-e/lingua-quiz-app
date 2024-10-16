@@ -1,15 +1,13 @@
-import { QuizManager } from '../quiz/quizManager.js';
 import { fetchWordSets, fetchWordLists } from '../quiz/dataHandler.js';
 import {
   displayQuestion,
   updateDirectionToggleTitle,
   updateWordSetsDisplay,
 } from './displayManager.js';
-import { appInstance } from '../app.js';
-import { moveToMasteredOneDirection, moveToMasteredVocabulary } from '../quiz/wordSetManager.js';
+import { saveQuizState } from '../quiz/wordSetManager.js';
 import { errorHandler } from '../utils/errorHandler.js';
 
-const quizManager = new QuizManager(appInstance);
+let app = null;
 
 function setFeedback(message, isSuccess = true) {
   const feedbackElement = document.getElementById('feedback');
@@ -29,12 +27,12 @@ async function loadWordsFromAPI(wordListName) {
       throw new Error('User is not authenticated');
     }
 
-    await fetchWordSets(appInstance, token, wordListName);
+    app = await fetchWordSets(token, wordListName);
 
-    updateDirectionToggleTitle(appInstance);
-    const questionData = quizManager.getNextQuestion();
+    updateDirectionToggleTitle(app);
+    const questionData = app.getNextQuestion();
     displayQuestion(questionData);
-    updateWordSetsDisplay(appInstance);
+    updateWordSetsDisplay(app);
   } catch (error) {
     console.error(`Error loading words for ${wordListName}:`, error);
     errorHandler.handleApiError(error);
@@ -63,70 +61,37 @@ async function submitAnswer() {
     }
 
     const userAnswer = answerInput.value;
-    const startTime = new Date();
+    const { feedback, usageExamples, questionData } = await app.submitAnswer(userAnswer);
 
-    const isAnswerCorrect = quizManager.verifyAnswer(userAnswer, startTime);
+    // Update UI with feedback and usage examples
+    setFeedback(feedback.message, feedback.isSuccess);
+    document.getElementById('source-word-usage').textContent = usageExamples.source;
+    document.getElementById('target-word-usage').textContent = usageExamples.target;
 
-    if (isAnswerCorrect) {
-      const normalKey = `${appInstance.currentTranslationId}-normal`;
-      const reverseKey = `${appInstance.currentTranslationId}-reverse`;
-      const normalCorrect =
-        appInstance.stats.attemptsPerTranslationIdAndDirection[normalKey]?.correct || 0;
-      const reverseCorrect =
-        appInstance.stats.attemptsPerTranslationIdAndDirection[reverseKey]?.correct || 0;
-
-      if (
-        appInstance.focusTranslationIds.has(appInstance.currentTranslationId) &&
-        normalCorrect >= 3
-      ) {
-        moveToMasteredOneDirection(appInstance, appInstance.currentTranslationId);
-      }
-
-      if (
-        appInstance.masteredOneDirectionTranslationIds.has(appInstance.currentTranslationId) &&
-        reverseCorrect >= 3
-      ) {
-        moveToMasteredVocabulary(appInstance, appInstance.currentTranslationId);
-      }
-    }
-
-    const translation = appInstance.quizTranslations.get(appInstance.currentTranslationId);
-    if (isAnswerCorrect) {
-      setFeedback('Correct!', true);
-    } else {
-      setFeedback(`Wrong. '${translation.sourceWord}' - '${translation.targetWord}'`, false);
-    }
-
-    document.getElementById('source-word-usage').textContent =
-      translation.sourceWordUsageExample || 'No example available';
-    document.getElementById('target-word-usage').textContent =
-      translation.targetWordUsageExample || 'No example available';
-
-    answerInput.value = '';
-    answerInput.blur();
-    setTimeout(() => {
-      answerInput.focus();
-    }, 0);
-
-    const questionData = quizManager.getNextQuestion();
+    // Display next question
     displayQuestion(questionData);
-    updateWordSetsDisplay(appInstance);
+    updateWordSetsDisplay(app);
+
+    // Clear and focus input
+    answerInput.value = '';
     answerInput.focus();
+
+    // Save quiz state
+    const token = localStorage.getItem('token');
+    await saveQuizState(app, token);
   } catch (error) {
     console.error('Error submitting answer:', error);
     setFeedback('An error occurred. Please try again.', false);
+    errorHandler.handleApiError(error);
   }
 }
 
 function handleDirectionToggle() {
-  const oldDirection = appInstance.getDirectionText();
-  const newDirection = appInstance.toggleDirection();
-  if (oldDirection !== newDirection) {
-    updateDirectionToggleTitle(appInstance);
-    const questionData = quizManager.getNextQuestion();
-    displayQuestion(questionData);
-    updateWordSetsDisplay(appInstance);
-  }
+  app.toggleDirection();
+  updateDirectionToggleTitle(app);
+  const questionData = app.getNextQuestion();
+  displayQuestion(questionData);
+  updateWordSetsDisplay(app);
 }
 
 function handleQuizSelect(event) {
@@ -182,7 +147,9 @@ export function initEventHandlers() {
   }
 
   // Set initial direction text
-  updateDirectionToggleTitle(appInstance);
+  if (app) {
+    updateDirectionToggleTitle(app);
+  }
 
   // Populate word lists when the page loads
   populateWordLists();
