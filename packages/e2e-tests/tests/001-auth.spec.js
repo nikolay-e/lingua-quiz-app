@@ -10,13 +10,11 @@ test.describe('User Authentication', () => {
   });
 
   test('should register a new user', async ({ page }) => {
-    await register(page, testUser, testPassword);
-    await expect(page.locator('text=Registration successful')).toBeVisible({ timeout: 10000 });
+    await register(page, testUser, testPassword, true);
   });
 
   test('should not allow duplicate registration', async ({ page }) => {
-    await register(page, testUser, testPassword);
-    await expect(page.locator('text=Error')).toBeVisible({ timeout: 10000 });
+    await register(page, testUser, testPassword, false);
   });
 
   test('should login with valid credentials', async ({ page }) => {
@@ -43,7 +41,10 @@ test.describe('User Authentication', () => {
     await expect(page.locator('#login-logout-btn')).toContainText(testUser, { timeout: 10000 });
   });
 
-  test('should redirect to login page when accessing protected route', async ({ page, context }) => {
+  test('should redirect to login page when accessing protected route', async ({
+    page,
+    context,
+  }) => {
     await context.clearCookies();
     await page.goto('/');
     await expect(page).toHaveURL(/.*login.html/);
@@ -66,8 +67,12 @@ test.describe('User Authentication', () => {
     await login(page, testUser, testPassword);
     await logout(page);
     const localStorage = await context.storageState();
-    expect(localStorage.origins[0].localStorage.find(item => item.name === 'token')).toBeUndefined();
-    expect(localStorage.origins[0].localStorage.find(item => item.name === 'email')).toBeUndefined();
+    expect(
+      localStorage.origins[0].localStorage.find((item) => item.name === 'token')
+    ).toBeUndefined();
+    expect(
+      localStorage.origins[0].localStorage.find((item) => item.name === 'email')
+    ).toBeUndefined();
   });
 
   test('should not allow access to protected routes after logout', async ({ page }) => {

@@ -14,6 +14,13 @@ export const DIRECTION = {
   REVERSE: false,
 };
 
+// Magic number constants
+export const MAX_FOCUS_WORDS = 20;
+export const MAX_LAST_ASKED_WORDS = 7;
+export const TOP_WORDS_LIMIT = 10;
+export const CORRECT_ANSWERS_TO_MASTER = 3;
+export const MILLISECONDS_IN_SECOND = 1000;
+
 export class App {
   quizTranslations = new Map();
 
@@ -105,7 +112,7 @@ export class App {
     const focusSet = this.wordStatusSets[STATUS.FOCUS];
     const upcomingSet = this.wordStatusSets[STATUS.UPCOMING];
 
-    while (focusSet.size < 20 && upcomingSet.size > 0) {
+    while (focusSet.size < MAX_FOCUS_WORDS && upcomingSet.size > 0) {
       const idToMove = upcomingSet.values().next().value;
       this.moveWordToStatus(idToMove, STATUS.FOCUS);
     }
@@ -158,7 +165,7 @@ export class App {
       (a, b) => (incorrectCounts[a] || 0) - (incorrectCounts[b] || 0)
     );
 
-    const topFewWords = sortedWords.slice(0, 10);
+    const topFewWords = sortedWords.slice(0, TOP_WORDS_LIMIT);
     const availableWords = topFewWords.filter((wordId) => !this.lastAskedWords.includes(wordId));
 
     const selectionPool = availableWords.length > 0 ? availableWords : topFewWords;
@@ -179,7 +186,7 @@ export class App {
 
   updateLastAskedWords(wordId) {
     this.lastAskedWords.push(wordId);
-    if (this.lastAskedWords.length > 7) {
+    if (this.lastAskedWords.length > MAX_LAST_ASKED_WORDS) {
       this.lastAskedWords.shift();
     }
   }
@@ -229,6 +236,8 @@ export class App {
       if (!answer) return '';
       return answer
         .toLowerCase()
+        .normalize('NFD')
+        .replace(/\p{M}/gu, '') // Remove diacritical marks
         .split(',')
         .map((item) => item.trim().replace(/[^\p{Letter}]/gu, ''))
         .filter(Boolean)
@@ -241,7 +250,7 @@ export class App {
 
   updateStats(isCorrect, startTime) {
     const endTime = Date.now();
-    const timeTaken = (endTime - startTime) / 1000;
+    const timeTaken = (endTime - startTime) / MILLISECONDS_IN_SECOND;
     this.stats.totalAttempts += 1;
     this.stats.timePerQuestion.push(timeTaken);
 
@@ -282,12 +291,15 @@ export class App {
 
     const currentStatus = this.quizTranslations.get(this.currentTranslationId).status;
 
-    if (currentStatus === STATUS.FOCUS && normalCorrect >= 3) {
+    if (currentStatus === STATUS.FOCUS && normalCorrect >= CORRECT_ANSWERS_TO_MASTER) {
       this.moveWordToStatus(this.currentTranslationId, STATUS.MASTERED_ONE_DIRECTION);
       this.populateFocusWords();
     }
 
-    if (currentStatus === STATUS.MASTERED_ONE_DIRECTION && reverseCorrect >= 3) {
+    if (
+      currentStatus === STATUS.MASTERED_ONE_DIRECTION &&
+      reverseCorrect >= CORRECT_ANSWERS_TO_MASTER
+    ) {
       this.moveWordToStatus(this.currentTranslationId, STATUS.MASTERED_VOCABULARY);
     }
   }
