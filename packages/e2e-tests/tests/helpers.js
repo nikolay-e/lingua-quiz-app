@@ -1,10 +1,14 @@
 const { expect } = require('@playwright/test');
 
-async function register(page, email, password) {
+async function register(page, email, password, success) {
   await page.goto('/login.html');
   await page.fill('#register-email', email);
   await page.fill('#register-password', password);
   await page.click('#register-form button[type="submit"]');
+  if (success !== undefined) {
+    const message = success ? 'Registration successful' : 'Error';
+    await expect(page.locator(`text=${message}`)).toBeVisible({ timeout: 10000 });
+  }
 }
 
 async function login(page, email, password) {

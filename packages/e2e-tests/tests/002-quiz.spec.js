@@ -11,7 +11,7 @@ test.describe('Quiz Functionality', () => {
     const context = await browser.newContext();
     const page = await context.newPage();
     // Perform registration via GUI
-    await register(page, testUser, testPassword);
+    await register(page, testUser, testPassword, true);
     // Close the context
     await context.close();
   });
