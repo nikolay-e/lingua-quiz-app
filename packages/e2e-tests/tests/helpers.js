@@ -14,16 +14,6 @@ async function login(page, email, password) {
   await page.click('#login-form button[type="submit"]');
 }
 
-async function apiLogin(request, email, password) {
-  const response = await request.post('/api/login', {
-    data: { email, password },
-  });
-  expect(response.ok()).toBeTruthy();
-  const body = await response.json();
-  expect(body).toHaveProperty('token');
-  return body;
-}
-
 async function logout(page) {
   const logoutButton = page.locator('#login-logout-btn');
   await logoutButton.click();
@@ -37,33 +27,9 @@ async function selectQuiz(page, quizName) {
   await expect(page.locator('#focus-words-list')).not.toBeEmpty();
 }
 
-async function addWordPair(request, token, listName, sourceWord, targetWord) {
-  const generateInt32 = () => Math.floor(Math.random() * 2147483647);
-  const response = await request.post('/api/word-pair', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    data: {
-      translationId: generateInt32(),
-      sourceWordId: generateInt32(),
-      targetWordId: generateInt32(),
-      sourceWord,
-      targetWord,
-      sourceLanguageName: 'English',
-      targetLanguageName: 'Spanish',
-      wordListName: listName,
-      sourceWordUsageExample: `This is an example with ${sourceWord}.`,
-      targetWordUsageExample: `Este es un ejemplo con ${targetWord}.`,
-    },
-  });
-  expect(response.status()).toBe(201);
-}
-
 module.exports = {
   register,
   login,
-  apiLogin,
   logout,
   selectQuiz,
-  addWordPair,
 };

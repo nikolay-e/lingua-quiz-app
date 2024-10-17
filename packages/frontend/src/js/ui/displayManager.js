@@ -1,15 +1,17 @@
-export function updateDirectionToggleTitle(appState) {
+import { STATUS } from '../app.js';
+
+export function updateDirectionToggleTitle(app) {
   const directionToggleBtn = document.getElementById('direction-toggle');
   if (directionToggleBtn) {
     directionToggleBtn.innerHTML = `<i class="fas fa-exchange-alt"></i> ${
-      appState.direction
-        ? `${appState.sourceLanguage} -> ${appState.targetLanguage}`
-        : `${appState.targetLanguage} -> ${appState.sourceLanguage}`
+      app.direction === true
+        ? `${app.sourceLanguage} ➔ ${app.targetLanguage}`
+        : `${app.targetLanguage} ➔ ${app.sourceLanguage}`
     }`;
   }
 }
 
-function updateSetDisplay(elementId, translationSet, appState) {
+function updateSetDisplay(elementId, translationSet, app) {
   const container = document.getElementById(elementId);
   if (!container) {
     console.error('updateSetDisplay: Failed to find element with ID', elementId);
@@ -20,31 +22,28 @@ function updateSetDisplay(elementId, translationSet, appState) {
 
   const translationArray = Array.from(translationSet);
   translationArray.forEach((id) => {
-    const translation = appState.quizTranslations.get(id);
+    const translation = app.quizTranslations.get(id);
     const listItem = document.createElement('li');
-    listItem.textContent =
-      elementId === 'focus-words-list' && id === appState.currentTranslationId
-        ? `${translation.sourceWord} (translation hidden)`
-        : `${translation.sourceWord} (${translation.targetWord})`;
+    listItem.textContent = `${translation.sourceWord} (${translation.targetWord})`;
     container.appendChild(listItem);
   });
 }
 
-export function updateWordSetsDisplay(appState) {
-  updateSetDisplay('focus-words-list', appState.focusTranslationIds, appState);
+export function updateWordSetsDisplay(app) {
+  updateSetDisplay('focus-words-list', app.wordStatusSets[STATUS.FOCUS], app);
   updateSetDisplay(
     'mastered-one-direction-list',
-    appState.masteredOneDirectionTranslationIds,
-    appState
+    app.wordStatusSets[STATUS.MASTERED_ONE_DIRECTION],
+    app
   );
-  updateSetDisplay('mastered-vocabulary-list', appState.masteredVocabularyTranslationIds, appState);
-  updateSetDisplay('upcoming-words-list', appState.upcomingTranslationIds, appState);
+  updateSetDisplay('mastered-vocabulary-list', app.wordStatusSets[STATUS.MASTERED_VOCABULARY], app);
+  updateSetDisplay('upcoming-words-list', app.wordStatusSets[STATUS.UPCOMING], app);
 }
 
 export function displayQuestion(questionData) {
   const wordElement = document.getElementById('word');
   if (wordElement) {
-    wordElement.textContent = questionData.word;
+    wordElement.textContent = questionData ? questionData.word : 'No more questions available.';
   } else {
     console.error('Word element not found');
   }

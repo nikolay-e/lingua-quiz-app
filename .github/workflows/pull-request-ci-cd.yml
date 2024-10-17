@@ -59,7 +59,27 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
+  frontend-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+
+      - name: Install dependencies
+        run: |
+          npm ci
+
+      - name: Run tests
+        run: |
+          npm run test --workspace=@linguaquiz/frontend
+
   frontend:
+    needs: [frontend-tests]
     uses: nikolay-e/reusable-workflows/.github/workflows/docker-build-deploy-vps.yml@main
     with:
       image_name: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'lingua-quiz-com' || 'test-lingua-quiz-com' }}
