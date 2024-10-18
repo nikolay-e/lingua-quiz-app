@@ -59,7 +59,14 @@ body {
   height: 100vh;
 }
 
-.quiz-section,
+.quiz-section {
+  background-color: var(--container-bg);
+  border-radius: 12px;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px var(--shadow-color);
+}
+
 .sidebar-section {
   background-color: var(--container-bg);
   border-radius: 12px;
@@ -99,10 +106,6 @@ h2 {
   font-size: clamp(1rem, 2vw, 1.6em);
   border-bottom: 2px solid var(--primary-color);
   padding-bottom: 10px;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
 }
 
 h3 {
@@ -152,7 +155,7 @@ button:hover {
 }
 
 .feedback-container {
-  margin-top: 20px;
+  margin-top: 10px;
   background-color: var(--container-bg);
   border-radius: 8px;
   box-shadow: 0 2px 4px var(--shadow-color);
@@ -199,8 +202,7 @@ button:hover {
 }
 
 .usage-examples {
-  padding: 15px;
-  border-top: 1px solid var(--input-border-color);
+  padding: 10px;
 }
 
 .usage-examples h3 {
@@ -216,7 +218,7 @@ button:hover {
 
 .example-container p {
   background-color: #f8f9fa;
-  padding: 10px;
+  padding: 5px;
   border-radius: 6px;
   margin: 0;
 }
@@ -224,6 +226,32 @@ button:hover {
 .example-container strong {
   color: var(--primary-color);
   margin-right: 5px;
+}
+
+/* Adjusted styles for the quiz header */
+.quiz-section h2 {
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 10px;
+}
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quiz-select {
+  flex: 1;
+}
+
+.quiz-select select {
+  width: 100%;
+}
+
+.logo {
+  font-size: 1.5em;
+  color: var(--primary-color);
+  text-align: right;
 }
 
 .stats-grid {
@@ -345,6 +373,15 @@ button:hover {
   font-weight: bold;
 }
 
+/* Adjusted padding and margins for vertical density */
+.quiz-content {
+  margin-bottom: 10px;
+}
+
+.input-group {
+  margin-bottom: 10px;
+}
+
 /* Responsive styles */
 @media (max-width: 1024px) {
   .container {
@@ -381,9 +418,14 @@ button:hover {
     width: 100%;
   }
 
-  h2 {
+  .quiz-header {
     flex-direction: column;
     align-items: flex-start;
+    gap: 10px;
+  }
+
+  .logo {
+    text-align: left;
   }
 
   #quiz-select {
