@@ -1,0 +1,4 @@
+.git
+*.csv
+word_processing_scripts
+package-lock.json
