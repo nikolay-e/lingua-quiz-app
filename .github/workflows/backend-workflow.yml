@@ -7,26 +7,36 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v2
       - name: Login to DockerHub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
+      - name: Set environment variables
+        run: |
+          echo "DEPLOY_ENV=${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'production' || 'test' }}" >> $GITHUB_ENV
+          echo "IMAGE_TAG=${{ github.head_ref || github.ref_name }}-${{ github.run_number }}" >> $GITHUB_ENV
       - name: Build and push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v4
         with:
           context: ./packages/backend
           push: true
-          tags: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backend:${{ github.head_ref || github.ref_name }}-${{ github.run_number }}
+          tags: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backend:${{ env.IMAGE_TAG }}
+      - name: Log build details
+        run: |
+          echo "::group::Build Details"
+          echo "Environment: ${{ env.DEPLOY_ENV }}"
+          echo "Image: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backend:${{ env.IMAGE_TAG }}"
+          echo "::endgroup::"
 
   deploy:
     needs: [build-and-push]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up kubectl
         uses: azure/setup-kubectl@v1
       - name: Install kustomize
@@ -44,13 +54,23 @@ jobs:
           sudo chmod +x /usr/local/bin/yq
       - name: Verify kubectl configuration
         run: kubectl cluster-info
-      - name: Set deployment namespace and ports
+      - name: Set deployment environment variables
         run: |
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
             echo "DEPLOY_NAMESPACE=test" >> $GITHUB_ENV
+            echo "API_HOST=test-api-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
           else
             echo "DEPLOY_NAMESPACE=default" >> $GITHUB_ENV
+            echo "API_HOST=api-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
           fi
+          echo "IMAGE_TAG=${{ github.head_ref || github.ref_name }}-${{ github.run_number }}" >> $GITHUB_ENV
+      - name: Log deployment details
+        run: |
+          echo "::group::Deployment Details"
+          echo "Namespace: ${{ env.DEPLOY_NAMESPACE }}"
+          echo "API Host: ${{ env.API_HOST }}"
+          echo "Image Tag: ${{ env.IMAGE_TAG }}"
+          echo "::endgroup::"
       - name: Cleanup before deployment
         uses: actions/github-script@v6
         with:
@@ -95,21 +115,17 @@ jobs:
       - name: Update manifests
         env:
           DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
-          IMAGE_TAG: ${{ github.head_ref || github.ref_name }}-${{ github.run_number }}
           IMAGE_NAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backend
-          GITHUB_RUN_NUMBER: ${{ github.run_number }}
-          DEPLOY_NAMESPACE: ${{ env.DEPLOY_NAMESPACE }}
-          API_HOST: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'api-lingua-quiz.nikolay-eremeev.com' || 'test-api-lingua-quiz.nikolay-eremeev.com' }}
         run: |
           cd packages/backend/k8s
           yq e ".images[0].newName = \"${IMAGE_NAME}\"" -i kustomization.yaml
-          yq e ".images[0].newTag = \"${IMAGE_TAG}\"" -i kustomization.yaml
-          yq e ".metadata.namespace = \"${DEPLOY_NAMESPACE}\"" -i deployment.yaml
-          yq e ".metadata.namespace = \"${DEPLOY_NAMESPACE}\"" -i ingress.yaml
-          yq e ".metadata.namespace = \"${DEPLOY_NAMESPACE}\"" -i postgres-deployment.yaml
-          yq e ".metadata.namespace = \"${DEPLOY_NAMESPACE}\"" -i service.yaml
-          yq e ".spec.tls[0].hosts[0] = \"${API_HOST}\"" -i ingress.yaml
-          yq e ".spec.rules[0].host = \"${API_HOST}\"" -i ingress.yaml
+          yq e ".images[0].newTag = \"${{ env.IMAGE_TAG }}\"" -i kustomization.yaml
+          yq e ".metadata.namespace = \"${{ env.DEPLOY_NAMESPACE }}\"" -i deployment.yaml
+          yq e ".metadata.namespace = \"${{ env.DEPLOY_NAMESPACE }}\"" -i ingress.yaml
+          yq e ".metadata.namespace = \"${{ env.DEPLOY_NAMESPACE }}\"" -i postgres-deployment.yaml
+          yq e ".metadata.namespace = \"${{ env.DEPLOY_NAMESPACE }}\"" -i service.yaml
+          yq e ".spec.tls[0].hosts[0] = \"${{ env.API_HOST }}\"" -i ingress.yaml
+          yq e ".spec.rules[0].host = \"${{ env.API_HOST }}\"" -i ingress.yaml
       - name: Deploy to Kubernetes
         run: |
           cd packages/backend/k8s
@@ -117,10 +133,18 @@ jobs:
       - name: Wait for postgres deployment to be ready
         run: |
           kubectl rollout status deployment/postgres -n ${{ env.DEPLOY_NAMESPACE }} --timeout=300s
-      - name: Wait for app deployment to be ready!
+      - name: Wait for app deployment to be ready
         run: |
           kubectl rollout status deployment/lingua-quiz -n ${{ env.DEPLOY_NAMESPACE }} --timeout=300s
           sleep 5s
+      - name: Log deployment status
+        run: |
+          echo "::group::Deployment Status"
+          echo "Postgres deployment status:"
+          kubectl get deployment postgres -n ${{ env.DEPLOY_NAMESPACE }} -o wide
+          echo "App deployment status:"
+          kubectl get deployment lingua-quiz -n ${{ env.DEPLOY_NAMESPACE }} -o wide
+          echo "::endgroup::"
       - name: Run Database Migrations
         run: |
           BACKEND_POD=$(kubectl get pods -l app=lingua-quiz -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.items[0].metadata.name}")
@@ -131,16 +155,25 @@ jobs:
                 POSTGRES_USER=$(kubectl get secret postgres-secret -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.data.POSTGRES_USER}" | base64 --decode) \
                 POSTGRES_PASSWORD=$(kubectl get secret postgres-secret -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.data.POSTGRES_PASSWORD}" | base64 --decode) \
             npm run migrate
+      - name: Log final deployment details
+        run: |
+          echo "::group::Final Deployment Details"
+          echo "Environment: ${{ env.DEPLOY_NAMESPACE == 'default' && 'Production' || 'Test' }}"
+          echo "Namespace: ${{ env.DEPLOY_NAMESPACE }}"
+          echo "API Host: ${{ env.API_HOST }}"
+          echo "Image: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backend:${{ env.IMAGE_TAG }}"
+          echo "Deployment completed successfully"
+          echo "::endgroup::"
 
   test:
     needs: [deploy]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '20'
       - name: Install dependencies
         run: |
           npm ci
@@ -154,7 +187,19 @@ jobs:
           else
             echo "API_URL=https://api-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
           fi
+      - name: Log test environment
+        run: |
+          echo "::group::Test Environment"
+          echo "API URL: ${{ env.API_URL }}"
+          echo "Test Environment: ${{ env.TEST_ENV }}"
+          echo "Node Environment: ${{ env.NODE_ENV }}"
+          echo "::endgroup::"
       - name: Run tests
         env:
           API_URL: ${{ env.API_URL }}
         run: npm run test --workspace=@linguaquiz/backend
+      - name: Log test results
+        run: |
+          echo "::group::Test Results"
+          echo "Tests completed. Check above for detailed results."
+          echo "::endgroup::"

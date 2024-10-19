@@ -12,34 +12,40 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v3
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20'
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Run depcheck
         run: npm run depcheck
+      - name: Log depcheck results
+        run: |
+          echo "::group::Depcheck Results"
+          echo "Depcheck completed. Check above for detailed results."
+          echo "::endgroup::"
 
   eslint:
     name: ESLint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v3
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20'
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Run ESLint
         run: npm run lint
+      - name: Log ESLint results
+        run: |
+          echo "::group::ESLint Results"
+          echo "ESLint completed. Check above for detailed results."
+          echo "::endgroup::"
 
   codeql:
     name: CodeQL
@@ -49,34 +55,39 @@ jobs:
         language: ['javascript']
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
+        uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v2
+        uses: github/codeql-action/autobuild@v3
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
+        uses: github/codeql-action/analyze@v3
+      - name: Log CodeQL results
+        run: |
+          echo "::group::CodeQL Results"
+          echo "CodeQL analysis completed. Check the 'Security' tab for detailed results."
+          echo "::endgroup::"
 
   frontend-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
-
+          node-version: '20'
       - name: Install dependencies
-        run: |
-          npm ci
-
+        run: npm ci
       - name: Run tests
+        run: npm run test --workspace=@linguaquiz/frontend
+      - name: Log frontend test results
         run: |
-          npm run test --workspace=@linguaquiz/frontend
+          echo "::group::Frontend Test Results"
+          echo "Frontend tests completed. Check above for detailed results."
+          echo "::endgroup::"
 
   frontend:
     needs: [frontend-tests]
@@ -110,7 +121,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '20'
 
       - name: Install dependencies
         run: |
@@ -127,7 +138,21 @@ jobs:
             echo "LINGUA_QUIZ_URL=https://lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
           fi
 
+      - name: Log E2E test environment
+        run: |
+          echo "::group::E2E Test Environment"
+          echo "LINGUA_QUIZ_URL: ${{ env.LINGUA_QUIZ_URL }}"
+          echo "TEST_ENV: ${{ env.TEST_ENV }}"
+          echo "NODE_ENV: ${{ env.NODE_ENV }}"
+          echo "::endgroup::"
+
       - name: Run E2E Tests
         env:
           LINGUA_QUIZ_URL: ${{ env.LINGUA_QUIZ_URL }}
         run: npm run test --workspace=@linguaquiz/e2e-tests
+
+      - name: Log E2E test results
+        run: |
+          echo "::group::E2E Test Results"
+          echo "E2E tests completed. Check above for detailed results."
+          echo "::endgroup::"
