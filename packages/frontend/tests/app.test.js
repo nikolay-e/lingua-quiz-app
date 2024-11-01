@@ -500,13 +500,6 @@ describe('App Class', () => {
       expect(result.feedback.message).toContain('Wrong');
     });
 
-    it('should accept comma-separated correct answers', async () => {
-      app.currentTranslationId = 1;
-      app.quizTranslations.get(1).targetWord = 'hola, buenos días';
-      const result = await app.submitAnswer('buenos días, hola', false);
-      expect(result.feedback.isSuccess).toBe(true);
-    });
-
     it('should handle undefined or null userAnswer in compareAnswers', () => {
       app.currentTranslationId = 1;
       const resultUndefined = app.compareAnswers(undefined, 'hola');

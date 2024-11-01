@@ -21,6 +21,18 @@
         }
       }
     </script>
+    <script type="module">
+      import { AuthUtils } from './js/utils/authUtils.js';
+      import { errorHandler } from './js/utils/errorHandler.js';
+
+      document.addEventListener('DOMContentLoaded', () => {
+        errorHandler.init();
+        // Redirect to main page if already authenticated
+        if (AuthUtils.isValidToken(AuthUtils.getToken())) {
+          window.location.href = '/';
+        }
+      });
+    </script>
   </head>
   <body>
     <main class="container login-container">
@@ -34,18 +46,21 @@
           <h2 id="login-section">Login</h2>
           <form id="login-form">
             <div class="input-group">
-              <label for="email"></label
-              ><input id="email" name="email" placeholder="Email" required type="email" />
+              <label for="email"></label>
+              <input id="email" name="email" placeholder="Email" required type="email" />
             </div>
             <div class="input-group">
-              <label for="password"></label
-              ><input
+              <label for="password"></label>
+              <input
                 id="password"
                 name="password"
                 placeholder="Password"
                 required
                 type="password"
               />
+              <button type="button" class="toggle-password-btn">
+                <i class="fas fa-eye"></i>
+              </button>
             </div>
             <button type="submit"><i class="fas fa-sign-in-alt"></i> Login</button>
           </form>
@@ -56,12 +71,12 @@
           <h2 id="register-section">Register</h2>
           <form id="register-form">
             <div class="input-group">
-              <label for="register-email"></label
-              ><input id="register-email" name="email" placeholder="Email" required type="email" />
+              <label for="register-email"></label>
+              <input id="register-email" name="email" placeholder="Email" required type="email" />
             </div>
             <div class="input-group">
-              <label for="register-password"></label
-              ><input
+              <label for="register-password"></label>
+              <input
                 id="register-password"
                 name="password"
                 placeholder="Password"
@@ -69,7 +84,7 @@
                 type="password"
               />
             </div>
-            <button type="submit"><i class="fas fa-user-plus"></i> Register</button>
+            <button type="submit" disabled><i class="fas fa-user-plus"></i> Register</button>
           </form>
           <p id="register-message"></p>
         </section>

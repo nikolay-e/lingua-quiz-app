@@ -125,6 +125,21 @@ jobs:
 
       - name: Install dependencies
         run: |
+          sudo apt update && sudo apt install -y \
+            libwoff1 \
+            libvpx7 \
+            libevent-2.1-7 \
+            libopus0 \
+            gstreamer1.0-plugins-base \
+            gstreamer1.0-plugins-good \
+            gstreamer1.0-plugins-bad \
+            gstreamer1.0-libav \
+            gstreamer1.0-alsa \
+            libharfbuzz-icu0 \
+            libhyphen0 \
+            libmanette-0.2-0 \
+            libflite1 \
+            libgles2-mesa
           npm ci
           npx playwright install
 
@@ -147,9 +162,22 @@ jobs:
           echo "::endgroup::"
 
       - name: Run E2E Tests
+        id: run_e2e_tests
         env:
           LINGUA_QUIZ_URL: ${{ env.LINGUA_QUIZ_URL }}
         run: npm run test --workspace=@linguaquiz/e2e-tests
+        continue-on-error: true
+
+      - name: Upload Playwright Artifacts
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-report
+          path: packages/e2e-tests/playwright-report
+
+      - name: Fail job if tests failed
+        if: steps.run_e2e_tests.outcome == 'failure'
+        run: exit 1
 
       - name: Log E2E test results
         run: |

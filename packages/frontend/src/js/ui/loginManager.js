@@ -1,30 +1,40 @@
-/* eslint-disable class-methods-use-this */
-import jwtDecode from 'jwt-decode';
+import { AuthUtils } from '../utils/authUtils.js';
 import serverAddress from '../config.js';
 import { populateWordLists } from './eventHandlers.js';
 import { errorHandler } from '../utils/errorHandler.js';
+import { PasswordValidator } from './passwordValidator.js';
 
 export class AuthManager {
   constructor() {
-    this.token = localStorage.getItem('token');
-    this.email = localStorage.getItem('email');
+    this.token = AuthUtils.getToken();
+    this.email = localStorage.getItem(AuthUtils.EMAIL_KEY);
+    this.passwordValidator = new PasswordValidator();
   }
 
   isAuthenticated() {
-    return !!this.token;
+    return AuthUtils.isValidToken(this.token);
   }
 
+  // eslint-disable-next-line
   redirectToLogin() {
-    window.location.href = '/login.html';
+    AuthUtils.redirectToLogin();
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('email');
+    // First clear the auth
+    AuthUtils.clearAuth();
+
+    // Force immediate check and redirect
+    AuthUtils.shouldRedirectToLogin();
+
+    // Update UI
     this.updateLoginStatus();
-    window.location.href = 'login.html';
+
+    // Use replace instead of href to prevent back navigation
+    window.location.replace('login.html');
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async handleLogin(e) {
     e.preventDefault();
     const email = document.getElementById('email').value;
@@ -43,17 +53,11 @@ export class AuthManager {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('email', email);
-        try {
-          const decodedToken = jwtDecode(data.token);
-          localStorage.setItem('tokenExpiration', decodedToken.exp * 1000);
-        } catch (error) {
-          console.error('Error decoding token:', error);
-        }
+        AuthUtils.setToken(data.token);
+        AuthUtils.setEmail(email);
         loginMessage.textContent = 'Login successful. Loading word lists...';
         try {
-          window.location.href = '/';
+          window.location.replace('/');
           await populateWordLists();
         } catch (error) {
           console.error('Error loading word lists:', error);
@@ -70,11 +74,11 @@ export class AuthManager {
 
   updateLoginStatus() {
     const loginLogoutBtn = document.getElementById('login-logout-btn');
-    this.token = localStorage.getItem('token');
-    this.email = localStorage.getItem('email');
+    this.token = AuthUtils.getToken();
+    this.email = localStorage.getItem(AuthUtils.EMAIL_KEY);
 
     if (loginLogoutBtn) {
-      if (this.token && this.email) {
+      if (this.isAuthenticated()) {
         loginLogoutBtn.innerHTML = `
           <i class="fas fa-sign-out-alt"></i> 
           <span>Logout (${this.email})</span>
@@ -100,6 +104,11 @@ export class AuthManager {
     const password = document.getElementById('register-password').value;
     const registerMessage = document.getElementById('register-message');
 
+    if (!this.passwordValidator.validatePassword(password)) {
+      errorHandler.showError('Please meet all password requirements');
+      return;
+    }
+
     try {
       const response = await fetch(`${serverAddress}/register`, {
         method: 'POST',
@@ -113,6 +122,12 @@ export class AuthManager {
 
       if (response.ok) {
         registerMessage.textContent = 'Registration successful. You can now log in.';
+        registerMessage.style.color = 'var(--success-color)';
+        // Clear the form
+        document.getElementById('register-email').value = '';
+        document.getElementById('register-password').value = '';
+        // Reset password validation display
+        this.passwordValidator.validatePassword('');
       } else {
         console.warn(`Registration failed: ${data.message || 'Registration failed'}`);
         errorHandler.showError(data.message || 'Registration failed. Please try again.');
@@ -123,20 +138,71 @@ export class AuthManager {
     }
   }
 
+  initializePasswordValidation(passwordInput, registerForm) {
+    const validationContainer = this.passwordValidator.createValidationContainer();
+    passwordInput.parentNode.insertBefore(validationContainer, passwordInput.nextSibling);
+
+    // Add show/hide password toggle
+    const togglePasswordBtn = document.createElement('button');
+    togglePasswordBtn.type = 'button';
+    togglePasswordBtn.className = 'toggle-password-btn';
+    togglePasswordBtn.innerHTML = '<i class="fas fa-eye"></i>';
+    togglePasswordBtn.addEventListener('click', () => {
+      const type = passwordInput.type === 'password' ? 'text' : 'password';
+      // eslint-disable-next-line no-param-reassign
+      passwordInput.type = type;
+      // eslint-disable-next-line max-len
+      togglePasswordBtn.innerHTML = `<i class="fas fa-eye${type === 'password' ? '' : '-slash'}"></i>`;
+    });
+    passwordInput.parentNode.appendChild(togglePasswordBtn);
+
+    // Add real-time validation
+    passwordInput.addEventListener('input', (e) => {
+      const isValid = this.passwordValidator.validatePassword(e.target.value);
+      const submitButton = registerForm.querySelector('button[type="submit"]');
+      if (submitButton) {
+        submitButton.disabled = !isValid;
+      }
+    });
+
+    // Show validation on focus
+    passwordInput.addEventListener('focus', () => {
+      validationContainer.style.display = 'block';
+    });
+  }
+
   initializeForms() {
+    const registerForm = document.getElementById('register-form');
+    if (registerForm) {
+      const passwordInput = document.getElementById('register-password');
+      if (passwordInput) {
+        this.initializePasswordValidation(passwordInput, registerForm);
+      }
+      registerForm.addEventListener('submit', this.handleRegister.bind(this));
+    }
+
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
       loginForm.addEventListener('submit', this.handleLogin.bind(this));
     }
 
-    const registerForm = document.getElementById('register-form');
-    if (registerForm) {
-      registerForm.addEventListener('submit', this.handleRegister.bind(this));
-    }
+    // Initialize login toggle buttons
+    const loginToggleBtns = document.querySelectorAll('.toggle-password-btn');
+    loginToggleBtns.forEach((btn) => {
+      const input = btn.previousElementSibling;
+      if (input) {
+        btn.addEventListener('click', () => {
+          const type = input.type === 'password' ? 'text' : 'password';
+          input.type = type;
+          // eslint-disable-next-line no-param-reassign
+          btn.innerHTML = `<i class="fas fa-eye${type === 'password' ? '' : '-slash'}"></i>`;
+        });
+      }
+    });
   }
 
   checkAuthAndRedirect() {
-    if (!this.isAuthenticated() && window.location.pathname !== '/login.html') {
+    if (AuthUtils.shouldRedirectToLogin()) {
       this.redirectToLogin();
     }
   }
@@ -148,4 +214,5 @@ export function initAuth() {
   authManager.initializeForms();
   authManager.updateLoginStatus();
   authManager.checkAuthAndRedirect();
+  AuthUtils.initAuthCheck();
 }
