@@ -232,20 +232,17 @@ export class App {
 
   // eslint-disable-next-line class-methods-use-this
   compareAnswers(userAnswer, correctAnswer) {
-    const normalizeAndSort = (answer) => {
+    const normalize = (answer) => {
       if (!answer) return '';
       return answer
         .toLowerCase()
         .normalize('NFD')
         .replace(/\p{M}/gu, '') // Remove diacritical marks
-        .split(',')
-        .map((item) => item.trim().replace(/[^\p{Letter}]/gu, ''))
-        .filter(Boolean)
-        .sort()
-        .join(',');
+        .replace(/[^\p{Letter}]/gu, '') // Keep only letters
+        .trim();
     };
 
-    return normalizeAndSort(userAnswer) === normalizeAndSort(correctAnswer);
+    return normalize(userAnswer) === normalize(correctAnswer);
   }
 
   updateStats(isCorrect, startTime) {

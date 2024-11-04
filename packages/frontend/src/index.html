@@ -21,19 +21,16 @@
         }
       }
     </script>
-    <script>
+    <script type="module">
+      import { AuthUtils } from './js/utils/authUtils.js';
       (function () {
-        const token = localStorage.getItem('token');
-        if (!token && window.location.pathname !== '/login.html') {
-          window.location.href = '/login.html';
-        }
+        AuthUtils.initAuthCheck();
       })();
     </script>
   </head>
   <body>
-    <main class="container">
+    <main class="quiz-container">
       <div class="main-content">
-        <!-- Removed the header section -->
         <section aria-labelledby="quiz-section" class="quiz-section">
           <h2 id="quiz-section">
             <div class="quiz-header">

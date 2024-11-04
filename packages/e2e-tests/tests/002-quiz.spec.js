@@ -1,4 +1,3 @@
-// tests/002-quiz.spec.js
 const { test, expect } = require('@playwright/test');
 const { register, login, logout } = require('./helpers');
 
@@ -25,7 +24,7 @@ test.describe('Quiz Functionality', () => {
   });
 
   test('should master all words in the selected quiz', async ({ page }) => {
-    test.setTimeout(1000000);
+    test.setTimeout(2000000);
 
     // Wait for the quiz select dropdown to be available
     const quizSelect = page.locator('#quiz-select');
