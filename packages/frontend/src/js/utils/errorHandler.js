@@ -17,6 +17,11 @@ class ErrorHandler {
   }
 
   showError(message, duration = 5000) {
+    // Don't show authentication errors on login page
+    if (window.location.pathname.endsWith('/login.html') && message.includes('not authenticated')) {
+      return;
+    }
+
     const errorElement = document.createElement('div');
     errorElement.className = 'error-message';
     errorElement.innerHTML = `
