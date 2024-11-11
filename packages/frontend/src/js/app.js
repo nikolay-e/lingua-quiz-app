@@ -111,10 +111,17 @@ export class App {
   populateFocusWords() {
     const focusSet = this.wordStatusSets[STATUS.FOCUS];
     const upcomingSet = this.wordStatusSets[STATUS.UPCOMING];
+    const spacesAvailable = MAX_FOCUS_WORDS - focusSet.size;
 
-    while (focusSet.size < MAX_FOCUS_WORDS && upcomingSet.size > 0) {
-      const idToMove = upcomingSet.values().next().value;
-      this.moveWordToStatus(idToMove, STATUS.FOCUS);
+    if (spacesAvailable > 0 && upcomingSet.size > 0) {
+      const upcomingArray = Array.from(upcomingSet);
+      const wordsToMove = Math.min(spacesAvailable, upcomingSet.size);
+      for (let i = 0; i < wordsToMove; i += 1) {
+        const randomIndex = Math.floor(Math.random() * upcomingArray.length);
+        const selectedWordId = upcomingArray[randomIndex];
+        this.moveWordToStatus(selectedWordId, STATUS.FOCUS);
+        upcomingArray.splice(randomIndex, 1);
+      }
     }
   }
 
