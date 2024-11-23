@@ -1,4 +1,6 @@
 *.py
 *.csv
 *.txt
+*.ico
+*.png
 .treemapperignore
