@@ -29,8 +29,8 @@ translation_id,source_word_id,target_word_id,source_word,target_word,source_word
 1000027,1000055,1000056,Él está contento,Он доволен,Él está contento porque consiguió un ascenso en su trabajo.,"Он доволен, потому что получил повышение на работе."
 1000028,1000057,1000058,Él está nervioso,Он нервничает,Él está nervioso porque tiene una entrevista de trabajo mañana.,"Он нервничает, потому что завтра у него собеседование на работу."
 1000029,1000059,1000060,Ella está en el parque,Она в парке,Ella está en el parque haciendo yoga con sus amigos.,Она в парке и занимается йогой с друзьями.
-1000030,1000061,1000062,Ella está triste,Она грустная,Ella está triste porque su mejor amiga se muda a otra ciudad.,"Она грустная, потому что ее лучшая подруга переезжает в другой город."
-1000031,1000063,1000064,Ella está enojada,Она злится,Ella está enojada porque perdió su teléfono en el autobús.,"Она злится, потому что потеряла свой телефон в автобусе."
+1000030,1000061,1000062,Ella está triste,Она грустна,Ella está triste porque su mejor amiga se muda a otra ciudad.,"Она грустная, потому что ее лучшая подруга переезжает в другой город."
+1000031,1000063,1000064,Ella está enojada,Она сердита,Ella está enojada porque perdió su teléfono en el autobús.,"Она злится, потому что потеряла свой телефон в автобусе."
 1000032,1000065,1000066,Nosotros estamos en la playa,Мы на пляже,Nosotros estamos en la playa disfrutando del sol y del mar.,Мы на пляже и наслаждаемся солнцем и морем.
 1000033,1000067,1000068,Nosotros estamos listos,Мы готовы,Nosotros estamos listos para empezar nuestro viaje por Europa.,Мы готовы начать наше путешествие по Европе.
 1000034,1000069,1000070,Nosotros estamos aburridos,Нам скучно,Nosotros estamos aburridos porque no hay nada interesante en la televisión.,"Нам скучно, потому что по телевизору нет ничего интересного."
@@ -44,7 +44,7 @@ translation_id,source_word_id,target_word_id,source_word,target_word,source_word
 1000042,1000085,1000086,Yo voy a estudiar,Я собираюсь учиться,Yo voy a estudiar toda la noche para el examen de mañana.,Я собираюсь учиться всю ночь перед завтрашним экзаменом.
 1000043,1000087,1000088,Yo voy con mis amigos,Я иду с друзьями,Yo voy con mis amigos a un concierto de rock esta noche.,Я иду с друзьями на рок-концерт сегодня вечером.
 1000044,1000089,1000090,Tú vas a la tienda,Ты идешь в магазин,Tú vas a la tienda a comprar leche y pan para el desayuno.,Ты идешь в магазин за молоком и хлебом для завтрака.
-1000045,1000091,1000092,Tú vas a trabajar,Ты идешь на работу,Tú vas a trabajar en bicicleta todos los días.,Ты ездишь на работу на велосипеде каждый день.
+1000045,1000091,1000092,Tú vas a trabajar caminando,Ты идешь на работу пешком,Tú vas a trabajar en bicicleta todos los días.,Ты ездишь на работу на велосипеде каждый день.
 1000046,1000093,1000094,Tú vas en autobús,Ты едешь на автобусе,Tú vas en autobús al centro de la ciudad para evitar el tráfico.,"Ты едешь на автобусе в центр города, чтобы избежать пробок."
 1000047,1000095,1000096,Él va al gimnasio,Он идет в спортзал,Él va al gimnasio tres veces por semana para mantenerse en forma.,"Он ходит в спортзал три раза в неделю, чтобы поддерживать форму."
 1000048,1000097,1000098,Él va a dormir,Он идет спать,Él va a dormir temprano porque tiene una reunión importante mañana.,"Он ложится спать рано, потому что у него завтра важная встреча."
@@ -56,7 +56,7 @@ translation_id,source_word_id,target_word_id,source_word,target_word,source_word
 1000054,1000109,1000110,Nosotros vamos a cenar,Мы идем ужинать,Nosotros vamos a cenar a un restaurante italiano para celebrar mi cumpleaños.,"Мы идем ужинать в итальянский ресторан, чтобы отпраздновать мой день рождения."
 1000055,1000111,1000112,Nosotros vamos en tren,Мы едем на поезде,Nosotros vamos en tren a París para nuestras vacaciones de verano.,Мы едем на поезде в Париж на летние каникулы.
 1000056,1000113,1000114,Vosotros vais a la fiesta,Вы идете на вечеринку,Vosotros vais a la fiesta de graduación de la universidad.,Вы идете на выпускной вечер в университете.
-1000057,1000115,1000116,Vosotros vais a cantar,Вы будете петь,Vosotros vais a cantar en el coro de la iglesia este domingo.,Вы будете петь в церковном хоре в это воскресенье.
+1000057,1000115,1000116,Vosotros vais a cantar,Вы собираетесь петь,Vosotros vais a cantar en el coro de la iglesia este domingo.,Вы будете петь в церковном хоре в это воскресенье.
 1000058,1000117,1000118,Vosotros vais en avión,Вы летите на самолете,Vosotros vais en avión a París.,Вы летите на самолете в Париж.
 1000059,1000119,1000120,Ellos van al museo,Они идут в музей,Ellos van al museo para ver la exposición de arte.,"Они идут в музей, чтобы посмотреть выставку искусства."
 1000060,1000121,1000122,Ellos van a jugar,Они собираются играть,Ellos van a jugar al fútbol en el parque.,Они собираются играть в футбол в парке.
@@ -96,7 +96,7 @@ translation_id,source_word_id,target_word_id,source_word,target_word,source_word
 1000094,1000189,1000190,Ella tiene una idea,У нее есть идея,Ella tiene una idea para un nuevo proyecto de arte.,У нее есть идея для нового художественного проекта.
 1000095,1000191,1000192,Nosotros tenemos una familia,У нас есть семья,Nosotros tenemos una familia grande y muy unida.,У нас большая и очень дружная семья.
 1000096,1000193,1000194,Nosotros tenemos planes,У нас есть планы,Nosotros tenemos planes para el fin de semana en la playa.,У нас есть планы на выходные на пляже.
-1000097,1000195,1000196,Nosotros tenemos suerte,Нам повезло,Nosotros tenemos suerte de estar aquí juntos.,Нам повезло быть здесь вместе.
+1000097,1000195,1000196,Nosotros tenemos suerte,У нас есть удача,Nosotros tenemos suerte de estar aquí juntos.,Нам повезло быть здесь вместе.
 1000098,1000197,1000198,Vosotros tenéis amigos,У вас есть друзья,"Vosotros tenéis amigos en todas partes, incluso en el extranjero.","У вас есть друзья повсюду, даже за границей."
 1000099,1000199,1000200,Vosotros tenéis razón,Вы правы,Vosotros tenéis razón sobre el problema y debemos solucionarlo.,"Вы правы по поводу проблемы, и нам нужно её решить."
 1000100,1000201,1000202,Vosotros tenéis talento,У вас есть талант,Vosotros tenéis talento para la música y para tocar varios instrumentos.,У вас есть талант к музыке и игре на нескольких инструментах.
@@ -104,14 +104,14 @@ translation_id,source_word_id,target_word_id,source_word,target_word,source_word
 1000102,1000205,1000206,Ellos tienen sueños,У них есть мечты,Ellos tienen sueños de viajar por el mundo y conocer nuevas culturas.,У них есть мечты путешествовать по миру и знакомиться с новыми культурами.
 1000103,1000207,1000208,Ellos tienen problemas,У них есть проблемы,Ellos tienen problemas en el trabajo con su jefe.,У них проблемы на работе с начальником.
 1000104,1000209,1000210,Yo hago mi tarea,Я делаю домашнее задание,Yo hago mi tarea todos los días después de la escuela.,Я делаю домашнее задание каждый день после школы.
-1000105,1000211,1000212,Yo hago ejercicio,Я занимаюсь спортом,Yo hago ejercicio por la mañana antes de desayunar.,Я занимаюсь спортом по утрам перед завтраком.
+1000105,1000211,1000212,Yo hago ejercicio,Я делаю упражнения,Yo hago ejercicio por la mañana antes de desayunar.,Я занимаюсь спортом по утрам перед завтраком.
 1000106,1000213,1000214,Yo hago la cena,Я готовлю ужин,Yo hago la cena para toda la familia todos los días.,Я готовлю ужин для всей семьи каждый день.
 1000107,1000215,1000216,Tú haces un pastel,Ты делаешь торт,Tú haces un pastel delicioso con fresas y crema.,Ты делаешь вкусный торт с клубникой и кремом.
 1000108,1000217,1000218,Tú haces preguntas,Ты задаешь вопросы,Tú haces muchas preguntas en clase sobre los temas difíciles.,Ты задаешь много вопросов на уроке по сложным темам.
 1000109,1000219,1000220,Tú haces deporte,Ты занимаешься спортом,Tú haces deporte todos los días para mantenerte en forma.,"Ты занимаешься спортом каждый день, чтобы поддерживать форму."
 1000110,1000221,1000222,Él hace su cama,Он заправляет свою постель,Él hace su cama todas las mañanas antes de salir.,Он заправляет свою постель каждое утро перед выходом.
 1000111,1000223,1000224,Ellos hacen un esfuerzo,Они делают усилие,Ellos hacen un esfuerzo para mejorar en su trabajo.,"Они делают усилие, чтобы стать лучше в своей работе."
-1000112,1000225,1000226,Ellos hacen una película,Они снимают фильм,Ellos hacen una película sobre la historia del cine.,Они снимают фильм о истории кино.
+1000112,1000225,1000226,Ellos filman una película,Они снимают фильм,Ellos hacen una película sobre la historia del cine.,Они снимают фильм о истории кино.
 1000113,1000227,1000228,Ellos hacen negocios,Они ведут бизнес,Ellos hacen negocios en todo el mundo y tienen muchas conexiones.,Они ведут бизнес по всему миру и имеют много связей.
 1000114,1000229,1000230,Yo puedo nadar,Я могу плавать,Yo puedo nadar muy bien en el mar y en la piscina.,Я умею хорошо плавать в море и в бассейне.
 1000115,1000231,1000232,Yo puedo ayudarte,Я могу помочь тебе,Yo puedo ayudarte con el proyecto que tienes que entregar mañana.,"Я могу помочь тебе с проектом, который тебе нужно сдать завтра."
@@ -127,7 +127,7 @@ translation_id,source_word_id,target_word_id,source_word,target_word,source_word
 1000125,1000251,1000252,Ella puede conducir,Она может водить машину,Ella puede conducir por la ciudad y también en carretera.,Она может водить машину по городу и также на трассе.
 1000126,1000253,1000254,Nosotros podemos jugar,Мы можем играть,Nosotros podemos jugar al fútbol en el parque los domingos.,Мы можем играть в футбол в парке по воскресеньям.
 1000127,1000255,1000256,Nosotros podemos estudiar,Мы можем учиться,Nosotros podemos estudiar juntos para los exámenes.,Мы можем учиться вместе для экзаменов.
-1000128,1000257,1000258,Nosotros podemos cambiar,Мы можем измениться,Nosotros podemos cambiar el mundo si trabajamos unidos.,"Мы можем изменить мир, если будем работать вместе."
+1000128,1000257,1000258,Nosotros podemos cambiar,Мы можем изменить,Nosotros podemos cambiar el mundo si trabajamos unidos.,"Мы можем изменить мир, если будем работать вместе."
 1000129,1000259,1000260,Vosotros podéis venir,Вы можете прийти,Vosotros podéis venir a la fiesta el sábado por la noche.,Вы можете прийти на вечеринку в субботу вечером.
 1000130,1000261,1000262,Vosotros podéis elegir,Вы можете выбрать,Vosotros podéis elegir entre varias opciones interesantes.,Вы можете выбрать из нескольких интересных вариантов.
 1000131,1000263,1000264,Vosotros podéis ganar,Вы можете победить,Vosotros podéis ganar el campeonato.,Вы можете выиграть чемпионат.
@@ -142,10 +142,10 @@ translation_id,source_word_id,target_word_id,source_word,target_word,source_word
 1000140,1000281,1000282,Tú dices perdón,Ты говоришь извини,Tú dices perdón cuando cometes un error.,"Ты говоришь извини, когда совершаешь ошибку."
 1000141,1000283,1000284,Él dice su nombre,Он говорит свое имя,Él dice su nombre en voz alta.,Он говорит свое имя вслух.
 1000142,1000285,1000286,Él dice la hora,Он говорит время,Él dice la hora cada vez que alguien pregunta.,"Он говорит время, когда кто-то спрашивает."
-1000143,1000287,1000288,Él dice un secreto,Он говорит секрет,Él dice un secreto a su amigo.,Он рассказывает секрет своему другу.
+1000143,1000287,1000288,Él cuenta un secreto,Он рассказывает секрет,Él dice un secreto a su amigo.,Он рассказывает секрет своему другу.
 1000144,1000289,1000290,Ella dice la verdad,Она говорит правду,Ella dice la verdad sobre todo.,Она говорит правду обо всем.
-1000145,1000291,1000292,Ella dice una historia,Она рассказывает историю,Ella dice una historia interesante.,Она рассказывает интересную историю.
-1000146,1000293,1000294,Ella dice un chiste,Она рассказывает шутку,Ella dice un chiste y todos se ríen.,"Она рассказывает шутку, и все смеются."
+1000145,1000291,1000292,Ella cuenta una historia,Она рассказывает историю,Ella dice una historia interesante.,Она рассказывает интересную историю.
+1000146,1000293,1000294,Ella cuenta un chiste,Она рассказывает шутку,Ella dice un chiste y todos se ríen.,"Она рассказывает шутку, и все смеются."
 1000147,1000295,1000296,Nosotros decimos sí,Мы говорим да,Nosotros decimos sí a la propuesta.,Мы говорим да на предложение.
 1000148,1000297,1000298,Nosotros decimos no,Мы говорим нет,Nosotros decimos no a la oferta.,Мы говорим нет на предложение.
 1000149,1000299,1000300,Nosotros decimos por favor,Мы говорим пожалуйста,Nosotros decimos por favor cuando pedimos algo.,"Мы говорим пожалуйста, когда о чем-то просим."
@@ -170,7 +170,7 @@ translation_id,source_word_id,target_word_id,source_word,target_word,source_word
 1000168,1000337,1000338,Nosotros sabemos la respuesta,Мы знаем ответ,Nosotros sabemos la respuesta a la pregunta.,Мы знаем ответ на вопрос.
 1000169,1000339,1000340,Nosotros sabemos jugar al fútbol,Мы умеем играть в футбол,Nosotros sabemos jugar al fútbol en equipo.,Мы умеем играть в командный футбол.
 1000170,1000341,1000342,Nosotros sabemos la verdad,Мы знаем правду,Nosotros sabemos la verdad sobre el accidente.,Мы знаем правду о происшествии.
-1000171,1000343,1000344,Vosotros sabéis la lección,Вы знаете урок,Vosotros sabéis la lección de memoria.,Вы знаете урок наизусть.
+1000171,1000343,1000344,Vosotros sabéis la lección,Вы выучили урок,Vosotros sabéis la lección de memoria.,Вы знаете урок наизусть.
 1000172,1000345,1000346,Vosotros sabéis bailar,Вы умеете танцевать,Vosotros sabéis bailar muy bien.,Вы умеете хорошо танцевать.
 1000173,1000347,1000348,Vosotros sabéis la noticia,Вы знаете новость,Vosotros sabéis la noticia antes que nadie.,Вы знаете новость раньше всех.
 1000174,1000349,1000350,Ellos saben la verdad,Они знают правду,Ellos saben la verdad sobre el robo.,Они знают правду о краже.
@@ -212,10 +212,10 @@ translation_id,source_word_id,target_word_id,source_word,target_word,source_word
 1000210,1000421,1000422,Nosotros vemos el mar,Мы видим море,Nosotros vemos el mar desde la playa.,Мы видим море с пляжа.
 1000211,1000423,1000424,Nosotros vemos un partido,Мы смотрим матч,Nosotros vemos un partido de fútbol en la televisión.,Мы смотрим футбольный матч по телевизору.
 1000212,1000425,1000426,Nosotros vemos la verdad,Мы видим правду,Nosotros vemos la verdad en sus palabras.,Мы видим правду в его словах.
-1000213,1000427,1000428,Vosotros veis una obra,Вы видите пьесу,Vosotros veis una obra de teatro en el centro cultural.,Вы смотрите пьесу в культурном центре.
+1000213,1000427,1000428,Vosotros veis una obra,Вы смотрите пьесу,Vosotros veis una obra de teatro en el centro cultural.,Вы смотрите пьесу в культурном центре.
 1000214,1000429,1000430,Vosotros veis las montañas,Вы видите горы,Vosotros veis las montañas desde la ventana.,Вы видите горы из окна.
 1000215,1000431,1000432,Vosotros veis el error,Вы видите ошибку,Vosotros veis el error en la cuenta.,Вы видите ошибку в счете.
-1000216,1000433,1000434,Ellos ven un concierto,Они видят концерт,Ellos ven un concierto de rock en vivo.,Они видят живой рок-концерт.
+1000216,1000433,1000434,Ellos ven un concierto,Они смотрят концерт,Ellos ven un concierto de rock en vivo.,Они видят живой рок-концерт.
 1000217,1000435,1000436,Ellos ven el cielo,Они видят небо,Ellos ven el cielo estrellado por la noche.,Они видят звездное небо ночью.
 1000218,1000437,1000438,Ellos ven la oportunidad,Они видят возможность,Ellos ven la oportunidad de mejorar sus vidas.,Они видят возможность улучшить свою жизнь.
 1000219,1000439,1000440,Yo doy un regalo,Я дарю подарок,Yo doy un regalo de cumpleaños a mi amiga.,Я дарю подруге подарок на день рождения.
@@ -223,7 +223,7 @@ translation_id,source_word_id,target_word_id,source_word,target_word,source_word
 1000221,1000443,1000444,Yo doy una clase,Я провожу урок,Yo doy una clase de español en la escuela.,Я провожу урок испанского языка в школе.
 1000222,1000445,1000446,Tú das una fiesta,Ты устраиваешь вечеринку,Tú das una fiesta para celebrar tu cumpleaños.,Ты устраиваешь вечеринку в честь дня рождения.
 1000223,1000447,1000448,Tú das un consejo,Ты даешь совет,Tú das un buen consejo a tus amigos.,Ты даешь хороший совет своим друзьям.
-1000224,1000449,1000450,Tú das un paseo,Ты идешь на прогулку,Tú das un paseo por el parque todos los días.,Ты гуляешь по парку каждый день.
+1000224,1000449,1000450,Tú das un paseo,Ты совершаешь прогулку,Tú das un paseo por el parque todos los días.,Ты гуляешь по парку каждый день.
 1000225,1000451,1000452,Él da un beso,Он целует,Él da un beso a su novia.,Он целует свою девушку.
 1000226,1000453,1000454,Él da una orden,Он отдает приказ,Él da una orden a los soldados.,Он отдает приказ солдатам.
 1000227,1000455,1000456,Él da un discurso,Он произносит речь,Él da un discurso en la conferencia.,Он выступает с речью на конференции.
@@ -261,7 +261,7 @@ translation_id,source_word_id,target_word_id,source_word,target_word,source_word
 1000259,1000519,1000520,Ellos ponen carteles,Они расклеивают плакаты,Ellos ponen carteles por toda la ciudad.,Они расклеивают плакаты по всему городу.
 1000260,1000521,1000522,Ellos ponen un negocio,Они открывают бизнес,Ellos ponen un negocio en el centro de la ciudad.,Они открывают бизнес в центре города.
 1000261,1000523,1000524,Yo salgo de casa,Я выхожу из дома,Yo salgo de casa temprano por la mañana.,Я выхожу из дома рано утром.
-1000262,1000525,1000526,Yo salgo con amigos,Я встречаюсь с друзьями,Yo salgo con amigos cada fin de semana.,Я встречаюсь с друзьями каждый выходной.
+1000262,1000525,1000526,Yo salgo con amigos,Я гуляю с друзьями,Yo salgo con amigos cada fin de semana.,Я встречаюсь с друзьями каждый выходной.
 1000263,1000527,1000528,Yo salgo en la foto,Я выхожу на фото,Yo salgo en la foto de la boda.,Я выхожу на свадебном фото.
 1000264,1000529,1000530,Tú sales del trabajo,Ты уходишь с работы,Tú sales del trabajo a las seis de la tarde.,Ты уходишь с работы в шесть вечера.
 1000265,1000531,1000532,Tú sales de compras,Ты идешь за покупками,Tú sales de compras cada sábado.,Ты ходишь за покупками каждую субботу.
@@ -276,7 +276,7 @@ translation_id,source_word_id,target_word_id,source_word,target_word,source_word
 1000274,1000549,1000550,Nosotros salimos de vacaciones,Мы уезжаем в отпуск,Nosotros salimos de vacaciones en agosto.,Мы уезжаем в отпуск в августе.
 1000275,1000551,1000552,Nosotros salimos en el periódico,Мы попали в газету,Nosotros salimos en el periódico local.,Мы попали в местную газету.
 1000276,1000553,1000554,Vosotros salís del cine,Вы выходите из кинотеатра,Vosotros salís del cine después de la película.,Вы выходите из кинотеатра после фильма.
-1000277,1000555,1000556,Vosotros salís a cenar,Вы выходите на ужин,Vosotros salís a cenar a un restaurante italiano.,Вы идете на ужин в итальянский ресторан.
+1000277,1000555,1000556,Vosotros salís a cenar,Вы выходите поужинать,Vosotros salís a cenar a un restaurante italiano.,Вы идете на ужин в итальянский ресторан.
 1000278,1000557,1000558,Vosotros salís ganando,Вы выигрываете,Vosotros salís ganando en este acuerdo.,Вы выигрываете в этой сделке.
 1000279,1000559,1000560,Ellos salen del país,Они уезжают из страны,Ellos salen del país por motivos de trabajo.,Они уезжают из страны по работе.
 1000280,1000561,1000562,Ellos salen a bailar,Они выходят танцевать,Ellos salen a bailar todos los viernes.,Они выходят танцевать каждую пятницу.
