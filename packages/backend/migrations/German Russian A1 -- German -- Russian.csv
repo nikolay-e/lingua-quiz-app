@@ -1,5 +1,5 @@
 translation_id,source_word_id,target_word_id,source_word,target_word,source_word_example,target_word_example
-3000000,3000001,3000002,"ab","от","abfahren","ОТправляться"
+3000000,3000001,3000002,"ab","от","abfahren","Отправляться"
 3000001,3000003,3000004,"der Abend, -e","вечер","Am Abend gehe ich oft spazieren.","Вечером я часто гуляю."
 3000002,3000005,3000006,"abends","вечером","Abends trinke ich gern einen Tee.","Вечером я с удовольствием пью чай."
 3000003,3000007,3000008,"aber","но","Ich möchte kommen, aber ich bin beschäftigt.","Я хочу прийти, но я занят."
