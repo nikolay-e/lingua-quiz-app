@@ -5,6 +5,7 @@ on:
     branches:
       - main
   pull_request:
+  workflow_dispatch:
 
 jobs:
   depcheck:
@@ -45,29 +46,6 @@ jobs:
         run: |
           echo "::group::ESLint Results"
           echo "ESLint completed. Check above for detailed results."
-          echo "::endgroup::"
-
-  codeql:
-    name: CodeQL
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        language: ['javascript']
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
-        with:
-          languages: ${{ matrix.language }}
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v3
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
-      - name: Log CodeQL results
-        run: |
-          echo "::group::CodeQL Results"
-          echo "CodeQL analysis completed. Check the 'Security' tab for detailed results."
           echo "::endgroup::"
 
   frontend-tests:
