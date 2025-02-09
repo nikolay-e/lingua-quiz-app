@@ -14,7 +14,7 @@ BEGIN
   WITH user_words AS (
     SELECT 
       t.id AS word_pair_id,
-      COALESCE(utp.status::VARCHAR, 'Upcoming Words') AS status,
+      COALESCE(utp.status::VARCHAR, 'LEVEL_0') AS status,
       sw.text AS source_word,
       tw.text AS target_word,
       sl.name AS source_language,
@@ -43,11 +43,13 @@ BEGIN
   SELECT * FROM user_words
   ORDER BY 
     CASE 
-      WHEN user_words.status = 'Focus Words' THEN 1
-      WHEN user_words.status = 'Upcoming Words' THEN 2
-      WHEN user_words.status = 'Mastered One Direction' THEN 3
-      WHEN user_words.status = 'Mastered Vocabulary' THEN 4
-      ELSE 5
+      WHEN user_words.status = 'LEVEL_1' THEN 1   -- Learning
+      WHEN user_words.status = 'LEVEL_0' THEN 2   -- New
+      WHEN user_words.status = 'LEVEL_2' THEN 3   -- Translation (One Way)
+      WHEN user_words.status = 'LEVEL_3' THEN 4   -- Translation (Both Ways)
+      WHEN user_words.status = 'LEVEL_4' THEN 5   -- Usage (One Way)
+      WHEN user_words.status = 'LEVEL_5' THEN 6   -- Usage (Both Ways)
+      ELSE 7
     END,
     word_pair_id;
 END;

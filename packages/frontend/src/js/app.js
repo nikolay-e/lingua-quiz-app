@@ -2,10 +2,10 @@ import { errorHandler } from './utils/errorHandler.js';
 
 // Constants for word statuses
 export const STATUS = {
-  FOCUS: 'Focus Words',
-  MASTERED_ONE_DIRECTION: 'Mastered One Direction',
-  MASTERED_VOCABULARY: 'Mastered Vocabulary',
-  UPCOMING: 'Upcoming Words',
+  FOCUS: 'LEVEL_1',
+  MASTERED_ONE_DIRECTION: 'LEVEL_2',
+  MASTERED_VOCABULARY: 'LEVEL_3',
+  UPCOMING: 'LEVEL_0',
 };
 
 // Constants for quiz directions
@@ -94,7 +94,7 @@ export class App {
     } else {
       console.warn(
         // eslint-disable-next-line max-len
-        `Unknown status '${newStatus}' for wordPairId '${wordPairId}'. Defaulting to 'Upcoming Words'.`
+        `Unknown status '${newStatus}' for wordPairId '${wordPairId}'. Defaulting to 'LEVEL_0'.`
       );
       this.wordStatusSets[STATUS.UPCOMING].add(wordPairId);
       // eslint-disable-next-line no-param-reassign
