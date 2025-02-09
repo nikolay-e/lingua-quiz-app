@@ -10,10 +10,10 @@ describe('User Word Sets Endpoint', () => {
   let jwtToken;
   const insertedWordPairs = [];
   const wordSetsByStatus = {
-    'Upcoming Words': [],
-    'Focus Words': [],
-    'Mastered One Direction': [],
-    'Mastered Vocabulary': [],
+    LEVEL_0: [],
+    LEVEL_1: [],
+    LEVEL_2: [],
+    LEVEL_3: [],
   };
 
   beforeAll(async () => {
@@ -74,22 +74,22 @@ describe('User Word Sets Endpoint', () => {
       const originalPair = insertedWordPairs.find((pair) => pair.translationId === set.wordPairId);
       expect(set.sourceWordUsageExample).to.equal(originalPair.sourceWordUsageExample);
       expect(set.targetWordUsageExample).to.equal(originalPair.targetWordUsageExample);
-      expect(set.status).to.equal('Upcoming Words');
+      expect(set.status).to.equal('LEVEL_0');
     });
 
-    wordSetsByStatus['Upcoming Words'] = ourInsertedPairs.map((set) => set.wordPairId);
+    wordSetsByStatus['LEVEL_0'] = ourInsertedPairs.map((set) => set.wordPairId);
   });
 
   it('should update word sets with any status transition', async function () {
     const wordUpdates = [
-      { status: 'Focus Words', count: 10 },
-      { status: 'Mastered One Direction', count: 5 },
-      { status: 'Mastered Vocabulary', count: 3 },
-      { status: 'Upcoming Words', count: 2 },
+      { status: 'LEVEL_1', count: 10 },
+      { status: 'LEVEL_2', count: 5 },
+      { status: 'LEVEL_3', count: 3 },
+      { status: 'LEVEL_0', count: 2 },
     ];
 
     for (const { status, count } of wordUpdates) {
-      const wordPairIds = wordSetsByStatus['Upcoming Words'].slice(0, count);
+      const wordPairIds = wordSetsByStatus['LEVEL_0'].slice(0, count);
       const updateResponse = await axiosInstance.post(
         `${API_URL}/user/word-sets`,
         { status, wordPairIds },
@@ -98,7 +98,7 @@ describe('User Word Sets Endpoint', () => {
       expect(updateResponse.status).to.equal(200);
 
       wordSetsByStatus[status] = [...wordSetsByStatus[status], ...wordPairIds];
-      wordSetsByStatus['Upcoming Words'] = wordSetsByStatus['Upcoming Words'].filter(
+      wordSetsByStatus['LEVEL_0'] = wordSetsByStatus['LEVEL_0'].filter(
         (id) => !wordPairIds.includes(id)
       );
 
@@ -121,10 +121,10 @@ describe('User Word Sets Endpoint', () => {
       return acc;
     }, {});
 
-    expect(statusCounts['Focus Words']).to.equal(10);
-    expect(statusCounts['Mastered One Direction']).to.equal(5);
-    expect(statusCounts['Mastered Vocabulary']).to.equal(3);
-    expect(statusCounts['Upcoming Words']).to.equal(12);
+    expect(statusCounts['LEVEL_1']).to.equal(10);
+    expect(statusCounts['LEVEL_2']).to.equal(5);
+    expect(statusCounts['LEVEL_3']).to.equal(3);
+    expect(statusCounts['LEVEL_0']).to.equal(12);
 
     for (const [status, ids] of Object.entries(wordSetsByStatus)) {
       ids.forEach((id) => {
@@ -137,10 +137,10 @@ describe('User Word Sets Endpoint', () => {
 
   it('should allow any state transition', async function () {
     const transitions = [
-      { from: 'Upcoming Words', to: 'Mastered Vocabulary' },
-      { from: 'Focus Words', to: 'Upcoming Words' },
-      { from: 'Mastered One Direction', to: 'Focus Words' },
-      { from: 'Mastered Vocabulary', to: 'Mastered One Direction' },
+      { from: 'LEVEL_0', to: 'LEVEL_3' },
+      { from: 'LEVEL_1', to: 'LEVEL_0' },
+      { from: 'LEVEL_2', to: 'LEVEL_1' },
+      { from: 'LEVEL_3', to: 'LEVEL_2' },
     ];
 
     for (const { from, to } of transitions) {
@@ -172,12 +172,7 @@ describe('User Word Sets Endpoint', () => {
   });
 
   it('should handle an empty wordPairIds array for all statuses gracefully', async function () {
-    const statuses = [
-      'Focus Words',
-      'Mastered One Direction',
-      'Mastered Vocabulary',
-      'Upcoming Words',
-    ];
+    const statuses = ['LEVEL_1', 'LEVEL_2', 'LEVEL_3', 'LEVEL_0'];
 
     for (const status of statuses) {
       const updateResponse = await axiosInstance.post(

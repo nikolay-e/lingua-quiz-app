@@ -16,7 +16,7 @@ describe('App Class', () => {
       targetWord: 'hola',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Upcoming Words',
+      status: 'LEVEL_0',
       sourceWordUsageExample: 'Hello, how are you?',
       targetWordUsageExample: '¿Hola, cómo estás?',
     },
@@ -26,7 +26,7 @@ describe('App Class', () => {
       targetWord: 'adiós',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Focus Words',
+      status: 'LEVEL_1',
       sourceWordUsageExample: 'Goodbye, see you later!',
       targetWordUsageExample: '¡Adiós, hasta luego!',
     },
@@ -36,7 +36,7 @@ describe('App Class', () => {
       targetWord: 'por favor',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Mastered One Direction',
+      status: 'LEVEL_2',
       sourceWordUsageExample: 'Please, help me.',
       targetWordUsageExample: 'Por favor, ayúdame.',
     },
@@ -46,7 +46,7 @@ describe('App Class', () => {
       targetWord: 'gracias',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Mastered Vocabulary',
+      status: 'LEVEL_3',
       sourceWordUsageExample: 'Thank you for your help.',
       targetWordUsageExample: 'Gracias por tu ayuda.',
     },
@@ -56,7 +56,7 @@ describe('App Class', () => {
       targetWord: 'sí',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Upcoming Words',
+      status: 'LEVEL_0',
       sourceWordUsageExample: 'Yes, I agree.',
       targetWordUsageExample: 'Sí, estoy de acuerdo.',
     },
@@ -66,7 +66,7 @@ describe('App Class', () => {
       targetWord: 'no',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Focus Words',
+      status: 'LEVEL_1',
       sourceWordUsageExample: "No, I don't want to.",
       targetWordUsageExample: 'No, no quiero.',
     },
@@ -76,7 +76,7 @@ describe('App Class', () => {
       targetWord: 'agua',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Upcoming Words',
+      status: 'LEVEL_0',
       sourceWordUsageExample: 'I need some water.',
       targetWordUsageExample: 'Necesito un poco de agua.',
     },
@@ -86,7 +86,7 @@ describe('App Class', () => {
       targetWord: 'comida',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Focus Words',
+      status: 'LEVEL_1',
       sourceWordUsageExample: 'The food is delicious.',
       targetWordUsageExample: 'La comida está deliciosa.',
     },
@@ -96,7 +96,7 @@ describe('App Class', () => {
       targetWord: 'casa',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Mastered One Direction',
+      status: 'LEVEL_2',
       sourceWordUsageExample: 'My house is big.',
       targetWordUsageExample: 'Mi casa es grande.',
     },
@@ -106,7 +106,7 @@ describe('App Class', () => {
       targetWord: 'coche',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Mastered Vocabulary',
+      status: 'LEVEL_3',
       sourceWordUsageExample: 'I drive a red car.',
       targetWordUsageExample: 'Conduzco un coche rojo.',
     },
@@ -116,7 +116,7 @@ describe('App Class', () => {
       targetWord: 'libro',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Upcoming Words',
+      status: 'LEVEL_0',
       sourceWordUsageExample: 'I love this book.',
       targetWordUsageExample: 'Me encanta este libro.',
     },
@@ -126,7 +126,7 @@ describe('App Class', () => {
       targetWord: 'amigo',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Focus Words',
+      status: 'LEVEL_1',
       sourceWordUsageExample: 'She is my friend.',
       targetWordUsageExample: 'Ella es mi amiga.',
     },
@@ -136,7 +136,7 @@ describe('App Class', () => {
       targetWord: 'familia',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Mastered One Direction',
+      status: 'LEVEL_2',
       sourceWordUsageExample: 'My family is large.',
       targetWordUsageExample: 'Mi familia es grande.',
     },
@@ -146,7 +146,7 @@ describe('App Class', () => {
       targetWord: 'amor',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Mastered Vocabulary',
+      status: 'LEVEL_3',
       sourceWordUsageExample: 'Love is important.',
       targetWordUsageExample: 'El amor es importante.',
     },
@@ -156,7 +156,7 @@ describe('App Class', () => {
       targetWord: 'tiempo',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Upcoming Words',
+      status: 'LEVEL_0',
       sourceWordUsageExample: 'What time is it?',
       targetWordUsageExample: '¿Qué hora es?',
     },
@@ -166,7 +166,7 @@ describe('App Class', () => {
       targetWord: 'día',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Focus Words',
+      status: 'LEVEL_1',
       sourceWordUsageExample: 'Have a nice day!',
       targetWordUsageExample: '¡Que tengas un buen día!',
     },
@@ -176,7 +176,7 @@ describe('App Class', () => {
       targetWord: 'noche',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Upcoming Words',
+      status: 'LEVEL_0',
       sourceWordUsageExample: 'Good night, sleep well.',
       targetWordUsageExample: 'Buenas noches, que duermas bien.',
     },
@@ -186,7 +186,7 @@ describe('App Class', () => {
       targetWord: 'comer',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Mastered One Direction',
+      status: 'LEVEL_2',
       sourceWordUsageExample: 'I like to eat pizza.',
       targetWordUsageExample: 'Me gusta comer pizza.',
     },
@@ -196,7 +196,7 @@ describe('App Class', () => {
       targetWord: 'beber',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Focus Words',
+      status: 'LEVEL_1',
       sourceWordUsageExample: 'What would you like to drink?',
       targetWordUsageExample: '¿Qué te gustaría beber?',
     },
@@ -206,7 +206,7 @@ describe('App Class', () => {
       targetWord: 'trabajo',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Mastered Vocabulary',
+      status: 'LEVEL_3',
       sourceWordUsageExample: 'I have to go to work.',
       targetWordUsageExample: 'Tengo que ir al trabajo.',
     },
@@ -216,7 +216,7 @@ describe('App Class', () => {
       targetWord: 'jugar',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Upcoming Words',
+      status: 'LEVEL_0',
       sourceWordUsageExample: 'The children like to play in the park.',
       targetWordUsageExample: 'A los niños les gusta jugar en el parque.',
     },
@@ -226,7 +226,7 @@ describe('App Class', () => {
       targetWord: 'escuela',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Focus Words',
+      status: 'LEVEL_1',
       sourceWordUsageExample: 'The school is closed today.',
       targetWordUsageExample: 'La escuela está cerrada hoy.',
     },
@@ -236,7 +236,7 @@ describe('App Class', () => {
       targetWord: 'dinero',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Mastered One Direction',
+      status: 'LEVEL_2',
       sourceWordUsageExample: 'I need to save money.',
       targetWordUsageExample: 'Necesito ahorrar dinero.',
     },
@@ -246,7 +246,7 @@ describe('App Class', () => {
       targetWord: 'sol',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Upcoming Words',
+      status: 'LEVEL_0',
       sourceWordUsageExample: 'The sun is shining brightly.',
       targetWordUsageExample: 'El sol brilla intensamente.',
     },
@@ -256,7 +256,7 @@ describe('App Class', () => {
       targetWord: 'luna',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Mastered Vocabulary',
+      status: 'LEVEL_3',
       sourceWordUsageExample: 'The moon is full tonight.',
       targetWordUsageExample: 'La luna está llena esta noche.',
     },
@@ -266,7 +266,7 @@ describe('App Class', () => {
       targetWord: 'feliz',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Focus Words',
+      status: 'LEVEL_1',
       sourceWordUsageExample: 'I am happy to see you.',
       targetWordUsageExample: 'Estoy feliz de verte.',
     },
@@ -276,7 +276,7 @@ describe('App Class', () => {
       targetWord: 'triste',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Upcoming Words',
+      status: 'LEVEL_0',
       sourceWordUsageExample: 'Why are you sad?',
       targetWordUsageExample: '¿Por qué estás triste?',
     },
@@ -286,7 +286,7 @@ describe('App Class', () => {
       targetWord: 'grande',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Mastered One Direction',
+      status: 'LEVEL_2',
       sourceWordUsageExample: 'That is a big dog!',
       targetWordUsageExample: '¡Ese es un perro grande!',
     },
@@ -296,7 +296,7 @@ describe('App Class', () => {
       targetWord: 'pequeño',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Focus Words',
+      status: 'LEVEL_1',
       sourceWordUsageExample: 'The mouse is very small.',
       targetWordUsageExample: 'El ratón es muy pequeño.',
     },
@@ -306,7 +306,7 @@ describe('App Class', () => {
       targetWord: 'bueno',
       sourceLanguage: 'en',
       targetLanguage: 'es',
-      status: 'Mastered Vocabulary',
+      status: 'LEVEL_3',
       sourceWordUsageExample: 'This is a good restaurant.',
       targetWordUsageExample: 'Este es un buen restaurante.',
     },
@@ -332,7 +332,7 @@ describe('App Class', () => {
       expect(() => new App(invalidData)).toThrow('No valid entries added to quizTranslations');
     });
 
-    it('should populate focus words on initialization', () => {
+    it('should populate LEVEL_1 on initialization', () => {
       expect(app.wordStatusSets[STATUS.FOCUS].size).toBeGreaterThan(0);
     });
   });
@@ -345,14 +345,14 @@ describe('App Class', () => {
       expect(app.wordStatusSets[STATUS.UPCOMING].has(wordId)).toBe(false);
     });
 
-    it('should default to "Upcoming Words" when moving a word to an unknown status', () => {
+    it('should default to "LEVEL_0" when moving a word to an unknown status', () => {
       const wordId = 1;
       app.moveWordToStatus(wordId, 'Unknown Status');
       expect(app.wordStatusSets[STATUS.UPCOMING].has(wordId)).toBe(true);
       expect(app.wordStatusSets['Unknown Status']).toBeUndefined();
     });
 
-    it('should populate focus words when needed and available', () => {
+    it('should populate LEVEL_1 when needed and available', () => {
       app.wordStatusSets[STATUS.FOCUS].clear();
       const initialUpcomingSize = app.wordStatusSets[STATUS.UPCOMING].size;
       app.populateFocusWords();
@@ -360,7 +360,7 @@ describe('App Class', () => {
       expect(app.wordStatusSets[STATUS.UPCOMING].size).toBe(Math.max(0, initialUpcomingSize - 20));
     });
 
-    it('should not populate focus words when focus set is already full', () => {
+    it('should not populate LEVEL_1 when focus set is already full', () => {
       // Fill focusSet to have 20 items
       app.wordStatusSets[STATUS.FOCUS].clear();
       for (let i = 100; i < 120; i++) {
@@ -373,7 +373,7 @@ describe('App Class', () => {
       expect(app.wordStatusSets[STATUS.UPCOMING].size).toBe(initialUpcomingSize);
     });
 
-    it('should not populate focus words when no upcoming words are available', () => {
+    it('should not populate LEVEL_1 when no LEVEL_0 are available', () => {
       app.wordStatusSets[STATUS.FOCUS].clear();
       app.wordStatusSets[STATUS.UPCOMING].clear();
       app.populateFocusWords();
@@ -450,7 +450,7 @@ describe('App Class', () => {
       expect(app.stats.correctAnswers).toBe(1);
     });
 
-    it('should move word to mastered one direction after 3 correct answers', async () => {
+    it('should move word to LEVEL_2 after 3 correct answers', async () => {
       app.currentTranslationId = 1;
       app.moveWordToStatus(1, STATUS.FOCUS);
       for (let i = 0; i < 3; i++) {
@@ -459,7 +459,7 @@ describe('App Class', () => {
       expect(app.wordStatusSets[STATUS.MASTERED_ONE_DIRECTION].has(1)).toBe(true);
     });
 
-    it('should move word to mastered vocabulary after mastering both directions', async () => {
+    it('should move word to LEVEL_3 after mastering both directions', async () => {
       // Master normal direction
       app.currentTranslationId = 1;
       app.moveWordToStatus(1, STATUS.FOCUS);
@@ -477,7 +477,7 @@ describe('App Class', () => {
       expect(app.wordStatusSets[STATUS.MASTERED_VOCABULARY].has(1)).toBe(true);
     });
 
-    it('should not move word to mastered one direction if answers are incorrect', async () => {
+    it('should not move word to LEVEL_2 if answers are incorrect', async () => {
       app.currentTranslationId = 1;
       app.moveWordToStatus(1, STATUS.FOCUS);
       for (let i = 0; i < 3; i++) {
@@ -558,7 +558,7 @@ describe('App Class', () => {
 
   describe('Edge Cases', () => {
     it('should handle getting next question when all words are mastered', () => {
-      // Move all words to Mastered Vocabulary
+      // Move all words to LEVEL_3
       app.quizTranslations.forEach((_, id) => {
         app.moveWordToStatus(id, STATUS.MASTERED_VOCABULARY);
       });
