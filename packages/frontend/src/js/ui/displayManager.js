@@ -30,14 +30,10 @@ function updateSetDisplay(elementId, translationSet, app) {
 }
 
 export function updateWordSetsDisplay(app) {
-  updateSetDisplay('focus-words-list', app.wordStatusSets[STATUS.FOCUS], app);
-  updateSetDisplay(
-    'mastered-one-direction-list',
-    app.wordStatusSets[STATUS.MASTERED_ONE_DIRECTION],
-    app
-  );
-  updateSetDisplay('mastered-vocabulary-list', app.wordStatusSets[STATUS.MASTERED_VOCABULARY], app);
-  updateSetDisplay('upcoming-words-list', app.wordStatusSets[STATUS.UPCOMING], app);
+  updateSetDisplay('level-1-list', app.wordStatusSets[STATUS.FOCUS], app);
+  updateSetDisplay('level-2-list', app.wordStatusSets[STATUS.MASTERED_ONE_DIRECTION], app);
+  updateSetDisplay('level-3-list', app.wordStatusSets[STATUS.MASTERED_VOCABULARY], app);
+  updateSetDisplay('level-0-list', app.wordStatusSets[STATUS.UPCOMING], app);
 }
 
 export function displayQuestion(questionData) {

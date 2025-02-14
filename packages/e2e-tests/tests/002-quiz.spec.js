@@ -68,10 +68,10 @@ test.describe('Quiz Functionality', () => {
     }
 
     // Gather initial words from all lists
-    let focusWords = await getWordsFromList('focus-words-list');
-    let masteredOneDirectionWords = await getWordsFromList('mastered-one-direction-list');
-    let masteredVocabularyWords = await getWordsFromList('mastered-vocabulary-list');
-    let upcomingWords = await getWordsFromList('upcoming-words-list');
+    let focusWords = await getWordsFromList('level-1-list');
+    let masteredOneDirectionWords = await getWordsFromList('level-2-list');
+    let masteredVocabularyWords = await getWordsFromList('level-3-list');
+    let upcomingWords = await getWordsFromList('level-0-list');
 
     // Combine all words into one array
     let allWords = [
@@ -190,10 +190,10 @@ test.describe('Quiz Functionality', () => {
       );
 
       // Refresh the word lists to get updated statuses
-      focusWords = await getWordsFromList('focus-words-list');
-      masteredOneDirectionWords = await getWordsFromList('mastered-one-direction-list');
-      masteredVocabularyWords = await getWordsFromList('mastered-vocabulary-list');
-      upcomingWords = await getWordsFromList('upcoming-words-list');
+      focusWords = await getWordsFromList('level-1-list');
+      masteredOneDirectionWords = await getWordsFromList('level-2-list');
+      masteredVocabularyWords = await getWordsFromList('level-3-list');
+      upcomingWords = await getWordsFromList('level-0-list');
 
       // Update allWords in case new words have been moved into focus
       allWords = [

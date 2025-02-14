@@ -36,7 +36,7 @@ async function logout(page) {
 async function selectQuiz(page, quizName) {
   await page.selectOption('#quiz-select', quizName);
   await expect(page.locator('#word')).not.toBeEmpty();
-  await expect(page.locator('#focus-words-list')).not.toBeEmpty();
+  await expect(page.locator('#level-1-list')).not.toBeEmpty();
 }
 
 module.exports = {

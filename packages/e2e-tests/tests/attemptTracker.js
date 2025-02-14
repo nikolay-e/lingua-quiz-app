@@ -10,7 +10,7 @@ class AttemptTracker {
     this.incorrectAttempts = {};
     this.wordStatus = {};
 
-    testWords.forEach(word => {
+    testWords.forEach((word) => {
       this.correctAttempts.original[word.sourceWord] = 0;
       this.correctAttempts.reverse[word.targetWord] = 0;
       this.incorrectAttempts[word.sourceWord] = 0;
@@ -103,16 +103,16 @@ class AttemptTracker {
 
     switch (status) {
       case 'mastered-one-direction':
-        await expect(page.locator('#mastered-one-direction-list')).toContainText(word.sourceWord);
+        await expect(page.locator('#level-2-list')).toContainText(word.sourceWord);
         break;
       case 'mastered':
-        await expect(page.locator('#mastered-vocabulary-list')).toContainText(word.sourceWord);
+        await expect(page.locator('#level-3-list')).toContainText(word.sourceWord);
         break;
       case 'focus':
-        await expect(page.locator('#focus-words-list')).toContainText(word.sourceWord);
+        await expect(page.locator('#level-1-list')).toContainText(word.sourceWord);
         break;
       default:
-        await expect(page.locator('#upcoming-words-list')).toContainText(word.sourceWord);
+        await expect(page.locator('#level-0-list')).toContainText(word.sourceWord);
     }
   }
 }

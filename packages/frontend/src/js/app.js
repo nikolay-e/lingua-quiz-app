@@ -2,10 +2,10 @@ import { errorHandler } from './utils/errorHandler.js';
 
 // Constants for word statuses
 export const STATUS = {
-  FOCUS: 'LEVEL_1',
-  MASTERED_ONE_DIRECTION: 'LEVEL_2',
-  MASTERED_VOCABULARY: 'LEVEL_3',
-  UPCOMING: 'LEVEL_0',
+  FOCUS: 'level_1',
+  MASTERED_ONE_DIRECTION: 'level_2',
+  MASTERED_VOCABULARY: 'level_3',
+  UPCOMING: 'level_0',
 };
 
 // Constants for quiz directions
