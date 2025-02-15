@@ -333,64 +333,64 @@ describe('App Class', () => {
     });
 
     it('should populate LEVEL_1 on initialization', () => {
-      expect(app.wordStatusSets[STATUS.FOCUS].size).toBeGreaterThan(0);
+      expect(app.wordStatusSets[STATUS.LEVEL_1].size).toBeGreaterThan(0);
     });
   });
 
   describe('Word Management', () => {
     it('should move a word to a new status', () => {
-      const wordId = Array.from(app.wordStatusSets[STATUS.UPCOMING])[0];
-      app.moveWordToStatus(wordId, STATUS.FOCUS);
-      expect(app.wordStatusSets[STATUS.FOCUS].has(wordId)).toBe(true);
-      expect(app.wordStatusSets[STATUS.UPCOMING].has(wordId)).toBe(false);
+      const wordId = Array.from(app.wordStatusSets[STATUS.LEVEL_0])[0];
+      app.moveWordToStatus(wordId, STATUS.LEVEL_1);
+      expect(app.wordStatusSets[STATUS.LEVEL_1].has(wordId)).toBe(true);
+      expect(app.wordStatusSets[STATUS.LEVEL_0].has(wordId)).toBe(false);
     });
 
     it('should default to "LEVEL_0" when moving a word to an unknown status', () => {
       const wordId = 1;
       app.moveWordToStatus(wordId, 'Unknown Status');
-      expect(app.wordStatusSets[STATUS.UPCOMING].has(wordId)).toBe(true);
+      expect(app.wordStatusSets[STATUS.LEVEL_0].has(wordId)).toBe(true);
       expect(app.wordStatusSets['Unknown Status']).toBeUndefined();
     });
 
     it('should populate LEVEL_1 when needed and available', () => {
-      app.wordStatusSets[STATUS.FOCUS].clear();
-      const initialUpcomingSize = app.wordStatusSets[STATUS.UPCOMING].size;
+      app.wordStatusSets[STATUS.LEVEL_1].clear();
+      const initialUpcomingSize = app.wordStatusSets[STATUS.LEVEL_0].size;
       app.populateFocusWords();
-      expect(app.wordStatusSets[STATUS.FOCUS].size).toBe(Math.min(20, initialUpcomingSize));
-      expect(app.wordStatusSets[STATUS.UPCOMING].size).toBe(Math.max(0, initialUpcomingSize - 20));
+      expect(app.wordStatusSets[STATUS.LEVEL_1].size).toBe(Math.min(20, initialUpcomingSize));
+      expect(app.wordStatusSets[STATUS.LEVEL_0].size).toBe(Math.max(0, initialUpcomingSize - 20));
     });
 
     it('should not populate LEVEL_1 when focus set is already full', () => {
       // Fill focusSet to have 20 items
-      app.wordStatusSets[STATUS.FOCUS].clear();
+      app.wordStatusSets[STATUS.LEVEL_1].clear();
       for (let i = 100; i < 120; i++) {
-        app.wordStatusSets[STATUS.FOCUS].add(i);
+        app.wordStatusSets[STATUS.LEVEL_1].add(i);
       }
-      const initialUpcomingSize = app.wordStatusSets[STATUS.UPCOMING].size;
+      const initialUpcomingSize = app.wordStatusSets[STATUS.LEVEL_0].size;
       app.populateFocusWords();
       // Verify that focusSet size remains 20 and upcomingSet size remains the same
-      expect(app.wordStatusSets[STATUS.FOCUS].size).toBe(20);
-      expect(app.wordStatusSets[STATUS.UPCOMING].size).toBe(initialUpcomingSize);
+      expect(app.wordStatusSets[STATUS.LEVEL_1].size).toBe(20);
+      expect(app.wordStatusSets[STATUS.LEVEL_0].size).toBe(initialUpcomingSize);
     });
 
     it('should not populate LEVEL_1 when no LEVEL_0 are available', () => {
-      app.wordStatusSets[STATUS.FOCUS].clear();
-      app.wordStatusSets[STATUS.UPCOMING].clear();
+      app.wordStatusSets[STATUS.LEVEL_1].clear();
+      app.wordStatusSets[STATUS.LEVEL_0].clear();
       app.populateFocusWords();
-      expect(app.wordStatusSets[STATUS.FOCUS].size).toBe(0);
+      expect(app.wordStatusSets[STATUS.LEVEL_1].size).toBe(0);
     });
   });
 
   describe('Quiz Direction', () => {
     it('should toggle direction when mastered words exist', () => {
-      app.wordStatusSets[STATUS.MASTERED_ONE_DIRECTION].add(1);
+      app.wordStatusSets[STATUS.LEVEL_2].add(1);
       const newDirection = app.toggleDirection();
       expect(newDirection).toBe('Reverse');
       expect(app.direction).toBe(DIRECTION.REVERSE);
     });
 
     it('should not toggle direction when no mastered words', () => {
-      app.wordStatusSets[STATUS.MASTERED_ONE_DIRECTION].clear();
+      app.wordStatusSets[STATUS.LEVEL_2].clear();
       const newDirection = app.toggleDirection();
       expect(newDirection).toBe('Normal');
       expect(app.direction).toBe(DIRECTION.NORMAL);
@@ -410,8 +410,8 @@ describe('App Class', () => {
     });
 
     it('should return null when no words are available', () => {
-      app.wordStatusSets[STATUS.FOCUS].clear();
-      app.wordStatusSets[STATUS.MASTERED_ONE_DIRECTION].clear();
+      app.wordStatusSets[STATUS.LEVEL_1].clear();
+      app.wordStatusSets[STATUS.LEVEL_2].clear();
       const question = app.getNextQuestion();
       expect(question).toBeNull();
     });
@@ -419,12 +419,12 @@ describe('App Class', () => {
     it('should return null in getNextQuestion when current set is empty', () => {
       // Clear the current set based on direction
       app.direction = DIRECTION.NORMAL;
-      app.wordStatusSets[STATUS.FOCUS].clear();
+      app.wordStatusSets[STATUS.LEVEL_1].clear();
       const question = app.getNextQuestion();
       expect(question).toBeNull();
 
       app.direction = DIRECTION.REVERSE;
-      app.wordStatusSets[STATUS.MASTERED_ONE_DIRECTION].clear();
+      app.wordStatusSets[STATUS.LEVEL_2].clear();
       const questionReverse = app.getNextQuestion();
       expect(questionReverse).toBeNull();
     });
@@ -452,17 +452,17 @@ describe('App Class', () => {
 
     it('should move word to LEVEL_2 after 3 correct answers', async () => {
       app.currentTranslationId = 1;
-      app.moveWordToStatus(1, STATUS.FOCUS);
+      app.moveWordToStatus(1, STATUS.LEVEL_1);
       for (let i = 0; i < 3; i++) {
         await app.submitAnswer('hola', false);
       }
-      expect(app.wordStatusSets[STATUS.MASTERED_ONE_DIRECTION].has(1)).toBe(true);
+      expect(app.wordStatusSets[STATUS.LEVEL_2].has(1)).toBe(true);
     });
 
     it('should move word to LEVEL_3 after mastering both directions', async () => {
       // Master normal direction
       app.currentTranslationId = 1;
-      app.moveWordToStatus(1, STATUS.FOCUS);
+      app.moveWordToStatus(1, STATUS.LEVEL_1);
       for (let i = 0; i < 3; i++) {
         await app.submitAnswer('hola', false);
       }
@@ -474,16 +474,16 @@ describe('App Class', () => {
         await app.submitAnswer('hello', false);
       }
 
-      expect(app.wordStatusSets[STATUS.MASTERED_VOCABULARY].has(1)).toBe(true);
+      expect(app.wordStatusSets[STATUS.LEVEL_3].has(1)).toBe(true);
     });
 
     it('should not move word to LEVEL_2 if answers are incorrect', async () => {
       app.currentTranslationId = 1;
-      app.moveWordToStatus(1, STATUS.FOCUS);
+      app.moveWordToStatus(1, STATUS.LEVEL_1);
       for (let i = 0; i < 3; i++) {
         await app.submitAnswer('wrong answer', false);
       }
-      expect(app.wordStatusSets[STATUS.MASTERED_ONE_DIRECTION].has(1)).toBe(false);
+      expect(app.wordStatusSets[STATUS.LEVEL_2].has(1)).toBe(false);
     });
 
     it('should provide usage examples in the response', async () => {
@@ -560,7 +560,7 @@ describe('App Class', () => {
     it('should handle getting next question when all words are mastered', () => {
       // Move all words to LEVEL_3
       app.quizTranslations.forEach((_, id) => {
-        app.moveWordToStatus(id, STATUS.MASTERED_VOCABULARY);
+        app.moveWordToStatus(id, STATUS.LEVEL_3);
       });
       const question = app.getNextQuestion();
       expect(question).toBeNull();

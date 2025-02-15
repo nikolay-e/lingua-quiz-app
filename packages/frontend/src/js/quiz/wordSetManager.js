@@ -4,9 +4,9 @@ import { STATUS } from '../app.js';
 // eslint-disable-next-line import/prefer-default-export
 export async function saveQuizState(app, token) {
   const statusSets = {
-    [STATUS.MASTERED_VOCABULARY]: app.wordStatusSets[STATUS.MASTERED_VOCABULARY],
-    [STATUS.MASTERED_ONE_DIRECTION]: app.wordStatusSets[STATUS.MASTERED_ONE_DIRECTION],
-    [STATUS.FOCUS]: app.wordStatusSets[STATUS.FOCUS],
+    [STATUS.LEVEL_3]: app.wordStatusSets[STATUS.LEVEL_3],
+    [STATUS.LEVEL_2]: app.wordStatusSets[STATUS.LEVEL_2],
+    [STATUS.LEVEL_1]: app.wordStatusSets[STATUS.LEVEL_1],
   };
 
   try {
