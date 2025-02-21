@@ -2,10 +2,10 @@ import { errorHandler } from './utils/errorHandler.js';
 
 // Constants for word statuses
 export const STATUS = {
-  FOCUS: 'LEVEL_1',
-  MASTERED_ONE_DIRECTION: 'LEVEL_2',
-  MASTERED_VOCABULARY: 'LEVEL_3',
-  UPCOMING: 'LEVEL_0',
+  LEVEL_1: 'LEVEL_1',
+  LEVEL_2: 'LEVEL_2',
+  LEVEL_3: 'LEVEL_3',
+  LEVEL_0: 'LEVEL_0',
 };
 
 // Constants for quiz directions
@@ -25,10 +25,10 @@ export class App {
   quizTranslations = new Map();
 
   wordStatusSets = {
-    [STATUS.FOCUS]: new Set(),
-    [STATUS.MASTERED_ONE_DIRECTION]: new Set(),
-    [STATUS.MASTERED_VOCABULARY]: new Set(),
-    [STATUS.UPCOMING]: new Set(),
+    [STATUS.LEVEL_1]: new Set(),
+    [STATUS.LEVEL_2]: new Set(),
+    [STATUS.LEVEL_3]: new Set(),
+    [STATUS.LEVEL_0]: new Set(),
   };
 
   currentTranslationId = null;
@@ -71,7 +71,7 @@ export class App {
       }
 
       const { wordPairId } = entry;
-      const status = entry.status || STATUS.UPCOMING;
+      const status = entry.status || STATUS.LEVEL_0;
 
       this.quizTranslations.set(wordPairId, { ...entry, status });
       this.moveWordToStatus(wordPairId, status);
@@ -96,9 +96,9 @@ export class App {
         // eslint-disable-next-line max-len
         `Unknown status '${newStatus}' for wordPairId '${wordPairId}'. Defaulting to 'LEVEL_0'.`
       );
-      this.wordStatusSets[STATUS.UPCOMING].add(wordPairId);
+      this.wordStatusSets[STATUS.LEVEL_0].add(wordPairId);
       // eslint-disable-next-line no-param-reassign
-      newStatus = STATUS.UPCOMING;
+      newStatus = STATUS.LEVEL_0;
     }
 
     // Update the status in the word pair
@@ -109,8 +109,8 @@ export class App {
   }
 
   populateFocusWords() {
-    const focusSet = this.wordStatusSets[STATUS.FOCUS];
-    const upcomingSet = this.wordStatusSets[STATUS.UPCOMING];
+    const focusSet = this.wordStatusSets[STATUS.LEVEL_1];
+    const upcomingSet = this.wordStatusSets[STATUS.LEVEL_0];
     const spacesAvailable = MAX_FOCUS_WORDS - focusSet.size;
 
     if (spacesAvailable > 0 && upcomingSet.size > 0) {
@@ -119,14 +119,14 @@ export class App {
       for (let i = 0; i < wordsToMove; i += 1) {
         const randomIndex = Math.floor(Math.random() * upcomingArray.length);
         const selectedWordId = upcomingArray[randomIndex];
-        this.moveWordToStatus(selectedWordId, STATUS.FOCUS);
+        this.moveWordToStatus(selectedWordId, STATUS.LEVEL_1);
         upcomingArray.splice(randomIndex, 1);
       }
     }
   }
 
   toggleDirection() {
-    const hasMasteredOneDirection = this.wordStatusSets[STATUS.MASTERED_ONE_DIRECTION].size > 0;
+    const hasMasteredOneDirection = this.wordStatusSets[STATUS.LEVEL_2].size > 0;
 
     if (!hasMasteredOneDirection) {
       this.direction = DIRECTION.NORMAL;
@@ -138,17 +138,14 @@ export class App {
   }
 
   getNextQuestion() {
-    if (
-      this.direction === DIRECTION.REVERSE &&
-      this.wordStatusSets[STATUS.MASTERED_ONE_DIRECTION].size === 0
-    ) {
+    if (this.direction === DIRECTION.REVERSE && this.wordStatusSets[STATUS.LEVEL_2].size === 0) {
       this.direction = DIRECTION.NORMAL;
     }
 
     const currentSet =
       this.direction === DIRECTION.NORMAL
-        ? this.wordStatusSets[STATUS.FOCUS]
-        : this.wordStatusSets[STATUS.MASTERED_ONE_DIRECTION];
+        ? this.wordStatusSets[STATUS.LEVEL_1]
+        : this.wordStatusSets[STATUS.LEVEL_2];
 
     if (currentSet.size === 0) {
       return null; // No words available in the current set
@@ -295,16 +292,13 @@ export class App {
 
     const currentStatus = this.quizTranslations.get(this.currentTranslationId).status;
 
-    if (currentStatus === STATUS.FOCUS && normalCorrect >= CORRECT_ANSWERS_TO_MASTER) {
-      this.moveWordToStatus(this.currentTranslationId, STATUS.MASTERED_ONE_DIRECTION);
+    if (currentStatus === STATUS.LEVEL_1 && normalCorrect >= CORRECT_ANSWERS_TO_MASTER) {
+      this.moveWordToStatus(this.currentTranslationId, STATUS.LEVEL_2);
       this.populateFocusWords();
     }
 
-    if (
-      currentStatus === STATUS.MASTERED_ONE_DIRECTION &&
-      reverseCorrect >= CORRECT_ANSWERS_TO_MASTER
-    ) {
-      this.moveWordToStatus(this.currentTranslationId, STATUS.MASTERED_VOCABULARY);
+    if (currentStatus === STATUS.LEVEL_2 && reverseCorrect >= CORRECT_ANSWERS_TO_MASTER) {
+      this.moveWordToStatus(this.currentTranslationId, STATUS.LEVEL_3);
     }
   }
 
