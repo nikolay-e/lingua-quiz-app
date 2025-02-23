@@ -153,3 +153,58 @@ jobs:
           echo "::group::E2E Test Results"
           echo "E2E tests completed. Check above for detailed results."
           echo "::endgroup::"
+
+  zap-security-scan:
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+    steps:
+      - name: Set ZAP Scan Target URLs
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "ZAP_FRONTEND_URL=https://test-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
+            echo "ZAP_BACKEND_URL=https://test-api-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
+          else
+            echo "ZAP_FRONTEND_URL=https://lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
+            echo "ZAP_BACKEND_URL=https://api-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
+          fi
+
+      - name: Run ZAP Full Scan (Frontend)
+        uses: zaproxy/action-full-scan@v0.12.0
+        with:
+          target: ${{ env.ZAP_FRONTEND_URL }}
+          cmd_options: "-a"
+          docker_name: "ghcr.io/zaproxy/zaproxy:stable"
+          rules_file_name: ".zap/rules.tsv"
+          allow_issue_writing: true
+          issue_title: "ZAP Security Scan Report (Frontend)"
+          fail_action: false
+          artifact_name: "zap_frontend_scan_report"
+
+      - name: Rename Frontend Report
+        run: mv report_html.html zap-frontend-report.html || echo "No frontend report found"
+
+      - name: Run ZAP Full Scan (Backend API)
+        uses: zaproxy/action-full-scan@v0.12.0
+        with:
+          target: ${{ env.ZAP_BACKEND_URL }}
+          cmd_options: "-a"
+          docker_name: "ghcr.io/zaproxy/zaproxy:stable"
+          rules_file_name: ".zap/api-rules.tsv"
+          allow_issue_writing: true
+          issue_title: "ZAP Security Scan Report (API)"
+          fail_action: false
+          artifact_name: "zap_backend_scan_report"
+
+      - name: Rename Backend Report
+        run: mv report_html.html zap-backend-report.html || echo "No backend report found"
+
+      - name: List Files Before Uploading Artifacts
+        run: ls -lah
+
+      - name: Upload ZAP Scan Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap_scan_reports
+          path: |
+            zap-frontend-report.html
+            zap-backend-report.html
