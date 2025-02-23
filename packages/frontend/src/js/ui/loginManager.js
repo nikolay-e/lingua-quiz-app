@@ -1,7 +1,8 @@
-import { AuthUtils } from '../utils/authUtils.js';
 import serverAddress from '../config.js';
-import { populateWordLists } from './eventHandlers.js';
+import { AuthUtils } from '../utils/authUtils.js';
 import { errorHandler } from '../utils/errorHandler.js';
+
+import { populateWordLists } from './eventHandlers.js';
 import { PasswordValidator } from './passwordValidator.js';
 
 export class AuthManager {

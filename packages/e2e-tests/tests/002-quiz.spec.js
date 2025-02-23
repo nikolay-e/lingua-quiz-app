@@ -27,6 +27,7 @@ test.describe('Quiz Functionality', () => {
     test.setTimeout(2000000);
 
     // Wait for the quiz select dropdown to be available
+    await page.waitForTimeout(10000);
     const quizSelect = page.locator('#quiz-select');
     await quizSelect.waitFor({ state: 'visible', timeout: 5000 });
 
@@ -49,7 +50,7 @@ test.describe('Quiz Functionality', () => {
     });
 
     // Wait for the word lists to load
-    await page.waitForSelector('#focus-words-list li', { timeout: 10000 });
+    await page.waitForSelector('#level-1-list li', { timeout: 10000 });
 
     // Function to extract words from a given list
     async function getWordsFromList(listId) {

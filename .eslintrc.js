@@ -11,8 +11,16 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['prettier', 'mocha', 'jest'],
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.mjs', '.cjs'],
+      },
+    },
+  },
+  plugins: ['prettier', 'mocha', 'jest', 'import'],
   rules: {
+    'eol-last': ['error', 'always'],
     'prettier/prettier': [
       'error',
       {
@@ -24,6 +32,14 @@ module.exports = {
     'no-console': ['error', { allow: ['warn', 'error'] }],
     'max-len': ['error', { code: 100 }],
     'import/no-mutable-exports': 'off',
+    'import/order': [
+      'error',
+      {
+        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+        'newlines-between': 'always',
+        alphabetize: { order: 'asc', caseInsensitive: true },
+      },
+    ],
     'import/extensions': 'off',
     'no-unused-vars': [
       'error',

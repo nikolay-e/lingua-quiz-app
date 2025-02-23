@@ -1,7 +1,7 @@
 import { createApp } from '../app.js';
-import { errorHandler } from '../utils/errorHandler.js';
-import { AuthUtils } from '../utils/authUtils.js';
 import serverAddress from '../config.js';
+import { AuthUtils } from '../utils/authUtils.js';
+import { errorHandler } from '../utils/errorHandler.js';
 
 export async function fetchWordSets(token, wordListName) {
   try {

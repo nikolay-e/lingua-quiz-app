@@ -1,7 +1,7 @@
 // wordPairEndpoints.test.js
 
 const { expect } = require('chai');
-const { registerTestUser, deleteTestUser, axiosInstance , generateInt32} = require('./testHelpers');
+const { registerTestUser, deleteTestUser, axiosInstance, generateInt32 } = require('./testHelpers');
 
 const API_URL = process.env.API_URL;
 
@@ -11,7 +11,7 @@ describe('Word Pair Endpoints', () => {
   let insertedTranslationId;
 
   beforeAll(async () => {
-    const testData = await registerTestUser("wordPairEndpoints");
+    const testData = await registerTestUser('wordPairEndpoints');
     testUser = testData.user;
     jwtToken = testData.token;
   });

@@ -30,4 +30,4 @@ async function deleteTestUser(token) {
 
 const generateInt32 = () => Math.floor(Math.random() * 2147483647);
 
-module.exports = { registerTestUser, deleteTestUser, axiosInstance, generateInt32};
+module.exports = { registerTestUser, deleteTestUser, axiosInstance, generateInt32 };

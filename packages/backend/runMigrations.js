@@ -1,8 +1,9 @@
 const fs = require('fs');
 const path = require('path');
+
+const csvParser = require('csv-parser');
 const { Pool } = require('pg');
 const winston = require('winston');
-const csvParser = require('csv-parser');
 
 const logger = winston.createLogger({
   level: 'info',

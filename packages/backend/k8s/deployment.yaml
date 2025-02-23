@@ -19,11 +19,11 @@ spec:
             - containerPort: 443
           resources:
             limits:
-              cpu: '500m'
-              memory: '512Mi'
+              cpu: "500m"
+              memory: "512Mi"
             requests:
-              cpu: '250m'
-              memory: '256Mi'
+              cpu: "250m"
+              memory: "256Mi"
           livenessProbe:
             httpGet:
               path: /healthz
@@ -53,11 +53,11 @@ spec:
             timeoutSeconds: 5
           env:
             - name: NODE_ENV
-              value: 'production'
+              value: "production"
             - name: DB_HOST
-              value: 'postgres'
+              value: "postgres"
             - name: DB_PORT
-              value: '5432'
+              value: "5432"
             - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
@@ -79,14 +79,14 @@ spec:
                   name: jwt-secret
                   key: JWT_SECRET
             - name: SSL_KEY_PATH
-              value: '/etc/tls/tls.key'
+              value: "/etc/tls/tls.key"
             - name: SSL_CERT_PATH
-              value: '/etc/tls/tls.crt'
+              value: "/etc/tls/tls.crt"
             - name: PORT
-              value: '443'
+              value: "443"
           volumeMounts:
             - name: tls
-              mountPath: '/etc/tls'
+              mountPath: "/etc/tls"
               readOnly: true
       volumes:
         - name: tls

@@ -109,7 +109,7 @@
   transform: scale(1.1);
 }
 
-#register-form button[type='submit']:disabled {
+#register-form button[type="submit"]:disabled {
   cursor: not-allowed;
   background-color: var(--input-border-color);
 }

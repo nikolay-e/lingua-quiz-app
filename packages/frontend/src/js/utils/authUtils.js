@@ -1,4 +1,5 @@
 import jwtDecode from 'jwt-decode';
+
 import { errorHandler } from './errorHandler.js';
 
 // eslint-disable-next-line import/prefer-default-export

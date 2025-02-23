@@ -1,16 +1,17 @@
 /* eslint-disable consistent-return */
-const express = require('express');
-const { Pool } = require('pg');
+const fs = require('fs');
+const https = require('https');
+
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const cors = require('cors');
 const dotenv = require('dotenv');
+const express = require('express');
 const rateLimit = require('express-rate-limit');
 const { body, param, query, validationResult } = require('express-validator');
-const winston = require('winston');
-const https = require('https');
+const jwt = require('jsonwebtoken');
 const _ = require('lodash');
-const fs = require('fs');
-const cors = require('cors');
+const { Pool } = require('pg');
+const winston = require('winston');
 const xss = require('xss');
 
 dotenv.config();

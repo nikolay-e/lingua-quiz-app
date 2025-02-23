@@ -19,6 +19,7 @@ export const MAX_FOCUS_WORDS = 20;
 export const MAX_LAST_ASKED_WORDS = 7;
 export const TOP_WORDS_LIMIT = 10;
 export const CORRECT_ANSWERS_TO_MASTER = 3;
+export const MAX_MISTAKES_BEFORE_DEGRADATION = 3;
 export const MILLISECONDS_IN_SECOND = 1000;
 
 export class App {
@@ -40,6 +41,8 @@ export class App {
   direction = DIRECTION.NORMAL;
 
   lastAskedWords = [];
+
+  consecutiveMistakes = new Map();
 
   stats = {
     totalAttempts: 0,
@@ -83,17 +86,14 @@ export class App {
   }
 
   moveWordToStatus(wordPairId, newStatus) {
-    // Remove from all status sets
     Object.values(STATUS).forEach((status) => {
       this.wordStatusSets[status].delete(wordPairId);
     });
 
-    // Add to the new status set
     if (this.wordStatusSets[newStatus]) {
       this.wordStatusSets[newStatus].add(wordPairId);
     } else {
       console.warn(
-        // eslint-disable-next-line max-len
         `Unknown status '${newStatus}' for wordPairId '${wordPairId}'. Defaulting to 'LEVEL_0'.`
       );
       this.wordStatusSets[STATUS.LEVEL_0].add(wordPairId);
@@ -101,10 +101,11 @@ export class App {
       newStatus = STATUS.LEVEL_0;
     }
 
-    // Update the status in the word pair
     const wordPair = this.quizTranslations.get(wordPairId);
     if (wordPair) {
       wordPair.status = newStatus;
+    } else {
+      console.error(`Word ${wordPairId} not found in quizTranslations!`);
     }
   }
 
@@ -195,14 +196,76 @@ export class App {
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  getMistakesKey(wordId, direction) {
+    return `${wordId}-${direction ? 'normal' : 'reverse'}`;
+  }
+
+  resetMistakesCounter(wordId, direction) {
+    const key = this.getMistakesKey(wordId, direction);
+    this.consecutiveMistakes.set(key, 0);
+  }
+
+  incrementMistakesCounter(wordId, direction) {
+    const key = this.getMistakesKey(wordId, direction);
+    const currentMistakes = this.consecutiveMistakes.get(key) || 0;
+    const newMistakes = currentMistakes + 1;
+    this.consecutiveMistakes.set(key, newMistakes);
+
+    return newMistakes;
+  }
+
+  degradeWordLevel(wordId) {
+    const word = this.quizTranslations.get(wordId);
+    if (!word) {
+      console.error(`Word ${wordId} not found in quizTranslations!`);
+      return false;
+    }
+
+    if (word.status === STATUS.LEVEL_0) {
+      console.warn(`Word ${wordId} is already at LEVEL_0`);
+      return false;
+    }
+
+    const levelMapping = {
+      [STATUS.LEVEL_3]: STATUS.LEVEL_2,
+      [STATUS.LEVEL_2]: STATUS.LEVEL_1,
+      [STATUS.LEVEL_1]: STATUS.LEVEL_0,
+    };
+
+    const newLevel = levelMapping[word.status];
+
+    if (newLevel) {
+      this.moveWordToStatus(wordId, newLevel);
+      word.status = newLevel;
+      this.populateFocusWords();
+
+      const mistakesKey = this.getMistakesKey(wordId, this.direction);
+      this.consecutiveMistakes.set(mistakesKey, 0);
+      return true;
+    }
+
+    return false;
+  }
+
   async submitAnswer(userAnswer, shouldGetNextQuestion = true) {
     try {
       const startTime = Date.now();
       const isCorrect = this.verifyAnswer(userAnswer);
+
       this.updateStats(isCorrect, startTime);
 
       if (isCorrect) {
+        this.resetMistakesCounter(this.currentTranslationId, this.direction);
         this.handleCorrectAnswer();
+      } else {
+        const mistakes = this.incrementMistakesCounter(this.currentTranslationId, this.direction);
+        if (mistakes >= MAX_MISTAKES_BEFORE_DEGRADATION) {
+          const wasWordDegraded = this.degradeWordLevel(this.currentTranslationId);
+          if (wasWordDegraded) {
+            this.resetMistakesCounter(this.currentTranslationId, this.direction);
+          }
+        }
       }
 
       const feedback = this.generateFeedback(isCorrect);
@@ -250,54 +313,60 @@ export class App {
   }
 
   updateStats(isCorrect, startTime) {
-    const endTime = Date.now();
-    const timeTaken = (endTime - startTime) / MILLISECONDS_IN_SECOND;
+    const timeSpentOnAnswer = (Date.now() - startTime) / MILLISECONDS_IN_SECOND;
     this.stats.totalAttempts += 1;
-    this.stats.timePerQuestion.push(timeTaken);
+    this.stats.timePerQuestion.push(timeSpentOnAnswer);
 
-    const directionKey = this.direction === DIRECTION.NORMAL ? 'normal' : 'reverse';
-    const statKey = `${this.currentTranslationId}-${directionKey}`;
+    const translationDirection = this.direction === DIRECTION.NORMAL ? 'normal' : 'reverse';
+    const wordDirectionKey = `${this.currentTranslationId}-${translationDirection}`;
 
-    if (!this.stats.attemptsPerTranslationIdAndDirection[statKey]) {
-      this.stats.attemptsPerTranslationIdAndDirection[statKey] = {
+    if (!this.stats.attemptsPerTranslationIdAndDirection[wordDirectionKey]) {
+      this.stats.attemptsPerTranslationIdAndDirection[wordDirectionKey] = {
         attempts: 0,
         correct: 0,
         incorrect: 0,
       };
-      this.stats.timePerTranslationIdAndDirection[statKey] = [];
+      this.stats.timePerTranslationIdAndDirection[wordDirectionKey] = [];
     }
 
-    const translationStats = this.stats.attemptsPerTranslationIdAndDirection[statKey];
-    translationStats.attempts += 1;
-    this.stats.timePerTranslationIdAndDirection[statKey].push(timeTaken);
+    const wordStats = this.stats.attemptsPerTranslationIdAndDirection[wordDirectionKey];
+    wordStats.attempts += 1;
+    this.stats.timePerTranslationIdAndDirection[wordDirectionKey].push(timeSpentOnAnswer);
 
     if (isCorrect) {
       this.stats.correctAnswers += 1;
-      translationStats.correct += 1;
+      wordStats.correct += 1;
     } else {
       this.stats.incorrectAnswers += 1;
-      translationStats.incorrect += 1;
-      this.stats.incorrectPerTranslationIdAndDirection[statKey] =
-        (this.stats.incorrectPerTranslationIdAndDirection[statKey] || 0) + 1;
+      wordStats.incorrect += 1;
     }
   }
 
   handleCorrectAnswer() {
-    const normalKey = `${this.currentTranslationId}-normal`;
-    const reverseKey = `${this.currentTranslationId}-reverse`;
+    const sourceToTargetStatsKey = `${this.currentTranslationId}-normal`;
+    const targetToSourceStatsKey = `${this.currentTranslationId}-reverse`;
 
-    const normalCorrect = this.stats.attemptsPerTranslationIdAndDirection[normalKey]?.correct || 0;
-    const reverseCorrect =
-      this.stats.attemptsPerTranslationIdAndDirection[reverseKey]?.correct || 0;
+    const correctSourceToTarget =
+      this.stats.attemptsPerTranslationIdAndDirection[sourceToTargetStatsKey]?.correct || 0;
+    const correctTargetToSource =
+      this.stats.attemptsPerTranslationIdAndDirection[targetToSourceStatsKey]?.correct || 0;
 
-    const currentStatus = this.quizTranslations.get(this.currentTranslationId).status;
+    const wordCurrentStatus = this.quizTranslations.get(this.currentTranslationId).status;
 
-    if (currentStatus === STATUS.LEVEL_1 && normalCorrect >= CORRECT_ANSWERS_TO_MASTER) {
+    // Upgrade from LEVEL_1 (Learning) to LEVEL_2 (One Way Mastered)
+    if (
+      wordCurrentStatus === STATUS.LEVEL_1 &&
+      correctSourceToTarget >= CORRECT_ANSWERS_TO_MASTER
+    ) {
       this.moveWordToStatus(this.currentTranslationId, STATUS.LEVEL_2);
       this.populateFocusWords();
     }
 
-    if (currentStatus === STATUS.LEVEL_2 && reverseCorrect >= CORRECT_ANSWERS_TO_MASTER) {
+    // Upgrade from LEVEL_2 (One Way Mastered) to LEVEL_3 (Both Ways Mastered)
+    if (
+      wordCurrentStatus === STATUS.LEVEL_2 &&
+      correctTargetToSource >= CORRECT_ANSWERS_TO_MASTER
+    ) {
       this.moveWordToStatus(this.currentTranslationId, STATUS.LEVEL_3);
     }
   }

@@ -1,11 +1,12 @@
 import { fetchWordSets, fetchWordLists } from '../quiz/dataHandler.js';
+import { saveQuizState } from '../quiz/wordSetManager.js';
+import { errorHandler } from '../utils/errorHandler.js';
+
 import {
   displayQuestion,
   updateDirectionToggleTitle,
   updateWordSetsDisplay,
 } from './displayManager.js';
-import { saveQuizState } from '../quiz/wordSetManager.js';
-import { errorHandler } from '../utils/errorHandler.js';
 
 let app = null;
 

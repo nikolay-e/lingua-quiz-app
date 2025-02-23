@@ -17,7 +17,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: "20"
       - name: Install dependencies
         run: npm ci
       - name: Run depcheck
@@ -37,7 +37,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: "20"
       - name: Install dependencies
         run: npm ci
       - name: Run ESLint
@@ -56,7 +56,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: "20"
       - name: Install dependencies
         run: npm ci
       - name: Run tests
@@ -71,9 +71,14 @@ jobs:
     needs: [frontend-tests]
     uses: nikolay-e/reusable-workflows/.github/workflows/docker-build-deploy-vps.yml@main
     with:
-      image_name: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'lingua-quiz-com' || 'test-lingua-quiz-com' }}
-      container_port: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 8444 || 8445 }}
-      domain: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'lingua-quiz.nikolay-eremeev.com' || 'test-lingua-quiz.nikolay-eremeev.com' }}
+      image_name:
+        ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'lingua-quiz-com' ||
+        'test-lingua-quiz-com' }}
+      container_port:
+        ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 8444 || 8445 }}
+      domain:
+        ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' &&
+        'lingua-quiz.nikolay-eremeev.com' || 'test-lingua-quiz.nikolay-eremeev.com' }}
       docker_context: packages/frontend
       docker_file: packages/frontend/Dockerfile
     secrets:
@@ -99,7 +104,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install dependencies
         run: |
