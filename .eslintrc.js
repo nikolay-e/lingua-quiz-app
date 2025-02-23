@@ -30,7 +30,10 @@ module.exports = {
       },
     ],
     'no-console': ['error', { allow: ['warn', 'error'] }],
+    complexity: ['error', { max: 10 }],
+    'max-depth': ['error', 4],
     'max-len': ['error', { code: 100 }],
+    'max-lines': ['error', { max: 300, skipBlankLines: true, skipComments: true }],
     'import/no-mutable-exports': 'off',
     'import/order': [
       'error',
