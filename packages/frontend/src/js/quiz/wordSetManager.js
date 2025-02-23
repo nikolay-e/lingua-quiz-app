@@ -1,5 +1,5 @@
-import serverAddress from '../config.js';
 import { STATUS } from '../app.js';
+import serverAddress from '../config.js';
 
 // eslint-disable-next-line import/prefer-default-export
 export async function saveQuizState(app, token) {

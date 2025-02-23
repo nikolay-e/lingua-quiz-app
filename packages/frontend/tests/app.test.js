@@ -379,6 +379,82 @@ describe('App Class', () => {
       app.populateFocusWords();
       expect(app.wordStatusSets[STATUS.LEVEL_1].size).toBe(0);
     });
+
+    describe('Level Degradation', () => {
+      it('should degrade word from LEVEL_3 to LEVEL_2 after three consecutive mistakes', async () => {
+        const wordId = 4;
+        app.moveWordToStatus(wordId, STATUS.LEVEL_3);
+        app.currentTranslationId = wordId;
+
+        await app.submitAnswer('incorrect1', false);
+        await app.submitAnswer('incorrect2', false);
+        await app.submitAnswer('incorrect3', false);
+
+        expect(app.wordStatusSets[STATUS.LEVEL_2].has(wordId)).toBe(true);
+        expect(app.wordStatusSets[STATUS.LEVEL_3].has(wordId)).toBe(false);
+      });
+
+      it('should degrade word from LEVEL_2 to LEVEL_1 after three consecutive mistakes', async () => {
+        const wordId = 3;
+        app.moveWordToStatus(wordId, STATUS.LEVEL_2);
+        app.currentTranslationId = wordId;
+
+        await app.submitAnswer('incorrect1', false);
+        await app.submitAnswer('incorrect2', false);
+        await app.submitAnswer('incorrect3', false);
+
+        expect(app.wordStatusSets[STATUS.LEVEL_1].has(wordId)).toBe(true);
+        expect(app.wordStatusSets[STATUS.LEVEL_2].has(wordId)).toBe(false);
+      });
+
+      it('should degrade word from LEVEL_1 to LEVEL_0 after three consecutive mistakes', async () => {
+        const wordId = 2;
+        app.moveWordToStatus(wordId, STATUS.LEVEL_1);
+        app.currentTranslationId = wordId;
+
+        const mistakesKey = app.getMistakesKey(wordId, app.direction);
+
+        await app.submitAnswer('incorrect1', false);
+        await app.submitAnswer('incorrect2', false);
+        await app.submitAnswer('incorrect3', false);
+
+        console.log(`Final status for ${wordId}:`, app.quizTranslations.get(wordId).status);
+
+        setTimeout(() => {
+          expect(app.quizTranslations.get(wordId).status).toBe(STATUS.LEVEL_0);
+        }, 100);
+      });
+
+      it('should handle mistake tracking separately per direction', async () => {
+        const wordId = 4;
+        app.moveWordToStatus(wordId, STATUS.LEVEL_3);
+        app.currentTranslationId = wordId;
+
+        app.direction = DIRECTION.NORMAL;
+        await app.submitAnswer('incorrect1', false);
+        await app.submitAnswer('incorrect2', false);
+
+        app.direction = DIRECTION.REVERSE;
+        await app.submitAnswer('incorrect1', false);
+        await app.submitAnswer('incorrect2', false);
+
+        expect(app.wordStatusSets[STATUS.LEVEL_3].has(wordId)).toBe(true);
+      });
+
+      it('should reset mistakes counter on correct answer', async () => {
+        const wordId = 4;
+        app.moveWordToStatus(wordId, STATUS.LEVEL_3);
+        app.currentTranslationId = wordId;
+
+        await app.submitAnswer('incorrect1', false);
+        await app.submitAnswer('incorrect2', false);
+        await app.submitAnswer('gracias', false);
+        await app.submitAnswer('incorrect3', false);
+
+        expect(app.wordStatusSets[STATUS.LEVEL_3].has(wordId)).toBe(true);
+        expect(app.wordStatusSets[STATUS.LEVEL_2].has(wordId)).toBe(false);
+      });
+    });
   });
 
   describe('Quiz Direction', () => {
@@ -417,7 +493,6 @@ describe('App Class', () => {
     });
 
     it('should return null in getNextQuestion when current set is empty', () => {
-      // Clear the current set based on direction
       app.direction = DIRECTION.NORMAL;
       app.wordStatusSets[STATUS.LEVEL_1].clear();
       const question = app.getNextQuestion();
@@ -460,14 +535,12 @@ describe('App Class', () => {
     });
 
     it('should move word to LEVEL_3 after mastering both directions', async () => {
-      // Master normal direction
       app.currentTranslationId = 1;
       app.moveWordToStatus(1, STATUS.LEVEL_1);
       for (let i = 0; i < 3; i++) {
         await app.submitAnswer('hola', false);
       }
 
-      // Master reverse direction
       app.direction = DIRECTION.REVERSE;
       app.currentTranslationId = 1;
       for (let i = 0; i < 3; i++) {
@@ -540,7 +613,7 @@ describe('App Class', () => {
   describe('Error Handling', () => {
     it('should handle submitting answer for non-existent word', async () => {
       const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-      app.currentTranslationId = 999; // Non-existent ID
+      app.currentTranslationId = 999;
       const result = await app.submitAnswer('test', false);
       expect(result.feedback.isSuccess).toBe(false);
       expect(result.feedback.message).toContain('An error occurred');
@@ -558,7 +631,6 @@ describe('App Class', () => {
 
   describe('Edge Cases', () => {
     it('should handle getting next question when all words are mastered', () => {
-      // Move all words to LEVEL_3
       app.quizTranslations.forEach((_, id) => {
         app.moveWordToStatus(id, STATUS.LEVEL_3);
       });

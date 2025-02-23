@@ -8,7 +8,7 @@ describe('Word Lists Endpoint', () => {
   let jwtToken;
 
   beforeAll(async () => {
-    const testData = await registerTestUser("wordLists");
+    const testData = await registerTestUser('wordLists');
     testUser = testData.user;
     jwtToken = testData.token;
   });
@@ -29,7 +29,7 @@ describe('Word Lists Endpoint', () => {
     expect(response.data.length).to.be.at.least(1);
 
     // Check the structure of the returned word list objects
-    response.data.forEach(wordList => {
+    response.data.forEach((wordList) => {
       expect(wordList).to.have.all.keys('id', 'name', 'createdAt', 'updatedAt');
       expect(wordList.id).to.be.a('number');
       expect(wordList.name).to.be.a('string');

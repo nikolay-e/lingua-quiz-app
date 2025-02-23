@@ -1,5 +1,5 @@
 /* src/css/styles.css */
-@import 'base.css';
-@import 'layout.css';
-@import 'auth.css';
+@import "base.css";
+@import "layout.css";
+@import "auth.css";
 /* Import other CSS modules as needed */

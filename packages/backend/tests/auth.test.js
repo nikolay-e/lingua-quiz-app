@@ -23,7 +23,9 @@ describe('Registration and Login', () => {
       await axiosInstance.post(`${API_URL}/register`, testUser);
     } catch (error) {
       expect(error.response.status).to.equal(400);
-      expect(error.response.data.message).to.equal('Invalid request. Please check your input and try again.');
+      expect(error.response.data.message).to.equal(
+        'Invalid request. Please check your input and try again.'
+      );
     }
   });
 

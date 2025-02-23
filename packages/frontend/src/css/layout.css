@@ -86,12 +86,12 @@
 }
 
 .feedback-text.success .feedback-icon::before {
-  content: '✓';
+  content: "✓";
   color: #4caf50;
 }
 
 .feedback-text.error .feedback-icon::before {
-  content: '✗';
+  content: "✗";
   color: #f44336;
 }
 
