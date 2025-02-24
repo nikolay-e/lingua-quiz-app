@@ -1,0 +1,98 @@
+version: "3.8"
+
+services:
+  # Setup service to install dependencies once
+  setup:
+    image: node:16-alpine
+    command: sh -c "cd /app && npm ci"
+    volumes:
+      - .:/app
+      - root_node_modules:/app/node_modules
+      - backend_node_modules:/app/packages/backend/node_modules
+      - frontend_node_modules:/app/packages/frontend/node_modules
+    networks:
+      - linguaquiz-network
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:13
+    container_name: linguaquiz-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: linguaquiz
+      POSTGRES_USER: linguaquiz_user
+      POSTGRES_PASSWORD: linguaquiz_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U linguaquiz_user -d linguaquiz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - linguaquiz-network
+
+  # Backend Service with hot reloading
+  backend:
+    image: node:16-alpine
+    container_name: linguaquiz-backend-dev
+    restart: unless-stopped
+    working_dir: /app/packages/backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+      setup:
+        condition: service_completed_successfully
+    environment:
+      NODE_ENV: development
+      DB_HOST: postgres
+      DB_PORT: 5432
+      POSTGRES_DB: linguaquiz
+      POSTGRES_USER: linguaquiz_user
+      POSTGRES_PASSWORD: linguaquiz_password
+      JWT_SECRET: local_development_jwt_secret
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - root_node_modules:/app/node_modules
+      - backend_node_modules:/app/packages/backend/node_modules
+    command: >
+      sh -c "node runMigrations.js && 
+             npx nodemon server.js"
+    networks:
+      - linguaquiz-network
+
+  # Frontend Service with live server
+  frontend:
+    image: node:16-alpine
+    container_name: linguaquiz-frontend-dev
+    restart: unless-stopped
+    working_dir: /app/packages/frontend
+    depends_on:
+      backend:
+        condition: service_started
+      setup:
+        condition: service_completed_successfully
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+      - root_node_modules:/app/node_modules
+      - frontend_node_modules:/app/packages/frontend/node_modules
+    command: npm start
+    networks:
+      - linguaquiz-network
+
+networks:
+  linguaquiz-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  root_node_modules:
+  backend_node_modules:
+  frontend_node_modules:
