@@ -238,7 +238,6 @@ export class App {
     if (newLevel) {
       this.moveWordToStatus(wordId, newLevel);
       word.status = newLevel;
-      this.populateFocusWords();
 
       const mistakesKey = this.getMistakesKey(wordId, this.direction);
       this.consecutiveMistakes.set(mistakesKey, 0);
