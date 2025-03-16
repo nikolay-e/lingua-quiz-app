@@ -113,16 +113,14 @@ export class App {
     const focusSet = this.wordStatusSets[STATUS.LEVEL_1];
     const upcomingSet = this.wordStatusSets[STATUS.LEVEL_0];
     const spacesAvailable = MAX_FOCUS_WORDS - focusSet.size;
-
+    
     if (spacesAvailable > 0 && upcomingSet.size > 0) {
-      const upcomingArray = Array.from(upcomingSet);
-      const wordsToMove = Math.min(spacesAvailable, upcomingSet.size);
-      for (let i = 0; i < wordsToMove; i += 1) {
-        const randomIndex = Math.floor(Math.random() * upcomingArray.length);
-        const selectedWordId = upcomingArray[randomIndex];
-        this.moveWordToStatus(selectedWordId, STATUS.LEVEL_1);
-        upcomingArray.splice(randomIndex, 1);
-      }
+      const upcomingWords = Array.from(upcomingSet);
+      const shuffled = upcomingWords.sort(() => 0.5 - Math.random());
+      const wordsToMove = shuffled.slice(0, spacesAvailable);
+      wordsToMove.forEach(wordId => {
+        this.moveWordToStatus(wordId, STATUS.LEVEL_1);
+      });
     }
   }
 
@@ -238,7 +236,6 @@ export class App {
     if (newLevel) {
       this.moveWordToStatus(wordId, newLevel);
       word.status = newLevel;
-      this.populateFocusWords();
 
       const mistakesKey = this.getMistakesKey(wordId, this.direction);
       this.consecutiveMistakes.set(mistakesKey, 0);
@@ -267,6 +264,7 @@ export class App {
           }
         }
       }
+      this.populateFocusWords();
 
       const feedback = this.generateFeedback(isCorrect);
       const usageExamples = this.getUsageExamples();
@@ -359,7 +357,6 @@ export class App {
       correctSourceToTarget >= CORRECT_ANSWERS_TO_MASTER
     ) {
       this.moveWordToStatus(this.currentTranslationId, STATUS.LEVEL_2);
-      this.populateFocusWords();
     }
 
     // Upgrade from LEVEL_2 (One Way Mastered) to LEVEL_3 (Both Ways Mastered)

@@ -7,6 +7,7 @@ export async function saveQuizState(app, token) {
     [STATUS.LEVEL_3]: app.wordStatusSets[STATUS.LEVEL_3],
     [STATUS.LEVEL_2]: app.wordStatusSets[STATUS.LEVEL_2],
     [STATUS.LEVEL_1]: app.wordStatusSets[STATUS.LEVEL_1],
+    [STATUS.LEVEL_0]: app.wordStatusSets[STATUS.LEVEL_0],
   };
 
   try {
