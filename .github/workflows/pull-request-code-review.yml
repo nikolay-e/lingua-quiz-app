@@ -5,13 +5,15 @@ on:
     types:
       - ready_for_review
 
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+  statuses: write
+  security-events: write
+
 jobs:
   ai-review:
     if: github.event.pull_request.draft == false
     uses: nikolay-e/reusable-workflows/.github/workflows/reusable-ai-review.yml@main
-    permissions:
-      contents: read
-      pull-requests: write
-      issues: write
-      statuses: write
     secrets: inherit

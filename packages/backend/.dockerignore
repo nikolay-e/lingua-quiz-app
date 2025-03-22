@@ -1,0 +1,37 @@
+# Git
+.git
+.gitignore
+
+# Зависимости Node - устанавливаются в контейнере
+node_modules
+
+# Логи
+logs
+*.log
+npm-debug.log*
+migration.log
+error.log
+combined.log
+exceptions.log
+rejections.log
+
+# Локальные переменные окружения
+.env
+tests/.test.env
+
+# Файлы тестов и конфигурации тестов/линтеров/форматтеров
+tests/
+*.test.js
+jest.config.js
+jest.setup.js
+babel.config.js
+.eslintignore
+.eslintrc.js
+.prettierignore
+.prettierrc
+
+# Dockerfile
+Dockerfile
+
+# Другие ненужные файлы
+README.md

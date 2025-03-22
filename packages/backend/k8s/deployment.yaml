@@ -14,9 +14,12 @@ spec:
     spec:
       containers:
         - name: backend
-          image: lingua-quiz
+          image: lingua-quiz:latest
           ports:
-            - containerPort: 443
+            - containerPort: PORT_PLACEHOLDER
+              hostPort: PORT_PLACEHOLDER
+              protocol: TCP
+              name: http
           resources:
             limits:
               cpu: "500m"
@@ -27,8 +30,8 @@ spec:
           livenessProbe:
             httpGet:
               path: /healthz
-              port: 443
-              scheme: HTTPS
+              port: PORT_PLACEHOLDER
+              scheme: HTTP
             initialDelaySeconds: 30
             periodSeconds: 10
             timeoutSeconds: 5
@@ -36,8 +39,8 @@ spec:
           readinessProbe:
             httpGet:
               path: /healthz
-              port: 443
-              scheme: HTTPS
+              port: PORT_PLACEHOLDER
+              scheme: HTTP
             initialDelaySeconds: 5
             periodSeconds: 5
             timeoutSeconds: 3
@@ -46,8 +49,8 @@ spec:
           startupProbe:
             httpGet:
               path: /healthz
-              port: 443
-              scheme: HTTPS
+              port: PORT_PLACEHOLDER
+              scheme: HTTP
             failureThreshold: 30
             periodSeconds: 10
             timeoutSeconds: 5
@@ -78,17 +81,5 @@ spec:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_SECRET
-            - name: SSL_KEY_PATH
-              value: "/etc/tls/tls.key"
-            - name: SSL_CERT_PATH
-              value: "/etc/tls/tls.crt"
             - name: PORT
-              value: "443"
-          volumeMounts:
-            - name: tls
-              mountPath: "/etc/tls"
-              readOnly: true
-      volumes:
-        - name: tls
-          secret:
-            secretName: tls-secret
+              value: "PORT_PLACEHOLDER"

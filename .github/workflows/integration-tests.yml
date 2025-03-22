@@ -1,0 +1,130 @@
+name: Integration Tests
+
+on:
+  workflow_call:
+    inputs:
+      frontend-url:
+        required: false
+        type: string
+        default: ""
+      backend-url:
+        required: false
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+  security-events: write
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npx playwright install-deps
+          npx playwright install
+
+      - name: Set environment variables
+        run: |
+          echo "TEST_ENV=test" >> $GITHUB_ENV
+          echo "NODE_ENV=production" >> $GITHUB_ENV
+          
+          # Use input URLs if provided, otherwise determine dynamically
+          if [[ -n "${{ inputs.frontend-url }}" ]]; then
+            echo "LINGUA_QUIZ_URL=${{ inputs.frontend-url }}" >> $GITHUB_ENV
+          elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "LINGUA_QUIZ_URL=https://test-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
+          else
+            echo "LINGUA_QUIZ_URL=https://lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
+          fi
+
+      - name: Run E2E Tests
+        id: run_e2e_tests
+        env:
+          LINGUA_QUIZ_URL: ${{ env.LINGUA_QUIZ_URL }}
+        run: npm run test --workspace=@linguaquiz/e2e-tests
+        continue-on-error: true
+
+      - name: Upload Playwright Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: packages/e2e-tests/playwright-report
+
+      - name: Fail job if tests failed
+        if: steps.run_e2e_tests.outcome == 'failure'
+        run: exit 1
+
+  zap-security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set ZAP Scan Target URLs
+        run: |
+          # Use input URLs if provided, otherwise determine dynamically
+          if [[ -n "${{ inputs.frontend-url }}" ]]; then
+            echo "ZAP_FRONTEND_URL=${{ inputs.frontend-url }}" >> $GITHUB_ENV
+          elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "ZAP_FRONTEND_URL=https://test-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
+          else
+            echo "ZAP_FRONTEND_URL=https://lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
+          fi
+          
+          if [[ -n "${{ inputs.backend-url }}" ]]; then
+            echo "ZAP_BACKEND_URL=${{ inputs.backend-url }}" >> $GITHUB_ENV
+          elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "ZAP_BACKEND_URL=https://test-api-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
+          else
+            echo "ZAP_BACKEND_URL=https://api-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
+          fi
+
+      - name: Run ZAP Full Scan (Frontend)
+        uses: zaproxy/action-full-scan@v0.12.0
+        with:
+          target: ${{ env.ZAP_FRONTEND_URL }}
+          cmd_options: "-a"
+          docker_name: "ghcr.io/zaproxy/zaproxy:stable"
+          rules_file_name: ".zap/rules.tsv"
+          allow_issue_writing: true
+          issue_title: "ZAP Security Scan Report (Frontend)"
+          fail_action: false
+          artifact_name: "zap_frontend_scan_report"
+
+      - name: Run ZAP Full Scan (Backend API)
+        uses: zaproxy/action-full-scan@v0.12.0
+        with:
+          target: ${{ env.ZAP_BACKEND_URL }}
+          cmd_options: "-a"
+          docker_name: "ghcr.io/zaproxy/zaproxy:stable"
+          rules_file_name: ".zap/api-rules.tsv"
+          allow_issue_writing: true
+          issue_title: "ZAP Security Scan Report (API)"
+          fail_action: false
+          artifact_name: "zap_backend_scan_report"
+
+      - name: Combine and Upload Reports
+        run: |
+          mkdir -p zap-reports
+          mv */report_html.html zap-frontend-report.html || true
+          mv */report_html.html zap-backend-report.html || true
+          mv zap-*-report.html zap-reports/ || true
+          ls -la zap-reports || echo "No reports found"
+
+      - name: Upload ZAP Scan Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap_scan_reports
+          path: zap-reports
