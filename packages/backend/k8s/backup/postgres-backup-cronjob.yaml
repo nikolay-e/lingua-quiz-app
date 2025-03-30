@@ -1,20 +1,21 @@
-# packages/backend/k8s/backup/postgres-backup-cronjob.yaml
 apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: postgres-backup
-  # namespace: default # Kustomize позаботится об этом
 spec:
-  # Расписание: Каждый день в 2:00 ночи по времени кластера (UTC по умолчанию)
   schedule: "0 2 * * *"
-  jobTemplate:
+
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+
+  jobTemplate: # Шаблон для Job'а
     spec:
-      template:
+      template: # Шаблон для Pod'а
         spec:
           containers:
             - name: postgres-backup
-              # Используем образ, который будет собран CI/CD
-              image: DOCKERHUB_USERNAME_PLACEHOLDER/lingua-quiz-backup:latest # Замени DOCKERHUB_USERNAME_PLACEHOLDER
+              image: DOCKERHUB_USERNAME_PLACEHOLDER/lingua-quiz-backup:latest
               env:
                 - name: POSTGRES_DB
                   valueFrom:
@@ -43,16 +44,18 @@ spec:
                     secretKeyRef:
                       name: spaces-credentials
                       key: SPACES_SECRET_KEY
+                # Настройки Spaces
                 - name: SPACES_ENDPOINT_URL
-                  value: "fra1.digitaloceanspaces.com"
+                  value: "fra1.digitaloceanspaces.com" # Твой эндпоинт
                 - name: SPACES_BUCKET_NAME
-                  value: "lingua-quiz"
+                  value: "lingua-quiz" # Имя твоего бакета
               command: ["/bin/sh", "-c"]
               args:
                 - |
                   set -e
                   echo "Starting PostgreSQL backup process..."
                   BACKUP_FILE="/backup/backup-$(date +%Y-%m-%dT%H-%M-%S).dump"
+
                   echo "Creating dump file: ${BACKUP_FILE}"
                   pg_dump -U $POSTGRES_USER -h $POSTGRES_HOST -d $POSTGRES_DB -Fc -f $BACKUP_FILE
                   echo "Dump created successfully."
@@ -76,6 +79,3 @@ spec:
             - name: backup-volume
               emptyDir: {}
           restartPolicy: OnFailure
-      concurrencyPolicy: Forbid
-      successfulJobsHistoryLimit: 3
-      failedJobsHistoryLimit: 1
