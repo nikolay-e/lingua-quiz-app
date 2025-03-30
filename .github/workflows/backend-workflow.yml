@@ -1,3 +1,4 @@
+# .github/workflows/backend-workflow.yml
 name: Backend Workflow
 
 on:
@@ -38,8 +39,11 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     outputs:
-      image_tag: ${{ env.IMAGE_TAG }}
-      deploy_env: ${{ env.DEPLOY_ENV }}
+      # Use outputs set explicitly by the step below
+      image_tag: ${{ steps.set_vars.outputs.image_tag_out }}
+      deploy_env: ${{ steps.set_vars.outputs.deploy_env_out }}
+      image_name: ${{ steps.set_vars.outputs.image_name_out }} # Output image_name again
+      helm_release_name: ${{ steps.set_vars.outputs.helm_release_name_out }}
     steps:
       - uses: actions/checkout@v3
       - name: Set up Docker Buildx
@@ -49,15 +53,48 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
-      - name: Set environment variables
+      - name: Set variables and outputs
+        id: set_vars
         run: |
-          echo "DEPLOY_ENV=$([[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]] && echo "production" || echo "test")" >> $GITHUB_ENV
+          DEPLOY_ENV_VAL=$([[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]] && echo "production" || echo "test")
           SAFE_REF_NAME=$(echo "${{ github.head_ref || github.ref_name }}" | sed -e 's/[^a-zA-Z0-9.-]/-/g' | cut -c1-128)
-          echo "IMAGE_TAG=${SAFE_REF_NAME}-${{ github.run_number }}" >> $GITHUB_ENV
-          echo "IMAGE_NAME=${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backend" >> $GITHUB_ENV
-          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-            echo "LATEST_TAG=latest" >> $GITHUB_ENV
+          IMAGE_TAG_VAL=${SAFE_REF_NAME}-${{ github.run_number }}
+
+          if [ -z "${{ secrets.DOCKER_REGISTRY_USERNAME }}" ]; then
+            echo "::error::Secret DOCKER_REGISTRY_USERNAME is not set or empty!"
+            exit 1
           fi
+          IMAGE_NAME_VAL=${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backend
+          echo "DEBUG: Calculated IMAGE_NAME_VAL is: '${IMAGE_NAME_VAL}'"
+
+          LATEST_TAG_VAL=""
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            LATEST_TAG_VAL=latest
+          fi
+
+          # Calculate Helm Release Name here
+          if [[ "$DEPLOY_ENV_VAL" == "production" ]]; then
+            HELM_RELEASE_NAME_VAL=lingua-quiz-backend
+          else
+            HELM_RELEASE_NAME_VAL=lingua-quiz-backend-test
+          fi
+          echo "DEBUG: Calculated HELM_RELEASE_NAME_VAL is: '${HELM_RELEASE_NAME_VAL}'"
+
+          # Set environment variables for subsequent steps in THIS job
+          echo "DEPLOY_ENV=${DEPLOY_ENV_VAL}" >> $GITHUB_ENV
+          echo "IMAGE_TAG=${IMAGE_TAG_VAL}" >> $GITHUB_ENV
+          echo "IMAGE_NAME=${IMAGE_NAME_VAL}" >> $GITHUB_ENV
+          echo "LATEST_TAG=${LATEST_TAG_VAL}" >> $GITHUB_ENV
+
+          # Set outputs using $GITHUB_OUTPUT
+          echo "Setting outputs using GITHUB_OUTPUT..."
+          echo "deploy_env_out=${DEPLOY_ENV_VAL}" >> $GITHUB_OUTPUT
+          echo "image_tag_out=${IMAGE_TAG_VAL}" >> $GITHUB_OUTPUT
+          echo "image_name_out=${IMAGE_NAME_VAL}" >> $GITHUB_OUTPUT # Set output
+          echo "latest_tag_out=${LATEST_TAG_VAL}" >> $GITHUB_OUTPUT
+          echo "helm_release_name_out=${HELM_RELEASE_NAME_VAL}" >> $GITHUB_OUTPUT
+          echo "Finished setting outputs."
+
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
@@ -70,9 +107,10 @@ jobs:
       - name: Log build details
         run: |
           echo "::group::Build Details"
-          echo "Deploy Environment: ${{ env.DEPLOY_ENV }}"
-          echo "Image: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
-          [[ -n "${{ env.LATEST_TAG }}" ]] && echo "Latest Tag Added: ${{ env.IMAGE_NAME }}:latest"
+          echo "Deploy Environment: ${{ steps.set_vars.outputs.deploy_env_out }}"
+          echo "Image Name: ${{ steps.set_vars.outputs.image_name_out }}" # Use output
+          echo "Image Tag: ${{ steps.set_vars.outputs.image_tag_out }}"
+          [[ -n "${{ steps.set_vars.outputs.latest_tag_out }}" ]] && echo "Latest Tag Added: ${{ steps.set_vars.outputs.image_name_out }}:latest"
           echo "::endgroup::"
 
   deploy:
@@ -82,15 +120,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup Kubernetes Tools
+      - name: Setup Kubernetes and Helm Tools
         run: |
           curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
           chmod +x kubectl
           sudo mv kubectl /usr/local/bin/
-          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
-          sudo mv kustomize /usr/local/bin/
-          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
-          sudo chmod +x /usr/local/bin/yq
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+          helm version
 
       - name: Set up kubeconfig
         run: |
@@ -101,15 +137,32 @@ jobs:
       - name: Verify kubectl configuration
         run: |
           kubectl cluster-info
+          kubectl config current-context
 
       - name: Set deployment environment variables
         env:
+          # Get outputs from the build job
           DEPLOY_ENV_FROM_BUILD: ${{ needs.build-and-push.outputs.deploy_env }}
           IMAGE_TAG_FROM_BUILD: ${{ needs.build-and-push.outputs.image_tag }}
+          # IMAGE_NAME_FROM_BUILD: ${{ needs.build-and-push.outputs.image_name }} # Not using this approach anymore
+          HELM_RELEASE_NAME_FROM_BUILD: ${{ needs.build-and-push.outputs.helm_release_name }}
         run: |
+          # Set variables for subsequent steps in *this* job
           echo "DEPLOY_ENV=${DEPLOY_ENV_FROM_BUILD}" >> $GITHUB_ENV
           echo "IMAGE_TAG=${IMAGE_TAG_FROM_BUILD}" >> $GITHUB_ENV
-          echo "IMAGE_NAME=${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backend" >> $GITHUB_ENV
+          echo "HELM_RELEASE_NAME=${HELM_RELEASE_NAME_FROM_BUILD}" >> $GITHUB_ENV
+
+          # === Recalculate IMAGE_NAME here ===
+          if [ -z "${{ secrets.DOCKER_REGISTRY_USERNAME }}" ]; then
+            echo "::error::Secret DOCKER_REGISTRY_USERNAME is not set or empty in deploy job!"
+            exit 1
+          fi
+          IMAGE_NAME_FOR_HELM_VAL=${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backend
+          echo "IMAGE_NAME_FOR_HELM=${IMAGE_NAME_FOR_HELM_VAL}" >> $GITHUB_ENV
+          echo "DEBUG: Recalculated IMAGE_NAME_FOR_HELM is: ${IMAGE_NAME_FOR_HELM_VAL}"
+          # === End Recalculation ===
+
+          # Calculate other variables based on DEPLOY_ENV
           if [[ "$DEPLOY_ENV_FROM_BUILD" == "production" ]]; then
             echo "DEPLOY_NAMESPACE=default" >> $GITHUB_ENV
             echo "DEPLOY_PORT=9000" >> $GITHUB_ENV
@@ -119,97 +172,79 @@ jobs:
             echo "DEPLOY_PORT=9001" >> $GITHUB_ENV
             echo "API_HOST=test-api-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
           fi
+          # Calculate POSTGRES_SECRET_NAME using the already set HELM_RELEASE_NAME
+          echo "POSTGRES_SECRET_NAME=${HELM_RELEASE_NAME_FROM_BUILD}-postgres" >> $GITHUB_ENV
+          echo "DEBUG: POSTGRES_SECRET_NAME set to: ${HELM_RELEASE_NAME_FROM_BUILD}-postgres"
+
           echo "SSL_CERT_PATH=/etc/nginx/ssl/${API_HOST}.crt" >> $GITHUB_ENV
           echo "SSL_KEY_PATH=/etc/nginx/ssl/${API_HOST}.key" >> $GITHUB_ENV
 
-      - name: Clean up Previous Production App Deployment (if exists)
-        if: env.DEPLOY_NAMESPACE == 'default'
+      - name: DEBUG - Show crucial env vars
         run: |
-          echo "Cleaning up Production App resources in namespace: ${{ env.DEPLOY_NAMESPACE }}"
-          kubectl delete deployment lingua-quiz -n ${{ env.DEPLOY_NAMESPACE }} --ignore-not-found=true --timeout=30s
-          kubectl delete service lingua-quiz-service -n ${{ env.DEPLOY_NAMESPACE }} --ignore-not-found=true --timeout=30s
-          kubectl delete secret jwt-secret -n ${{ env.DEPLOY_NAMESPACE }} --ignore-not-found=true --timeout=30s
-          echo "Waiting a few seconds..."
-          sleep 5
+          echo "Image name set in env for helm (IMAGE_NAME_FOR_HELM): '${{ env.IMAGE_NAME_FOR_HELM }}'"
+          echo "Image tag set in env for helm (IMAGE_TAG): '${{ env.IMAGE_TAG }}'"
+          echo "Helm Release Name: '${{ env.HELM_RELEASE_NAME }}'"
+          echo "Deploy Namespace: '${{ env.DEPLOY_NAMESPACE }}'"
+          echo "Postgres Secret Name: '${{ env.POSTGRES_SECRET_NAME }}'"
 
-      - name: Clean up Previous Test Deployment (if exists)
-        if: env.DEPLOY_NAMESPACE == 'test'
+      - name: Deploy to Kubernetes using Helm
         run: |
-          echo "Cleaning up Test resources in namespace: ${{ env.DEPLOY_NAMESPACE }}"
-          kubectl delete deployment lingua-quiz -n ${{ env.DEPLOY_NAMESPACE }} --ignore-not-found=true --timeout=30s
-          kubectl delete service lingua-quiz-service -n ${{ env.DEPLOY_NAMESPACE }} --ignore-not-found=true --timeout=30s
-          kubectl delete secret jwt-secret -n ${{ env.DEPLOY_NAMESPACE }} --ignore-not-found=true --timeout=30s
-          kubectl delete statefulset postgres -n ${{ env.DEPLOY_NAMESPACE }} --ignore-not-found=true --timeout=60s # StatefulSet может удаляться дольше
-          kubectl delete service postgres -n ${{ env.DEPLOY_NAMESPACE }} --ignore-not-found=true --timeout=30s
-          kubectl delete secret postgres-secret -n ${{ env.DEPLOY_NAMESPACE }} --ignore-not-found=true --timeout=30s
-          kubectl delete pvc -l app=postgres -n ${{ env.DEPLOY_NAMESPACE }} --ignore-not-found=true --timeout=60s # PVC тоже может удаляться дольше
-          echo "Waiting a few seconds for resources to terminate..."
-          sleep 10
-
-      - name: Create Kubernetes Resources (Namespace & Secrets)
-        run: |
-          kubectl create namespace ${{ env.DEPLOY_NAMESPACE }} --dry-run=client -o yaml | kubectl apply --namespace ${{ env.DEPLOY_NAMESPACE }} -f -
-          kubectl create secret generic jwt-secret \
+          echo "Deploying Helm chart to namespace: ${{ env.DEPLOY_NAMESPACE }}"
+          # Use the env vars set in this job
+          helm upgrade --install ${{ env.HELM_RELEASE_NAME }} ./packages/backend/helm/lingua-quiz \
             --namespace ${{ env.DEPLOY_NAMESPACE }} \
-            --from-literal=JWT_SECRET=${{ secrets.JWT_SECRET }} \
-            --dry-run=client -o yaml | kubectl apply --namespace ${{ env.DEPLOY_NAMESPACE }} -f -
-          kubectl create secret generic postgres-secret \
-            --namespace=${{ env.DEPLOY_NAMESPACE }} \
-            --from-literal=POSTGRES_DB=${{ secrets.POSTGRES_DB }} \
-            --from-literal=POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
-            --from-literal=POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
-            --dry-run=client -o yaml | kubectl apply --namespace ${{ env.DEPLOY_NAMESPACE }} -f -
+            --create-namespace \
+            --set backend.image.repository=${{ env.IMAGE_NAME_FOR_HELM }} \
+            --set backend.image.tag=${{ env.IMAGE_TAG }} \
+            --set backend.port=${{ env.DEPLOY_PORT }} \
+            --set backend.service.port=${{ env.DEPLOY_PORT }} \
+            --set secrets.jwtSecret=${{ secrets.JWT_SECRET }} \
+            --set secrets.postgresDb=${{ secrets.POSTGRES_DB }} \
+            --set secrets.postgresUser=${{ secrets.POSTGRES_USER }} \
+            --set secrets.postgresPassword=${{ secrets.POSTGRES_PASSWORD }} \
+            --wait --timeout 5m0s
 
-      - name: Update Kubernetes Manifests
-        env:
-          K8S_DIR: ./packages/backend/k8s
+      - name: Run Migrations
         run: |
-          cd ${K8S_DIR}
-          echo "Updating kustomization with image=${IMAGE_NAME}:${IMAGE_TAG}, namespace=${DEPLOY_NAMESPACE}"
-          yq e ".images[0].newName = \"${IMAGE_NAME}\"" -i kustomization.yaml
-          yq e ".images[0].newTag = \"${{ env.IMAGE_TAG }}\"" -i kustomization.yaml
-          yq e ".namespace = \"${{ env.DEPLOY_NAMESPACE }}\"" -i kustomization.yaml
-          echo "Updating deployment.yaml with port=${DEPLOY_PORT}"
-          yq e "(.spec.template.spec.containers[0].ports[0].containerPort) = ${{ env.DEPLOY_PORT }}" -i deployment.yaml
-          yq e "(.spec.template.spec.containers[0].ports[0].hostPort) = ${{ env.DEPLOY_PORT }}" -i deployment.yaml
-          yq e "(.spec.template.spec.containers[0].livenessProbe.httpGet.port) = ${{ env.DEPLOY_PORT }}" -i deployment.yaml
-          yq e "(.spec.template.spec.containers[0].readinessProbe.httpGet.port) = ${{ env.DEPLOY_PORT }}" -i deployment.yaml
-          yq e "(.spec.template.spec.containers[0].startupProbe.httpGet.port) = ${{ env.DEPLOY_PORT }}" -i deployment.yaml
-          yq e "(.spec.template.spec.containers[0].env[] | select(.name == \"PORT\")).value = strenv(DEPLOY_PORT)" -i deployment.yaml
-          echo "Updating service.yaml with port=${DEPLOY_PORT}"
-          yq e "(.spec.ports[0].port) = ${{ env.DEPLOY_PORT }}" -i service.yaml
-          yq e "(.spec.ports[0].targetPort) = ${{ env.DEPLOY_PORT }}" -i service.yaml
-
-      - name: Deploy to Kubernetes
-        env:
-          K8S_DIR: ./packages/backend/k8s
-        run: |
-          cd ${K8S_DIR}
-          echo "Applying Kubernetes manifests with kustomize..."
-          kustomize build . | kubectl apply --namespace ${{ env.DEPLOY_NAMESPACE }} -f -
-
-      - name: Wait for Deployments and Run Migrations
-        run: |
-          echo "Waiting for Kubernetes deployments in namespace: ${{ env.DEPLOY_NAMESPACE }}..."
-          kubectl rollout status statefulset/postgres -n ${{ env.DEPLOY_NAMESPACE }} --timeout=300s
-          kubectl rollout status deployment/lingua-quiz -n ${{ env.DEPLOY_NAMESPACE }} --timeout=300s
-          echo "Deployments ready. Waiting a few seconds before migration..."
+          echo "Waiting a few seconds before running migrations..."
           sleep 10
           echo "Running database migrations..."
-          BACKEND_POD=$(kubectl get pods -l app=lingua-quiz -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.items[0].metadata.name}" 2>/dev/null)
+          BACKEND_POD=$(kubectl get pods -l app.kubernetes.io/instance=${{ env.HELM_RELEASE_NAME }} -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.items[0].metadata.name}" 2>/dev/null)
           if [[ -z "$BACKEND_POD" ]]; then
              echo "::error::Could not find backend pod to run migrations."
              exit 1
           fi
           echo "Found backend pod: $BACKEND_POD"
-          DB_NAME=$(kubectl get secret postgres-secret -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.data.POSTGRES_DB}" | base64 --decode)
-          DB_USER=$(kubectl get secret postgres-secret -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.data.POSTGRES_USER}" | base64 --decode)
-          DB_PASS=$(kubectl get secret postgres-secret -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.data.POSTGRES_PASSWORD}" | base64 --decode)
+
+          # Use the env var POSTGRES_SECRET_NAME directly
+          POSTGRES_SECRET_VAR_NAME="${{ env.POSTGRES_SECRET_NAME }}"
+          echo "DEBUG: Using postgres secret name: '$POSTGRES_SECRET_VAR_NAME'"
+
+          DB_NAME=$(kubectl get secret "$POSTGRES_SECRET_VAR_NAME" -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.data.POSTGRES_DB}" | base64 --decode)
+          DB_USER=$(kubectl get secret "$POSTGRES_SECRET_VAR_NAME" -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.data.POSTGRES_USER}" | base64 --decode)
+          DB_PASS=$(kubectl get secret "$POSTGRES_SECRET_VAR_NAME" -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.data.POSTGRES_PASSWORD}" | base64 --decode)
+          DB_HOST_VALUE="${{ env.HELM_RELEASE_NAME }}-postgres"
+
+          if [ -z "$DB_NAME" ]; then echo "::error::Failed to get DB_NAME from secret '$POSTGRES_SECRET_VAR_NAME'"; exit 1; fi
+          if [ -z "$DB_USER" ]; then echo "::error::Failed to get DB_USER from secret '$POSTGRES_SECRET_VAR_NAME'"; exit 1; fi
+          if [ -z "$DB_PASS" ]; then echo "::error::Failed to get DB_PASS from secret '$POSTGRES_SECRET_VAR_NAME'"; exit 1; fi
+          echo "DEBUG: DB_HOST=${DB_HOST_VALUE}, DB_PORT=5432, POSTGRES_DB=${DB_NAME}, POSTGRES_USER=${DB_USER}, POSTGRES_PASSWORD length: ${#DB_PASS}"
+
+          # Execute migration command with export
+          echo "Executing migration command..."
           kubectl exec $BACKEND_POD -n ${{ env.DEPLOY_NAMESPACE }} -- \
-            sh -c "DB_HOST=postgres DB_PORT=5432 POSTGRES_DB=$DB_NAME POSTGRES_USER=$DB_USER POSTGRES_PASSWORD=$DB_PASS npm run migrate"
-          echo "Migrations command executed."
+            sh -c "export DB_HOST='${DB_HOST_VALUE}' && \
+                   export DB_PORT='5432' && \
+                   export POSTGRES_DB='${DB_NAME}' && \
+                   export POSTGRES_USER='${DB_USER}' && \
+                   export POSTGRES_PASSWORD='${DB_PASS}' && \
+                   echo '--- Running npm run migrate inside pod ---' && \
+                   npm run migrate && \
+                   echo '--- npm run migrate finished ---'"
+          echo "Migrations command execution attempt finished."
 
       - name: Configure Nginx on VPS
+        # This step remains unchanged
         uses: appleboy/ssh-action@v1.0.3
         env:
           API_HOST_ENV: ${{ env.API_HOST }}
@@ -222,6 +257,7 @@ jobs:
           key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
           envs: API_HOST_ENV, DEPLOY_PORT_ENV, SSL_CERT_PATH_ENV, SSL_KEY_PATH_ENV
           script: |
+            # ... (скрипт Nginx остается без изменений) ...
             echo "Configuring Nginx for ${API_HOST_ENV} proxying to ${DEPLOY_PORT_ENV}"
             sudo mkdir -p /etc/nginx/ssl
             sudo chmod 700 /etc/nginx/ssl
@@ -285,16 +321,17 @@ jobs:
         run: |
           echo "::group::Deployment Status"
           echo "Deploy Environment: ${{ env.DEPLOY_ENV }}"
+          echo "Helm Release: ${{ env.HELM_RELEASE_NAME }}"
           echo "Namespace: ${{ env.DEPLOY_NAMESPACE }}"
-          echo "Target Port (hostPort/containerPort): ${{ env.DEPLOY_PORT }}"
+          echo "Target Port (backend service): ${{ env.DEPLOY_PORT }}"
           echo "API Host (Nginx Server Name): ${{ env.API_HOST }}"
-          echo "Image: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
+          echo "Image: ${{ env.IMAGE_NAME_FOR_HELM }}:${{ env.IMAGE_TAG }}" # Use env var
           echo "Deployment to Kubernetes completed."
           echo "Nginx configuration on VPS updated."
           echo "::endgroup::"
 
   test:
-    needs: [deploy]
+    needs: [build-and-push, deploy]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
