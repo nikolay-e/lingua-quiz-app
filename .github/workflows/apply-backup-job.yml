@@ -1,7 +1,8 @@
+# .github/workflows/apply-backup-job.yml
 name: Apply Backup Job to Kubernetes
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Позволяет запускать вручную из интерфейса GitHub Actions
 
 permissions:
   contents: read
@@ -38,35 +39,47 @@ jobs:
       - name: Prepare Backup Manifests
         id: prepare
         env:
-          SPACES_KEY_ID_B64:
-            ${{ secrets.DO_SPACES_ACCESS_KEY_ID && format('{0}', secrets.DO_SPACES_ACCESS_KEY_ID ||
-            '') || '' }}
-          SPACES_SECRET_KEY_B64:
-            ${{ secrets.DO_SPACES_SECRET_KEY && format('{0}', secrets.DO_SPACES_SECRET_KEY || '') ||
-            '' }}
+          # --- Получаем секреты в чистом виде ---
+          SPACES_KEY_ID: ${{ secrets.DO_SPACES_ACCESS_KEY_ID }}
+          SPACES_SECRET_KEY: ${{ secrets.DO_SPACES_SECRET_KEY }}
+          # -------------------------------------
           BACKUP_IMAGE: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backup:latest
           BACKUP_MANIFEST_DIR: packages/backend/k8s/backup
         run: |
           echo "Preparing manifests in ${BACKUP_MANIFEST_DIR}..."
-          cd ${BACKUP_MANIFEST_DIR}
 
-          if [ -z "$SPACES_KEY_ID_B64" ] || [ -z "$SPACES_SECRET_KEY_B64" ]; then
+          # --- Проверяем наличие секретов ---
+          if [ -z "$SPACES_KEY_ID" ] || [ -z "$SPACES_SECRET_KEY" ]; then
             echo "::error::DO_SPACES_ACCESS_KEY_ID or DO_SPACES_SECRET_KEY secrets are not set in GitHub Actions."
             exit 1
           fi
+          # ---------------------------------
 
-          sed -i "s|SPACES_ACCESS_KEY_ID_BASE64_PLACEHOLDER|${SPACES_KEY_ID_B64}|g" spaces-credentials-secret.yaml
-          sed -i "s|SPACES_SECRET_KEY_BASE64_PLACEHOLDER|${SPACES_SECRET_KEY_B64}|g" spaces-credentials-secret.yaml
+          # --- Кодируем секреты в Base64 ---
+          ENCODED_KEY_ID=$(echo -n "$SPACES_KEY_ID" | base64)
+          ENCODED_SECRET_KEY=$(echo -n "$SPACES_SECRET_KEY" | base64)
+          # ---------------------------------
 
+          # Переходим в директорию с манифестами
+          cd ${BACKUP_MANIFEST_DIR}
+
+          # --- Заменяем плейсхолдеры на ЗАКОДИРОВАННЫЕ значения ---
+          sed -i "s|SPACES_ACCESS_KEY_ID_BASE64_PLACEHOLDER|${ENCODED_KEY_ID}|g" spaces-credentials-secret.yaml
+          sed -i "s|SPACES_SECRET_KEY_BASE64_PLACEHOLDER|${ENCODED_SECRET_KEY}|g" spaces-credentials-secret.yaml
+          # -------------------------------------------------------
+
+          # Заменяем плейсхолдер для имени образа в CronJob
           sed -i "s|DOCKERHUB_USERNAME_PLACEHOLDER/lingua-quiz-backup:latest|${BACKUP_IMAGE}|g" postgres-backup-cronjob.yaml
 
           echo "Manifests prepared."
-          echo "::group::Prepared Secret (masked)"
+          # Выведем для проверки (обрезанный)
+          echo "::group::Prepared Secret (placeholders replaced with encoded values)"
           head -n 10 spaces-credentials-secret.yaml
           echo "::endgroup::"
           echo "::group::Prepared CronJob (image updated)"
           head -n 20 postgres-backup-cronjob.yaml
           echo "::endgroup::"
+          # Возвращаемся в корень, чтобы следующая команда нашла путь
           cd ../../..
 
       - name: Apply Backup Manifests using Kustomize
@@ -78,5 +91,7 @@ jobs:
       - name: Verify CronJob Creation
         run: |
           echo "Verifying CronJob status..."
+          # Добавим проверку секрета тоже
+          kubectl get secret spaces-credentials -n default
           kubectl get cronjob postgres-backup -n default -o wide
           echo "Verification complete."
