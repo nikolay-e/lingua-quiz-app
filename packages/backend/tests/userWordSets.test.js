@@ -43,27 +43,31 @@ describe('User Word Sets Endpoint', () => {
     testUser = testData.user;
     jwtToken = testData.token;
     // Очищаем объекты перед каждым запуском набора тестов
-    Object.keys(wordSetsByStatus).forEach(key => { wordSetsByStatus[key] = []; });
+    Object.keys(wordSetsByStatus).forEach((key) => {
+      wordSetsByStatus[key] = [];
+    });
     insertedWordPairs.length = 0;
   });
 
   afterAll(async () => {
     if (jwtToken) {
       // Удаляем тестовые данные
-       for (const wordPair of insertedWordPairs) {
-           try {
-               // Добавим проверку на наличие translationId
-               if (wordPair && wordPair.translationId) {
-                   await axiosInstance.delete(`${API_URL}/word-pair/${wordPair.translationId}`, {
-                       headers: { Authorization: `Bearer ${jwtToken}` },
-                   });
-               }
-           } catch (error) {
-               console.warn(`Warning: Could not delete word pair ${wordPair?.translationId} during cleanup: ${error.response?.data?.message || error.message}`);
-           }
-       }
-       await deleteTestUser(jwtToken); // Удаляем пользователя
-       jwtToken = null; // Сбрасываем токен
+      for (const wordPair of insertedWordPairs) {
+        try {
+          // Добавим проверку на наличие translationId
+          if (wordPair && wordPair.translationId) {
+            await axiosInstance.delete(`${API_URL}/word-pair/${wordPair.translationId}`, {
+              headers: { Authorization: `Bearer ${jwtToken}` },
+            });
+          }
+        } catch (error) {
+          console.warn(
+            `Warning: Could not delete word pair ${wordPair?.translationId} during cleanup: ${error.response?.data?.message || error.message}`
+          );
+        }
+      }
+      await deleteTestUser(jwtToken); // Удаляем пользователя
+      jwtToken = null; // Сбрасываем токен
     }
   });
 
@@ -121,7 +125,11 @@ describe('User Word Sets Endpoint', () => {
 
     // Заполняем начальное состояние
     wordSetsByStatus[STATUS.LEVEL_0] = ourInsertedPairs.map((set) => set.wordPairId);
-    Object.keys(wordSetsByStatus).filter(k => k !== STATUS.LEVEL_0).forEach(key => { wordSetsByStatus[key] = []; });
+    Object.keys(wordSetsByStatus)
+      .filter((k) => k !== STATUS.LEVEL_0)
+      .forEach((key) => {
+        wordSetsByStatus[key] = [];
+      });
   });
 
   it('should update word sets status', async function () {
@@ -130,36 +138,39 @@ describe('User Word Sets Endpoint', () => {
     // Обновляем 10 слов на LEVEL_1
     const idsToLevel1 = wordSetsByStatus[STATUS.LEVEL_0].slice(0, 10);
     if (idsToLevel1.length > 0) {
-        let response = await axiosInstance.post(
-            `${API_URL}/user/word-sets`,
-            { status: STATUS.LEVEL_1, wordPairIds: idsToLevel1 },
-            { headers: { Authorization: `Bearer ${jwtToken}` } }
-        );
-        expect(response.status).to.equal(200);
-        wordSetsByStatus[STATUS.LEVEL_1].push(...idsToLevel1);
-        wordSetsByStatus[STATUS.LEVEL_0] = wordSetsByStatus[STATUS.LEVEL_0].filter(id => !idsToLevel1.includes(id));
-        await delay(50);
+      let response = await axiosInstance.post(
+        `${API_URL}/user/word-sets`,
+        { status: STATUS.LEVEL_1, wordPairIds: idsToLevel1 },
+        { headers: { Authorization: `Bearer ${jwtToken}` } }
+      );
+      expect(response.status).to.equal(200);
+      wordSetsByStatus[STATUS.LEVEL_1].push(...idsToLevel1);
+      wordSetsByStatus[STATUS.LEVEL_0] = wordSetsByStatus[STATUS.LEVEL_0].filter(
+        (id) => !idsToLevel1.includes(id)
+      );
+      await delay(50);
     }
-
 
     // Обновляем 5 слов на LEVEL_2 (из тех, что теперь LEVEL_0)
     const idsToLevel2 = wordSetsByStatus[STATUS.LEVEL_0].slice(0, 5);
-     if (idsToLevel2.length > 0) {
-        let response = await axiosInstance.post(
-            `${API_URL}/user/word-sets`,
-            { status: STATUS.LEVEL_2, wordPairIds: idsToLevel2 },
-            { headers: { Authorization: `Bearer ${jwtToken}` } }
-        );
-        expect(response.status).to.equal(200);
-        wordSetsByStatus[STATUS.LEVEL_2].push(...idsToLevel2);
-        wordSetsByStatus[STATUS.LEVEL_0] = wordSetsByStatus[STATUS.LEVEL_0].filter(id => !idsToLevel2.includes(id));
-        await delay(50);
-     }
+    if (idsToLevel2.length > 0) {
+      let response = await axiosInstance.post(
+        `${API_URL}/user/word-sets`,
+        { status: STATUS.LEVEL_2, wordPairIds: idsToLevel2 },
+        { headers: { Authorization: `Bearer ${jwtToken}` } }
+      );
+      expect(response.status).to.equal(200);
+      wordSetsByStatus[STATUS.LEVEL_2].push(...idsToLevel2);
+      wordSetsByStatus[STATUS.LEVEL_0] = wordSetsByStatus[STATUS.LEVEL_0].filter(
+        (id) => !idsToLevel2.includes(id)
+      );
+      await delay(50);
+    }
 
     // Проверяем финальное состояние
     const finalResponse = await axiosInstance.get(`${API_URL}/user/word-sets`, {
-        headers: { Authorization: `Bearer ${jwtToken}` },
-        params: { wordListName },
+      headers: { Authorization: `Bearer ${jwtToken}` },
+      params: { wordListName },
     });
 
     expect(finalResponse.status).to.equal(200);
@@ -170,12 +181,11 @@ describe('User Word Sets Endpoint', () => {
     const countLevel1 = wordSetsByStatus[STATUS.LEVEL_1].length;
     const countLevel2 = wordSetsByStatus[STATUS.LEVEL_2].length;
 
-    expect(finalData.filter(w => w.status === STATUS.LEVEL_1).length).to.equal(countLevel1);
-    expect(finalData.filter(w => w.status === STATUS.LEVEL_2).length).to.equal(countLevel2);
-    expect(finalData.filter(w => w.status === STATUS.LEVEL_0).length).to.equal(countLevel0);
-    expect(finalData.filter(w => w.status === STATUS.LEVEL_3).length).to.equal(0); // Не обновляли до L3
+    expect(finalData.filter((w) => w.status === STATUS.LEVEL_1).length).to.equal(countLevel1);
+    expect(finalData.filter((w) => w.status === STATUS.LEVEL_2).length).to.equal(countLevel2);
+    expect(finalData.filter((w) => w.status === STATUS.LEVEL_0).length).to.equal(countLevel0);
+    expect(finalData.filter((w) => w.status === STATUS.LEVEL_3).length).to.equal(0); // Не обновляли до L3
   });
-
 
   it('should allow any valid state transition', async function () {
     const wordListName = `TestList_${testUser.email}`;
@@ -194,29 +204,33 @@ describe('User Word Sets Endpoint', () => {
         headers: { Authorization: `Bearer ${jwtToken}` },
         params: { wordListName },
       });
-      expect(verifyResponse.data.find(w => w.wordPairId === idToMove)?.status).to.equal(STATUS.LEVEL_3);
+      expect(verifyResponse.data.find((w) => w.wordPairId === idToMove)?.status).to.equal(
+        STATUS.LEVEL_3
+      );
 
       // Обновляем локальное состояние
-      wordSetsByStatus[STATUS.LEVEL_1] = wordSetsByStatus[STATUS.LEVEL_1].filter(id => id !== idToMove);
+      wordSetsByStatus[STATUS.LEVEL_1] = wordSetsByStatus[STATUS.LEVEL_1].filter(
+        (id) => id !== idToMove
+      );
       wordSetsByStatus[STATUS.LEVEL_3].push(idToMove);
     } else {
-        console.warn("Skipping LEVEL_1 -> LEVEL_3 transition test: No words in LEVEL_1");
+      console.warn('Skipping LEVEL_1 -> LEVEL_3 transition test: No words in LEVEL_1');
     }
   });
 
   it('should handle an empty wordPairIds array gracefully', async function () {
     // Используем только валидные статусы из STATUS
-    const validStatuses = Object.values(STATUS).filter(s => s.startsWith('LEVEL_'));
+    const validStatuses = Object.values(STATUS).filter((s) => s.startsWith('LEVEL_'));
 
     for (const status of validStatuses) {
-        const response = await axiosInstance.post(
-            `${API_URL}/user/word-sets`,
-            { status, wordPairIds: [] }, // Отправляем пустой массив
-            { headers: { Authorization: `Bearer ${jwtToken}` } }
-        );
-        expect(response.status).to.equal(200);
-        expect(response.data.message).to.include('no changes applied');
-        await delay(50);
+      const response = await axiosInstance.post(
+        `${API_URL}/user/word-sets`,
+        { status, wordPairIds: [] }, // Отправляем пустой массив
+        { headers: { Authorization: `Bearer ${jwtToken}` } }
+      );
+      expect(response.status).to.equal(200);
+      expect(response.data.message).to.include('no changes applied');
+      await delay(50);
     }
   });
 

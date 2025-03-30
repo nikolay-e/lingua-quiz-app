@@ -6,8 +6,8 @@ FROM postgres:13-alpine
 RUN apk add --no-cache ca-certificates curl
 
 # Скачиваем и устанавливаем MinIO Client (mc)
-RUN curl -sSL https://dl.min.io/client/mc/release/linux-amd64/mc -o /usr/local/bin/mc && \
-    chmod +x /usr/local/bin/mc
+RUN curl -sSL https://dl.min.io/client/mc/release/linux-amd64/mc -o /usr/local/bin/mc \
+  && chmod +x /usr/local/bin/mc
 
 # Проверяем установку mc (опционально)
 RUN mc --version
