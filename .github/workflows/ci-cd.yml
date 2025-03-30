@@ -1,0 +1,68 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+  security-events: write
+
+jobs:
+  common-tests:
+    uses: ./.github/workflows/common-tests.yml
+
+  prepare-secrets:
+    uses: ./.github/workflows/secrets.yml
+    secrets:
+      VPS_SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+      SSL_CERT: ${{ secrets.SSL_CERT }}
+      SSL_KEY: ${{ secrets.SSL_KEY }}
+      KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+
+  frontend:
+    needs: [common-tests, prepare-secrets]
+    uses: nikolay-e/reusable-workflows/.github/workflows/docker-build-deploy-vps.yml@main
+    with:
+      image_name: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'lingua-quiz-com' || 'test-lingua-quiz-com' }}
+      container_port: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 8444 || 8445 }}
+      domain: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'lingua-quiz.nikolay-eremeev.com' || 'test-lingua-quiz.nikolay-eremeev.com' }}
+      docker_context: packages/frontend
+      docker_file: packages/frontend/Dockerfile
+    secrets:
+      DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+      DOCKER_REGISTRY_TOKEN: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+      VPS_USER: ${{ secrets.VPS_USER }}
+      VPS_SSH_PRIVATE_KEY: ${{ needs.prepare-secrets.outputs.vps_ssh_key }}
+      SSL_CERT: ${{ needs.prepare-secrets.outputs.ssl_cert }}
+      SSL_KEY: ${{ needs.prepare-secrets.outputs.ssl_key }}
+
+  backend:
+    needs: [common-tests, prepare-secrets]
+    uses: ./.github/workflows/backend-workflow.yml
+    secrets:
+      DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+      DOCKER_REGISTRY_TOKEN: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
+      KUBE_CONFIG: ${{ needs.prepare-secrets.outputs.kube_config }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+      VPS_USER: ${{ secrets.VPS_USER }}
+      VPS_SSH_PRIVATE_KEY: ${{ needs.prepare-secrets.outputs.vps_ssh_key }}
+      SSL_CERT: ${{ needs.prepare-secrets.outputs.ssl_cert }}
+      SSL_KEY: ${{ needs.prepare-secrets.outputs.ssl_key }}
+
+  integration-tests:
+    needs: [frontend, backend]
+    uses: ./.github/workflows/integration-tests.yml
+    with:
+      frontend-url: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'https://lingua-quiz.nikolay-eremeev.com' || 'https://test-lingua-quiz.nikolay-eremeev.com' }}
+      backend-url: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'https://api-lingua-quiz.nikolay-eremeev.com' || 'https://test-api-lingua-quiz.nikolay-eremeev.com' }}

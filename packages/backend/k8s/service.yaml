@@ -7,6 +7,7 @@ spec:
     app: lingua-quiz
   ports:
     - protocol: TCP
-      port: 443
-      targetPort: 443
+      port: PORT_PLACEHOLDER
+      targetPort: PORT_PLACEHOLDER
+      name: http
   type: ClusterIP

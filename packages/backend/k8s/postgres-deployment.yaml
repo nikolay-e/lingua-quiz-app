@@ -17,6 +17,7 @@ spec:
           image: postgres:13
           ports:
             - containerPort: 5432
+              name: postgresdb
           env:
             - name: POSTGRES_DB
               valueFrom:
@@ -36,7 +37,7 @@ spec:
           volumeMounts:
             - name: postgres-storage
               mountPath: /var/lib/postgresql/data
-              subPath: postgres # Uses a subdirectory to prevent overwriting the entire volume
+              subPath: postgres
       volumes:
         - name: postgres-storage
           emptyDir: {}
@@ -52,3 +53,4 @@ spec:
     - protocol: TCP
       port: 5432
       targetPort: 5432
+  type: ClusterIP
