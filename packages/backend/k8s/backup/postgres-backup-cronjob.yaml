@@ -1,0 +1,81 @@
+# packages/backend/k8s/backup/postgres-backup-cronjob.yaml
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: postgres-backup
+  # namespace: default # Kustomize позаботится об этом
+spec:
+  # Расписание: Каждый день в 2:00 ночи по времени кластера (UTC по умолчанию)
+  schedule: "0 2 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: postgres-backup
+              # Используем образ, который будет собран CI/CD
+              image: DOCKERHUB_USERNAME_PLACEHOLDER/lingua-quiz-backup:latest # Замени DOCKERHUB_USERNAME_PLACEHOLDER
+              env:
+                - name: POSTGRES_DB
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgres-secret
+                      key: POSTGRES_DB
+                - name: POSTGRES_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgres-secret
+                      key: POSTGRES_USER
+                - name: PGPASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgres-secret
+                      key: POSTGRES_PASSWORD
+                - name: POSTGRES_HOST
+                  value: "postgres"
+                - name: SPACES_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: spaces-credentials
+                      key: SPACES_ACCESS_KEY_ID
+                - name: SPACES_SECRET_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: spaces-credentials
+                      key: SPACES_SECRET_KEY
+                - name: SPACES_ENDPOINT_URL
+                  value: "fra1.digitaloceanspaces.com"
+                - name: SPACES_BUCKET_NAME
+                  value: "lingua-quiz"
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  set -e
+                  echo "Starting PostgreSQL backup process..."
+                  BACKUP_FILE="/backup/backup-$(date +%Y-%m-%dT%H-%M-%S).dump"
+                  echo "Creating dump file: ${BACKUP_FILE}"
+                  pg_dump -U $POSTGRES_USER -h $POSTGRES_HOST -d $POSTGRES_DB -Fc -f $BACKUP_FILE
+                  echo "Dump created successfully."
+
+                  echo "Configuring mc..."
+                  mc alias set spaces https://${SPACES_ENDPOINT_URL} ${SPACES_ACCESS_KEY_ID} ${SPACES_SECRET_KEY}
+                  echo "mc configured."
+
+                  TARGET_PATH="spaces/${SPACES_BUCKET_NAME}/backups/${BACKUP_FILE##*/}" # Путь в бакете
+                  echo "Uploading ${BACKUP_FILE} to ${TARGET_PATH}..."
+                  mc cp ${BACKUP_FILE} ${TARGET_PATH}
+                  echo "Upload complete."
+
+                  echo "Cleaning up local file..."
+                  rm ${BACKUP_FILE}
+                  echo "Backup process finished successfully."
+              volumeMounts:
+                - name: backup-volume
+                  mountPath: /backup
+          volumes:
+            - name: backup-volume
+              emptyDir: {}
+          restartPolicy: OnFailure
+      concurrencyPolicy: Forbid
+      successfulJobsHistoryLimit: 3
+      failedJobsHistoryLimit: 1
