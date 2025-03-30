@@ -1,97 +1,81 @@
-# .github/workflows/apply-backup-job.yml
-name: Apply Backup Job to Kubernetes
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: postgres-backup
+spec:
+  schedule: "0 2 * * *"
 
-on:
-  workflow_dispatch: # Позволяет запускать вручную из интерфейса GitHub Actions
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
 
-permissions:
-  contents: read
+  jobTemplate: # Шаблон для Job'а
+    spec:
+      template: # Шаблон для Pod'а
+        spec:
+          containers:
+            - name: postgres-backup
+              image: DOCKERHUB_USERNAME_PLACEHOLDER/lingua-quiz-backup:latest
+              env:
+                - name: POSTGRES_DB
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgres-secret
+                      key: POSTGRES_DB
+                - name: POSTGRES_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgres-secret
+                      key: POSTGRES_USER
+                - name: PGPASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: postgres-secret
+                      key: POSTGRES_PASSWORD
+                - name: POSTGRES_HOST
+                  value: "postgres"
+                - name: SPACES_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: spaces-credentials
+                      key: SPACES_ACCESS_KEY_ID
+                - name: SPACES_SECRET_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: spaces-credentials
+                      key: SPACES_SECRET_KEY
+                # Настройки Spaces
+                - name: SPACES_ENDPOINT_URL
+                  value: "fra1.digitaloceanspaces.com" # Твой эндпоинт
+                - name: SPACES_BUCKET_NAME
+                  value: "lingua-quiz" # Имя твоего бакета
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  set -e
+                  echo "Starting PostgreSQL backup process..."
+                  BACKUP_FILE="/backup/backup-$(date +%Y-%m-%dT%H-%M-%S).dump"
 
-jobs:
-  apply-manifests:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+                  echo "Creating dump file: ${BACKUP_FILE}"
+                  pg_dump -U $POSTGRES_USER -h $POSTGRES_HOST -d $POSTGRES_DB -Fc -f $BACKUP_FILE
+                  echo "Dump created successfully."
 
-      - name: Setup Kubernetes Tools
-        run: |
-          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-          chmod +x kubectl
-          sudo mv kubectl /usr/local/bin/
-          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
-          sudo mv kustomize /usr/local/bin/
+                  echo "Configuring mc..."
+                  mc alias set spaces https://${SPACES_ENDPOINT_URL} ${SPACES_ACCESS_KEY_ID} ${SPACES_SECRET_KEY}
+                  echo "mc configured."
 
-      - name: Decode Kubeconfig
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
-        run: |
-          mkdir -p $HOME/.kube
-          echo "$KUBE_CONFIG_DATA" | base64 -d > $HOME/.kube/config
-          chmod 600 $HOME/.kube/config
-          echo "Kubeconfig set up."
+                  TARGET_PATH="spaces/${SPACES_BUCKET_NAME}/backups/${BACKUP_FILE##*/}" # Путь в бакете
+                  echo "Uploading ${BACKUP_FILE} to ${TARGET_PATH}..."
+                  mc cp ${BACKUP_FILE} ${TARGET_PATH}
+                  echo "Upload complete."
 
-      - name: Verify kubectl configuration
-        run: |
-          kubectl cluster-info
-          kubectl config current-context
-
-      - name: Prepare Backup Manifests
-        id: prepare
-        env:
-          # --- Получаем секреты в чистом виде ---
-          SPACES_KEY_ID: ${{ secrets.DO_SPACES_ACCESS_KEY_ID }}
-          SPACES_SECRET_KEY: ${{ secrets.DO_SPACES_SECRET_KEY }}
-          # -------------------------------------
-          BACKUP_IMAGE: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backup:latest
-          BACKUP_MANIFEST_DIR: packages/backend/k8s/backup
-        run: |
-          echo "Preparing manifests in ${BACKUP_MANIFEST_DIR}..."
-
-          # --- Проверяем наличие секретов ---
-          if [ -z "$SPACES_KEY_ID" ] || [ -z "$SPACES_SECRET_KEY" ]; then
-            echo "::error::DO_SPACES_ACCESS_KEY_ID or DO_SPACES_SECRET_KEY secrets are not set in GitHub Actions."
-            exit 1
-          fi
-          # ---------------------------------
-
-          # --- Кодируем секреты в Base64 ---
-          ENCODED_KEY_ID=$(echo -n "$SPACES_KEY_ID" | base64)
-          ENCODED_SECRET_KEY=$(echo -n "$SPACES_SECRET_KEY" | base64)
-          # ---------------------------------
-
-          # Переходим в директорию с манифестами
-          cd ${BACKUP_MANIFEST_DIR}
-
-          # --- Заменяем плейсхолдеры на ЗАКОДИРОВАННЫЕ значения ---
-          sed -i "s|SPACES_ACCESS_KEY_ID_BASE64_PLACEHOLDER|${ENCODED_KEY_ID}|g" spaces-credentials-secret.yaml
-          sed -i "s|SPACES_SECRET_KEY_BASE64_PLACEHOLDER|${ENCODED_SECRET_KEY}|g" spaces-credentials-secret.yaml
-          # -------------------------------------------------------
-
-          # Заменяем плейсхолдер для имени образа в CronJob
-          sed -i "s|DOCKERHUB_USERNAME_PLACEHOLDER/lingua-quiz-backup:latest|${BACKUP_IMAGE}|g" postgres-backup-cronjob.yaml
-
-          echo "Manifests prepared."
-          # Выведем для проверки (обрезанный)
-          echo "::group::Prepared Secret (placeholders replaced with encoded values)"
-          head -n 10 spaces-credentials-secret.yaml
-          echo "::endgroup::"
-          echo "::group::Prepared CronJob (image updated)"
-          head -n 20 postgres-backup-cronjob.yaml
-          echo "::endgroup::"
-          # Возвращаемся в корень, чтобы следующая команда нашла путь
-          cd ../../..
-
-      - name: Apply Backup Manifests using Kustomize
-        run: |
-          echo "Applying backup manifests from packages/backend/k8s/backup to 'default' namespace..."
-          kubectl apply -k packages/backend/k8s/backup
-          echo "Apply command executed."
-
-      - name: Verify CronJob Creation
-        run: |
-          echo "Verifying CronJob status..."
-          # Добавим проверку секрета тоже
-          kubectl get secret spaces-credentials -n default
-          kubectl get cronjob postgres-backup -n default -o wide
-          echo "Verification complete."
+                  echo "Cleaning up local file..."
+                  rm ${BACKUP_FILE}
+                  echo "Backup process finished successfully."
+              volumeMounts:
+                - name: backup-volume
+                  mountPath: /backup
+          volumes:
+            - name: backup-volume
+              emptyDir: {}
+          restartPolicy: OnFailure
