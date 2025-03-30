@@ -1,6 +1,12 @@
+# .prettierignore
+
 *.py
 *.csv
 *.txt
 *.ico
 *.png
 .treemapperignore
+
+# Helm chart template files
+**/helm/**/templates/**/*.yaml
+**/helm/**/templates/**/*.tpl
