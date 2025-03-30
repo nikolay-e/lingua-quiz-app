@@ -104,8 +104,8 @@ jobs:
 
       - name: Set deployment environment variables
         env:
-           DEPLOY_ENV_FROM_BUILD: ${{ needs.build-and-push.outputs.deploy_env }}
-           IMAGE_TAG_FROM_BUILD: ${{ needs.build-and-push.outputs.image_tag }}
+          DEPLOY_ENV_FROM_BUILD: ${{ needs.build-and-push.outputs.deploy_env }}
+          IMAGE_TAG_FROM_BUILD: ${{ needs.build-and-push.outputs.image_tag }}
         run: |
           echo "DEPLOY_ENV=${DEPLOY_ENV_FROM_BUILD}" >> $GITHUB_ENV
           echo "IMAGE_TAG=${IMAGE_TAG_FROM_BUILD}" >> $GITHUB_ENV
@@ -306,7 +306,7 @@ jobs:
         run: npm ci
       - name: Set environment variables for tests
         env:
-           DEPLOY_ENV_FROM_BUILD: ${{ needs.build-and-push.outputs.deploy_env }}
+          DEPLOY_ENV_FROM_BUILD: ${{ needs.build-and-push.outputs.deploy_env }}
         run: |
           echo "NODE_ENV=test" >> $GITHUB_ENV
           if [[ "$DEPLOY_ENV_FROM_BUILD" == "production" ]]; then

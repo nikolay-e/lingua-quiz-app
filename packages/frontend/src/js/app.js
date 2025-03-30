@@ -113,12 +113,12 @@ export class App {
     const focusSet = this.wordStatusSets[STATUS.LEVEL_1];
     const upcomingSet = this.wordStatusSets[STATUS.LEVEL_0];
     const spacesAvailable = MAX_FOCUS_WORDS - focusSet.size;
-    
+
     if (spacesAvailable > 0 && upcomingSet.size > 0) {
       const upcomingWords = Array.from(upcomingSet);
       const shuffled = upcomingWords.sort(() => 0.5 - Math.random());
       const wordsToMove = shuffled.slice(0, spacesAvailable);
-      wordsToMove.forEach(wordId => {
+      wordsToMove.forEach((wordId) => {
         this.moveWordToStatus(wordId, STATUS.LEVEL_1);
       });
     }

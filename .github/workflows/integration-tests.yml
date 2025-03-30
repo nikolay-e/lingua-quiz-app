@@ -40,7 +40,7 @@ jobs:
         run: |
           echo "TEST_ENV=test" >> $GITHUB_ENV
           echo "NODE_ENV=production" >> $GITHUB_ENV
-          
+
           # Use input URLs if provided, otherwise determine dynamically
           if [[ -n "${{ inputs.frontend-url }}" ]]; then
             echo "LINGUA_QUIZ_URL=${{ inputs.frontend-url }}" >> $GITHUB_ENV
@@ -81,7 +81,7 @@ jobs:
           else
             echo "ZAP_FRONTEND_URL=https://lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
           fi
-          
+
           if [[ -n "${{ inputs.backend-url }}" ]]; then
             echo "ZAP_BACKEND_URL=${{ inputs.backend-url }}" >> $GITHUB_ENV
           elif [[ "${{ github.event_name }}" == "pull_request" ]]; then

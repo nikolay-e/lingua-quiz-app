@@ -1,15 +1,14 @@
 /* eslint-disable consistent-return */
 /* eslint-disable max-len */
 // Используем встроенный модуль http для создания сервера
+const fs = require('fs'); // eslint-disable-line no-unused-vars -- Используется логгером winston
 const http = require('http');
 // fs нужен для файлового логгера
-const fs = require('fs'); // eslint-disable-line no-unused-vars -- Используется логгером winston
 
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const express = require('express');
-const rateLimit = require('express-rate-limit');
 const { body, param, query, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
@@ -83,12 +82,8 @@ const logger = winston.createLogger({
     new winston.transports.File({ filename: 'error.log', level: 'error' }),
     new winston.transports.File({ filename: 'combined.log' }),
   ],
-  exceptionHandlers: [
-    new winston.transports.File({ filename: 'exceptions.log' }),
-  ],
-  rejectionHandlers: [
-    new winston.transports.File({ filename: 'rejections.log' }),
-  ],
+  exceptionHandlers: [new winston.transports.File({ filename: 'exceptions.log' })],
+  rejectionHandlers: [new winston.transports.File({ filename: 'rejections.log' })],
 });
 
 // Создание Express приложения
@@ -176,22 +171,6 @@ function authenticateToken(req, res, next) {
     next({ statusCode: 403, message: 'Invalid or expired token' });
   }
 }
-
-// Middleware для ограничения частоты запросов
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: process.env.RATE_LIMIT_MAX ? parseInt(process.env.RATE_LIMIT_MAX, 10) : 1000,
-  message: 'Too many requests from this IP, please try again after 15 minutes',
-  skip: (req) => req.path === '/healthz',
-  handler: (req, res, next, options) => {
-    logger.warn(`Rate limit exceeded for IP: ${req.ip}`, {
-      method: req.method,
-      url: req.originalUrl || req.url,
-    });
-    res.status(options.statusCode).send(options.message);
-  },
-});
-app.use(limiter);
 
 // ==================
 // Маршруты API
@@ -365,13 +344,18 @@ app.post(
       // *** ИСПРАВЛЕНО: Разрешаем пустой массив ***
       .isArray({ min: 0 }) // Было { min: 1 }
       .withMessage('wordPairIds must be an array'),
-    body('wordPairIds.*').isInt({ min: 1 }).withMessage('Each wordPairId must be a positive integer'),
+    body('wordPairIds.*')
+      .isInt({ min: 1 })
+      .withMessage('Each wordPairId must be a positive integer'),
   ],
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       // Добавим логирование деталей ошибки валидации
-      logger.warn('Update user word sets validation failed', { errors: errors.array(), body: req.body });
+      logger.warn('Update user word sets validation failed', {
+        errors: errors.array(),
+        body: req.body,
+      });
       return next({ statusCode: 400, message: 'Validation failed', errors: errors.array() });
     }
     const { userId } = req;
@@ -380,8 +364,13 @@ app.post(
     try {
       // Обрабатываем пустой массив ID отдельно, чтобы не вызывать БД без нужды
       if (wordPairIds.length === 0) {
-          logger.info('Received empty wordPairIds array, no database update needed.', { userId, status });
-          return res.status(200).json({ message: 'Word sets status update request received (no changes applied for empty list).' });
+        logger.info('Received empty wordPairIds array, no database update needed.', {
+          userId,
+          status,
+        });
+        return res.status(200).json({
+          message: 'Word sets status update request received (no changes applied for empty list).',
+        });
       }
 
       const wordPairIdsArray = `{${wordPairIds.join(',')}}`;
@@ -477,8 +466,15 @@ app.post(
       res.status(201).json({ message: 'Word pair inserted successfully' });
     } catch (error) {
       if (error.code === '23505') {
-        logger.warn('Attempt to insert duplicate word pair', { translationId, error: error.message });
-        return next({ statusCode: 409, message: 'Word pair already exists', details: error.detail });
+        logger.warn('Attempt to insert duplicate word pair', {
+          translationId,
+          error: error.message,
+        });
+        return next({
+          statusCode: 409,
+          message: 'Word pair already exists',
+          details: error.detail,
+        });
       }
       if (error.code === '23503') {
         logger.error('Foreign key violation during word pair insertion', {
@@ -500,9 +496,7 @@ app.post(
 app.delete(
   '/word-pair/:translationId',
   authenticateToken,
-  [
-    param('translationId').isInt({ min: 1 }).withMessage('Invalid translationId parameter'),
-  ],
+  [param('translationId').isInt({ min: 1 }).withMessage('Invalid translationId parameter')],
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -510,9 +504,7 @@ app.delete(
     }
     const translationId = parseInt(req.params.translationId, 10);
     try {
-      await pool.query('SELECT remove_word_pair_and_list_entry($1)', [
-        translationId,
-      ]);
+      await pool.query('SELECT remove_word_pair_and_list_entry($1)', [translationId]);
       logger.info('Word pair and associated list entries removed successfully', { translationId });
       res.status(200).json({ message: 'Word pair and associated data removed successfully' });
     } catch (error) {
@@ -557,19 +549,19 @@ function errorHandler(err, req, res, _next) {
 
   // Кастомизация сообщений
   if (statusCode >= 500 && !(err instanceof DatabaseError)) {
-      userMessage = 'An internal server error occurred.';
+    userMessage = 'An internal server error occurred.';
   } else if (statusCode === 400 && err.errors) {
-      userMessage = 'Invalid request data.';
+    userMessage = 'Invalid request data.';
   } else if (statusCode === 401 || statusCode === 403) {
-      // *** ИСПРАВЛЕНО: Используем это сообщение для тестов ***
-      userMessage = 'Authentication failed or insufficient permissions.';
+    // *** ИСПРАВЛЕНО: Используем это сообщение для тестов ***
+    userMessage = 'Authentication failed or insufficient permissions.';
   } else if (statusCode === 404) {
-      userMessage = 'The requested resource was not found.';
+    userMessage = 'The requested resource was not found.';
   } else if (statusCode === 409) {
-      // *** ИСПРАВЛЕНО: Используем это сообщение для тестов ***
-      userMessage = 'Conflict: The resource already exists or cannot be created.';
+    // *** ИСПРАВЛЕНО: Используем это сообщение для тестов ***
+    userMessage = 'Conflict: The resource already exists or cannot be created.';
   } else if (statusCode === 503) {
-      userMessage = 'Service currently unavailable. Please try again later.';
+    userMessage = 'Service currently unavailable. Please try again later.';
   }
 
   const responseError =
@@ -593,7 +585,7 @@ app.use(errorHandler);
 let server;
 
 function startServer() {
-  const PORT = process.env.PORT;
+  const { PORT } = process.env;
   if (!PORT || Number.isNaN(parseInt(PORT, 10))) {
     logger.error('FATAL ERROR: PORT environment variable is not set or invalid.');
     process.exit(1);
