@@ -138,12 +138,13 @@ jobs:
           echo "Cleaning up Test resources in namespace: ${{ env.DEPLOY_NAMESPACE }}"
           kubectl delete deployment lingua-quiz -n ${{ env.DEPLOY_NAMESPACE }} --ignore-not-found=true --timeout=30s
           kubectl delete service lingua-quiz-service -n ${{ env.DEPLOY_NAMESPACE }} --ignore-not-found=true --timeout=30s
-          kubectl delete deployment postgres -n ${{ env.DEPLOY_NAMESPACE }} --ignore-not-found=true --timeout=30s
-          kubectl delete service postgres -n ${{ env.DEPLOY_NAMESPACE }} --ignore-not-found=true --timeout=30s
           kubectl delete secret jwt-secret -n ${{ env.DEPLOY_NAMESPACE }} --ignore-not-found=true --timeout=30s
+          kubectl delete statefulset postgres -n ${{ env.DEPLOY_NAMESPACE }} --ignore-not-found=true --timeout=60s # StatefulSet может удаляться дольше
+          kubectl delete service postgres -n ${{ env.DEPLOY_NAMESPACE }} --ignore-not-found=true --timeout=30s
           kubectl delete secret postgres-secret -n ${{ env.DEPLOY_NAMESPACE }} --ignore-not-found=true --timeout=30s
-          echo "Waiting a few seconds..."
-          sleep 5
+          kubectl delete pvc -l app=postgres -n ${{ env.DEPLOY_NAMESPACE }} --ignore-not-found=true --timeout=60s # PVC тоже может удаляться дольше
+          echo "Waiting a few seconds for resources to terminate..."
+          sleep 10
 
       - name: Create Kubernetes Resources (Namespace & Secrets)
         run: |
@@ -190,11 +191,7 @@ jobs:
       - name: Wait for Deployments and Run Migrations
         run: |
           echo "Waiting for Kubernetes deployments in namespace: ${{ env.DEPLOY_NAMESPACE }}..."
-          if [[ "${{ env.DEPLOY_NAMESPACE }}" == "default" ]]; then
-              kubectl rollout status deployment/postgres -n ${{ env.DEPLOY_NAMESPACE }} --timeout=300s
-          elif [[ "${{ env.DEPLOY_NAMESPACE }}" == "test" ]]; then
-              kubectl rollout status deployment/postgres -n ${{ env.DEPLOY_NAMESPACE }} --timeout=300s
-          fi
+          kubectl rollout status statefulset/postgres -n ${{ env.DEPLOY_NAMESPACE }} --timeout=300s
           kubectl rollout status deployment/lingua-quiz -n ${{ env.DEPLOY_NAMESPACE }} --timeout=300s
           echo "Deployments ready. Waiting a few seconds before migration..."
           sleep 10
