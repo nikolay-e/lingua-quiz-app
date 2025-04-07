@@ -13,10 +13,7 @@ const logger = winston.createLogger({
       return `${timestamp} [${level.toUpperCase()}]: ${message}`;
     })
   ),
-  transports: [
-    new winston.transports.Console(),
-    new winston.transports.File({ filename: 'migration.log' }),
-  ],
+  transports: [new winston.transports.Console(), new winston.transports.File({ filename: 'migration.log' })],
 });
 
 const escapeSQL = (str) => {
@@ -83,9 +80,7 @@ async function generateSQLFromCSV(csvFilePath, outputSqlFilePath, config) {
 }
 
 async function processCSVFiles(migrationsDirPath) {
-  const csvFiles = fs
-    .readdirSync(migrationsDirPath)
-    .filter((file) => path.extname(file) === '.csv');
+  const csvFiles = fs.readdirSync(migrationsDirPath).filter((file) => path.extname(file) === '.csv');
   logger.info(`Found CSV files: ${csvFiles.join(', ')}`);
 
   for (let i = 0; i < csvFiles.length; i += 1) {

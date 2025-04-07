@@ -24,13 +24,13 @@ module.exports = {
     'prettier/prettier': [
       'error',
       {
-        printWidth: 100,
+        printWidth: 150,
         singleQuote: true,
         trailingComma: 'es5',
       },
     ],
     'no-console': ['error', { allow: ['warn', 'error'] }],
-    'max-len': ['error', { code: 100 }],
+    'max-len': ['error', { code: 150 }],
     'import/no-mutable-exports': 'off',
     'import/order': [
       'error',

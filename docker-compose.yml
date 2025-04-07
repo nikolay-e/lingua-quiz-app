@@ -1,0 +1,101 @@
+services:
+  db:
+    image: postgres:13-alpine
+    container_name: lingua-quiz-db-local
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata_local:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - lingua-quiz-local-net
+
+  backend:
+    container_name: lingua-quiz-backend-local
+    build:
+      context: .
+      dockerfile: packages/backend/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      PORT: 9000
+      DB_HOST: ${DB_HOST:-db}
+      DB_PORT: ${DB_PORT:-5432}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - "9000:9000"
+    command: >
+      sh -c "sleep 5 && node runMigrations.js && node server.js"
+    networks:
+      - lingua-quiz-local-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://backend:9000/healthz"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  frontend:
+    container_name: lingua-quiz-frontend-local
+    build:
+      context: ./packages/frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    networks:
+      - lingua-quiz-local-net
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://frontend:80/"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+
+  e2e-tests:
+    container_name: lingua-quiz-e2e-tests
+    build:
+      context: .
+      dockerfile: packages/e2e-tests/Dockerfile
+    environment:
+      LINGUA_QUIZ_URL: http://frontend:80
+      API_URL: http://backend:9000
+      NODE_ENV: test
+    depends_on:
+      frontend:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    command: >
+      sh -c "
+        echo 'Waiting a bit more for services to stabilize...' && sleep 15 &&
+        echo 'Running E2E tests...' &&
+        npm run test --workspace=@linguaquiz/e2e-tests
+      "
+    networks:
+      - lingua-quiz-local-net
+    volumes:
+      - ./packages/e2e-tests/playwright-report:/app/packages/e2e-tests/playwright-report
+      - ./packages/e2e-tests/test-results:/app/packages/e2e-tests/test-results
+
+volumes:
+  pgdata_local:
+
+networks:
+  lingua-quiz-local-net:
+    driver: bridge

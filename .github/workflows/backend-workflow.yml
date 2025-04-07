@@ -65,7 +65,6 @@ jobs:
             exit 1
           fi
           IMAGE_NAME_VAL=${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backend
-          echo "DEBUG: Calculated IMAGE_NAME_VAL is: '${IMAGE_NAME_VAL}'"
 
           LATEST_TAG_VAL=""
           if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
@@ -78,7 +77,6 @@ jobs:
           else
             HELM_RELEASE_NAME_VAL=lingua-quiz-backend-test
           fi
-          echo "DEBUG: Calculated HELM_RELEASE_NAME_VAL is: '${HELM_RELEASE_NAME_VAL}'"
 
           # Set environment variables for subsequent steps in THIS job
           echo "DEPLOY_ENV=${DEPLOY_ENV_VAL}" >> $GITHUB_ENV
@@ -144,7 +142,6 @@ jobs:
           # Get outputs from the build job
           DEPLOY_ENV_FROM_BUILD: ${{ needs.build-and-push.outputs.deploy_env }}
           IMAGE_TAG_FROM_BUILD: ${{ needs.build-and-push.outputs.image_tag }}
-          # IMAGE_NAME_FROM_BUILD: ${{ needs.build-and-push.outputs.image_name }} # Not using this approach anymore
           HELM_RELEASE_NAME_FROM_BUILD: ${{ needs.build-and-push.outputs.helm_release_name }}
         run: |
           # Set variables for subsequent steps in *this* job
@@ -159,7 +156,6 @@ jobs:
           fi
           IMAGE_NAME_FOR_HELM_VAL=${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backend
           echo "IMAGE_NAME_FOR_HELM=${IMAGE_NAME_FOR_HELM_VAL}" >> $GITHUB_ENV
-          echo "DEBUG: Recalculated IMAGE_NAME_FOR_HELM is: ${IMAGE_NAME_FOR_HELM_VAL}"
           # === End Recalculation ===
 
           # Calculate other variables based on DEPLOY_ENV
@@ -174,24 +170,17 @@ jobs:
           fi
           # Calculate POSTGRES_SECRET_NAME using the already set HELM_RELEASE_NAME
           echo "POSTGRES_SECRET_NAME=${HELM_RELEASE_NAME_FROM_BUILD}-postgres" >> $GITHUB_ENV
-          echo "DEBUG: POSTGRES_SECRET_NAME set to: ${HELM_RELEASE_NAME_FROM_BUILD}-postgres"
 
           echo "SSL_CERT_PATH=/etc/nginx/ssl/${API_HOST}.crt" >> $GITHUB_ENV
           echo "SSL_KEY_PATH=/etc/nginx/ssl/${API_HOST}.key" >> $GITHUB_ENV
-
-      - name: DEBUG - Show crucial env vars
-        run: |
-          echo "Image name set in env for helm (IMAGE_NAME_FOR_HELM): '${{ env.IMAGE_NAME_FOR_HELM }}'"
-          echo "Image tag set in env for helm (IMAGE_TAG): '${{ env.IMAGE_TAG }}'"
-          echo "Helm Release Name: '${{ env.HELM_RELEASE_NAME }}'"
-          echo "Deploy Namespace: '${{ env.DEPLOY_NAMESPACE }}'"
-          echo "Postgres Secret Name: '${{ env.POSTGRES_SECRET_NAME }}'"
 
       - name: Deploy to Kubernetes using Helm
         run: |
           echo "Deploying Helm chart to namespace: ${{ env.DEPLOY_NAMESPACE }}"
           # Use the env vars set in this job
-          helm upgrade --install ${{ env.HELM_RELEASE_NAME }} ./packages/backend/helm/lingua-quiz \
+          helm uninstall ${{ env.HELM_RELEASE_NAME }} \
+            --namespace ${{ env.DEPLOY_NAMESPACE }} && \
+          helm install ${{ env.HELM_RELEASE_NAME }} ./packages/backend/helm/lingua-quiz \
             --namespace ${{ env.DEPLOY_NAMESPACE }} \
             --create-namespace \
             --set backend.image.repository=${{ env.IMAGE_NAME_FOR_HELM }} \
@@ -218,7 +207,6 @@ jobs:
 
           # Use the env var POSTGRES_SECRET_NAME directly
           POSTGRES_SECRET_VAR_NAME="${{ env.POSTGRES_SECRET_NAME }}"
-          echo "DEBUG: Using postgres secret name: '$POSTGRES_SECRET_VAR_NAME'"
 
           DB_NAME=$(kubectl get secret "$POSTGRES_SECRET_VAR_NAME" -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.data.POSTGRES_DB}" | base64 --decode)
           DB_USER=$(kubectl get secret "$POSTGRES_SECRET_VAR_NAME" -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.data.POSTGRES_USER}" | base64 --decode)
@@ -228,7 +216,6 @@ jobs:
           if [ -z "$DB_NAME" ]; then echo "::error::Failed to get DB_NAME from secret '$POSTGRES_SECRET_VAR_NAME'"; exit 1; fi
           if [ -z "$DB_USER" ]; then echo "::error::Failed to get DB_USER from secret '$POSTGRES_SECRET_VAR_NAME'"; exit 1; fi
           if [ -z "$DB_PASS" ]; then echo "::error::Failed to get DB_PASS from secret '$POSTGRES_SECRET_VAR_NAME'"; exit 1; fi
-          echo "DEBUG: DB_HOST=${DB_HOST_VALUE}, DB_PORT=5432, POSTGRES_DB=${DB_NAME}, POSTGRES_USER=${DB_USER}, POSTGRES_PASSWORD length: ${#DB_PASS}"
 
           # Execute migration command with export
           echo "Executing migration command..."
@@ -257,7 +244,6 @@ jobs:
           key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
           envs: API_HOST_ENV, DEPLOY_PORT_ENV, SSL_CERT_PATH_ENV, SSL_KEY_PATH_ENV
           script: |
-            # ... (скрипт Nginx остается без изменений) ...
             echo "Configuring Nginx for ${API_HOST_ENV} proxying to ${DEPLOY_PORT_ENV}"
             sudo mkdir -p /etc/nginx/ssl
             sudo chmod 700 /etc/nginx/ssl

@@ -7,7 +7,6 @@
   },
   "scripts": {
     "start": "live-server --port=8080 src",
-    "build": "mkdir -p dist && cp -r src/* dist/",
     "test": "jest --runInBand --coverage"
   },
   "keywords": [],

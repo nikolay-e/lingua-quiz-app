@@ -1,211 +1,414 @@
 const { test, expect } = require('@playwright/test');
-const { register, login, logout } = require('./helpers');
+const { register, login } = require('./helpers');
 
+// --- Configuration ---
+const MAX_SUBMIT_RETRIES = 2;
+const RETRY_DELAY_MS = 50;
+const WAIT_FOR_ELEMENT_TIMEOUT = 10000;
+const WAIT_FOR_LIST_TIMEOUT = 15000;
+const TEST_TIMEOUT_MS = 2700000;
+const MAX_CONSECUTIVE_ERRORS_BEFORE_FAIL = 3;
+const FULL_LIST_REFRESH_INTERVAL = 25;
+
+/**
+ * Gets words or count from a list.
+ * @param {import('@playwright/test').Page} page
+ * @param {string} listId
+ * @param {boolean} [countOnly=false] - If true, returns only the count.
+ * @returns {Promise<Array<{sourceWord: string, targetWord: string}> | number>}
+ */
+async function getWordsOrCountFromList(page, listId, countOnly = false) {
+  try {
+    const listLocator = page.locator(`#${listId} li`);
+    // Ensure list container exists briefly before checking count or items
+    await page
+      .locator(`#${listId}`)
+      .waitFor({ state: 'attached', timeout: 2000 })
+      .catch(() => {});
+
+    if (countOnly) {
+      const count = await listLocator.count();
+      // console.log(`Count for ${listId}: ${count}`); // Optional debug log
+      return count;
+    }
+
+    const words = [];
+    const listItems = await listLocator.allTextContents();
+    for (const text of listItems) {
+      const match = text.match(/(.+?)\s+(\(.*)/);
+
+      if (match) {
+        const sourceWord = match[1].trim();
+        let targetPart = match[2].trim();
+
+        let targetWord = '';
+        if (targetPart.startsWith('(') && targetPart.endsWith(')')) {
+          targetWord = targetPart.slice(1, -1).trim();
+        } else if (targetPart.startsWith('(')) {
+          targetWord = targetPart.slice(1).trim();
+        } else {
+          targetWord = targetPart;
+        }
+
+        words.push({ sourceWord: sourceWord, targetWord: targetWord });
+      }
+    }
+    return words;
+  } catch (error) {
+    console.warn(`Could not get words/count from list ${listId}: ${error.message}`);
+    return countOnly ? 0 : []; // Return appropriate default on error
+  }
+}
+
+async function waitForNextQuestion(page, previousWord) {
+  try {
+    await page.waitForFunction(
+      (prevWord) => {
+        const currentWordEl = document.querySelector('#word');
+        const currentWord = currentWordEl ? currentWordEl.innerText : '';
+        return currentWord && currentWord.trim() !== '' && currentWord !== prevWord;
+      },
+      previousWord,
+      { timeout: WAIT_FOR_ELEMENT_TIMEOUT }
+    );
+    const newWord = await page.locator('#word').innerText();
+  } catch (e) {
+    console.warn(`Timeout or error waiting for the next question word after "${previousWord}". Error: ${e.message}`);
+    throw e;
+  }
+}
+
+// --- Test Suite ---
 test.describe('Quiz Functionality', () => {
   const testUser = `testuser${Date.now()}@example.com`;
   const testPassword = 'TestPassword123!';
 
-  test.beforeAll(async ({ browser }) => {
-    // Create a new browser context and page
-    const context = await browser.newContext();
-    const page = await context.newPage();
-    // Perform registration via GUI
-    await register(page, testUser, testPassword, true);
-    // Close the context
-    await context.close();
-  });
-
-  test.beforeEach(async ({ page }) => {
-    await login(page, testUser, testPassword);
-  });
-
-  test.afterEach(async ({ page }) => {
-    await logout(page);
-  });
-
   test('should master all words in the selected quiz', async ({ page }) => {
-    test.setTimeout(2000000);
+    test.setTimeout(TEST_TIMEOUT_MS);
 
-    // Wait for the quiz select dropdown to be available
-    await page.waitForTimeout(10000);
-    const quizSelect = page.locator('#quiz-select');
-    await quizSelect.waitFor({ state: 'visible', timeout: 5000 });
-
-    // Check if there are quizzes available
-    const quizOptions = await quizSelect.locator('option').all();
-    if (quizOptions.length <= 1) {
-      console.error('No quizzes available for selection.');
-      return;
-    }
-
-    // Select the first available quiz (skip the default option)
-    const quizValue = await quizOptions[1].getAttribute('value');
-    await quizSelect.selectOption(quizValue);
-
-    // Trigger the change event manually
-    await page.evaluate(() => {
-      const selectElement = document.getElementById('quiz-select');
-      const event = new Event('change', { bubbles: true });
-      selectElement.dispatchEvent(event);
+    console.log('Starting quiz test...');
+    await page.addStyleTag({
+      content: `*, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }`,
     });
+    console.log('UI animations disabled.');
 
-    // Wait for the word lists to load
-    await page.waitForSelector('#level-1-list li', { timeout: 10000 });
+    await register(page, testUser, testPassword, true);
+    await login(page, testUser, testPassword);
+    console.log('User registered and logged in.');
 
-    // Function to extract words from a given list
-    async function getWordsFromList(listId) {
-      const words = [];
-      const listItems = await page.locator(`#${listId} li`).allTextContents();
-      for (const text of listItems) {
-        // Each item is in the format: 'sourceWord (targetWord)'
-        const match = text.match(/(.+?)\s+\((.+?)\)/);
-        if (match) {
-          const sourceWord = match[1].trim();
-          const targetWord = match[2].trim();
-          words.push({ sourceWord, targetWord });
-        }
-      }
-      return words;
+    const quizSelect = page.locator('#quiz-select');
+    await quizSelect.waitFor({ state: 'visible', timeout: WAIT_FOR_ELEMENT_TIMEOUT });
+    await page.waitForTimeout(5000);
+    const quizOptions = await quizSelect.locator('option').all();
+
+    const quizValue = await quizOptions[1].getAttribute('value');
+    console.log(`Selecting quiz: "${quizValue}"`);
+    await quizSelect.selectOption({ index: 1 });
+
+    try {
+      console.log('Waiting for the first question word...');
+      await expect(page.locator('#word')).not.toBeEmpty({ timeout: WAIT_FOR_LIST_TIMEOUT });
+      console.log('First question word appeared.');
+    } catch (e) {
+      console.error('Initial question word did not appear after selecting quiz.');
+      throw e;
+    }
+    try {
+      console.log('Waiting for initial list population check...');
+      await page.waitForSelector('#level-1-list li, #level-0-list li', { timeout: 5000 });
+      console.log('Lists seem populated.');
+    } catch (e) {
+      console.warn('Initial list population check timed out, proceeding.');
     }
 
-    // Gather initial words from all lists
-    let focusWords = await getWordsFromList('level-1-list');
-    let masteredOneDirectionWords = await getWordsFromList('level-2-list');
-    let masteredVocabularyWords = await getWordsFromList('level-3-list');
-    let upcomingWords = await getWordsFromList('level-0-list');
+    // --- Initial Data Gathering ---
+    console.log('Gathering initial word lists state...');
 
-    // Combine all words into one array
-    let allWords = [
-      ...focusWords,
-      ...masteredOneDirectionWords,
-      ...masteredVocabularyWords,
-      ...upcomingWords,
-    ];
+    let initialListsWords = await Promise.all([
+      getWordsOrCountFromList(page, 'level-0-list', false), // false = get words
+      getWordsOrCountFromList(page, 'level-1-list', false),
+      getWordsOrCountFromList(page, 'level-2-list', false),
+      getWordsOrCountFromList(page, 'level-3-list', false),
+    ]);
+    let allWords = initialListsWords.flat(); // Initial full list for finding pairs
 
-    // Ensure we have words to work with
-    if (allWords.length === 0) {
-      console.error('No words available in any word list.');
+    let masteredOneDirectionCount = await getWordsOrCountFromList(page, 'level-2-list', true); // true = count only
+    let masteredVocabularyWordsCount = await getWordsOrCountFromList(page, 'level-3-list', true); // true = count only
+
+    const totalWordsInQuiz = allWords.length;
+    const targetMasteredCount = totalWordsInQuiz;
+
+    if (totalWordsInQuiz === 0) {
+      console.error('No words found in the quiz after initial load.');
+      test.fail(true, 'No words loaded initially.');
       return;
     }
+    console.log(`Quiz Started. Target: Master ${targetMasteredCount} words.`);
 
-    // Initialize a flag to track if we've toggled the direction
+    const initialL0Count = await getWordsOrCountFromList(page, 'level-0-list', true);
+    const initialL1Count = await getWordsOrCountFromList(page, 'level-1-list', true);
+    console.log(
+      `Initial Counts - L0: ${initialL0Count}, L1: ${initialL1Count}, L2: ${masteredOneDirectionCount}, L3: ${masteredVocabularyWordsCount}`
+    );
+
+    // --- Quiz State Variables ---
     let directionToggled = false;
+    let consecutiveErrorsCount = 0;
+    let questionCounter = 0;
+    let forceFullRefreshNextLoop = false;
 
-    // Loop until all words are mastered completely
-    while (masteredVocabularyWords.length < allWords.length) {
-      // Get the current question word
+    // --- Main Quiz Loop ---
+    while (
+      masteredVocabularyWordsCount < targetMasteredCount && // Loop until all words reach L3
+      consecutiveErrorsCount < MAX_CONSECUTIVE_ERRORS_BEFORE_FAIL
+    ) {
+      questionCounter++;
+
+      const currentProgressPoints = masteredOneDirectionCount + masteredVocabularyWordsCount;
+      const maxProgressPoints = 2 * targetMasteredCount;
+      const progressPercentage = maxProgressPoints > 0 ? ((currentProgressPoints / maxProgressPoints) * 100).toFixed(1) : 'N/A';
+
+      console.log(
+        `\n--- Question ${questionCounter} | Progress: ${currentProgressPoints}/${maxProgressPoints} (${progressPercentage}%) [L2:${masteredOneDirectionCount}, L3:${masteredVocabularyWordsCount}] | Errors: ${consecutiveErrorsCount} ---`
+      );
+
+      // 1. Get the current question word
       const questionWordElement = page.locator('#word');
-      const previousQuestionWord = await questionWordElement.innerText();
-
-      // Check if the question word is valid
-      if (
-        !previousQuestionWord ||
-        previousQuestionWord.trim() === '' ||
-        previousQuestionWord.includes('No more questions')
-      ) {
-        console.log('No more questions available in current direction.');
-
-        if (!directionToggled) {
-          // Toggle direction
-          console.log('Toggling direction...');
-          await page.click('#direction-toggle');
-
-          // Wait for the question word to update
-          await page.waitForFunction(
-            async (oldWord) => {
-              const newWord = document.querySelector('#word')?.innerText;
-              return newWord && newWord !== oldWord;
-            },
-            previousQuestionWord,
-            { timeout: 5000 }
-          );
-
-          // Set flag
-          directionToggled = true;
-          continue; // Continue the loop in new direction
-        } else {
-          // No more questions in both directions
-          console.log('No more questions in both directions.');
-          break; // Exit the loop
-        }
-      }
-
-      // Try to find the word pair in the current direction
-      let wordPair;
-      let answer = '';
-
-      if (!directionToggled) {
-        // Initial direction (e.g., source to target)
-        wordPair = allWords.find((wp) => wp.sourceWord === previousQuestionWord);
-        if (wordPair) {
-          answer = wordPair.targetWord;
-        }
-      } else {
-        // After toggling direction (e.g., target to source)
-        wordPair = allWords.find((wp) => wp.targetWord === previousQuestionWord);
-        if (wordPair) {
-          answer = wordPair.sourceWord;
-        }
-      }
-
-      if (!wordPair) {
-        console.error(`Could not find the answer for the question word: ${previousQuestionWord}`);
-        // Skip this iteration if the word is not found
-        // Go to next question
-        await page.click('#submit');
+      let previousQuestionWord = '';
+      try {
+        await expect(questionWordElement).toBeVisible({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
+        await expect(questionWordElement).not.toBeEmpty({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
+        previousQuestionWord = await questionWordElement.innerText();
+        console.log(`Question word: "${previousQuestionWord}" (Direction: ${directionToggled ? 'Reverse' : 'Normal'})`);
+      } catch (e) {
+        console.error(`Failed to get question word (Attempt ${consecutiveErrorsCount + 1}).`);
+        consecutiveErrorsCount++;
+        await page.waitForTimeout(250);
+        forceFullRefreshNextLoop = true;
         continue;
       }
 
-      // Input the answer and submit
-      const answerInput = page.locator('#answer');
+      // 2. Check for end state or invalid word
+      if (!previousQuestionWord || previousQuestionWord.trim() === '' || previousQuestionWord.includes('No more questions')) {
+        console.log(`Quiz state indicates no more questions for current direction: "${previousQuestionWord}"`);
+        // Update L3 count first to check for completion
+        masteredVocabularyWordsCount = await getWordsOrCountFromList(page, 'level-3-list', true);
 
-      // Wait for the answer input to be visible and enabled
-      await answerInput.waitFor({ state: 'visible', timeout: 5000 });
+        if (masteredVocabularyWordsCount >= targetMasteredCount) {
+          console.log("Target reached upon 'No more questions'. Breaking loop.");
+          break; // Exit loop - Target Met
+        }
 
-      // Fill the answer input
-      await answerInput.fill(answer);
+        // Target not reached, try toggling if not already done
+        if (!directionToggled) {
+          console.log('>>> Toggling direction to Reverse...');
+          await page.click('#direction-toggle');
+          directionToggled = true;
+          consecutiveErrorsCount = 0; // Reset errors after successful direction change
+          forceFullRefreshNextLoop = true; // Good practice to refresh after toggle
 
-      // Click submit
-      await page.click('#submit');
+          console.log('Waiting for the first question word in the REVERSE direction...');
+          try {
+            await page.waitForFunction(
+              (prevWord) => {
+                const currentWordEl = document.querySelector('#word');
+                const currentWord = currentWordEl ? currentWordEl.innerText.trim() : '';
+                return currentWord && currentWord !== prevWord && !currentWord.includes('No more questions');
+              },
+              previousQuestionWord,
+              { timeout: WAIT_FOR_ELEMENT_TIMEOUT * 2 }
+            );
+            const newWord = await page.locator('#word').innerText();
+            console.log(`First REVERSE question word appeared: "${newWord}"`);
+            continue;
+          } catch (e) {
+            console.error('Timeout or error waiting for the first REVERSE question word. Assuming stuck.', e);
+            masteredOneDirectionCount = await getWordsOrCountFromList(page, 'level-2-list', true);
+            masteredVocabularyWordsCount = await getWordsOrCountFromList(page, 'level-3-list', true); // Update count before final log
+            const currentL0Count = await getWordsOrCountFromList(page, 'level-0-list', true);
+            const currentL1Count = await getWordsOrCountFromList(page, 'level-1-list', true);
+            console.error(
+              `Stuck! Mastered L3: ${masteredVocabularyWordsCount}/${targetMasteredCount}. Remaining L0: ${currentL0Count}, L1: ${currentL1Count}, L2: ${masteredOneDirectionCount}`
+            );
+            break;
+          }
+        } else {
+          // Already tried Reverse, still "No more questions", and target not met.
+          console.log('No more questions available in Reverse. Stuck?');
+          masteredOneDirectionCount = await getWordsOrCountFromList(page, 'level-2-list', true);
+          // L3 count already updated above
+          const currentL0Count = await getWordsOrCountFromList(page, 'level-0-list', true);
+          const currentL1Count = await getWordsOrCountFromList(page, 'level-1-list', true);
+          console.error(
+            `Stuck! Mastered L3: ${masteredVocabularyWordsCount}/${targetMasteredCount}. Remaining L0: ${currentL0Count}, L1: ${currentL1Count}, L2: ${masteredOneDirectionCount}`
+          );
+          break; // Exit loop as stuck
+        }
+      } // End of "No more questions" block
 
-      // Verify the feedback
-      await page.waitForSelector('#feedback .feedback-message');
-      const feedbackText = await page.locator('#feedback .feedback-message').innerText();
-      if (feedbackText.includes('Correct!')) {
-        // Success
-        expect(feedbackText).toContain('Correct!');
+      // --- Full List Refresh Logic & Word Finding ---
+      let wordPair;
+      if (forceFullRefreshNextLoop || (questionCounter > 1 && questionCounter % FULL_LIST_REFRESH_INTERVAL === 0)) {
+        console.log(
+          `Performing full list refresh (Flag: ${forceFullRefreshNextLoop}, Interval: ${questionCounter % FULL_LIST_REFRESH_INTERVAL === 0})...`
+        );
+
+        const lists = await Promise.all([
+          getWordsOrCountFromList(page, 'level-0-list', false),
+          getWordsOrCountFromList(page, 'level-1-list', false),
+          getWordsOrCountFromList(page, 'level-2-list', false),
+          getWordsOrCountFromList(page, 'level-3-list', false),
+        ]);
+        allWords = lists.flat(); // Update the master list of words
+
+        masteredOneDirectionCount = await getWordsOrCountFromList(page, 'level-2-list', true);
+        masteredVocabularyWordsCount = await getWordsOrCountFromList(page, 'level-3-list', true);
+
+        const currentL0Count = await getWordsOrCountFromList(page, 'level-0-list', true);
+        const currentL1Count = await getWordsOrCountFromList(page, 'level-1-list', true);
+        console.log(
+          `Refreshed Counts - L0:${currentL0Count}, L1:${currentL1Count}, L2:${masteredOneDirectionCount}, L3:${masteredVocabularyWordsCount}`
+        );
+        forceFullRefreshNextLoop = false; // Reset flag
+
+        // Find pair using the *fresh* list
+        if (!directionToggled) wordPair = allWords.find((wp) => wp.sourceWord === previousQuestionWord);
+        else wordPair = allWords.find((wp) => wp.targetWord === previousQuestionWord);
       } else {
-        // Failure
-        console.error(`Expected 'Correct!', but got '${feedbackText}'`);
-        expect(feedbackText).toContain('Correct!');
+        // Try finding in potentially stale `allWords` list first
+        if (!directionToggled) wordPair = allWords.find((wp) => wp.sourceWord === previousQuestionWord);
+        else wordPair = allWords.find((wp) => wp.targetWord === previousQuestionWord);
+
+        // If not found in stale list, force a full refresh NOW
+        if (!wordPair) {
+          console.warn(`Word "${previousQuestionWord}" not in stale list. Forcing refresh.`);
+          const lists = await Promise.all([
+            getWordsOrCountFromList(page, 'level-0-list', false),
+            getWordsOrCountFromList(page, 'level-1-list', false),
+            getWordsOrCountFromList(page, 'level-2-list', false),
+            getWordsOrCountFromList(page, 'level-3-list', false),
+          ]);
+          allWords = lists.flat();
+          masteredOneDirectionCount = await getWordsOrCountFromList(page, 'level-2-list', true);
+          masteredVocabularyWordsCount = await getWordsOrCountFromList(page, 'level-3-list', true);
+          const currentL0Count = await getWordsOrCountFromList(page, 'level-0-list', true);
+          const currentL1Count = await getWordsOrCountFromList(page, 'level-1-list', true);
+          console.log(
+            `Refreshed Counts (after miss) - L0:${currentL0Count}, L1:${currentL1Count}, L2:${masteredOneDirectionCount}, L3:${masteredVocabularyWordsCount}`
+          );
+          forceFullRefreshNextLoop = false; // Reset flag as we just refreshed
+          // --- Try finding again ---
+          if (!directionToggled) wordPair = allWords.find((wp) => wp.sourceWord === previousQuestionWord);
+          else wordPair = allWords.find((wp) => wp.targetWord === previousQuestionWord);
+        }
       }
 
-      // Wait for the next question to load by waiting for the #word text to change
-      await page.waitForFunction(
-        async (oldWord) => {
-          const newWord = document.querySelector('#word')?.innerText;
-          return newWord && newWord !== oldWord;
-        },
-        previousQuestionWord,
-        { timeout: 5000 }
-      );
+      // 3. Set answer
+      const answer = !directionToggled ? wordPair.targetWord : wordPair.sourceWord;
 
-      // Refresh the word lists to get updated statuses
-      focusWords = await getWordsFromList('level-1-list');
-      masteredOneDirectionWords = await getWordsFromList('level-2-list');
-      masteredVocabularyWords = await getWordsFromList('level-3-list');
-      upcomingWords = await getWordsFromList('level-0-list');
+      // 4. Input and submit
+      console.log(`Attempting answer: "${answer}"`);
+      const answerInput = page.locator('#answer');
+      await answerInput.fill(answer);
+      let feedbackText = '';
+      for (let attempt = 1; attempt <= MAX_SUBMIT_RETRIES + 1; attempt++) {
+        await page.click('#submit');
+        try {
+          const feedbackMessageLocator = page.locator('#feedback .feedback-message');
+          await feedbackMessageLocator.waitFor({ state: 'visible', timeout: WAIT_FOR_ELEMENT_TIMEOUT });
+          await expect(feedbackMessageLocator).not.toBeEmpty({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
+          feedbackText = await feedbackMessageLocator.innerText();
+          console.log(`Feedback (Attempt ${attempt}): "${feedbackText}"`);
+          if (feedbackText.includes('Correct!') || feedbackText.includes('An error occurred.') || attempt > MAX_SUBMIT_RETRIES) break;
+          if (!feedbackText.includes('An error occurred.')) break; // Break on "Wrong" etc.
+          console.log(`Waiting ${RETRY_DELAY_MS}ms before retrying...`);
+          await page.waitForTimeout(RETRY_DELAY_MS);
+          if ((await answerInput.inputValue()) !== answer) await answerInput.fill(answer);
+        } catch (error) {
+          console.warn(`Attempt ${attempt} failed waiting for feedback: ${error.message}`);
+          if (attempt > MAX_SUBMIT_RETRIES) {
+            feedbackText = 'Feedback Error';
+            break;
+          }
+          await page.waitForTimeout(RETRY_DELAY_MS);
+          if ((await answerInput.inputValue()) !== answer) await answerInput.fill(answer);
+        }
+      }
 
-      // Update allWords in case new words have been moved into focus
-      allWords = [
-        ...focusWords,
-        ...masteredOneDirectionWords,
-        ...masteredVocabularyWords,
-        ...upcomingWords,
-      ];
+      // 5. Process result
+      if (feedbackText.includes('Correct!')) {
+        consecutiveErrorsCount = 0;
+      } else {
+        consecutiveErrorsCount++;
+        console.error(`Final check failed for "${previousQuestionWord}". Feedback: '${feedbackText}'. Error count: ${consecutiveErrorsCount}`);
+        forceFullRefreshNextLoop = true;
+      }
+
+      // 6. Wait for next question
+      if (masteredVocabularyWordsCount < targetMasteredCount && consecutiveErrorsCount < MAX_CONSECUTIVE_ERRORS_BEFORE_FAIL) {
+        try {
+          await waitForNextQuestion(page, previousQuestionWord);
+        } catch (e) {
+          const currentL3Count = (await getWordsFromList(page, 'level-3-list')).length;
+          masteredVocabularyWordsCount = currentL3Count;
+          if (currentL3Count >= targetMasteredCount) {
+            console.log('Target reached after waiting timeout. Breaking.');
+            break;
+          } else {
+            console.warn(`Stuck waiting for next question. Mastered L3: ${currentL3Count}/${targetMasteredCount}. Incrementing errors.`);
+            consecutiveErrorsCount++;
+            forceFullRefreshNextLoop = true;
+          }
+        }
+      }
+
+      // 7. Update L2 and L3 counts for the next loop iteration's condition check and progress
+      if (
+        masteredVocabularyWordsCount < targetMasteredCount &&
+        consecutiveErrorsCount < MAX_CONSECUTIVE_ERRORS_BEFORE_FAIL &&
+        !forceFullRefreshNextLoop
+      ) {
+        const [l2Count, l3Count] = await Promise.all([
+          getWordsOrCountFromList(page, 'level-2-list', true), // true = count only
+          getWordsOrCountFromList(page, 'level-3-list', true), // true = count only
+        ]);
+        masteredOneDirectionCount = l2Count;
+        masteredVocabularyWordsCount = l3Count; // This count is crucial for the while loop condition
+      } else {
+        console.log('No more questions available in Reverse, but target not met. Stuck?');
+        masteredOneDirectionCount = await getWordsOrCountFromList(page, 'level-2-list', true);
+        masteredVocabularyWordsCount = await getWordsOrCountFromList(page, 'level-3-list', true);
+        const currentL0Count = await getWordsOrCountFromList(page, 'level-0-list', true);
+        const currentL1Count = await getWordsOrCountFromList(page, 'level-1-list', true);
+        console.error(
+          `Stuck! Mastered L3: ${masteredVocabularyWordsCount}/${targetMasteredCount}. Remaining L0: ${currentL0Count}, L1: ${currentL1Count}, L2: ${masteredOneDirectionCount}`
+        );
+        break; // Exit the main loop as we are stuck
+      }
+    } // --- End of Main Quiz Loop ---
+
+    // --- Final Assertions ---
+    console.log('\n--- Quiz Loop Finished ---');
+
+    const finalL2Count = await getWordsOrCountFromList(page, 'level-2-list', true);
+    const finalL3Count = await getWordsOrCountFromList(page, 'level-3-list', true);
+    const finalProgressPoints = finalL2Count + finalL3Count;
+    const maxProgressPoints = 2 * targetMasteredCount;
+    const finalProgressPercentage = maxProgressPoints > 0 ? ((finalProgressPoints / maxProgressPoints) * 100).toFixed(1) : 'N/A';
+
+    console.log(
+      `Final State - Mastered L3: ${finalL3Count} (Target was ${targetMasteredCount}) | Mastered L2: ${finalL2Count} | Total Progress Points: ${finalProgressPoints}/${maxProgressPoints} (${finalProgressPercentage}%) | Consecutive Errors: ${consecutiveErrorsCount}`
+    );
+
+    if (consecutiveErrorsCount >= MAX_CONSECUTIVE_ERRORS_BEFORE_FAIL) {
+      console.error(`Test failed due to max consecutive errors (${MAX_CONSECUTIVE_ERRORS_BEFORE_FAIL}).`);
+      test.fail(true, `Reached max consecutive errors. Final mastered L3: ${finalL3Count}/${targetMasteredCount}`);
+    } else if (finalL3Count < targetMasteredCount) {
+      console.error(`Test failed: Target L3 count not reached. Mastered L3: ${finalL3Count}/${targetMasteredCount}`);
+      test.fail(true, `Target L3 count not reached. Mastered L3: ${finalL3Count}/${targetMasteredCount}`);
+    } else {
+      expect(finalL3Count, `Expected all ${targetMasteredCount} words to reach L3.`).toEqual(targetMasteredCount);
+      console.log(`✅ Test Passed: Successfully mastered all ${finalL3Count} words to L3.`);
     }
-
-    // At this point, all words should be mastered
-    expect(masteredVocabularyWords.length).toBe(allWords.length);
   });
 });

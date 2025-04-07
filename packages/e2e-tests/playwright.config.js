@@ -8,10 +8,10 @@ module.exports = defineConfig({
     timeout: 5000,
   },
   use: {
-    baseURL: process.env.LINGUA_QUIZ_URL || 'https://test-lingua-quiz.nikolay-eremeev.com/',
-    trace: 'on-first-retry',
+    baseURL: process.env.LINGUA_QUIZ_URL,
+    trace: 'off',
     screenshot: 'on',
-    video: 'on',
+    video: 'on', // set to 'on' for detailed debugging
   },
   reporter: [['html'], ['list']],
 

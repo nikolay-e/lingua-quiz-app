@@ -1,9 +1,6 @@
 # Dependency directories
 node_modules/
 
-# Environment files
-.env
-
 # Build outputs
 dist/
 build/
@@ -73,7 +70,6 @@ amplifytools.xcconfig
 *.cnf
 *.pem
 *.bak
-*.env
 
 cypress/screenshots
 cypress/videos

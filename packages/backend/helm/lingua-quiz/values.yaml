@@ -6,7 +6,7 @@ replicaCount: 1
 
 backend:
   image:
-    repository: nikolayeremeev/lingua-quiz-backend # Default, will be overridden by CI
+    repository: lingua-quiz-backend # Default, will be overridden by CI
     pullPolicy: IfNotPresent
     # Overridden by CI with specific tag
     tag: "latest"

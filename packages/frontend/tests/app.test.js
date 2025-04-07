@@ -338,11 +338,30 @@ describe('App Class', () => {
   });
 
   describe('Word Management', () => {
-    it('should move a word to a new status', () => {
-      const wordId = Array.from(app.wordStatusSets[STATUS.LEVEL_0])[0];
-      app.moveWordToStatus(wordId, STATUS.LEVEL_1);
+    it('should move a word to a new status and handle no-change scenarios', () => {
+      const wordInLevel1 = mockData.find((d) => d.status === STATUS.LEVEL_1);
+      expect(wordInLevel1).toBeDefined();
+      const wordId = wordInLevel1.wordPairId;
+
       expect(app.wordStatusSets[STATUS.LEVEL_1].has(wordId)).toBe(true);
-      expect(app.wordStatusSets[STATUS.LEVEL_0].has(wordId)).toBe(false);
+      expect(app.quizTranslations.get(wordId).status).toBe(STATUS.LEVEL_1);
+
+      let changed = app.moveWordToStatus(wordId, STATUS.LEVEL_2);
+      expect(changed).toBe(true);
+      expect(app.wordStatusSets[STATUS.LEVEL_1].has(wordId)).toBe(false);
+      expect(app.wordStatusSets[STATUS.LEVEL_2].has(wordId)).toBe(true);
+      expect(app.quizTranslations.get(wordId).status).toBe(STATUS.LEVEL_2);
+
+      changed = app.moveWordToStatus(wordId, STATUS.LEVEL_0);
+      expect(changed).toBe(true);
+      expect(app.wordStatusSets[STATUS.LEVEL_2].has(wordId)).toBe(false);
+      expect(app.wordStatusSets[STATUS.LEVEL_0].has(wordId)).toBe(true);
+      expect(app.quizTranslations.get(wordId).status).toBe(STATUS.LEVEL_0);
+
+      changed = app.moveWordToStatus(wordId, STATUS.LEVEL_0);
+      expect(changed).toBe(false);
+      expect(app.wordStatusSets[STATUS.LEVEL_0].has(wordId)).toBe(true);
+      expect(app.quizTranslations.get(wordId).status).toBe(STATUS.LEVEL_0);
     });
 
     it('should default to "LEVEL_0" when moving a word to an unknown status', () => {
