@@ -50,6 +50,8 @@ jobs:
           BACKUP_NAMESPACE: default # Namespace for the backup job
         run: |
           echo "Deploying backup Helm chart to '${BACKUP_NAMESPACE}' namespace..."
+          helm uninstall ${BACKUP_RELEASE_NAME} \
+            --namespace ${BACKUP_NAMESPACE} && \
           helm upgrade --install ${BACKUP_RELEASE_NAME} ./packages/backend/helm/lingua-quiz-backup \
             --namespace ${BACKUP_NAMESPACE} \
             --create-namespace \

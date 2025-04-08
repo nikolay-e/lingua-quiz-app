@@ -32,39 +32,69 @@ jobs:
       image_name: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backup
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Login to DockerHub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
 
-      - name: Docker meta
+      - name: Docker meta for backup image
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backup
           tags: |
-            type=schedule
             type=ref,event=branch
             type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
             type=sha,prefix=,suffix=,format=short
-            latest
+            type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build and push backup image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
           context: ./packages/backend
           file: ./packages/backend/docker/backup/Dockerfile
-          push: ${{ github.event_name == 'push' }}
+          push: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  e2e-docker-compose:
+    name: E2E Tests (Docker Compose)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build and Run Docker Compose services for E2E tests
+        id: run_e2e
+        run: docker compose up --build e2e-tests --abort-on-container-exit --exit-code-from e2e-tests
+
+      - name: Upload Playwright Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-docker-compose
+          path: |
+            packages/e2e-tests/playwright-report/
+            packages/e2e-tests/test-results/
+          retention-days: 7
+
+      - name: Docker Compose Logs on Failure
+        if: failure()
+        run: docker compose logs --tail="all"
+
+      - name: Cleanup Docker Compose environment
+        if: always()
+        run: docker compose down -v --remove-orphans
+
+      - name: Fail job if E2E tests failed
+        if: steps.run_e2e.outcome == 'failure'
+        run: exit 1
 
   frontend:
     name: Build and Deploy Frontend (VPS)
@@ -83,7 +113,9 @@ jobs:
           vps-host: ${{ secrets.VPS_HOST }}
           vps-user: ${{ secrets.VPS_USER }}
           container-port: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 8444 || 8445 }}
-          domain: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'lingua-quiz.nikolay-eremeev.com' || 'test-lingua-quiz.nikolay-eremeev.com' }}
+          domain:
+            ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'lingua-quiz.nikolay-eremeev.com' ||
+            'test-lingua-quiz.nikolay-eremeev.com' }}
           docker-context: packages/frontend
           docker-file: packages/frontend/Dockerfile
         env:
@@ -93,7 +125,7 @@ jobs:
           SSL_KEY: ${{ needs.prepare-secrets.outputs.ssl_key }}
 
   backend:
-    needs: [common-tests, prepare-secrets, build-backup-image]
+    needs: [common-tests, prepare-secrets]
     uses: ./.github/workflows/backend-workflow.yml
     secrets:
       DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
@@ -109,15 +141,14 @@ jobs:
       SSL_CERT: ${{ needs.prepare-secrets.outputs.ssl_cert }}
       SSL_KEY: ${{ needs.prepare-secrets.outputs.ssl_key }}
 
-  integration-tests:
+  security-scans:
+    name: Security Scans (ZAP)
     needs: [frontend, backend]
-    uses: ./.github/workflows/integration-tests.yml
+    uses: ./.github/workflows/security-scans.yml
     with:
       frontend-url:
-        ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' &&
-        'https://lingua-quiz.nikolay-eremeev.com' || 'https://test-lingua-quiz.nikolay-eremeev.com'
-        }}
+        ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'https://lingua-quiz.nikolay-eremeev.com' ||
+        'https://test-lingua-quiz.nikolay-eremeev.com' }}
       backend-url:
-        ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' &&
-        'https://api-lingua-quiz.nikolay-eremeev.com' ||
+        ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'https://api-lingua-quiz.nikolay-eremeev.com' ||
         'https://test-api-lingua-quiz.nikolay-eremeev.com' }}

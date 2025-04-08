@@ -1,44 +1,34 @@
 /* eslint-disable consistent-return */
 /* eslint-disable max-len */
-// Используем встроенный модуль http для создания сервера
-const fs = require('fs'); // eslint-disable-line no-unused-vars -- Используется логгером winston
+const fs = require('fs'); // eslint-disable-line no-unused-vars
 const http = require('http');
-// fs нужен для файлового логгера
 
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const express = require('express');
-const { body, param, query, validationResult } = require('express-validator');
+const { body, query, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const { Pool } = require('pg');
 const winston = require('winston');
 const xss = require('xss');
 
-// Загружаем переменные окружения из .env файла (если он есть)
 dotenv.config();
 
-// Определяем статусы здесь, чтобы они были доступны для валидации
-// Убедитесь, что они совпадают с теми, что используются в app.js и тестах
 const STATUS = {
   LEVEL_0: 'LEVEL_0',
   LEVEL_1: 'LEVEL_1',
   LEVEL_2: 'LEVEL_2',
   LEVEL_3: 'LEVEL_3',
-  LEVEL_4: 'LEVEL_4', // Добавлено, если используется
-  LEVEL_5: 'LEVEL_5', // Добавлено, если используется
-  // Можно добавить и старые, если нужна обратная совместимость, но лучше унифицировать
+  LEVEL_4: 'LEVEL_4',
+  LEVEL_5: 'LEVEL_5',
+
   LEARNING: 'learning',
   LEARNED: 'learned',
   REFRESHING: 'refreshing',
 };
 
-/**
- * Рекурсивно санирует объект или значение с помощью xss.
- * @param {any} obj - Объект или значение для санитации.
- * @returns {any} - Санированный объект или значение.
- */
 function sanitizeInput(obj) {
   if (typeof obj !== 'object' || obj === null) {
     return xss(obj);
@@ -52,11 +42,6 @@ function sanitizeInput(obj) {
   }, {});
 }
 
-/**
- * Рекурсивно конвертирует ключи объекта (или массива объектов) в camelCase.
- * @param {any} obj - Объект или массив для конвертации.
- * @returns {any} - Объект или массив с ключами в camelCase.
- */
 function convertKeysToCamelCase(obj) {
   if (Array.isArray(obj)) {
     return obj.map((item) => convertKeysToCamelCase(item));
@@ -71,7 +56,6 @@ function convertKeysToCamelCase(obj) {
   return obj;
 }
 
-// Настройка логгера Winston
 const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
   format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
@@ -86,12 +70,10 @@ const logger = winston.createLogger({
   rejectionHandlers: [new winston.transports.File({ filename: 'rejections.log' })],
 });
 
-// Создание Express приложения
 const app = express();
 app.use(express.json());
-app.use(cors()); // TODO: Настроить для production
+app.use(cors());
 
-// Middleware логирования
 app.use((req, _res, next) => {
   logger.info(`Incoming request: ${req.method} ${req.originalUrl || req.url} from ${req.ip}`);
   next();
@@ -100,16 +82,13 @@ app.use((req, res, next) => {
   const oldSend = res.send;
   res.send = function send(...args) {
     res.on('finish', () => {
-      logger.info(
-        `Response status: ${res.statusCode} for ${req.method} ${req.originalUrl || req.url}`
-      );
+      logger.info(`Response status: ${res.statusCode} for ${req.method} ${req.originalUrl || req.url}`);
     });
     oldSend.apply(res, args);
   };
   next();
 });
 
-// Настройка пула подключений к PostgreSQL
 const pool = new Pool({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT || 5432,
@@ -117,12 +96,8 @@ const pool = new Pool({
   user: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   max: process.env.DB_POOL_MAX ? parseInt(process.env.DB_POOL_MAX, 10) : 10,
-  idleTimeoutMillis: process.env.DB_POOL_IDLE_TIMEOUT
-    ? parseInt(process.env.DB_POOL_IDLE_TIMEOUT, 10)
-    : 30000,
-  connectionTimeoutMillis: process.env.DB_POOL_CONN_TIMEOUT
-    ? parseInt(process.env.DB_POOL_CONN_TIMEOUT, 10)
-    : 2000,
+  idleTimeoutMillis: process.env.DB_POOL_IDLE_TIMEOUT ? parseInt(process.env.DB_POOL_IDLE_TIMEOUT, 10) : 30000,
+  connectionTimeoutMillis: process.env.DB_POOL_CONN_TIMEOUT ? parseInt(process.env.DB_POOL_CONN_TIMEOUT, 10) : 2000,
 });
 pool.on('connect', (client) => {
   logger.info(`Connected to the database (Client PID: ${client.processID})`);
@@ -134,7 +109,6 @@ pool.on('error', (err, client) => {
   });
 });
 
-// Кастомный класс ошибки базы данных
 class DatabaseError extends Error {
   constructor(message, originalError) {
     super(message);
@@ -144,7 +118,6 @@ class DatabaseError extends Error {
   }
 }
 
-// Функция проверки существования пользователя
 async function userExists(email) {
   try {
     const result = await pool.query('SELECT 1 FROM "user" WHERE email = $1 LIMIT 1', [email]);
@@ -154,7 +127,6 @@ async function userExists(email) {
   }
 }
 
-// Middleware для аутентификации JWT токена
 function authenticateToken(req, res, next) {
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.startsWith('Bearer ') && authHeader.split(' ')[1];
@@ -172,11 +144,6 @@ function authenticateToken(req, res, next) {
   }
 }
 
-// ==================
-// Маршруты API
-// ==================
-
-// --- Health Check ---
 app.get('/healthz', async (req, res, next) => {
   try {
     await pool.query('SELECT 1');
@@ -191,7 +158,6 @@ app.get('/healthz', async (req, res, next) => {
   }
 });
 
-// --- Регистрация пользователя ---
 app.post(
   '/register',
   [
@@ -200,9 +166,7 @@ app.post(
       .isLength({ min: 8 })
       .withMessage('Password must be at least 8 characters long')
       .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/)
-      .withMessage(
-        'Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character'
-      ),
+      .withMessage('Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character'),
   ],
   async (req, res, next) => {
     const errors = validationResult(req);
@@ -217,14 +181,9 @@ app.post(
         logger.warn('Registration attempt for existing user', { email });
         return next({ statusCode: 409, message: 'User already exists' }); // 409 Conflict
       }
-      const saltRounds = process.env.BCRYPT_SALT_ROUNDS
-        ? parseInt(process.env.BCRYPT_SALT_ROUNDS, 10)
-        : 10;
+      const saltRounds = process.env.BCRYPT_SALT_ROUNDS ? parseInt(process.env.BCRYPT_SALT_ROUNDS, 10) : 10;
       const hashedPassword = await bcrypt.hash(password, saltRounds);
-      await pool.query('INSERT INTO "user" (email, password) VALUES ($1, $2)', [
-        email,
-        hashedPassword,
-      ]);
+      await pool.query('INSERT INTO "user" (email, password) VALUES ($1, $2)', [email, hashedPassword]);
       logger.info('User registered successfully', { email });
       res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
@@ -233,13 +192,9 @@ app.post(
   }
 );
 
-// --- Вход пользователя ---
 app.post(
   '/login',
-  [
-    body('email').isEmail().normalizeEmail().withMessage('Invalid email format'),
-    body('password').notEmpty().withMessage('Password cannot be empty'),
-  ],
+  [body('email').isEmail().normalizeEmail().withMessage('Invalid email format'), body('password').notEmpty().withMessage('Password cannot be empty')],
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -249,9 +204,7 @@ app.post(
     const sanitizedInput = sanitizeInput(req.body);
     const { email, password } = sanitizedInput;
     try {
-      const result = await pool.query('SELECT id, email, password FROM "user" WHERE email = $1', [
-        email,
-      ]);
+      const result = await pool.query('SELECT id, email, password FROM "user" WHERE email = $1', [email]);
       const users = convertKeysToCamelCase(result.rows);
       if (users.length === 0) {
         logger.warn('Login attempt for non-existent user', { email });
@@ -275,7 +228,6 @@ app.post(
   }
 );
 
-// --- Удаление аккаунта ---
 app.delete('/delete-account', authenticateToken, async (req, res, next) => {
   const { userId } = req;
   try {
@@ -296,17 +248,10 @@ app.delete('/delete-account', authenticateToken, async (req, res, next) => {
   }
 });
 
-// --- Получение наборов слов пользователя ---
 app.get(
   '/user/word-sets',
   authenticateToken,
-  [
-    query('wordListName')
-      .isString()
-      .trim()
-      .notEmpty()
-      .withMessage('wordListName query parameter is required'),
-  ],
+  [query('wordListName').isString().trim().notEmpty().withMessage('wordListName query parameter is required')],
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -316,42 +261,27 @@ app.get(
     const sanitizedQuery = sanitizeInput(req.query);
     const { wordListName } = sanitizedQuery;
     try {
-      const result = await pool.query('SELECT * FROM get_user_word_sets($1, $2)', [
-        userId,
-        wordListName,
-      ]);
+      const result = await pool.query('SELECT * FROM get_user_word_sets($1, $2)', [userId, wordListName]);
       const wordSets = convertKeysToCamelCase(result.rows);
       logger.info('User word sets retrieved successfully', { userId, wordListName });
-      res.status(200).json(wordSets); // Возвращаем 200 OK с [] если пусто
+      res.status(200).json(wordSets);
     } catch (error) {
       next(error);
     }
   }
 );
 
-// --- Обновление статуса наборов слов пользователя ---
 app.post(
   '/user/word-sets',
   authenticateToken,
   [
-    body('status')
-      .isString()
-      .trim()
-      // *** ИСПРАВЛЕНО: Принимаем реальные статусы ***
-      .isIn(Object.values(STATUS)) // Используем константы STATUS
-      .withMessage('Invalid status value'),
-    body('wordPairIds')
-      // *** ИСПРАВЛЕНО: Разрешаем пустой массив ***
-      .isArray({ min: 0 }) // Было { min: 1 }
-      .withMessage('wordPairIds must be an array'),
-    body('wordPairIds.*')
-      .isInt({ min: 1 })
-      .withMessage('Each wordPairId must be a positive integer'),
+    body('status').isString().trim().isIn(Object.values(STATUS)).withMessage('Invalid status value'),
+    body('wordPairIds').isArray({ min: 0 }).withMessage('wordPairIds must be an array'),
+    body('wordPairIds.*').isInt({ min: 1 }).withMessage('Each wordPairId must be a positive integer'),
   ],
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      // Добавим логирование деталей ошибки валидации
       logger.warn('Update user word sets validation failed', {
         errors: errors.array(),
         body: req.body,
@@ -362,7 +292,6 @@ app.post(
     const sanitizedInput = sanitizeInput(req.body);
     const { status, wordPairIds } = sanitizedInput;
     try {
-      // Обрабатываем пустой массив ID отдельно, чтобы не вызывать БД без нужды
       if (wordPairIds.length === 0) {
         logger.info('Received empty wordPairIds array, no database update needed.', {
           userId,
@@ -374,11 +303,7 @@ app.post(
       }
 
       const wordPairIdsArray = `{${wordPairIds.join(',')}}`;
-      await pool.query('SELECT update_user_word_set_status($1, $2, $3::translation_status)', [
-        userId,
-        wordPairIdsArray,
-        status,
-      ]);
+      await pool.query('SELECT update_user_word_set_status($1, $2, $3::translation_status)', [userId, wordPairIdsArray, status]);
       logger.info('User word sets status updated successfully', {
         userId,
         status,
@@ -399,121 +324,6 @@ app.post(
   }
 );
 
-// --- Добавление новой пары слов ---
-app.post(
-  '/word-pair',
-  authenticateToken,
-  [
-    body('translationId').isInt({ min: 1 }).withMessage('Invalid translationId'),
-    body('sourceWordId').isInt({ min: 1 }).withMessage('Invalid sourceWordId'),
-    body('targetWordId').isInt({ min: 1 }).withMessage('Invalid targetWordId'),
-    body('sourceWord').isString().trim().notEmpty().withMessage('sourceWord is required'),
-    body('targetWord').isString().trim().notEmpty().withMessage('targetWord is required'),
-    body('sourceLanguageName')
-      .isString()
-      .trim()
-      .notEmpty()
-      .withMessage('sourceLanguageName is required'),
-    body('targetLanguageName')
-      .isString()
-      .trim()
-      .notEmpty()
-      .withMessage('targetLanguageName is required'),
-    body('wordListName').isString().trim().notEmpty().withMessage('wordListName is required'),
-    body('sourceWordUsageExample').optional().isString().trim(),
-    body('targetWordUsageExample').optional().isString().trim(),
-  ],
-  async (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return next({ statusCode: 400, message: 'Validation failed', errors: errors.array() });
-    }
-    const sanitizedInput = sanitizeInput(req.body);
-    const {
-      translationId,
-      sourceWordId,
-      targetWordId,
-      sourceWord,
-      targetWord,
-      sourceLanguageName,
-      targetLanguageName,
-      wordListName,
-      sourceWordUsageExample,
-      targetWordUsageExample,
-    } = sanitizedInput;
-    try {
-      await pool.query(
-        'SELECT insert_word_pair_and_add_to_list($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
-        [
-          translationId,
-          sourceWordId,
-          targetWordId,
-          sourceWord,
-          targetWord,
-          sourceLanguageName,
-          targetLanguageName,
-          wordListName,
-          sourceWordUsageExample || null,
-          targetWordUsageExample || null,
-        ]
-      );
-      logger.info('Word pair inserted and added to list successfully', {
-        translationId,
-        sourceWord,
-        targetWord,
-        wordListName,
-      });
-      res.status(201).json({ message: 'Word pair inserted successfully' });
-    } catch (error) {
-      if (error.code === '23505') {
-        logger.warn('Attempt to insert duplicate word pair', {
-          translationId,
-          error: error.message,
-        });
-        return next({
-          statusCode: 409,
-          message: 'Word pair already exists',
-          details: error.detail,
-        });
-      }
-      if (error.code === '23503') {
-        logger.error('Foreign key violation during word pair insertion', {
-          translationId,
-          error: error.message,
-        });
-        return next({
-          statusCode: 400,
-          message: 'Invalid reference (e.g., language or word list not found)',
-          details: error.detail,
-        });
-      }
-      next(error);
-    }
-  }
-);
-
-// --- Удаление пары слов ---
-app.delete(
-  '/word-pair/:translationId',
-  authenticateToken,
-  [param('translationId').isInt({ min: 1 }).withMessage('Invalid translationId parameter')],
-  async (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return next({ statusCode: 400, message: 'Validation failed', errors: errors.array() });
-    }
-    const translationId = parseInt(req.params.translationId, 10);
-    try {
-      await pool.query('SELECT remove_word_pair_and_list_entry($1)', [translationId]);
-      logger.info('Word pair and associated list entries removed successfully', { translationId });
-      res.status(200).json({ message: 'Word pair and associated data removed successfully' });
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
-// --- Получение всех списков слов ---
 app.get('/word-lists', authenticateToken, async (req, res, next) => {
   try {
     const result = await pool.query('SELECT * FROM get_word_lists()');
@@ -525,9 +335,6 @@ app.get('/word-lists', authenticateToken, async (req, res, next) => {
   }
 });
 
-// ==================
-// Обработка ошибок
-// ==================
 app.all('*', (req, res, next) => {
   next({ statusCode: 404, message: `Cannot ${req.method} ${req.path}` });
 });
@@ -547,18 +354,15 @@ function errorHandler(err, req, res, _next) {
   const statusCode = err.statusCode || 500;
   let userMessage = err.message || 'An unexpected error occurred. Please try again later.';
 
-  // Кастомизация сообщений
   if (statusCode >= 500 && !(err instanceof DatabaseError)) {
     userMessage = 'An internal server error occurred.';
   } else if (statusCode === 400 && err.errors) {
     userMessage = 'Invalid request data.';
   } else if (statusCode === 401 || statusCode === 403) {
-    // *** ИСПРАВЛЕНО: Используем это сообщение для тестов ***
     userMessage = 'Authentication failed or insufficient permissions.';
   } else if (statusCode === 404) {
     userMessage = 'The requested resource was not found.';
   } else if (statusCode === 409) {
-    // *** ИСПРАВЛЕНО: Используем это сообщение для тестов ***
     userMessage = 'Conflict: The resource already exists or cannot be created.';
   } else if (statusCode === 503) {
     userMessage = 'Service currently unavailable. Please try again later.';
@@ -579,9 +383,6 @@ function errorHandler(err, req, res, _next) {
 }
 app.use(errorHandler);
 
-// ==================
-// Запуск сервера
-// ==================
 let server;
 
 function startServer() {
