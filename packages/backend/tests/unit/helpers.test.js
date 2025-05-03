@@ -16,8 +16,8 @@ describe('Helper Utilities', () => {
         name: 'John',
         html: '<b>Bold</b>',
         nested: {
-          script: '<script>alert("nested")</script>'
-        }
+          script: '<script>alert("nested")</script>',
+        },
       };
       const result = sanitizeInput(input);
       // Just check the structure is preserved
@@ -41,13 +41,13 @@ describe('Helper Utilities', () => {
       const input = {
         user_id: 1,
         first_name: 'John',
-        last_name: 'Doe'
+        last_name: 'Doe',
       };
       const result = convertKeysToCamelCase(input);
       expect(result).to.deep.equal({
         userId: 1,
         firstName: 'John',
-        lastName: 'Doe'
+        lastName: 'Doe',
       });
     });
 
@@ -55,27 +55,27 @@ describe('Helper Utilities', () => {
       const input = {
         user_data: {
           email_address: 'john@example.com',
-          phone_number: '123-456-7890'
-        }
+          phone_number: '123-456-7890',
+        },
       };
       const result = convertKeysToCamelCase(input);
       expect(result).to.deep.equal({
         userData: {
           emailAddress: 'john@example.com',
-          phoneNumber: '123-456-7890'
-        }
+          phoneNumber: '123-456-7890',
+        },
       });
     });
 
     it('should handle arrays', () => {
       const input = [
         { word_id: 1, source_word: 'hello' },
-        { word_id: 2, source_word: 'goodbye' }
+        { word_id: 2, source_word: 'goodbye' },
       ];
       const result = convertKeysToCamelCase(input);
       expect(result).to.deep.equal([
         { wordId: 1, sourceWord: 'hello' },
-        { wordId: 2, sourceWord: 'goodbye' }
+        { wordId: 2, sourceWord: 'goodbye' },
       ]);
     });
   });
@@ -88,9 +88,9 @@ describe('Helper Utilities', () => {
     });
 
     it('should escape backslashes', () => {
-      const input = "C:\\Program Files\\App";
+      const input = String.raw`C:\Program Files\App`;
       const result = escapeSQL(input);
-      expect(result).to.equal("C:\\\\Program Files\\\\App");
+      expect(result).to.equal(String.raw`C:\\Program Files\\App`);
     });
 
     it('should handle non-string values', () => {

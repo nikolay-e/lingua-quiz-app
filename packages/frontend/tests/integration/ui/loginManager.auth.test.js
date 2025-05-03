@@ -4,10 +4,7 @@ import { AuthUtils } from '../../../src/js/utils/authUtils.js';
 import { errorHandler } from '../../../src/js/utils/errorHandler.js';
 
 // Import integration test setup and helpers
-import { 
-  setupLocalStorageMock,
-  setupLocationMock
-} from '../../__mocks__/browserMocks.js';
+import { setupLocalStorageMock, setupLocationMock } from '../../__mocks__/browserMocks.js';
 
 // --- Mock external dependencies using centralized mocks ---
 jest.mock('../../../src/js/utils/authUtils.js', () => ({
@@ -42,12 +39,12 @@ describe('AuthManager - Authentication State & Logout', () => {
 
     // --- Mock Setup ---
     jest.clearAllMocks();
-    
+
     // Set up localStorage and location mocks using our centralized helpers
     mockLocalStorage = setupLocalStorageMock();
     const { locationMock, restoreLocation } = setupLocationMock('/');
     originalLocation = restoreLocation; // Store the restore function
-    
+
     // Mock fetch for completeness
     global.fetch = jest.fn();
 
@@ -62,7 +59,7 @@ describe('AuthManager - Authentication State & Logout', () => {
         !AuthUtils.isValidToken(AuthUtils.getToken())
       );
     });
-    
+
     // Reset all centralized mocks
     AuthUtils._reset();
     errorHandler._reset();
@@ -71,10 +68,10 @@ describe('AuthManager - Authentication State & Logout', () => {
   afterEach(() => {
     // Restore original location
     originalLocation();
-    
+
     // Clear localStorage
     mockLocalStorage.clear();
-    
+
     // Clean up any other mocks
     jest.clearAllMocks();
   });

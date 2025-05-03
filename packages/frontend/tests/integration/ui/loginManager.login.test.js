@@ -5,11 +5,11 @@ import { AuthUtils } from '../../../src/js/utils/authUtils.js';
 import { errorHandler } from '../../../src/js/utils/errorHandler.js';
 
 // Import centralized test setup
-import { 
-  setupLocalStorageMock, 
-  setupFetchMock, 
-  setupLocationMock, 
-  suppressConsoleOutput 
+import {
+  setupLocalStorageMock,
+  setupFetchMock,
+  setupLocationMock,
+  suppressConsoleOutput,
 } from '../../__mocks__/browserMocks.js';
 
 // Use centralized mocks
@@ -49,25 +49,25 @@ describe('AuthManager - Login Flow', () => {
 
     // --- Mock Setup using centralized helpers ---
     jest.clearAllMocks();
-    
+
     // Set up common mocks
     mockLocalStorage = setupLocalStorageMock();
     const { locationMock, restoreLocation } = setupLocationMock('/');
     originalLocation = restoreLocation;
     const { fetchMock } = setupFetchMock();
     mockFetch = fetchMock;
-    
+
     // Set up console suppression
     const consoleSuppress = suppressConsoleOutput();
     consoleErrorSpy = jest.spyOn(console, 'error');
-    
+
     // Store original serverAddress for restoration
     originalServerAddress = serverAddress;
 
     // Reset all mocks
     AuthUtils._reset();
     errorHandler._reset();
-    
+
     // --- Instance Creation ---
     authManager = new AuthManager();
     // Need to call initializeForms to attach listener, even with minimal DOM
@@ -77,7 +77,7 @@ describe('AuthManager - Login Flow', () => {
   afterEach(() => {
     // Restore original objects
     originalLocation();
-    
+
     // Clear mocks
     mockLocalStorage.clear();
     jest.clearAllMocks();

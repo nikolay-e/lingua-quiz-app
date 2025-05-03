@@ -34,7 +34,7 @@
       (function () {
         // Run auth check immediately
         const isAuthenticated = AuthUtils.handleTokenExpiration();
-        
+
         // Initialize periodic auth check if user is authenticated
         if (isAuthenticated) {
           AuthUtils.initAuthCheck();

@@ -40,6 +40,7 @@ IGNORE_PATTERNS = [
     r'__pycache__/',
     r'packages/backend/helm/.*/templates/', # Ignore Helm template dir contents
     r'Generated -- .*\.sql', # Ignore generated SQL files
+    r'.*_words\.sql$', # Ignore SQL migrations for word imports (contain large numbers of words)
     r'\.pyc$',
     r'\.log$',
     r'package-lock\.json$',

@@ -22,7 +22,7 @@ module.exports = {
   testMatch: [
     '<rootDir>/tests/unit/**/*.test.js',
     '<rootDir>/tests/integration/**/*.test.js',
-    '<rootDir>/tests/e2e-jest/**/*.test.js'
+    '<rootDir>/tests/e2e-jest/**/*.test.js',
   ],
   resetMocks: false, // This is important for localStorage mock to work
   clearMocks: true,

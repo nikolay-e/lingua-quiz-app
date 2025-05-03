@@ -67,9 +67,11 @@ class ErrorHandler {
 
     // We won't directly update UI message areas during unit tests to avoid breaking
     // existing tests that expect empty messages
-    if ((typeof process === 'undefined' || !process.env.JEST_WORKER_ID) && // Only run this code in actual browser, not in test environment
+    if (
+      (typeof process === 'undefined' || !process.env.JEST_WORKER_ID) && // Only run this code in actual browser, not in test environment
       // Update relevant message areas based on location
-      window.location.pathname.endsWith('/login.html')) {
+      window.location.pathname.endsWith('/login.html')
+    ) {
       // For the login page - also update both login and register message areas
       const loginMessage = document.querySelector('#login-message');
       if (loginMessage) {

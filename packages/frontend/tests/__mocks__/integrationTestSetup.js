@@ -5,8 +5,8 @@
 import '@testing-library/jest-dom';
 import 'jest-localstorage-mock';
 import fetchMock from 'jest-fetch-mock';
-import jwt_decode from 'jwt-decode';
-import { setupLocalStorageMock, setupLocationMock, suppressConsoleOutput } from './browserMocks';
+
+import { setupLocalStorageMock, setupLocationMock } from './browserMocks';
 import { AuthUtils } from './utils/authUtils';
 import { errorHandler } from './utils/errorHandler';
 
@@ -36,8 +36,8 @@ jest.mock('../../src/js/config.js', () => ({
   default: 'http://localhost:9000',
 }));
 
-// Mock jwt-decode
-jest.mock('jwt-decode', () => jest.fn());
+// Mock jwt-decode - we're using a dedicated mock file at tests/__mocks__/jwt-decode.js
+jest.mock('jwt-decode');
 
 // Enable fetch mocks
 fetchMock.enableMocks();
@@ -48,19 +48,11 @@ beforeEach(() => {
   jest.clearAllMocks();
   localStorage.clear();
   fetchMock.resetMocks();
-  
+
   // Set up basic mocks
   const mockLocalStorage = setupLocalStorageMock();
   const { locationMock } = setupLocationMock();
-  
-  // Set default jwt-decode behavior
-  jwt_decode.mockImplementation((token) => {
-    if (token && token.split('.').length === 3) {
-      return JSON.parse(atob(token.split('.')[1]));
-    }
-    throw new Error('Invalid token');
-  });
-  
+
   // Reset custom mock helpers
   errorHandler._reset();
   AuthUtils._reset();
@@ -73,16 +65,18 @@ afterEach(() => {
 });
 
 // Exports for test files
-export { errorHandler, AuthUtils, fetchMock };
-export { setupLocalStorageMock, setupLocationMock, suppressConsoleOutput };
 
 // Export utilities from fixture data
-export { 
+export {
   getTestWordPairs,
   testWordLists,
   createMockToken,
   createExpiredToken,
   setupAuthState,
   apiResponses,
-  setupAuthTestDOM
+  setupAuthTestDOM,
 } from '../__fixtures__/testData';
+export { suppressConsoleOutput, setupLocalStorageMock, setupLocationMock } from './browserMocks';
+export { errorHandler } from './utils/errorHandler';
+export { AuthUtils } from './utils/authUtils';
+export { default as fetchMock } from 'jest-fetch-mock';

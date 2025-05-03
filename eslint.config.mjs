@@ -37,6 +37,8 @@ export default [
       'package-lock.json',
       '**/tests/.test.env',
       'Generated -- *.sql',
+      '*_words.sql', // Ignore SQL migration files containing word lists
+      'packages/backend/migrations/*_import_*_words.sql', // Specifically ignore word import SQL files
       'word_processing_scripts/',
       '*.csv',
     ],
@@ -50,6 +52,7 @@ export default [
       globals: {
         ...globals.node,
         ...globals.es2021,
+        ...globals.browser, // Add browser globals for frontend code
       },
     },
     linterOptions: { reportUnusedDisableDirectives: 'warn' },
@@ -78,12 +81,13 @@ export default [
       'node/no-extraneous-import': 'off',
       // Unicorn recommended
       ...unicornPlugin.configs.recommended?.rules,
+      // --- Project-specific rule adjustments ---
       'unicorn/prevent-abbreviations': 'off',
-      'unicorn/filename-case': ['warn', { case: 'kebabCase' }],
+      'unicorn/filename-case': 'off', // Turn off filename case rules
       'unicorn/no-null': 'off',
       'unicorn/import-style': 'off',
       'unicorn/no-process-exit': 'off',
-      // --- FIX: Disable problematic Unicorn rule globally ---
+      'unicorn/prefer-module': 'off', // Allow require() usage
       'unicorn/expiring-todo-comments': 'off',
 
       // Import rules
@@ -125,6 +129,7 @@ export default [
         'warn',
         { allow: ['__TESTCONTAINER__', '__SERVER__', '_authCheckInterval'] },
       ],
+      // Enable browser globals in .languageOptions
 
       // Stricter checks
       eqeqeq: ['warn', 'always', { null: 'ignore' }],
@@ -135,7 +140,7 @@ export default [
       'no-async-promise-executor': 'warn',
       'no-await-in-loop': 'warn',
       radix: 'warn',
-      'no-undef': 'warn',
+      // 'no-undef' defined above with globals
       'unicorn/prefer-top-level-await': 'warn',
       'sonarjs/no-hardcoded-passwords': 'warn',
       'sonarjs/unused-import': 'warn',
@@ -149,7 +154,7 @@ export default [
       'promise/always-return': 'warn',
       'sonarjs/no-clear-text-protocols': 'warn',
       'unicorn/consistent-function-scoping': 'warn',
-      'unicorn/prefer-module': 'warn',
+      // 'unicorn/prefer-module' already disabled above
       'sonarjs/pseudo-random': 'warn',
       'unicorn/prefer-dom-node-text-content': 'warn',
       'sonarjs/no-redundant-assignments': 'warn',
@@ -163,6 +168,11 @@ export default [
       'unicorn/prefer-number-properties': 'warn',
       'unicorn/prefer-ternary': 'warn',
       'no-empty-pattern': 'warn',
+      'sonarjs/no-os-command-from-path': 'warn',
+      'unicorn/prefer-structured-clone': 'warn',
+      'sonarjs/prefer-single-boolean-return': 'warn',
+      'sonarjs/void-use': 'warn',
+      'unicorn/no-useless-promise-resolve-reject': 'warn',
 
       yoda: 'warn',
       'object-shorthand': ['warn', 'properties'],
@@ -317,6 +327,8 @@ export default [
       'jest/valid-title': 'warn',
       'jest/no-standalone-expect': 'off',
       'jest/no-conditional-expect': 'warn',
+      'jest/no-mocks-import': 'off', // Allow direct imports from __mocks__ directory
+      'import/extensions': 'off', // Don't enforce file extensions in tests
       'no-unused-expressions': 'off',
       'sonarjs/no-duplicate-string': 'off',
       'sonarjs/no-identical-functions': 'off',

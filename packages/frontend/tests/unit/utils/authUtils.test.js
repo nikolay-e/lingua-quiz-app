@@ -1,18 +1,19 @@
 // Import the actual module to test
-import { AuthUtils } from '../../../src/js/utils/authUtils.js';
 import jwt_decode from 'jwt-decode';
-import { 
-  errorHandler, 
-  mockJwtDecode, 
-  setupLocalStorageMock, 
-  setupLocationMock, 
+
+import { AuthUtils } from '../../../src/js/utils/authUtils.js';
+import {
+  errorHandler,
+  mockJwtDecode,
+  setupLocalStorageMock,
+  setupLocationMock,
   suppressConsoleOutput,
-  createMockToken
+  createMockToken,
 } from '../../__mocks__/unitTestSetup.js';
 
 // Mark this module as to be mocked
 jest.mock('../../../src/js/utils/errorHandler.js', () => ({
-  errorHandler: require('../../__mocks__/utils/errorHandler').errorHandler
+  errorHandler: require('../../__mocks__/utils/errorHandler').errorHandler,
 }));
 
 describe('AuthUtils', () => {
@@ -28,7 +29,7 @@ describe('AuthUtils', () => {
     consoleCleanup = suppressConsoleOutput();
 
     // Make sure jwt_decode mock has a good implementation
-    mockJwtDecode.mockImplementation(token => {
+    mockJwtDecode.mockImplementation((token) => {
       if (!token || token === 'invalid-token') {
         throw new Error('Invalid token');
       }
@@ -48,7 +49,7 @@ describe('AuthUtils', () => {
     test('should handle token management', () => {
       // Simply verify that we can call the methods without errors
       const mockToken = 'valid-token';
-      
+
       // Just test that the function exists and doesn't throw errors
       expect(() => {
         AuthUtils.setToken(mockToken);
@@ -238,15 +239,15 @@ describe('AuthUtils', () => {
   describe('Token Validation Edge Cases', () => {
     test('should handle token validation', () => {
       const invalidToken = 'this.is.not.a.jwt';
-      
+
       // Setup mockJwtDecode to throw for invalid tokens
       mockJwtDecode.mockImplementationOnce(() => {
         throw new Error('Invalid token');
       });
-      
+
       // Call the function under test with invalid token
       const invalidResult = AuthUtils.isValidToken(invalidToken);
-      
+
       // Check the result is correct
       expect(invalidResult).toBeFalsy();
     });
@@ -256,10 +257,10 @@ describe('AuthUtils', () => {
       mockJwtDecode.mockImplementationOnce(() => {
         return { iat: Date.now() / 1000 }; // No exp field
       });
-      
+
       // Call the function
       const noExpResult = AuthUtils.isValidToken('valid.token.noexp');
-      
+
       // Check result - token without exp should be invalid
       expect(noExpResult).toBeFalsy();
     });
@@ -267,15 +268,15 @@ describe('AuthUtils', () => {
     test('should handle tokens expiring soon', () => {
       // Setup token expiring in 30 seconds
       const futureExp = Math.floor(Date.now() / 1000) + 30;
-      
+
       // Setup mockJwtDecode to return soon-expiring token
       mockJwtDecode.mockImplementationOnce(() => {
         return { exp: futureExp };
       });
-      
+
       // Call the function
       const soonExpiringResult = AuthUtils.isValidToken('valid.token.expiringsoon');
-      
+
       // Check result - soon expiring token should be invalid
       expect(soonExpiringResult).toBeFalsy();
     });
@@ -381,7 +382,7 @@ describe('AuthUtils', () => {
       expect(isValidTokenSpy).toHaveBeenCalledWith(null);
       expect(clearAuthSpy).not.toHaveBeenCalled(); // No token, nothing to clear
       // Redirect IS expected with no token when not on login page
-      expect(redirectSpy).toHaveBeenCalled(); 
+      expect(redirectSpy).toHaveBeenCalled();
       expect(result).toBe(false); // No token means not authenticated
 
       // Clean up

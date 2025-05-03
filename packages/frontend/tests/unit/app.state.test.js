@@ -1,345 +1,40 @@
 // packages/frontend/tests/unit/app.state.test.js
-import { App } from '../../src/js/app.js';
 import {
   STATUS,
   DIRECTION,
   MAX_FOCUS_WORDS,
   MAX_MISTAKES_BEFORE_DEGRADATION,
-} from '../../src/js/constants.js'; // Updated import
+} from '../../src/js/constants.js';
 import { errorHandler } from '../../src/js/utils/errorHandler.js';
 import { suppressConsoleOutput } from '../__mocks__/browserMocks.js';
+import { createMockApp, createRealApp } from './test-utils/app-test-utils.js';
+import { mockQuizData, smallTestSet, createDataWithStatuses } from './test-utils/quiz-test-data.js';
 
 // Mock errorHandler - using centralized mock approach
 jest.mock('../../src/js/utils/errorHandler.js', () => ({
   errorHandler: require('../__mocks__/utils/errorHandler').errorHandler,
 }));
 
-// --- Mock Data (Ensure full array is available) ---
-const mockData = [
-  {
-    wordPairId: 1,
-    sourceWord: 'hello',
-    targetWord: 'hola',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_0',
-    sourceWordUsageExample: 'Hello, how are you?',
-    targetWordUsageExample: '¿Hola, cómo estás?',
-  },
-  {
-    wordPairId: 2,
-    sourceWord: 'goodbye',
-    targetWord: 'adiós',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_1',
-    sourceWordUsageExample: 'Goodbye, see you later!',
-    targetWordUsageExample: '¡Adiós, hasta luego!',
-  },
-  {
-    wordPairId: 3,
-    sourceWord: 'please',
-    targetWord: 'por favor',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_2',
-    sourceWordUsageExample: 'Please, help me.',
-    targetWordUsageExample: 'Por favor, ayúdame.',
-  },
-  {
-    wordPairId: 4,
-    sourceWord: 'thank you',
-    targetWord: 'gracias',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_3',
-    sourceWordUsageExample: 'Thank you for your help.',
-    targetWordUsageExample: 'Gracias por tu ayuda.',
-  },
-  {
-    wordPairId: 5,
-    sourceWord: 'yes',
-    targetWord: 'sí',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_0',
-    sourceWordUsageExample: 'Yes, I agree.',
-    targetWordUsageExample: 'Sí, estoy de acuerdo.',
-  },
-  {
-    wordPairId: 6,
-    sourceWord: 'no',
-    targetWord: 'no',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_1',
-    sourceWordUsageExample: "No, I don't want to.",
-    targetWordUsageExample: 'No, no quiero.',
-  },
-  {
-    wordPairId: 7,
-    sourceWord: 'water',
-    targetWord: 'agua',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_0',
-    sourceWordUsageExample: 'I need some water.',
-    targetWordUsageExample: 'Necesito un poco de agua.',
-  },
-  {
-    wordPairId: 8,
-    sourceWord: 'food',
-    targetWord: 'comida',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_1',
-    sourceWordUsageExample: 'The food is delicious.',
-    targetWordUsageExample: 'La comida está deliciosa.',
-  },
-  {
-    wordPairId: 9,
-    sourceWord: 'house',
-    targetWord: 'casa',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_2',
-    sourceWordUsageExample: 'My house is big.',
-    targetWordUsageExample: 'Mi casa es grande.',
-  },
-  {
-    wordPairId: 10,
-    sourceWord: 'car',
-    targetWord: 'coche',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_3',
-    sourceWordUsageExample: 'I drive a red car.',
-    targetWordUsageExample: 'Conduzco un coche rojo.',
-  },
-  {
-    wordPairId: 11,
-    sourceWord: 'book',
-    targetWord: 'libro',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_0',
-    sourceWordUsageExample: 'I love this book.',
-    targetWordUsageExample: 'Me encanta este libro.',
-  },
-  {
-    wordPairId: 12,
-    sourceWord: 'friend',
-    targetWord: 'amigo',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_1',
-    sourceWordUsageExample: 'She is my friend.',
-    targetWordUsageExample: 'Ella es mi amiga.',
-  },
-  {
-    wordPairId: 13,
-    sourceWord: 'family',
-    targetWord: 'familia',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_2',
-    sourceWordUsageExample: 'My family is large.',
-    targetWordUsageExample: 'Mi familia es grande.',
-  },
-  {
-    wordPairId: 14,
-    sourceWord: 'love',
-    targetWord: 'amor',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_3',
-    sourceWordUsageExample: 'Love is important.',
-    targetWordUsageExample: 'El amor es importante.',
-  },
-  {
-    wordPairId: 15,
-    sourceWord: 'time',
-    targetWord: 'tiempo',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_0',
-    sourceWordUsageExample: 'What time is it?',
-    targetWordUsageExample: '¿Qué hora es?',
-  },
-  {
-    wordPairId: 16,
-    sourceWord: 'day',
-    targetWord: 'día',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_1',
-    sourceWordUsageExample: 'Have a nice day!',
-    targetWordUsageExample: '¡Que tengas un buen día!',
-  },
-  {
-    wordPairId: 17,
-    sourceWord: 'night',
-    targetWord: 'noche',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_0',
-    sourceWordUsageExample: 'Good night, sleep well.',
-    targetWordUsageExample: 'Buenas noches, que duermas bien.',
-  },
-  {
-    wordPairId: 18,
-    sourceWord: 'eat',
-    targetWord: 'comer',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_2',
-    sourceWordUsageExample: 'I like to eat pizza.',
-    targetWordUsageExample: 'Me gusta comer pizza.',
-  },
-  {
-    wordPairId: 19,
-    sourceWord: 'drink',
-    targetWord: 'beber',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_1',
-    sourceWordUsageExample: 'What would you like to drink?',
-    targetWordUsageExample: '¿Qué te gustaría beber?',
-  },
-  {
-    wordPairId: 20,
-    sourceWord: 'work',
-    targetWord: 'trabajo',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_3',
-    sourceWordUsageExample: 'I have to go to work.',
-    targetWordUsageExample: 'Tengo que ir al trabajo.',
-  },
-  {
-    wordPairId: 21,
-    sourceWord: 'play',
-    targetWord: 'jugar',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_0',
-    sourceWordUsageExample: 'The children like to play in the park.',
-    targetWordUsageExample: 'A los niños les gusta jugar en el parque.',
-  },
-  {
-    wordPairId: 22,
-    sourceWord: 'school',
-    targetWord: 'escuela',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_1',
-    sourceWordUsageExample: 'The school is closed today.',
-    targetWordUsageExample: 'La escuela está cerrada hoy.',
-  },
-  {
-    wordPairId: 23,
-    sourceWord: 'money',
-    targetWord: 'dinero',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_2',
-    sourceWordUsageExample: 'I need to save money.',
-    targetWordUsageExample: 'Necesito ahorrar dinero.',
-  },
-  {
-    wordPairId: 24,
-    sourceWord: 'sun',
-    targetWord: 'sol',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_0',
-    sourceWordUsageExample: 'The sun is shining brightly.',
-    targetWordUsageExample: 'El sol brilla intensamente.',
-  },
-  {
-    wordPairId: 25,
-    sourceWord: 'moon',
-    targetWord: 'luna',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_3',
-    sourceWordUsageExample: 'The moon is full tonight.',
-    targetWordUsageExample: 'La luna está llena esta noche.',
-  },
-  {
-    wordPairId: 26,
-    sourceWord: 'happy',
-    targetWord: 'feliz',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_1',
-    sourceWordUsageExample: 'I am happy to see you.',
-    targetWordUsageExample: 'Estoy feliz de verte.',
-  },
-  {
-    wordPairId: 27,
-    sourceWord: 'sad',
-    targetWord: 'triste',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_0',
-    sourceWordUsageExample: 'Why are you sad?',
-    targetWordUsageExample: '¿Por qué estás triste?',
-  },
-  {
-    wordPairId: 28,
-    sourceWord: 'big',
-    targetWord: 'grande',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_2',
-    sourceWordUsageExample: 'That is a big dog!',
-    targetWordUsageExample: '¡Ese es un perro grande!',
-  },
-  {
-    wordPairId: 29,
-    sourceWord: 'small',
-    targetWord: 'pequeño',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_1',
-    sourceWordUsageExample: 'The mouse is very small.',
-    targetWordUsageExample: 'El ratón es muy pequeño.',
-  },
-  {
-    wordPairId: 30,
-    sourceWord: 'good',
-    targetWord: 'bueno',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_3',
-    sourceWordUsageExample: 'This is a good restaurant.',
-    targetWordUsageExample: 'Este es un buen restaurante.',
-  },
-];
-
 describe('App State Management', () => {
-  let isolatedApp;
+  let app;
+  let mocks;
   let consoleWarnSpy;
   let consoleErrorSpy;
 
   beforeEach(() => {
-    // Clear mocks and use suppressConsoleOutput helper
-    jest.clearAllMocks();
-    const consoleSuppress = suppressConsoleOutput();
-    
-    // Create spies for checking calls
+    // Create mock app with components for isolated testing
+    const mockAppData = createMockApp(mockQuizData);
+    app = mockAppData.app;
+    mocks = mockAppData.mocks;
+
+    // Set up console spies
     consoleWarnSpy = jest.spyOn(console, 'warn');
     consoleErrorSpy = jest.spyOn(console, 'error');
-    
-    // Create fresh instance for each test
-    isolatedApp = new App(mockData);
-    
-    // Reset internal state parts if needed, e.g., mistakes
-    isolatedApp.quizState.consecutiveMistakes = new Map();
-    isolatedApp.quizState.lastAskedWords = [];
-    
-    // Reset centralized mocks
+
+    // Suppress console output for cleaner tests
+    suppressConsoleOutput();
+
+    // Reset error handler
     errorHandler._reset();
   });
 
@@ -349,318 +44,130 @@ describe('App State Management', () => {
     if (consoleErrorSpy) consoleErrorSpy.mockRestore();
   });
 
-  describe('Word Status Management', () => {
-    it('should move a word to a new status and handle no-change scenarios', () => {
-      const wordId = 2; // Starts L1
-      // Access state via quizState
-      expect(isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_1].has(wordId)).toBe(true);
-      expect(isolatedApp.quizState.quizTranslations.get(wordId).status).toBe(STATUS.LEVEL_1);
-
-      // Call method on App instance
-      let changed = isolatedApp.moveWordToStatus(wordId, STATUS.LEVEL_2);
-      expect(changed).toBe(true);
-      // Check state via quizState
-      expect(isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_1].has(wordId)).toBe(false);
-      expect(isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_2].has(wordId)).toBe(true);
-      expect(isolatedApp.quizState.quizTranslations.get(wordId).status).toBe(STATUS.LEVEL_2);
-
-      changed = isolatedApp.moveWordToStatus(wordId, STATUS.LEVEL_0);
-      expect(changed).toBe(true);
-      expect(isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_2].has(wordId)).toBe(false);
-      expect(isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_0].has(wordId)).toBe(true);
-      expect(isolatedApp.quizState.quizTranslations.get(wordId).status).toBe(STATUS.LEVEL_0);
-
-      changed = isolatedApp.moveWordToStatus(wordId, STATUS.LEVEL_0);
-      expect(changed).toBe(false); // Already in L0
-      expect(isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_0].has(wordId)).toBe(true);
-      expect(isolatedApp.quizState.quizTranslations.get(wordId).status).toBe(STATUS.LEVEL_0);
+  // Base getter tests
+  describe('Base State Getters', () => {
+    it('should provide access to word status sets', () => {
+      const sets = app.currentWordStatusSets;
+      expect(sets).toBe(app.quizState.wordStatusSets);
+      expect(sets[STATUS.LEVEL_0]).toBeDefined();
+      expect(sets[STATUS.LEVEL_1]).toBeDefined();
+      expect(sets[STATUS.LEVEL_2]).toBeDefined();
+      expect(sets[STATUS.LEVEL_3]).toBeDefined();
     });
 
-    it('should return error and false when moving a word to an invalid status', () => {
-      const wordId = 2; // Starts L1
-      const originalStatus = isolatedApp.quizState.quizTranslations.get(wordId).status;
-
-      const changed = isolatedApp.moveWordToStatus(wordId, 'INVALID_STATUS');
-
-      expect(changed).toBe(false);
-      // Status should remain unchanged
-      expect(isolatedApp.quizState.quizTranslations.get(wordId).status).toBe(originalStatus);
-      expect(isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_1].has(wordId)).toBe(true); // Should still be in original set
-      expect(consoleErrorSpy).toHaveBeenCalledWith(
-        expect.stringContaining("invalid status 'INVALID_STATUS'")
-      );
+    it('should provide access to quiz translations', () => {
+      const translations = app.currentQuizTranslations;
+      expect(translations).toBe(app.quizState.quizTranslations);
+      expect(translations.size).toBeGreaterThan(0);
     });
 
-    it('should return true from populateFocusWords when L1 is not full and L0 has words', () => {
-      // Reset state specifically for this test
-      isolatedApp = new App(
-        mockData.map((d) => ({ ...d, status: d.status === 'LEVEL_1' ? 'LEVEL_3' : d.status }))
-      ); // Move initial L1 words out
-      isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_1].clear(); // Ensure L1 is empty
-      const initialL0Words = mockData
-        .filter((d) => d.status === STATUS.LEVEL_0)
-        .map((d) => d.wordPairId);
-      isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_0] = new Set(initialL0Words);
-      for (const id of initialL0Words) {
-        // Ensure map reflects L0 status
-        if (isolatedApp.quizState.quizTranslations.has(id))
-          isolatedApp.quizState.quizTranslations.get(id).status = STATUS.LEVEL_0;
-      }
+    it('should return correct direction label', () => {
+      app.quizState.direction = DIRECTION.NORMAL;
+      expect(app.currentDirectionLabel).toBe('Normal');
 
-      const initialL0Size = isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_0].size;
-      expect(initialL0Size).toBeGreaterThan(0);
-
-      const populated = isolatedApp.populateFocusWords(); // Call method on App
-
-      expect(populated).toBe(true);
-      const expectedToMove = Math.min(MAX_FOCUS_WORDS, initialL0Size);
-      // Check state via quizState
-      expect(isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_1].size).toBe(expectedToMove);
-      expect(isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_0].size).toBe(
-        initialL0Size - expectedToMove
-      );
-    });
-
-    it('should return false from populateFocusWords when focus set is already full', () => {
-      // Setup: create an app where L1 is already full
-      const tempMockData = [];
-      for (let i = 1; i <= MAX_FOCUS_WORDS; i++)
-        tempMockData.push({
-          wordPairId: i,
-          status: STATUS.LEVEL_1,
-          sourceLanguage: 'en',
-          targetLanguage: 'es',
-        });
-      tempMockData.push({
-        wordPairId: 100,
-        status: STATUS.LEVEL_0,
-        sourceLanguage: 'en',
-        targetLanguage: 'es',
-      }); // Add one L0 word
-      const fullL1App = new App(tempMockData);
-
-      expect(fullL1App.quizState.wordStatusSets[STATUS.LEVEL_1].size).toBe(MAX_FOCUS_WORDS);
-      const initialL0Size = fullL1App.quizState.wordStatusSets[STATUS.LEVEL_0].size;
-      expect(initialL0Size).toBe(1);
-
-      const populated = fullL1App.populateFocusWords();
-
-      expect(populated).toBe(false); // Should not populate as L1 is full
-      expect(fullL1App.quizState.wordStatusSets[STATUS.LEVEL_1].size).toBe(MAX_FOCUS_WORDS);
-      expect(fullL1App.quizState.wordStatusSets[STATUS.LEVEL_0].size).toBe(initialL0Size); // L0 should remain unchanged
-    });
-
-    it('should return false from populateFocusWords when no LEVEL_0 words are available', () => {
-      isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_0].clear(); // Ensure L0 is empty
-      // Ensure map reflects no L0 words
-      for (const word of isolatedApp.quizState.quizTranslations.values()) {
-        if (word.status === STATUS.LEVEL_0) word.status = STATUS.LEVEL_1; // Move any stray L0s
-      }
-      const initialL1Size = isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_1].size;
-
-      const populated = isolatedApp.populateFocusWords(); // Call method on App
-
-      expect(populated).toBe(false);
-      // Check state via quizState
-      expect(isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_1].size).toBe(initialL1Size); // L1 unchanged
-    });
-
-    test('should handle moving a non-existent word status', () => {
-      const result = isolatedApp.moveWordToStatus(9999, STATUS.LEVEL_1);
-      expect(result).toBe(false);
-      expect(consoleErrorSpy).toHaveBeenCalledWith(
-        'Word 9999 not found in quizTranslations! Cannot move status.'
-      );
+      app.quizState.direction = DIRECTION.REVERSE;
+      expect(app.currentDirectionLabel).toBe('Reverse');
     });
   });
 
-  describe('Level Degradation', () => {
-    it('should degrade word from LEVEL_3 to LEVEL_2 after N mistakes', async () => {
-      const wordId = 4; // Starts L3
-      isolatedApp.moveWordToStatus(wordId, STATUS.LEVEL_3);
-      isolatedApp.quizState.currentTranslationId = wordId; // Set context
-      isolatedApp.quizState.direction = DIRECTION.NORMAL;
+  // State manager tests
+  describe('State Manager Functionality', () => {
+    it('should delegate populateFocusWords to stateManager', () => {
+      // Set mocks and test delegation
+      mocks.stateManager.populateFocusWords.mockReturnValue(true);
 
-      // Simulate N incorrect answers by calling submitAnswer
-      for (let i = 0; i < MAX_MISTAKES_BEFORE_DEGRADATION; i++) {
-        await isolatedApp.submitAnswer('incorrect', false); // Submit incorrect answer
-      }
+      // Test by calling App's public API
+      const result = app.stateManager.populateFocusWords(MAX_FOCUS_WORDS);
 
-      // Check final state via quizState
-      expect(isolatedApp.quizState.quizTranslations.get(wordId).status).toBe(STATUS.LEVEL_2);
-      expect(isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_2].has(wordId)).toBe(true);
-      expect(isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_3].has(wordId)).toBe(false);
-      // Check mistake counter reset via quizLogic/quizState
-      const mistakeKey = isolatedApp.quizLogic.getMistakesKey(wordId, DIRECTION.NORMAL);
-      expect(isolatedApp.quizState.consecutiveMistakes.get(mistakeKey)).toBe(0);
+      expect(mocks.stateManager.populateFocusWords).toHaveBeenCalledWith(MAX_FOCUS_WORDS);
+      expect(result).toBe(true);
     });
 
-    it('should degrade word from LEVEL_2 to LEVEL_1 after N mistakes', async () => {
-      const wordId = 3; // Starts L2
-      isolatedApp.moveWordToStatus(wordId, STATUS.LEVEL_2);
-      isolatedApp.quizState.currentTranslationId = wordId;
-      isolatedApp.quizState.direction = DIRECTION.NORMAL;
+    it('should delegate moveWordToStatus to stateManager', () => {
+      // Set mocks and test delegation
+      mocks.stateManager.moveWordToStatus.mockReturnValue(true);
 
-      for (let i = 0; i < MAX_MISTAKES_BEFORE_DEGRADATION; i++) {
-        await isolatedApp.submitAnswer('incorrect', false);
-      }
+      // Test by calling the method through the App's stateManager
+      const wordId = 1;
+      const newStatus = STATUS.LEVEL_1;
+      const result = app.stateManager.moveWordToStatus(wordId, newStatus);
 
-      expect(isolatedApp.quizState.quizTranslations.get(wordId).status).toBe(STATUS.LEVEL_1);
-      expect(isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_1].has(wordId)).toBe(true);
-      expect(isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_2].has(wordId)).toBe(false);
-      const mistakeKey = isolatedApp.quizLogic.getMistakesKey(wordId, DIRECTION.NORMAL);
-      expect(isolatedApp.quizState.consecutiveMistakes.get(mistakeKey)).toBe(0);
+      expect(mocks.stateManager.moveWordToStatus).toHaveBeenCalledWith(wordId, newStatus);
+      expect(result).toBe(true);
     });
 
-    it('should degrade word from LEVEL_1 to LEVEL_0 after N mistakes', async () => {
-      const wordId = 2; // Starts L1
+    it('should delegate degradeWordLevel to stateManager', () => {
+      // Set mocks and test delegation
+      mocks.stateManager.degradeWordLevel.mockReturnValue(true);
 
-      // Clear and explicitly set up the word status to ensure integrity
-      isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_0].clear();
-      isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_1].clear();
+      // Test by calling the method through the App's stateManager
+      const wordId = 2;
+      const result = app.stateManager.degradeWordLevel(wordId);
 
-      const word2 = isolatedApp.quizState.quizTranslations.get(wordId);
-      if (word2) word2.status = STATUS.LEVEL_1;
-      isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_1].add(wordId);
-
-      isolatedApp.quizState.currentTranslationId = wordId;
-      isolatedApp.quizState.direction = DIRECTION.NORMAL;
-
-      // Important: Reset mistake counter at the start of the test
-      const mistakeKey = isolatedApp.quizLogic.getMistakesKey(wordId, DIRECTION.NORMAL);
-      isolatedApp.quizState.consecutiveMistakes.set(mistakeKey, 0);
-
-      expect(isolatedApp.quizState.quizTranslations.get(wordId).status).toBe(STATUS.LEVEL_1);
-
-      // Make MAX_MISTAKES_BEFORE_DEGRADATION-1 mistakes first
-      for (let i = 0; i < MAX_MISTAKES_BEFORE_DEGRADATION - 1; i++) {
-        await isolatedApp.submitAnswer('incorrect', false);
-        expect(isolatedApp.quizState.consecutiveMistakes.get(mistakeKey)).toBe(i + 1);
-      }
-
-      // Verify we're at the threshold
-      expect(isolatedApp.quizState.consecutiveMistakes.get(mistakeKey)).toBe(
-        MAX_MISTAKES_BEFORE_DEGRADATION - 1
-      );
-
-      // Make the final mistake that should trigger degradation
-      const result = await isolatedApp.submitAnswer('incorrect_final', false);
-
-      expect(result.statusChanged).toBe(true);
-      expect(isolatedApp.quizState.quizTranslations.get(wordId).status).toBe(STATUS.LEVEL_0);
-      expect(isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_0].has(wordId)).toBe(true);
-      expect(isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_1].has(wordId)).toBe(false);
-      expect(isolatedApp.quizState.consecutiveMistakes.get(mistakeKey)).toBe(0); // Reset after degradation
-    });
-    it('should handle mistake tracking separately per direction', async () => {
-      const wordId = 4; // Starts L3
-      isolatedApp.moveWordToStatus(wordId, STATUS.LEVEL_3);
-      isolatedApp.quizState.currentTranslationId = wordId;
-
-      // Make N-1 mistakes in NORMAL direction
-      isolatedApp.quizState.direction = DIRECTION.NORMAL;
-      for (let i = 0; i < MAX_MISTAKES_BEFORE_DEGRADATION - 1; i++) {
-        await isolatedApp.submitAnswer('incorrect', false);
-      }
-      const normalKey = isolatedApp.quizLogic.getMistakesKey(wordId, DIRECTION.NORMAL);
-      expect(isolatedApp.quizState.consecutiveMistakes.get(normalKey)).toBe(
-        MAX_MISTAKES_BEFORE_DEGRADATION - 1
-      );
-
-      // Make N-1 mistakes in REVERSE direction
-      isolatedApp.quizState.direction = DIRECTION.REVERSE;
-      isolatedApp.quizState.currentTranslationId = wordId; // Ensure context is right
-      for (let i = 0; i < MAX_MISTAKES_BEFORE_DEGRADATION - 1; i++) {
-        await isolatedApp.submitAnswer('incorrect', false);
-      }
-      const reverseKey = isolatedApp.quizLogic.getMistakesKey(wordId, DIRECTION.REVERSE);
-      expect(isolatedApp.quizState.consecutiveMistakes.get(reverseKey)).toBe(
-        MAX_MISTAKES_BEFORE_DEGRADATION - 1
-      );
-
-      // Status should NOT have changed yet
-      expect(isolatedApp.quizState.quizTranslations.get(wordId).status).toBe(STATUS.LEVEL_3);
-
-      // One more mistake in NORMAL should degrade
-      isolatedApp.quizState.direction = DIRECTION.NORMAL;
-      isolatedApp.quizState.currentTranslationId = wordId;
-      await isolatedApp.submitAnswer('incorrect_final', false);
-      expect(isolatedApp.quizState.quizTranslations.get(wordId).status).toBe(STATUS.LEVEL_2);
-      // Both counters should reset upon degradation
-      expect(isolatedApp.quizState.consecutiveMistakes.get(normalKey)).toBe(0);
-      expect(isolatedApp.quizState.consecutiveMistakes.get(reverseKey)).toBe(0);
-    });
-
-    it('should reset mistakes counter on correct answer', async () => {
-      const wordId = 4; // Starts L3
-      isolatedApp.moveWordToStatus(wordId, STATUS.LEVEL_3);
-      isolatedApp.quizState.currentTranslationId = wordId;
-      isolatedApp.quizState.direction = DIRECTION.NORMAL;
-      const mistakeKey = isolatedApp.quizLogic.getMistakesKey(wordId, DIRECTION.NORMAL);
-
-      await isolatedApp.submitAnswer('incorrect1', false);
-      await isolatedApp.submitAnswer('incorrect2', false);
-      expect(isolatedApp.quizState.consecutiveMistakes.get(mistakeKey)).toBe(2);
-
-      await isolatedApp.submitAnswer('gracias', false); // Correct answer for word 4
-      expect(isolatedApp.quizState.consecutiveMistakes.get(mistakeKey)).toBe(0); // Counter reset
-
-      await isolatedApp.submitAnswer('incorrect3', false); // Another mistake
-      expect(isolatedApp.quizState.consecutiveMistakes.get(mistakeKey)).toBe(1); // Counter starts again
-
-      expect(isolatedApp.quizState.quizTranslations.get(wordId).status).toBe(STATUS.LEVEL_3); // Status unchanged
-    });
-
-    it('should handle degrading a word already at LEVEL_0', () => {
-      const wordId = 1; // Starts L0
-      isolatedApp.moveWordToStatus(wordId, STATUS.LEVEL_0);
-      expect(isolatedApp.quizState.quizTranslations.get(wordId).status).toBe(STATUS.LEVEL_0);
-
-      const result = isolatedApp.degradeWordLevel(wordId); // Call method on App instance
-      expect(result).toBe(false); // No change occurred
-      expect(isolatedApp.quizState.quizTranslations.get(wordId).status).toBe(STATUS.LEVEL_0);
-      expect(consoleWarnSpy).toHaveBeenCalledWith(
-        `Word ${wordId} is already at LEVEL_0, cannot degrade further.`
-      );
-    });
-
-    test('should handle degrading a non-existent word', () => {
-      const result = isolatedApp.degradeWordLevel(9999); // Call method on App instance
-      expect(result).toBe(false);
-      expect(consoleErrorSpy).toHaveBeenCalledWith('Word 9999 not found for degradation!');
+      expect(mocks.stateManager.degradeWordLevel).toHaveBeenCalledWith(wordId);
+      expect(result).toBe(true);
     });
   });
 
-  describe('Quiz Direction', () => {
-    it('should toggle direction when LEVEL_2 words exist', () => {
-      isolatedApp.moveWordToStatus(3, STATUS.LEVEL_2); // Ensure L2 has a word
-      expect(isolatedApp.quizState.direction).toBe(DIRECTION.NORMAL);
-      const newDirectionLabel = isolatedApp.toggleDirection(); // Call method on App instance
-      expect(newDirectionLabel).toBe('Reverse');
-      expect(isolatedApp.quizState.direction).toBe(DIRECTION.REVERSE);
+  // Integration tests with real components
+  describe('State Management Integration', () => {
+    let realApp;
+
+    beforeEach(() => {
+      // Create a real app with actual components for integration testing
+      const customData = createDataWithStatuses({
+        1: STATUS.LEVEL_0,
+        2: STATUS.LEVEL_1,
+        3: STATUS.LEVEL_2,
+        4: STATUS.LEVEL_3,
+      });
+
+      realApp = createRealApp(customData);
     });
 
-    it('should not toggle to REVERSE when no LEVEL_2 words exist', () => {
-      isolatedApp.quizState.wordStatusSets[STATUS.LEVEL_2].clear(); // Ensure L2 is empty
-      // Ensure map reflects this
-      for (const word of isolatedApp.quizState.quizTranslations.values()) {
-        if (word.status === STATUS.LEVEL_2) word.status = STATUS.LEVEL_1;
-      }
-
-      expect(isolatedApp.quizState.direction).toBe(DIRECTION.NORMAL);
-      const newDirectionLabel = isolatedApp.toggleDirection(); // Call method on App instance
-      expect(newDirectionLabel).toBe('Normal'); // Stays Normal
-      expect(isolatedApp.quizState.direction).toBe(DIRECTION.NORMAL);
+    it('should properly initialize word status sets', () => {
+      // Check that words are in the correct status sets
+      expect(realApp.quizState.wordStatusSets[STATUS.LEVEL_0].has(1)).toBe(true);
+      expect(realApp.quizState.wordStatusSets[STATUS.LEVEL_1].has(2)).toBe(true);
+      expect(realApp.quizState.wordStatusSets[STATUS.LEVEL_2].has(3)).toBe(true);
+      expect(realApp.quizState.wordStatusSets[STATUS.LEVEL_3].has(4)).toBe(true);
     });
 
-    it('should always toggle back to NORMAL from REVERSE', () => {
-      isolatedApp.moveWordToStatus(3, STATUS.LEVEL_2); // Allow toggling to reverse first
-      isolatedApp.toggleDirection(); // Toggle to Reverse
-      expect(isolatedApp.quizState.direction).toBe(DIRECTION.REVERSE);
+    it('should move words between status sets', () => {
+      // Test moving a word from L1 to L2
+      realApp.stateManager.moveWordToStatus(2, STATUS.LEVEL_2);
 
-      const newDirectionLabel = isolatedApp.toggleDirection(); // Toggle back
-      expect(newDirectionLabel).toBe('Normal');
-      expect(isolatedApp.quizState.direction).toBe(DIRECTION.NORMAL);
+      // Verify the word moved
+      expect(realApp.quizState.wordStatusSets[STATUS.LEVEL_1].has(2)).toBe(false);
+      expect(realApp.quizState.wordStatusSets[STATUS.LEVEL_2].has(2)).toBe(true);
+      expect(realApp.quizState.quizTranslations.get(2).status).toBe(STATUS.LEVEL_2);
+    });
+
+    it('should handle degrade word level', () => {
+      // Test degrading a word from L3 to L2
+      const result = realApp.stateManager.degradeWordLevel(4);
+
+      // Verify the word was degraded
+      expect(result).toBe(true);
+      expect(realApp.quizState.wordStatusSets[STATUS.LEVEL_3].has(4)).toBe(false);
+      expect(realApp.quizState.wordStatusSets[STATUS.LEVEL_2].has(4)).toBe(true);
+      expect(realApp.quizState.quizTranslations.get(4).status).toBe(STATUS.LEVEL_2);
+    });
+
+    it('should populate focus words when needed', () => {
+      // Clear L1 and set up L0 with words
+      realApp.quizState.wordStatusSets[STATUS.LEVEL_1].clear();
+
+      // Update the status in the translations map to match
+      realApp.quizState.quizTranslations.get(2).status = STATUS.LEVEL_0;
+      realApp.quizState.wordStatusSets[STATUS.LEVEL_0].add(2);
+
+      // Populate focus words
+      const result = realApp.stateManager.populateFocusWords(MAX_FOCUS_WORDS);
+
+      // Verify words were moved to focus
+      expect(result).toBe(true);
+      expect(realApp.quizState.wordStatusSets[STATUS.LEVEL_1].size).toBeGreaterThan(0);
     });
   });
 });

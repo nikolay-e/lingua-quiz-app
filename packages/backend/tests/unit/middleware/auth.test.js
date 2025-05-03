@@ -1,6 +1,6 @@
 // Import the enhanced expect from our setup
-const expect = require('../setup');
 const { AuthenticationError, AuthorizationError } = require('../../../src/utils/errors');
+const expect = require('../setup');
 
 describe('Auth Middleware', () => {
   // Only test error handling cases

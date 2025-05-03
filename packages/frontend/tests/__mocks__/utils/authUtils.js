@@ -8,7 +8,7 @@ const TOKEN_KEY = 'token';
 const EMAIL_KEY = 'email';
 const TOKEN_EXPIRATION_KEY = 'tokenExpiration';
 const LOGIN_PAGE = '/login.html';
-const AUTH_CHECK_INTERVAL = 60000; // 1 minute
+const AUTH_CHECK_INTERVAL = 60_000; // 1 minute
 
 // Create mock functions with mockName for better error messages
 const getToken = jest.fn().mockName('AuthUtils.getToken');
@@ -29,7 +29,7 @@ export const AuthUtils = {
   TOKEN_EXPIRATION_KEY,
   LOGIN_PAGE,
   AUTH_CHECK_INTERVAL,
-  
+
   // Functions
   getToken,
   setToken,
@@ -40,7 +40,7 @@ export const AuthUtils = {
   shouldRedirectToLogin,
   initAuthCheck,
   handleTokenExpiration,
-  
+
   // Helper to reset all mocks between tests
   _reset() {
     getToken.mockClear();
@@ -52,7 +52,7 @@ export const AuthUtils = {
     shouldRedirectToLogin.mockClear();
     initAuthCheck.mockClear();
     handleTokenExpiration.mockClear();
-  }
+  },
 };
 
 // Default mock implementations
@@ -71,8 +71,8 @@ AuthUtils.setToken.mockImplementation((token) => {
         localStorage.setItem(TOKEN_EXPIRATION_KEY, payload.exp * 1000);
       }
     }
-  } catch (e) {
-    console.error('[MOCK] Error decoding token:', e);
+  } catch (error) {
+    console.error('[MOCK] Error decoding token:', error);
   }
 });
 
@@ -88,20 +88,20 @@ AuthUtils.clearAuth.mockImplementation(() => {
 
 AuthUtils.isValidToken.mockImplementation((token) => {
   if (!token) return false;
-  
+
   try {
     // Simple token validation (assuming JWT format)
     const parts = token.split('.');
     if (parts.length !== 3) return false;
-    
+
     // Check expiration if it exists
     const payload = JSON.parse(atob(parts[1]));
     if (!payload.exp) return false;
-    
+
     // Check if token is expired (with 60s buffer)
     const now = Math.floor(Date.now() / 1000);
-    return payload.exp > (now + 60);
-  } catch (e) {
+    return payload.exp > now + 60;
+  } catch {
     return false;
   }
 });
@@ -122,17 +122,17 @@ AuthUtils.shouldRedirectToLogin.mockImplementation(() => {
 AuthUtils.handleTokenExpiration.mockImplementation(() => {
   const token = AuthUtils.getToken();
   const isValid = AuthUtils.isValidToken(token);
-  
+
   if (!isValid && token) {
     // Clear auth if token exists but is invalid
     AuthUtils.clearAuth();
   }
-  
+
   // Only redirect if not on login page and not authenticated
   if (!isValid && window.location.pathname !== LOGIN_PAGE) {
     AuthUtils.redirectToLogin();
   }
-  
+
   return isValid;
 });
 
@@ -140,7 +140,7 @@ AuthUtils.initAuthCheck.mockImplementation(() => {
   // Initial check
   const isAuthenticated = AuthUtils.handleTokenExpiration();
   if (!isAuthenticated) return null;
-  
+
   // Set up interval
   return setInterval(() => {
     AuthUtils.handleTokenExpiration();

@@ -6,7 +6,7 @@ const axios = require('axios');
 const { Pool } = require('pg');
 
 // Import the runMigrations function from the new location
-const { runMigrations } = require('../src/migrations');
+const { runMigrations } = require('../../src/migrations');
 
 module.exports = async () => {
   const env = process.env.TEST_ENV || 'local';
@@ -35,7 +35,7 @@ module.exports = async () => {
     await runMigrations();
 
     // Import the server instance from new location
-    const { startServer } = require('../src/app');
+    const { startServer } = require('../../src/app');
 
     // Give database time to start
     await new Promise((resolve) => setTimeout(resolve, 3000));

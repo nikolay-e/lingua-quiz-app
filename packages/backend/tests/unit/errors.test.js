@@ -7,7 +7,7 @@ const {
   ValidationError,
   NotFoundError,
   ConflictError,
-  ServiceUnavailableError
+  ServiceUnavailableError,
 } = require('../../src/utils/errors');
 
 describe('Error Classes', () => {
@@ -46,9 +46,7 @@ describe('Error Classes', () => {
 
   describe('ValidationError', () => {
     it('should have correct name and status code', () => {
-      const validationErrors = [
-        { field: 'email', message: 'Email is required' }
-      ];
+      const validationErrors = [{ field: 'email', message: 'Email is required' }];
       const error = new ValidationError('Validation failed', validationErrors);
       expect(error.name).to.equal('ValidationError');
       expect(error.message).to.equal('Validation failed');

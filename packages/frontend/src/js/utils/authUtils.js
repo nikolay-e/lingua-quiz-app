@@ -19,10 +19,7 @@ export const AuthUtils = {
 
       // Expired or expires within 60 seconds buffer
       // Only check validity, don't clear auth here
-      if (!decoded || !decoded.exp || decoded.exp <= currentTime + 60) {
-        return false;
-      }
-      return true;
+      return !(!decoded || !decoded.exp || decoded.exp <= currentTime + 60);
     } catch {
       return false;
     }
@@ -39,9 +36,9 @@ export const AuthUtils = {
       if (token) {
         AuthUtils.clearAuth();
       }
-      
+
       // Only redirect if not already on login page
-      if (!window.location.pathname.includes(AuthUtils.LOGIN_PAGE.substring(1))) {
+      if (!window.location.pathname.includes(AuthUtils.LOGIN_PAGE.slice(1))) {
         AuthUtils.redirectToLogin();
         return false;
       }
@@ -80,7 +77,8 @@ export const AuthUtils = {
     // Only check if token is valid - don't perform side effects
     // This method is only used for the decision, actual redirection is done elsewhere
     return (
-      !currentPath.includes(AuthUtils.LOGIN_PAGE.substring(1)) && !AuthUtils.isValidToken(AuthUtils.getToken())
+      !currentPath.includes(AuthUtils.LOGIN_PAGE.slice(1)) &&
+      !AuthUtils.isValidToken(AuthUtils.getToken())
     );
   },
 
@@ -91,13 +89,13 @@ export const AuthUtils = {
     );
 
     // Only redirect if not already on login page
-    if (!window.location.pathname.includes(AuthUtils.LOGIN_PAGE.substring(1))) {
+    if (window.location.pathname.includes(AuthUtils.LOGIN_PAGE.slice(1))) {
+      console.log('Already on login page, not redirecting');
+    } else {
       // Force redirect to login page and replace current history entry
       console.log(`Executing redirect to: ${AuthUtils.LOGIN_PAGE}`);
       // Use replace to avoid adding to browser history
       window.location.replace(AuthUtils.LOGIN_PAGE);
-    } else {
-      console.log('Already on login page, not redirecting');
     }
   },
 

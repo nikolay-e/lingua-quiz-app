@@ -58,7 +58,7 @@ function displayUsageExamples(examples) {
     console.error('Usage example elements not found');
     return;
   }
-  
+
   // Defensive programming: handle null/undefined examples properly
   if (!examples) {
     sourceUsageEl.textContent = 'N/A';
@@ -112,10 +112,12 @@ async function loadWordsFromAPI(wordListName) {
     // Get token after handling expiration to ensure it's still valid
     const token = AuthUtils.getToken();
     console.debug(`[eventHandlers] Token present: ${!!token}`);
-    
+
     // Debug log word list name encoding
     const encodedWordListName = encodeURIComponent(wordListName);
-    console.debug(`[eventHandlers] Encoded word list name: "${wordListName}" -> "${encodedWordListName}"`);
+    console.debug(
+      `[eventHandlers] Encoded word list name: "${wordListName}" -> "${encodedWordListName}"`
+    );
 
     app = await fetchWordSets(token, wordListName);
 
@@ -127,15 +129,19 @@ async function loadWordsFromAPI(wordListName) {
     }
 
     console.debug(`[eventHandlers] App created successfully: ${!!app}`);
-    
+
     // Debug log app status
-    console.debug(`[eventHandlers] App wordStatusSets sizes:`, 
-      Object.entries(app.currentWordStatusSets).map(([k, v]) => `${k}: ${v.size}`).join(', '));
+    console.debug(
+      `[eventHandlers] App wordStatusSets sizes:`,
+      Object.entries(app.currentWordStatusSets)
+        .map(([k, v]) => `${k}: ${v.size}`)
+        .join(', ')
+    );
 
     updateDirectionToggleTitle(app);
     const questionData = app.getNextQuestion();
     console.debug(`[eventHandlers] Next question data:`, questionData);
-    
+
     displayQuestion(questionData);
     updateWordSetsDisplay(app);
     setFeedback('');
@@ -257,10 +263,10 @@ function handleDirectionToggle() {
   displayQuestion(questionData);
   updateWordSetsDisplay(app);
   setFeedback('');
-  
+
   // Use proper empty usage examples
   displayUsageExamples({ source: 'N/A', target: 'N/A' });
-  
+
   document.querySelector('#answer')?.focus();
 }
 

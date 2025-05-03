@@ -7,11 +7,11 @@ import 'jest-localstorage-mock';
 import fetchMock from 'jest-fetch-mock';
 
 // Import our centralized mock utilities
-import { 
-  setupLocalStorageMock, 
-  setupLocationMock, 
+import {
+  setupLocalStorageMock,
+  setupLocationMock,
   suppressConsoleOutput,
-  setupFetchMock
+  setupFetchMock,
 } from './browserMocks.js';
 
 // Enable fetch mocks globally

@@ -1,5 +1,4 @@
 // Import the enhanced expect from our setup
-const expect = require('../setup');
 const errorHandler = require('../../../src/middleware/errorHandler');
 const {
   DatabaseError,
@@ -10,6 +9,7 @@ const {
   ConflictError,
   ServiceUnavailableError,
 } = require('../../../src/utils/errors');
+const expect = require('../setup');
 
 describe('Error Handler Middleware', () => {
   let req, res, jsonSpy, statusSpy, nextSpy;
@@ -24,14 +24,14 @@ describe('Error Handler Middleware', () => {
 
     // Create mock functions manually instead of using jest.fn()
     jsonSpy = function mockJsonFn() {
-      mockJsonFn.mock.calls.push(Array.from(arguments));
+      mockJsonFn.mock.calls.push([...arguments]);
       return mockJsonFn.mockReturnValue;
     };
     jsonSpy.mock = { calls: [] };
     jsonSpy.mockReturnValue = undefined;
 
     statusSpy = function mockStatusFn() {
-      mockStatusFn.mock.calls.push(Array.from(arguments));
+      mockStatusFn.mock.calls.push([...arguments]);
       return { json: jsonSpy };
     };
     statusSpy.mock = { calls: [] };
@@ -42,7 +42,7 @@ describe('Error Handler Middleware', () => {
     };
 
     nextSpy = function mockNextFn() {
-      mockNextFn.mock.calls.push(Array.from(arguments));
+      mockNextFn.mock.calls.push([...arguments]);
     };
     nextSpy.mock = { calls: [] };
 
@@ -59,13 +59,13 @@ describe('Error Handler Middleware', () => {
   it('should handle ValidationError with 400 status code', () => {
     const validationErrors = [{ field: 'email', message: 'Invalid email' }];
     const error = new ValidationError('Validation failed', validationErrors);
-    
+
     errorHandler(error, req, res, nextSpy);
-    
+
     // Verify status was called with 400
     expect(statusSpy.mock.calls.length).to.equal(1);
     expect(statusSpy.mock.calls[0][0]).to.equal(400);
-    
+
     // Verify json was called with expected structure
     expect(jsonSpy.mock.calls.length).to.be.at.least(1);
     const jsonArg = jsonSpy.mock.calls[0][0];
@@ -76,13 +76,13 @@ describe('Error Handler Middleware', () => {
 
   it('should handle AuthenticationError with 401 status code', () => {
     const error = new AuthenticationError('Invalid token');
-    
+
     errorHandler(error, req, res, nextSpy);
-    
+
     // Verify status was called with 401
     expect(statusSpy.mock.calls.length).to.equal(1);
     expect(statusSpy.mock.calls[0][0]).to.equal(401);
-    
+
     // Verify json was called with expected structure
     expect(jsonSpy.mock.calls.length).to.be.at.least(1);
     const jsonArg = jsonSpy.mock.calls[0][0];
@@ -92,13 +92,13 @@ describe('Error Handler Middleware', () => {
 
   it('should handle NotFoundError with 404 status code', () => {
     const error = new NotFoundError('User not found');
-    
+
     errorHandler(error, req, res, nextSpy);
-    
+
     // Verify status was called with 404
     expect(statusSpy.mock.calls.length).to.equal(1);
     expect(statusSpy.mock.calls[0][0]).to.equal(404);
-    
+
     // Verify json was called with expected structure
     expect(jsonSpy.mock.calls.length).to.be.at.least(1);
     const jsonArg = jsonSpy.mock.calls[0][0];
@@ -108,13 +108,13 @@ describe('Error Handler Middleware', () => {
 
   it('should handle generic errors with 500 status code', () => {
     const error = new Error('Unexpected error');
-    
+
     errorHandler(error, req, res, nextSpy);
-    
+
     // Verify status was called with 500
     expect(statusSpy.mock.calls.length).to.equal(1);
     expect(statusSpy.mock.calls[0][0]).to.equal(500);
-    
+
     // Verify json was called with expected structure
     expect(jsonSpy.mock.calls.length).to.be.at.least(1);
     const jsonArg = jsonSpy.mock.calls[0][0];

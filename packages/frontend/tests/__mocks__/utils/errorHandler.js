@@ -13,23 +13,23 @@ export const errorHandler = {
   handleApiError,
   showError,
   init,
-  
+
   // Additional properties that may be needed in specific tests
   errorContainer: null,
   maxErrors: 5,
-  
+
   // Helper to reset all mocks between tests
   _reset() {
     handleApiError.mockClear();
     showError.mockClear();
     init.mockClear();
-  }
+  },
 };
 
 // Default mock implementations
-errorHandler.init.mockImplementation(function() {
+errorHandler.init.mockImplementation(function () {
   // First try to find an existing container
-  const existingContainer = document.getElementById('error-container');
+  const existingContainer = document.querySelector('#error-container');
   if (existingContainer) {
     this.errorContainer = existingContainer;
   } else {
@@ -41,11 +41,11 @@ errorHandler.init.mockImplementation(function() {
     this.errorContainer.style.right = '20px';
     this.errorContainer.style.maxWidth = '300px';
     this.errorContainer.style.zIndex = '9999';
-    document.body.appendChild(this.errorContainer);
+    document.body.append(this.errorContainer);
   }
 });
 
-errorHandler.showError.mockImplementation(function(message) {
+errorHandler.showError.mockImplementation(function (message) {
   console.error(`[MOCK] Error: ${message}`);
   // Simple implementation to add error to DOM if container exists
   if (this.errorContainer) {
@@ -53,21 +53,21 @@ errorHandler.showError.mockImplementation(function(message) {
     errorElement.className = 'error-message';
     errorElement.dataset.testid = 'error-message';
     errorElement.textContent = message;
-    this.errorContainer.appendChild(errorElement);
+    this.errorContainer.append(errorElement);
   }
 });
 
-errorHandler.handleApiError.mockImplementation(function(error) {
+errorHandler.handleApiError.mockImplementation(function (error) {
   console.error('[MOCK] API Error:', error);
-  
+
   // Extract error message from various possible sources
   let errorMessage = 'An unexpected error occurred';
-  
+
   if (error.message) {
     errorMessage = error.message;
   } else if (error.response && error.response.data && error.response.data.message) {
     errorMessage = error.response.data.message;
   }
-  
+
   this.showError(errorMessage);
 });

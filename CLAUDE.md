@@ -8,21 +8,26 @@ repository.
 **IMPORTANT: ALWAYS use root package.json scripts when available instead of manual commands.**
 
 ### Development
+
 - **Start UI**: `npm run dev:ui` (frontend dev server)
 - **Start API**: `npm run dev:api` (backend server)
 - **Build UI**: `npm run build:ui` (build frontend for production)
 
 ### Database
+
 - **Run Migrations**: `npm run db:migrate` (setup/update database schema)
 
 ### Testing
+
 - **All Tests**: `npm run test` (runs all unit + integration tests)
 - **Unit Tests**: `npm run test:unit` (runs all unit tests)
 - **Frontend Unit Tests**: `npm run test:unit:frontend` (frontend Jest tests)
 - **Backend Unit Tests**: `npm run test:unit:backend` (backend utility/middleware tests)
 - **Integration Tests**: `npm run test:integration` (runs all integration tests)
-- **Frontend Integration Tests**: `npm run test:integration:frontend` (core component integration tests)
-- **Frontend Integration Tests (All)**: `npm run test:integration:frontend:all` (all frontend integration tests)
+- **Frontend Integration Tests**: `npm run test:integration:frontend` (core component integration
+  tests)
+- **Frontend Integration Tests (All)**: `npm run test:integration:frontend:all` (all frontend
+  integration tests)
 - **Backend Integration Tests**: `npm run test:integration:backend` (backend API tests)
 - **E2E Tests**: `npm run test:e2e` (all end-to-end tests)
 - **E2E Auth Tests**: `npm run test:e2e:auth` (auth feature tests)
@@ -36,6 +41,7 @@ repository.
 - **Test Report**: `npm run test:report` (view Playwright HTML report)
 
 ### Code Quality
+
 - **Lint Code**: `npm run lint` (format check + js lint)
 - **Fix Lint Issues**: `npm run fix` (auto-fix format & js issues)
 - **Format Code**: `npm run format` (prettier only)
@@ -63,9 +69,14 @@ repository.
 
 ## E2E Testing Guidelines
 
-- **ALWAYS use constants for timeouts** - All timeouts must use constants from `utils/timeouts.js` or `utils/constants.js`
-- **Keep timeouts short** - Only heavy data downloads can take up to 5 seconds, everything else should be 1 second or less
+- **ALWAYS use constants for timeouts** - All timeouts must use constants from `utils/timeouts.js`
+  or `utils/constants.js`
+- **Keep timeouts short** - Only heavy data downloads can take up to 5 seconds, everything else
+  should be 1 second or less
 - **Use proper reporting** - Use HTML reporter with `open: 'never'` to prevent process blocking
-- **Prefer fast test mode** - Always use fast test mode with `E2E_FAST_QUIZ=true` for quicker test iterations during development and debugging
-- **Check all related logs** - Before providing a fix, always check console logs, API responses, and all related source code
-- **Debug data flow completely** - When debugging data-related issues, trace the full flow from API calls to front-end rendering
+- **Prefer fast test mode** - Always use fast test mode with `E2E_FAST_QUIZ=true` for quicker test
+  iterations during development and debugging
+- **Check all related logs** - Before providing a fix, always check console logs, API responses, and
+  all related source code
+- **Debug data flow completely** - When debugging data-related issues, trace the full flow from API
+  calls to front-end rendering

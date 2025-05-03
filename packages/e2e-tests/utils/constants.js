@@ -9,9 +9,9 @@ export const QUIZ_CONSTANTS = {
   RETRY_DELAY_MS: 50,
 
   // Timeout values in milliseconds
-  WAIT_FOR_ELEMENT_TIMEOUT: 5_000, // Increased from 3s to 5s
-  WAIT_FOR_LIST_TIMEOUT: 10_000,   // Increased from 5s to 10s
-  TEST_TIMEOUT_MS: 90_000,         // Increased from 60s to 90s per quiz
+  WAIT_FOR_ELEMENT_TIMEOUT: 5000, // Increased from 3s to 5s
+  WAIT_FOR_LIST_TIMEOUT: 10_000, // Increased from 5s to 10s
+  TEST_TIMEOUT_MS: 90_000, // Increased from 60s to 90s per quiz
 
   // Error handling
   MAX_CONSECUTIVE_ERRORS_BEFORE_FAIL: 3,

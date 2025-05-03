@@ -1,9 +1,12 @@
 // Check if we're in a test environment (Jest)
-const isTestEnvironment = typeof process !== 'undefined' && process.env && process.env.USE_REAL_API === 'true';
+const isTestEnvironment =
+  typeof process !== 'undefined' && process.env && process.env.USE_REAL_API === 'true';
 const injectedApiUrl = isTestEnvironment ? process.env.API_URL : window.linguaQuizApiUrl;
 let serverAddress;
 
-console.log(`[config.js] Reading API URL: "${injectedApiUrl}", Test Environment: ${isTestEnvironment}`);
+console.log(
+  `[config.js] Reading API URL: "${injectedApiUrl}", Test Environment: ${isTestEnvironment}`
+);
 
 // Handle test environment
 if (isTestEnvironment) {

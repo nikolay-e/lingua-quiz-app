@@ -42,10 +42,10 @@ export default defineConfig({
   use: {
     baseURL: process.env.LINGUA_QUIZ_URL || 'http://localhost:8080',
     ...sharedConfig,
-    
+
     // Add logger configuration to show browser logs directly in the console
     logger: {
-      isEnabled: (name, severity) => true,  // Enable all logs
+      isEnabled: (name, severity) => true, // Enable all logs
       log: (name, severity, message, args) => console.log(`[${severity}] ${message}`),
     },
   },
@@ -55,10 +55,7 @@ export default defineConfig({
   outputDir: join(process.env.PLAYWRIGHT_OUTPUT_DIR || 'test-results', 'artifacts'),
 
   // Use HTML reporter but with open:never to prevent browser opening
-  reporter: [
-    ['html', { open: 'never' }],
-    ['dot']
-  ],
+  reporter: [['html', { open: 'never' }], ['dot']],
 
   // Project-specific configurations
   projects: process.env.CI

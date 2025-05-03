@@ -21,13 +21,13 @@ export function setupLocalStorageMock() {
       mockLocalStorage.store = {};
     }),
   };
-  
+
   // Replace the window.localStorage with our mock
   Object.defineProperty(window, 'localStorage', {
     value: mockLocalStorage,
     writable: true,
   });
-  
+
   return mockLocalStorage;
 }
 
@@ -38,7 +38,7 @@ export function setupLocalStorageMock() {
 export function setupLocationMock(initialPath = '/') {
   // Store original location
   const originalLocation = window.location;
-  
+
   // Create location mock
   const locationMock = {
     href: `http://localhost${initialPath}`,
@@ -63,17 +63,17 @@ export function setupLocationMock(initialPath = '/') {
     }),
     reload: jest.fn(),
   };
-  
+
   // Replace window.location with our mock
   delete window.location;
   window.location = locationMock;
-  
+
   // Return both the mock and a restore function
   return {
     locationMock,
     restoreLocation: () => {
       window.location = originalLocation;
-    }
+    },
   };
 }
 
@@ -83,17 +83,17 @@ export function setupLocationMock(initialPath = '/') {
  */
 export function setupFetchMock() {
   const originalFetch = global.fetch;
-  
+
   // Create fetch mock
   const fetchMock = jest.fn();
   global.fetch = fetchMock;
-  
+
   // Return both the mock and a restore function
   return {
     fetchMock,
     restoreFetch: () => {
       global.fetch = originalFetch;
-    }
+    },
   };
 }
 
@@ -109,14 +109,14 @@ export function suppressConsoleOutput() {
     debug: console.debug,
     info: console.info,
   };
-  
+
   // Mock all console methods
   console.log = jest.fn();
   console.error = jest.fn();
   console.warn = jest.fn();
   console.debug = jest.fn();
   console.info = jest.fn();
-  
+
   // Return function to restore original console
   return {
     restoreConsole: () => {
@@ -125,6 +125,6 @@ export function suppressConsoleOutput() {
       console.warn = originalConsole.warn;
       console.debug = originalConsole.debug;
       console.info = originalConsole.info;
-    }
+    },
   };
 }

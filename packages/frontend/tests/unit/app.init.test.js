@@ -1,333 +1,59 @@
 // packages/frontend/tests/unit/app.init.test.js
+import { createMockApp, createRealApp } from './test-utils/app-test-utils.js';
 import { App, createApp } from '../../src/js/app.js';
-import { STATUS, MAX_FOCUS_WORDS } from '../../src/js/constants.js'; // Updated import
+import { STATUS, MAX_FOCUS_WORDS } from '../../src/js/constants.js';
+import { AppInitializer } from '../../src/js/quiz/AppInitializer.js';
 import { errorHandler } from '../../src/js/utils/errorHandler.js';
 import { suppressConsoleOutput } from '../__mocks__/browserMocks.js';
+import { mockQuizData, smallTestSet } from './test-utils/quiz-test-data.js';
 
 // Mock errorHandler - using centralized mock approach
 jest.mock('../../src/js/utils/errorHandler.js', () => ({
   errorHandler: require('../__mocks__/utils/errorHandler').errorHandler,
 }));
 
-// --- Mock Data (Ensure this is the full array) ---
-const mockData = [
-  {
-    wordPairId: 1,
-    sourceWord: 'hello',
-    targetWord: 'hola',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_0',
-    sourceWordUsageExample: 'Hello, how are you?',
-    targetWordUsageExample: '¿Hola, cómo estás?',
-  },
-  {
-    wordPairId: 2,
-    sourceWord: 'goodbye',
-    targetWord: 'adiós',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_1',
-    sourceWordUsageExample: 'Goodbye, see you later!',
-    targetWordUsageExample: '¡Adiós, hasta luego!',
-  },
-  {
-    wordPairId: 3,
-    sourceWord: 'please',
-    targetWord: 'por favor',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_2',
-    sourceWordUsageExample: 'Please, help me.',
-    targetWordUsageExample: 'Por favor, ayúdame.',
-  },
-  {
-    wordPairId: 4,
-    sourceWord: 'thank you',
-    targetWord: 'gracias',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_3',
-    sourceWordUsageExample: 'Thank you for your help.',
-    targetWordUsageExample: 'Gracias por tu ayuda.',
-  },
-  {
-    wordPairId: 5,
-    sourceWord: 'yes',
-    targetWord: 'sí',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_0',
-    sourceWordUsageExample: 'Yes, I agree.',
-    targetWordUsageExample: 'Sí, estoy de acuerdo.',
-  },
-  {
-    wordPairId: 6,
-    sourceWord: 'no',
-    targetWord: 'no',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_1',
-    sourceWordUsageExample: "No, I don't want to.",
-    targetWordUsageExample: 'No, no quiero.',
-  },
-  {
-    wordPairId: 7,
-    sourceWord: 'water',
-    targetWord: 'agua',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_0',
-    sourceWordUsageExample: 'I need some water.',
-    targetWordUsageExample: 'Necesito un poco de agua.',
-  },
-  {
-    wordPairId: 8,
-    sourceWord: 'food',
-    targetWord: 'comida',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_1',
-    sourceWordUsageExample: 'The food is delicious.',
-    targetWordUsageExample: 'La comida está deliciosa.',
-  },
-  {
-    wordPairId: 9,
-    sourceWord: 'house',
-    targetWord: 'casa',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_2',
-    sourceWordUsageExample: 'My house is big.',
-    targetWordUsageExample: 'Mi casa es grande.',
-  },
-  {
-    wordPairId: 10,
-    sourceWord: 'car',
-    targetWord: 'coche',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_3',
-    sourceWordUsageExample: 'I drive a red car.',
-    targetWordUsageExample: 'Conduzco un coche rojo.',
-  },
-  {
-    wordPairId: 11,
-    sourceWord: 'book',
-    targetWord: 'libro',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_0',
-    sourceWordUsageExample: 'I love this book.',
-    targetWordUsageExample: 'Me encanta este libro.',
-  },
-  {
-    wordPairId: 12,
-    sourceWord: 'friend',
-    targetWord: 'amigo',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_1',
-    sourceWordUsageExample: 'She is my friend.',
-    targetWordUsageExample: 'Ella es mi amiga.',
-  },
-  {
-    wordPairId: 13,
-    sourceWord: 'family',
-    targetWord: 'familia',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_2',
-    sourceWordUsageExample: 'My family is large.',
-    targetWordUsageExample: 'Mi familia es grande.',
-  },
-  {
-    wordPairId: 14,
-    sourceWord: 'love',
-    targetWord: 'amor',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_3',
-    sourceWordUsageExample: 'Love is important.',
-    targetWordUsageExample: 'El amor es importante.',
-  },
-  {
-    wordPairId: 15,
-    sourceWord: 'time',
-    targetWord: 'tiempo',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_0',
-    sourceWordUsageExample: 'What time is it?',
-    targetWordUsageExample: '¿Qué hora es?',
-  },
-  {
-    wordPairId: 16,
-    sourceWord: 'day',
-    targetWord: 'día',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_1',
-    sourceWordUsageExample: 'Have a nice day!',
-    targetWordUsageExample: '¡Que tengas un buen día!',
-  },
-  {
-    wordPairId: 17,
-    sourceWord: 'night',
-    targetWord: 'noche',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_0',
-    sourceWordUsageExample: 'Good night, sleep well.',
-    targetWordUsageExample: 'Buenas noches, que duermas bien.',
-  },
-  {
-    wordPairId: 18,
-    sourceWord: 'eat',
-    targetWord: 'comer',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_2',
-    sourceWordUsageExample: 'I like to eat pizza.',
-    targetWordUsageExample: 'Me gusta comer pizza.',
-  },
-  {
-    wordPairId: 19,
-    sourceWord: 'drink',
-    targetWord: 'beber',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_1',
-    sourceWordUsageExample: 'What would you like to drink?',
-    targetWordUsageExample: '¿Qué te gustaría beber?',
-  },
-  {
-    wordPairId: 20,
-    sourceWord: 'work',
-    targetWord: 'trabajo',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_3',
-    sourceWordUsageExample: 'I have to go to work.',
-    targetWordUsageExample: 'Tengo que ir al trabajo.',
-  },
-  {
-    wordPairId: 21,
-    sourceWord: 'play',
-    targetWord: 'jugar',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_0',
-    sourceWordUsageExample: 'The children like to play in the park.',
-    targetWordUsageExample: 'A los niños les gusta jugar en el parque.',
-  },
-  {
-    wordPairId: 22,
-    sourceWord: 'school',
-    targetWord: 'escuela',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_1',
-    sourceWordUsageExample: 'The school is closed today.',
-    targetWordUsageExample: 'La escuela está cerrada hoy.',
-  },
-  {
-    wordPairId: 23,
-    sourceWord: 'money',
-    targetWord: 'dinero',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_2',
-    sourceWordUsageExample: 'I need to save money.',
-    targetWordUsageExample: 'Necesito ahorrar dinero.',
-  },
-  {
-    wordPairId: 24,
-    sourceWord: 'sun',
-    targetWord: 'sol',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_0',
-    sourceWordUsageExample: 'The sun is shining brightly.',
-    targetWordUsageExample: 'El sol brilla intensamente.',
-  },
-  {
-    wordPairId: 25,
-    sourceWord: 'moon',
-    targetWord: 'luna',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_3',
-    sourceWordUsageExample: 'The moon is full tonight.',
-    targetWordUsageExample: 'La luna está llena esta noche.',
-  },
-  {
-    wordPairId: 26,
-    sourceWord: 'happy',
-    targetWord: 'feliz',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_1',
-    sourceWordUsageExample: 'I am happy to see you.',
-    targetWordUsageExample: 'Estoy feliz de verte.',
-  },
-  {
-    wordPairId: 27,
-    sourceWord: 'sad',
-    targetWord: 'triste',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_0',
-    sourceWordUsageExample: 'Why are you sad?',
-    targetWordUsageExample: '¿Por qué estás triste?',
-  },
-  {
-    wordPairId: 28,
-    sourceWord: 'big',
-    targetWord: 'grande',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_2',
-    sourceWordUsageExample: 'That is a big dog!',
-    targetWordUsageExample: '¡Ese es un perro grande!',
-  },
-  {
-    wordPairId: 29,
-    sourceWord: 'small',
-    targetWord: 'pequeño',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_1',
-    sourceWordUsageExample: 'The mouse is very small.',
-    targetWordUsageExample: 'El ratón es muy pequeño.',
-  },
-  {
-    wordPairId: 30,
-    sourceWord: 'good',
-    targetWord: 'bueno',
-    sourceLanguage: 'en',
-    targetLanguage: 'es',
-    status: 'LEVEL_3',
-    sourceWordUsageExample: 'This is a good restaurant.',
-    targetWordUsageExample: 'Este es un buen restaurante.',
-  },
-];
+// Mock AppInitializer for certain tests
+jest.mock('../../src/js/quiz/AppInitializer.js', () => {
+  // Store a reference to the original module
+  const originalModule = jest.requireActual('../../src/js/quiz/AppInitializer.js');
+
+  return {
+    ...originalModule,
+    AppInitializer: class extends originalModule.AppInitializer {
+      constructor(...args) {
+        super(...args);
+      }
+
+      initializeData(data) {
+        // Call original with debug spies to track calls
+        originalModule.AppInitializer.prototype.initializeData.call(this, data);
+      }
+
+      static validateDataAndCreateApp(data, createAppCallback) {
+        // Call original with debug spies
+        return originalModule.AppInitializer.validateDataAndCreateApp(data, createAppCallback);
+      }
+    },
+  };
+});
 
 describe('App Initialization and Factory', () => {
   let consoleWarnSpy;
   let consoleErrorSpy;
+  let consoleDebugSpy;
 
   beforeEach(() => {
     // Clear all mocks for a clean state
     jest.clearAllMocks();
-    
+
     // Use the suppressConsoleOutput helper from browserMocks
     const consoleSuppress = suppressConsoleOutput();
-    
+
     // But still create spies to check what was called
     consoleWarnSpy = jest.spyOn(console, 'warn');
     consoleErrorSpy = jest.spyOn(console, 'error');
-    
+    consoleDebugSpy = jest.spyOn(console, 'debug');
+
     // Reset centralized mocks
     errorHandler._reset();
   });
@@ -336,14 +62,19 @@ describe('App Initialization and Factory', () => {
     // Make sure to call mockRestore on all spies
     if (consoleWarnSpy) consoleWarnSpy.mockRestore();
     if (consoleErrorSpy) consoleErrorSpy.mockRestore();
+    if (consoleDebugSpy) consoleDebugSpy.mockRestore();
   });
 
   it('should initialize with provided data', () => {
-    const app = new App(mockData);
-    // Access state via app.quizState
-    expect(app.quizState.quizTranslations.size).toBe(mockData.length);
+    const app = new App(mockQuizData);
+
+    // Check that data was properly initialized
+    expect(app.quizState.quizTranslations.size).toBe(mockQuizData.length);
     expect(app.quizState.sourceLanguage).toBe('en');
     expect(app.quizState.targetLanguage).toBe('es');
+
+    // Verify the initializer was called with the correct data
+    expect(app.initializer).toBeDefined();
   });
 
   it('should throw an error with invalid data (empty array)', () => {
@@ -355,18 +86,18 @@ describe('App Initialization and Factory', () => {
   });
 
   it('should populate LEVEL_1 correctly during construction', () => {
-    const localApp = new App(mockData); // Use full mockData
-    const initialL0Count = mockData.filter((d) => d.status === STATUS.LEVEL_0).length;
-    const initialL1Count = mockData.filter((d) => d.status === STATUS.LEVEL_1).length;
+    const app = new App(mockQuizData);
+
+    // Calculate expected values
+    const initialL0Count = mockQuizData.filter((d) => d.status === STATUS.LEVEL_0).length;
+    const initialL1Count = mockQuizData.filter((d) => d.status === STATUS.LEVEL_1).length;
     const availableL1Slots = MAX_FOCUS_WORDS - initialL1Count;
     const expectedToMove = Math.min(availableL1Slots > 0 ? availableL1Slots : 0, initialL0Count);
     const finalExpectedL1Size = initialL1Count + expectedToMove;
 
-    // Access state via localApp.quizState
-    expect(localApp.quizState.wordStatusSets[STATUS.LEVEL_1].size).toBe(finalExpectedL1Size);
-    expect(localApp.quizState.wordStatusSets[STATUS.LEVEL_0].size).toBe(
-      initialL0Count - expectedToMove
-    );
+    // Verify the status sets were updated correctly
+    expect(app.quizState.wordStatusSets[STATUS.LEVEL_1].size).toBe(finalExpectedL1Size);
+    expect(app.quizState.wordStatusSets[STATUS.LEVEL_0].size).toBe(initialL0Count - expectedToMove);
   });
 
   describe('Initialization Error Handling', () => {
@@ -384,25 +115,29 @@ describe('App Initialization and Factory', () => {
         { sourceWord: 'invalid2', targetWord: 'invalido2', status: 'LEVEL_0' }, // Missing ID
         'not an object',
       ];
-      const localApp = new App(invalidData);
-      // Access state via localApp.quizState
-      expect(localApp.quizState.quizTranslations.size).toBe(1); // Only the valid entry
-      // Check if word 1 was populated to L1
-      expect(localApp.quizState.wordStatusSets[STATUS.LEVEL_1].has(1)).toBe(true);
-      expect(localApp.quizState.wordStatusSets[STATUS.LEVEL_0].has(1)).toBe(false);
-      // Check warnings for invalid entries
+
+      const app = new App(invalidData);
+
+      // Only the valid entry should be added
+      expect(app.quizState.quizTranslations.size).toBe(1);
+
+      // Check if word 1 was populated to L1 (since it would be the only valid word)
+      expect(app.quizState.wordStatusSets[STATUS.LEVEL_1].has(1)).toBe(true);
+      expect(app.quizState.wordStatusSets[STATUS.LEVEL_0].has(1)).toBe(false);
+
+      // Verify warnings for invalid entries were logged
       expect(consoleWarnSpy).toHaveBeenCalledWith(
-        '[App] Invalid word entry (missing or null wordPairId):',
+        '[AppInitializer] Invalid word entry (missing or null wordPairId):',
         invalidData[1]
       );
       expect(consoleWarnSpy).toHaveBeenCalledWith(
-        '[App] Invalid word entry (missing or null wordPairId):',
+        '[AppInitializer] Invalid word entry (missing or null wordPairId):',
         invalidData[2]
       );
       expect(consoleWarnSpy).toHaveBeenCalledWith(
-        '[App] Invalid word entry (missing or null wordPairId):',
+        '[AppInitializer] Invalid word entry (missing or null wordPairId):',
         invalidData[3]
-      ); // Also warns for non-object
+      );
     });
 
     test('should throw error if no valid entries after initialization', () => {
@@ -410,26 +145,98 @@ describe('App Initialization and Factory', () => {
         { wordPairId: null, sourceWord: 'invalid1', targetWord: 'invalido1' },
         'not an object',
       ];
+
       expect(() => new App(invalidData)).toThrow('No valid entries added to quizTranslations');
       expect(consoleWarnSpy).toHaveBeenCalledTimes(2); // Warns for both invalid entries
     });
   });
 
+  describe('AppInitializer Module Integration', () => {
+    test('AppInitializer.initializeData correctly processes valid data', () => {
+      // Create spies on AppInitializer methods
+      const initSpy = jest.spyOn(AppInitializer.prototype, 'initializeData');
+
+      // Create app with small test data
+      const app = new App(smallTestSet);
+
+      // Verify the initializer was called
+      expect(initSpy).toHaveBeenCalledTimes(1);
+
+      // Verify data was processed
+      expect(app.quizState.quizTranslations.size).toBe(smallTestSet.length);
+
+      // Clean up spies
+      initSpy.mockRestore();
+    });
+
+    test('mocked App has expected component structure', () => {
+      // Create a mock App with spy methods
+      const { app, mocks } = createMockApp(smallTestSet);
+
+      // Verify all mocks were set up correctly
+      expect(app.initializer).toBeDefined();
+      expect(app.stateManager).toBeDefined();
+      expect(app.quizFlow).toBeDefined();
+      expect(app.quizLogic).toBeDefined();
+      expect(app.statsManager).toBeDefined();
+
+      // Verify addWordToStatusSet is available as a mock method
+      expect(typeof mocks.stateManager.addWordToStatusSet).toBe('function');
+    });
+  });
+
   describe('createApp Factory', () => {
-    it('should create an App instance successfully', () => {
-      const instance = createApp(mockData);
+    test('should create an App instance successfully', () => {
+      // Create spy on static validator method
+      const validateSpy = jest.spyOn(AppInitializer, 'validateDataAndCreateApp');
+
+      const instance = createApp(mockQuizData);
+
+      // Verify validator was called
+      expect(validateSpy).toHaveBeenCalledTimes(1);
+
+      // Verify proper App instance was created
       expect(instance).toBeInstanceOf(App);
-      // Check if internal instances were created
       expect(instance.quizState).toBeDefined();
       expect(instance.statsManager).toBeDefined();
       expect(instance.quizLogic).toBeDefined();
+      expect(instance.stateManager).toBeDefined();
+      expect(instance.quizFlow).toBeDefined();
+      expect(instance.answerProcessor).toBeDefined();
+      expect(instance.initializer).toBeDefined();
+
+      // Clean up spy
+      validateSpy.mockRestore();
     });
 
-    it('should handle errors during createApp and call errorHandler', () => {
+    test('should handle errors during createApp and call errorHandler', () => {
       const invalidData = [];
-      expect(() => createApp(invalidData)).toThrow('[createApp] Empty array provided to createApp');
-      // Check if the central error handler was called by the factory function
+
+      expect(() => createApp(invalidData)).toThrow(
+        '[AppInitializer] Empty array provided to createApp'
+      );
+
+      // Verify the central error handler was called
       expect(errorHandler.handleApiError).toHaveBeenCalledWith(expect.any(Error));
+    });
+
+    test('should throw detailed error messages for null or undefined data', () => {
+      expect(() => createApp(null)).toThrow('[AppInitializer] No data provided to createApp');
+
+      expect(() => createApp(undefined)).toThrow('[AppInitializer] No data provided to createApp');
+
+      // Verify error handler was called in both cases
+      expect(errorHandler.handleApiError).toHaveBeenCalledTimes(2);
+    });
+
+    test('should validate data is array type', () => {
+      const nonArrayData = { wordPairId: 1, sourceWord: 'test', targetWord: 'prueba' };
+
+      expect(() => createApp(nonArrayData)).toThrow(
+        '[AppInitializer] Expected array but got object'
+      );
+
+      expect(errorHandler.handleApiError).toHaveBeenCalledTimes(1);
     });
   });
 });

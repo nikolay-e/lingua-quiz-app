@@ -21,7 +21,7 @@ export class AuthManager {
 
   logout() {
     console.log('Logout method called');
-    
+
     // Store the current state of the button before clearing auth
     const loginButton = document.querySelector('#login-logout-btn');
     const initialText = loginButton ? loginButton.innerHTML : '';
@@ -36,7 +36,7 @@ export class AuthManager {
 
     // Redirect to login page using AuthUtils for consistency
     console.log('About to redirect to login page');
-    
+
     // Use AuthUtils.redirectToLogin() for consistency with other authentication flows
     // This will handle window.location.replace for us
     AuthUtils.redirectToLogin();

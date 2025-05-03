@@ -2,33 +2,23 @@
  * Centralized setup for unit tests
  * This provides common mocks with simpler configuration for isolated unit tests.
  */
-import { errorHandler } from './utils/errorHandler.js';
-import { setupLocalStorageMock, setupLocationMock, suppressConsoleOutput } from './browserMocks.js';
-import jwt_decode from 'jwt-decode';
 
 // Mock jwt-decode for token validation
 jest.mock('jwt-decode', () => jest.fn());
 
 // Export basic mocks for unit tests
-export { errorHandler };
-export const mockJwtDecode = jwt_decode;
 
 // Setup helpers for unit tests
-export { 
-  setupLocalStorageMock, 
-  setupLocationMock, 
-  suppressConsoleOutput 
-};
 
 // Re-export fixture data
-export { 
+export {
   getTestWordPairs,
   testWordLists,
   createMockToken,
   createExpiredToken,
   setupAuthState,
   apiResponses,
-  setupAuthTestDOM
+  setupAuthTestDOM,
 } from '../__fixtures__/testData';
 
 /**
@@ -39,7 +29,7 @@ export function mockErrorHandler() {
   return {
     handleApiError: jest.fn(),
     showError: jest.fn(),
-    init: jest.fn()
+    init: jest.fn(),
   };
 }
 
@@ -61,6 +51,9 @@ export function mockAuthUtils() {
     redirectToLogin: jest.fn(),
     shouldRedirectToLogin: jest.fn(),
     initAuthCheck: jest.fn(),
-    handleTokenExpiration: jest.fn()
+    handleTokenExpiration: jest.fn(),
   };
 }
+export { default as mockJwtDecode } from 'jwt-decode';
+export { setupLocalStorageMock, setupLocationMock, suppressConsoleOutput } from './browserMocks.js';
+export { errorHandler } from './utils/errorHandler.js';

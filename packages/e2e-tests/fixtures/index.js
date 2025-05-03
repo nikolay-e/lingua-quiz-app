@@ -42,25 +42,27 @@ const test = base.extend({
         console.error(`[REQUEST FAILED] ${request.url()}`);
       }
     });
-    
+
     // Listen to ALL network requests for debugging
-    page.on('request', request => {
+    page.on('request', (request) => {
       if (request.url().includes('/api/word-sets')) {
         console.log(`[REQUEST] ${request.method()} ${request.url()}`);
         console.log(`[REQUEST HEADERS] ${JSON.stringify(request.headers())}`);
       }
     });
-    
+
     // Listen to ALL network responses for debugging
-    page.on('response', async response => {
+    page.on('response', async (response) => {
       if (response.url().includes('/api/word-sets')) {
         console.log(`[RESPONSE] ${response.status()} ${response.url()}`);
-        
+
         try {
           const responseBody = await response.text();
-          console.log(`[RESPONSE BODY] ${responseBody.substring(0, 300)}${responseBody.length > 300 ? '...' : ''}`);
-        } catch (e) {
-          console.log(`[RESPONSE BODY ERROR] Failed to get response body: ${e.message}`);
+          console.log(
+            `[RESPONSE BODY] ${responseBody.slice(0, 300)}${responseBody.length > 300 ? '...' : ''}`
+          );
+        } catch (error) {
+          console.log(`[RESPONSE BODY ERROR] Failed to get response body: ${error.message}`);
         }
       }
     });

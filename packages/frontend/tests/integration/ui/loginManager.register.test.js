@@ -6,10 +6,10 @@ import { AuthUtils } from '../../../src/js/utils/authUtils.js';
 import { errorHandler } from '../../../src/js/utils/errorHandler.js';
 
 // Import centralized test setup and helpers
-import { 
-  setupLocalStorageMock, 
-  setupFetchMock, 
-  suppressConsoleOutput 
+import {
+  setupLocalStorageMock,
+  setupFetchMock,
+  suppressConsoleOutput,
 } from '../../__mocks__/browserMocks.js';
 
 // --- Use centralized mock implementations ---
@@ -70,21 +70,21 @@ describe('AuthManager - Registration Flow', () => {
 
     // --- Mock Setup using centralized helpers ---
     jest.clearAllMocks();
-    
+
     // Set up common mocks
     mockLocalStorage = setupLocalStorageMock();
     const { fetchMock } = setupFetchMock();
     mockFetch = fetchMock;
-    
+
     // Set up console suppression
     const consoleSuppress = suppressConsoleOutput();
     consoleErrorSpy = jest.spyOn(console, 'error');
     consoleWarnSpy = jest.spyOn(console, 'warn');
-    
+
     // Reset all centralized mocks
     AuthUtils._reset();
     errorHandler._reset();
-    
+
     // Reset password validator mock functions
     mockValidatePassword.mockClear();
     mockCreateValidationContainer.mockClear();

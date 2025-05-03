@@ -59,7 +59,7 @@ export const testWordPairs = [
 
 // Helper to get fresh copy of test data to avoid contamination across tests
 export function getTestWordPairs() {
-  return JSON.parse(JSON.stringify(testWordPairs));
+  return structuredClone(testWordPairs);
 }
 
 // Sample word lists (for fetchWordLists tests)
@@ -77,7 +77,7 @@ export function createMockToken(payload = {}, expireInSeconds = 3600) {
     email: 'test@example.com',
     ...payload,
   };
-  
+
   // Base64 encode the parts
   const base64Encode = (obj) => btoa(JSON.stringify(obj));
   const tokenParts = [
@@ -85,7 +85,7 @@ export function createMockToken(payload = {}, expireInSeconds = 3600) {
     base64Encode(tokenPayload),
     'signature', // We don't need a real signature for testing
   ];
-  
+
   return tokenParts.join('.');
 }
 

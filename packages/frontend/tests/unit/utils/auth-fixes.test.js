@@ -6,12 +6,12 @@ import { suppressConsoleOutput } from '../../__mocks__/unitTestSetup.js';
 // We're only testing that our bug fixes don't break functionality
 describe('AuthUtils Bug Fixes', () => {
   let consoleCleanup;
-  
+
   beforeEach(() => {
     // Suppress console output for clean test output
     consoleCleanup = suppressConsoleOutput();
   });
-  
+
   afterEach(() => {
     // Restore console functions
     consoleCleanup.restoreConsole();

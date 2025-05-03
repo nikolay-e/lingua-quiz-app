@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "npx playwright test",
-    "test:auth": "LINGUA_QUIZ_URL=http://localhost:8080 npx playwright test tests/001-auth.spec.js --project=\"Desktop Chromium\"",
+    "test:auth": "LINGUA_QUIZ_URL=http://localhost:8080 npx playwright test tests/auth --project=\"Desktop Chromium\"",
     "test:quiz": "LINGUA_QUIZ_URL=http://localhost:8080 E2E_QUIZ_NAME=\"Spanish Russian A1\" npx playwright test tests/002-quiz.spec.js --project=\"Desktop Chromium\" --reporter=dot",
     "test:quiz:fast": "LINGUA_QUIZ_URL=http://localhost:8080 E2E_QUIZ_NAME=\"Spanish Russian A1\" E2E_FAST_QUIZ=true npx playwright test tests/002-quiz.spec.js --project=\"Desktop Chromium\" --reporter=dot --timeout=10000",
     "test:quiz:debug": "LINGUA_QUIZ_URL=http://localhost:8080 E2E_QUIZ_NAME=\"Spanish Russian A1\" DEBUG=pw:api npx playwright test tests/002-quiz.spec.js --project=\"Desktop Chromium\" --reporter=dot",

@@ -32,7 +32,7 @@ chai.use(function (_chai) {
     // Check each call's arguments
     for (const callArgs of obj.mock.calls) {
       if (callArgs.length !== expectedArgs.length) continue;
-      
+
       const allArgsMatch = expectedArgs.every((expectedArg, index) => {
         if (expectedArg && typeof expectedArg === 'object' && expectedArg.asymmetricMatch) {
           // Handle Jest's expect.anything(), expect.any(), etc.
@@ -60,36 +60,36 @@ chai.use(function (_chai) {
 // Mock utilities similar to Jest
 global.jest = {
   fn: () => {
-    const mockFn = function(...args) {
+    const mockFn = function (...args) {
       mockFn.mock.calls.push(args);
       mockFn.mock.instances.push(this);
       return mockFn.mockReturnValue;
     };
-    
+
     mockFn.mock = {
       calls: [],
       instances: [],
       invocationCallOrder: [],
     };
-    
+
     mockFn.mockReset = () => {
       mockFn.mock.calls = [];
       mockFn.mock.instances = [];
       mockFn.mockReturnValue = undefined;
     };
-    
+
     mockFn.mockReturnValue = (val) => {
       mockFn.mockReturnValue = val;
       return mockFn;
     };
-    
+
     mockFn.mockImplementation = (fn) => {
       mockFn.mockImplementationValue = fn;
       mockFn.mockReturnValue = undefined;
-      
+
       return mockFn;
     };
-    
+
     // Override function implementation
     const originalFn = mockFn;
     return new Proxy(mockFn, {
@@ -98,25 +98,25 @@ global.jest = {
           return mockFn.mockImplementationValue.apply(thisArg, args);
         }
         return originalFn.apply(thisArg, args);
-      }
+      },
     });
   },
-  
+
   mock: (moduleName) => {
     jest.mock[moduleName] = {};
     return jest.mock[moduleName];
-  }
+  },
 };
 
 // Add expect.anything() and similar matchers
 global.expect = {
   ...chai.expect,
   anything: () => ({
-    asymmetricMatch: (actual) => actual !== null && actual !== undefined
+    asymmetricMatch: (actual) => actual !== null && actual !== undefined,
   }),
   any: (constructor) => ({
-    asymmetricMatch: (actual) => actual instanceof constructor
-  })
+    asymmetricMatch: (actual) => actual instanceof constructor,
+  }),
 };
 
 // Export chai expect for ease of use

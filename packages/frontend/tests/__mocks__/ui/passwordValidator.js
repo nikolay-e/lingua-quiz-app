@@ -13,12 +13,14 @@ export class PasswordValidator {
       { id: 'number', text: 'At least one number', valid: false },
       { id: 'special', text: 'At least one special character', valid: false },
     ];
-    
+
     // Create mock functions with mockName for better error messages
     this.validatePassword = jest.fn().mockName('PasswordValidator.validatePassword');
-    this.createValidationContainer = jest.fn().mockName('PasswordValidator.createValidationContainer');
+    this.createValidationContainer = jest
+      .fn()
+      .mockName('PasswordValidator.createValidationContainer');
     this.updateRequirement = jest.fn().mockName('PasswordValidator.updateRequirement');
-    
+
     // Default implementations
     this.validatePassword.mockImplementation(() => true);
     this.createValidationContainer.mockImplementation(() => {
@@ -27,20 +29,20 @@ export class PasswordValidator {
       return container;
     });
     this.updateRequirement.mockImplementation((id, valid) => {
-      const req = this.requirements.find(r => r.id === id);
+      const req = this.requirements.find((r) => r.id === id);
       if (req) req.valid = valid;
     });
   }
-  
+
   // Helper to reset all mocks
   _reset() {
     this.validatePassword.mockClear();
     this.createValidationContainer.mockClear();
     this.updateRequirement.mockClear();
-    
+
     // Reset requirements state
-    this.requirements.forEach(req => {
+    for (const req of this.requirements) {
       req.valid = false;
-    });
+    }
   }
 }
