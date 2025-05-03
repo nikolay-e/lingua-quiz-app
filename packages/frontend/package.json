@@ -7,7 +7,11 @@
   },
   "scripts": {
     "start": "live-server --port=8080 src",
-    "test": "jest --runInBand --coverage"
+    "test": "jest --runInBand --coverage",
+    "test:unit": "jest --runInBand --coverage --testPathIgnorePatterns=integration",
+    "test:integration": "jest --runInBand --coverage --testPathIgnorePatterns=unit",
+    "test:e2e-jest": "node tests/e2e-jest/run-tests.js",
+    "build": "mkdir -p dist && cp -r src/* dist/ && echo \"Build completed: $(date)\" > dist/build-info.txt"
   },
   "keywords": [],
   "author": "",
@@ -22,11 +26,6 @@
   },
   "description": "",
   "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@babel/preset-env": "^7.25.4",
-    "babel-jest": "^29.7.0",
-    "eslint": "^8.49.0",
-    "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jest-fetch-mock": "^3.0.3"
   }

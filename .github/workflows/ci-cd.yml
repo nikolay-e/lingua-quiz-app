@@ -11,21 +11,191 @@ permissions:
   contents: read
   issues: write
   pull-requests: write
+  statuses: write
   security-events: write
+  actions: write # Needed for upload-artifact in E2E job
 
 jobs:
   common-tests:
     uses: ./.github/workflows/common-tests.yml
+    # Permissions for common-tests are defined within that file
 
+  # --- Job to get quiz list for E2E matrix ---
+  generate-e2e-matrix:
+    name: Generate E2E Quiz List Matrix
+    runs-on: ubuntu-latest
+    outputs:
+      quiz_list: ${{ steps.get_list.outputs.quiz_list_json }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # REPLACED Node script with shell commands + jq
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Generate Quiz List from Migration CSVs (using shell)
+        id: get_list
+        run: |
+          echo "Searching for CSV files in packages/backend/migrations/"
+          # Navigate to migration directory relative to repo root
+          MIGRATION_DIR="packages/backend/migrations"
+          if [ ! -d "$MIGRATION_DIR" ]; then
+             echo "::error::Migration directory not found: $MIGRATION_DIR"
+             echo "quiz_list_json=[]" >> "$GITHUB_OUTPUT"
+             exit 1
+          fi
+          cd "$MIGRATION_DIR"
+
+          # List CSVs, remove extension, remove suffix, handle no files found
+          # sed -E 's/\.csv$//; s/ --.*//' removes .csv and everything from ' --' onwards
+          RAW_LIST=$(ls *.csv 2>/dev/null | sed -E 's/\.csv$//; s/ --.*//' || echo "")
+
+          if [ -z "$RAW_LIST" ]; then
+            echo "No CSV files found in $MIGRATION_DIR."
+            JSON_LIST="[]"
+          else
+            echo "Found potential quiz names:"
+            echo "$RAW_LIST"
+            # Create a valid JSON array string using jq
+            # Reads each line (-R), converts to JSON string, then collects all strings into an array (-s)
+            JSON_LIST=$(echo "$RAW_LIST" | jq -R . | jq -sc .)
+          fi
+          echo "Generated JSON List: ${JSON_LIST}"
+          echo "quiz_list_json=${JSON_LIST}" >> "$GITHUB_OUTPUT"
+          # IMPORTANT: Return to the original directory
+          cd - > /dev/null # Go back silently
+
+      - name: Log generated matrix
+        run: |
+          echo "Quiz list JSON matrix: ${{ steps.get_list.outputs.quiz_list_json }}"
+
+  # --- E2E Tests (runs per quiz in matrix) ---
+  e2e-docker-compose:
+    name: E2E Test (${{ matrix.quiz_name }})
+    needs: generate-e2e-matrix
+    runs-on: ubuntu-latest
+    # Only run if the list is not empty (handles empty list or generation error)
+    if: ${{ needs.generate-e2e-matrix.outputs.quiz_list != '[]' && needs.generate-e2e-matrix.outputs.quiz_list != '' }}
+    strategy:
+      fail-fast: false # Don't stop other tests if one fails
+      matrix:
+        # Use the JSON list generated in the previous job
+        quiz_name: ${{ fromJson(needs.generate-e2e-matrix.outputs.quiz_list || '[]') }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build and Run Docker Compose E2E for Quiz "${{ matrix.quiz_name }}"
+        id: run_compose_e2e
+        env:
+          E2E_QUIZ_NAME: ${{ matrix.quiz_name }} # Pass quiz name to test runner env
+          # Use secrets with fallbacks from .env for local-like testing
+          # Ensure .env exists or provide defaults in docker-compose.yml if needed
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB || 'linguaquiz_local_db' }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER || 'linguaquiz_local_user' }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD || 'your_strong_local_password' }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET || 'your_very_secret_local_jwt_key_that_is_long' }}
+          NODE_ENV: development # Or 'test' if your E2E tests require it
+        run: |
+          echo "Starting Docker Compose E2E for Quiz: ${{ matrix.quiz_name }}"
+          # Ensure .env file exists or warn if not (Compose will use env vars directly if no file)
+          if [ ! -f .env ]; then
+            echo "Warning: .env file not found, using environment variables or compose defaults."
+          fi
+          # Run docker compose, passing the quiz name environment variable
+          docker compose --env-file .env up \
+            --build \
+            --abort-on-container-exit \
+            --exit-code-from e2e-tests \
+            --force-recreate \
+            e2e-tests # Service name defined in docker-compose.yml
+          echo "Docker Compose for ${{ matrix.quiz_name }} exited with code $?"
+
+      - name: Upload Playwright Artifacts (${{ matrix.quiz_name }})
+        if: always() # Upload artifacts even if tests fail
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-compose-${{ matrix.quiz_name }}
+          path: |
+            packages/e2e-tests/playwright-report/
+            packages/e2e-tests/test-results/
+          retention-days: 7
+
+      - name: Docker Compose Logs on Failure (${{ matrix.quiz_name }})
+        if: failure()
+        run: docker compose --env-file .env logs --tail="all"
+
+      - name: Cleanup Docker Compose environment (${{ matrix.quiz_name }})
+        if: always()
+        run: docker compose --env-file .env down -v --remove-orphans || true # Ignore errors if already down
+
+      - name: Fail job if E2E tests failed for Quiz "${{ matrix.quiz_name }}"
+        if: steps.run_compose_e2e.outcome == 'failure'
+        run: |
+          echo "::error::Docker Compose E2E tests failed for quiz: ${{ matrix.quiz_name }}"
+          exit 1
+
+  # --- K8s Deployment Section ---
   prepare-secrets:
     uses: ./.github/workflows/secrets.yml
     secrets:
-      VPS_SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
       SSL_CERT: ${{ secrets.SSL_CERT }}
       SSL_KEY: ${{ secrets.SSL_KEY }}
       KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
 
+  create-tls-secrets:
+    name: Create/Update Kubernetes TLS Secrets
+    runs-on: ubuntu-latest
+    needs: [prepare-secrets]
+    steps:
+      - name: Setup Kubernetes Tools
+        run: |
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/
+      - name: Set up kubeconfig
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ needs.prepare-secrets.outputs.kube_config }}" > $HOME/.kube/config
+          chmod 600 $HOME/.kube/config
+      - name: Prepare Cert Files from Outputs
+        run: |
+          echo "${{ needs.prepare-secrets.outputs.ssl_cert }}" > tls.crt
+          echo "${{ needs.prepare-secrets.outputs.ssl_key }}" > tls.key
+          echo "Certificate and key files created from outputs."
+          echo "Cert content (first 80 chars):"
+          head -c 80 tls.crt ; echo
+          echo "Key content (first 80 chars):"
+          head -c 80 tls.key ; echo
+      - name: Create/Update Secrets in Namespaces
+        run: |
+          for ns in default test; do
+            echo "--- Processing namespace: $ns ---"
+            kubectl create namespace $ns || echo "Namespace $ns already exists or cannot be created, continuing..."
+
+            # Secret for Frontend (used by frontend Ingress)
+            kubectl create secret tls lingua-quiz-frontend-tls \
+              --namespace $ns \
+              --cert=tls.crt \
+              --key=tls.key \
+              --dry-run=client -o yaml | kubectl apply -f -
+            echo "Applied secret lingua-quiz-frontend-tls in $ns"
+
+            # Secret for Backend (used by backend Ingress)
+            kubectl create secret tls lingua-quiz-backend-tls \
+              --namespace $ns \
+              --cert=tls.crt \
+              --key=tls.key \
+              --dry-run=client -o yaml | kubectl apply -f -
+            echo "Applied secret lingua-quiz-backend-tls in $ns"
+          done
+      - name: Cleanup Cert Files
+        if: always()
+        run: rm -f tls.crt tls.key
+
   build-backup-image:
+    name: Build Backup Image # Kept as is from old.txt
     runs-on: ubuntu-latest
     outputs:
       image_tag: ${{ steps.meta.outputs.version }}
@@ -36,13 +206,11 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
-
       - name: Docker meta for backup image
         id: meta
         uses: docker/metadata-action@v5
@@ -53,7 +221,6 @@ jobs:
             type=ref,event=pr
             type=sha,prefix=,suffix=,format=short
             type=raw,value=latest,enable={{is_default_branch}}
-
       - name: Build and push backup image
         uses: docker/build-push-action@v5
         with:
@@ -63,70 +230,21 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-  e2e-docker-compose:
-    name: E2E Tests (Docker Compose)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Build and Run Docker Compose services for E2E tests
-        id: run_e2e
-        run: docker compose up --build e2e-tests --abort-on-container-exit --exit-code-from e2e-tests
-
-      - name: Upload Playwright Artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report-docker-compose
-          path: |
-            packages/e2e-tests/playwright-report/
-            packages/e2e-tests/test-results/
-          retention-days: 7
-
-      - name: Docker Compose Logs on Failure
-        if: failure()
-        run: docker compose logs --tail="all"
-
-      - name: Cleanup Docker Compose environment
-        if: always()
-        run: docker compose down -v --remove-orphans
-
-      - name: Fail job if E2E tests failed
-        if: steps.run_e2e.outcome == 'failure'
-        run: exit 1
-
   frontend:
-    name: Build and Deploy Frontend (VPS)
-    needs: [common-tests, prepare-secrets]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Build and Deploy Frontend using Published Action
-        id: deploy-frontend
-        uses: nikolay-e/docker-nginx-vps-deploy-action@latest
-        with:
-          image-name: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'lingua-quiz-com' || 'test-lingua-quiz-com' }}
-          docker-registry-username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
-          vps-host: ${{ secrets.VPS_HOST }}
-          vps-user: ${{ secrets.VPS_USER }}
-          container-port: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 8444 || 8445 }}
-          domain:
-            ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'lingua-quiz.nikolay-eremeev.com' ||
-            'test-lingua-quiz.nikolay-eremeev.com' }}
-          docker-context: packages/frontend
-          docker-file: packages/frontend/Dockerfile
-        env:
-          DOCKER_REGISTRY_TOKEN: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
-          VPS_SSH_PRIVATE_KEY: ${{ needs.prepare-secrets.outputs.vps_ssh_key }}
-          SSL_CERT: ${{ needs.prepare-secrets.outputs.ssl_cert }}
-          SSL_KEY: ${{ needs.prepare-secrets.outputs.ssl_key }}
+    name: Build and Deploy Frontend (K8s) # Updated job name
+    needs: [common-tests, prepare-secrets, create-tls-secrets] # Depends on TLS secrets
+    uses: ./.github/workflows/frontend-workflow.yml # Use the reusable workflow
+    secrets: # Pass required secrets
+      DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+      DOCKER_REGISTRY_TOKEN: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
+      KUBE_CONFIG: ${{ needs.prepare-secrets.outputs.kube_config }} # Pass kubeconfig from prepare step
 
   backend:
-    needs: [common-tests, prepare-secrets]
+    name: Build, Deploy and Test Backend (K8s) # Updated job name
+    needs: [common-tests, prepare-secrets, create-tls-secrets] # Depends on TLS secrets
     uses: ./.github/workflows/backend-workflow.yml
+    permissions:
+      contents: read # Ensure correct permissions for reusable workflow if needed
     secrets:
       DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
       DOCKER_REGISTRY_TOKEN: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
@@ -135,20 +253,17 @@ jobs:
       POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
       POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-      VPS_HOST: ${{ secrets.VPS_HOST }}
-      VPS_USER: ${{ secrets.VPS_USER }}
-      VPS_SSH_PRIVATE_KEY: ${{ needs.prepare-secrets.outputs.vps_ssh_key }}
-      SSL_CERT: ${{ needs.prepare-secrets.outputs.ssl_cert }}
-      SSL_KEY: ${{ needs.prepare-secrets.outputs.ssl_key }}
 
   security-scans:
     name: Security Scans (ZAP)
-    needs: [frontend, backend]
+    needs: [frontend, backend] # Depends on K8s deployments
+    if: ${{ !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'skipped') }}
     uses: ./.github/workflows/security-scans.yml
+    permissions: # Permissions needed by the security scan workflow
+      contents: read
+      issues: write
+      security-events: write
+      pull-requests: write
     with:
-      frontend-url:
-        ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'https://lingua-quiz.nikolay-eremeev.com' ||
-        'https://test-lingua-quiz.nikolay-eremeev.com' }}
-      backend-url:
-        ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'https://api-lingua-quiz.nikolay-eremeev.com' ||
-        'https://test-api-lingua-quiz.nikolay-eremeev.com' }}
+      frontend-url: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'https://lingua-quiz.nikolay-eremeev.com' || 'https://test-lingua-quiz.nikolay-eremeev.com' }}
+      backend-url: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'https://api-lingua-quiz.nikolay-eremeev.com' || 'https://test-api-lingua-quiz.nikolay-eremeev.com' }}

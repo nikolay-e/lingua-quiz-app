@@ -1,5 +1,4 @@
-CREATE
-OR REPLACE FUNCTION get_user_word_sets (p_user_id INTEGER, p_word_list_name VARCHAR) RETURNS TABLE (
+CREATE OR REPLACE FUNCTION get_user_word_sets (p_user_id INTEGER, p_word_list_name VARCHAR) RETURNS TABLE (
   word_pair_id INTEGER,
   status VARCHAR,
   source_word VARCHAR(255),

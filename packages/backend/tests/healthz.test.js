@@ -1,5 +1,6 @@
+const https = require('node:https');
+
 const axios = require('axios');
-const https = require('https');
 const { expect } = require('chai');
 
 const API_URL = process.env.API_URL;
@@ -12,7 +13,7 @@ const axiosInstance = axios.create({
 
 describe('Health Check', () => {
   it('should return OK status', async () => {
-    const response = await axiosInstance.get(`${API_URL}/healthz`);
+    const response = await axiosInstance.get(`${API_URL}/health`);
     expect(response.status).to.equal(200);
     expect(response.data.status).to.equal('ok');
   });

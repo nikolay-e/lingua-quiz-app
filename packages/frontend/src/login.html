@@ -13,8 +13,14 @@
     <meta name="theme-color" content="#4a90e2" />
     <title>LinguaQuiz - Login/Register</title>
     <link href="css/styles.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <script type="importmap">
       {
         "imports": {
@@ -24,18 +30,18 @@
       }
     </script>
     <script type="module">
-      import { AuthUtils } from './js/utils/authUtils.js';
+      import { initAuth } from './js/ui/loginManager.js';
+      import { initEventHandlers } from './js/ui/eventHandlers.js';
       import { errorHandler } from './js/utils/errorHandler.js';
 
       document.addEventListener('DOMContentLoaded', () => {
         errorHandler.init();
-        // Redirect to main page if already authenticated
-        if (AuthUtils.isValidToken(AuthUtils.getToken())) {
-          window.location.href = '/';
-        }
+        initEventHandlers();
+        initAuth();
       });
     </script>
   </head>
+
   <body>
     <main class="container login-container">
       <div class="left-sidebar">
@@ -53,7 +59,13 @@
             </div>
             <div class="input-group">
               <label for="password"></label>
-              <input id="password" name="password" placeholder="Password" required type="password" />
+              <input
+                id="password"
+                name="password"
+                placeholder="Password"
+                required
+                type="password"
+              />
               <button type="button" class="toggle-password-btn">
                 <i class="fas fa-eye"></i>
               </button>
@@ -63,34 +75,40 @@
           <p id="login-message"></p>
         </section>
 
-        <section aria-labelledby="register-section" class="sidebar-section">
-          <h2 id="register-section">Register</h2>
-          <form id="register-form">
-            <div class="input-group">
-              <label for="register-email"></label>
-              <input id="register-email" name="email" placeholder="Email" required type="email" />
-            </div>
-            <div class="input-group">
-              <label for="register-password"></label>
-              <input id="register-password" name="password" placeholder="Password" required type="password" />
-            </div>
-            <button type="submit" disabled><i class="fas fa-user-plus"></i> Register</button>
-          </form>
-          <p id="register-message"></p>
-        </section>
+        <!-- Button to show registration -->
+        <div class="text-center" style="margin: 20px 0">
+          <button id="show-register-btn" type="button" class="link-button">
+            Need an account? Register here.
+          </button>
+        </div>
+
+        <!-- Registration section, initially hidden -->
+        <div id="register-section-wrapper" class="hidden">
+          <section aria-labelledby="register-section" class="sidebar-section">
+            <h2 id="register-section">Register</h2>
+            <form id="register-form">
+              <div class="input-group">
+                <label for="register-email"></label>
+                <input id="register-email" name="email" placeholder="Email" required type="email" />
+              </div>
+              <div class="input-group">
+                <label for="register-password"></label>
+                <input
+                  id="register-password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                  type="password"
+                />
+                <!-- Toggle button will be added by JS -->
+              </div>
+              <button type="submit" disabled><i class="fas fa-user-plus"></i> Register</button>
+            </form>
+            <p id="register-message"></p>
+          </section>
+        </div>
       </div>
       <div class="right-sidebar"></div>
     </main>
-    <script type="module">
-      import { initEventHandlers } from './js/ui/eventHandlers.js';
-      import { initAuth } from './js/ui/loginManager.js';
-      import { errorHandler } from './js/utils/errorHandler.js';
-
-      document.addEventListener('DOMContentLoaded', () => {
-        errorHandler.init();
-        initEventHandlers();
-        initAuth();
-      });
-    </script>
   </body>
 </html>

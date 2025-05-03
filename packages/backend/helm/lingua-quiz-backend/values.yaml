@@ -1,0 +1,102 @@
+replicaCount: 1
+
+backend:
+  image:
+    repository: lingua-quiz-backend # Default, will be overridden by CI
+    pullPolicy: IfNotPresent
+    # Overridden by CI with specific tag
+    tag: "latest"
+  # Port the backend container listens on
+  port: 9000 # Default port, will be overridden by CI for test/prod
+  service:
+    type: ClusterIP # CHANGED: Use ClusterIP for Ingress
+    port: 9000 # Default service port, will be overridden by CI
+  resources:
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
+    requests:
+      cpu: "250m"
+      memory: "256Mi"
+  # Liveness, Readiness, Startup probes configuration
+  probes:
+    liveness:
+      path: /healthz
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+    readiness:
+      path: /healthz
+      initialDelaySeconds: 5
+      periodSeconds: 5
+      timeoutSeconds: 3
+      successThreshold: 1
+      failureThreshold: 3
+    startup:
+      path: /healthz
+      failureThreshold: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
+
+postgres:
+  enabled: true # Deploy PostgreSQL along with the backend
+  image:
+    repository: postgres
+    tag: "13" # Match your existing version
+  persistence:
+    size: 5Gi # Match your existing PVC size
+  resources: {} # Add resource requests/limits if needed
+  # Example:
+  #   requests:
+  #     memory: "256Mi"
+  #     cpu: "250m"
+  #   limits:
+  #     memory: "512Mi"
+  #     cpu: "500m"
+
+# ADDED: Ingress configuration
+ingress:
+  enabled: true # Default to true, controlled by CI
+  className: "" # Set if using a specific IngressClass
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: api-lingua-quiz.example.com # Placeholder, set by CI
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+   - secretName: lingua-quiz-backend-tls # Name of the TLS secret created separately
+     hosts:
+       - api-lingua-quiz.example.com # Placeholder, set by CI
+
+# Secrets - These MUST be provided during deployment (e.g., via --set or a secrets file)
+secrets:
+  # Values should be plain text, Helm will Base64 encode them
+  jwtSecret: "<JWT_SECRET>" # Placeholder, must be set via --set
+  postgresDb: "<POSTGRES_DB>" # Placeholder, must be set via --set
+  postgresUser: "<POSTGRES_USER>" # Placeholder, must be set via --set
+  postgresPassword: "<POSTGRES_PASSWORD>" # Placeholder, must be set via --set
+
+# Service Account configuration
+# Provide default values even if not creating a specific one now
+serviceAccount:
+  # Set to true to create a specific service account
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  # If create is false, it defaults to 'default' within the helper.
+  name: ""
+# Optional configurations if needed
+# imagePullSecrets: []
+# nameOverride: ""
+# fullnameOverride: ""
+# podSecurityContext: {}
+# securityContext: {}
+# nodeSelector: {}
+# tolerations: []
+# affinity: {}

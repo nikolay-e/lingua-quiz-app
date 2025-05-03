@@ -1,0 +1,24 @@
+# Git Attributes File
+
+# Auto detect text files and ensure they use LF line endings in the repo
+* text=auto eol=lf
+
+# Explicitly set text files to use LF
+*.tpl text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.sh text eol=lf
+*.js text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.py text eol=lf
+*.sql text eol=lf
+# Add other text file extensions as needed
+
+# Explicitly set binary files (optional, but good practice)
+# *.png binary
+# *.jpg binary
+# *.ico binary

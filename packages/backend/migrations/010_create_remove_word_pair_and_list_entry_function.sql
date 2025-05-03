@@ -1,5 +1,4 @@
-CREATE
-OR REPLACE FUNCTION remove_word_pair_and_list_entry (p_translation_id INTEGER) RETURNS VOID AS $$
+CREATE OR REPLACE FUNCTION remove_word_pair_and_list_entry (p_translation_id INTEGER) RETURNS VOID AS $$
 DECLARE
   v_source_word_id INTEGER;
   v_target_word_id INTEGER;

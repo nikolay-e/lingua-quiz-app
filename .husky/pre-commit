@@ -1,1 +1,36 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "Running pre-commit hooks..."
+
+# Run lint-staged first (for linters/formatters on staged files)
+echo "Running lint-staged..."
 npx lint-staged
+LINT_STAGED_EXIT_CODE=$?
+
+if [ $LINT_STAGED_EXIT_CODE -ne 0 ]; then
+  echo "ERROR: lint-staged failed. Please fix the issues." >&2
+  exit 1
+fi
+echo "lint-staged passed."
+
+# --- Replace max lines check with max tokens check ---
+echo "Running max tokens check..."
+# Ensure python is available and dependencies (tiktoken) are installed in the dev env
+if command -v python &> /dev/null && python -c "import tiktoken" &> /dev/null; then
+  python ./scripts/check-max-tokens.py
+  MAX_TOKENS_EXIT_CODE=$?
+else
+  echo "WARNING: Python or tiktoken not found. Skipping max tokens check." >&2
+  MAX_TOKENS_EXIT_CODE=0 # Don't block commit if tools aren't set up locally
+fi
+
+if [ $MAX_TOKENS_EXIT_CODE -ne 0 ]; then
+  echo "ERROR: Max tokens check failed. See errors above." >&2
+  exit 1
+fi
+echo "Max tokens check passed (or skipped)."
+# --- End replacement ---
+
+echo "Pre-commit checks passed!"
+exit 0

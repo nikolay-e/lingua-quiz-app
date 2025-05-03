@@ -31,7 +31,6 @@ coverage/
 
 # IDE and editor folders
 .idea
-.vscode
 *.swp
 *.swo
 *.sublime-workspace

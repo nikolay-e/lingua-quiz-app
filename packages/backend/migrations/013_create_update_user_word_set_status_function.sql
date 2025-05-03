@@ -1,5 +1,4 @@
-CREATE
-OR REPLACE FUNCTION update_user_word_set_status (
+CREATE OR REPLACE FUNCTION update_user_word_set_status (
   p_user_id INTEGER,
   p_word_pair_ids INTEGER[],
   p_status translation_status

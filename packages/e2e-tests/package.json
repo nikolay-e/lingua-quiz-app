@@ -2,10 +2,17 @@
   "name": "@linguaquiz/e2e-tests",
   "version": "1.0.0",
   "description": "E2E tests for your monorepo",
+  "type": "module",
   "scripts": {
-    "test": "playwright test"
+    "test": "npx playwright test",
+    "test:auth": "LINGUA_QUIZ_URL=http://localhost:8080 npx playwright test tests/001-auth.spec.js --project=\"Desktop Chromium\"",
+    "test:quiz": "LINGUA_QUIZ_URL=http://localhost:8080 E2E_QUIZ_NAME=\"Spanish Russian A1\" npx playwright test tests/002-quiz.spec.js --project=\"Desktop Chromium\" --reporter=dot",
+    "test:quiz:fast": "LINGUA_QUIZ_URL=http://localhost:8080 E2E_QUIZ_NAME=\"Spanish Russian A1\" E2E_FAST_QUIZ=true npx playwright test tests/002-quiz.spec.js --project=\"Desktop Chromium\" --reporter=dot --timeout=10000",
+    "test:quiz:debug": "LINGUA_QUIZ_URL=http://localhost:8080 E2E_QUIZ_NAME=\"Spanish Russian A1\" DEBUG=pw:api npx playwright test tests/002-quiz.spec.js --project=\"Desktop Chromium\" --reporter=dot",
+    "test:chromium": "LINGUA_QUIZ_URL=http://localhost:8080 npx playwright test --project=\"Desktop Chromium\"",
+    "report": "npx playwright show-report"
   },
   "devDependencies": {
-    "@playwright/test": "^1.32.0"
+    "@playwright/test": "^1.52.0"
   }
 }

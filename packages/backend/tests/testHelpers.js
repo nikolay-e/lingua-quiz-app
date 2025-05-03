@@ -1,5 +1,6 @@
+const https = require('node:https');
+
 const axios = require('axios');
-const https = require('https');
 
 const API_URL = process.env.API_URL;
 
@@ -15,19 +16,19 @@ async function registerTestUser(userPrefix) {
     password: 'testPassword123!',
   };
 
-  await axiosInstance.post(`${API_URL}/register`, testUser);
-  const loginResponse = await axiosInstance.post(`${API_URL}/login`, testUser);
+  await axiosInstance.post(`${API_URL}/auth/register`, testUser);
+  const loginResponse = await axiosInstance.post(`${API_URL}/auth/login`, testUser);
   const jwtToken = loginResponse.data.token;
 
   return { user: testUser, token: jwtToken };
 }
 
 async function deleteTestUser(token) {
-  await axiosInstance.delete(`${API_URL}/delete-account`, {
+  await axiosInstance.delete(`${API_URL}/auth/delete-account`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 }
 
-const generateInt32 = () => Math.floor(Math.random() * 2147483647);
+const generateInt32 = () => Math.floor(Math.random() * 2_147_483_647);
 
 module.exports = { registerTestUser, deleteTestUser, axiosInstance, generateInt32 };

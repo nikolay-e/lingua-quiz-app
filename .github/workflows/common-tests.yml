@@ -1,3 +1,4 @@
+# .github/workflows/common-tests.yml
 name: Common Tests
 
 on:
@@ -6,13 +7,15 @@ on:
       node-version:
         required: false
         type: string
-        default: "20"
+        default: "22" # Using the updated default
 
 permissions:
-  contents: read
-  issues: write
-  pull-requests: write
-  security-events: write
+  contents: read # Needed for checkout in all jobs
+  # Permissions below might be needed if tests/linters create annotations/checks
+  # issues: write
+  # pull-requests: write
+  # checks: write
+  # security-events: write # If any security linters are used
 
 jobs:
   depcheck:
@@ -20,12 +23,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ inputs.node-version }}
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -34,33 +38,40 @@ jobs:
         run: npm run depcheck
 
       - name: Log results
+        if: always()
         run: |
           echo "::group::Depcheck Results"
           echo "Depcheck completed. Check above for detailed results."
           echo "::endgroup::"
 
-  eslint:
-    name: ESLint
+  lint:
+    name: Linters Check (JS/Format)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ inputs.node-version }}
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Run ESLint
-        run: npm run lint
-
-      - name: Log results
+      - name: Run Linters Check
         run: |
-          echo "::group::ESLint Results"
-          echo "ESLint completed. Check above for detailed results."
+          echo "--- Running Prettier Format Check ---"
+          npm run lint:format
+          echo "--- Running ESLint Check ---"
+          npm run lint:js
+
+      - name: Log Linting Results
+        if: always()
+        run: |
+          echo "::group::Linting Results"
+          echo "Linters check completed. Check output above."
           echo "::endgroup::"
 
   frontend-tests:
@@ -68,21 +79,55 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ inputs.node-version }}
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Run tests
-        run: npm run test --workspace=@linguaquiz/frontend
+      - name: Run Frontend Tests
+        run: npm run test --workspace=@linguaquiz/frontend # Run tests for the specific workspace
 
-      - name: Log results
+      - name: Log Frontend Test Results
+        if: always()
         run: |
           echo "::group::Frontend Test Results"
           echo "Frontend tests completed. Check above for detailed results."
           echo "::endgroup::"
+
+  # Job to check file token counts using the Python script
+  token-checks:
+    name: File Token Count Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5 # Use latest stable version
+        with:
+          python-version: "3.10" # Specify a Python version available on runners
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # Install from requirements file if it exists in the scripts directory
+          if [ -f scripts/requirements.txt ]; then
+            pip install -r scripts/requirements.txt
+          else
+            # Fallback to installing directly if no requirements file
+            echo "Warning: scripts/requirements.txt not found. Installing tiktoken directly."
+            pip install tiktoken openai
+          fi
+          # Verify installation (optional but good for debugging)
+          pip show tiktoken
+
+      - name: Check Max File Tokens
+        run: python ./scripts/check-max-tokens.py # Assumes the script is executable or called via python
+        # You can add arguments here if needed, e.g.:
+        # run: python ./scripts/check-max-tokens.py --max-tokens 3000 --model gpt-3.5-turbo

@@ -1,5 +1,4 @@
-CREATE
-OR REPLACE FUNCTION get_word_lists () RETURNS TABLE (
+CREATE OR REPLACE FUNCTION get_word_lists () RETURNS TABLE (
   id INTEGER,
   name VARCHAR(255),
   created_at TEXT,

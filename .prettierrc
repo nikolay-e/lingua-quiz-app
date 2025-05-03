@@ -1,5 +1,5 @@
 {
-  "printWidth": 150,
+  "printWidth": 100,
   "tabWidth": 2,
   "useTabs": false,
   "semi": true,
@@ -10,16 +10,17 @@
   "plugins": ["prettier-plugin-sql", "prettier-plugin-sh"],
   "overrides": [
     {
-      "files": "*.json",
+      "files": ["*.json", ".vscode/*.json"],
       "options": {
-        "printWidth": 80
+        "printWidth": 80,
+        "singleQuote": false
       }
     },
     {
-      "files": ["*.yml", "*.yaml"],
+      "files": ["*.yml", "*.yaml", ".github/workflows/*.yml"],
       "options": {
         "singleQuote": false,
-        "proseWrap": "always"
+        "proseWrap": "preserve"
       }
     },
     {
@@ -36,9 +37,7 @@
     },
     {
       "files": ["*.html"],
-      "options": {
-        "printWidth": 150
-      }
+      "options": {}
     },
     {
       "files": ["*.css"],
@@ -47,21 +46,16 @@
       }
     },
     {
-      "files": ["*.js", "*.cjs"],
+      "files": ["*.js", "*.cjs", "*.mjs", "*.jsx", "*.tsx"],
       "options": {
         "parser": "babel"
       }
     },
     {
-      "files": ["*.py"],
+      "files": ["*.sh", "**/scripts/pre-commit", "**/Dockerfile", "Dockerfile", "Dockerfile.*"],
       "options": {
-        "singleQuote": false,
-        "trailingComma": "none"
+        "parser": "sh"
       }
-    },
-    {
-      "files": ["*.csv"],
-      "options": {}
     }
   ]
 }

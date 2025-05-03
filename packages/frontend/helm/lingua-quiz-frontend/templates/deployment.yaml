@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "lingua-quiz-frontend.fullname" . }}
+  labels:
+    {{- include "lingua-quiz-frontend.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount | default 1 }}
+  selector:
+    matchLabels:
+      {{- include "lingua-quiz-frontend.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "lingua-quiz-frontend.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.frontend.port }}
+              protocol: TCP
+          # No environment variables needed here for API_URL as it's derived client-side
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.frontend.probes.liveness.path | default "/" }}
+              port: http
+            initialDelaySeconds: {{ .Values.frontend.probes.liveness.initialDelaySeconds | default 10 }}
+            periodSeconds: {{ .Values.frontend.probes.liveness.periodSeconds | default 10 }}
+            timeoutSeconds: {{ .Values.frontend.probes.liveness.timeoutSeconds | default 5 }}
+            failureThreshold: {{ .Values.frontend.probes.liveness.failureThreshold | default 3 }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.frontend.probes.readiness.path | default "/" }}
+              port: http
+            initialDelaySeconds: {{ .Values.frontend.probes.readiness.initialDelaySeconds | default 5 }}
+            periodSeconds: {{ .Values.frontend.probes.readiness.periodSeconds | default 5 }}
+            timeoutSeconds: {{ .Values.frontend.probes.readiness.timeoutSeconds | default 3 }}
+            successThreshold: {{ .Values.frontend.probes.readiness.successThreshold | default 1 }}
+            failureThreshold: {{ .Values.frontend.probes.readiness.failureThreshold | default 3 }}
+          resources:
+            {{- toYaml .Values.frontend.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Kubernetes and Helm Tools
         run: |
@@ -36,8 +36,6 @@ jobs:
         run: |
           kubectl cluster-info
           kubectl config current-context
-
-      # Removed manifest preparation step (sed)
 
       - name: Deploy Backup Job using Helm
         env:

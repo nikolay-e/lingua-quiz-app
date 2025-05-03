@@ -6,7 +6,7 @@ successfulJobsHistoryLimit: 3
 failedJobsHistoryLimit: 1
 
 image:
-  repository: nikolayeremeev/lingua-quiz-backup # Default, override in CI
+  repository: example/lingua-quiz-backup # Default, override in CI
   pullPolicy: IfNotPresent
   # Overridden by CI
   tag: "latest"

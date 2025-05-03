@@ -1,9 +1,12 @@
+const fs = require('node:fs');
+const path = require('node:path');
+
 const { PostgreSqlContainer } = require('@testcontainers/postgresql');
-const { Pool } = require('pg');
 const axios = require('axios');
-const fs = require('fs');
-const path = require('path');
-const { setupAndRunMigrations } = require('../runMigrations');
+const { Pool } = require('pg');
+
+// Import the runMigrations function from the new location
+const { runMigrations } = require('../src/migrations');
 
 module.exports = async () => {
   const env = process.env.TEST_ENV || 'local';
@@ -11,31 +14,37 @@ module.exports = async () => {
   if (env === 'local') {
     // Start PostgreSQL container
     const container = await new PostgreSqlContainer()
-      .withDatabase('test_db')
-      .withUsername('test_user')
+      .withDatabase('linguaquiz_test_db')
+      .withUsername('linguaquiz_test_user')
       .withPassword('test_password')
       .start();
 
     // Set environment variables for the test run
     process.env.DB_HOST = container.getHost();
     process.env.DB_PORT = container.getMappedPort(5432);
-    process.env.POSTGRES_DB = 'test_db';
-    process.env.POSTGRES_USER = 'test_user';
+    process.env.POSTGRES_DB = 'linguaquiz_test_db';
+    process.env.POSTGRES_USER = 'linguaquiz_test_user';
     process.env.POSTGRES_PASSWORD = 'test_password';
     process.env.JWT_SECRET = 'test_secret';
     process.env.JWT_EXPIRES_IN = '1h';
-    process.env.NODE_ENV = 'development';
+    process.env.NODE_ENV = 'test';
     process.env.PORT = '3000'; // Set a fixed port for the test server
-    process.env.API_URL = `http://localhost:${process.env.PORT}`;
+    process.env.API_URL = `http://localhost:${process.env.PORT}/api`;
 
     // Run migrations
-    await setupAndRunMigrations();
+    await runMigrations();
 
-    // Import the server instance
-    const server = require('../server');
+    // Import the server instance from new location
+    const { startServer } = require('../src/app');
+
+    // Give database time to start
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+
+    // Start the server
+    const server = startServer();
 
     // Wait for the server to start
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     // Write environment variables to a file
     const envVars = `

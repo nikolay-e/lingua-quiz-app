@@ -3,3 +3,27 @@
 @import "layout.css";
 @import "auth.css";
 /* Import other CSS modules as needed */
+
+/* Added user action styles */
+.user-actions {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+  justify-content: center; /* Center buttons in the user-status area */
+  align-items: center;
+  flex-wrap: wrap; /* Allow wrapping on small screens */
+}
+
+/* Style for danger buttons like Delete */
+.danger-btn {
+  background-color: var(--error-color);
+  color: white;
+}
+
+.danger-btn:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+/* Center text utility */
+.text-center {
+  text-align: center;
+}

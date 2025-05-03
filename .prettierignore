@@ -1,12 +1,38 @@
-# .prettierignore
+# File: .prettierignore
 
+# Files handled by other formatters or should not be formatted
 *.py
+*.sql_data
+
+# Data files
 *.csv
 *.txt
 *.ico
 *.png
-.treemapperignore
 
-# Helm chart template files
-**/helm/**/templates/**/*.yaml
-**/helm/**/templates/**/*.tpl
+# Project/Tool specific ignores
+.treemapperignore
+.env* # Ignore .env and variations like .env.local
+node_modules/
+.husky/**
+coverage/
+pgdata_local/ # Ignore docker volume data
+
+# Generated/output files
+dist/
+build/
+playwright-report/
+test-results/
+Generated -- *.sql # Ignore SQL generated from CSVs
+*.log
+logs/
+
+# Helm chart template files - VERY IMPORTANT to keep this ignore!
+**/helm/**/*.*
+
+# Git specific (redundant with .gitignore usually, but safe to keep)
+.git/
+package-lock.json
+yarn.lock
+
+.prettierignore

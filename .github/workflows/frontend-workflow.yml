@@ -1,0 +1,192 @@
+name: Frontend Workflow
+
+on:
+  workflow_call:
+    secrets:
+      # Docker & K8s
+      DOCKER_REGISTRY_USERNAME:
+        required: true
+      DOCKER_REGISTRY_TOKEN:
+        required: true
+      KUBE_CONFIG:
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    outputs:
+      image_tag: ${{ steps.set_vars.outputs.image_tag_out }}
+      deploy_env: ${{ steps.set_vars.outputs.deploy_env_out }}
+      image_base_name: ${{ steps.set_vars.outputs.image_base_name_out }}
+      helm_release_name: ${{ steps.set_vars.outputs.helm_release_name_out }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+          password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
+      - name: Set variables and outputs
+        id: set_vars
+        run: |
+          DEPLOY_ENV_VAL=$([[ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/main" ]] && echo "production" || echo "test")
+          SAFE_REF_NAME=$(echo "${{ github.head_ref || github.ref_name }}" | sed -e 's/[^a-zA-Z0-9.-]/-/g' | cut -c1-128)
+          IMAGE_TAG_VAL=${SAFE_REF_NAME}-${{ github.run_number }}
+
+          if [ -z "${{ secrets.DOCKER_REGISTRY_USERNAME }}" ]; then
+            echo "::error::Secret DOCKER_REGISTRY_USERNAME is not set or empty!"
+            exit 1
+          fi
+          IMAGE_BASE_NAME_VAL="lingua-quiz-frontend"
+          IMAGE_NAME_VAL="${{ secrets.DOCKER_REGISTRY_USERNAME }}/${IMAGE_BASE_NAME_VAL}"
+
+          LATEST_TAG_VAL=""
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            LATEST_TAG_VAL=latest
+          fi
+
+          if [[ "$DEPLOY_ENV_VAL" == "production" ]]; then
+            HELM_RELEASE_NAME_VAL=lingua-quiz-frontend
+          else
+            HELM_RELEASE_NAME_VAL=lingua-quiz-frontend-test
+          fi
+
+          echo "DEPLOY_ENV=${DEPLOY_ENV_VAL}" >> $GITHUB_ENV
+          echo "IMAGE_TAG=${IMAGE_TAG_VAL}" >> $GITHUB_ENV
+          echo "IMAGE_NAME=${IMAGE_NAME_VAL}" >> $GITHUB_ENV
+          echo "LATEST_TAG=${LATEST_TAG_VAL}" >> $GITHUB_ENV
+
+          echo "Setting outputs using GITHUB_OUTPUT..."
+          echo "deploy_env_out=${DEPLOY_ENV_VAL}" >> $GITHUB_OUTPUT
+          echo "image_tag_out=${IMAGE_TAG_VAL}" >> $GITHUB_OUTPUT
+          echo "image_base_name_out=${IMAGE_BASE_NAME_VAL}" >> $GITHUB_OUTPUT
+          echo "latest_tag_out=${LATEST_TAG_VAL}" >> $GITHUB_OUTPUT
+          echo "helm_release_name_out=${HELM_RELEASE_NAME_VAL}" >> $GITHUB_OUTPUT
+          echo "Finished setting outputs."
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: ./packages/frontend # Use simplified Dockerfile
+          file: ./packages/frontend/Dockerfile
+          push: true
+          tags: |
+            ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+            ${{ env.LATEST_TAG != '' && format('{0}:{1}', env.IMAGE_NAME, env.LATEST_TAG) || '' }}
+      - name: Log build details
+        run: |
+          echo "::group::Build Details"
+          echo "Deploy Environment: ${{ steps.set_vars.outputs.deploy_env_out }}"
+          echo "Full Image Name Pushed: ${{ env.IMAGE_NAME }}"
+          echo "Image Tag: ${{ steps.set_vars.outputs.image_tag_out }}"
+          [[ -n "${{ steps.set_vars.outputs.latest_tag_out }}" ]] && echo "Latest Tag Added: ${{ env.IMAGE_NAME }}:latest"
+          echo "::endgroup::"
+
+  deploy:
+    needs: [build-and-push]
+    runs-on: ubuntu-latest
+    environment: ${{ needs.build-and-push.outputs.deploy_env }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Kubernetes and Helm Tools
+        run: |
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+          helm version
+
+      - name: Set up kubeconfig
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
+          chmod 600 $HOME/.kube/config
+
+      - name: Verify kubectl configuration
+        run: |
+          kubectl cluster-info
+          kubectl config current-context
+
+      - name: Set deployment environment variables
+        env:
+          DEPLOY_ENV_FROM_BUILD: ${{ needs.build-and-push.outputs.deploy_env }}
+          IMAGE_TAG_FROM_BUILD: ${{ needs.build-and-push.outputs.image_tag }}
+          HELM_RELEASE_NAME_FROM_BUILD: ${{ needs.build-and-push.outputs.helm_release_name }}
+          IMAGE_BASE_NAME_FROM_BUILD: ${{ needs.build-and-push.outputs.image_base_name }}
+        run: |
+          echo "DEPLOY_ENV=${DEPLOY_ENV_FROM_BUILD}" >> $GITHUB_ENV
+          echo "IMAGE_TAG=${IMAGE_TAG_FROM_BUILD}" >> $GITHUB_ENV
+          echo "HELM_RELEASE_NAME=${HELM_RELEASE_NAME_FROM_BUILD}" >> $GITHUB_ENV
+
+          if [ -z "${{ secrets.DOCKER_REGISTRY_USERNAME }}" ]; then
+            echo "::error::Secret DOCKER_REGISTRY_USERNAME is not set or empty in deploy job!"
+            exit 1
+          fi
+          if [ -z "$IMAGE_BASE_NAME_FROM_BUILD" ]; then
+            echo "::error::IMAGE_BASE_NAME_FROM_BUILD is empty! Check build job outputs."
+            exit 1
+          fi
+          IMAGE_NAME_FOR_HELM_VAL="${{ secrets.DOCKER_REGISTRY_USERNAME }}/${IMAGE_BASE_NAME_FROM_BUILD}"
+          echo "IMAGE_NAME=${IMAGE_NAME_FOR_HELM_VAL}" >> $GITHUB_ENV
+
+          if [[ "$DEPLOY_ENV_FROM_BUILD" == "production" ]]; then
+            echo "DEPLOY_NAMESPACE=default" >> $GITHUB_ENV
+            echo "FRONTEND_HOST=lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
+            # API_URL no longer needed here for Helm deployment
+          else # test environment
+            echo "DEPLOY_NAMESPACE=test" >> $GITHUB_ENV
+            echo "FRONTEND_HOST=test-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
+            # API_URL no longer needed here for Helm deployment
+          fi
+
+      - name: Log Helm Deployment Variables
+        run: |
+          echo "--- Helm Variables ---"
+          echo "Helm Release Name: ${{ env.HELM_RELEASE_NAME }}"
+          echo "Namespace: ${{ env.DEPLOY_NAMESPACE }}"
+          echo "Image Repository: ${{ env.IMAGE_NAME }}"
+          echo "Image Tag: ${{ env.IMAGE_TAG }}"
+          echo "Frontend Host: ${{ env.FRONTEND_HOST }}"
+          # echo "API URL: Determined by Frontend JS" # Updated log message
+          echo "----------------------"
+
+      - name: Deploy to Kubernetes using Helm
+        run: |
+          echo "Deploying Frontend Helm chart to namespace: ${{ env.DEPLOY_NAMESPACE }}"
+          ( helm uninstall ${{ env.HELM_RELEASE_NAME }} --namespace ${{ env.DEPLOY_NAMESPACE }} || true ) && \
+          helm upgrade --install ${{ env.HELM_RELEASE_NAME }} ./packages/frontend/helm/lingua-quiz-frontend \
+            --namespace ${{ env.DEPLOY_NAMESPACE }} \
+            --create-namespace \
+            --set frontend.image.repository='${{ env.IMAGE_NAME }}' \
+            --set frontend.image.tag='${{ env.IMAGE_TAG }}' \
+            --set frontend.port=80 \
+            --set frontend.service.port=80 \
+            --set frontend.service.type=ClusterIP \
+            --set ingress.enabled=true \
+            --set ingress.hosts[0].host=${{ env.FRONTEND_HOST }} \
+            --set ingress.hosts[0].paths[0].path=/ \
+            --set ingress.hosts[0].paths[0].pathType=Prefix \
+            --set ingress.tls[0].secretName=lingua-quiz-frontend-tls \
+            --set ingress.tls[0].hosts[0]=${{ env.FRONTEND_HOST }} \
+            --wait --timeout 5m0s
+
+      - name: Log deployment status
+        run: |
+          echo "::group::Deployment Status"
+          echo "Deploy Environment: ${{ env.DEPLOY_ENV }}"
+          echo "Helm Release: ${{ env.HELM_RELEASE_NAME }}"
+          echo "Namespace: ${{ env.DEPLOY_NAMESPACE }}"
+          echo "Frontend Host (Ingress hostname): ${{ env.FRONTEND_HOST }}"
+          # echo "API URL: Determined by Frontend JS" # Updated log message
+          echo "Image: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
+          echo "Deployment to Kubernetes completed."
+          echo "::endgroup::"

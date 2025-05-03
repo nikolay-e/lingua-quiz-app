@@ -1,4 +1,6 @@
+const { beforeAll, afterAll } = require('@jest/globals');
 const { expect } = require('chai');
+
 const { deleteTestUser, axiosInstance } = require('./testHelpers');
 
 const API_URL = process.env.API_URL;
@@ -14,11 +16,14 @@ describe('Registration and Login', () => {
       password: 'testPassword123!',
     };
     try {
-      await axiosInstance.post(`${API_URL}/register`, testUser);
-      const loginResponse = await axiosInstance.post(`${API_URL}/login`, testUser);
+      await axiosInstance.post(`${API_URL}/auth/register`, testUser);
+      const loginResponse = await axiosInstance.post(`${API_URL}/auth/login`, testUser);
       jwtToken = loginResponse.data.token;
     } catch (error) {
-      console.error('!!! Failed to setup user for auth tests:', error.response?.data || error.message);
+      console.error(
+        '!!! Failed to setup user for auth tests:',
+        error.response?.data || error.message
+      );
       throw error;
     }
   });
@@ -31,24 +36,26 @@ describe('Registration and Login', () => {
 
   it('should not allow duplicate registration', async () => {
     try {
-      await axiosInstance.post(`${API_URL}/register`, testUser);
+      await axiosInstance.post(`${API_URL}/auth/register`, testUser);
       expect.fail('Second registration attempt should have failed');
     } catch (error) {
       expect(error.response).to.exist;
       expect(error.response.status).to.equal(409);
-      expect(error.response.data.message).to.equal('Conflict: The resource already exists or cannot be created.');
+      expect(error.response.data.message).to.equal(
+        'Conflict: The resource already exists or cannot be created.'
+      );
     }
   });
 
   it('should login with correct credentials', async () => {
-    const response = await axiosInstance.post(`${API_URL}/login`, testUser);
+    const response = await axiosInstance.post(`${API_URL}/auth/login`, testUser);
     expect(response.status).to.equal(200);
     expect(response.data).to.have.property('token');
   });
 
   it('should not login with incorrect credentials', async () => {
     try {
-      await axiosInstance.post(`${API_URL}/login`, {
+      await axiosInstance.post(`${API_URL}/auth/login`, {
         ...testUser,
         password: 'wrongPassword',
       });
@@ -56,7 +63,7 @@ describe('Registration and Login', () => {
     } catch (error) {
       expect(error.response).to.exist;
       expect(error.response.status).to.equal(401);
-      expect(error.response.data.message).to.equal('Authentication failed or insufficient permissions.');
+      expect(error.response.data.message).to.equal('Authentication failed.');
     }
   });
 });

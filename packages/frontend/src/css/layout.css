@@ -7,28 +7,33 @@
   margin: 0 auto;
   max-width: 1400px;
   overflow: hidden;
+  flex-wrap: nowrap; /* Prevent wrapping at the top level */
 }
 
 .left-sidebar {
-  width: 300px;
+  width: 300px; /* Fixed width for left sidebar */
   padding: 20px;
   z-index: 1;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0; /* Prevent shrinking */
 }
 
 .main-content {
-  flex: 1;
+  flex: 1; /* Takes up remaining space */
   padding: 20px;
-  overflow-y: auto;
+  overflow-y: auto; /* Allows content scrolling */
+  min-width: 300px; /* Prevent becoming too narrow */
 }
 
 .right-sidebar {
-  width: 500px;
+  width: 500px; /* Fixed width for right sidebar */
   padding: 20px;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100vh; /* Full viewport height */
+  overflow-y: auto; /* Scrollable sidebar content */
+  flex-shrink: 0; /* Prevent shrinking */
 }
 
 .sidebar-section,
@@ -38,6 +43,34 @@
   padding: 20px;
   margin-bottom: 20px;
   box-shadow: 0 4px 6px var(--shadow-color);
+  flex-shrink: 0; /* Prevent sections shrinking excessively */
+}
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between; /* Align items nicely */
+  align-items: center;
+  flex-wrap: wrap; /* Allow wrapping if space is limited */
+  gap: 15px;
+}
+
+.quiz-select {
+  flex-grow: 1; /* Allow select to take space */
+  min-width: 150px; /* Prevent select getting too small */
+}
+
+.quiz-select label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+#quiz-select {
+  padding: 8px 12px;
+  border: 1px solid var(--input-border-color);
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 100%; /* Use full width available */
+  max-width: 300px; /* Limit maximum width */
 }
 
 .quiz-content {
@@ -45,11 +78,12 @@
 }
 
 .question {
-  font-size: 2em;
+  font-size: clamp(1.8em, 4vw, 2.5em); /* Responsive font size */
   font-weight: bold;
   color: var(--secondary-color);
   text-align: center;
   margin: 20px 0;
+  word-wrap: break-word; /* Ensure long words wrap */
 }
 
 .feedback-container {
@@ -58,6 +92,9 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px var(--shadow-color);
   overflow: hidden;
+  min-height: 50px; /* Ensure space for feedback */
+  display: flex; /* Use flex for better alignment */
+  flex-direction: column; /* Stack items vertically */
 }
 
 .feedback-text {
@@ -67,58 +104,70 @@
   padding: 15px;
   font-weight: bold;
   text-align: center;
-  transition: all 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    opacity 0.3s ease;
+  flex-grow: 1;
 }
 
+/* Ensure icon and message have space */
+.feedback-icon {
+  font-size: 20px; /* Slightly smaller icon */
+  margin-right: 8px; /* Space between icon and text */
+  line-height: 1; /* Align icon better vertically */
+}
+
+/* Keep the styles for success/error */
 .feedback-text.success {
   background-color: #e8f5e9;
   color: #2e7d32;
 }
-
 .feedback-text.error {
   background-color: #ffebee;
   color: #c62828;
 }
-
-.feedback-icon {
-  font-size: 24px;
-  margin-right: 10px;
-}
-
 .feedback-text.success .feedback-icon::before {
   content: "✓";
   color: #4caf50;
 }
-
 .feedback-text.error .feedback-icon::before {
   content: "✗";
   color: #f44336;
 }
 
 .feedback-message {
-  font-size: 18px;
+  font-size: 1rem; /* Slightly adjusted size */
 }
 
+/* Usage Examples adjustments */
 .usage-examples {
-  padding: 10px;
+  padding: 10px 15px; /* Adjusted padding */
+  border-top: 1px solid var(--input-border-color); /* Separator line */
+  display: none; /* Initially hide */
+}
+.feedback-container.has-examples .usage-examples {
+  display: block; /* Show when examples are present */
 }
 
 .usage-examples h3 {
   margin-bottom: 10px;
   color: var(--primary-color);
+  font-size: 1.1em;
 }
 
 .example-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px; /* Slightly reduced gap */
 }
 
 .example-container p {
   background-color: #f8f9fa;
-  padding: 5px;
-  border-radius: 6px;
+  padding: 8px;
+  border-radius: 4px;
   margin: 0;
+  font-size: 0.95rem;
 }
 
 .example-container strong {
@@ -127,20 +176,38 @@
 }
 
 .learning-progress {
-  padding: 20px;
+  padding: 0 10px 20px 10px; /* Remove top padding, adjust others */
   overflow-y: auto;
-  min-height: 70vh;
+  /* Remove min-height to let it be flexible */
+  /* Use flex-grow to take remaining space in the sidebar */
+  flex-grow: 1;
+}
+
+.learning-progress h3 {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-size: 1.1em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .learning-progress ol {
-  padding-left: 30px;
-  margin-top: 10px;
+  list-style: none; /* Remove default bullets */
+  padding-left: 5px; /* Reduced padding */
+  margin-top: 5px;
 }
 
 .learning-progress ol li {
-  padding: 5px 0;
-  border-bottom: 1px solid var(--input-border-color);
-  margin: 5px 0;
+  padding: 6px 5px;
+  border-bottom: 1px dashed var(--input-border-color); /* Use dashed */
+  margin: 0;
+  font-size: 0.95rem; /* Adjust font size */
+  line-height: 1.4;
+}
+
+.learning-progress ol li:last-child {
+  border-bottom: none; /* Remove border from last item */
 }
 
 /* Responsive layout adjustments */
@@ -150,17 +217,33 @@
     flex-direction: column;
     height: auto;
     overflow-y: auto;
+    overflow-x: hidden; /* Prevent horizontal scroll */
   }
 
   .left-sidebar,
   .main-content,
   .right-sidebar {
     width: 100%;
+    height: auto; /* Allow height to adjust */
+    max-height: none; /* Remove max-height */
+    overflow-y: visible; /* Prevent internal scrollbars */
+    padding: 15px; /* Slightly reduced padding */
   }
 
   .right-sidebar {
-    height: auto;
-    max-height: none;
+    order: 3; /* Move right sidebar below main content on small screens */
+  }
+  .main-content {
+    order: 2;
+  }
+  .left-sidebar {
+    order: 1;
+    /* Remove left sidebar if not needed on small screens */
+    /* display: none; */
+  }
+
+  .learning-progress {
+    flex-grow: 0; /* Don't grow on column layout */
   }
 
   #user-status {
@@ -170,40 +253,43 @@
   }
 }
 
+/* Further adjustments for smaller screens */
 @media (max-width: 768px) {
-  .container,
-  .quiz-container {
-    flex-direction: column;
-  }
-
-  .left-sidebar,
-  .main-content,
-  .right-sidebar {
-    width: 100%;
-  }
-
-  .left-sidebar,
-  .right-sidebar {
-    height: auto;
-    max-height: none;
-  }
+  /* Already column layout from 1024px */
 
   .quiz-header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch; /* Stretch items full width */
     gap: 10px;
   }
 
   .logo {
-    text-align: left;
+    text-align: left; /* Reset text align if needed */
   }
 
   #quiz-select {
-    max-width: 100%;
+    max-width: none; /* Allow full width */
   }
 
   .direction-toggle-btn {
     margin-top: 10px;
+    width: 100%; /* Make button full width */
+  }
+
+  .question {
+    font-size: clamp(1.5em, 5vw, 2em); /* Slightly smaller on mobile */
+    margin: 15px 0;
+  }
+
+  .input-group {
+    flex-direction: column; /* Stack input and button vertically */
+    gap: 10px;
+  }
+
+  #answer,
+  #submit {
+    width: 100%; /* Make input and button full width */
+    margin-bottom: 0; /* Remove default margin */
   }
 }
 
@@ -213,23 +299,20 @@
   }
 
   h1 {
-    font-size: 1.8em;
+    font-size: 1.6em; /* Further adjust heading sizes */
   }
 
   h2 {
-    font-size: 1.4em;
+    font-size: 1.2em;
   }
 
   h3 {
-    font-size: 1.1em;
+    font-size: 1em;
   }
 
   .quiz-section,
   .sidebar-section {
-    padding: 15px;
-  }
-
-  .right-sidebar {
-    max-height: none;
+    padding: 10px; /* Minimum padding */
+    border-radius: 8px; /* Slightly smaller radius */
   }
 }

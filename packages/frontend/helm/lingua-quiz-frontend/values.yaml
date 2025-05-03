@@ -1,0 +1,62 @@
+replicaCount: 1
+
+frontend:
+  image:
+    repository: lingua-quiz-frontend # Default, overridden by CI
+    pullPolicy: IfNotPresent
+    tag: "latest" # Default, overridden by CI
+
+  port: 80 # Container port (Nginx default)
+
+  service:
+    type: ClusterIP # Use ClusterIP for Ingress
+    port: 80 # Service port
+
+  resources: {} # Define limits/requests if needed
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 50m
+    #   memory: 64Mi
+
+  probes: # Basic probes for static content
+    liveness:
+      path: /
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+    readiness:
+      path: /
+      initialDelaySeconds: 5
+      periodSeconds: 5
+      timeoutSeconds: 3
+      successThreshold: 1
+      failureThreshold: 3
+
+ingress:
+  enabled: true # Default to true, controlled by CI
+  className: ""
+  annotations: {}
+  hosts:
+    - host: lingua-quiz.example.com # Placeholder, set by CI
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+   - secretName: lingua-quiz-frontend-tls # Name of the TLS secret created separately
+     hosts:
+       - lingua-quiz.example.com # Placeholder, set by CI
+
+# ADDED: config section matching the template expectation
+config:
+  apiUrl: "https://api-lingua-quiz.example.com" # Default/placeholder, will likely be overridden by CI if needed
+
+# Optional values
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+nodeSelector: {}
+tolerations: []
+affinity: {}

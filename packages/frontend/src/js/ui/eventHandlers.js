@@ -1,167 +1,246 @@
+import serverAddress from '../config.js';
+import { STATUS } from '../constants.js'; // *** ADDED: Import STATUS constants ***
+import {
+  displayQuestion,
+  updateDirectionToggleTitle,
+  updateWordSetsDisplay,
+} from './displayManager.js';
 import { fetchWordSets, fetchWordLists } from '../quiz/dataHandler.js';
-import { saveQuizState } from '../quiz/wordSetManager.js'; // Assume this makes API calls
-import { AuthUtils } from '../utils/authUtils.js'; // Import AuthUtils
+import { saveQuizState } from '../quiz/wordSetManager.js';
+import { AuthUtils } from '../utils/authUtils.js';
 import { errorHandler } from '../utils/errorHandler.js';
-
-import { displayQuestion, updateDirectionToggleTitle, updateWordSetsDisplay } from './displayManager.js';
 
 let app = null; // The single instance of our App class
 
 function setFeedback(message, isSuccess = true) {
-  const feedbackElement = document.getElementById('feedback');
-  const feedbackMessage = feedbackElement.querySelector('.feedback-message');
-  if (feedbackElement && feedbackMessage) {
-    feedbackMessage.textContent = message;
-    feedbackElement.className = isSuccess ? 'feedback-text success' : 'feedback-text error';
-    // Make feedback visible briefly
-    feedbackElement.style.opacity = '1';
-    setTimeout(() => {
-      // Optional: fade out instead of abrupt hide
-      // feedbackElement.style.opacity = '0';
-    }, 3000); // Hide after 3 seconds
-  } else {
-    console.error('Feedback element or message span not found');
+  const feedbackElement = document.querySelector('#feedback');
+  if (!feedbackElement) {
+    console.error('Feedback container element not found');
+    return;
   }
+  const feedbackMessage = feedbackElement.querySelector('.feedback-message');
+  const feedbackIcon = feedbackElement.querySelector('.feedback-icon');
+
+  if (!feedbackMessage || !feedbackIcon) {
+    console.error('Feedback message or icon span not found');
+    return;
+  }
+
+  feedbackMessage.textContent = message;
+  feedbackElement.className = isSuccess ? 'feedback-text success' : 'feedback-text error';
+  feedbackIcon.textContent = isSuccess ? '✓' : '✗';
+  feedbackIcon.className = isSuccess ? 'feedback-icon success-icon' : 'feedback-icon error-icon';
+
+  feedbackElement.style.display = message ? 'flex' : 'none';
+  feedbackElement.style.opacity = '1';
+
+  setTimeout(() => {
+    if (feedbackMessage.textContent === message) {
+      feedbackElement.style.opacity = '0';
+      setTimeout(() => {
+        if (feedbackElement.style.opacity === '0') {
+          feedbackElement.style.display = 'none';
+          feedbackMessage.textContent = '';
+          feedbackIcon.textContent = '';
+        }
+      }, 300);
+    }
+  }, 5000);
 }
 
 function displayUsageExamples(examples) {
-  const sourceUsageEl = document.getElementById('source-word-usage');
-  const targetUsageEl = document.getElementById('target-word-usage');
-  const examplesContainer = document.getElementById('usage-examples');
+  const sourceUsageEl = document.querySelector('#source-word-usage');
+  const targetUsageEl = document.querySelector('#target-word-usage');
+  const examplesContainer = document.querySelector('#usage-examples');
+  const feedbackContainer = document.querySelector('.feedback-container');
 
-  if (sourceUsageEl && targetUsageEl && examplesContainer) {
-    sourceUsageEl.textContent = examples.source;
-    targetUsageEl.textContent = examples.target;
-    // Show container only if examples exist? Or always show with placeholder text?
-    examplesContainer.style.display = 'block'; // Or adjust based on content
-  } else {
+  if (!sourceUsageEl || !targetUsageEl || !examplesContainer || !feedbackContainer) {
     console.error('Usage example elements not found');
+    return;
+  }
+  
+  // Defensive programming: handle null/undefined examples properly
+  if (!examples) {
+    sourceUsageEl.textContent = 'N/A';
+    targetUsageEl.textContent = 'N/A';
+    examplesContainer.style.display = 'none';
+    feedbackContainer.classList.remove('has-examples');
+    return;
+  }
+
+  // Now we know examples is defined, safely check for source/target
+  const hasSource = examples.source && examples.source !== 'No source example available';
+  const hasTarget = examples.target && examples.target !== 'No target example available';
+
+  // Use optional chaining to safely access properties
+  sourceUsageEl.textContent = examples.source || 'N/A';
+  targetUsageEl.textContent = examples.target || 'N/A';
+
+  if (hasSource || hasTarget) {
+    examplesContainer.style.display = 'block';
+    feedbackContainer.classList.add('has-examples');
+  } else {
+    examplesContainer.style.display = 'none';
+    feedbackContainer.classList.remove('has-examples');
   }
 }
 
 async function loadWordsFromAPI(wordListName) {
-  // Basic UI reset/loading state
-  displayQuestion({ word: 'Loading...' }); // Show loading state
-  setFeedback(''); // Clear previous feedback
-  displayUsageExamples({ source: '', target: '' }); // Clear examples
-  // Clear lists visually while loading
+  console.debug(`[eventHandlers] Loading words for "${wordListName}"`);
+  displayQuestion({ word: 'Loading...' });
+  setFeedback('');
+  // Properly handle the case where we have no usage examples yet
+  displayUsageExamples({ source: 'N/A', target: 'N/A' });
   updateWordSetsDisplay({
     wordStatusSets: {
-      LEVEL_0: new Set(),
-      LEVEL_1: new Set(),
-      LEVEL_2: new Set(),
-      LEVEL_3: new Set(),
+      [STATUS.LEVEL_0]: new Set(), // Use STATUS directly
+      [STATUS.LEVEL_1]: new Set(),
+      [STATUS.LEVEL_2]: new Set(),
+      [STATUS.LEVEL_3]: new Set(),
     },
+    quizTranslations: new Map(),
   });
 
   try {
-    const token = AuthUtils.getToken(); // Use AuthUtils
-    if (!token) {
-      console.error('Attempted to load words but user is not authenticated.');
-      AuthUtils.redirectToLogin(); // Redirect if no token
-      return; // Stop execution
+    // Check authentication and handle token expiration in one atomic operation
+    if (AuthUtils.handleTokenExpiration() === false) {
+      console.error('[eventHandlers] Attempted to load words but user is not authenticated.');
+      setFeedback('Please log in to access quizzes.', false);
+      return;
     }
 
-    // Fetch and create the App instance
+    // Get token after handling expiration to ensure it's still valid
+    const token = AuthUtils.getToken();
+    console.debug(`[eventHandlers] Token present: ${!!token}`);
+    
+    // Debug log word list name encoding
+    const encodedWordListName = encodeURIComponent(wordListName);
+    console.debug(`[eventHandlers] Encoded word list name: "${wordListName}" -> "${encodedWordListName}"`);
+
     app = await fetchWordSets(token, wordListName);
 
     if (!app) {
-      console.error('Failed to initialize app instance after fetching word sets.');
-      setFeedback('Error loading quiz data.', false);
-      displayQuestion({ word: 'Error' });
-      return; // Stop if app creation failed
+      console.error('[eventHandlers] Failed to initialize app instance after fetching word sets.');
+      setFeedback('Error loading quiz data. Please try another quiz.', false);
+      displayQuestion({ word: 'Error Loading Quiz' });
+      return;
     }
 
-    updateDirectionToggleTitle(app); // Update direction display
-    const questionData = app.getNextQuestion(); // Get the first question
-    displayQuestion(questionData); // Display the first question
-    updateWordSetsDisplay(app); // Display the initial word lists
-    document.getElementById('answer').focus(); // Focus input field
+    console.debug(`[eventHandlers] App created successfully: ${!!app}`);
+    
+    // Debug log app status
+    console.debug(`[eventHandlers] App wordStatusSets sizes:`, 
+      Object.entries(app.currentWordStatusSets).map(([k, v]) => `${k}: ${v.size}`).join(', '));
+
+    updateDirectionToggleTitle(app);
+    const questionData = app.getNextQuestion();
+    console.debug(`[eventHandlers] Next question data:`, questionData);
+    
+    displayQuestion(questionData);
+    updateWordSetsDisplay(app);
+    setFeedback('');
+    document.querySelector('#answer')?.focus();
   } catch (error) {
-    console.error(`Error loading words for "${wordListName}":`, error);
-    errorHandler.handleApiError(error); // Use central error handler
-    // Display error to user
+    console.error(`[eventHandlers] Error loading words for "${wordListName}":`, error);
+    errorHandler.handleApiError(error);
     setFeedback('Failed to load quiz. Please try again or select another quiz.', false);
     displayQuestion({ word: 'Load Error' });
+    document.querySelector('#answer')?.setAttribute('disabled', 'true');
+    document.querySelector('#submit')?.setAttribute('disabled', 'true');
+    document.querySelector('#direction-toggle')?.setAttribute('disabled', 'true');
   }
 }
 
 function handleEnterKey(event) {
-  if (event.key === 'Enter') {
-    event.preventDefault(); // Prevent form submission if applicable
-    const submitButton = document.getElementById('submit');
-    if (submitButton) {
-      submitButton.click(); // Trigger the submit button's click handler
-    } else {
-      console.error('Submit button not found');
+  if (event.key === 'Enter' && !event.shiftKey && !event.ctrlKey && !event.altKey) {
+    event.preventDefault();
+    const submitButton = document.querySelector('#submit');
+    if (submitButton && !submitButton.disabled) {
+      submitButton.click();
     }
   }
 }
 
 async function submitAnswer() {
-  const answerInput = document.getElementById('answer');
-  const submitButton = document.getElementById('submit'); // Get button reference
+  const answerInput = document.querySelector('#answer');
+  const submitButton = document.querySelector('#submit');
 
   if (!answerInput || !app) {
     console.error('Answer input not found or app not initialized');
     setFeedback('Cannot submit answer. App not ready.', false);
     return;
   }
-  if (app.currentTranslationId === null && !app.getNextQuestion()) {
-    setFeedback('Quiz finished or no questions available.', true); // Inform user
-    return;
+
+  if (app.quizState.currentTranslationId === null) {
+    const nextQ = app.getNextQuestion();
+    if (!nextQ) {
+      setFeedback('Quiz finished! Select another or review.', true);
+      displayQuestion(null);
+      displayUsageExamples({ source: 'N/A', target: 'N/A' });
+      return;
+    }
+    app.quizState.currentTranslationId = nextQ.translationId;
+    displayQuestion(nextQ);
   }
 
   const userAnswer = answerInput.value;
 
-  // Disable input and button during processing
   answerInput.disabled = true;
   if (submitButton) submitButton.disabled = true;
+  setFeedback('Checking...', true);
+
+  await new Promise((resolve) => setTimeout(resolve, 50));
 
   try {
-    // Call the app logic, which now returns statusChanged
-    const { feedback, usageExamples, questionData, statusChanged } = await app.submitAnswer(userAnswer);
+    const { feedback, usageExamples, questionData, statusChanged } =
+      await app.submitAnswer(userAnswer);
 
-    // Update UI immediately with feedback and examples
     setFeedback(feedback.message, feedback.isSuccess);
     displayUsageExamples(usageExamples);
+    displayQuestion(questionData);
+    updateWordSetsDisplay(app);
 
-    // Display next question (or end state)
-    displayQuestion(questionData); // Handles null questionData internally
-    updateWordSetsDisplay(app); // Update lists based on potential status changes
-
-    // Clear input for next answer
     answerInput.value = '';
 
-    // *** Conditionally save state ***
     if (statusChanged) {
+      // Handle token validation, clearing, and redirection in one atomic operation
+      if (AuthUtils.handleTokenExpiration() === false) {
+        console.warn('Cannot save state: token invalid/expired.');
+        return;
+      }
+
+      // Get token after validation to ensure it's still valid
       const token = AuthUtils.getToken();
-      if (token) {
-        // Call saveQuizState without awaiting if background saving is acceptable
-        // Await if you need to ensure saving completes before proceeding (might slow UI slightly)
-        await saveQuizState(app, token).catch((saveError) => {
-          console.error('Error saving quiz state:', saveError);
-          // Optionally inform the user about save failure
-          // Don't block user interaction due to save error
-          errorHandler.handleApiError(saveError); // Log centrally
-        });
+      saveQuizState(app, token).catch((saveError) => {
+        console.error('Background save quiz state failed:', saveError);
+        errorHandler.handleApiError(saveError);
+      });
+    }
+
+    if (questionData === null) {
+      const finished =
+        app.quizState.wordStatusSets[STATUS.LEVEL_0].size === 0 &&
+        app.quizState.wordStatusSets[STATUS.LEVEL_1].size === 0 &&
+        app.quizState.wordStatusSets[STATUS.LEVEL_2].size === 0;
+      if (finished) {
+        setFeedback('Quiz finished! All words mastered.', true);
       } else {
-        console.warn('Cannot save state: user token not found.');
-        // Handle missing token? Maybe redirect? For now, just warn.
-        AuthUtils.redirectToLogin();
+        setFeedback('No more questions in this direction. Try toggling.', true);
       }
     }
   } catch (error) {
-    // Catch errors specifically from app.submitAnswer or the save operation
     console.error('Error during answer submission or state saving:', error);
     setFeedback('An error occurred. Please try again.', false);
-    errorHandler.handleApiError(error); // Log error centrally
+    errorHandler.handleApiError(error);
   } finally {
-    // Re-enable input and button regardless of success/failure
     answerInput.disabled = false;
     if (submitButton) submitButton.disabled = false;
-    // Ensure focus returns to the input field for the next answer
-    if (document.activeElement !== answerInput) {
+    const wordElement = document.querySelector('#word');
+    if (
+      wordElement &&
+      wordElement.textContent &&
+      !wordElement.textContent.includes('No more questions')
+    ) {
       answerInput.focus();
     }
   }
@@ -173,42 +252,113 @@ function handleDirectionToggle() {
     return;
   }
   app.toggleDirection();
-  updateDirectionToggleTitle(app); // Update button text
-  const questionData = app.getNextQuestion(); // Get question for new direction
+  updateDirectionToggleTitle(app);
+  const questionData = app.getNextQuestion();
   displayQuestion(questionData);
-  updateWordSetsDisplay(app); // Update lists (might not change visually, but good practice)
-  document.getElementById('answer').focus(); // Keep focus on input
+  updateWordSetsDisplay(app);
+  setFeedback('');
+  
+  // Use proper empty usage examples
+  displayUsageExamples({ source: 'N/A', target: 'N/A' });
+  
+  document.querySelector('#answer')?.focus();
 }
 
 function handleQuizSelect(event) {
   const selectedQuiz = event.target.value;
+  const answerInput = document.querySelector('#answer');
+  const submitButton = document.querySelector('#submit');
+  const directionButton = document.querySelector('#direction-toggle');
+
   if (selectedQuiz) {
-    // Call the main function to load data for the selected quiz
+    if (answerInput) answerInput.disabled = false;
+    if (submitButton) submitButton.disabled = false;
+    if (directionButton) directionButton.disabled = false;
     loadWordsFromAPI(selectedQuiz);
   } else {
-    // Handle case where "Select a quiz" is chosen
-    app = null; // Reset app instance
-    displayQuestion({ word: '' }); // Clear question
+    app = null;
+    displayQuestion({ word: '' });
     setFeedback('');
-    displayUsageExamples({ source: '', target: '' });
+    displayUsageExamples({ source: 'N/A', target: 'N/A' });
     updateWordSetsDisplay({
       wordStatusSets: {
-        LEVEL_0: new Set(),
-        LEVEL_1: new Set(),
-        LEVEL_2: new Set(),
-        LEVEL_3: new Set(),
+        [STATUS.LEVEL_0]: new Set(),
+        [STATUS.LEVEL_1]: new Set(),
+        [STATUS.LEVEL_2]: new Set(),
+        [STATUS.LEVEL_3]: new Set(),
       },
-    }); // Clear lists visually
+      quizTranslations: new Map(),
+    });
+    if (answerInput) answerInput.disabled = true;
+    if (submitButton) submitButton.disabled = true;
+    if (directionButton) directionButton.disabled = true;
+    if (directionButton)
+      directionButton.innerHTML = `<i class="fas fa-exchange-alt"></i> Direction`;
+  }
+}
+
+// --- Delete Account Handler ---
+async function handleDeleteAccount() {
+  const confirmation = window.confirm(
+    'Are you absolutely sure you want to delete your account?\n\nTHIS ACTION CANNOT BE UNDONE.'
+  );
+
+  if (!confirmation) {
+    return; // User cancelled
+  }
+
+  // Check authentication with our encapsulated method
+  if (AuthUtils.handleTokenExpiration() === false) {
+    errorHandler.showError('You are not logged in.');
+    return;
+  }
+
+  // Get token after validation
+  const token = AuthUtils.getToken();
+
+  const deleteButton = document.querySelector('#delete-account-btn');
+  if (deleteButton) deleteButton.disabled = true;
+  setFeedback('Deleting account...', true);
+
+  try {
+    const response = await fetch(`${serverAddress}/api/auth/delete-account`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.ok) {
+      // Success!
+
+      alert('Account deleted successfully.');
+      // Use AuthUtils to clear auth data and handle redirection
+      AuthUtils.clearAuth();
+      // After clearing auth, redirect to login page (don't use handleTokenExpiration
+      // since we've already deliberately cleared the auth data)
+      AuthUtils.redirectToLogin();
+    } else {
+      const errorData = await response
+        .json()
+        .catch(() => ({ message: 'Failed to delete account.' }));
+      errorHandler.showError(errorData.message || `Error: ${response.status}`);
+      if (deleteButton) deleteButton.disabled = false;
+      setFeedback('', false);
+    }
+  } catch (error) {
+    console.error('Error deleting account:', error);
+    errorHandler.handleApiError(error);
+    if (deleteButton) deleteButton.disabled = false;
+    setFeedback('', false);
   }
 }
 
 export async function populateWordLists() {
-  const quizSelect = document.getElementById('quiz-select');
+  const quizSelect = document.querySelector('#quiz-select');
   if (!quizSelect) {
     console.error('Quiz select element not found.');
     return;
   }
-  // Add default option while loading
   quizSelect.innerHTML = '<option value="">Loading quizzes...</option>';
   quizSelect.disabled = true;
 
@@ -217,70 +367,83 @@ export async function populateWordLists() {
     if (!token) {
       console.warn('Cannot populate word lists: user is not authenticated.');
       quizSelect.innerHTML = '<option value="">Please login</option>';
-      // Don't redirect here, let the main auth check handle it
       return;
     }
 
     const wordLists = await fetchWordLists(token);
 
-    // Clear loading/error message and add default option
     quizSelect.innerHTML = '<option value="">Select a quiz</option>';
 
     if (wordLists && wordLists.length > 0) {
-      wordLists.forEach((list) => {
+      for (const list of wordLists) {
         const option = document.createElement('option');
         option.value = list.name;
         option.textContent = list.name;
-        quizSelect.appendChild(option);
-      });
-      quizSelect.disabled = false; // Enable select now that options are loaded
+        quizSelect.append(option);
+      }
+      quizSelect.disabled = false;
     } else {
-      quizSelect.innerHTML = '<option value="">No quizzes found</option>';
+      quizSelect.innerHTML = '<option value="">No quizzes available</option>';
+      quizSelect.disabled = true;
     }
   } catch (error) {
     console.error('Error populating word lists:', error);
-    errorHandler.handleApiError(error); // Log centrally
-    quizSelect.innerHTML = '<option value="">Error loading</option>'; // Show error in select
+    errorHandler.handleApiError(error);
+    quizSelect.innerHTML = '<option value="">Error loading quizzes</option>';
+    quizSelect.disabled = true;
   }
 }
 
 export function initEventHandlers() {
-  errorHandler.init(); // Initialize global error display
-
-  const answerInput = document.getElementById('answer');
+  const answerInput = document.querySelector('#answer');
   if (answerInput) {
     answerInput.addEventListener('keydown', handleEnterKey);
+    answerInput.disabled = true;
   } else {
     console.error('Answer input element not found during init.');
   }
 
-  const submitButton = document.getElementById('submit');
+  const submitButton = document.querySelector('#submit');
   if (submitButton) {
     submitButton.addEventListener('click', submitAnswer);
+    submitButton.disabled = true;
   } else {
     console.error('Submit button element not found during init.');
   }
 
-  const directionToggleBtn = document.getElementById('direction-toggle');
+  const directionToggleBtn = document.querySelector('#direction-toggle');
   if (directionToggleBtn) {
     directionToggleBtn.addEventListener('click', handleDirectionToggle);
+    directionToggleBtn.disabled = true;
   } else {
     console.error('Direction toggle button element not found during init.');
   }
 
-  const quizSelect = document.getElementById('quiz-select');
+  const quizSelect = document.querySelector('#quiz-select');
   if (quizSelect) {
     quizSelect.addEventListener('change', handleQuizSelect);
   } else {
     console.error('Quiz select element not found during init.');
   }
 
-  // Populate word lists when the page loads (if authenticated)
-  if (AuthUtils.isValidToken(AuthUtils.getToken())) {
+  const deleteAccountBtn = document.querySelector('#delete-account-btn');
+  if (deleteAccountBtn) {
+    deleteAccountBtn.addEventListener('click', handleDeleteAccount);
+  } else {
+    console.warn('Delete account button not found during init (might be ok if on login page).');
+  }
+
+  // Use handleTokenExpiration to check validity, clear if invalid,
+  // and redirect if needed - all in one atomic operation
+  const isAuthenticated = AuthUtils.handleTokenExpiration();
+
+  if (isAuthenticated) {
     populateWordLists();
   } else {
-    // eslint-disable-next-line no-shadow
-    const quizSelect = document.getElementById('quiz-select');
-    if (quizSelect) quizSelect.innerHTML = '<option value="">Please login</option>';
+    const selectElement = document.querySelector('#quiz-select');
+    if (selectElement) {
+      selectElement.innerHTML = '<option value="">Please login to see quizzes</option>';
+      selectElement.disabled = true;
+    }
   }
 }

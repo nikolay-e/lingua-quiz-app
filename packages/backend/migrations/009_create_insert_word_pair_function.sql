@@ -1,5 +1,4 @@
-CREATE
-OR REPLACE FUNCTION insert_word_pair_and_add_to_list (
+CREATE OR REPLACE FUNCTION insert_word_pair_and_add_to_list (
   p_translation_id INTEGER,
   p_source_word_id INTEGER,
   p_target_word_id INTEGER,
