@@ -1,3 +1,13 @@
+##
+## LinguaQuiz – Copyright © 2025 Nikolay Eremeev
+##
+## Dual-licensed:
+##  – Non-Commercial Source-Available v2  →  see LICENSE-NONCOMMERCIAL.md
+##  – Commercial License v2              →  see LICENSE-COMMERCIAL.md
+##
+## Contact: lingua-quiz@nikolay-eremeev.com
+## Repository: https://github.com/nikolay-e/lingua-quiz
+##
 name: CI/CD Pipeline
 
 on:
@@ -16,125 +26,13 @@ permissions:
   actions: write # Needed for upload-artifact in E2E job
 
 jobs:
-  common-tests:
-    uses: ./.github/workflows/common-tests.yml
-    # Permissions for common-tests are defined within that file
-
-  # --- Job to get quiz list for E2E matrix ---
-  generate-e2e-matrix:
-    name: Generate E2E Quiz List Matrix
-    runs-on: ubuntu-latest
-    outputs:
-      quiz_list: ${{ steps.get_list.outputs.quiz_list_json }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      # REPLACED Node script with shell commands + jq
-      - name: Install jq
-        run: sudo apt-get update && sudo apt-get install -y jq
-
-      - name: Generate Quiz List from Migration CSVs (using shell)
-        id: get_list
-        run: |
-          echo "Searching for CSV files in packages/backend/migrations/"
-          # Navigate to migration directory relative to repo root
-          MIGRATION_DIR="packages/backend/migrations"
-          if [ ! -d "$MIGRATION_DIR" ]; then
-             echo "::error::Migration directory not found: $MIGRATION_DIR"
-             echo "quiz_list_json=[]" >> "$GITHUB_OUTPUT"
-             exit 1
-          fi
-          cd "$MIGRATION_DIR"
-
-          # List CSVs, remove extension, remove suffix, handle no files found
-          # sed -E 's/\.csv$//; s/ --.*//' removes .csv and everything from ' --' onwards
-          RAW_LIST=$(ls *.csv 2>/dev/null | sed -E 's/\.csv$//; s/ --.*//' || echo "")
-
-          if [ -z "$RAW_LIST" ]; then
-            echo "No CSV files found in $MIGRATION_DIR."
-            JSON_LIST="[]"
-          else
-            echo "Found potential quiz names:"
-            echo "$RAW_LIST"
-            # Create a valid JSON array string using jq
-            # Reads each line (-R), converts to JSON string, then collects all strings into an array (-s)
-            JSON_LIST=$(echo "$RAW_LIST" | jq -R . | jq -sc .)
-          fi
-          echo "Generated JSON List: ${JSON_LIST}"
-          echo "quiz_list_json=${JSON_LIST}" >> "$GITHUB_OUTPUT"
-          # IMPORTANT: Return to the original directory
-          cd - > /dev/null # Go back silently
-
-      - name: Log generated matrix
-        run: |
-          echo "Quiz list JSON matrix: ${{ steps.get_list.outputs.quiz_list_json }}"
-
-  # --- E2E Tests (runs per quiz in matrix) ---
-  e2e-docker-compose:
-    name: E2E Test (${{ matrix.quiz_name }})
-    needs: generate-e2e-matrix
-    runs-on: ubuntu-latest
-    # Only run if the list is not empty (handles empty list or generation error)
-    if: ${{ needs.generate-e2e-matrix.outputs.quiz_list != '[]' && needs.generate-e2e-matrix.outputs.quiz_list != '' }}
-    strategy:
-      fail-fast: false # Don't stop other tests if one fails
-      matrix:
-        # Use the JSON list generated in the previous job
-        quiz_name: ${{ fromJson(needs.generate-e2e-matrix.outputs.quiz_list || '[]') }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Build and Run Docker Compose E2E for Quiz "${{ matrix.quiz_name }}"
-        id: run_compose_e2e
-        env:
-          E2E_QUIZ_NAME: ${{ matrix.quiz_name }} # Pass quiz name to test runner env
-          # Use secrets with fallbacks from .env for local-like testing
-          # Ensure .env exists or provide defaults in docker-compose.yml if needed
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB || 'linguaquiz_local_db' }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER || 'linguaquiz_local_user' }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD || 'your_strong_local_password' }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET || 'your_very_secret_local_jwt_key_that_is_long' }}
-          NODE_ENV: development # Or 'test' if your E2E tests require it
-        run: |
-          echo "Starting Docker Compose E2E for Quiz: ${{ matrix.quiz_name }}"
-          # Ensure .env file exists or warn if not (Compose will use env vars directly if no file)
-          if [ ! -f .env ]; then
-            echo "Warning: .env file not found, using environment variables or compose defaults."
-          fi
-          # Run docker compose, passing the quiz name environment variable
-          docker compose --env-file .env up \
-            --build \
-            --abort-on-container-exit \
-            --exit-code-from e2e-tests \
-            --force-recreate \
-            e2e-tests # Service name defined in docker-compose.yml
-          echo "Docker Compose for ${{ matrix.quiz_name }} exited with code $?"
-
-      - name: Upload Playwright Artifacts (${{ matrix.quiz_name }})
-        if: always() # Upload artifacts even if tests fail
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report-compose-${{ matrix.quiz_name }}
-          path: |
-            packages/e2e-tests/playwright-report/
-            packages/e2e-tests/test-results/
-          retention-days: 7
-
-      - name: Docker Compose Logs on Failure (${{ matrix.quiz_name }})
-        if: failure()
-        run: docker compose --env-file .env logs --tail="all"
-
-      - name: Cleanup Docker Compose environment (${{ matrix.quiz_name }})
-        if: always()
-        run: docker compose --env-file .env down -v --remove-orphans || true # Ignore errors if already down
-
-      - name: Fail job if E2E tests failed for Quiz "${{ matrix.quiz_name }}"
-        if: steps.run_compose_e2e.outcome == 'failure'
-        run: |
-          echo "::error::Docker Compose E2E tests failed for quiz: ${{ matrix.quiz_name }}"
-          exit 1
+  # Run all tests (unit, integration, component, e2e)
+  run-tests:
+    name: Run Tests
+    uses: ./.github/workflows/testing.yml
+    with:
+      test-type: all
+      node-version: "22"
 
   # --- K8s Deployment Section ---
   prepare-secrets:
@@ -231,20 +129,20 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
   frontend:
-    name: Build and Deploy Frontend (K8s) # Updated job name
-    needs: [common-tests, prepare-secrets, create-tls-secrets] # Depends on TLS secrets
-    uses: ./.github/workflows/frontend-workflow.yml # Use the reusable workflow
-    secrets: # Pass required secrets
+    name: Build and Deploy Frontend (K8s)
+    needs: [run-tests, prepare-secrets, create-tls-secrets] # Updated to depend on run-tests instead of common-tests
+    uses: ./.github/workflows/frontend-workflow.yml
+    secrets:
       DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
       DOCKER_REGISTRY_TOKEN: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
-      KUBE_CONFIG: ${{ needs.prepare-secrets.outputs.kube_config }} # Pass kubeconfig from prepare step
+      KUBE_CONFIG: ${{ needs.prepare-secrets.outputs.kube_config }}
 
   backend:
-    name: Build, Deploy and Test Backend (K8s) # Updated job name
-    needs: [common-tests, prepare-secrets, create-tls-secrets] # Depends on TLS secrets
+    name: Build, Deploy and Test Backend (K8s)
+    needs: [run-tests, prepare-secrets, create-tls-secrets] # Updated to depend on run-tests instead of common-tests
     uses: ./.github/workflows/backend-workflow.yml
     permissions:
-      contents: read # Ensure correct permissions for reusable workflow if needed
+      contents: read
     secrets:
       DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
       DOCKER_REGISTRY_TOKEN: ${{ secrets.DOCKER_REGISTRY_TOKEN }}

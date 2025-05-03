@@ -1,26 +1,32 @@
-// packages/frontend/tests/e2e-jest/quiz-real-api.test.js
-
-import nodeFetch from 'node-fetch';
-
-import serverAddress from '../../src/js/config.js';
-import { AuthUtils } from '../../src/js/utils/authUtils.js';
-import { errorHandler } from '../../src/js/utils/errorHandler.js';
-
-// Flag to determine if we're running with Docker
-const USING_REAL_API = process.env.USE_REAL_API === 'true';
-
-/**
- * End-to-end tests for quiz functionality using Jest with real API
+/*
+ * LinguaQuiz – Copyright © 2025 Nikolay Eremeev
  *
- * These tests simulate browser interactions using JSDOM
- * but make real API calls to the backend running in Docker
+ * Dual-licensed:
+ *  – Non-Commercial Source-Available v2  →  see LICENSE-NONCOMMERCIAL.md
+ *  – Commercial License v2              →  see LICENSE-COMMERCIAL.md
  *
- * Run with:
- * npm run test:frontend:e2e-jest
+ * Contact: lingua-quiz@nikolay-eremeev.com
+ * Repository: https://github.com/nikolay-e/lingua-quiz
  */
 
-// Only run these tests when explicitly enabled
-const runTest = USING_REAL_API ? describe : describe.skip;
+// packages/frontend/tests/component/quiz.test.js
+
+import {
+  serverAddress,
+  errorHandler,
+  createTestUser,
+  deleteTestUser,
+} from '../__mocks__/componentTestSetup.js';
+
+/**
+ * Component tests for quiz functionality using real API
+ *
+ * These tests interact with a real backend running in Docker
+ * to verify quiz functionality works correctly
+ */
+
+// Always run these tests (assuming Docker is already running)
+const runTest = describe;
 
 runTest('Quiz Flow with Real API', () => {
   // Test data
@@ -33,45 +39,15 @@ runTest('Quiz Flow with Real API', () => {
 
   // Setup before all tests
   beforeAll(async () => {
-    // Create a test user and get auth token
-    try {
-      // Register user
-      await fetch(`${serverAddress}/api/auth/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(testUser),
-      });
-
-      // Login to get token
-      const loginResponse = await fetch(`${serverAddress}/api/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(testUser),
-      });
-
-      const loginData = await loginResponse.json();
-      authToken = loginData.token;
-
-      // Store in localStorage for auth
-      localStorage.setItem('token', authToken);
-      localStorage.setItem('email', testUser.email);
-    } catch (error) {
-      console.error('Failed to create test user:', error);
-    }
+    // Create test user and get auth token
+    authToken = await createTestUser(testUser);
   }, 15_000);
 
   // Cleanup after all tests
   afterAll(async () => {
     // Delete test user if created
     if (authToken) {
-      try {
-        await fetch(`${serverAddress}/api/auth/delete-account`, {
-          method: 'DELETE',
-          headers: { Authorization: `Bearer ${authToken}` },
-        });
-      } catch (error) {
-        console.error('Failed to delete test user:', error);
-      }
+      await deleteTestUser(authToken);
     }
 
     // Clear localStorage
@@ -101,22 +77,6 @@ runTest('Quiz Flow with Real API', () => {
         <div id="word-sets-container"></div>
       </div>
     `;
-
-    // Use node-fetch directly for testing
-    global.fetch = jest.fn().mockImplementation(async (url, options = {}) => {
-      // Log fetch requests
-      console.log('Fetch request:', url, options?.method || 'GET');
-
-      try {
-        // Use node-fetch implementation
-        const response = await nodeFetch(url, options);
-        console.log('Fetch response status:', response.status);
-        return response;
-      } catch (error) {
-        console.error('Fetch error:', error);
-        throw error;
-      }
-    });
 
     // Spy on error handler methods
     jest.spyOn(errorHandler, 'showError');

@@ -1,5 +1,5 @@
+// eslint-disable-next-line strict
 module.exports = {
-  testTimeout: 30_000,
   transform: {
     '^.+\\.js$': 'babel-jest',
   },

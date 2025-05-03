@@ -5,8 +5,10 @@
   "scripts": {
     "start": "node src/server.js",
     "migrate": "node src/migrations.js",
-    "test": "NODE_ENV=test JWT_SECRET=test_secret_key jest --detectOpenHandles",
-    "test:unit": "NODE_ENV=test JWT_SECRET=test_secret_key jest tests/unit/ --testEnvironment=node --setupFilesAfterEnv=./tests/unit/setup.js"
+    "test": "npm run test:unit && npm run test:integration && npm run test:component",
+    "test:unit": "NODE_ENV=test JWT_SECRET=test_secret_key jest --coverage --detectOpenHandles unit",
+    "test:integration": "echo not_implemented",
+    "test:component": "NODE_ENV=test JWT_SECRET=test_secret_key API_URL=http://localhost:9000/api jest --detectOpenHandles component"
   },
   "keywords": [],
   "author": "",

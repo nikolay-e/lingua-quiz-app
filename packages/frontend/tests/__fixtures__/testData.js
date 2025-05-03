@@ -1,3 +1,14 @@
+/*
+ * LinguaQuiz – Copyright © 2025 Nikolay Eremeev
+ *
+ * Dual-licensed:
+ *  – Non-Commercial Source-Available v2  →  see LICENSE-NONCOMMERCIAL.md
+ *  – Commercial License v2              →  see LICENSE-COMMERCIAL.md
+ *
+ * Contact: lingua-quiz@nikolay-eremeev.com
+ * Repository: https://github.com/nikolay-e/lingua-quiz
+ */
+
 /**
  * Centralized test data fixtures for use across all tests.
  * Using shared fixtures helps maintain consistency and reduces duplication.
@@ -59,6 +70,10 @@ export const testWordPairs = [
 
 // Helper to get fresh copy of test data to avoid contamination across tests
 export function getTestWordPairs() {
+  // Polyfill for structuredClone if not available (for testing environments)
+  if (typeof structuredClone !== 'function') {
+    return JSON.parse(JSON.stringify(testWordPairs));
+  }
   return structuredClone(testWordPairs);
 }
 

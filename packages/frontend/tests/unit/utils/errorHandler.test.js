@@ -1,3 +1,14 @@
+/*
+ * LinguaQuiz – Copyright © 2025 Nikolay Eremeev
+ *
+ * Dual-licensed:
+ *  – Non-Commercial Source-Available v2  →  see LICENSE-NONCOMMERCIAL.md
+ *  – Commercial License v2              →  see LICENSE-COMMERCIAL.md
+ *
+ * Contact: lingua-quiz@nikolay-eremeev.com
+ * Repository: https://github.com/nikolay-e/lingua-quiz
+ */
+
 // Import the actual module to test
 import { errorHandler } from '../../../src/js/utils/errorHandler.js';
 import { suppressConsoleOutput, setupLocationMock } from '../../__mocks__/unitTestSetup.js';

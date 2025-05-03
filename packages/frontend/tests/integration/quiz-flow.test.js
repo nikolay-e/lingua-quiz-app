@@ -1,3 +1,14 @@
+/*
+ * LinguaQuiz – Copyright © 2025 Nikolay Eremeev
+ *
+ * Dual-licensed:
+ *  – Non-Commercial Source-Available v2  →  see LICENSE-NONCOMMERCIAL.md
+ *  – Commercial License v2              →  see LICENSE-COMMERCIAL.md
+ *
+ * Contact: lingua-quiz@nikolay-eremeev.com
+ * Repository: https://github.com/nikolay-e/lingua-quiz
+ */
+
 // packages/frontend/tests/integration/quiz-flow.test.js
 import { App } from '../../src/js/app.js';
 import {
@@ -6,7 +17,8 @@ import {
   CORRECT_ANSWERS_TO_MASTER,
   MAX_MISTAKES_BEFORE_DEGRADATION,
 } from '../../src/js/constants.js';
-import { suppressConsoleOutput, getTestWordPairs } from '../__mocks__/integrationTestSetup.js';
+import { getTestWordPairs } from '../__fixtures__/testData.js';
+import { suppressConsoleOutput } from '../__mocks__/browserMocks.js';
 
 describe('Quiz Flow Integration', () => {
   let appInstance;

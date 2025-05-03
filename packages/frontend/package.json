@@ -7,10 +7,10 @@
   },
   "scripts": {
     "start": "live-server --port=8080 src",
-    "test": "jest --runInBand --coverage",
-    "test:unit": "jest --runInBand --coverage --testPathIgnorePatterns=integration",
-    "test:integration": "jest --runInBand --coverage --testPathIgnorePatterns=unit",
-    "test:e2e-jest": "node tests/e2e-jest/run-tests.js",
+    "test": "npm run test:unit && npm run test:integration && npm run test:component",
+    "test:unit": "NODE_ENV=test jest --coverage --detectOpenHandles unit",
+    "test:integration": "NODE_ENV=test jest --coverage --detectOpenHandles integration",
+    "test:component": "NODE_ENV=test jest --detectOpenHandles component",
     "build": "mkdir -p dist && cp -r src/* dist/ && echo \"Build completed: $(date)\" > dist/build-info.txt"
   },
   "keywords": [],

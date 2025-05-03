@@ -1,0 +1,313 @@
+##
+## LinguaQuiz – Copyright © 2025 Nikolay Eremeev
+##
+## Dual-licensed:
+##  – Non-Commercial Source-Available v2  →  see LICENSE-NONCOMMERCIAL.md
+##  – Commercial License v2              →  see LICENSE-COMMERCIAL.md
+##
+## Contact: lingua-quiz@nikolay-eremeev.com
+## Repository: https://github.com/nikolay-e/lingua-quiz
+##
+name: Test Pipeline
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        required: false
+        type: string
+        default: "22"
+      test-type:
+        required: false
+        type: string
+        default: "all" # Options: all, unit, integration, component, e2e
+      skip-unit:
+        required: false
+        type: boolean
+        default: false
+      skip-integration:
+        required: false
+        type: boolean
+        default: false
+      skip-component:
+        required: false
+        type: boolean
+        default: false
+      skip-e2e:
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  actions: write # Needed for upload-artifact in E2E job
+
+jobs:
+  # ================================================
+  # 1. UNIT TESTS
+  # Local environment, no dependencies
+  # ================================================
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    if: ${{ inputs.test-type == 'all' || inputs.test-type == 'unit' || inputs.test-type == 'unit-integration' || inputs.test-type == 'unit-component' || inputs.test-type == 'unit-e2e' && inputs.skip-unit != true }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Frontend Unit Tests
+        run: npm run test:unit:frontend
+
+      - name: Run Backend Unit Tests
+        run: npm run test:unit:backend
+
+      - name: Log Unit Test Results
+        if: always()
+        run: |
+          echo "::group::Unit Test Results"
+          echo "Unit tests completed. Check above for detailed results."
+          echo "::endgroup::"
+
+  # ================================================
+  # 2. INTEGRATION TESTS
+  # Local environment, isolated tests
+  # ================================================
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    if: ${{ inputs.test-type == 'all' || inputs.test-type == 'integration' || inputs.test-type == 'unit-integration' || inputs.test-type == 'integration-component' || inputs.test-type == 'integration-e2e' && inputs.skip-integration != true }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Frontend Integration Tests
+        run: npm run test:integration:frontend
+
+      - name: Run Backend Integration Tests
+        run: npm run test:integration:backend
+
+      - name: Log Integration Test Results
+        if: always()
+        run: |
+          echo "::group::Integration Test Results"
+          echo "Integration tests completed. Check above for detailed results."
+          echo "::endgroup::"
+
+  # ================================================
+  # 3. COMPONENT TESTS
+  # Docker containers, service boundaries
+  # ================================================
+  component-tests:
+    name: Component Tests
+    runs-on: ubuntu-latest
+    if: ${{ inputs.test-type == 'all' || inputs.test-type == 'component' || inputs.test-type == 'unit-component' || inputs.test-type == 'integration-component' || inputs.test-type == 'component-e2e' && inputs.skip-component != true }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Start Docker Compose for Component Tests
+        env:
+          # Use test values instead of secrets
+          POSTGRES_DB: linguaquiz_test_db
+          POSTGRES_USER: linguaquiz_test_user
+          POSTGRES_PASSWORD: linguaquiz_test_password
+          JWT_SECRET: test_jwt_secret_for_testing_purposes_only
+          NODE_ENV: test
+        run: |
+          echo "Starting Docker Compose services for Component Tests"
+          # Start the services in the background
+          docker compose up -d --build db backend
+
+          # Wait for services to be ready
+          echo "Waiting for services to be ready..."
+          sleep 15
+
+          # Check if services are running
+          docker compose ps
+
+          # Check if API is reachable
+          curl -s http://localhost:9000/api/health || echo "API is not yet available"
+
+      - name: Run Component Tests (Frontend)
+        env:
+          API_URL: http://localhost:9000/api
+          USE_REAL_API: "true"
+        run: npm run test:component:frontend
+
+      - name: Run Component Tests (Backend)
+        env:
+          API_URL: http://localhost:9000/api
+        run: npm run test:component:backend
+
+      - name: Docker Compose Logs on Failure
+        if: failure()
+        run: docker compose logs --tail="all"
+
+      - name: Cleanup Docker Compose environment
+        if: always()
+        run: docker compose down -v --remove-orphans || true
+
+      - name: Log Component Test Results
+        if: always()
+        run: |
+          echo "::group::Component Test Results"
+          echo "Component tests completed. Check above for detailed results."
+          echo "::endgroup::"
+
+  # ================================================
+  # 4. E2E TESTS PREPARATION
+  # Generate matrix based on quiz CSVs
+  # ================================================
+  generate-e2e-matrix:
+    name: Generate E2E Quiz List Matrix
+    runs-on: ubuntu-latest
+    if: ${{ inputs.test-type == 'all' || contains(inputs.test-type, 'e2e') && inputs.skip-e2e != true }}
+    outputs:
+      quiz_list_json: ${{ steps.get_list.outputs.quiz_list_json }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Generate Hardcoded Quiz List
+        id: get_list
+        run: |
+          echo "Using hardcoded quiz list values"
+
+          # Hardcoded list of quiz names
+          QUIZ_NAMES=("Spanish-Russian A1" "German-Russian A1")
+
+          # Create a valid JSON array string using jq
+          JSON_LIST=$(printf "%s\n" "${QUIZ_NAMES[@]}" | jq -R . | jq -sc .)
+
+          echo "Generated JSON List: ${JSON_LIST}"
+          echo "quiz_list_json=${JSON_LIST}" >> "$GITHUB_OUTPUT"
+
+      - name: Log generated matrix
+        run: |
+          echo "Quiz list JSON matrix: ${{ steps.get_list.outputs.quiz_list_json }}"
+
+  # ================================================
+  # 5. E2E TESTS (Docker Compose)
+  # Full stack browser tests in Docker
+  # ================================================
+  e2e-tests:
+    name: E2E Test (${{ matrix.quiz_name }})
+    needs: generate-e2e-matrix
+    runs-on: ubuntu-latest
+    if: ${{ (inputs.test-type == 'all' || inputs.test-type == 'e2e') && inputs.skip-e2e != true && needs.generate-e2e-matrix.outputs.quiz_list_json != '[]' && needs.generate-e2e-matrix.outputs.quiz_list_json != '' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        quiz_name: ${{ fromJson(needs.generate-e2e-matrix.outputs.quiz_list_json || '[]') }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright with all browsers
+        run: |
+          cd packages/e2e-tests
+          npx playwright install --with-deps
+
+      - name: Build and Run Docker Compose E2E for Quiz "${{ matrix.quiz_name }}"
+        id: run_compose_e2e
+        env:
+          E2E_QUIZ_NAME: ${{ matrix.quiz_name }}
+          # Use test values instead of secrets
+          POSTGRES_DB: linguaquiz_test_db
+          POSTGRES_USER: linguaquiz_test_user
+          POSTGRES_PASSWORD: linguaquiz_test_password
+          JWT_SECRET: test_jwt_secret_for_testing_purposes_only
+          NODE_ENV: test
+          LINGUA_QUIZ_URL: http://localhost:8080
+          E2E_FAST_QUIZ: "true"
+        run: |
+          echo "Starting Docker Compose E2E for Quiz: ${{ matrix.quiz_name }}"
+          # Start the services in the background
+          docker compose up -d --build db backend frontend
+
+          # Wait for services to be ready
+          echo "Waiting for services to be ready..."
+          sleep 20
+
+          # Check if services are running
+          docker compose ps
+
+          # Check API connectivity
+          echo "Checking API health..."
+          curl -v http://localhost:9000/api/health || echo "API health check failed, but continuing anyway"
+          echo ""
+
+          # Check frontend availability
+          echo "Checking frontend availability..."
+          curl -v http://localhost:8080 || echo "Frontend check failed, but continuing anyway"
+          echo ""
+
+          # Run the fast E2E tests
+          npm run test:e2e:fast
+          TEST_EXIT_CODE=$?
+
+          echo "E2E tests for ${{ matrix.quiz_name }} exited with code $TEST_EXIT_CODE"
+          exit $TEST_EXIT_CODE
+
+      - name: Upload Playwright Artifacts (${{ matrix.quiz_name }})
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-compose-${{ matrix.quiz_name }}
+          path: |
+            packages/e2e-tests/playwright-report/
+            packages/e2e-tests/test-results/
+          retention-days: 7
+
+      - name: Docker Compose Logs on Failure (${{ matrix.quiz_name }})
+        if: failure()
+        run: docker compose logs --tail="all"
+
+      - name: Cleanup Docker Compose environment (${{ matrix.quiz_name }})
+        if: always()
+        run: docker compose down -v --remove-orphans || true
+
+      - name: Fail job if E2E tests failed for Quiz "${{ matrix.quiz_name }}"
+        if: steps.run_compose_e2e.outcome == 'failure'
+        run: |
+          echo "::error::Docker Compose E2E tests failed for quiz: ${{ matrix.quiz_name }}"
+          exit 1

@@ -1,5 +1,6 @@
 # scripts/requirements.txt
 tiktoken>=0.4.0
+licenseheaders
 # openai library is implicitly needed by tiktoken for model lookups,
 # but installing tiktoken usually handles it. Add explicitly if needed.
 # openai>=1.0.0

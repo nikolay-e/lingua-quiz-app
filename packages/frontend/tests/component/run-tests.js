@@ -1,11 +1,22 @@
+/*
+ * LinguaQuiz – Copyright © 2025 Nikolay Eremeev
+ *
+ * Dual-licensed:
+ *  – Non-Commercial Source-Available v2  →  see LICENSE-NONCOMMERCIAL.md
+ *  – Commercial License v2              →  see LICENSE-COMMERCIAL.md
+ *
+ * Contact: lingua-quiz@nikolay-eremeev.com
+ * Repository: https://github.com/nikolay-e/lingua-quiz
+ */
 #!/usr/bin/env node
+
 /**
  * Script to run Jest-based E2E tests with real backend API via Docker
  *
  * This script:
  * 1. Checks if Docker containers are running
  * 2. Starts them if needed
- * 3. Runs the e2e-jest tests with real API enabled
+ * 3. Runs the component tests with real API enabled
  */
 
 // Use ES Modules syntax since the package is set to type: "module"
@@ -111,15 +122,15 @@ async function runTests() {
   }
 
   // Run the tests with real API enabled
-  console.log('Running e2e-jest tests with real API...');
+  console.log('Running component tests with real API...');
   const testEnv = {
     ...process.env,
     USE_REAL_API: 'true',
     API_URL: 'http://localhost:9000/api',
   };
 
-  // Run Jest with correct path to e2e-jest tests
-  const testResult = spawnSync('npx', ['jest', '--testMatch', '**/tests/e2e-jest/**/*.test.js'], {
+  // Run Jest with correct path to component tests
+  const testResult = spawnSync('npx', ['jest', '--testMatch', '**/tests/component/**/*.test.js'], {
     cwd: frontendDir,
     stdio: 'inherit',
     env: testEnv,

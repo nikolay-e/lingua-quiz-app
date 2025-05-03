@@ -1,6 +1,7 @@
 /**
  * Jest configuration for frontend package
  */
+// eslint-disable-next-line strict
 module.exports = {
   testEnvironment: 'jsdom',
   transform: {
@@ -22,10 +23,37 @@ module.exports = {
   testMatch: [
     '<rootDir>/tests/unit/**/*.test.js',
     '<rootDir>/tests/integration/**/*.test.js',
-    '<rootDir>/tests/e2e-jest/**/*.test.js',
+    '<rootDir>/tests/component/**/*.test.js',
   ],
   resetMocks: false, // This is important for localStorage mock to work
   clearMocks: true,
   // Automatically restore mock state between every test
   restoreMocks: true,
+
+  // Configure specific test types
+  projects: [
+    {
+      displayName: 'unit',
+      testEnvironment: 'jsdom',
+      testMatch: ['<rootDir>/tests/unit/**/*.test.js'],
+      setupFilesAfterEnv: ['<rootDir>/tests/__mocks__/jestSetup.js'],
+    },
+    {
+      displayName: 'integration',
+      testEnvironment: 'jsdom',
+      testMatch: ['<rootDir>/tests/integration/**/*.test.js'],
+      setupFilesAfterEnv: ['<rootDir>/tests/__mocks__/jestSetup.js'],
+    },
+    {
+      displayName: 'component',
+      testEnvironment: 'jsdom',
+      testMatch: ['<rootDir>/tests/component/**/*.test.js'],
+      setupFilesAfterEnv: [
+        '<rootDir>/tests/__mocks__/jestSetup.js',
+        '<rootDir>/tests/__mocks__/componentTestSetup.js',
+      ],
+      globalSetup: '<rootDir>/tests/__mocks__/globalSetup.cjs',
+      globalTeardown: '<rootDir>/tests/__mocks__/globalTeardown.cjs',
+    },
+  ],
 };

@@ -81,6 +81,38 @@ Before you begin, ensure you have the following installed:
     - **Backend API:** The API will be available at `http://localhost:9000`. Useful for development
       or API testing tools.
 
+### Test Organization
+
+LinguaQuiz has a comprehensive testing strategy with four distinct layers:
+
+#### 1. Unit Tests
+
+- Tests individual functions and components in isolation
+- No external dependencies or network calls
+- Fast execution for quick feedback loops
+- Run with: `npm run test:unit`
+
+#### 2. Integration Tests
+
+- Tests interactions between related components
+- Runs in the local environment with mocked dependencies
+- Verifies code interfaces work correctly together
+- Run with: `npm run test:integration`
+
+#### 3. Component Tests
+
+- Tests service boundaries and API contracts
+- Uses containerized dependencies when needed
+- Simulates real service interactions in isolated environments
+- Run with: `npm run test:component`
+
+#### 4. End-to-End (E2E) Tests
+
+- Tests complete user flows through the entire application
+- Uses Playwright to automate browser interactions
+- Verifies critical functionality from the user's perspective
+- Run with: `npm run test:e2e`
+
 ### Running End-to-End (E2E) Tests
 
 LinguaQuiz includes a comprehensive end-to-end test suite using Playwright that verifies critical
@@ -94,9 +126,35 @@ To run the E2E tests:
    docker compose up -d
    ```
 
-2. Then run the tests locally:
+2. Then run the tests:
    ```bash
-   cd packages/e2e-tests
-   npm install
-   npm run test
+   npm run test:e2e
    ```
+
+#### Additional E2E Test Commands
+
+- Run specific test suites:
+  - Authentication tests: `npm run test:e2e:auth`
+  - Quiz functionality: `npm run test:e2e:quiz`
+- Run with faster quiz settings: `npm run test:e2e:fast`
+- Run with debug mode: `npm run test:e2e:debug`
+- Run in a specific browser: `npm run test:e2e:chromium`
+- View the test report: `npm run test:report`
+
+## Licensing 📝
+
+LinguaQuiz is released under a **dual licence** model:
+
+1. **Source-Available Non-Commercial License v2** (free) - For personal, educational, and non-profit
+   use. Requires sharing source code of any derivatives.
+
+2. **Proprietary Commercial License v2** (paid) - For business and commercial use. Allows
+   object-code-only distribution.
+
+This approach balances open usage for education/research with sustainable development through
+commercial licensing. German law applies with venue in Berlin.
+
+Please see [LICENSING.md](LICENSING.md) for detailed information on both license options and to
+determine which is appropriate for your use case.
+
+For commercial licensing inquiries, please contact: lingua-quiz@nikolay-eremeev.com

@@ -41,6 +41,14 @@ export default [
       'packages/backend/migrations/*_import_*_words.sql', // Specifically ignore word import SQL files
       'word_processing_scripts/',
       '*.csv',
+      // Additional ignore patterns for files ESLint can't parse
+      '**/*.yaml',
+      '**/*.yml',
+      '**/*.conf',
+      'packages/frontend/nginx.conf',
+      '**/*.css',
+      '**/*.html',
+      '**/*.sql',
     ],
   },
 
@@ -271,7 +279,6 @@ export default [
       'security/detect-object-injection': ['warn'],
     },
   },
-
   // --- FILE SPECIFIC OVERRIDES ---
 
   // 4. CommonJS Files

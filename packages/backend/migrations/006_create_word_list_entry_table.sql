@@ -1,3 +1,13 @@
+--
+-- LinguaQuiz – Copyright © 2025 Nikolay Eremeev
+--
+-- Dual-licensed:
+--  – Non-Commercial Source-Available v2  →  see LICENSE-NONCOMMERCIAL.md
+--  – Commercial License v2              →  see LICENSE-COMMERCIAL.md
+--
+-- Contact: lingua-quiz@nikolay-eremeev.com
+-- Repository: https://github.com/nikolay-e/lingua-quiz
+--
 CREATE TABLE IF NOT EXISTS word_list_entry (
   id SERIAL PRIMARY KEY,
   translation_id INTEGER REFERENCES translation (id) ON DELETE CASCADE,
