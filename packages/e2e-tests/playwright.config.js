@@ -13,7 +13,7 @@ module.exports = defineConfig({
     screenshot: 'on',
     video: 'on', // set to 'on' for detailed debugging
   },
-  reporter: [['html'], ['list']],
+  reporter: [['html', { open: 'never' }], ['list']],
 
   projects: [
     // Desktop configurations

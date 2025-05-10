@@ -1,0 +1,80 @@
+{{- if .Values.postgres.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "lingua-quiz-app.postgresql.fullname" . }}
+  namespace: {{ include "lingua-quiz-app.namespace" . }}
+  labels:
+    {{- include "lingua-quiz-app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: postgresql
+spec:
+  serviceName: {{ include "lingua-quiz-app.postgresql.fullname" . }} # Headless service name
+  replicas: 1 # Typically 1 for simple setups
+  selector:
+    matchLabels:
+      {{- include "lingua-quiz-app.postgresql.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "lingua-quiz-app.postgresql.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: postgres
+          image: "{{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}"
+          imagePullPolicy: {{ .Values.postgres.image.pullPolicy | default "IfNotPresent" }}
+          ports:
+            - containerPort: 5432
+              name: postgresdb
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "lingua-quiz-app.fullname" . }}-postgres
+                  key: POSTGRES_DB
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "lingua-quiz-app.fullname" . }}-postgres
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "lingua-quiz-app.fullname" . }}-postgres
+                  key: POSTGRES_PASSWORD
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata # Standard data directory
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data
+          resources:
+            {{- toYaml .Values.postgres.resources | nindent 12 }}
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-storage
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: {{ .Values.postgres.persistence.size }}
+        # Define storageClassName if needed for your K8s cluster
+        # storageClassName: your-storage-class
+---
+# Headless service for StatefulSet discovery
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "lingua-quiz-app.postgresql.fullname" . }}
+  namespace: {{ include "lingua-quiz-app.namespace" . }}
+  labels:
+    {{- include "lingua-quiz-app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: postgresql
+spec:
+  ports:
+    - port: 5432
+      targetPort: postgresdb
+      protocol: TCP
+      name: postgresdb
+  clusterIP: None # Makes it a headless service
+  selector:
+    {{- include "lingua-quiz-app.postgresql.selectorLabels" . | nindent 4 }}
+{{- end }}
