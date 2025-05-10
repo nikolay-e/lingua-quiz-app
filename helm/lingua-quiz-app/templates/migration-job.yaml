@@ -1,0 +1,74 @@
+{{- if .Values.migrations.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "lingua-quiz-app.fullname" . }}-migrations
+  namespace: {{ include "lingua-quiz-app.namespace" . }}
+  labels:
+    {{- include "lingua-quiz-app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: migrations
+  annotations:
+    # This is important - it ensures the job is re-run on Helm upgrades
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "10"
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  ttlSecondsAfterFinished: {{ .Values.migrations.ttlSecondsAfterFinished }}
+  template:
+    metadata:
+      labels:
+        {{- include "lingua-quiz-app.labels" . | nindent 8 }}
+        app.kubernetes.io/component: migrations
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: migration-runner
+        image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.backend.image.pullPolicy }}
+        command:
+        {{- range .Values.migrations.command }}
+        - {{ . | quote }}
+        {{- end }}
+        env:
+          - name: DB_HOST
+            value: {{ include "lingua-quiz-app.postgresql.fullname" . }}
+          - name: DB_PORT
+            value: "5432"
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "lingua-quiz-app.fullname" . }}-postgres
+                key: POSTGRES_DB
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "lingua-quiz-app.fullname" . }}-postgres
+                key: POSTGRES_USER
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "lingua-quiz-app.fullname" . }}-postgres
+                key: POSTGRES_PASSWORD
+          {{- if .Values.migrations.env }}
+          {{- toYaml .Values.migrations.env | nindent 10 }}
+          {{- end }}
+        resources:
+          {{- toYaml .Values.migrations.resources | nindent 10 }}
+      restartPolicy: {{ .Values.migrations.restartPolicy }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  backoffLimit: {{ .Values.migrations.backoffLimit }}
+{{- end }}

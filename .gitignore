@@ -78,3 +78,5 @@ directory_tree.*
 Generated -- *
 test-results
 playwright-report
+
+**/.claude/settings.local.json

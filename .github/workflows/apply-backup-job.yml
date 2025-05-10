@@ -28,6 +28,7 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
         run: |
           mkdir -p $HOME/.kube
+          # Using base64 -d directly to file to avoid leaking secrets
           echo "$KUBE_CONFIG_DATA" | base64 -d > $HOME/.kube/config
           chmod 600 $HOME/.kube/config
           echo "Kubeconfig set up."
@@ -37,38 +38,48 @@ jobs:
           kubectl cluster-info
           kubectl config current-context
 
-      # Removed manifest preparation step (sed)
-
       - name: Deploy Backup Job using Helm
         env:
-          # Assuming the main production release is named 'lingua-quiz-backend'
-          MAIN_APP_RELEASE_NAME: lingua-quiz-backend
+          # Assuming the main production release is named 'lingua-quiz' (unified chart)
+          MAIN_APP_RELEASE_NAME: lingua-quiz
           BACKUP_IMAGE_REPO: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backup
           # Use 'latest' tag for backup image or get from build step if available
           BACKUP_IMAGE_TAG: latest
           BACKUP_RELEASE_NAME: lingua-quiz-backup # Helm release name for the backup job
-          BACKUP_NAMESPACE: default # Namespace for the backup job
+          BACKUP_NAMESPACE: lingua-quiz-production # Namespace for the backup job
+          # Store secrets in environment variables to avoid exposure in logs
+          SPACES_ACCESS_KEY_ID: ${{ secrets.DO_SPACES_ACCESS_KEY_ID }}
+          SPACES_SECRET_KEY: ${{ secrets.DO_SPACES_SECRET_KEY }}
         run: |
           echo "Deploying backup Helm chart to '${BACKUP_NAMESPACE}' namespace..."
-          helm uninstall ${BACKUP_RELEASE_NAME} \
-            --namespace ${BACKUP_NAMESPACE} && \
-          helm upgrade --install ${BACKUP_RELEASE_NAME} ./packages/backend/helm/lingua-quiz-backup \
+          # Create namespace first
+          kubectl create namespace ${BACKUP_NAMESPACE} --dry-run=client -o yaml | kubectl apply -f -
+
+          # Uninstall previous release if exists
+          echo "Uninstalling previous Helm release if it exists..."
+          helm uninstall ${BACKUP_RELEASE_NAME} --namespace ${BACKUP_NAMESPACE} || true
+
+          # Wait a moment to ensure release is fully uninstalled
+          sleep 5
+
+          # Install new release
+          echo "Installing Helm release..."
+          helm install ${BACKUP_RELEASE_NAME} ./helm/lingua-quiz-backup \
             --namespace ${BACKUP_NAMESPACE} \
-            --create-namespace \
             --set image.repository=${BACKUP_IMAGE_REPO} \
             --set image.tag=${BACKUP_IMAGE_TAG} \
             --set postgresSecretName=${MAIN_APP_RELEASE_NAME}-postgres \
             --set mainAppReleaseName=${MAIN_APP_RELEASE_NAME} \
-            --set spaces.accessKeyId=${{ secrets.DO_SPACES_ACCESS_KEY_ID }} \
-            --set spaces.secretKey=${{ secrets.DO_SPACES_SECRET_KEY }} \
-            # Add other values like schedule if needed, otherwise defaults are used
-            # --set schedule="0 3 * * *"
-          echo "Helm upgrade command executed."
+            --set spaces.accessKeyId="${SPACES_ACCESS_KEY_ID}" \
+            --set spaces.secretKey="${SPACES_SECRET_KEY}" \
+            --set namespace=${BACKUP_NAMESPACE}
+
+          echo "Helm install command executed."
 
       - name: Verify CronJob Creation
         env:
           BACKUP_RELEASE_NAME: lingua-quiz-backup # Must match the release name used above
-          BACKUP_NAMESPACE: default # Must match the namespace used above
+          BACKUP_NAMESPACE: lingua-quiz-production # Must match the namespace used above
         run: |
           echo "Verifying CronJob status..."
           # Check Helm-managed resources

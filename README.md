@@ -76,3 +76,40 @@ The E2E tests run in a separate service (`e2e-tests`) defined in the `docker-com
 ```bash
 docker compose up --build e2e-tests
 ```
+
+## Deployment Architecture 🚢
+
+LinguaQuiz uses Kubernetes for cloud deployment, providing a scalable and maintainable infrastructure.
+
+### Unified Helm Chart
+
+The application is deployed using a single unified Helm chart located in `./helm/lingua-quiz-app/`. This chart manages:
+
+- Frontend deployment (Nginx serving static files)
+- Backend API deployment
+- PostgreSQL database (using StatefulSet)
+- Ingress configuration for both services
+- Secret management
+
+> **Note**: Legacy Helm charts in `packages/backend/helm/` are deprecated and will be removed in a future update.
+
+### Deployment Strategy
+
+- **CI/CD Pipeline**: GitHub Actions automates the build, test, and deployment process
+- **Docker Images**: Frontend and backend are containerized separately
+- **Kubernetes Deployment**: Both components are deployed to Kubernetes
+- **Ingress**: Configured to route traffic to frontend and API endpoints
+- **TLS**: HTTPS encryption for all endpoints
+- **Database Backups**: Automated backups using CronJobs
+
+### Detailed Documentation
+
+For a more detailed explanation of the deployment process, see:
+
+- GitHub Actions workflows in `.github/workflows/`
+- Helm chart templates in `./helm/lingua-quiz-app/templates/`
+- Kubernetes resource configurations
+
+## Contributing 🤝
+
+Contributions are welcome! Please feel free to submit a Pull Request.
