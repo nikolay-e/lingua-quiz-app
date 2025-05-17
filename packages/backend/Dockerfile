@@ -1,4 +1,4 @@
-FROM node:22.14.0-alpine3.21 as dependencies
+FROM node:22.15.1-alpine3.21 as dependencies
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ COPY packages/backend/package.json ./packages/backend/
 
 RUN npm ci
 
-FROM node:22.14.0-alpine3.21 as production-build
+FROM node:22.15.1-alpine3.21 as production-build
 
 WORKDIR /app
 
@@ -18,7 +18,7 @@ COPY packages/backend .
 
 RUN npm prune --omit=dev
 
-FROM node:22.14.0-alpine3.21
+FROM node:22.15.1-alpine3.21
 
 WORKDIR /app
 
