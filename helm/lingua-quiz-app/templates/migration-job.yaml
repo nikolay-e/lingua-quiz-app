@@ -24,6 +24,38 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      # Add init container to wait for PostgreSQL to be ready before running migrations
+      initContainers:
+      - name: wait-for-db
+        image: "{{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}"
+        imagePullPolicy: {{ .Values.postgres.image.pullPolicy }}
+        command:
+        - sh
+        - -c
+        - |
+          until pg_isready -h {{ include "lingua-quiz-app.postgresql.fullname" . }} -p 5432; do
+            echo "Waiting for PostgreSQL to be ready..."
+            sleep 2
+          done
+          echo "PostgreSQL is ready!"
+        env:
+          - name: PGUSER
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "lingua-quiz-app.fullname" . }}-postgres
+                key: POSTGRES_USER
+          - name: PGPASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "lingua-quiz-app.fullname" . }}-postgres
+                key: POSTGRES_PASSWORD
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+          limits:
+            cpu: "100m"
+            memory: "128Mi"
       containers:
       - name: migration-runner
         image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag | default .Chart.AppVersion }}"
@@ -52,6 +84,13 @@ spec:
               secretKeyRef:
                 name: {{ include "lingua-quiz-app.fullname" . }}-postgres
                 key: POSTGRES_PASSWORD
+          - name: JWT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "lingua-quiz-app.fullname" . }}-jwt
+                key: JWT_SECRET
+          - name: NODE_ENV
+            value: "production"
           {{- if .Values.migrations.env }}
           {{- toYaml .Values.migrations.env | nindent 10 }}
           {{- end }}

@@ -173,7 +173,7 @@ jobs:
           sleep 30
 
           echo "Running e2e-tests container and executing auth tests only..."
-          docker compose run -e LINGUA_QUIZ_URL=http://frontend:80 -e API_URL=http://backend:9000 -e NODE_ENV=test e2e-tests npx playwright test tests/001-auth.spec.js
+          docker compose run -e LINGUA_QUIZ_URL=http://frontend:80 -e API_URL=http://backend:9000/api -e NODE_ENV=test -e DEBUG=pw:api e2e-tests npx playwright test tests/001-auth.spec.js --reporter=list
           EXIT_CODE=$?
 
           echo "Cleaning up..."
@@ -367,8 +367,49 @@ jobs:
             # Check if the job failed
             JOB_FAILED=$(kubectl get job $JOB_NAME -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.status.conditions[?(@.type=='Failed')].status}" 2>/dev/null)
             if [ "$JOB_FAILED" == "True" ]; then
-              echo "::error::Migration job failed! Check the logs:"
-              kubectl logs job/$JOB_NAME -n ${{ env.DEPLOY_NAMESPACE }}
+              echo "::group::Migration Job Failed - Debug Information"
+              
+              # Get detailed job description
+              echo "--- Job Description ---"
+              kubectl describe job/$JOB_NAME -n ${{ env.DEPLOY_NAMESPACE }}
+              
+              # Get pod information
+              echo "--- Pod Information ---"
+              POD_NAME=$(kubectl get pods -n ${{ env.DEPLOY_NAMESPACE }} -l job-name=$JOB_NAME -o jsonpath="{.items[0].metadata.name}")
+              if [ -n "$POD_NAME" ]; then
+                echo "Pod name: $POD_NAME"
+                kubectl describe pod/$POD_NAME -n ${{ env.DEPLOY_NAMESPACE }}
+                
+                # Get pod logs
+                echo "--- Pod Logs ---"
+                kubectl logs pod/$POD_NAME -n ${{ env.DEPLOY_NAMESPACE }} --all-containers
+                
+                # Get container image details
+                echo "--- Container Image Details ---"
+                kubectl get pod/$POD_NAME -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.spec.containers[*].image}"
+                
+                # Check if init containers exist and get their logs
+                INIT_CONTAINERS=$(kubectl get pod/$POD_NAME -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.spec.initContainers[*].name}" 2>/dev/null)
+                if [ -n "$INIT_CONTAINERS" ]; then
+                  echo "--- Init Container Logs ---"
+                  for container in $INIT_CONTAINERS; do
+                    echo "Init container: $container"
+                    kubectl logs pod/$POD_NAME -n ${{ env.DEPLOY_NAMESPACE }} -c $container
+                  done
+                fi
+              else
+                echo "No pods found for job $JOB_NAME"
+              fi
+              
+              # List all environment variables from pod (masked for security)
+              echo "--- Environment Variables (masked) ---"
+              kubectl get pod/$POD_NAME -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.spec.containers[*].env[*].name}" | tr ' ' '\n' | sort
+              
+              # Get events related to the job
+              echo "--- Related Events ---"
+              kubectl get events -n ${{ env.DEPLOY_NAMESPACE }} --field-selector involvedObject.name=$JOB_NAME
+              
+              echo "::endgroup::"
               exit 1
             fi
 
@@ -378,13 +419,47 @@ jobs:
           done
 
           if [ $ATTEMPTS -eq $MAX_ATTEMPTS ]; then
-            echo "::error::Migration job timed out after 5 minutes."
-            kubectl logs job/$JOB_NAME -n ${{ env.DEPLOY_NAMESPACE }}
+            echo "::group::Migration Job Timeout - Debug Information"
+            
+            # Get detailed job description
+            echo "--- Job Description ---"
+            kubectl describe job/$JOB_NAME -n ${{ env.DEPLOY_NAMESPACE }}
+            
+            # Get pod information
+            echo "--- Pod Information ---"
+            POD_NAME=$(kubectl get pods -n ${{ env.DEPLOY_NAMESPACE }} -l job-name=$JOB_NAME -o jsonpath="{.items[0].metadata.name}")
+            if [ -n "$POD_NAME" ]; then
+              echo "Pod name: $POD_NAME"
+              kubectl describe pod/$POD_NAME -n ${{ env.DEPLOY_NAMESPACE }}
+              
+              # Get pod logs
+              echo "--- Pod Logs ---"
+              kubectl logs pod/$POD_NAME -n ${{ env.DEPLOY_NAMESPACE }} --all-containers
+              
+              # Check pod status
+              echo "--- Pod Status ---"
+              kubectl get pod/$POD_NAME -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.status.phase}" | tr -d '\n'
+              echo " ($(kubectl get pod/$POD_NAME -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.status.conditions[*].type}" | tr ' ' ','))"
+              
+              # Show resource usage if possible
+              echo "--- Resource Usage ---"
+              kubectl top pod $POD_NAME -n ${{ env.DEPLOY_NAMESPACE }} 2>/dev/null || echo "Resource metrics not available"
+            else
+              echo "No pods found for job $JOB_NAME"
+            fi
+            
+            # Get all pods in namespace to check for other issues
+            echo "--- All Pods in Namespace ---"
+            kubectl get pods -n ${{ env.DEPLOY_NAMESPACE }}
+            
+            echo "::endgroup::"
             exit 1
           fi
 
-          echo "Migrations completed successfully. Checking logs:"
+          echo "::group::Migrations Success Logs"
+          echo "Migrations completed successfully. Full logs:"
           kubectl logs job/$JOB_NAME -n ${{ env.DEPLOY_NAMESPACE }}
+          echo "::endgroup::"
 
       - name: Log deployment status
         run: |
@@ -418,9 +493,9 @@ jobs:
         run: |
           echo "NODE_ENV=test" >> $GITHUB_ENV
           if [[ "$DEPLOY_ENV" == "production" ]]; then
-            echo "API_URL=https://api-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
+            echo "API_URL=https://api-lingua-quiz.nikolay-eremeev.com/api" >> $GITHUB_ENV
           else
-            echo "API_URL=https://test-api-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
+            echo "API_URL=https://test-api-lingua-quiz.nikolay-eremeev.com/api" >> $GITHUB_ENV
           fi
       - name: Run backend tests
         env:
@@ -439,5 +514,5 @@ jobs:
     needs: [deploy-app]
     uses: ./.github/workflows/security-scans.yml
     with:
-      frontend-url: 'https://lingua-quiz.nikolay-eremeev.com'
-      backend-url: 'https://api-lingua-quiz.nikolay-eremeev.com'
+      frontend-url: "https://lingua-quiz.nikolay-eremeev.com"
+      backend-url: "https://api-lingua-quiz.nikolay-eremeev.com"

@@ -4,9 +4,7 @@ export function updateDirectionToggleTitle(app) {
   const directionToggleBtn = document.getElementById('direction-toggle');
   if (directionToggleBtn) {
     directionToggleBtn.innerHTML = `<i class="fas fa-exchange-alt"></i> ${
-      app.direction === true
-        ? `${app.sourceLanguage} ➔ ${app.targetLanguage}`
-        : `${app.targetLanguage} ➔ ${app.sourceLanguage}`
+      app.direction === true ? `${app.sourceLanguage} ➔ ${app.targetLanguage}` : `${app.targetLanguage} ➔ ${app.sourceLanguage}`
     }`;
   }
 }

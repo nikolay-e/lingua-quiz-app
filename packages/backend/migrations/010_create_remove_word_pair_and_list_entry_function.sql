@@ -1,5 +1,13 @@
-CREATE
-OR REPLACE FUNCTION remove_word_pair_and_list_entry (p_translation_id INTEGER) RETURNS VOID AS $$
+-- LinguaQuiz - Copyright © 2025 Nikolay Eremeev
+--
+-- Dual-licensed:
+--  - Non-Commercial Source-Available v2  →  see LICENSE-NONCOMMERCIAL.md
+--  - Commercial License v2               →  see LICENSE-COMMERCIAL.md
+--
+-- Contact: lingua-quiz@nikolay-eremeev.com
+-- Repository: https://github.com/nikolay-e/lingua-quiz
+-- File: packages/backend/migrations/010_create_remove_word_pair_and_list_entry_function.sql
+CREATE OR REPLACE FUNCTION remove_word_pair_and_list_entry (p_translation_id INTEGER) RETURNS VOID AS $$
 DECLARE
   v_source_word_id INTEGER;
   v_target_word_id INTEGER;

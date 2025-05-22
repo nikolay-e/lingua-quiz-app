@@ -1,5 +1,13 @@
-CREATE
-OR REPLACE FUNCTION update_user_word_set_status (
+-- LinguaQuiz - Copyright © 2025 Nikolay Eremeev
+--
+-- Dual-licensed:
+--  - Non-Commercial Source-Available v2  →  see LICENSE-NONCOMMERCIAL.md
+--  - Commercial License v2               →  see LICENSE-COMMERCIAL.md
+--
+-- Contact: lingua-quiz@nikolay-eremeev.com
+-- Repository: https://github.com/nikolay-e/lingua-quiz
+-- File: packages/backend/migrations/013_create_update_user_word_set_status_function.sql
+CREATE OR REPLACE FUNCTION update_user_word_set_status (
   p_user_id INTEGER,
   p_word_pair_ids INTEGER[],
   p_status translation_status
