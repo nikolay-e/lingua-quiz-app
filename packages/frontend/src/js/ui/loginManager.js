@@ -2,6 +2,8 @@ import serverAddress from '../config.js';
 import { AuthUtils } from '../utils/authUtils.js';
 import { errorHandler } from '../utils/errorHandler.js';
 
+// Force frontend rebuild - version 2.0
+
 import { populateWordSets } from './eventHandlers.js';
 import { PasswordValidator } from './passwordValidator.js';
 
