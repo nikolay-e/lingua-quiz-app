@@ -1,6 +1,0 @@
-apiVersion: v2
-name: lingua-quiz
-description: A Helm chart for the LinguaQuiz Backend application and PostgreSQL database.
-type: application
-version: 0.1.0 # Start with an initial version
-appVersion: "1.0.0" # Corresponds to your application version if desired

@@ -14,7 +14,7 @@ export async function saveQuizState(app, token) {
     const promises = Object.entries(statusSets).map(([status, set]) => {
       const wordPairIds = Array.from(set);
 
-      return fetch(`${serverAddress}/user/word-sets`, {
+      return fetch(`${serverAddress}/word-sets/user`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,

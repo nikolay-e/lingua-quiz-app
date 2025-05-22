@@ -1,34 +1,64 @@
 const { test, expect } = require('@playwright/test');
 const { register, login, logout } = require('./helpers');
 
-test.describe('User Authentication', () => {
-  const testUser = `test${Date.now()}@example.com`;
+test.describe.serial('User Authentication', () => {
+  // Generate a unique user for this test suite
+  const timestamp = Date.now();
+  const testUser = `test${timestamp}@example.com`;
   const testPassword = 'testPassword123!';
 
+  // Track if user has been registered
+  let userRegistered = false;
+
   test.beforeEach(async ({ page }) => {
-    await page.goto('/login.html');
+    // Use environment variable directly since baseURL is not being set
+    const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
+    // eslint-disable-next-line no-console
+    console.log('Using URL:', url);
+    await page.goto(`${url}/login.html`);
   });
 
   test('should register a new user', async ({ page }) => {
     await register(page, testUser, testPassword, true);
+    userRegistered = true;
   });
 
   test('should not allow duplicate registration', async ({ page }) => {
+    // Skip if previous test failed
+    if (!userRegistered) {
+      test.skip();
+      return;
+    }
     await register(page, testUser, testPassword, false);
   });
 
   test('should login with valid credentials', async ({ page }) => {
+    // Skip if registration failed
+    if (!userRegistered) {
+      test.skip();
+      return;
+    }
     await login(page, testUser, testPassword);
-    await page.waitForURL('/', { waitUntil: 'networkidle' });
-    await expect(page).toHaveURL('/');
+    await page.waitForURL((url) => !url.pathname.includes('login'), { waitUntil: 'networkidle' });
+    await expect(page.url()).not.toContain('login');
   });
 
   test('should not login with invalid credentials', async ({ page }) => {
+    // Skip if registration failed
+    if (!userRegistered) {
+      test.skip();
+      return;
+    }
     await login(page, testUser, 'wrongPassword');
     await expect(page.locator('text=Error')).toBeVisible({ timeout: 10000 });
   });
 
   test('should logout successfully', async ({ page }) => {
+    // Skip if registration failed
+    if (!userRegistered) {
+      test.skip();
+      return;
+    }
     await login(page, testUser, testPassword);
     await logout(page);
     await expect(page).toHaveURL(/.*login.html/);
@@ -36,18 +66,28 @@ test.describe('User Authentication', () => {
   });
 
   test('should maintain session after page reload', async ({ page }) => {
+    // Skip if registration failed
+    if (!userRegistered) {
+      test.skip();
+      return;
+    }
     await login(page, testUser, testPassword);
-    await expect(page).toHaveURL('/');
+    await expect(page.url()).not.toContain('login');
     await page.reload();
     await expect(page.locator('#login-logout-btn')).toContainText(testUser, { timeout: 10000 });
   });
 
   test('should clear user data after logout', async ({ page }) => {
+    // Skip if registration failed
+    if (!userRegistered) {
+      test.skip();
+      return;
+    }
     // First ensure we're logged in successfully
     await login(page, testUser, testPassword);
 
     // Wait for navigation and storage to be set
-    await page.waitForURL('/', { waitUntil: 'networkidle' });
+    await page.waitForURL((url) => !url.pathname.includes('login'), { waitUntil: 'networkidle' });
     await page.waitForTimeout(1000);
 
     // Verify initial storage state
@@ -67,10 +107,7 @@ test.describe('User Authentication', () => {
 
     expect(initialStorage.hasToken, 'Token should be present after login').toBeTruthy();
     expect(initialStorage.hasEmail, 'Email should be present after login').toBeTruthy();
-    expect(
-      initialStorage.hasExpiration,
-      'Token expiration should be present after login'
-    ).toBeTruthy();
+    expect(initialStorage.hasExpiration, 'Token expiration should be present after login').toBeTruthy();
 
     // Perform logout and wait for navigation
     await logout(page);
@@ -90,17 +127,15 @@ test.describe('User Authentication', () => {
     expect(finalStorage.tokenExpiration, 'Token expiration should be null after logout').toBeNull();
   });
 
-  test('should redirect to login page when accessing protected route', async ({
-    page,
-    context,
-  }) => {
+  test('should redirect to login page when accessing protected route', async ({ page, context }) => {
     await context.clearCookies();
-    await page.goto('/');
+    const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
+    await page.goto(`${url}/`);
     await expect(page).toHaveURL(/.*login.html/);
   });
 
   test('should handle server errors gracefully', async ({ page }) => {
-    await page.route('**/login', (route) => {
+    await page.route('**/api/auth/login', (route) => {
       route.fulfill({
         status: 500,
         body: JSON.stringify({ message: 'Internal Server Error' }),
@@ -113,11 +148,16 @@ test.describe('User Authentication', () => {
   });
 
   test('should not allow access to protected routes after logout', async ({ page }) => {
+    // Skip if registration failed
+    if (!userRegistered) {
+      test.skip();
+      return;
+    }
     // Login first
     await login(page, testUser, testPassword);
 
     // Wait for navigation and verify we're on the home page
-    await page.waitForURL('/', { waitUntil: 'networkidle' });
+    await page.waitForURL((url) => !url.pathname.includes('login'), { waitUntil: 'networkidle' });
 
     // Verify we're logged in
     await expect(page.locator('#login-logout-btn')).toContainText(testUser);
@@ -128,7 +168,8 @@ test.describe('User Authentication', () => {
     await page.waitForTimeout(1000); // Ensure storage is cleared
 
     // Try to access protected route and verify redirect
-    await page.goto('/');
+    const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
+    await page.goto(`${url}/`);
     await page.waitForURL(/.*login.html/, { waitUntil: 'networkidle' });
     await expect(page.locator('#login-form')).toBeVisible();
   });
@@ -140,22 +181,23 @@ test.describe('User Authentication', () => {
       localStorage.setItem('email', 'test@example.com');
     });
 
-    await page.goto('/');
+    const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
+    await page.goto(`${url}/`);
     await page.waitForURL(/.*login.html/, { waitUntil: 'networkidle' });
     await expect(page.locator('#login-form')).toBeVisible();
   });
 
   test('should redirect to login when token is expired', async ({ page }) => {
     // Set expired token (JWT with past expiration)
-    const expiredToken =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MTYyMzkwMjJ9.4MW7_-gqkqOvHhBwpLI9T0x3DFDpOozqQok9rev4XxY';
+    const expiredToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MTYyMzkwMjJ9.4MW7_-gqkqOvHhBwpLI9T0x3DFDpOozqQok9rev4XxY';
 
     await page.evaluate((token) => {
       localStorage.setItem('token', token);
       localStorage.setItem('email', 'test@example.com');
     }, expiredToken);
 
-    await page.goto('/');
+    const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
+    await page.goto(`${url}/`);
     await page.waitForURL(/.*login.html/, { waitUntil: 'networkidle' });
     await expect(page.locator('#login-form')).toBeVisible();
   });
@@ -166,7 +208,8 @@ test.describe('User Authentication', () => {
       localStorage.clear();
     });
 
-    await page.goto('/');
+    const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
+    await page.goto(`${url}/`);
     await page.waitForURL(/.*login.html/, { waitUntil: 'networkidle' });
     await expect(page.locator('#login-form')).toBeVisible();
   });

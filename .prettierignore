@@ -7,6 +7,10 @@
 *.png
 .treemapperignore
 
+# Environment files
+*.env
+*.env.*
+
 # Helm chart template files
 **/helm/**/templates/**/*.yaml
 **/helm/**/templates/**/*.tpl

@@ -1,4 +1,4 @@
-import { fetchWordSets, fetchWordLists } from '../quiz/dataHandler.js';
+import { fetchUserWordSets, fetchWordSets } from '../quiz/dataHandler.js';
 import { saveQuizState } from '../quiz/wordSetManager.js'; // Assume this makes API calls
 import { AuthUtils } from '../utils/authUtils.js'; // Import AuthUtils
 import { errorHandler } from '../utils/errorHandler.js';
@@ -63,7 +63,7 @@ async function loadWordsFromAPI(wordListName) {
     }
 
     // Fetch and create the App instance
-    app = await fetchWordSets(token, wordListName);
+    app = await fetchUserWordSets(token, wordListName);
 
     if (!app) {
       console.error('Failed to initialize app instance after fetching word sets.');
@@ -202,7 +202,7 @@ function handleQuizSelect(event) {
   }
 }
 
-export async function populateWordLists() {
+export async function populateWordSets() {
   const quizSelect = document.getElementById('quiz-select');
   if (!quizSelect) {
     console.error('Quiz select element not found.');
@@ -215,22 +215,22 @@ export async function populateWordLists() {
   try {
     const token = AuthUtils.getToken();
     if (!token) {
-      console.warn('Cannot populate word lists: user is not authenticated.');
+      console.warn('Cannot populate word sets: user is not authenticated.');
       quizSelect.innerHTML = '<option value="">Please login</option>';
       // Don't redirect here, let the main auth check handle it
       return;
     }
 
-    const wordLists = await fetchWordLists(token);
+    const wordSets = await fetchWordSets(token);
 
     // Clear loading/error message and add default option
     quizSelect.innerHTML = '<option value="">Select a quiz</option>';
 
-    if (wordLists && wordLists.length > 0) {
-      wordLists.forEach((list) => {
+    if (wordSets && wordSets.length > 0) {
+      wordSets.forEach((set) => {
         const option = document.createElement('option');
-        option.value = list.name;
-        option.textContent = list.name;
+        option.value = set.name;
+        option.textContent = set.name;
         quizSelect.appendChild(option);
       });
       quizSelect.disabled = false; // Enable select now that options are loaded
@@ -238,7 +238,7 @@ export async function populateWordLists() {
       quizSelect.innerHTML = '<option value="">No quizzes found</option>';
     }
   } catch (error) {
-    console.error('Error populating word lists:', error);
+    console.error('Error populating word sets:', error);
     errorHandler.handleApiError(error); // Log centrally
     quizSelect.innerHTML = '<option value="">Error loading</option>'; // Show error in select
   }
@@ -275,9 +275,9 @@ export function initEventHandlers() {
     console.error('Quiz select element not found during init.');
   }
 
-  // Populate word lists when the page loads (if authenticated)
+  // Populate word sets when the page loads (if authenticated)
   if (AuthUtils.isValidToken(AuthUtils.getToken())) {
-    populateWordLists();
+    populateWordSets();
   } else {
     // eslint-disable-next-line no-shadow
     const quizSelect = document.getElementById('quiz-select');

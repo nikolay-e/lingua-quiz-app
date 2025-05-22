@@ -2,7 +2,7 @@ import serverAddress from '../config.js';
 import { AuthUtils } from '../utils/authUtils.js';
 import { errorHandler } from '../utils/errorHandler.js';
 
-import { populateWordLists } from './eventHandlers.js';
+import { populateWordSets } from './eventHandlers.js';
 import { PasswordValidator } from './passwordValidator.js';
 
 export class AuthManager {
@@ -43,7 +43,7 @@ export class AuthManager {
     const loginMessage = document.getElementById('login-message');
 
     try {
-      const response = await fetch(`${serverAddress}/login`, {
+      const response = await fetch(`${serverAddress}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -56,12 +56,12 @@ export class AuthManager {
       if (response.ok) {
         AuthUtils.setToken(data.token);
         AuthUtils.setEmail(email);
-        loginMessage.textContent = 'Login successful. Loading word lists...';
+        loginMessage.textContent = 'Login successful. Loading word sets...';
         try {
           window.location.replace('/');
-          await populateWordLists();
+          await populateWordSets();
         } catch (error) {
-          console.error('Error loading word lists:', error);
+          console.error('Error loading word sets:', error);
           errorHandler.handleApiError(error);
         }
       } else {
@@ -111,7 +111,7 @@ export class AuthManager {
     }
 
     try {
-      const response = await fetch(`${serverAddress}/register`, {
+      const response = await fetch(`${serverAddress}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
