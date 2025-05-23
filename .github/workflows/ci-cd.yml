@@ -57,7 +57,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./packages/backend
-          file: ./packages/backend/docker/backup/Dockerfile
+          file: ./packages/backend/Dockerfile.backup
           push: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
@@ -502,7 +502,9 @@ jobs:
           API_URL: ${{ env.API_URL }}
         run: |
           echo "Running tests against URL: ${API_URL}"
-          npm run test --workspace=@linguaquiz/backend
+          cd packages/backend
+          pip install -r requirements-test.txt
+          python test_integration.py
           echo "::group::Test Results"
           echo "Tests completed. Check test runner output above for details."
           echo "::endgroup::"

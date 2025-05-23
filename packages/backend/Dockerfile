@@ -1,56 +1,24 @@
-# syntax=docker/dockerfile:1.4
-FROM node:20-alpine as base
+FROM python:3.11-alpine
 
 WORKDIR /app
 
-# First stage: Install dependencies
-FROM base as dependencies
-# Copy package.json files
-COPY package.json package-lock.json ./
-COPY packages/backend/package.json ./packages/backend/
+# Install PostgreSQL client libraries
+RUN apk add --no-cache postgresql-libs \
+  && apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev
 
-# Install all dependencies (including dev) for potential build steps
-RUN npm ci
+# Copy and install dependencies
+COPY packages/backend/requirements.txt packages/backend/requirements-migrate.txt ./
+RUN pip install --no-cache-dir -r requirements.txt -r requirements-migrate.txt \
+  && apk --purge del .build-deps
 
-# Second stage: Prune dependencies if needed
-FROM dependencies as pruned-dependencies
-# Keep only production dependencies
-RUN npm prune --production
-# Ensure directory structure exists
-RUN mkdir -p packages/backend
+# Copy application and migrations
+COPY packages/backend/app.py packages/backend/migrate.py ./
+COPY packages/backend/migrations/ ./migrations/
 
-# Final stage
-FROM node:20-alpine
-
-WORKDIR /app
-
-# Create non-root user
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-RUN apk add --no-cache curl postgresql-client
-
-# Copy root package.json and backend package.json
-COPY package.json ./
-COPY packages/backend/package.json ./packages/backend/
-
-# Copy only production dependencies
-COPY --from=pruned-dependencies /app/node_modules ./node_modules
-
-# Copy backend source code
-COPY packages/backend/src ./packages/backend/src
-COPY packages/backend/migrations ./packages/backend/migrations
-
-# Set proper ownership
-RUN chown -R appuser:appgroup /app
-
+# Run as non-root
+RUN adduser -D appuser
 USER appuser
 
-# Add health check
-HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:9000/api/health || exit 1
-
-# Set environment variables
-ENV NODE_ENV=production
 EXPOSE 9000
 
-# Start the server
-CMD ["node", "packages/backend/src/server.js"]
+CMD ["python", "app.py"]
