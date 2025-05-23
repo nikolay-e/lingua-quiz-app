@@ -119,7 +119,7 @@ serviceAccount:
 # Database migrations configuration
 migrations:
   enabled: true
-  command: ["sh", "-c", "node packages/backend/src/migrations.mjs"]
+  command: ["python", "migrate.py"]
   ttlSecondsAfterFinished: 120
   restartPolicy: OnFailure
   backoffLimit: 4
