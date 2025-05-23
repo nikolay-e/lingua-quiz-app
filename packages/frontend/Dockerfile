@@ -1,16 +1,38 @@
-FROM node:alpine as builder
+# Build stage
+FROM node:18-alpine AS builder
 
-RUN apk add --no-cache ca-certificates
+WORKDIR /app
 
-WORKDIR /site
-COPY package*.json ./
+# Copy package files
+COPY package.json ./
+
+# Install dependencies
 RUN npm install
 
-COPY ./src ./dist
+# Copy source files
+COPY . .
 
+# Build the application
+RUN npm run build
+
+# Production stage
 FROM nginx:alpine
 
-COPY --from=builder /site/dist /usr/share/nginx/html
+WORKDIR /usr/share/nginx/html
+
+# Copy built files from builder stage
+COPY --from=builder /app/dist .
+
+# Custom nginx config to handle SPA routing
+RUN echo "server { \
+    listen 80; \
+    location / { \
+        root /usr/share/nginx/html; \
+        index index.html; \
+        try_files \$uri \$uri/ /index.html; \
+    } \
+}" > /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
+
 CMD ["nginx", "-g", "daemon off;"]

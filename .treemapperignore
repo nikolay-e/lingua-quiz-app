@@ -7,3 +7,5 @@ playwright-report
 coverage
 favicon
 *.png
+*_words.sql
+.claude

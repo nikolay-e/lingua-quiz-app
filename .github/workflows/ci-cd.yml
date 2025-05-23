@@ -173,7 +173,7 @@ jobs:
           sleep 30
 
           echo "Running e2e-tests container and executing auth tests only..."
-          docker compose run -e LINGUA_QUIZ_URL=http://frontend:80 -e API_URL=http://backend:9000/api -e NODE_ENV=test -e DEBUG=pw:api e2e-tests npx playwright test tests/001-auth.spec.js --reporter=list
+          docker compose run -e LINGUA_QUIZ_URL=http://frontend:80 -e API_URL=http://backend:9000/api -e NODE_ENV=test -e DEBUG=pw:api e2e-tests playwright test tests/001-auth.spec.js --reporter=list
           EXIT_CODE=$?
 
           echo "Cleaning up..."

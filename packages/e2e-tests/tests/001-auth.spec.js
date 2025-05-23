@@ -15,7 +15,7 @@ test.describe.serial('User Authentication', () => {
     const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
     // eslint-disable-next-line no-console
     console.log('Using URL:', url);
-    await page.goto(`${url}/login.html`);
+    await page.goto(url);
   });
 
   test('should register a new user', async ({ page }) => {
@@ -39,8 +39,8 @@ test.describe.serial('User Authentication', () => {
       return;
     }
     await login(page, testUser, testPassword);
-    await page.waitForURL((url) => !url.pathname.includes('login'), { waitUntil: 'networkidle' });
-    await expect(page.url()).not.toContain('login');
+    // In a SPA, we check for the quiz select element instead of URL
+    await expect(page.locator('#quiz-select')).toBeVisible();
   });
 
   test('should not login with invalid credentials', async ({ page }) => {
@@ -50,7 +50,11 @@ test.describe.serial('User Authentication', () => {
       return;
     }
     await login(page, testUser, 'wrongPassword');
-    await expect(page.locator('text=Error')).toBeVisible({ timeout: 10000 });
+    // Check for error message in the login message element
+    const loginMessage = page.locator('#login-message');
+    await expect(loginMessage).toBeVisible({ timeout: 2000 });
+    // The message should not contain "successful"
+    await expect(loginMessage).not.toContainText('successful');
   });
 
   test('should logout successfully', async ({ page }) => {
@@ -61,8 +65,8 @@ test.describe.serial('User Authentication', () => {
     }
     await login(page, testUser, testPassword);
     await logout(page);
-    await expect(page).toHaveURL(/.*login.html/);
-    await expect(page.locator('#login-form')).toBeVisible();
+    // After logout, should see the login form
+    await expect(page.locator('section:has-text("Login")')).toBeVisible();
   });
 
   test('should maintain session after page reload', async ({ page }) => {
@@ -72,9 +76,10 @@ test.describe.serial('User Authentication', () => {
       return;
     }
     await login(page, testUser, testPassword);
-    await expect(page.url()).not.toContain('login');
+    // Wait for login to complete and quiz view to load
+    await expect(page.locator('#quiz-select')).toBeVisible({ timeout: 5000 });
     await page.reload();
-    await expect(page.locator('#login-logout-btn')).toContainText(testUser, { timeout: 10000 });
+    await expect(page.locator('#login-logout-btn')).toContainText(testUser, { timeout: 5000 });
   });
 
   test('should clear user data after logout', async ({ page }) => {
@@ -86,9 +91,9 @@ test.describe.serial('User Authentication', () => {
     // First ensure we're logged in successfully
     await login(page, testUser, testPassword);
 
-    // Wait for navigation and storage to be set
-    await page.waitForURL((url) => !url.pathname.includes('login'), { waitUntil: 'networkidle' });
-    await page.waitForTimeout(1000);
+    // Wait for quiz view to be visible (indicates successful login)
+    await expect(page.locator('#quiz-select')).toBeVisible({ timeout: 5000 });
+    await page.waitForTimeout(500);
 
     // Verify initial storage state
     const initialStorage = await page.evaluate(() => {
@@ -111,7 +116,8 @@ test.describe.serial('User Authentication', () => {
 
     // Perform logout and wait for navigation
     await logout(page);
-    await page.waitForURL(/.*login.html/, { waitUntil: 'networkidle' });
+    // After logout, should see the login form
+    await page.waitForSelector('section:has-text("Login")', { state: 'visible' });
     await page.waitForTimeout(1000); // Give time for storage to clear
 
     // Verify final storage state
@@ -131,7 +137,8 @@ test.describe.serial('User Authentication', () => {
     await context.clearCookies();
     const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
     await page.goto(`${url}/`);
-    await expect(page).toHaveURL(/.*login.html/);
+    // Should see the login form when not authenticated
+    await expect(page.locator('section:has-text("Login")')).toBeVisible();
   });
 
   test('should handle server errors gracefully', async ({ page }) => {
@@ -141,10 +148,11 @@ test.describe.serial('User Authentication', () => {
         body: JSON.stringify({ message: 'Internal Server Error' }),
       });
     });
-    await page.fill('#email', testUser);
-    await page.fill('#password', testPassword);
-    await page.click('#login-form button[type="submit"]');
-    await expect(page.locator('text=Internal Server Error')).toBeVisible({ timeout: 10000 });
+    const loginSection = page.locator('section:has-text("Login")');
+    await loginSection.locator('input[type="email"]').fill(testUser);
+    await loginSection.locator('input[id="password"]').fill(testPassword);
+    await loginSection.locator('button[type="submit"]').click();
+    await expect(page.locator('text=Internal Server Error')).toBeVisible({ timeout: 2000 });
   });
 
   test('should not allow access to protected routes after logout', async ({ page }) => {
@@ -156,22 +164,24 @@ test.describe.serial('User Authentication', () => {
     // Login first
     await login(page, testUser, testPassword);
 
-    // Wait for navigation and verify we're on the home page
-    await page.waitForURL((url) => !url.pathname.includes('login'), { waitUntil: 'networkidle' });
+    // Wait for quiz view to be visible (indicates successful login)
+    await expect(page.locator('#quiz-select')).toBeVisible({ timeout: 5000 });
 
     // Verify we're logged in
     await expect(page.locator('#login-logout-btn')).toContainText(testUser);
 
     // Logout and wait for navigation
     await page.click('#login-logout-btn');
-    await page.waitForURL(/.*login.html/, { waitUntil: 'networkidle' });
+    // After logout, should see the login form
+    await page.waitForSelector('section:has-text("Login")', { state: 'visible' });
     await page.waitForTimeout(1000); // Ensure storage is cleared
 
     // Try to access protected route and verify redirect
     const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
     await page.goto(`${url}/`);
-    await page.waitForURL(/.*login.html/, { waitUntil: 'networkidle' });
-    await expect(page.locator('#login-form')).toBeVisible();
+    // After logout, should see the login form
+    await page.waitForSelector('section:has-text("Login")', { state: 'visible' });
+    await expect(page.locator('section:has-text("Login")')).toBeVisible();
   });
 
   test('should redirect to login when token is invalid', async ({ page }) => {
@@ -183,8 +193,9 @@ test.describe.serial('User Authentication', () => {
 
     const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
     await page.goto(`${url}/`);
-    await page.waitForURL(/.*login.html/, { waitUntil: 'networkidle' });
-    await expect(page.locator('#login-form')).toBeVisible();
+    // After logout, should see the login form
+    await page.waitForSelector('section:has-text("Login")', { state: 'visible' });
+    await expect(page.locator('section:has-text("Login")')).toBeVisible();
   });
 
   test('should redirect to login when token is expired', async ({ page }) => {
@@ -198,8 +209,9 @@ test.describe.serial('User Authentication', () => {
 
     const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
     await page.goto(`${url}/`);
-    await page.waitForURL(/.*login.html/, { waitUntil: 'networkidle' });
-    await expect(page.locator('#login-form')).toBeVisible();
+    // After logout, should see the login form
+    await page.waitForSelector('section:has-text("Login")', { state: 'visible' });
+    await expect(page.locator('section:has-text("Login")')).toBeVisible();
   });
 
   test('should redirect to login when token is missing', async ({ page }) => {
@@ -210,7 +222,8 @@ test.describe.serial('User Authentication', () => {
 
     const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
     await page.goto(`${url}/`);
-    await page.waitForURL(/.*login.html/, { waitUntil: 'networkidle' });
-    await expect(page.locator('#login-form')).toBeVisible();
+    // After logout, should see the login form
+    await page.waitForSelector('section:has-text("Login")', { state: 'visible' });
+    await expect(page.locator('section:has-text("Login")')).toBeVisible();
   });
 });

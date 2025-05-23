@@ -1,5 +1,33 @@
 FROM mcr.microsoft.com/playwright:v1.52.0-jammy
 
+# Install additional dependencies for WebKit and Firefox
+RUN apt-get update && apt-get install -y \
+    # Dependencies for WebKit
+    libwoff1 \
+    libopus0 \
+    libwebp7 \
+    libwebpdemux2 \
+    libharfbuzz-icu0 \
+    # Dependencies for Firefox
+    libgtk-3-0 \
+    libdbus-glib-1-2 \
+    libxt6 \
+    # General browser dependencies
+    libnss3 \
+    libnspr4 \
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxfixes3 \
+    libxrandr2 \
+    libgbm1 \
+    libxkbcommon0 \
+    libpango-1.0-0 \
+    libcairo2 \
+    libasound2 \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 COPY package*.json ./
@@ -8,4 +36,12 @@ COPY . .
 
 RUN npm ci
 
-CMD ["npm", "run", "test", "--reporter=list,null"]
+# Install playwright browsers
+RUN npx playwright install-deps
+RUN npx playwright install
+
+# Make playwright available in PATH
+ENV PATH="/app/node_modules/.bin:${PATH}"
+
+# Default command runs all tests
+CMD ["playwright", "test"]

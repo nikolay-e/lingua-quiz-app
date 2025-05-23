@@ -58,6 +58,9 @@ services:
       context: ./packages/frontend
       dockerfile: Dockerfile
     restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
     ports:
       - "8080:80"
     networks:
@@ -75,7 +78,7 @@ services:
       context: .
       dockerfile: packages/e2e-tests/Dockerfile
     environment:
-      LINGUA_QUIZ_URL: http://frontend:80/
+      LINGUA_QUIZ_URL: http://frontend:80
       API_URL: http://backend:9000/api
       NODE_ENV: test
     depends_on:
@@ -83,12 +86,7 @@ services:
         condition: service_healthy
       backend:
         condition: service_healthy
-    command: >
-      sh -c "
-        echo 'Waiting a bit more for services to stabilize...' && sleep 15 &&
-        echo 'Running E2E tests...' &&
-        npm run test --workspace=@linguaquiz/e2e-tests
-      "
+    # Remove command to use the ENTRYPOINT from Dockerfile
     networks:
       - lingua-quiz-local-net
     volumes:
