@@ -140,11 +140,17 @@ def register():
     
     # Create user
     hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-    user = query_db(
-        'INSERT INTO "user" (email, password) VALUES (%s, %s) RETURNING id, email',
-        [email, hashed], one=True
-    )
-    execute_db('COMMIT')
+    conn = get_db()
+    try:
+        with conn.cursor(cursor_factory=RealDictCursor) as cur:
+            cur.execute(
+                'INSERT INTO "user" (email, password) VALUES (%s, %s) RETURNING id, email',
+                [email, hashed]
+            )
+            user = cur.fetchone()
+            conn.commit()
+    finally:
+        put_db(conn)
     
     # Generate token
     token = jwt.encode({

@@ -2,8 +2,8 @@ FROM python:3.11-alpine
 
 WORKDIR /app
 
-# Install PostgreSQL client libraries
-RUN apk add --no-cache postgresql-libs \
+# Install PostgreSQL client libraries and curl for health checks
+RUN apk add --no-cache postgresql-libs curl \
   && apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev
 
 # Copy and install dependencies
