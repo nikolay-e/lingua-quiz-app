@@ -1,0 +1,419 @@
+:root {
+  --primary-color: #4a90e2;
+  --secondary-color: #f39c12;
+  --background-color: #f4f7f9;
+  --text-color: #333;
+  --container-bg: #fff;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --input-border-color: #ddd;
+  --success-color: #27ae60;
+  --error-color: #e74c3c;
+  --transition-speed: 0.3s;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  height: 100%;
+  overflow: auto;
+}
+
+body {
+  font-family: "Roboto", Arial, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 2em;
+  text-align: center;
+}
+
+h2 {
+  font-size: clamp(1rem, 2vw, 1.6em);
+  border-bottom: 2px solid var(--primary-color);
+  padding-bottom: 10px;
+}
+
+h3 {
+  font-size: 1.2em;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+button {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid var(--input-border-color);
+  font-size: 16px;
+  transition: all var(--transition-speed) ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color var(--transition-speed) ease;
+}
+
+button:hover {
+  background-color: #3a7bc8;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  background-color: var(--input-border-color);
+}
+
+.container,
+.quiz-container {
+  display: flex;
+  height: 100vh;
+  margin: 0 auto;
+  max-width: 1400px;
+  overflow: hidden;
+}
+
+.left-sidebar {
+  width: 300px;
+  padding: 20px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.right-sidebar {
+  width: 500px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.sidebar-section,
+.quiz-section {
+  background-color: var(--container-bg);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px var(--shadow-color);
+}
+
+.quiz-content {
+  margin-bottom: 10px;
+}
+
+.question {
+  font-size: 2em;
+  font-weight: bold;
+  color: var(--secondary-color);
+  text-align: center;
+  margin: 20px 0;
+}
+
+.feedback-container {
+  margin-top: 10px;
+  background-color: var(--container-bg);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px var(--shadow-color);
+  overflow: hidden;
+}
+
+.feedback-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  font-weight: bold;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.feedback-text.success {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.feedback-text.error {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.feedback-icon {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.feedback-text.success .feedback-icon::before {
+  content: "✓";
+  color: #4caf50;
+}
+
+.feedback-text.error .feedback-icon::before {
+  content: "✗";
+  color: #f44336;
+}
+
+.feedback-message {
+  font-size: 18px;
+}
+
+.usage-examples {
+  padding: 10px;
+}
+
+.usage-examples h3 {
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.example-container p {
+  background-color: #f8f9fa;
+  padding: 5px;
+  border-radius: 6px;
+  margin: 0;
+}
+
+.example-container strong {
+  color: var(--primary-color);
+  margin-right: 5px;
+}
+
+.learning-progress {
+  padding: 20px;
+  overflow-y: auto;
+  min-height: 70vh;
+}
+
+.learning-progress ol {
+  padding-left: 30px;
+  margin-top: 10px;
+}
+
+.learning-progress ol li {
+  padding: 5px 0;
+  border-bottom: 1px solid var(--input-border-color);
+  margin: 5px 0;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+#password,
+#register-password {
+  padding-right: 40px;
+  margin-bottom: 0;
+}
+
+.toggle-password-btn {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  background: none;
+  border: none;
+  padding: 0;
+  width: auto;
+  height: auto;
+  margin: 0;
+  cursor: pointer;
+  color: var(--text-color);
+  z-index: 2;
+  transform: none;
+}
+
+.toggle-password-btn:hover {
+  color: var(--primary-color);
+  background: none;
+}
+
+.login-container {
+  display: flex;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+
+.login-container .left-sidebar,
+.login-container .right-sidebar {
+  width: 25%;
+}
+
+.login-container .main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login-content {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.login-content .sidebar-section {
+  margin-bottom: 30px;
+}
+
+#login-message,
+#register-message {
+  margin-top: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.password-requirements {
+  background-color: var(--container-bg);
+  border-radius: 6px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.password-requirements-title {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.requirement {
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 3px 0;
+}
+
+.requirement:hover {
+  opacity: 1;
+}
+
+.requirement-icon {
+  transition: all 0.2s ease-in-out;
+  color: var(--input-border-color);
+  font-size: 12px;
+}
+
+.requirement.valid {
+  color: var(--success-color);
+}
+
+.requirement-icon.valid {
+  color: var(--success-color);
+  transform: scale(1.1);
+}
+
+.direction-toggle-btn {
+  margin-bottom: 20px;
+}
+
+#user-status {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 1024px) {
+  .container,
+  .quiz-container {
+    flex-direction: column;
+    height: auto;
+    overflow-y: auto;
+  }
+
+  .left-sidebar,
+  .main-content,
+  .right-sidebar {
+    width: 100%;
+  }
+
+  .right-sidebar {
+    height: auto;
+    max-height: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .container,
+  .quiz-container,
+  .login-container {
+    flex-direction: column;
+  }
+
+  .left-sidebar,
+  .main-content,
+  .right-sidebar,
+  .login-container .left-sidebar,
+  .login-container .main-content,
+  .login-container .right-sidebar {
+    width: 100%;
+  }
+
+  .left-sidebar,
+  .right-sidebar {
+    height: auto;
+    max-height: none;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 1.8em;
+  }
+
+  h2 {
+    font-size: 1.4em;
+  }
+
+  h3 {
+    font-size: 1.1em;
+  }
+
+  .quiz-section,
+  .sidebar-section {
+    padding: 15px;
+  }
+
+  .right-sidebar {
+    max-height: none;
+  }
+}

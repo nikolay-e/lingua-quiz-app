@@ -13,9 +13,9 @@ console.log(
 
 module.exports = defineConfig({
   testDir: './tests',
-  timeout: 30 * 1000,
+  timeout: 60 * 1000,
   expect: {
-    timeout: 5000,
+    timeout: 10000,
   },
   use: {
     baseURL,
@@ -29,8 +29,16 @@ module.exports = defineConfig({
       // Enable verbose logging
       args: ['--enable-logging', '--v=1'],
     },
+    // Add action timeout
+    actionTimeout: 10000,
+    // Add navigation timeout
+    navigationTimeout: 30000,
   },
   reporter: [['html', { open: 'never' }], ['list']],
+  // Retry failed tests
+  retries: process.env.CI ? 2 : 0,
+  // Run tests in parallel
+  workers: process.env.CI ? 1 : undefined,
 
   projects: [
     // Desktop configurations

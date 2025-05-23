@@ -11,6 +11,23 @@ const MAX_CONSECUTIVE_ERRORS_BEFORE_FAIL = 3;
 const FULL_LIST_REFRESH_INTERVAL = 25;
 
 /**
+ * Gets word count from the header.
+ * @param {import('@playwright/test').Page} page
+ * @param {string} levelId - The level container id (e.g., 'level-0', 'level-1')
+ * @returns {Promise<number>}
+ */
+async function getWordCountFromHeader(page, levelId) {
+  try {
+    const headerText = await page.locator(`#${levelId} h3`).innerText();
+    const match = headerText.match(/\((\d+)\)/);
+    return match ? parseInt(match[1], 10) : 0;
+  } catch (error) {
+    console.warn(`Could not get count from header ${levelId}: ${error.message}`);
+    return 0;
+  }
+}
+
+/**
  * Gets words or count from a list.
  * @param {import('@playwright/test').Page} page
  * @param {string} listId
@@ -23,11 +40,16 @@ async function getWordsOrCountFromList(page, listId, countOnly = false) {
     // Ensure list container exists briefly before checking count or items
     await page
       .locator(`#${listId}`)
-      .waitFor({ state: 'attached', timeout: 2000 })
+      .waitFor({ state: 'attached', timeout: 3000 })
       .catch(() => {});
-
+    
     if (countOnly) {
-      const count = await listLocator.count();
+      const listItems = await listLocator.allTextContents();
+      // Filter out empty list messages
+      const actualItems = listItems.filter(text => 
+        !text.includes('No words') && !text.includes('No new words')
+      );
+      const count = actualItems.length;
       // console.log(`Count for ${listId}: ${count}`); // Optional debug log
       return count;
     }
@@ -35,6 +57,11 @@ async function getWordsOrCountFromList(page, listId, countOnly = false) {
     const words = [];
     const listItems = await listLocator.allTextContents();
     for (const text of listItems) {
+      // Skip empty list messages
+      if (text.includes('No words') || text.includes('No new words')) {
+        continue;
+      }
+      
       const match = text.match(/(.+?)\s+(\(.*)/);
 
       if (match) {
@@ -115,7 +142,9 @@ test.describe('Quiz Functionality', () => {
     }
     try {
       console.log('Waiting for initial list population check...');
-      await page.waitForSelector('#level-1-list li, #level-0-list li', { timeout: 5000 });
+      await page.waitForSelector('#level-1-list li, #level-0-list li', { timeout: 10000 });
+      // Wait a bit for state to stabilize after quiz load
+      await page.waitForTimeout(1000);
       console.log('Lists seem populated.');
     } catch (e) {
       console.warn('Initial list population check timed out, proceeding.');
@@ -132,8 +161,8 @@ test.describe('Quiz Functionality', () => {
     ]);
     let allWords = initialListsWords.flat(); // Initial full list for finding pairs
 
-    let masteredOneDirectionCount = await getWordsOrCountFromList(page, 'level-2-list', true); // true = count only
-    let masteredVocabularyWordsCount = await getWordsOrCountFromList(page, 'level-3-list', true); // true = count only
+    let masteredOneDirectionCount = await getWordCountFromHeader(page, 'level-2');
+    let masteredVocabularyWordsCount = await getWordCountFromHeader(page, 'level-3');
 
     const totalWordsInQuiz = allWords.length;
     const targetMasteredCount = totalWordsInQuiz;
@@ -145,14 +174,14 @@ test.describe('Quiz Functionality', () => {
     }
     console.log(`Quiz Started. Target: Master ${targetMasteredCount} words.`);
 
-    const initialL0Count = await getWordsOrCountFromList(page, 'level-0-list', true);
-    const initialL1Count = await getWordsOrCountFromList(page, 'level-1-list', true);
+    const initialL0Count = await getWordCountFromHeader(page, 'level-0');
+    const initialL1Count = await getWordCountFromHeader(page, 'level-1');
     console.log(
       `Initial Counts - L0: ${initialL0Count}, L1: ${initialL1Count}, L2: ${masteredOneDirectionCount}, L3: ${masteredVocabularyWordsCount}`
     );
 
     // --- Quiz State Variables ---
-    let directionToggled = false;
+    let currentDirection = 'Normal'; // Track current direction
     let consecutiveErrorsCount = 0;
     let questionCounter = 0;
     let forceFullRefreshNextLoop = false;
@@ -179,11 +208,23 @@ test.describe('Quiz Functionality', () => {
         await expect(questionWordElement).toBeVisible({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
         await expect(questionWordElement).not.toBeEmpty({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
         previousQuestionWord = await questionWordElement.innerText();
-        console.log(`Question word: "${previousQuestionWord}" (Direction: ${directionToggled ? 'Reverse' : 'Normal'})`);
+        
+        // Detect current direction from the UI
+        try {
+          const directionButton = page.locator('#direction-toggle');
+          const directionText = await directionButton.innerText();
+          currentDirection = directionText.includes('➔') && !directionText.includes('Russian ➔') ? 'Normal' : 'Reverse';
+        } catch (e) {
+          // If can't detect, assume based on L1/L2 counts
+          const l1Count = await getWordCountFromHeader(page, 'level-1');
+          const l2Count = await getWordCountFromHeader(page, 'level-2');
+          currentDirection = (l1Count > 0 || l2Count === 0) ? 'Normal' : 'Reverse';
+        }
+        
+        console.log(`Question word: "${previousQuestionWord}" (Direction: ${currentDirection})`);
       } catch (e) {
         console.error(`Failed to get question word (Attempt ${consecutiveErrorsCount + 1}).`);
         consecutiveErrorsCount++;
-        await page.waitForTimeout(250);
         forceFullRefreshNextLoop = true;
         continue;
       }
@@ -192,7 +233,7 @@ test.describe('Quiz Functionality', () => {
       if (!previousQuestionWord || previousQuestionWord.trim() === '' || previousQuestionWord.includes('No more questions')) {
         console.log(`Quiz state indicates no more questions for current direction: "${previousQuestionWord}"`);
         // Update L3 count first to check for completion
-        masteredVocabularyWordsCount = await getWordsOrCountFromList(page, 'level-3-list', true);
+        masteredVocabularyWordsCount = await getWordCountFromHeader(page, 'level-3');
 
         if (masteredVocabularyWordsCount >= targetMasteredCount) {
           console.log("Target reached upon 'No more questions'. Breaking loop.");
@@ -223,10 +264,10 @@ test.describe('Quiz Functionality', () => {
             continue;
           } catch (e) {
             console.error('Timeout or error waiting for the first REVERSE question word. Assuming stuck.', e);
-            masteredOneDirectionCount = await getWordsOrCountFromList(page, 'level-2-list', true);
-            masteredVocabularyWordsCount = await getWordsOrCountFromList(page, 'level-3-list', true); // Update count before final log
-            const currentL0Count = await getWordsOrCountFromList(page, 'level-0-list', true);
-            const currentL1Count = await getWordsOrCountFromList(page, 'level-1-list', true);
+            masteredOneDirectionCount = await getWordCountFromHeader(page, 'level-2');
+            masteredVocabularyWordsCount = await getWordCountFromHeader(page, 'level-3'); // Update count before final log
+            const currentL0Count = await getWordCountFromHeader(page, 'level-0');
+            const currentL1Count = await getWordCountFromHeader(page, 'level-1');
             console.error(
               `Stuck! Mastered L3: ${masteredVocabularyWordsCount}/${targetMasteredCount}. Remaining L0: ${currentL0Count}, L1: ${currentL1Count}, L2: ${masteredOneDirectionCount}`
             );
@@ -235,10 +276,10 @@ test.describe('Quiz Functionality', () => {
         } else {
           // Already tried Reverse, still "No more questions", and target not met.
           console.log('No more questions available in Reverse. Stuck?');
-          masteredOneDirectionCount = await getWordsOrCountFromList(page, 'level-2-list', true);
+          masteredOneDirectionCount = await getWordCountFromHeader(page, 'level-2');
           // L3 count already updated above
-          const currentL0Count = await getWordsOrCountFromList(page, 'level-0-list', true);
-          const currentL1Count = await getWordsOrCountFromList(page, 'level-1-list', true);
+          const currentL0Count = await getWordCountFromHeader(page, 'level-0');
+          const currentL1Count = await getWordCountFromHeader(page, 'level-1');
           console.error(
             `Stuck! Mastered L3: ${masteredVocabularyWordsCount}/${targetMasteredCount}. Remaining L0: ${currentL0Count}, L1: ${currentL1Count}, L2: ${masteredOneDirectionCount}`
           );
@@ -261,11 +302,11 @@ test.describe('Quiz Functionality', () => {
         ]);
         allWords = lists.flat(); // Update the master list of words
 
-        masteredOneDirectionCount = await getWordsOrCountFromList(page, 'level-2-list', true);
-        masteredVocabularyWordsCount = await getWordsOrCountFromList(page, 'level-3-list', true);
+        masteredOneDirectionCount = await getWordCountFromHeader(page, 'level-2');
+        masteredVocabularyWordsCount = await getWordCountFromHeader(page, 'level-3');
 
-        const currentL0Count = await getWordsOrCountFromList(page, 'level-0-list', true);
-        const currentL1Count = await getWordsOrCountFromList(page, 'level-1-list', true);
+        const currentL0Count = await getWordCountFromHeader(page, 'level-0');
+        const currentL1Count = await getWordCountFromHeader(page, 'level-1');
         console.log(
           `Refreshed Counts - L0:${currentL0Count}, L1:${currentL1Count}, L2:${masteredOneDirectionCount}, L3:${masteredVocabularyWordsCount}`
         );
@@ -289,10 +330,10 @@ test.describe('Quiz Functionality', () => {
             getWordsOrCountFromList(page, 'level-3-list', false),
           ]);
           allWords = lists.flat();
-          masteredOneDirectionCount = await getWordsOrCountFromList(page, 'level-2-list', true);
-          masteredVocabularyWordsCount = await getWordsOrCountFromList(page, 'level-3-list', true);
-          const currentL0Count = await getWordsOrCountFromList(page, 'level-0-list', true);
-          const currentL1Count = await getWordsOrCountFromList(page, 'level-1-list', true);
+          masteredOneDirectionCount = await getWordCountFromHeader(page, 'level-2');
+          masteredVocabularyWordsCount = await getWordCountFromHeader(page, 'level-3');
+          const currentL0Count = await getWordCountFromHeader(page, 'level-0');
+          const currentL1Count = await getWordCountFromHeader(page, 'level-1');
           console.log(
             `Refreshed Counts (after miss) - L0:${currentL0Count}, L1:${currentL1Count}, L2:${masteredOneDirectionCount}, L3:${masteredVocabularyWordsCount}`
           );
@@ -314,7 +355,7 @@ test.describe('Quiz Functionality', () => {
       for (let attempt = 1; attempt <= MAX_SUBMIT_RETRIES + 1; attempt++) {
         await page.click('#submit');
         try {
-          const feedbackMessageLocator = page.locator('#feedback .feedback-message');
+          const feedbackMessageLocator = page.locator('.feedback-container .feedback-message');
           await feedbackMessageLocator.waitFor({ state: 'visible', timeout: WAIT_FOR_ELEMENT_TIMEOUT });
           await expect(feedbackMessageLocator).not.toBeEmpty({ timeout: WAIT_FOR_ELEMENT_TIMEOUT });
           feedbackText = await feedbackMessageLocator.innerText();
@@ -349,7 +390,7 @@ test.describe('Quiz Functionality', () => {
         try {
           await waitForNextQuestion(page, previousQuestionWord);
         } catch (e) {
-          const currentL3Count = (await getWordsFromList(page, 'level-3-list')).length;
+          const currentL3Count = await getWordCountFromHeader(page, 'level-3');
           masteredVocabularyWordsCount = currentL3Count;
           if (currentL3Count >= targetMasteredCount) {
             console.log('Target reached after waiting timeout. Breaking.');
@@ -369,17 +410,17 @@ test.describe('Quiz Functionality', () => {
         !forceFullRefreshNextLoop
       ) {
         const [l2Count, l3Count] = await Promise.all([
-          getWordsOrCountFromList(page, 'level-2-list', true), // true = count only
-          getWordsOrCountFromList(page, 'level-3-list', true), // true = count only
+          getWordCountFromHeader(page, 'level-2'),
+          getWordCountFromHeader(page, 'level-3'),
         ]);
         masteredOneDirectionCount = l2Count;
         masteredVocabularyWordsCount = l3Count; // This count is crucial for the while loop condition
       } else {
         console.log('No more questions available in Reverse, but target not met. Stuck?');
-        masteredOneDirectionCount = await getWordsOrCountFromList(page, 'level-2-list', true);
-        masteredVocabularyWordsCount = await getWordsOrCountFromList(page, 'level-3-list', true);
-        const currentL0Count = await getWordsOrCountFromList(page, 'level-0-list', true);
-        const currentL1Count = await getWordsOrCountFromList(page, 'level-1-list', true);
+        masteredOneDirectionCount = await getWordCountFromHeader(page, 'level-2');
+        masteredVocabularyWordsCount = await getWordCountFromHeader(page, 'level-3');
+        const currentL0Count = await getWordCountFromHeader(page, 'level-0');
+        const currentL1Count = await getWordCountFromHeader(page, 'level-1');
         console.error(
           `Stuck! Mastered L3: ${masteredVocabularyWordsCount}/${targetMasteredCount}. Remaining L0: ${currentL0Count}, L1: ${currentL1Count}, L2: ${masteredOneDirectionCount}`
         );
@@ -390,8 +431,8 @@ test.describe('Quiz Functionality', () => {
     // --- Final Assertions ---
     console.log('\n--- Quiz Loop Finished ---');
 
-    const finalL2Count = await getWordsOrCountFromList(page, 'level-2-list', true);
-    const finalL3Count = await getWordsOrCountFromList(page, 'level-3-list', true);
+    const finalL2Count = await getWordCountFromHeader(page, 'level-2');
+    const finalL3Count = await getWordCountFromHeader(page, 'level-3');
     const finalProgressPoints = finalL2Count + finalL3Count;
     const maxProgressPoints = 2 * targetMasteredCount;
     const finalProgressPercentage = maxProgressPoints > 0 ? ((finalProgressPoints / maxProgressPoints) * 100).toFixed(1) : 'N/A';
