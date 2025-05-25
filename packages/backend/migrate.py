@@ -53,7 +53,7 @@ def init_migration_table(conn):
         conn.commit()
 
 def get_applied_migrations(conn):
-    """Get list of already applied migrations"""
+    """Get list of already applied migrations with their checksums"""
     try:
         with conn.cursor(cursor_factory=RealDictCursor) as cur:
             cur.execute("SELECT version, checksum FROM schema_migrations ORDER BY id")
@@ -133,16 +133,36 @@ def main():
         files = get_migration_files()
         print(f"Found {len(files)} migration files")
         
-        # Find pending migrations
-        pending = [f for f in files if f not in applied]
+        # Find pending migrations and check for changed import migrations
+        pending = []
+        changed_imports = []
         
-        if not pending:
+        for filename in files:
+            filepath = os.path.join(MIGRATIONS_DIR, filename)
+            with open(filepath, 'r') as f:
+                content = f.read()
+            current_checksum = calculate_checksum(content)
+            
+            if filename not in applied:
+                # New migration
+                pending.append(filename)
+            elif 'import' in filename and applied.get(filename) != current_checksum:
+                # Import migration with changed content
+                changed_imports.append((filename, current_checksum))
+        
+        if not pending and not changed_imports:
             print(f"\n{GREEN}✓ Database is up to date!{RESET}")
             return
         
-        print(f"\n{YELLOW}Pending migrations:{RESET}")
-        for f in pending:
-            print(f"  - {f}")
+        if pending:
+            print(f"\n{YELLOW}Pending migrations:{RESET}")
+            for f in pending:
+                print(f"  - {f}")
+        
+        if changed_imports:
+            print(f"\n{YELLOW}Changed import migrations (will re-run):{RESET}")
+            for f, _ in changed_imports:
+                print(f"  - {f}")
         
         # Ask for confirmation (skip in CI/CD environments)
         if os.getenv('CI') != 'true' and os.getenv('KUBERNETES_SERVICE_HOST') is None and os.getenv('DOCKER_ENVIRONMENT') != 'true':
@@ -150,22 +170,45 @@ def main():
                 print("Aborted.")
                 return
         
-        # Run pending migrations
+        # Run pending migrations and re-run changed imports
         print()
-        for filename in pending:
+        all_to_run = [(f, None) for f in pending] + changed_imports
+        
+        for filename, new_checksum in all_to_run:
             filepath = os.path.join(MIGRATIONS_DIR, filename)
-            print(f"Running {filename}...", end=' ')
+            
+            if new_checksum:
+                # Re-running changed import
+                print(f"Re-running {filename} (content changed)...", end=' ')
+            else:
+                print(f"Running {filename}...", end=' ')
             
             try:
                 # Read migration file
                 with open(filepath, 'r') as f:
                     content = f.read()
                 
-                # Calculate checksum
-                checksum = calculate_checksum(content)
+                # Calculate checksum if not provided
+                checksum = new_checksum or calculate_checksum(content)
                 
-                # Run migration
-                run_migration(conn, filename, content, checksum)
+                # For re-runs, update the existing record
+                if new_checksum:
+                    with conn.cursor() as cur:
+                        cur.execute("""
+                            UPDATE schema_migrations 
+                            SET checksum = %s, applied_at = NOW() 
+                            WHERE version = %s
+                        """, (checksum, filename))
+                        conn.commit()
+                    
+                    # Now run the migration content
+                    with conn.cursor() as cur:
+                        cur.execute(content)
+                        conn.commit()
+                else:
+                    # Normal migration run
+                    run_migration(conn, filename, content, checksum)
+                
                 print(f"{GREEN}✓{RESET}")
                 
             except Exception as e:

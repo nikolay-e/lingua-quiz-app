@@ -14,38 +14,14 @@ DECLARE
   v_target_language_name CONSTANT VARCHAR := 'Russian';
   v_word_list_name CONSTANT VARCHAR := 'German Russian A1';
 
-  -- Language IDs
-  v_source_language_id INTEGER;
-  v_target_language_id INTEGER;
-  v_word_list_id INTEGER;
-
   -- Counter for processed word pairs
   v_word_pair_count INTEGER := 0;
 
   -- A record for the current word pair being processed
   r_word_pair RECORD;
 BEGIN
-  -- First, make sure the languages and word list exist
-
-  -- Insert or get source language
-  INSERT INTO language (name)
-  VALUES (v_source_language_name)
-  ON CONFLICT (name) DO UPDATE SET name = EXCLUDED.name
-  RETURNING id INTO v_source_language_id;
-
-  -- Insert or get target language
-  INSERT INTO language (name)
-  VALUES (v_target_language_name)
-  ON CONFLICT (name) DO UPDATE SET name = EXCLUDED.name
-  RETURNING id INTO v_target_language_id;
-
-  -- Insert or get word list
-  INSERT INTO word_list (name)
-  VALUES (v_word_list_name)
-  ON CONFLICT (name) DO UPDATE SET name = EXCLUDED.name
-  RETURNING id INTO v_word_list_id;
-
-  -- Now process each word pair
+  -- Process each word pair using the existing function
+  -- The function will handle language and word list creation/updates
   -- Format: translation_id, source_word_id, target_word_id, source_word, target_word, source_example, target_example
 
   FOR r_word_pair IN (
@@ -1097,33 +1073,19 @@ BEGIN
     -- End of word pairs data
     ) AS t(translation_id, source_word_id, target_word_id, source_word, target_word, source_example, target_example)
   ) LOOP
-    -- Insert source word
-    INSERT INTO word (id, text, language_id, usage_example)
-    VALUES (r_word_pair.source_word_id, r_word_pair.source_word, v_source_language_id, r_word_pair.source_example)
-    ON CONFLICT (id) DO UPDATE
-    SET text = EXCLUDED.text,
-        language_id = EXCLUDED.language_id,
-        usage_example = EXCLUDED.usage_example;
-
-    -- Insert target word
-    INSERT INTO word (id, text, language_id, usage_example)
-    VALUES (r_word_pair.target_word_id, r_word_pair.target_word, v_target_language_id, r_word_pair.target_example)
-    ON CONFLICT (id) DO UPDATE
-    SET text = EXCLUDED.text,
-        language_id = EXCLUDED.language_id,
-        usage_example = EXCLUDED.usage_example;
-
-    -- Insert translation
-    INSERT INTO translation (id, source_word_id, target_word_id)
-    VALUES (r_word_pair.translation_id, r_word_pair.source_word_id, r_word_pair.target_word_id)
-    ON CONFLICT (id) DO UPDATE
-    SET source_word_id = EXCLUDED.source_word_id,
-        target_word_id = EXCLUDED.target_word_id;
-
-    -- Add translation to word list
-    INSERT INTO word_list_entry (translation_id, word_list_id)
-    VALUES (r_word_pair.translation_id, v_word_list_id)
-    ON CONFLICT (translation_id, word_list_id) DO NOTHING;
+    -- Use the existing function to handle word insertion with proper conflict resolution
+    PERFORM insert_word_pair_and_add_to_list(
+      r_word_pair.translation_id,
+      r_word_pair.source_word_id,
+      r_word_pair.target_word_id,
+      r_word_pair.source_word,
+      r_word_pair.target_word,
+      v_source_language_name,
+      v_target_language_name,
+      v_word_list_name,
+      r_word_pair.source_example,
+      r_word_pair.target_example
+    );
 
     -- Increment counter
     v_word_pair_count := v_word_pair_count + 1;

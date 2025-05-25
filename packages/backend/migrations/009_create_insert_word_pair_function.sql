@@ -37,6 +37,7 @@ BEGIN
   RETURNING id INTO v_target_language_id;
 
   -- Insert or update the source word
+  -- Force update all fields to ensure data is overwritten
   INSERT INTO word (id, text, language_id, usage_example)
   VALUES (p_source_word_id, p_source_word, v_source_language_id, p_source_word_usage_example)
   ON CONFLICT (id) DO UPDATE
@@ -45,6 +46,7 @@ BEGIN
       usage_example = EXCLUDED.usage_example;
 
   -- Insert or update the target word
+  -- Force update all fields to ensure data is overwritten
   INSERT INTO word (id, text, language_id, usage_example)
   VALUES (p_target_word_id, p_target_word, v_target_language_id, p_target_word_usage_example)
   ON CONFLICT (id) DO UPDATE
@@ -68,8 +70,7 @@ BEGIN
   -- Insert or update the translation in the word list
   INSERT INTO word_list_entry (translation_id, word_list_id)
   VALUES (p_translation_id, v_word_list_id)
-  ON CONFLICT (translation_id, word_list_id) DO UPDATE
-  SET translation_id = EXCLUDED.translation_id, word_list_id = EXCLUDED.word_list_id;
+  ON CONFLICT (translation_id, word_list_id) DO NOTHING;
 
 END;
 $$ LANGUAGE plpgsql;
