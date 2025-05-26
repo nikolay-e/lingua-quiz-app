@@ -16,6 +16,8 @@ from psycopg2.extras import RealDictCursor
 from psycopg2.pool import SimpleConnectionPool
 import bcrypt
 import jwt
+import werkzeug.exceptions
+from quiz_logic import QuizManager
 
 # Configuration
 DB_HOST = os.getenv('DB_HOST', 'localhost')
@@ -26,16 +28,17 @@ DB_PASSWORD = os.getenv('POSTGRES_PASSWORD', 'password')
 JWT_SECRET = os.getenv('JWT_SECRET', 'your_jwt_secret_key_here')
 JWT_EXPIRES_IN = os.getenv('JWT_EXPIRES_IN', '1h')
 PORT = int(os.getenv('PORT', 9000))
+CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '*').split(',') if os.getenv('CORS_ALLOWED_ORIGINS') != '*' else ['*']
 
 # Flask app
 app = Flask(__name__)
-CORS(app, origins=['*'])
+CORS(app, origins=CORS_ALLOWED_ORIGINS, methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'])
 
 # Rate limiting
 limiter = Limiter(
     app=app,
     key_func=get_remote_address,
-    default_limits=["500 per 15 minutes"]
+    default_limits=["100000 per 15 minutes"]  # Very high limit for comprehensive testing
 )
 
 # Database pool
@@ -47,6 +50,9 @@ db_pool = SimpleConnectionPool(
     user=DB_USER,
     password=DB_PASSWORD
 )
+
+# Quiz manager
+quiz_manager = QuizManager(db_pool)
 
 # Helper functions
 def snake_to_camel(snake_str):
@@ -71,24 +77,65 @@ def put_db(conn):
     db_pool.putconn(conn)
 
 def query_db(query, args=(), one=False):
-    conn = get_db()
+    conn = None
     try:
+        conn = get_db()
+        if not conn:
+            raise Exception("Failed to get database connection")
         with conn.cursor(cursor_factory=RealDictCursor) as cur:
             cur.execute(query, args)
             rv = cur.fetchall()
             return (rv[0] if rv else None) if one else rv
+    except psycopg2.pool.PoolError as e:
+        print(f"Connection pool error: {e}")
+        raise
+    except Exception as e:
+        print(f"Database query error: {e}")
+        raise
     finally:
-        put_db(conn)
+        if conn:
+            try:
+                put_db(conn)
+            except Exception as e:
+                print(f"CRITICAL: Failed to return connection to pool: {e}")
+                # Force close the connection to prevent leak
+                try:
+                    conn.close()
+                except:
+                    pass
 
 def execute_db(query, args=()):
-    conn = get_db()
+    conn = None
     try:
+        conn = get_db()
+        if not conn:
+            raise Exception("Failed to get database connection")
         with conn.cursor(cursor_factory=RealDictCursor) as cur:
             cur.execute(query, args)
             conn.commit()
             return cur.rowcount
+    except psycopg2.pool.PoolError as e:
+        print(f"Connection pool error: {e}")
+        raise
+    except Exception as e:
+        print(f"Database execute error: {e}")
+        if conn:
+            try:
+                conn.rollback()
+            except:
+                pass  # Don't raise in rollback
+        raise
     finally:
-        put_db(conn)
+        if conn:
+            try:
+                put_db(conn)
+            except Exception as e:
+                print(f"CRITICAL: Failed to return connection to pool: {e}")
+                # Force close the connection to prevent leak
+                try:
+                    conn.close()
+                except:
+                    pass
 
 # Auth decorator
 def auth_required(f):
@@ -141,6 +188,7 @@ def register():
     # Create user
     hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
     conn = get_db()
+    user = None
     try:
         with conn.cursor(cursor_factory=RealDictCursor) as cur:
             cur.execute(
@@ -149,6 +197,10 @@ def register():
             )
             user = cur.fetchone()
             conn.commit()
+    except Exception as e:
+        conn.rollback()
+        print(f"Failed to create user: {e}")
+        raise
     finally:
         put_db(conn)
     
@@ -262,6 +314,155 @@ def update_user_word_sets():
     
     return jsonify({'message': 'Word sets status updated successfully'})
 
+@app.route('/api/quiz/start', methods=['POST'])
+@auth_required
+def start_quiz():
+    """Start or resume a quiz session"""
+    data = request.get_json()
+    word_list_name = data.get('wordListName')
+    
+    if not word_list_name:
+        return jsonify({'message': 'wordListName is required'}), 400
+    
+    try:
+        state = quiz_manager.get_or_create_session(request.user_id, word_list_name)
+        
+        if 'error' in state:
+            return jsonify({'message': state['error']}), 404
+        
+        # Convert to camelCase for frontend
+        return jsonify({
+            'sessionId': state['session_id'],
+            'direction': 'normal' if state['direction'] else 'reverse',
+            'currentTranslationId': state['current_translation_id'],
+            'sourceLanguage': state['source_language'],
+            'targetLanguage': state['target_language'],
+            'wordLists': {
+                'level0': state['level_0_words'] or [],
+                'level1': state['level_1_words'] or [],
+                'level2': state['level_2_words'] or [],
+                'level3': state['level_3_words'] or []
+            }
+        })
+    except Exception as e:
+        import traceback
+        print(f"[ERROR] Error starting quiz for user {request.user_id}, word_list {word_list_name}: {e}")
+        print(f"[ERROR] Exception type: {type(e).__name__}")
+        traceback.print_exc()
+        return jsonify({'message': 'Failed to start quiz'}), 500
+
+@app.route('/api/quiz/next-question', methods=['GET'])
+@auth_required
+def get_next_question():
+    """Get the next question"""
+    word_list_name = request.args.get('wordListName')
+    
+    print(f"[DEBUG] get_next_question called - user_id: {request.user_id}, word_list: {word_list_name}")
+    
+    if not word_list_name:
+        return jsonify({'message': 'wordListName is required'}), 400
+    
+    try:
+        question = quiz_manager.get_next_question(request.user_id, word_list_name)
+        print(f"[DEBUG] Question retrieved: {question}")
+        return jsonify(question)
+    except Exception as e:
+        import traceback
+        print(f"[ERROR] Error getting next question for user {request.user_id}, word_list {word_list_name}: {e}")
+        print(f"[ERROR] Exception type: {type(e).__name__}")
+        traceback.print_exc()
+        return jsonify({'message': 'Failed to get next question'}), 500
+
+@app.route('/api/quiz/submit-answer', methods=['POST'])
+@auth_required  
+def submit_answer():
+    """Submit an answer"""
+    data = request.get_json()
+    word_list_name = data.get('wordListName')
+    translation_id = data.get('translationId')
+    user_answer = data.get('answer', '')
+    displayed_word = data.get('displayedWord')  # Optional field for validation
+    
+    if not all([word_list_name, translation_id]):
+        return jsonify({'message': 'Missing required fields'}), 400
+    
+    try:
+        result = quiz_manager.submit_answer(
+            request.user_id, 
+            word_list_name, 
+            translation_id, 
+            user_answer,
+            displayed_word
+        )
+        
+        if 'error' in result:
+            return jsonify({'message': result['error']}), 400
+            
+        return jsonify(result)
+    except Exception as e:
+        import traceback
+        print(f"[ERROR] Error submitting answer for user {request.user_id}: {e}")
+        print(f"[ERROR] Exception type: {type(e).__name__}")
+        traceback.print_exc()
+        return jsonify({'message': 'Failed to submit answer'}), 500
+
+@app.route('/api/quiz/toggle-direction', methods=['POST'])
+@auth_required
+def toggle_direction():
+    """Toggle quiz direction"""
+    data = request.get_json()
+    word_list_name = data.get('wordListName')
+    
+    if not word_list_name:
+        return jsonify({'message': 'wordListName is required'}), 400
+    
+    try:
+        result = quiz_manager.toggle_direction(request.user_id, word_list_name)
+        
+        if 'error' in result:
+            return jsonify({'message': result['error']}), 404
+            
+        return jsonify(result)
+    except Exception as e:
+        import traceback
+        print(f"Error toggling direction: {e}")
+        traceback.print_exc()
+        return jsonify({'message': 'Failed to toggle direction'}), 500
+
+@app.route('/api/quiz/state', methods=['GET'])
+@auth_required
+def get_quiz_state():
+    """Get current quiz state"""
+    word_list_name = request.args.get('wordListName')
+    
+    if not word_list_name:
+        return jsonify({'message': 'wordListName is required'}), 400
+    
+    try:
+        state = quiz_manager.get_or_create_session(request.user_id, word_list_name)
+        
+        if 'error' in state:
+            return jsonify({'message': state['error']}), 404
+        
+        return jsonify({
+            'sessionId': state['session_id'],
+            'direction': 'normal' if state['direction'] else 'reverse',
+            'currentTranslationId': state['current_translation_id'],
+            'sourceLanguage': state['source_language'],
+            'targetLanguage': state['target_language'],
+            'wordLists': {
+                'level0': state['level_0_words'] or [],
+                'level1': state['level_1_words'] or [],
+                'level2': state['level_2_words'] or [],
+                'level3': state['level_3_words'] or []
+            }
+        })
+    except Exception as e:
+        import traceback
+        print(f"Error getting quiz state: {e}")
+        traceback.print_exc()
+        return jsonify({'message': 'Failed to get quiz state'}), 500
+
 # Error handler
 @app.errorhandler(404)
 def not_found(e):
@@ -269,9 +470,24 @@ def not_found(e):
 
 @app.errorhandler(Exception)
 def handle_error(e):
-    print(f"Error: {e}")
-    return jsonify({'message': 'An internal server error occurred.'}), 500
+    # Handle specific exceptions with appropriate status codes
+    if isinstance(e, werkzeug.exceptions.TooManyRequests):
+        return jsonify({'message': 'Too many requests. Please try again later.'}), 429
+    elif isinstance(e, werkzeug.exceptions.HTTPException):
+        # Pass through HTTP exceptions with their status codes
+        return jsonify({'message': e.description}), e.code
+    elif isinstance(e, psycopg2.pool.PoolError):
+        print(f"Database pool error: {e}")
+        return jsonify({'message': 'Database connection unavailable. Please try again.'}), 503
+    else:
+        # Log the actual error for debugging
+        print(f"Unhandled error: {type(e).__name__}: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'message': 'An internal server error occurred.'}), 500
 
 if __name__ == '__main__':
-    print(f"Starting server on port {PORT}")
-    app.run(host='0.0.0.0', port=PORT, debug=False)
+    # Enable debug mode if DEBUG env var is set
+    debug_mode = os.getenv('DEBUG', 'false').lower() == 'true'
+    print(f"Starting server on port {PORT} (debug={debug_mode})")
+    app.run(host='0.0.0.0', port=PORT, debug=debug_mode)

@@ -12,7 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt -r requirements-migrate.txt \
   && apk --purge del .build-deps
 
 # Copy application and migrations
-COPY packages/backend/app.py packages/backend/migrate.py ./
+COPY packages/backend/app.py packages/backend/migrate.py packages/backend/quiz_logic.py ./
 COPY packages/backend/migrations/ ./migrations/
 
 # Run as non-root

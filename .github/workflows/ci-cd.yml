@@ -504,10 +504,16 @@ jobs:
           echo "Running tests against URL: ${API_URL}"
           cd packages/backend
           pip install -r requirements-test.txt
+          echo "::group::Basic Integration Tests"
           python test_integration.py
-          echo "::group::Test Results"
-          echo "Tests completed. Check test runner output above for details."
           echo "::endgroup::"
+          echo "::group::Quiz Integration Tests"
+          python test_quiz_integration.py
+          echo "::endgroup::"
+          echo "::group::Quiz Learning Simulations (All Word Lists in Parallel)"
+          python test_quiz_learning_simulation.py --parallel
+          echo "::endgroup::"
+          echo "Tests completed. Check test runner output above for details."
 
   security-scans:
     name: Security Scans (ZAP)

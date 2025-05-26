@@ -1,20 +1,39 @@
 const getServerAddress = () => {
-  const { hostname } = window.location;
-  const { port } = window.location;
+  const { hostname, port, protocol } = window.location;
 
-  if (hostname === 'localhost' && port === '8080') {
-    return 'http://localhost:9000/api';
+  // Environment variable override (for Docker and other deployment scenarios)
+  if (window.LINGUA_QUIZ_API_URL) {
+    return window.LINGUA_QUIZ_API_URL;
   }
+
+  // Development scenarios
+  if (hostname === 'localhost') {
+    if (port === '8080') {
+      return 'http://localhost:9000/api';
+    }
+    // Handle other development ports
+    return `http://localhost:9000/api`;
+  }
+  
+  // Docker internal networking
   if (hostname === 'frontend') {
     return 'http://backend:9000/api';
   }
+  
+  // Production domains
   if (hostname === 'test-lingua-quiz.nikolay-eremeev.com') {
     return 'https://test-api-lingua-quiz.nikolay-eremeev.com/api';
   }
   if (hostname === 'lingua-quiz.nikolay-eremeev.com') {
     return 'https://api-lingua-quiz.nikolay-eremeev.com/api';
   }
-  return '/api'; // fallback
+  
+  // Generic production fallback - assume API is on same domain with /api path
+  if (protocol === 'https:') {
+    return `https://${hostname}/api`;
+  }
+  
+  return '/api'; // fallback for same-origin deployment
 };
 
 const serverAddress = getServerAddress();
@@ -83,6 +102,79 @@ const api = {
     });
 
     if (!response.ok) throw new Error('Failed to save quiz state');
+  },
+
+  async startQuiz(token, wordListName) {
+    const response = await fetch(`${serverAddress}/quiz/start`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ wordListName })
+    });
+    
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Failed to start quiz');
+    return data;
+  },
+
+  async getNextQuestion(token, wordListName) {
+    const response = await fetch(
+      `${serverAddress}/quiz/next-question?wordListName=${encodeURIComponent(wordListName)}`,
+      {
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${token}` }
+      }
+    );
+    
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Failed to get next question');
+    return data;
+  },
+
+  async submitAnswer(token, wordListName, translationId, answer, displayedWord) {
+    const response = await fetch(`${serverAddress}/quiz/submit-answer`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ wordListName, translationId, answer, displayedWord })
+    });
+    
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Failed to submit answer');
+    return data;
+  },
+
+  async toggleDirection(token, wordListName) {
+    const response = await fetch(`${serverAddress}/quiz/toggle-direction`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ wordListName })
+    });
+    
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Failed to toggle direction');
+    return data;
+  },
+
+  async getQuizState(token, wordListName) {
+    const response = await fetch(
+      `${serverAddress}/quiz/state?wordListName=${encodeURIComponent(wordListName)}`,
+      {
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${token}` }
+      }
+    );
+    
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Failed to get quiz state');
+    return data;
   },
 };
 

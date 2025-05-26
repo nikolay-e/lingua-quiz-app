@@ -1,6 +1,11 @@
 # Dependency directories
 node_modules/
 .venv
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
 # Build outputs
 dist/
 build/
