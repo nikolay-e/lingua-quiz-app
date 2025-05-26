@@ -6,41 +6,31 @@
   let answerInput;
   let feedback = null;
   let usageExamples = null;
-  let currentQuestion = null;
   let isSubmitting = false;
   
-  // Reactive state from stores
+  // Request queuing to prevent concurrent requests
+  let requestQueue = Promise.resolve();
+  let currentRequestId = 0;
+  
+  // Reactive state from stores  
   $: wordSets = $quizStore.wordSets;
   $: selectedQuiz = $quizStore.selectedQuiz;
+  $: currentQuestion = $quizStore.currentQuestion;
   $: direction = $quizStore.direction;
   $: sourceLanguage = $quizStore.sourceLanguage;
   $: targetLanguage = $quizStore.targetLanguage;
   $: loading = $quizStore.loading;
+  $: wordLists = $quizStore.wordLists;
   $: email = $authStore.email;
   
-  // Reactive word lists - THIS IS THE KEY FIX
-  $: level0Words = Array.from($quizStore.wordStatusSets?.LEVEL_0 || new Set())
-    .map(id => $quizStore.translations.get(id))
-    .filter(Boolean)
-    .map(word => `${word.sourceWord} (${word.targetWord})`);
-    
-  $: level1Words = Array.from($quizStore.wordStatusSets?.LEVEL_1 || new Set())
-    .map(id => $quizStore.translations.get(id))
-    .filter(Boolean)
-    .map(word => `${word.sourceWord} (${word.targetWord})`);
-    
-  $: level2Words = Array.from($quizStore.wordStatusSets?.LEVEL_2 || new Set())
-    .map(id => $quizStore.translations.get(id))
-    .filter(Boolean)
-    .map(word => `${word.sourceWord} (${word.targetWord})`);
-    
-  $: level3Words = Array.from($quizStore.wordStatusSets?.LEVEL_3 || new Set())
-    .map(id => $quizStore.translations.get(id))
-    .filter(Boolean)
-    .map(word => `${word.sourceWord} (${word.targetWord})`);
+  // Reactive word lists for display
+  $: level0Words = wordLists.level0.map(w => `${w.source} (${w.target})`);
+  $: level1Words = wordLists.level1.map(w => `${w.source} (${w.target})`);
+  $: level2Words = wordLists.level2.map(w => `${w.source} (${w.target})`);
+  $: level3Words = wordLists.level3.map(w => `${w.source} (${w.target})`);
   
-  // Derived values
-  $: directionText = direction 
+  // Direction text
+  $: directionText = direction === 'normal' 
     ? `${sourceLanguage} ➔ ${targetLanguage}`
     : `${targetLanguage} ➔ ${sourceLanguage}`;
     
@@ -52,58 +42,69 @@
   async function handleQuizSelect(e) {
     const quiz = e.target.value;
     
-    // Reset state first
+    // Reset state
     quizStore.reset();
-    currentQuestion = null;
     feedback = null;
     usageExamples = null;
     userAnswer = '';
     
-    if (!quiz) {
-      return;
-    }
+    if (!quiz) return;
     
     try {
-      console.log('Loading quiz:', quiz);
-      await quizStore.loadQuiz($authStore.token, quiz);
-      
-      // Small delay to ensure state is fully updated
-      await new Promise(resolve => setTimeout(resolve, 100));
-      
-      currentQuestion = quizStore.getNextQuestion();
+      await quizStore.startQuiz($authStore.token, quiz);
+      const question = await quizStore.getNextQuestion($authStore.token);
+      if (!question) {
+        feedback = { message: 'No questions available for this quiz.', isSuccess: false };
+      }
       if (answerInput) answerInput.focus();
     } catch (error) {
-      console.error('Failed to load quiz:', error);
-      // Handle error appropriately
+      console.error('Failed to start quiz:', error);
+      feedback = { message: 'Failed to start quiz. Please try again.', isSuccess: false };
     }
   }
   
   async function submitAnswer() {
     if (!currentQuestion || isSubmitting) return;
     
-    isSubmitting = true;
+    const requestId = ++currentRequestId;
     
-    try {
-      const result = await quizStore.submitAnswer(userAnswer);
-      
-      if (result) {
-        feedback = result.feedback;
-        usageExamples = result.usageExamples;
-        userAnswer = '';
-        
-        // Add a small delay to ensure state updates properly
-        await new Promise(resolve => setTimeout(resolve, 100));
-        
-        // Get next question
-        currentQuestion = quizStore.getNextQuestion();
+    // Queue this request
+    requestQueue = requestQueue.then(async () => {
+      // Check if this request is still valid
+      if (requestId !== currentRequestId) {
+        console.log('Request cancelled - newer request exists');
+        return;
       }
-    } catch (error) {
-      console.error('Error submitting answer:', error);
-      feedback = { message: 'Error submitting answer. Please try again.', isSuccess: false };
-    } finally {
-      isSubmitting = false;
-      if (answerInput) answerInput.focus();
-    }
+      
+      isSubmitting = true;
+      feedback = null; // Clear any previous feedback immediately
+      usageExamples = null;
+      
+      try {
+        const result = await quizStore.submitAnswer($authStore.token, userAnswer);
+        
+        // Only update UI if this is still the current request
+        if (requestId === currentRequestId) {
+          if (result) {
+            feedback = result.feedback;
+            usageExamples = result.usageExamples;
+            userAnswer = '';
+          }
+        }
+      } catch (error) {
+        if (requestId === currentRequestId) {
+          console.error('Error submitting answer:', error);
+          feedback = { message: error.message || 'Error submitting answer. Please try again.', isSuccess: false };
+        }
+      } finally {
+        if (requestId === currentRequestId) {
+          isSubmitting = false;
+          if (answerInput) answerInput.focus();
+        }
+      }
+    });
+    
+    await requestQueue;
   }
   
   function handleKeydown(e) {
@@ -113,13 +114,21 @@
     }
   }
   
-  function toggleDirection() {
-    quizStore.toggleDirection();
-    currentQuestion = quizStore.getNextQuestion();
-    feedback = null;
-    usageExamples = null;
-    userAnswer = '';
-    if (answerInput) answerInput.focus();
+  async function toggleDirection() {
+    try {
+      await quizStore.toggleDirection($authStore.token);
+      const question = await quizStore.getNextQuestion($authStore.token);
+      if (!question) {
+        feedback = { message: 'No questions available in this direction.', isSuccess: false };
+      }
+      feedback = null;
+      usageExamples = null;
+      userAnswer = '';
+      if (answerInput) answerInput.focus();
+    } catch (error) {
+      console.error('Failed to toggle direction:', error);
+      feedback = { message: 'Failed to toggle direction. Please try again.', isSuccess: false };
+    }
   }
   
   function logout() {
@@ -132,18 +141,22 @@
     <section class="quiz-section">
       <h2>
         <div class="quiz-header">
-          <div class="quiz-select">
+          <div class="quiz-select-container">
+            <label for="quiz-select" class="quiz-select-label">
+              <i class="fas fa-book"></i> Choose your word list:
+            </label>
             <select 
               id="quiz-select" 
+              class="quiz-select"
               on:change={handleQuizSelect}
               disabled={loading}
               value={selectedQuiz || ''}
             >
               <option value="">
-                {loading ? 'Loading quizzes...' : 'Select a quiz'}
+                {loading ? 'Loading quizzes...' : '🎯 Select a quiz to start learning'}
               </option>
               {#each wordSets as set}
-                <option value={set.name}>{set.name}</option>
+                <option value={set.name}>{set.name} ({set.wordCount} {set.wordCount === 1 ? 'word' : 'words'})</option>
               {/each}
             </select>
           </div>
@@ -151,11 +164,24 @@
       </h2>
       
       <div class="quiz-content">
-        <div class="question">
-          <span id="word">
-            {currentQuestion ? currentQuestion.word : (selectedQuiz ? 'No more questions available.' : '')}
-          </span>
-        </div>
+        {#if !selectedQuiz}
+          <div class="welcome-message">
+            <div class="welcome-icon">🎯</div>
+            <h3>Welcome to LinguaQuiz!</h3>
+            <p>Choose a word list from the dropdown above to start learning.</p>
+            <div class="feature-list">
+              <div class="feature">✨ Adaptive learning algorithm</div>
+              <div class="feature">📊 Track your progress</div>
+              <div class="feature">🔄 Practice in both directions</div>
+            </div>
+          </div>
+        {:else}
+          <div class="question">
+            <span id="word">
+              {currentQuestion ? currentQuestion.word : 'No more questions available.'}
+            </span>
+          </div>
+        {/if}
         
         {#if currentQuestion}
           <div class="input-group">
@@ -224,8 +250,6 @@
         <ol id="level-1-list">
           {#each level1Words as word}
             <li>{word}</li>
-          {:else}
-            <li>No words currently learning</li>
           {/each}
         </ol>
       </div>
@@ -235,8 +259,6 @@
         <ol id="level-2-list">
           {#each level2Words as word}
             <li>{word}</li>
-          {:else}
-            <li>No words mastered in one direction yet</li>
           {/each}
         </ol>
       </div>
@@ -246,8 +268,6 @@
         <ol id="level-3-list">
           {#each level3Words as word}
             <li>{word}</li>
-          {:else}
-            <li>No words fully mastered yet</li>
           {/each}
         </ol>
       </div>
@@ -257,8 +277,6 @@
         <ol id="level-0-list">
           {#each level0Words as word}
             <li>{word}</li>
-          {:else}
-            <li>No new words available</li>
           {/each}
         </ol>
       </div>

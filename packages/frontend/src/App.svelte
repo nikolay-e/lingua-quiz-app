@@ -1,4 +1,5 @@
 <script>
+  import { onDestroy } from 'svelte';
   import { authStore, quizStore } from './stores.js';
   import Login from './views/Login.svelte';
   import Quiz from './views/Quiz.svelte';
@@ -10,6 +11,10 @@
     if (!isAuthenticated) {
       quizStore.reset();
     }
+  });
+  
+  onDestroy(() => {
+    authStore.cleanup();
   });
 </script>
 

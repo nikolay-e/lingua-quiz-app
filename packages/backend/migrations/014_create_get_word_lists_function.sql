@@ -10,6 +10,7 @@
 CREATE OR REPLACE FUNCTION get_word_lists () RETURNS TABLE (
   id INTEGER,
   name VARCHAR(255),
+  word_count INTEGER,
   created_at TEXT,
   updated_at TEXT
 ) AS $$
@@ -18,6 +19,7 @@ BEGIN
   SELECT
     word_list.id,
     word_list.name,
+    (SELECT COUNT(*) FROM word_list_entry WHERE word_list_id = word_list.id)::INTEGER AS word_count,
     word_list.created_at::TEXT AS created_at,
     word_list.updated_at::TEXT AS updated_at
   FROM word_list

@@ -60,10 +60,20 @@ def get_applied_migrations(conn):
             result = {row['version']: row['checksum'] for row in cur.fetchall()}
         # Ensure transaction is properly closed
         txn_status = conn.get_transaction_status()
-        if txn_status == 1:  # INTRANS - normal transaction
+        if txn_status == 0:  # IDLE
+            pass  # No action needed
+        elif txn_status == 1:  # INTRANS - normal transaction
             conn.commit()
         elif txn_status == 2:  # INERROR - failed transaction 
             conn.rollback()
+        elif txn_status == 3:  # INTRANS (subxact) - in subtransaction
+            conn.commit()
+        elif txn_status == 4:  # INERROR (subxact) - failed subtransaction  
+            conn.rollback()
+        elif txn_status == 5:  # INTRANS_READONLY - read-only transaction
+            conn.rollback()  # Can't commit readonly transaction
+        else:  # UNKNOWN or future states
+            conn.rollback()  # Safe default
         return result
     except Exception as e:
         # Rollback on any error and return empty dict

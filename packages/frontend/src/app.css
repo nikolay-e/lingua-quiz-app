@@ -52,6 +52,7 @@ h3 {
 input[type="text"],
 input[type="password"],
 input[type="email"],
+select,
 button {
   width: 100%;
   padding: 12px;
@@ -64,10 +65,27 @@ button {
 
 input[type="text"]:focus,
 input[type="password"]:focus,
-input[type="email"]:focus {
+input[type="email"]:focus,
+select:focus {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+select {
+  background-color: white;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 8px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  appearance: none;
+  cursor: pointer;
+}
+
+select:disabled {
+  background-color: #f9fafb;
+  color: #6b7280;
+  cursor: not-allowed;
 }
 
 button {
@@ -346,6 +364,66 @@ button:disabled {
 
 #user-status {
   margin-bottom: 20px;
+}
+
+/* New styles for welcome message */
+.welcome-message {
+  text-align: center;
+  padding: 40px 20px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.welcome-icon {
+  font-size: 4em;
+  margin-bottom: 20px;
+  animation: bounce 2s infinite;
+}
+
+.welcome-message h3 {
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  font-size: 1.8em;
+}
+
+.welcome-message p {
+  color: var(--text-color);
+  font-size: 1.1em;
+  margin-bottom: 30px;
+  opacity: 0.8;
+}
+
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.feature {
+  background: linear-gradient(135deg, #f8f9ff 0%, #e8f0ff 100%);
+  padding: 15px 20px;
+  border-radius: 8px;
+  color: var(--primary-color);
+  font-weight: 500;
+  border-left: 4px solid var(--primary-color);
+  transition: transform 0.2s ease;
+}
+
+.feature:hover {
+  transform: translateX(5px);
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
 }
 
 @media (max-width: 1024px) {

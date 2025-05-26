@@ -14,22 +14,6 @@ async function withRetry(fn, retries = 3) {
 }
 
 async function register(page, email, password, success) {
-  // Log all network requests
-  page.on('request', (request) => {
-    // eslint-disable-next-line no-console
-    console.log('>>>', request.method(), request.url());
-  });
-
-  page.on('response', (response) => {
-    // eslint-disable-next-line no-console
-    console.log('<<<', response.status(), response.url());
-  });
-
-  // Log console messages from the page
-  page.on('console', (msg) => {
-    // eslint-disable-next-line no-console
-    console.log('PAGE LOG:', msg.text());
-  });
 
   // Use environment variable or fallback URL
   const baseURL = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
