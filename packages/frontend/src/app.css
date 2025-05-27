@@ -11,6 +11,18 @@
   --transition-speed: 0.3s;
 }
 
+[data-theme="dark"] {
+  --primary-color: #5ba3f5;
+  --secondary-color: #f5b041;
+  --background-color: #1a1a1a;
+  --text-color: #e0e0e0;
+  --container-bg: #2a2a2a;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --input-border-color: #444;
+  --success-color: #2ecc71;
+  --error-color: #e67e73;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -61,6 +73,8 @@ button {
   border: 1px solid var(--input-border-color);
   font-size: 16px;
   transition: all var(--transition-speed) ease;
+  background-color: var(--container-bg);
+  color: var(--text-color);
 }
 
 input[type="text"]:focus,
@@ -73,7 +87,6 @@ select:focus {
 }
 
 select {
-  background-color: white;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
   background-position: right 8px center;
   background-repeat: no-repeat;
@@ -82,10 +95,19 @@ select {
   cursor: pointer;
 }
 
+[data-theme="dark"] select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23e0e0e0' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+}
+
 select:disabled {
   background-color: #f9fafb;
   color: #6b7280;
   cursor: not-allowed;
+}
+
+[data-theme="dark"] select:disabled {
+  background-color: #1f1f1f;
+  color: #555;
 }
 
 button {
@@ -99,6 +121,10 @@ button {
 
 button:hover {
   background-color: #3a7bc8;
+}
+
+[data-theme="dark"] button:hover {
+  background-color: #4a8fe7;
 }
 
 button:disabled {
@@ -177,13 +203,11 @@ button:disabled {
 }
 
 .feedback-text.success {
-  background-color: #e8f5e9;
-  color: #2e7d32;
+  color: var(--success-color);
 }
 
 .feedback-text.error {
-  background-color: #ffebee;
-  color: #c62828;
+  color: var(--error-color);
 }
 
 .feedback-icon {
@@ -225,6 +249,11 @@ button:disabled {
   padding: 5px;
   border-radius: 6px;
   margin: 0;
+}
+
+[data-theme="dark"] .example-container p {
+  background-color: #333;
+  color: var(--text-color);
 }
 
 .example-container strong {
@@ -408,6 +437,10 @@ button:disabled {
   font-weight: 500;
   border-left: 4px solid var(--primary-color);
   transition: transform 0.2s ease;
+}
+
+[data-theme="dark"] .feature {
+  background: linear-gradient(135deg, #1a2332 0%, #2a3342 100%);
 }
 
 .feature:hover {

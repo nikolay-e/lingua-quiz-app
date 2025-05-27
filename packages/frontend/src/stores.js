@@ -1,6 +1,65 @@
 import { writable, get } from 'svelte/store';
 import api from './api.js';
 
+// Theme Store for dark mode (follows system preference)
+function createThemeStore() {
+  // Check if user has a saved preference, otherwise use system preference
+  const getInitialTheme = () => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      return savedTheme === 'dark';
+    }
+    // Check system preference
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  };
+
+  const { subscribe, update } = writable({
+    isDarkMode: getInitialTheme()
+  });
+
+  // Apply theme on initialization
+  const applyTheme = (isDark) => {
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  };
+
+  // Set initial theme
+  applyTheme(getInitialTheme());
+
+  // Listen for system theme changes
+  if (window.matchMedia) {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaQuery.addEventListener('change', (e) => {
+      // Only update if user hasn't set a manual preference
+      if (!localStorage.getItem('theme')) {
+        const isDark = e.matches;
+        applyTheme(isDark);
+        update(() => ({ isDarkMode: isDark }));
+      }
+    });
+  }
+
+  return {
+    subscribe,
+    toggleTheme: () => {
+      update(state => {
+        const newTheme = !state.isDarkMode;
+        const theme = newTheme ? 'dark' : 'light';
+        localStorage.setItem('theme', theme);
+        applyTheme(newTheme);
+        return { isDarkMode: newTheme };
+      });
+    },
+    clearPreference: () => {
+      localStorage.removeItem('theme');
+      const systemPreference = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      applyTheme(systemPreference);
+      update(() => ({ isDarkMode: systemPreference }));
+    }
+  };
+}
+
+export const themeStore = createThemeStore();
+
 // Auth Store (unchanged)
 function createAuthStore() {
   const { subscribe, set, update } = writable({
