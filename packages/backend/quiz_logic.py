@@ -371,14 +371,23 @@ class QuizManager:
                 
                 # Determine correct answer
                 correct_answer = data['target_word'] if data['direction'] else data['source_word']
-                normalized_user = self.normalize_text(user_answer)
-                normalized_correct = self.normalize_text(correct_answer)
                 
                 # Check for intentionally wrong answers first
                 if "INTENTIONALLY_WRONG" in user_answer:
                     is_correct = False  # Force to be incorrect for test purposes
                 else:
-                    is_correct = normalized_user == normalized_correct
+                    # Check if either answer contains commas (multiple meanings)
+                    if ',' in user_answer or ',' in correct_answer:
+                        # Split and normalize all parts
+                        user_parts = {self.normalize_text(part.strip()) for part in user_answer.split(',')}
+                        correct_parts = {self.normalize_text(part.strip()) for part in correct_answer.split(',')}
+                        # Order doesn't matter - check if sets are equal
+                        is_correct = user_parts == correct_parts
+                    else:
+                        # Single answer - use simple comparison
+                        normalized_user = self.normalize_text(user_answer)
+                        normalized_correct = self.normalize_text(correct_answer)
+                        is_correct = normalized_user == normalized_correct
                 
                 # Update statistics
                 direction = 'normal' if data['direction'] else 'reverse'
