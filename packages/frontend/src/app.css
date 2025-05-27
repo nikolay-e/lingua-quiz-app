@@ -528,3 +528,51 @@ button:disabled {
     max-height: none;
   }
 }
+/* Foldable lists styles */
+.foldable-section {
+  margin-bottom: 15px;
+}
+
+.foldable-header {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s ease;
+  padding: 5px;
+  margin: -5px;
+  border-radius: 4px;
+}
+
+.foldable-header:hover {
+  background-color: rgba(74, 144, 226, 0.1);
+}
+
+[data-theme="dark"] .foldable-header:hover {
+  background-color: rgba(91, 163, 245, 0.1);
+}
+
+.fold-icon {
+  font-size: 0.8em;
+  margin-right: 8px;
+  transition: transform 0.2s ease;
+  color: var(--text-color);
+  opacity: 0.6;
+}
+
+.foldable-content {
+  animation: fadeIn 0.3s ease;
+  margin-top: 10px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

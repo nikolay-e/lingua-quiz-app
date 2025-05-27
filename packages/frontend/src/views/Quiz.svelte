@@ -12,6 +12,32 @@
   let requestQueue = Promise.resolve();
   let currentRequestId = 0;
   
+  // Foldable lists state
+  let foldedLists = {
+    level0: false,
+    level1: false,
+    level2: false,
+    level3: false
+  };
+  
+  // Load saved fold states from localStorage
+  if (typeof window !== 'undefined') {
+    const savedFoldStates = localStorage.getItem('foldedLists');
+    if (savedFoldStates) {
+      try {
+        foldedLists = JSON.parse(savedFoldStates);
+      } catch (e) {
+        // Use defaults if parsing fails
+      }
+    }
+  }
+  
+  function toggleFold(level) {
+    foldedLists[level] = !foldedLists[level];
+    // Save to localStorage
+    localStorage.setItem('foldedLists', JSON.stringify(foldedLists));
+  }
+  
   // Reactive state from stores  
   $: wordSets = $quizStore.wordSets;
   $: selectedQuiz = $quizStore.selectedQuiz;
@@ -156,7 +182,7 @@
                 {loading ? 'Loading quizzes...' : '🎯 Select a quiz to start learning'}
               </option>
               {#each wordSets as set}
-                <option value={set.name}>{set.name} ({set.wordCount} {set.wordCount === 1 ? 'word' : 'words'})</option>
+                <option value={set.name}>{set.name}</option>
               {/each}
             </select>
           </div>
@@ -245,40 +271,60 @@
     <section class="sidebar-section learning-progress">
       <h2>Learning Progress</h2>
       
-      <div id="level-1">
-        <h3><i class="fas fa-tasks"></i> Learning ({level1Words.length})</h3>
-        <ol id="level-1-list">
-          {#each level1Words as word}
-            <li>{word}</li>
-          {/each}
-        </ol>
+      <div id="level-1" class="foldable-section">
+        <h3 class="foldable-header" on:click={() => toggleFold('level1')}>
+          <i class="fas fa-{foldedLists.level1 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
+          <i class="fas fa-tasks"></i> Learning ({level1Words.length})
+        </h3>
+        {#if !foldedLists.level1}
+          <ol id="level-1-list" class="foldable-content">
+            {#each level1Words as word}
+              <li>{word}</li>
+            {/each}
+          </ol>
+        {/if}
       </div>
       
-      <div id="level-2">
-        <h3><i class="fas fa-check-circle"></i> Translation Mastered (One Way) ({level2Words.length})</h3>
-        <ol id="level-2-list">
-          {#each level2Words as word}
-            <li>{word}</li>
-          {/each}
-        </ol>
+      <div id="level-2" class="foldable-section">
+        <h3 class="foldable-header" on:click={() => toggleFold('level2')}>
+          <i class="fas fa-{foldedLists.level2 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
+          <i class="fas fa-check-circle"></i> Translation Mastered One Way ({level2Words.length})
+        </h3>
+        {#if !foldedLists.level2}
+          <ol id="level-2-list" class="foldable-content">
+            {#each level2Words as word}
+              <li>{word}</li>
+            {/each}
+          </ol>
+        {/if}
       </div>
       
-      <div id="level-3">
-        <h3><i class="fas fa-check-circle"></i> Translation Mastered (Both Ways) ({level3Words.length})</h3>
-        <ol id="level-3-list">
-          {#each level3Words as word}
-            <li>{word}</li>
-          {/each}
-        </ol>
+      <div id="level-3" class="foldable-section">
+        <h3 class="foldable-header" on:click={() => toggleFold('level3')}>
+          <i class="fas fa-{foldedLists.level3 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
+          <i class="fas fa-check-circle"></i> Translation Mastered Both Ways ({level3Words.length})
+        </h3>
+        {#if !foldedLists.level3}
+          <ol id="level-3-list" class="foldable-content">
+            {#each level3Words as word}
+              <li>{word}</li>
+            {/each}
+          </ol>
+        {/if}
       </div>
       
-      <div id="level-0">
-        <h3><i class="fas fa-list"></i> New ({level0Words.length})</h3>
-        <ol id="level-0-list">
-          {#each level0Words as word}
-            <li>{word}</li>
-          {/each}
-        </ol>
+      <div id="level-0" class="foldable-section">
+        <h3 class="foldable-header" on:click={() => toggleFold('level0')}>
+          <i class="fas fa-{foldedLists.level0 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
+          <i class="fas fa-list"></i> New ({level0Words.length})
+        </h3>
+        {#if !foldedLists.level0}
+          <ol id="level-0-list" class="foldable-content">
+            {#each level0Words as word}
+              <li>{word}</li>
+            {/each}
+          </ol>
+        {/if}
       </div>
     </section>
   </div>
