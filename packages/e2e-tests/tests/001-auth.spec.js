@@ -66,7 +66,7 @@ test.describe.serial('User Authentication', () => {
     await login(page, testUser, testPassword);
     await logout(page);
     // After logout, should see the login form
-    await expect(page.locator('section:has-text("Login")')).toBeVisible();
+    await expect(page.locator('section:has-text("Sign In")')).toBeVisible();
   });
 
   test('should maintain session after page reload', async ({ page }) => {
@@ -117,7 +117,7 @@ test.describe.serial('User Authentication', () => {
     // Perform logout and wait for navigation
     await logout(page);
     // After logout, should see the login form
-    await page.waitForSelector('section:has-text("Login")', { state: 'visible' });
+    await page.waitForSelector('section:has-text("Sign In")', { state: 'visible' });
     await page.waitForTimeout(1000); // Give time for storage to clear
 
     // Verify final storage state
@@ -138,7 +138,7 @@ test.describe.serial('User Authentication', () => {
     const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
     await page.goto(`${url}/`);
     // Should see the login form when not authenticated
-    await expect(page.locator('section:has-text("Login")')).toBeVisible();
+    await expect(page.locator('section:has-text("Sign In")')).toBeVisible();
   });
 
   test('should handle server errors gracefully', async ({ page }) => {
@@ -148,7 +148,7 @@ test.describe.serial('User Authentication', () => {
         body: JSON.stringify({ message: 'Internal Server Error' }),
       });
     });
-    const loginSection = page.locator('section:has-text("Login")');
+    const loginSection = page.locator('section:has-text("Sign In")');
     await loginSection.locator('input[type="email"]').fill(testUser);
     await loginSection.locator('input[id="password"]').fill(testPassword);
     await loginSection.locator('button[type="submit"]').click();
@@ -173,15 +173,15 @@ test.describe.serial('User Authentication', () => {
     // Logout and wait for navigation
     await page.click('#login-logout-btn');
     // After logout, should see the login form
-    await page.waitForSelector('section:has-text("Login")', { state: 'visible' });
+    await page.waitForSelector('section:has-text("Sign In")', { state: 'visible' });
     await page.waitForTimeout(1000); // Ensure storage is cleared
 
     // Try to access protected route and verify redirect
     const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
     await page.goto(`${url}/`);
     // After logout, should see the login form
-    await page.waitForSelector('section:has-text("Login")', { state: 'visible' });
-    await expect(page.locator('section:has-text("Login")')).toBeVisible();
+    await page.waitForSelector('section:has-text("Sign In")', { state: 'visible' });
+    await expect(page.locator('section:has-text("Sign In")')).toBeVisible();
   });
 
   test('should redirect to login when token is invalid', async ({ page }) => {
@@ -194,8 +194,8 @@ test.describe.serial('User Authentication', () => {
     const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
     await page.goto(`${url}/`);
     // After logout, should see the login form
-    await page.waitForSelector('section:has-text("Login")', { state: 'visible' });
-    await expect(page.locator('section:has-text("Login")')).toBeVisible();
+    await page.waitForSelector('section:has-text("Sign In")', { state: 'visible' });
+    await expect(page.locator('section:has-text("Sign In")')).toBeVisible();
   });
 
   test('should redirect to login when token is expired', async ({ page }) => {
@@ -210,8 +210,8 @@ test.describe.serial('User Authentication', () => {
     const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
     await page.goto(`${url}/`);
     // After logout, should see the login form
-    await page.waitForSelector('section:has-text("Login")', { state: 'visible' });
-    await expect(page.locator('section:has-text("Login")')).toBeVisible();
+    await page.waitForSelector('section:has-text("Sign In")', { state: 'visible' });
+    await expect(page.locator('section:has-text("Sign In")')).toBeVisible();
   });
 
   test('should redirect to login when token is missing', async ({ page }) => {
@@ -223,7 +223,7 @@ test.describe.serial('User Authentication', () => {
     const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
     await page.goto(`${url}/`);
     // After logout, should see the login form
-    await page.waitForSelector('section:has-text("Login")', { state: 'visible' });
-    await expect(page.locator('section:has-text("Login")')).toBeVisible();
+    await page.waitForSelector('section:has-text("Sign In")', { state: 'visible' });
+    await expect(page.locator('section:has-text("Sign In")')).toBeVisible();
   });
 });

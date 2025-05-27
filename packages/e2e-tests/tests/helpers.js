@@ -28,17 +28,26 @@ async function register(page, email, password, success) {
     throw error;
   }
   
-  // Wait for the registration form to be visible
+  // First check if we're on login page and need to navigate to register
   try {
-    await page.waitForSelector('section:has-text("Register")', { state: 'visible', timeout: 2000 });
+    await page.waitForSelector('section:has-text("Sign In")', { state: 'visible', timeout: 2000 });
+    // Click on "Register here" link
+    await page.click('button:has-text("Register here")');
+    // Wait for register page to load
+    await page.waitForSelector('section:has-text("Create Account")', { state: 'visible', timeout: 2000 });
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Registration form not found. Page content:', await page.content().then(c => c.substring(0, 500)));
-    throw error;
+    // Check if we're already on register page
+    try {
+      await page.waitForSelector('section:has-text("Create Account")', { state: 'visible', timeout: 2000 });
+    } catch (error2) {
+      // eslint-disable-next-line no-console
+      console.error('Registration form not found. Page content:', await page.content().then(c => c.substring(0, 500)));
+      throw error2;
+    }
   }
   
   // Find the email and password inputs within the register section
-  const registerSection = page.locator('section:has-text("Register")');
+  const registerSection = page.locator('section:has-text("Create Account")');
   
   // Wait for inputs to be ready
   await registerSection.locator('input[type="email"]').waitFor({ state: 'visible', timeout: 5000 });
@@ -90,10 +99,10 @@ async function login(page, email, password) {
   }
   
   // Wait for the login form to be visible
-  await page.waitForSelector('section:has-text("Login")', { state: 'visible', timeout: 2000 });
+  await page.waitForSelector('section:has-text("Sign In")', { state: 'visible', timeout: 2000 });
   
   // Find the email and password inputs within the login section
-  const loginSection = page.locator('section:has-text("Login")');
+  const loginSection = page.locator('section:has-text("Sign In")');
   
   // Wait for inputs to be ready
   await loginSection.locator('input[type="email"]').waitFor({ state: 'visible', timeout: 5000 });
@@ -117,7 +126,7 @@ async function logout(page) {
   await page.waitForTimeout(500);
   await logoutButton.click();
   // After logout, we should see the login form
-  await expect(page.locator('section:has-text("Login")')).toBeVisible({ timeout: 5000 });
+  await expect(page.locator('section:has-text("Sign In")')).toBeVisible({ timeout: 5000 });
 }
 
 async function selectQuiz(page, quizName) {
