@@ -41,6 +41,9 @@ coverage/
 *.swo
 *.sublime-workspace
 
+venv
+.venv
+
 # OS generated files
 .DS_Store
 .DS_Store?
