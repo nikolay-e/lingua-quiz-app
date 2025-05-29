@@ -92,6 +92,9 @@
   async function submitAnswer() {
     if (!currentQuestion || isSubmitting) return;
     
+    // Keep focus on input
+    if (answerInput) answerInput.focus();
+    
     const requestId = ++currentRequestId;
     
     // Queue this request
@@ -115,6 +118,8 @@
             feedback = result.feedback;
             usageExamples = result.usageExamples;
             userAnswer = '';
+            // Immediately focus the input after clearing
+            if (answerInput) answerInput.focus();
           }
         }
       } catch (error) {
@@ -218,12 +223,12 @@
               bind:value={userAnswer}
               on:keydown={handleKeydown}
               placeholder="Your translation"
-              disabled={isSubmitting}
             />
             <button 
               id="submit" 
-              on:click={submitAnswer}
+              on:mousedown|preventDefault={submitAnswer}
               disabled={isSubmitting}
+              tabindex="-1"
             >
               <i class="fas fa-check"></i> Submit
             </button>

@@ -65,6 +65,11 @@ class QuizIntegrationTester:
         if not condition:
             raise AssertionError(msg or "Condition is false")
     
+    def assert_not_in(self, item, container, msg=""):
+        """Assert item not in container"""
+        if item in container:
+            raise AssertionError(f"{msg}: {item} found in {container}")
+    
     def run_all(self):
         """Run all quiz integration tests"""
         print(f"\n{YELLOW}Running Quiz Integration Tests{RESET}")
@@ -92,6 +97,7 @@ class QuizIntegrationTester:
         self.test("Test special characters in answers", self.test_special_characters)
         self.test("Test case insensitive answers", self.test_case_insensitive)
         self.test("Test comma-separated answers", self.test_comma_separated_answers)
+        self.test("Test pipe-separated alternative answers", self.test_pipe_separated_alternatives)
         
         # Cleanup
         self.test("Cleanup: Delete test account", self.test_delete_account)
@@ -670,6 +676,55 @@ class QuizIntegrationTester:
             self.assert_in('feedback', result)
             self.assert_in('isSuccess', result['feedback'])
             self.assert_in('message', result['feedback'])
+    
+    def test_pipe_separated_alternatives(self):
+        """Test pipe-separated alternative answers"""
+        # This test simulates words that have multiple acceptable alternatives
+        # separated by pipes (e.g., "hello|hi|hey")
+        
+        # Get quiz state to check if words are cleaned for display
+        r = requests.get(f"{API_URL}/quiz/state",
+                        params={'wordListName': self.word_list_name},
+                        headers=self.get_headers(),
+                        timeout=TIMEOUT)
+        self.assert_equal(r.status_code, 200)
+        state = r.json()
+        
+        # Verify that if any words contain pipes, they are cleaned in the display
+        for level in ['level0', 'level1', 'level2', 'level3']:
+            for word in state['wordLists'][level]:
+                # Displayed words should not contain pipes
+                self.assert_not_in('|', word.get('source', ''))
+                self.assert_not_in('|', word.get('target', ''))
+        
+        # Get a question
+        r = requests.get(f"{API_URL}/quiz/next-question",
+                        params={'wordListName': self.word_list_name},
+                        headers=self.get_headers(),
+                        timeout=TIMEOUT)
+        self.assert_equal(r.status_code, 200)
+        question = r.json()
+        
+        # The displayed word should not contain pipes
+        self.assert_not_in('|', question['word'])
+        
+        # Test submitting an answer (even though we don't know if this specific
+        # word has alternatives, the system should handle it)
+        r = requests.post(f"{API_URL}/quiz/submit-answer",
+                         json={
+                             'wordListName': self.word_list_name,
+                             'translationId': question['translationId'],
+                             'answer': 'test answer'
+                         },
+                         headers=self.get_headers(),
+                         timeout=TIMEOUT)
+        self.assert_equal(r.status_code, 200)
+        result = r.json()
+        
+        # Verify response structure
+        self.assert_in('feedback', result)
+        self.assert_in('isSuccess', result['feedback'])
+        self.assert_in('message', result['feedback'])
     
     def test_delete_account(self):
         """Delete test account"""

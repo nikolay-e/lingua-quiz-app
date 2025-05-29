@@ -28,6 +28,14 @@ class QuizManager:
         # Normalize whitespace
         return re.sub(r'\s+', ' ', clean).strip()
     
+    def _clean_word_for_display(self, word: str) -> str:
+        """Clean word for display - show only first alternative if pipe-separated"""
+        if not word:
+            return word
+        if '|' in word:
+            return word.split('|')[0].strip()
+        return word
+    
     def get_or_create_session(self, user_id: int, word_list_name: str) -> Dict:
         """Get or create quiz session and return full state"""
         conn = None
@@ -54,10 +62,18 @@ class QuizManager:
                 conn.commit()
                 # JSONB fields are automatically converted to Python objects by psycopg2 RealDictCursor
                 state_dict = dict(state)
-                # Ensure word lists are always arrays (COALESCE in SQL should handle this)
+                # Ensure word lists are always arrays and clean pipe-separated alternatives
                 for key in ['level_0_words', 'level_1_words', 'level_2_words', 'level_3_words']:
                     if state_dict[key] is None:
                         state_dict[key] = []
+                    else:
+                        # Clean each word in the list to show only first alternative
+                        for word_data in state_dict[key]:
+                            if isinstance(word_data, dict):
+                                if 'source' in word_data:
+                                    word_data['source'] = self._clean_word_for_display(word_data['source'])
+                                if 'target' in word_data:
+                                    word_data['target'] = self._clean_word_for_display(word_data['target'])
                 return state_dict
         finally:
             if conn:
@@ -265,8 +281,13 @@ class QuizManager:
                 """, (next_translation_id,))
                 word_data = cur.fetchone()
                 
+                # Get the word to display (only show first alternative if pipe-separated)
+                displayed_word = word_data['source_word'] if session['direction'] else word_data['target_word']
+                if '|' in displayed_word:
+                    displayed_word = displayed_word.split('|')[0].strip()
+                
                 return {
-                    "word": word_data['source_word'] if session['direction'] else word_data['target_word'],
+                    "word": displayed_word,
                     "translationId": word_data['id'],
                     "direction": "normal" if session['direction'] else "reverse",
                     "sourceLanguage": word_data['source_language'],
@@ -376,8 +397,14 @@ class QuizManager:
                 if "INTENTIONALLY_WRONG" in user_answer:
                     is_correct = False  # Force to be incorrect for test purposes
                 else:
-                    # Check if either answer contains commas (multiple meanings)
-                    if ',' in user_answer or ',' in correct_answer:
+                    # First, check if correct answer has pipe-separated alternatives
+                    if '|' in correct_answer:
+                        # User can provide any one of the alternatives
+                        alternatives = [self.normalize_text(alt.strip()) for alt in correct_answer.split('|')]
+                        normalized_user = self.normalize_text(user_answer)
+                        is_correct = normalized_user in alternatives
+                    # Then check if either answer contains commas (multiple meanings)
+                    elif ',' in user_answer or ',' in correct_answer:
                         # Split and normalize all parts
                         user_parts = {self.normalize_text(part.strip()) for part in user_answer.split(',')}
                         correct_parts = {self.normalize_text(part.strip()) for part in correct_answer.split(',')}
@@ -505,7 +532,7 @@ class QuizManager:
                 conn.commit()
                 
                 # Prepare response
-                feedback_message = "Correct!" if is_correct else f"{data['source_word']}' ↔ '{data['target_word']}'"
+                feedback_message = "Correct!" if is_correct else f"{data['source_word']} ↔ {data['target_word']}"
                 
                 feedback = {
                     "message": feedback_message,
