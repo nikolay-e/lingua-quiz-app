@@ -154,8 +154,7 @@ class QuizManager:
                 if not session:
                     return {"error": "No quiz session found"}
                 
-                # Auto-toggle direction based on available words
-                self._auto_toggle_direction(cur, session)
+                # Direction toggling is managed by the frontend to prevent race conditions
                 
                 # Get word sets based on direction
                 if session['direction']:  # Normal direction
@@ -294,11 +293,6 @@ class QuizManager:
                     "targetLanguage": word_data['target_language']
                 }
     
-    def _auto_toggle_direction(self, cur, session: Dict):
-        """Auto-toggle direction based on available words - DISABLED to prevent race conditions"""
-        # DISABLED: Auto-toggle causes race conditions where frontend doesn't know about direction changes
-        # This leads to session state mismatches and wrong answer validation
-        return
     
     def _get_candidate_words(self, cur, user_id: int, word_list_id: int, status: str) -> List[int]:
         """Get candidate words for given status"""

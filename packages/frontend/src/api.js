@@ -20,14 +20,6 @@ const getServerAddress = () => {
     return 'http://backend:9000/api';
   }
   
-  // Production domains
-  if (hostname === 'test-lingua-quiz.nikolay-eremeev.com') {
-    return 'https://test-api-lingua-quiz.nikolay-eremeev.com/api';
-  }
-  if (hostname === 'lingua-quiz.nikolay-eremeev.com') {
-    return 'https://api-lingua-quiz.nikolay-eremeev.com/api';
-  }
-  
   // Generic production fallback - assume API is on same domain with /api path
   if (protocol === 'https:') {
     return `https://${hostname}/api`;

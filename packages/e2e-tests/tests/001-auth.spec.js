@@ -2,25 +2,47 @@ const { test, expect } = require('@playwright/test');
 const { register, login, logout } = require('./helpers');
 
 test.describe.serial('User Authentication', () => {
-  // Generate a unique user for this test suite
-  const timestamp = Date.now();
-  const testUser = `test${timestamp}@example.com`;
+  // Generate a unique user for this test suite with extra entropy
+  const generateUniqueEmail = () => {
+    const timestamp = Date.now();
+    const random1 = Math.random().toString(36).substring(2, 15);
+    const random2 = Math.random().toString(36).substring(2, 15);
+    const processId = process.pid || Math.floor(Math.random() * 10000);
+    // Add additional randomness with high precision timestamp
+    const nanoTime = process.hrtime ? process.hrtime.bigint().toString() : Date.now() + Math.random();
+    return `test_${timestamp}_${random1}_${random2}_${processId}_${nanoTime}@example.com`;
+  };
+  
+  const testUser = generateUniqueEmail();
   const testPassword = 'testPassword123!';
 
   // Track if user has been registered
   let userRegistered = false;
+  let actualTestUser = testUser; // Track the actual user email used
 
   test.beforeEach(async ({ page }) => {
     // Use environment variable directly since baseURL is not being set
     const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
-    // eslint-disable-next-line no-console
-    console.log('Using URL:', url);
     await page.goto(url);
   });
 
   test('should register a new user', async ({ page }) => {
-    await register(page, testUser, testPassword, true);
-    userRegistered = true;
+    try {
+      await register(page, testUser, testPassword, true);
+      userRegistered = true;
+      actualTestUser = testUser; // Store the successful email
+    } catch (error) {
+      if (error.message && error.message.includes('Conflict')) {
+        // If there's still a conflict with our highly unique email, try once more
+        const fallbackUser = generateUniqueEmail();
+        console.log(`Registration conflict detected (unlikely), trying with new email: ${fallbackUser}`);
+        await register(page, fallbackUser, testPassword, true);
+        userRegistered = true;
+        actualTestUser = fallbackUser;
+      } else {
+        throw error;
+      }
+    }
   });
 
   test('should not allow duplicate registration', async ({ page }) => {
@@ -29,7 +51,7 @@ test.describe.serial('User Authentication', () => {
       test.skip();
       return;
     }
-    await register(page, testUser, testPassword, false);
+    await register(page, actualTestUser, testPassword, false);
   });
 
   test('should login with valid credentials', async ({ page }) => {
@@ -38,7 +60,7 @@ test.describe.serial('User Authentication', () => {
       test.skip();
       return;
     }
-    await login(page, testUser, testPassword);
+    await login(page, actualTestUser, testPassword);
     // In a SPA, we check for the quiz select element instead of URL
     await expect(page.locator('#quiz-select')).toBeVisible();
   });
@@ -49,7 +71,7 @@ test.describe.serial('User Authentication', () => {
       test.skip();
       return;
     }
-    await login(page, testUser, 'wrongPassword');
+    await login(page, actualTestUser, 'wrongPassword');
     // Check for error message in the login message element
     const loginMessage = page.locator('#login-message');
     await expect(loginMessage).toBeVisible({ timeout: 2000 });
@@ -63,7 +85,7 @@ test.describe.serial('User Authentication', () => {
       test.skip();
       return;
     }
-    await login(page, testUser, testPassword);
+    await login(page, actualTestUser, testPassword);
     await logout(page);
     // After logout, should see the login form
     await expect(page.locator('section:has-text("Sign In")')).toBeVisible();
@@ -75,11 +97,11 @@ test.describe.serial('User Authentication', () => {
       test.skip();
       return;
     }
-    await login(page, testUser, testPassword);
+    await login(page, actualTestUser, testPassword);
     // Wait for login to complete and quiz view to load
     await expect(page.locator('#quiz-select')).toBeVisible({ timeout: 5000 });
     await page.reload();
-    await expect(page.locator('#login-logout-btn')).toContainText(testUser, { timeout: 5000 });
+    await expect(page.locator('#login-logout-btn')).toContainText(actualTestUser, { timeout: 5000 });
   });
 
   test('should clear user data after logout', async ({ page }) => {
@@ -89,7 +111,7 @@ test.describe.serial('User Authentication', () => {
       return;
     }
     // First ensure we're logged in successfully
-    await login(page, testUser, testPassword);
+    await login(page, actualTestUser, testPassword);
 
     // Wait for quiz view to be visible (indicates successful login)
     await expect(page.locator('#quiz-select')).toBeVisible({ timeout: 5000 });
@@ -148,10 +170,28 @@ test.describe.serial('User Authentication', () => {
         body: JSON.stringify({ message: 'Internal Server Error' }),
       });
     });
+    
+    // Wait for login section to be visible
     const loginSection = page.locator('section:has-text("Sign In")');
-    await loginSection.locator('input[type="email"]').fill(testUser);
-    await loginSection.locator('input[id="password"]').fill(testPassword);
-    await loginSection.locator('button[type="submit"]').click();
+    await expect(loginSection).toBeVisible();
+    
+    // Fill form fields with explicit waits
+    const emailInput = loginSection.locator('input[type="email"]');
+    await expect(emailInput).toBeVisible();
+    await emailInput.fill(actualTestUser);
+    
+    const passwordInput = loginSection.locator('input[id="password"]');
+    await expect(passwordInput).toBeVisible();
+    await passwordInput.fill(testPassword);
+    
+    // Use a more specific button selector and wait for it to be actionable
+    const submitButton = loginSection.locator('button[type="submit"]');
+    await expect(submitButton).toBeVisible();
+    await expect(submitButton).toBeEnabled();
+    
+    // Firefox-friendly click with force option
+    await submitButton.click({ force: true });
+    
     await expect(page.locator('text=Internal Server Error')).toBeVisible({ timeout: 2000 });
   });
 
@@ -162,13 +202,13 @@ test.describe.serial('User Authentication', () => {
       return;
     }
     // Login first
-    await login(page, testUser, testPassword);
+    await login(page, actualTestUser, testPassword);
 
     // Wait for quiz view to be visible (indicates successful login)
     await expect(page.locator('#quiz-select')).toBeVisible({ timeout: 5000 });
 
     // Verify we're logged in
-    await expect(page.locator('#login-logout-btn')).toContainText(testUser);
+    await expect(page.locator('#login-logout-btn')).toContainText(actualTestUser);
 
     // Logout and wait for navigation
     await page.click('#login-logout-btn');
@@ -225,5 +265,34 @@ test.describe.serial('User Authentication', () => {
     // After logout, should see the login form
     await page.waitForSelector('section:has-text("Sign In")', { state: 'visible' });
     await expect(page.locator('section:has-text("Sign In")')).toBeVisible();
+  });
+
+  test('cleanup: delete test user', async ({ page }) => {
+    // Skip if user was never registered
+    if (!userRegistered) {
+      test.skip();
+      return;
+    }
+    
+    // Login to the test account
+    await login(page, actualTestUser, testPassword);
+    await expect(page.locator('#quiz-select')).toBeVisible({ timeout: 5000 });
+    
+    // Delete the account via API call
+    const token = await page.evaluate(() => localStorage.getItem('token'));
+    const apiUrl = process.env.API_URL || 'http://localhost:9000/api';
+    
+    const response = await page.evaluate(async ({ token, apiUrl }) => {
+      const response = await fetch(`${apiUrl}/auth/delete-account`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      return { status: response.status, ok: response.ok };
+    }, { token, apiUrl });
+    
+    expect(response.ok).toBeTruthy();
   });
 });

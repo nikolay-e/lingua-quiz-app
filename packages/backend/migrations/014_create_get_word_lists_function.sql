@@ -7,6 +7,9 @@
 -- Contact: lingua-quiz@nikolay-eremeev.com
 -- Repository: https://github.com/nikolay-e/lingua-quiz
 -- File: packages/backend/migrations/014_create_get_word_lists_function.sql
+-- Drop function if exists to handle signature changes
+DROP FUNCTION IF EXISTS get_word_lists();
+
 CREATE OR REPLACE FUNCTION get_word_lists () RETURNS TABLE (
   id INTEGER,
   name VARCHAR(255),

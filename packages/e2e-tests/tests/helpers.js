@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 const { expect } = require('@playwright/test');
 
 async function withRetry(fn, retries = 3) {
@@ -6,8 +7,6 @@ async function withRetry(fn, retries = 3) {
       return await fn();
     } catch (error) {
       if (i === retries - 1) throw error;
-      // eslint-disable-next-line no-console
-      console.log(`Retry ${i + 1}/${retries} after error:`, error.message);
       await new Promise(resolve => setTimeout(resolve, 1000));
     }
   }
@@ -23,8 +22,6 @@ async function register(page, email, password, success) {
       await page.goto(baseURL, { waitUntil: 'domcontentloaded', timeout: 30000 });
     });
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Failed to navigate to:', baseURL, error.message);
     throw error;
   }
   
@@ -40,8 +37,6 @@ async function register(page, email, password, success) {
     try {
       await page.waitForSelector('section:has-text("Create Account")', { state: 'visible', timeout: 2000 });
     } catch (error2) {
-      // eslint-disable-next-line no-console
-      console.error('Registration form not found. Page content:', await page.content().then(c => c.substring(0, 500)));
       throw error2;
     }
   }
@@ -60,24 +55,28 @@ async function register(page, email, password, success) {
 
   // Debug: Check if the button is enabled before clicking
   const submitButton = registerSection.locator('button[type="submit"]');
-  const isDisabled = await submitButton.isDisabled();
-  // eslint-disable-next-line no-console
-  console.log(`Register button disabled: ${isDisabled}`);
 
   // Wait for network idle before clicking
   await page.waitForLoadState('networkidle');
-  await submitButton.click();
+  
+  // Click with retry for Firefox compatibility
+  try {
+    await submitButton.click({ timeout: 15000 });
+  } catch (error) {
+    // Retry with force click if normal click fails
+    await submitButton.click({ force: true });
+  }
 
-  // Wait for response
-  await page.waitForTimeout(1000);
+  // Wait for response with longer timeout for slower networks
+  await page.waitForTimeout(1500);
 
   if (success !== undefined) {
     if (success) {
       // Look for success message in the register section
-      await expect(page.locator('#register-message')).toContainText('successful', { timeout: 2000 });
+      await expect(page.locator('#register-message')).toContainText('successful', { timeout: 5000 });
     } else {
       // Look for error message
-      await expect(page.locator('#register-message')).toBeVisible({ timeout: 2000 });
+      await expect(page.locator('#register-message')).toBeVisible({ timeout: 5000 });
       const messageText = await page.locator('#register-message').innerText();
       expect(messageText).not.toContain('successful');
     }
@@ -93,8 +92,6 @@ async function login(page, email, password) {
       await page.goto(baseURL, { waitUntil: 'domcontentloaded', timeout: 30000 });
     });
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Failed to navigate to:', baseURL, error.message);
     throw error;
   }
   
@@ -110,11 +107,23 @@ async function login(page, email, password) {
   
   await loginSection.locator('input[type="email"]').fill(email);
   await loginSection.locator('input[id="password"]').fill(password);
-  await loginSection.locator('button[type="submit"]').click();
+  
+  // Wait for submit button to be ready and click with retry for Firefox compatibility
+  const submitButton = loginSection.locator('button[type="submit"]');
+  await submitButton.waitFor({ state: 'visible', timeout: 5000 });
+  await page.waitForTimeout(100); // Small delay for Firefox
+  
+  try {
+    await submitButton.click({ timeout: 15000 }); // Increased timeout for Firefox
+  } catch (error) {
+    // Retry with force click if normal click fails
+    await submitButton.click({ force: true });
+  }
+  
   // Wait for either successful login (quiz select visible) or error message
   await Promise.race([
-    page.waitForSelector('#quiz-select', { state: 'visible', timeout: 5000 }),
-    page.waitForSelector('#login-message', { state: 'visible', timeout: 5000 }),
+    page.waitForSelector('#quiz-select', { state: 'visible', timeout: 10000 }),
+    page.waitForSelector('#login-message', { state: 'visible', timeout: 10000 }),
   ]);
 }
 

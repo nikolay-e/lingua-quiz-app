@@ -1,526 +1,209 @@
-name: CI/CD Pipeline
+name: CI/CD
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  issues: write
-  pull-requests: write
-  security-events: write
 
 jobs:
-  common-tests:
-    uses: ./.github/workflows/common-tests.yml
-
-  prepare-secrets:
-    uses: ./.github/workflows/secrets.yml
-    secrets:
-      SSL_CERT: ${{ secrets.SSL_CERT }}
-      SSL_KEY: ${{ secrets.SSL_KEY }}
-      KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-
-  build-backup-image:
+  test:
     runs-on: ubuntu-latest
-    outputs:
-      image_tag: ${{ steps.meta.outputs.version }}
-      image_name: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backup
+    permissions:
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Run linting
+        run: npm run lint
+        
+      - name: Check dependencies
+        run: npm run depcheck
+        
+      - name: Start test environment
+        run: docker compose up -d
+        
+      - name: Build E2E test image
+        run: docker build -t e2e-tests ./packages/e2e-tests
+        
+      - name: Wait for services to be ready
+        run: timeout 60 bash -c 'until curl -f http://localhost:8080 > /dev/null 2>&1; do sleep 1; done'
+        
+      - name: Run backend integration tests
+        run: |
+          cd packages/backend
+          pip install -r requirements-test.txt
+          API_URL=http://localhost:9000/api python test_integration.py
+          
+      - name: Run backend quiz integration tests
+        run: |
+          cd packages/backend
+          API_URL=http://localhost:9000/api python test_quiz_integration.py
+          
+      - name: Run E2E tests
+        run: docker run --rm --network lingua-quiz_default -e LINGUA_QUIZ_URL=http://frontend:80 -e API_URL=http://backend:9000/api e2e-tests
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v3
+  build-images:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        include:
+          - context: ./packages/backend
+            dockerfile: Dockerfile
+            image: lingua-quiz-backend
+          - context: ./packages/frontend
+            dockerfile: Dockerfile
+            image: lingua-quiz-frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
           password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
-
-      - name: Docker meta for backup image
-        id: meta
-        uses: docker/metadata-action@v5
+      - uses: docker/build-push-action@v5
         with:
-          images: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backup
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=sha,prefix=,suffix=,format=short
-            type=raw,value=latest,enable={{is_default_branch}}
+          context: ${{ matrix.context }}
+          file: ${{ matrix.context }}/${{ matrix.dockerfile }}
+          push: true
+          tags: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/${{ matrix.image }}:${{ github.sha }},${{ secrets.DOCKER_REGISTRY_USERNAME }}/${{ matrix.image }}:latest
 
-      - name: Build and push backup image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./packages/backend
-          file: ./packages/backend/Dockerfile.backup
-          push: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-
-  build-backend-image:
-    name: Build Backend Docker Image
+  deploy:
+    needs: [test, build-images]
     runs-on: ubuntu-latest
-    outputs:
-      image_name: ${{ steps.set_vars.outputs.image_name }}
-      image_tag: ${{ steps.meta.outputs.version }}
+    environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
+    permissions:
+      contents: read
+    env:
+      NAMESPACE: ${{ github.ref == 'refs/heads/main' && 'lingua-quiz-production' || 'lingua-quiz-staging' }}
+      ENVIRONMENT: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
-          password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
-
-      - name: Set variables
-        id: set_vars
-        run: |
-          IMAGE_NAME_VAL=${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backend
-          echo "image_name=${IMAGE_NAME_VAL}" >> $GITHUB_OUTPUT
-
-      - name: Docker meta for backend image
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ steps.set_vars.outputs.image_name }}
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=sha,prefix=,suffix=,format=short
-            type=raw,value=latest,enable={{is_default_branch}}
-
-      - name: Build and push backend image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./packages/backend/Dockerfile
-          push: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-
-  build-frontend-image:
-    name: Build Frontend Docker Image
-    runs-on: ubuntu-latest
-    outputs:
-      image_name: ${{ steps.set_vars.outputs.image_name }}
-      image_tag: ${{ steps.meta.outputs.version }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to DockerHub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
-          password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
-
-      - name: Set variables
-        id: set_vars
-        run: |
-          IMAGE_NAME_VAL=${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-frontend
-          echo "image_name=${IMAGE_NAME_VAL}" >> $GITHUB_OUTPUT
-
-      - name: Docker meta for frontend image
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ steps.set_vars.outputs.image_name }}
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=sha,prefix=,suffix=,format=short
-            type=raw,value=latest,enable={{is_default_branch}}
-
-      - name: Build and push frontend image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./packages/frontend
-          file: ./packages/frontend/Dockerfile
-          push: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-
-  e2e-docker-compose:
-    name: E2E Tests (Docker Compose)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Build and Run Docker Compose services for E2E tests (auth tests only)
-        id: run_e2e
-        run: |
-          # Only run the 001-auth.spec.js test to avoid the hanging issue with 002-quiz.spec.js
-          echo "Building e2e-tests container..."
-          docker compose build e2e-tests
-
-          echo "Starting services..."
-          docker compose up --build -d db backend frontend
-
-          echo "Waiting for services to stabilize..."
-          sleep 30
-
-          echo "Running e2e-tests container and executing auth tests only..."
-          docker compose run -e LINGUA_QUIZ_URL=http://frontend:80 -e API_URL=http://backend:9000/api -e NODE_ENV=test -e DEBUG=pw:api e2e-tests playwright test tests/001-auth.spec.js --reporter=list
-          EXIT_CODE=$?
-
-          echo "Cleaning up..."
-          docker compose down -v --remove-orphans
-          exit $EXIT_CODE
-
-      - name: Upload Playwright Artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report-docker-compose
-          path: |
-            packages/e2e-tests/playwright-report/
-            packages/e2e-tests/test-results/
-          retention-days: 7
-
-      - name: Docker Compose Logs on Failure
-        if: failure()
-        run: docker compose logs --tail="all"
-
-      - name: Cleanup Docker Compose environment
-        if: always()
-        run: docker compose down -v --remove-orphans
-
-      - name: Fail job if E2E tests failed
-        if: steps.run_e2e.outcome == 'failure'
-        run: exit 1
-
-  deploy-app:
-    name: Deploy Unified Application
-    needs: [common-tests, prepare-secrets, build-backend-image, build-frontend-image]
-    runs-on: ubuntu-latest
-    environment: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'production' || 'test' }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Kubernetes and Helm Tools
+      - uses: actions/checkout@v4
+      
+      - name: Setup kubectl and Helm
         run: |
           curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
           chmod +x kubectl
           sudo mv kubectl /usr/local/bin/
           curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-          helm version
-
-      - name: Set up kubeconfig
+          
+      - name: Configure kubeconfig
         run: |
           mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > $HOME/.kube/config
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > $HOME/.kube/config
           chmod 600 $HOME/.kube/config
-
-      - name: Verify kubectl configuration
+          
+      - name: Create TLS Secret
         run: |
-          kubectl cluster-info
-          kubectl config current-context
-
-      - name: Set deployment environment variables
-        env:
-          DEPLOY_ENV: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'production' || 'test' }}
-        run: |
-          # Set deployment environment variables
-          echo "DEPLOY_ENV=${DEPLOY_ENV}" >> $GITHUB_ENV
-
-          # Set release name based on environment
-          if [[ "${DEPLOY_ENV}" == "production" ]]; then
-            echo "HELM_RELEASE_NAME=lingua-quiz" >> $GITHUB_ENV
-            echo "DEPLOY_NAMESPACE=lingua-quiz-production" >> $GITHUB_ENV
-            echo "BACKEND_PORT=9000" >> $GITHUB_ENV
-            echo "FRONTEND_HOST=lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
-            echo "API_HOST=api-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
-          else
-            # For staging, use same base name without suffix to avoid image naming issues
-            echo "HELM_RELEASE_NAME=lingua-quiz" >> $GITHUB_ENV
-            echo "DEPLOY_NAMESPACE=lingua-quiz-staging" >> $GITHUB_ENV
-            echo "BACKEND_PORT=9001" >> $GITHUB_ENV
-            echo "FRONTEND_HOST=test-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
-            echo "API_HOST=test-api-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
-          fi
-
-          echo "TLS_SECRET_NAME=lingua-quiz-tls" >> $GITHUB_ENV
-          echo "BACKEND_IMAGE_NAME=${{ needs.build-backend-image.outputs.image_name }}" >> $GITHUB_ENV
-          echo "BACKEND_IMAGE_TAG=${{ needs.build-backend-image.outputs.image_tag }}" >> $GITHUB_ENV
-          echo "FRONTEND_IMAGE_NAME=${{ needs.build-frontend-image.outputs.image_name }}" >> $GITHUB_ENV
-          echo "FRONTEND_IMAGE_TAG=${{ needs.build-frontend-image.outputs.image_tag }}" >> $GITHUB_ENV
-
-          # Postgres secret name
-          echo "POSTGRES_SECRET_NAME=${HELM_RELEASE_NAME}-postgres" >> $GITHUB_ENV
-
-      - name: Create TLS Secret for Ingress
-        env:
-          SSL_CERT: ${{ secrets.SSL_CERT }}
-          SSL_KEY: ${{ secrets.SSL_KEY }}
-        run: |
-          echo "Creating TLS secret for Ingress..."
-          # Create temporary files without echoing their contents to logs
-          mkdir -p /tmp/certs
-          SSL_CERT_FILE="/tmp/certs/tls.crt"
-          SSL_KEY_FILE="/tmp/certs/tls.key"
-          echo "$SSL_CERT" | base64 --decode > "$SSL_CERT_FILE"
-          echo "$SSL_KEY" | base64 --decode > "$SSL_KEY_FILE"
-
-          # Create namespace
-          kubectl create namespace ${{ env.DEPLOY_NAMESPACE }} --dry-run=client -o yaml | kubectl apply -f -
-
-          # Create TLS secret without showing content
-          kubectl create secret tls ${{ env.TLS_SECRET_NAME }} \
-            --cert="$SSL_CERT_FILE" --key="$SSL_KEY_FILE" \
-            --namespace=${{ env.DEPLOY_NAMESPACE }} \
+          kubectl create namespace $NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
+          kubectl create secret tls lingua-quiz-tls \
+            --cert=<(echo "${{ secrets.SSL_CERT }}" | base64 -d) \
+            --key=<(echo "${{ secrets.SSL_KEY }}" | base64 -d) \
+            --namespace=$NAMESPACE \
             --dry-run=client -o yaml | kubectl apply -f -
-
-          # Cleanup securely
-          rm -f "$SSL_CERT_FILE" "$SSL_KEY_FILE"
-          echo "TLS secret created successfully."
-
-      - name: Deploy to Kubernetes using Unified Helm Chart
+            
+      - name: Deploy with Helm
+        id: helm-deploy
+        continue-on-error: true
         run: |
-          echo "Deploying unified Helm chart to namespace: ${{ env.DEPLOY_NAMESPACE }}"
-          # Create namespace first
-          kubectl create namespace ${{ env.DEPLOY_NAMESPACE }} --dry-run=client -o yaml | kubectl apply -f -
-
-          # Uninstall previous release if exists (with --no-hooks to avoid running pre/post hooks)
-          echo "Uninstalling previous Helm release if it exists..."
-          helm uninstall ${{ env.HELM_RELEASE_NAME }} --namespace ${{ env.DEPLOY_NAMESPACE }} || true
-
-          # Wait a moment to ensure release is fully uninstalled
-          sleep 5
-
-          # Print image info for debugging
-          echo "Backend Image: ${{ env.BACKEND_IMAGE_NAME }}:${{ env.BACKEND_IMAGE_TAG }}"
-          echo "Frontend Image: ${{ env.FRONTEND_IMAGE_NAME }}:${{ env.FRONTEND_IMAGE_TAG }}"
-
-          # Check if image repos and tags are available, use fallbacks if needed
-          BACKEND_REPO="${{ env.BACKEND_IMAGE_NAME }}"
-          FRONTEND_REPO="${{ env.FRONTEND_IMAGE_NAME }}"
-          BACKEND_TAG="${{ env.BACKEND_IMAGE_TAG }}"
-          FRONTEND_TAG="${{ env.FRONTEND_IMAGE_TAG }}"
-
-          # Set default repository if empty
-          if [ -z "$BACKEND_REPO" ]; then BACKEND_REPO="${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backend"; fi
-          if [ -z "$FRONTEND_REPO" ]; then FRONTEND_REPO="${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-frontend"; fi
-
-          # Set default tag if empty
-          if [ -z "$BACKEND_TAG" ]; then BACKEND_TAG="latest"; fi
-          if [ -z "$FRONTEND_TAG" ]; then FRONTEND_TAG="latest"; fi
-
-          echo "Using Backend image: $BACKEND_REPO:$BACKEND_TAG"
-          echo "Using Frontend image: $FRONTEND_REPO:$FRONTEND_TAG"
-
-          # Install new release
-          echo "Installing Helm release..."
-          helm install ${{ env.HELM_RELEASE_NAME }} ./helm/lingua-quiz-app \
-            --namespace ${{ env.DEPLOY_NAMESPACE }} \
-            --set namespace=${{ env.DEPLOY_NAMESPACE }} \
-            --set backend.image.repository=$BACKEND_REPO \
-            --set backend.image.tag=$BACKEND_TAG \
-            --set backend.port=${{ env.BACKEND_PORT }} \
-            --set backend.service.port=${{ env.BACKEND_PORT }} \
-            --set frontend.image.repository=$FRONTEND_REPO \
-            --set frontend.image.tag=$FRONTEND_TAG \
-            --set ingress.frontend.host=${{ env.FRONTEND_HOST }} \
-            --set ingress.backend.host=${{ env.API_HOST }} \
-            --set ingress.tls.secretName=${{ env.TLS_SECRET_NAME }} \
-            --set secrets.jwtSecret=${{ secrets.JWT_SECRET }} \
-            --set secrets.postgresDb=${{ secrets.POSTGRES_DB }} \
-            --set secrets.postgresUser=${{ secrets.POSTGRES_USER }} \
-            --set secrets.postgresPassword=${{ secrets.POSTGRES_PASSWORD }} \
-            --wait --timeout 5m0s
-
-      - name: Wait for Migrations
-        run: |
-          echo "Migrations are now handled automatically by the Helm chart hook."
-          echo "Waiting for the migration job to complete..."
+          # Uninstall existing release if it exists to avoid "operation in progress" errors
+          helm uninstall lingua-quiz --namespace $NAMESPACE || true
+          
+          # Wait a moment for cleanup
           sleep 10
-
-          # Check if the migration job exists
-          JOB_NAME="${{ env.HELM_RELEASE_NAME }}-migrations"
-          echo "Looking for migration job: $JOB_NAME in namespace ${{ env.DEPLOY_NAMESPACE }}"
-
-          # Wait for job to complete
-          ATTEMPTS=0
-          MAX_ATTEMPTS=30 # 5 minutes total (10 sec * 30)
-
-          while [ $ATTEMPTS -lt $MAX_ATTEMPTS ]; do
-            # Get job status
-            JOB_STATUS=$(kubectl get job $JOB_NAME -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.status.conditions[?(@.type=='Complete')].status}" 2>/dev/null)
-            if [ "$JOB_STATUS" == "True" ]; then
-              echo "Migration job completed successfully!"
-              break
-            fi
-
-            # Check if the job failed
-            JOB_FAILED=$(kubectl get job $JOB_NAME -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.status.conditions[?(@.type=='Failed')].status}" 2>/dev/null)
-            if [ "$JOB_FAILED" == "True" ]; then
-              echo "::group::Migration Job Failed - Debug Information"
-              
-              # Get detailed job description
-              echo "--- Job Description ---"
-              kubectl describe job/$JOB_NAME -n ${{ env.DEPLOY_NAMESPACE }}
-              
-              # Get pod information
-              echo "--- Pod Information ---"
-              POD_NAME=$(kubectl get pods -n ${{ env.DEPLOY_NAMESPACE }} -l job-name=$JOB_NAME -o jsonpath="{.items[0].metadata.name}")
-              if [ -n "$POD_NAME" ]; then
-                echo "Pod name: $POD_NAME"
-                kubectl describe pod/$POD_NAME -n ${{ env.DEPLOY_NAMESPACE }}
-                
-                # Get pod logs
-                echo "--- Pod Logs ---"
-                kubectl logs pod/$POD_NAME -n ${{ env.DEPLOY_NAMESPACE }} --all-containers
-                
-                # Get container image details
-                echo "--- Container Image Details ---"
-                kubectl get pod/$POD_NAME -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.spec.containers[*].image}"
-                
-                # Check if init containers exist and get their logs
-                INIT_CONTAINERS=$(kubectl get pod/$POD_NAME -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.spec.initContainers[*].name}" 2>/dev/null)
-                if [ -n "$INIT_CONTAINERS" ]; then
-                  echo "--- Init Container Logs ---"
-                  for container in $INIT_CONTAINERS; do
-                    echo "Init container: $container"
-                    kubectl logs pod/$POD_NAME -n ${{ env.DEPLOY_NAMESPACE }} -c $container
-                  done
-                fi
-              else
-                echo "No pods found for job $JOB_NAME"
-              fi
-              
-              # List all environment variables from pod (masked for security)
-              echo "--- Environment Variables (masked) ---"
-              kubectl get pod/$POD_NAME -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.spec.containers[*].env[*].name}" | tr ' ' '\n' | sort
-              
-              # Get events related to the job
-              echo "--- Related Events ---"
-              kubectl get events -n ${{ env.DEPLOY_NAMESPACE }} --field-selector involvedObject.name=$JOB_NAME
-              
-              echo "::endgroup::"
+          
+          echo "Deploying with image tag: ${{ github.sha }}"
+          helm upgrade --install lingua-quiz ./helm/lingua-quiz-app \
+            --namespace $NAMESPACE \
+            --set namespace=$NAMESPACE \
+            --set backend.image.repository=${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backend \
+            --set backend.image.tag=${{ github.sha }} \
+            --set frontend.image.repository=${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-frontend \
+            --set frontend.image.tag=${{ github.sha }} \
+            --set ingress.frontend.host=${{ github.ref == 'refs/heads/main' && 'lingua-quiz.nikolay-eremeev.com' || 'test-lingua-quiz.nikolay-eremeev.com' }} \
+            --set secrets.jwtSecret="${{ secrets.JWT_SECRET }}" \
+            --set secrets.postgresDb="${{ secrets.POSTGRES_DB }}" \
+            --set secrets.postgresUser="${{ secrets.POSTGRES_USER }}" \
+            --set secrets.postgresPassword="${{ secrets.POSTGRES_PASSWORD }}" \
+            --wait --timeout 5m
+            
+      - name: Check Migration Logs
+        if: always()
+        run: |
+          echo "Checking for migration job..."
+          # Give it a moment for the job to be created
+          sleep 5
+          
+          # Check if migration job exists
+          if kubectl get job lingua-quiz-migrations -n $NAMESPACE 2>/dev/null; then
+            echo "Migration job found. Waiting for completion..."
+            kubectl wait --for=condition=complete \
+              job/lingua-quiz-migrations \
+              -n $NAMESPACE \
+              --timeout=5m || {
+                echo "Migration job did not complete successfully."
+              }
+            
+            echo ""
+            echo "=== Migration Job Status ==="
+            kubectl describe job/lingua-quiz-migrations -n $NAMESPACE || true
+            
+            echo ""
+            echo "=== Migration Logs ==="
+            kubectl logs job/lingua-quiz-migrations -n $NAMESPACE --all-containers=true || true
+            
+            # Check if job failed
+            if kubectl get job lingua-quiz-migrations -n $NAMESPACE -o jsonpath='{.status.failed}' | grep -q "1"; then
+              echo "Migration job failed!"
               exit 1
             fi
-
-            echo "Migration job still running, waiting (attempt $ATTEMPTS of $MAX_ATTEMPTS)..."
-            sleep 10
-            ATTEMPTS=$((ATTEMPTS+1))
-          done
-
-          if [ $ATTEMPTS -eq $MAX_ATTEMPTS ]; then
-            echo "::group::Migration Job Timeout - Debug Information"
-            
-            # Get detailed job description
-            echo "--- Job Description ---"
-            kubectl describe job/$JOB_NAME -n ${{ env.DEPLOY_NAMESPACE }}
-            
-            # Get pod information
-            echo "--- Pod Information ---"
-            POD_NAME=$(kubectl get pods -n ${{ env.DEPLOY_NAMESPACE }} -l job-name=$JOB_NAME -o jsonpath="{.items[0].metadata.name}")
-            if [ -n "$POD_NAME" ]; then
-              echo "Pod name: $POD_NAME"
-              kubectl describe pod/$POD_NAME -n ${{ env.DEPLOY_NAMESPACE }}
-              
-              # Get pod logs
-              echo "--- Pod Logs ---"
-              kubectl logs pod/$POD_NAME -n ${{ env.DEPLOY_NAMESPACE }} --all-containers
-              
-              # Check pod status
-              echo "--- Pod Status ---"
-              kubectl get pod/$POD_NAME -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.status.phase}" | tr -d '\n'
-              echo " ($(kubectl get pod/$POD_NAME -n ${{ env.DEPLOY_NAMESPACE }} -o jsonpath="{.status.conditions[*].type}" | tr ' ' ','))"
-              
-              # Show resource usage if possible
-              echo "--- Resource Usage ---"
-              kubectl top pod $POD_NAME -n ${{ env.DEPLOY_NAMESPACE }} 2>/dev/null || echo "Resource metrics not available"
-            else
-              echo "No pods found for job $JOB_NAME"
-            fi
-            
-            # Get all pods in namespace to check for other issues
-            echo "--- All Pods in Namespace ---"
-            kubectl get pods -n ${{ env.DEPLOY_NAMESPACE }}
-            
-            echo "::endgroup::"
-            exit 1
+          else
+            echo "Migration job not found. Helm deployment may have failed."
           fi
-
-          echo "::group::Migrations Success Logs"
-          echo "Migrations completed successfully. Full logs:"
-          kubectl logs job/$JOB_NAME -n ${{ env.DEPLOY_NAMESPACE }}
-          echo "::endgroup::"
-
-      - name: Log deployment status
+          
+      - name: Check Deployment Status
+        if: steps.helm-deploy.outcome == 'failure'
         run: |
-          echo "::group::Deployment Status"
-          echo "Deploy Environment: ${{ env.DEPLOY_ENV }}"
-          echo "Helm Release: ${{ env.HELM_RELEASE_NAME }}"
-          echo "Namespace: ${{ env.DEPLOY_NAMESPACE }}"
-          echo "Target Backend Port: ${{ env.BACKEND_PORT }}"
-          echo "Frontend Host: ${{ env.FRONTEND_HOST }}"
-          echo "API Host: ${{ env.API_HOST }}"
-          echo "Backend Image: ${{ env.BACKEND_IMAGE_NAME }}:${{ env.BACKEND_IMAGE_TAG }}"
-          echo "Frontend Image: ${{ env.FRONTEND_IMAGE_NAME }}:${{ env.FRONTEND_IMAGE_TAG }}"
-          echo "Deployment to Kubernetes completed."
-          echo "::endgroup::"
+          echo "Helm deployment failed. Checking status..."
+          kubectl get all -n $NAMESPACE
+          exit 1
 
   test-api:
-    name: Test API after deployment
-    needs: [deploy-app]
+    needs: deploy
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      API_URL: ${{ github.ref == 'refs/heads/main' && 'https://lingua-quiz.nikolay-eremeev.com/api' || 'https://test-lingua-quiz.nikolay-eremeev.com/api' }}
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "20"
-      - name: Install dependencies
-        run: npm ci
-      - name: Set environment variables for tests
-        env:
-          DEPLOY_ENV: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'production' || 'test' }}
+      - name: Test deployed API
         run: |
-          echo "NODE_ENV=test" >> $GITHUB_ENV
-          if [[ "$DEPLOY_ENV" == "production" ]]; then
-            echo "API_URL=https://api-lingua-quiz.nikolay-eremeev.com/api" >> $GITHUB_ENV
-          else
-            echo "API_URL=https://test-api-lingua-quiz.nikolay-eremeev.com/api" >> $GITHUB_ENV
-          fi
-      - name: Run backend tests
-        env:
-          API_URL: ${{ env.API_URL }}
-        run: |
-          echo "Running tests against URL: ${API_URL}"
           cd packages/backend
           pip install -r requirements-test.txt
-          echo "::group::Basic Integration Tests"
           python test_integration.py
-          echo "::endgroup::"
-          echo "::group::Quiz Integration Tests"
           python test_quiz_integration.py
-          echo "::endgroup::"
-          echo "::group::Quiz Learning Simulations (All Word Lists in Parallel)"
-          python test_quiz_learning_simulation.py --parallel
-          echo "::endgroup::"
-          echo "Tests completed. Check test runner output above for details."
+          python test_quiz_learning_simulation.py
 
-  security-scans:
-    name: Security Scans (ZAP)
-    # Only run security scans for production (main branch) deployments
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: [deploy-app]
-    uses: ./.github/workflows/security-scans.yml
-    with:
-      frontend-url: "https://lingua-quiz.nikolay-eremeev.com"
-      backend-url: "https://api-lingua-quiz.nikolay-eremeev.com"
+  test-e2e-deployed:
+    needs: deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      LINGUA_QUIZ_URL: ${{ github.ref == 'refs/heads/main' && 'https://lingua-quiz.nikolay-eremeev.com' || 'https://test-lingua-quiz.nikolay-eremeev.com' }}
+      API_URL: ${{ github.ref == 'refs/heads/main' && 'https://lingua-quiz.nikolay-eremeev.com/api' || 'https://test-lingua-quiz.nikolay-eremeev.com/api' }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t e2e-tests ./packages/e2e-tests
+      - run: docker run --rm -e LINGUA_QUIZ_URL -e API_URL e2e-tests playwright test

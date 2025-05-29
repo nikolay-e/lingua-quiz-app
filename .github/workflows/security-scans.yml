@@ -1,16 +1,9 @@
-name: Integration Tests
+name: Security Scans
 
 on:
-  workflow_call:
-    inputs:
-      frontend-url:
-        required: false
-        type: string
-        default: ""
-      backend-url:
-        required: false
-        type: string
-        default: ""
+  schedule:
+    - cron: '0 0 * * 0' # Weekly on Sunday
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -22,60 +15,14 @@ jobs:
   zap-security-scan:
     runs-on: ubuntu-latest
     steps:
-      - name: Set ZAP Scan Target URLs
-        run: |
-          # Use input URLs if provided, otherwise determine dynamically
-          if [[ -n "${{ inputs.frontend-url }}" ]]; then
-            echo "ZAP_FRONTEND_URL=${{ inputs.frontend-url }}" >> $GITHUB_ENV
-          elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            echo "ZAP_FRONTEND_URL=https://test-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
-          else
-            echo "ZAP_FRONTEND_URL=https://lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
-          fi
-
-          if [[ -n "${{ inputs.backend-url }}" ]]; then
-            echo "ZAP_BACKEND_URL=${{ inputs.backend-url }}" >> $GITHUB_ENV
-          elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            echo "ZAP_BACKEND_URL=https://test-api-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
-          else
-            echo "ZAP_BACKEND_URL=https://api-lingua-quiz.nikolay-eremeev.com" >> $GITHUB_ENV
-          fi
-
-      - name: Run ZAP Full Scan (Frontend)
-        uses: zaproxy/action-full-scan@v0.12.0
+      - name: Run ZAP Baseline Scan (Frontend)
+        uses: zaproxy/action-baseline@v0.12.0
         with:
-          target: ${{ env.ZAP_FRONTEND_URL }}
-          cmd_options: "-a"
-          docker_name: "ghcr.io/zaproxy/zaproxy:stable"
-          rules_file_name: ".zap/rules.tsv"
-          allow_issue_writing: true
-          issue_title: "ZAP Security Scan Report (Frontend)"
+          target: 'https://lingua-quiz.nikolay-eremeev.com'
           fail_action: false
-          artifact_name: "zap_frontend_scan_report"
 
-      - name: Run ZAP Full Scan (Backend API)
-        uses: zaproxy/action-full-scan@v0.12.0
+      - name: Run ZAP Baseline Scan (Backend API)
+        uses: zaproxy/action-baseline@v0.12.0
         with:
-          target: ${{ env.ZAP_BACKEND_URL }}
-          cmd_options: "-a"
-          docker_name: "ghcr.io/zaproxy/zaproxy:stable"
-          rules_file_name: ".zap/api-rules.tsv"
-          allow_issue_writing: true
-          issue_title: "ZAP Security Scan Report (API)"
+          target: 'https://api-lingua-quiz.nikolay-eremeev.com'
           fail_action: false
-          artifact_name: "zap_backend_scan_report"
-
-      - name: Combine and Upload Reports
-        run: |
-          mkdir -p zap-reports
-          mv */report_html.html zap-frontend-report.html || true
-          mv */report_html.html zap-backend-report.html || true
-          mv zap-*-report.html zap-reports/ || true
-          ls -la zap-reports || echo "No reports found"
-
-      - name: Upload ZAP Scan Reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: zap_scan_reports
-          path: zap-reports

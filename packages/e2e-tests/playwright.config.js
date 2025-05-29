@@ -1,15 +1,6 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 const { defineConfig, devices } = require('@playwright/test');
 
 const baseURL = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
-// Debug logging for CI - remove after fixing the issue
-// eslint-disable-next-line no-console
-console.log('Playwright config - baseURL:', baseURL);
-// eslint-disable-next-line no-console
-console.log(
-  'All env vars:',
-  Object.keys(process.env).filter((k) => k.includes('LINGUA') || k.includes('API'))
-);
 
 module.exports = defineConfig({
   testDir: './tests',
@@ -22,16 +13,8 @@ module.exports = defineConfig({
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    // Enable debug mode for more verbose logging
     headless: true,
-    // Log all network activity
-    launchOptions: {
-      // Enable verbose logging
-      args: ['--enable-logging', '--v=1'],
-    },
-    // Add action timeout
     actionTimeout: 10000,
-    // Add navigation timeout
     navigationTimeout: 30000,
   },
   reporter: [['html', { open: 'never' }], ['list']],
@@ -44,7 +27,13 @@ module.exports = defineConfig({
     // Desktop configurations
     {
       name: 'Desktop Chromium',
-      use: { browserName: 'chromium', viewport: { width: 1280, height: 720 } },
+      use: { 
+        browserName: 'chromium', 
+        viewport: { width: 1280, height: 720 },
+        launchOptions: {
+          args: ['--enable-logging', '--v=1'],
+        },
+      },
     },
     {
       name: 'Desktop Firefox',
@@ -64,6 +53,9 @@ module.exports = defineConfig({
       use: {
         browserName: 'chromium',
         ...devices['Pixel 5'],
+        launchOptions: {
+          args: ['--enable-logging', '--v=1'],
+        },
       },
     },
     {

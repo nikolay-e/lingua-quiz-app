@@ -34,7 +34,7 @@ COPY package*.json ./
 
 COPY . .
 
-RUN npm ci
+RUN npm install
 
 # Install playwright browsers
 RUN npx playwright install-deps
