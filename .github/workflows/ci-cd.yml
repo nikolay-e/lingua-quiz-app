@@ -37,11 +37,11 @@ jobs:
       - name: Wait for services to be ready
         run: timeout 60 bash -c 'until curl -f http://localhost:8080 > /dev/null 2>&1; do sleep 1; done'
         
-      - name: Run backend integration tests
+      - name: Run backend integration tests (no TTS)
         run: |
           cd packages/backend
           pip install -r requirements-test.txt
-          API_URL=http://localhost:9000/api python test_integration.py
+          SKIP_TTS_TESTS=true API_URL=http://localhost:9000/api python test_integration.py
           
       - name: Run backend quiz integration tests
         run: |
@@ -76,7 +76,7 @@ jobs:
           context: ${{ matrix.context }}
           file: ${{ matrix.context }}/${{ matrix.dockerfile }}
           push: true
-          tags: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/${{ matrix.image }}:${{ github.sha }},${{ secrets.DOCKER_REGISTRY_USERNAME }}/${{ matrix.image }}:latest
+          tags: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/${{ matrix.image }}:${{ github.event.pull_request.head.sha || github.sha }},${{ secrets.DOCKER_REGISTRY_USERNAME }}/${{ matrix.image }}:latest
 
   deploy:
     needs: [test, build-images]
@@ -122,19 +122,21 @@ jobs:
           # Wait a moment for cleanup
           sleep 10
           
-          echo "Deploying with image tag: ${{ github.sha }}"
+          IMAGE_TAG="${{ github.event.pull_request.head.sha || github.sha }}"
+          echo "Deploying with image tag: $IMAGE_TAG"
           helm upgrade --install lingua-quiz ./helm/lingua-quiz-app \
             --namespace $NAMESPACE \
             --set namespace=$NAMESPACE \
             --set backend.image.repository=${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backend \
-            --set backend.image.tag=${{ github.sha }} \
+            --set backend.image.tag=$IMAGE_TAG \
             --set frontend.image.repository=${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-frontend \
-            --set frontend.image.tag=${{ github.sha }} \
+            --set frontend.image.tag=$IMAGE_TAG \
             --set ingress.frontend.host=${{ github.ref == 'refs/heads/main' && 'lingua-quiz.nikolay-eremeev.com' || 'test-lingua-quiz.nikolay-eremeev.com' }} \
             --set secrets.jwtSecret="${{ secrets.JWT_SECRET }}" \
             --set secrets.postgresDb="${{ secrets.POSTGRES_DB }}" \
             --set secrets.postgresUser="${{ secrets.POSTGRES_USER }}" \
             --set secrets.postgresPassword="${{ secrets.POSTGRES_PASSWORD }}" \
+            --set secrets.googleCloudCredentialsB64="${{ secrets.GOOGLE_CLOUD_CREDENTIALS_B64 }}" \
             --wait --timeout 5m
             
       - name: Check Migration Logs

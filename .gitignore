@@ -1,6 +1,7 @@
 # Dependency directories
 node_modules/
 .venv
+.env
 
 # Python cache
 __pycache__/

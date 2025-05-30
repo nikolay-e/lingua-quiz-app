@@ -105,6 +105,7 @@ secrets:
   postgresDb: "" # Must be set at deployment time
   postgresUser: "" # Must be set at deployment time
   postgresPassword: "" # Must be set at deployment time
+  googleCloudCredentialsB64: "" # Base64-encoded Google Cloud service account JSON for TTS (optional)
 
 # Service Account configuration
 serviceAccount:

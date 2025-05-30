@@ -1,12 +1,19 @@
 <script>
   import { onMount } from 'svelte';
   import { authStore, quizStore } from '../stores.js';
+  import api from '../api.js';
   
   let userAnswer = '';
   let answerInput;
   let feedback = null;
   let usageExamples = null;
   let isSubmitting = false;
+
+  // TTS variables
+  let ttsAvailable = false;
+  let ttsLanguages = [];
+  let isPlayingTTS = false;
+  let currentAudio = null;
   
   // Request queuing to prevent concurrent requests
   let requestQueue = Promise.resolve();
@@ -48,6 +55,10 @@
   $: loading = $quizStore.loading;
   $: wordLists = $quizStore.wordLists;
   $: email = $authStore.email;
+
+  // TTS reactive state
+  $: currentLanguage = direction === 'normal' ? sourceLanguage : targetLanguage;
+  $: canUseTTS = ttsAvailable && currentQuestion && ttsLanguages.includes(currentLanguage);
   
   // Reactive word lists for display
   $: level0Words = wordLists.level0.map(w => `${w.source} (${w.target})`);
@@ -60,8 +71,59 @@
     ? `${sourceLanguage} ➔ ${targetLanguage}`
     : `${targetLanguage} ➔ ${sourceLanguage}`;
     
+  // TTS functions
+  async function loadTTSLanguages() {
+    try {
+      const ttsData = await api.getTTSLanguages($authStore.token);
+      ttsAvailable = ttsData.available;
+      ttsLanguages = ttsData.supportedLanguages || [];
+    } catch (error) {
+      console.warn('Failed to load TTS languages:', error);
+      ttsAvailable = false;
+      ttsLanguages = [];
+    }
+  }
+
+  async function playTTS(text, language) {
+    if (!canUseTTS || isPlayingTTS) return;
+    
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio = null;
+    }
+    
+    isPlayingTTS = true;
+    
+    try {
+      const ttsData = await api.synthesizeSpeech($authStore.token, text, language);
+      const audioBlob = new Blob(
+        [Uint8Array.from(atob(ttsData.audioData), c => c.charCodeAt(0))],
+        { type: ttsData.contentType }
+      );
+      const audioUrl = URL.createObjectURL(audioBlob);
+      
+      currentAudio = new Audio(audioUrl);
+      currentAudio.onended = () => {
+        isPlayingTTS = false;
+        URL.revokeObjectURL(audioUrl);
+        currentAudio = null;
+      };
+      currentAudio.onerror = () => {
+        isPlayingTTS = false;
+        URL.revokeObjectURL(audioUrl);
+        currentAudio = null;
+      };
+      
+      await currentAudio.play();
+    } catch (error) {
+      console.error('TTS playback failed:', error);
+      isPlayingTTS = false;
+    }
+  }
+
   onMount(async () => {
     await quizStore.loadWordSets($authStore.token);
+    await loadTTSLanguages();
     if (answerInput) answerInput.focus();
   });
   
@@ -211,6 +273,17 @@
             <span id="word">
               {currentQuestion ? currentQuestion.word : 'No more questions available.'}
             </span>
+            {#if canUseTTS && currentQuestion}
+              <button 
+                class="tts-button {isPlayingTTS ? 'speaking' : ''}"
+                on:click={() => playTTS(currentQuestion.word, currentLanguage)}
+                disabled={isPlayingTTS}
+                title="Listen to pronunciation"
+                aria-label="Listen to pronunciation"
+              >
+                <i class="fas fa-volume-up"></i>
+              </button>
+            {/if}
           </div>
         {/if}
         

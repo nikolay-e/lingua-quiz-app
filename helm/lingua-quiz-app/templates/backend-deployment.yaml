@@ -90,6 +90,13 @@ spec:
                   key: JWT_SECRET
             - name: CORS_ALLOWED_ORIGINS
               value: {{ .Values.backend.corsAllowedOrigins | quote }}
+            {{- if .Values.secrets.googleCloudCredentialsB64 }}
+            - name: GOOGLE_CLOUD_CREDENTIALS_B64
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "lingua-quiz-app.fullname" . }}-tts
+                  key: GOOGLE_CLOUD_CREDENTIALS_B64
+            {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

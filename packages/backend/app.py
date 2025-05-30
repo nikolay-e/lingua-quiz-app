@@ -7,6 +7,7 @@ Single-file implementation assuming database is already set up
 import os
 import datetime
 import functools
+import base64
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_limiter import Limiter
@@ -18,6 +19,7 @@ import bcrypt
 import jwt
 import werkzeug.exceptions
 from quiz_logic import QuizManager
+from tts_service import TTSService
 
 # Configuration
 DB_HOST = os.getenv('DB_HOST', 'localhost')
@@ -26,7 +28,8 @@ DB_NAME = os.getenv('POSTGRES_DB', 'linguaquiz_db')
 DB_USER = os.getenv('POSTGRES_USER', 'linguaquiz_user')
 DB_PASSWORD = os.getenv('POSTGRES_PASSWORD', 'password')
 JWT_SECRET = os.getenv('JWT_SECRET', 'your_jwt_secret_key_here')
-JWT_EXPIRES_IN = os.getenv('JWT_EXPIRES_IN', '1h')
+JWT_EXPIRES_IN = os.getenv('JWT_EXPIRES_IN', '24h')
+JWT_EXPIRES_HOURS = int(os.getenv('JWT_EXPIRES_HOURS', '24'))
 PORT = int(os.getenv('PORT', 9000))
 CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '*').split(',') if os.getenv('CORS_ALLOWED_ORIGINS') != '*' else ['*']
 
@@ -53,6 +56,9 @@ db_pool = SimpleConnectionPool(
 
 # Quiz manager
 quiz_manager = QuizManager(db_pool)
+
+# TTS service
+tts_service = TTSService(db_pool)
 
 # Helper functions
 def snake_to_camel(snake_str):
@@ -209,7 +215,7 @@ def register():
         'userId': user['id'],
         'sub': user['email'],
         'iat': datetime.datetime.utcnow(),
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=JWT_EXPIRES_HOURS)
     }, JWT_SECRET, algorithm='HS256')
     
     return jsonify({
@@ -233,7 +239,7 @@ def login():
         'userId': user['id'],
         'sub': user['email'],
         'iat': datetime.datetime.utcnow(),
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1)
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=JWT_EXPIRES_HOURS)
     }, JWT_SECRET, algorithm='HS256')
     
     return jsonify({
@@ -462,6 +468,55 @@ def get_quiz_state():
         print(f"Error getting quiz state: {e}")
         traceback.print_exc()
         return jsonify({'message': 'Failed to get quiz state'}), 500
+
+# TTS Routes
+@app.route('/api/tts/synthesize', methods=['POST'])
+@auth_required
+@limiter.limit("100 per 1 minute", key_func=lambda: request.headers.get('Authorization', ''))
+def synthesize_speech():
+    """Synthesize speech for given text and language"""
+    if not tts_service.is_available():
+        return jsonify({'message': 'TTS service unavailable'}), 503
+    
+    data = request.get_json()
+    if not data:
+        return jsonify({'message': 'JSON payload required'}), 400
+        
+    text = data.get('text', '').strip()
+    language = data.get('language', '')
+    
+    if not text or len(text) > 500:
+        return jsonify({'message': 'Text must be between 1 and 500 characters'}), 400
+    
+    if language not in tts_service.get_supported_languages():
+        return jsonify({'message': f'Language {language} not supported'}), 400
+    
+    try:
+        audio_content = tts_service.synthesize_speech(text, language)
+        if audio_content is None:
+            return jsonify({'message': 'Text not found in database or TTS synthesis failed'}), 400
+        
+        audio_b64 = base64.b64encode(audio_content).decode('utf-8')
+        return jsonify({
+            'audioData': audio_b64,
+            'contentType': 'audio/mpeg',
+            'text': text,
+            'language': language
+        })
+    except Exception as e:
+        print(f"TTS synthesis error: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'message': 'TTS synthesis failed'}), 500
+
+@app.route('/api/tts/languages', methods=['GET'])
+@auth_required
+def get_tts_languages():
+    """Get supported TTS languages"""
+    return jsonify({
+        'supportedLanguages': tts_service.get_supported_languages(),
+        'available': tts_service.is_available()
+    })
 
 # Error handler
 @app.errorhandler(404)
