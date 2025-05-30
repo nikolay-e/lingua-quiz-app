@@ -11,10 +11,12 @@ level.
 
 ### Tech Stack 🛠️
 
-- **Frontend**: Vanilla JavaScript (ES6+), focusing on clean, maintainable code without framework overhead
-- **Backend**: Node.js, Express.js, PostgreSQL with advanced SQL functions and triggers
-- **Infrastructure**: Docker, Kubernetes, GitHub Actions, Nginx
-- **Testing**: Jest, Playwright for cross-browser testing
+- **Frontend**: Svelte 4.0 with Vite build tool, deployed with Nginx
+- **Backend**: Python 3.11, Flask, PostgreSQL with advanced SQL functions and triggers
+- **Infrastructure**: Docker, Kubernetes, Helm, GitHub Actions
+- **Testing**: Playwright for comprehensive E2E testing (desktop & mobile)
+- **Security**: JWT authentication, rate limiting, OWASP ZAP security scans
+- **Monitoring**: Optional automated database backups to DigitalOcean Spaces
 
 Want to see it in action? Check out the [live demo](https://lingua-quiz.nikolay-eremeev.com/)
 
@@ -83,32 +85,71 @@ LinguaQuiz uses Kubernetes for cloud deployment, providing a scalable and mainta
 
 ### Unified Helm Chart
 
-The application is deployed using a single unified Helm chart located in `./helm/lingua-quiz-app/`. This chart manages:
+The application is deployed using a single comprehensive Helm chart located in `./helm/lingua-quiz-app/`. This chart manages:
 
 - Frontend deployment (Nginx serving static files)
 - Backend API deployment
-- PostgreSQL database (using StatefulSet)
-- Ingress configuration for both services
-- Secret management
-
-> **Note**: Legacy Helm charts in `packages/backend/helm/` are deprecated and will be removed in a future update.
+- PostgreSQL database (using StatefulSet with persistent volumes)
+- Database migrations (automated via Kubernetes Jobs)
+- Ingress configuration for routing traffic
+- Secret management for sensitive data
+- Optional database backup system (CronJob with MinIO client)
 
 ### Deployment Strategy
 
-- **CI/CD Pipeline**: GitHub Actions automates the build, test, and deployment process
-- **Docker Images**: Frontend and backend are containerized separately
-- **Kubernetes Deployment**: Both components are deployed to Kubernetes
-- **Ingress**: Configured to route traffic to frontend and API endpoints
-- **TLS**: HTTPS encryption for all endpoints
-- **Database Backups**: Automated backups using CronJobs
+- **CI/CD Pipeline**: Streamlined GitHub Actions workflow with parallel test and build jobs
+- **Docker Images**: 
+  - Frontend: Multi-stage build with Nginx
+  - Backend: Optimized Node.js image with production dependencies
+- **Kubernetes Resources**:
+  - Deployments for frontend and backend with health checks
+  - StatefulSet for PostgreSQL with persistent storage
+  - Jobs for database migrations
+  - Optional CronJob for automated backups
+- **Ingress**: Single ingress resource routing to both frontend and API
+- **TLS**: HTTPS encryption via cert-manager
+- **Database Backups**: Optional automated backups to DigitalOcean Spaces
 
-### Detailed Documentation
+### Key Features
 
-For a more detailed explanation of the deployment process, see:
+- **Environment Separation**: Supports multiple environments (production, staging) via namespace configuration
+- **Health Checks**: Comprehensive liveness, readiness, and startup probes
+- **Resource Management**: Defined resource limits and requests for all containers
+- **Database Migrations**: Automated migration system that runs before application startup
+- **Backup System**: Optional backup functionality that can be enabled via Helm values
 
-- GitHub Actions workflows in `.github/workflows/`
-- Helm chart templates in `./helm/lingua-quiz-app/templates/`
-- Kubernetes resource configurations
+### Configuration
+
+The Helm chart can be customized via values. Key configuration options:
+
+```yaml
+# Namespace configuration
+namespace: lingua-quiz
+
+# Enable/disable features
+backup:
+  enabled: true
+  schedule: "0 2 * * *"  # Daily at 2 AM
+
+migrations:
+  enabled: true
+```
+
+### Deployment Commands
+
+```bash
+# Deploy to production
+helm upgrade --install lingua-quiz ./helm/lingua-quiz-app \
+  --namespace lingua-quiz-production \
+  --set secrets.jwtSecret=$JWT_SECRET \
+  --set secrets.postgresPassword=$DB_PASSWORD
+
+# Enable backups
+helm upgrade lingua-quiz ./helm/lingua-quiz-app \
+  --set backup.enabled=true \
+  --set backup.spaces.accessKeyId=$SPACES_KEY \
+  --set backup.spaces.secretKey=$SPACES_SECRET
+```
 
 ## Contributing 🤝
 

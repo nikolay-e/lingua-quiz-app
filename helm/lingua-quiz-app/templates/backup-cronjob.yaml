@@ -1,0 +1,107 @@
+{{- if .Values.backup.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "lingua-quiz-app.fullname" . }}-backup
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "lingua-quiz-app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: backup
+spec:
+  schedule: {{ .Values.backup.schedule | quote }}
+  concurrencyPolicy: {{ .Values.backup.concurrencyPolicy }}
+  successfulJobsHistoryLimit: {{ .Values.backup.successfulJobsHistoryLimit }}
+  failedJobsHistoryLimit: {{ .Values.backup.failedJobsHistoryLimit }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          initContainers:
+            - name: install-mc
+              image: alpine:3.18
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  apk add --no-cache ca-certificates curl
+                  curl -sSL https://dl.min.io/client/mc/release/linux-amd64/mc -o /usr/local/bin/mc
+                  chmod +x /usr/local/bin/mc
+                  cp /usr/local/bin/mc /tools/mc
+              volumeMounts:
+                - name: tools-volume
+                  mountPath: /tools
+          containers:
+            - name: postgres-backup
+              image: postgres:13-alpine
+              imagePullPolicy: IfNotPresent
+              env:
+                # Reference the PostgreSQL secret created by this chart
+                - name: POSTGRES_DB
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ include "lingua-quiz-app.fullname" . }}-postgres
+                      key: POSTGRES_DB
+                - name: POSTGRES_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ include "lingua-quiz-app.fullname" . }}-postgres
+                      key: POSTGRES_USER
+                - name: PGPASSWORD # pg_dump uses this env var
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ include "lingua-quiz-app.fullname" . }}-postgres
+                      key: POSTGRES_PASSWORD
+                # Use the postgres service from this chart
+                - name: POSTGRES_HOST
+                  value: "{{ include "lingua-quiz-app.fullname" . }}-postgres"
+                # Reference the spaces credentials secret
+                - name: SPACES_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ include "lingua-quiz-app.fullname" . }}-backup-spaces
+                      key: SPACES_ACCESS_KEY_ID
+                - name: SPACES_SECRET_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ include "lingua-quiz-app.fullname" . }}-backup-spaces
+                      key: SPACES_SECRET_KEY
+                # Spaces Configuration from values
+                - name: SPACES_ENDPOINT_URL
+                  value: {{ .Values.backup.spaces.endpointUrl | quote }}
+                - name: SPACES_BUCKET_NAME
+                  value: {{ .Values.backup.spaces.bucketName | quote }}
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  set -e
+                  echo "Starting PostgreSQL backup process..."
+                  BACKUP_FILE="/backup/backup-$(date +%Y-%m-%dT%H-%M-%S).dump"
+
+                  echo "Creating dump file: ${BACKUP_FILE}"
+                  # Use -Fc for custom-format archive, suitable for pg_restore
+                  pg_dump -U $POSTGRES_USER -h $POSTGRES_HOST -d $POSTGRES_DB -Fc -f $BACKUP_FILE
+                  echo "Dump created successfully."
+
+                  echo "Configuring mc..."
+                  /tools/mc alias set spaces https://${SPACES_ENDPOINT_URL} ${SPACES_ACCESS_KEY_ID} ${SPACES_SECRET_KEY}
+                  echo "mc configured."
+
+                  TARGET_PATH="spaces/${SPACES_BUCKET_NAME}/backups/${BACKUP_FILE##*/}" # Path in bucket
+                  echo "Uploading ${BACKUP_FILE} to ${TARGET_PATH}..."
+                  /tools/mc cp ${BACKUP_FILE} ${TARGET_PATH}
+                  echo "Upload complete."
+
+                  echo "Cleaning up local file..."
+                  rm ${BACKUP_FILE}
+                  echo "Backup process finished successfully."
+              volumeMounts:
+                - name: backup-volume
+                  mountPath: /backup
+                - name: tools-volume
+                  mountPath: /tools
+          volumes:
+            - name: backup-volume
+              emptyDir: {} # Use emptyDir for temporary storage during the job run
+            - name: tools-volume
+              emptyDir: {} # Use emptyDir for sharing tools between init and main containers
+          restartPolicy: OnFailure # Job pods should run to completion or fail
+{{- end }}

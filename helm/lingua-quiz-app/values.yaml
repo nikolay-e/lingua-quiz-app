@@ -134,6 +134,19 @@ migrations:
   env:
     - name: NODE_ENV
       value: "production"
+
+# Database backup configuration
+backup:
+  enabled: false  # Enable/disable backup functionality
+  schedule: "0 2 * * *"  # Daily at 2 AM
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  spaces:
+    endpointUrl: "fra1.digitaloceanspaces.com"
+    bucketName: "lingua-quiz"
+    accessKeyId: ""  # Must be set at deployment
+    secretKey: ""     # Must be set at deployment
 # Optional configurations
 # imagePullSecrets: []
 # nameOverride: ""

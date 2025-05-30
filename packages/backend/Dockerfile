@@ -7,13 +7,13 @@ RUN apk add --no-cache postgresql-libs curl \
   && apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev
 
 # Copy and install dependencies
-COPY packages/backend/requirements.txt packages/backend/requirements-migrate.txt ./
+COPY requirements.txt requirements-migrate.txt ./
 RUN pip install --no-cache-dir -r requirements.txt -r requirements-migrate.txt \
   && apk --purge del .build-deps
 
 # Copy application and migrations
-COPY packages/backend/app.py packages/backend/migrate.py packages/backend/quiz_logic.py ./
-COPY packages/backend/migrations/ ./migrations/
+COPY app.py migrate.py quiz_logic.py ./
+COPY migrations/ ./migrations/
 
 # Run as non-root
 RUN adduser -D appuser

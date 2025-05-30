@@ -1,9 +1,9 @@
 .git
 *.csv
-word_processing_scripts
 package-lock.json
 test-results
 playwright-report
+word_processing_scripts
 coverage
 favicon
 *.png

@@ -1,5 +1,5 @@
 -- Create quiz session tables for managing quiz state in backend
-CREATE TABLE quiz_session (
+CREATE TABLE IF NOT EXISTS quiz_session (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES "user"(id) ON DELETE CASCADE,
     word_list_id INTEGER REFERENCES word_list(id),
@@ -11,7 +11,7 @@ CREATE TABLE quiz_session (
     UNIQUE(user_id, word_list_id)
 );
 
-CREATE TABLE quiz_session_stats (
+CREATE TABLE IF NOT EXISTS quiz_session_stats (
     id SERIAL PRIMARY KEY,
     session_id INTEGER REFERENCES quiz_session(id) ON DELETE CASCADE,
     translation_id INTEGER REFERENCES translation(id),
@@ -25,6 +25,6 @@ CREATE TABLE quiz_session_stats (
 );
 
 -- Create indexes for performance
-CREATE INDEX idx_quiz_session_user_list ON quiz_session(user_id, word_list_id);
-CREATE INDEX idx_quiz_session_stats_session ON quiz_session_stats(session_id);
-CREATE INDEX idx_quiz_session_stats_translation ON quiz_session_stats(translation_id);
+CREATE INDEX IF NOT EXISTS idx_quiz_session_user_list ON quiz_session(user_id, word_list_id);
+CREATE INDEX IF NOT EXISTS idx_quiz_session_stats_session ON quiz_session_stats(session_id);
+CREATE INDEX IF NOT EXISTS idx_quiz_session_stats_translation ON quiz_session_stats(translation_id);

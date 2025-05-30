@@ -14,8 +14,8 @@ from collections import defaultdict
 
 # Configuration
 API_URL = os.getenv('API_URL', 'http://localhost:9000/api')
-TIMEOUT = 5
-MAX_QUESTIONS = 15000
+TIMEOUT = 2  # Reduced timeout for faster requests
+MAX_QUESTIONS = 15000  # Prevent infinite loops
 MAX_CONSECUTIVE_ERRORS_BEFORE_FAIL = 3
 
 # Colors for output
@@ -168,8 +168,12 @@ class QuizLearningSimulation:
                             return word_pair.get('source')
         return None
     
-    def should_intentionally_fail(self, translation_id):
+    def should_intentionally_fail(self, translation_id, current_progress=0):
         """Determine if we should intentionally fail this word for testing"""
+        # Stop intentional failures when close to completion to avoid infinite loops
+        if current_progress > 0.95:  # 95% completion
+            return False
+            
         if translation_id not in self.failure_test_words:
             if random.random() < self.FAILURE_TEST_RATE:
                 max_failures = random.choice(self.DEGRADATION_PATTERNS)
@@ -218,6 +222,8 @@ class QuizLearningSimulation:
             # Learning variables
             manual_direction_toggle = False
             force_refresh = False
+            last_progress_change = 0  # Track when progress last changed
+            last_level3_count = initial_counts['level3']
             
             # Main learning loop - complete all words to L3
             while (initial_counts['level3'] < target_mastered and
@@ -229,9 +235,19 @@ class QuizLearningSimulation:
                 # Progress calculation
                 progress_pct = (initial_counts['level3'] / target_mastered * 100) if target_mastered > 0 else 0
                 
-                # Only log progress periodically to reduce output
-                if self.question_counter % 500 == 1 or self.question_counter == 1:
+                # Check for progress changes
+                if initial_counts['level3'] > last_level3_count:
+                    last_progress_change = self.question_counter
+                    last_level3_count = initial_counts['level3']
+                
+                # Only log progress less frequently to reduce I/O overhead
+                if self.question_counter % 1000 == 0 or self.question_counter == 1:
                     self.log(f"Question {self.question_counter} | Progress: {progress_pct:.1f}% ({initial_counts['level3']}/{target_mastered} L3)", BLUE, force=True)
+                
+                # Break if stuck for too long (no progress in 1000 questions for faster termination)
+                if self.question_counter - last_progress_change > 1000:
+                    self.log(f"Breaking: No progress for {self.question_counter - last_progress_change} questions", YELLOW, force=True)
+                    break
                 
                 # Refresh session data if needed
                 if force_refresh:
@@ -239,21 +255,19 @@ class QuizLearningSimulation:
                     initial_counts = self.get_level_counts(session_data['wordLists'])
                     force_refresh = False
                 
-                # Get next question (use cache if available)
+                # Get next question (always fresh to avoid session sync issues)
                 try:
-                    if hasattr(self, 'next_question_cache') and self.next_question_cache:
-                        question = self.next_question_cache
-                        self.next_question_cache = None
-                    else:
-                        question = self.get_next_question(self.word_list_name)
+                    question = self.get_next_question(self.word_list_name)
                 except Exception as e:
                     error_msg = str(e)
+                    self.log(f"ERROR getting next question: {error_msg}", RED, force=False)
                     self.consecutive_errors += 1
                     force_refresh = True
                     continue
                 
                 # Validate question
                 if not question or 'word' not in question or not question.get('word'):
+                    self.log(f"ERROR invalid question format: {question}", RED, force=False)
                     self.consecutive_errors += 1
                     continue
                 
@@ -269,7 +283,7 @@ class QuizLearningSimulation:
                 
                 # Check if required fields exist
                 if 'translationId' not in question:
-                    print(f"\n{RED}Invalid question format: missing translationId{RESET}")
+                    self.log(f"ERROR missing translationId in question: {question}", RED, force=False)
                     self.consecutive_errors += 1
                     continue
                 
@@ -279,12 +293,14 @@ class QuizLearningSimulation:
                 # Find correct answer
                 correct_answer = self.find_correct_answer(question, session_data['wordLists'])
                 if not correct_answer:
+                    self.log(f"ERROR could not find correct answer for question: {question}", RED, force=False)
                     force_refresh = True
                     self.consecutive_errors += 1
                     continue
                 
                 # Determine if we should intentionally fail
-                intentionally_wrong = self.should_intentionally_fail(translation_id)
+                progress_pct = (initial_counts['level3'] / target_mastered) if target_mastered > 0 else 0
+                intentionally_wrong = self.should_intentionally_fail(translation_id, progress_pct)
                 
                 if intentionally_wrong:
                     answer = "INTENTIONALLY_WRONG_ANSWER"
@@ -296,6 +312,8 @@ class QuizLearningSimulation:
                 
                 # Submit answer
                 try:
+                    # Store counts before submission to track changes
+                    old_counts = initial_counts.copy()
                     result = self.submit_answer(translation_id, answer, word)
                     feedback = result['feedback']
                     is_correct = feedback['isSuccess']
@@ -318,6 +336,7 @@ class QuizLearningSimulation:
                             # Don't log every intentional failure, it's too verbose
                             self.consecutive_errors = 0  # Don't count intentional failures
                         else:
+                            self.log(f"ERROR unexpected wrong answer for word '{word}': gave '{answer}', expected similar to '{correct_answer}'", RED, force=False)
                             self.consecutive_errors += 1
                             force_refresh = True
                     
@@ -334,9 +353,7 @@ class QuizLearningSimulation:
                         session_data['wordLists'] = result['wordLists']
                         initial_counts = self.get_level_counts(result['wordLists'])
                     
-                    # Store next question from response for next iteration
-                    if 'nextQuestion' in result and result['nextQuestion'] and not result['nextQuestion'].get('error'):
-                        self.next_question_cache = result['nextQuestion']
+                    # Note: Not caching next question to avoid session sync issues
                         
                         # Log significant changes
                         if old_counts != initial_counts:
@@ -354,12 +371,23 @@ class QuizLearningSimulation:
                                 self.log(f"Level changes: {', '.join(changes)}", BLUE)
                     
                 except Exception as e:
-                    self.consecutive_errors += 1
-                    force_refresh = True
+                    error_msg = str(e)
+                    self.log(f"ERROR submitting answer: {error_msg}", RED, force=False)
+                    
+                    # Handle session sync errors specifically
+                    if "Session out of sync" in error_msg or "question has changed" in error_msg:
+                        # Clear cached question and refresh session data
+                        self.next_question_cache = None
+                        force_refresh = True
+                        # Don't count session sync errors as consecutive errors, just retry
+                        continue
+                    else:
+                        self.consecutive_errors += 1
+                        force_refresh = True
                 
                 # Check for periodic direction switching for balanced learning
                 # Switch more frequently to progress words through levels faster
-                if self.current_direction == 'reverse' and manual_direction_toggle and self.question_counter % 50 == 0:
+                if self.current_direction == 'reverse' and manual_direction_toggle and self.question_counter % 25 == 0:
                     self.log("Switching direction back to normal", force=False)
                     self.toggle_direction()
                     manual_direction_toggle = False
@@ -368,7 +396,7 @@ class QuizLearningSimulation:
                 
                 # Check for manual direction toggle for balanced learning
                 if self.current_direction == 'normal' and not manual_direction_toggle:
-                    if initial_counts['level2'] >= 5 or self.question_counter % 50 == 0:
+                    if initial_counts['level2'] >= 5 or self.question_counter % 100 == 0:
                         reason = f"{initial_counts['level2']} L2 words" if initial_counts['level2'] >= 5 else f"periodic balance"
                         self.log(f"Switching to reverse direction ({reason})", force=False)
                         self.toggle_direction()
@@ -376,8 +404,6 @@ class QuizLearningSimulation:
                         force_refresh = True
                         continue
                 
-                # Store old counts for comparison
-                old_counts = initial_counts.copy()
             
             # Final state
             print(f"\n{YELLOW}--- Simulation Complete ---{RESET}")
@@ -434,9 +460,12 @@ class QuizLearningSimulation:
             elif final_counts['level3'] == target_mastered:
                 self.log(f"✅ PASSED: 100% mastered! ({target_mastered} words in {self.question_counter} questions)", GREEN, force=True)
                 return True
-            else:
-                self.log(f"⚠️  PARTIAL: {completion_rate:.1f}% complete ({final_counts['level3']}/{target_mastered} L3)", BLUE, force=True)
+            elif completion_rate >= 95.0:
+                self.log(f"✅ PASSED: {completion_rate:.1f}% mastered ({final_counts['level3']}/{target_mastered} L3 in {self.question_counter} questions)", GREEN, force=True)
                 return True
+            else:
+                self.log(f"❌ FAILED: Only {completion_rate:.1f}% complete ({final_counts['level3']}/{target_mastered} L3)", RED, force=True)
+                return False
                 
         except Exception as e:
             self.log(f"Simulation failed with error: {e}", RED, force=True)
@@ -463,7 +492,8 @@ def main():
     
     parser = argparse.ArgumentParser(description='Run quiz learning simulation')
     parser.add_argument('--word-list', help='Specific word list to test (optional)')
-    parser.add_argument('--parallel', action='store_true', help='Run simulations in parallel')
+    parser.add_argument('--parallel', action='store_true', help='Force parallel execution (default for multiple word lists)')
+    parser.add_argument('--sequential', action='store_true', help='Force sequential execution')
     args = parser.parse_args()
     
     if args.word_list:
@@ -512,10 +542,16 @@ def main():
     for wl in word_lists:
         print(f"  - {wl}")
     
-    if args.parallel:
-        # Run simulations in parallel
+    if args.sequential or (len(word_lists) == 1 and not args.parallel):
+        # Run simulations sequentially
+        print(f"\n{YELLOW}Running simulation{'s' if len(word_lists) > 1 else ''} sequentially...{RESET}")
+        results = {}
+        for wl in word_lists:
+            results[wl] = run_simulation_for_word_list(wl)
+    else:
+        # Run simulations in parallel (default for multiple word lists)
         print(f"\n{YELLOW}Running simulations in parallel...{RESET}")
-        with concurrent.futures.ProcessPoolExecutor(max_workers=len(word_lists)) as executor:
+        with concurrent.futures.ProcessPoolExecutor(max_workers=min(len(word_lists), 4)) as executor:
             future_to_list = {executor.submit(run_simulation_for_word_list, wl): wl 
                             for wl in word_lists}
             
@@ -527,12 +563,6 @@ def main():
                 except Exception as exc:
                     print(f"{RED}Simulation for {word_list} failed: {exc}{RESET}")
                     results[word_list] = False
-    else:
-        # Run simulations sequentially
-        print(f"\n{YELLOW}Running simulations sequentially...{RESET}")
-        results = {}
-        for wl in word_lists:
-            results[wl] = run_simulation_for_word_list(wl)
     
     # Summary
     print(f"\n{YELLOW}{'='*60}{RESET}")
