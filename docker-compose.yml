@@ -16,6 +16,7 @@ services:
       POSTGRES_PASSWORD: postgres
       JWT_SECRET: dev-secret
       DOCKER_ENVIRONMENT: true
+      GOOGLE_CLOUD_CREDENTIALS_B64: ${GOOGLE_CLOUD_CREDENTIALS_B64}
     depends_on: [db]
     command: sh -c "sleep 5 && python migrate.py && python app.py"
   

@@ -168,6 +168,32 @@ const api = {
     if (!response.ok) throw new Error(data.message || 'Failed to get quiz state');
     return data;
   },
+
+  async synthesizeSpeech(token, text, language) {
+    const response = await fetch(`${serverAddress}/tts/synthesize`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ text, language })
+    });
+    
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Failed to synthesize speech');
+    return data;
+  },
+
+  async getTTSLanguages(token) {
+    const response = await fetch(`${serverAddress}/tts/languages`, {
+      method: 'GET',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || 'Failed to get TTS languages');
+    return data;
+  },
 };
 
 export default api;
