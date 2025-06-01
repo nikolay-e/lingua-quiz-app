@@ -30,10 +30,10 @@ class TestRunner:
         self.test_user = None
         self.token = None
         
-    def random_email(self):
-        """Generate random test email"""
+    def random_username(self):
+        """Generate random test username"""
         suffix = ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
-        return f"test_{suffix}@example.com"
+        return f"test_{suffix}"
     
     def test(self, name, func):
         """Run a single test"""
@@ -119,7 +119,7 @@ class TestRunner:
     def test_register(self):
         """Test user registration"""
         self.test_user = {
-            'email': self.random_email(),
+            'username': self.random_username(),
             'password': 'TestPassword123!'
         }
         r = requests.post(f"{API_URL}/auth/register", json=self.test_user, timeout=TIMEOUT)
@@ -127,7 +127,7 @@ class TestRunner:
         data = r.json()
         self.assert_in('token', data)
         self.assert_in('user', data)
-        self.assert_equal(data['user']['email'], self.test_user['email'])
+        self.assert_equal(data['user']['username'], self.test_user['username'])
         self.token = data['token']
     
     def test_login(self):
@@ -147,7 +147,7 @@ class TestRunner:
     def test_invalid_login(self):
         """Test invalid login rejection"""
         invalid_user = {
-            'email': self.test_user['email'],
+            'username': self.test_user['username'],
             'password': 'WrongPassword'
         }
         r = requests.post(f"{API_URL}/auth/login", json=invalid_user, timeout=TIMEOUT)

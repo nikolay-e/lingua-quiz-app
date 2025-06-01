@@ -46,7 +46,7 @@ BEGIN
         WHERE wle.word_list_id = v_word_list_id
     )
     SELECT 
-        qs.id as session_id,
+        v_session_id as session_id,
         qs.direction,
         qs.current_translation_id,
         MIN(wd.source_language) as source_language,
@@ -55,9 +55,8 @@ BEGIN
         COALESCE(jsonb_agg(jsonb_build_object('id', wd.translation_id, 'source', wd.source_word, 'target', wd.target_word, 'sourceExample', wd.source_example, 'targetExample', wd.target_example)) FILTER (WHERE wd.status = 'LEVEL_1'), '[]'::jsonb) as level_1_words,
         COALESCE(jsonb_agg(jsonb_build_object('id', wd.translation_id, 'source', wd.source_word, 'target', wd.target_word, 'sourceExample', wd.source_example, 'targetExample', wd.target_example)) FILTER (WHERE wd.status = 'LEVEL_2'), '[]'::jsonb) as level_2_words,
         COALESCE(jsonb_agg(jsonb_build_object('id', wd.translation_id, 'source', wd.source_word, 'target', wd.target_word, 'sourceExample', wd.source_example, 'targetExample', wd.target_example)) FILTER (WHERE wd.status = 'LEVEL_3'), '[]'::jsonb) as level_3_words
-    FROM quiz_session qs
-    CROSS JOIN word_data wd
+    FROM quiz_session qs, word_data wd
     WHERE qs.id = v_session_id
-    GROUP BY qs.id, qs.direction, qs.current_translation_id;
+    GROUP BY qs.direction, qs.current_translation_id;
 END;
 $$ LANGUAGE plpgsql;

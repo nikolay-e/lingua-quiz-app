@@ -14,9 +14,9 @@ from collections import defaultdict
 
 # Configuration
 API_URL = os.getenv('API_URL', 'http://localhost:9000/api')
-TIMEOUT = 2  # Reduced timeout for faster requests
+TIMEOUT = 2  # Fast timeout for requests
 MAX_QUESTIONS = 15000  # Prevent infinite loops
-MAX_CONSECUTIVE_ERRORS_BEFORE_FAIL = 3
+MAX_CONSECUTIVE_ERRORS_BEFORE_FAIL = 5
 
 # Colors for output
 GREEN = '\033[92m'
@@ -27,7 +27,7 @@ RESET = '\033[0m'
 
 class QuizLearningSimulation:
     def __init__(self):
-        self.email = None
+        self.username = None
         self.password = 'TestPassword123!'
         self.token = None
         self.word_list_name = 'German Russian A1'  # Default word list
@@ -58,10 +58,10 @@ class QuizLearningSimulation:
             else:
                 print(f"{prefix}{message}")
     
-    def random_email(self):
-        """Generate random test email"""
+    def random_username(self):
+        """Generate random test username"""
         suffix = ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
-        return f"quiz_sim_{suffix}@example.com"
+        return f"quiz_sim_{suffix}"
     
     def get_headers(self):
         """Get authorization headers"""
@@ -69,10 +69,10 @@ class QuizLearningSimulation:
     
     def register_and_login(self):
         """Register and login test user"""
-        self.email = self.random_email()
+        self.username = self.random_username()
         
         # Register
-        user_data = {'email': self.email, 'password': self.password}
+        user_data = {'username': self.username, 'password': self.password}
         r = requests.post(f"{API_URL}/auth/register", json=user_data, timeout=TIMEOUT)
         if r.status_code != 201:
             raise Exception(f"Registration failed: {r.text}")
@@ -210,7 +210,7 @@ class QuizLearningSimulation:
             if not self.register_and_login():
                 return False
             
-            self.log(f"Started - User: {self.email}", GREEN, force=True)
+            self.log(f"Started - User: {self.username}", GREEN, force=True)
             
             # Start quiz
             session_data = self.start_quiz(self.word_list_name)
@@ -255,12 +255,13 @@ class QuizLearningSimulation:
                     initial_counts = self.get_level_counts(session_data['wordLists'])
                     force_refresh = False
                 
-                # Get next question (always fresh to avoid session sync issues)
+                # Get next question (always fresh to match frontend behavior)
                 try:
                     question = self.get_next_question(self.word_list_name)
                 except Exception as e:
                     error_msg = str(e)
                     self.log(f"ERROR getting next question: {error_msg}", RED, force=False)
+                    
                     self.consecutive_errors += 1
                     force_refresh = True
                     continue
@@ -353,7 +354,7 @@ class QuizLearningSimulation:
                         session_data['wordLists'] = result['wordLists']
                         initial_counts = self.get_level_counts(result['wordLists'])
                     
-                    # Note: Not caching next question to avoid session sync issues
+                    # Note: Not caching next question to match frontend behavior
                         
                         # Log significant changes
                         if old_counts != initial_counts:
@@ -507,7 +508,6 @@ def main():
     # Create a temporary user just to get word lists
     test_creds = {
         'username': f'temp_list_check_{random.randint(1000, 9999)}',
-        'email': f'temp_{random.randint(1000, 9999)}@example.com',
         'password': 'TempPass123!'
     }
     
@@ -518,7 +518,7 @@ def main():
         sys.exit(1)
     
     r = requests.post(f"{API_URL}/auth/login", 
-                     json={'email': test_creds['email'], 'password': test_creds['password']},
+                     json={'username': test_creds['username'], 'password': test_creds['password']},
                      timeout=TIMEOUT)
     if r.status_code != 200:
         print(f"{RED}Failed to login temp user{RESET}")

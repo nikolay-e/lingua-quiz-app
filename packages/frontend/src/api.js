@@ -31,11 +31,11 @@ const getServerAddress = () => {
 const serverAddress = getServerAddress();
 
 const api = {
-  async login(email, password) {
+  async login(username, password) {
     const response = await fetch(`${serverAddress}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ username, password }),
     });
 
     const data = await response.json();
@@ -43,11 +43,11 @@ const api = {
     return data;
   },
 
-  async register(email, password) {
+  async register(username, password) {
     const response = await fetch(`${serverAddress}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ username, password }),
     });
 
     const data = await response.json();

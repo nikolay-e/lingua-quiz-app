@@ -179,16 +179,16 @@ def health():
 @limiter.limit("100 per 15 minutes")
 def register():
     data = request.get_json()
-    email = data.get('email', '').strip().lower()
+    username = data.get('username', '').strip()
     password = data.get('password', '')
     
-    if not email or '@' not in email:
-        return jsonify({'message': 'Invalid email format'}), 400
+    if not username or len(username) < 3:
+        return jsonify({'message': 'Username must be at least 3 characters long'}), 400
     if len(password) < 8:
         return jsonify({'message': 'Password must be at least 8 characters long'}), 400
     
     # Check if user exists
-    if query_db('SELECT EXISTS(SELECT 1 FROM "user" WHERE email = %s)', [email], one=True)['exists']:
+    if query_db('SELECT EXISTS(SELECT 1 FROM "user" WHERE username = %s)', [username], one=True)['exists']:
         return jsonify({'message': 'Conflict: The resource already exists or cannot be created.'}), 409
     
     # Create user
@@ -198,8 +198,8 @@ def register():
     try:
         with conn.cursor(cursor_factory=RealDictCursor) as cur:
             cur.execute(
-                'INSERT INTO "user" (email, password) VALUES (%s, %s) RETURNING id, email',
-                [email, hashed]
+                'INSERT INTO "user" (username, password) VALUES (%s, %s) RETURNING id, username',
+                [username, hashed]
             )
             user = cur.fetchone()
             conn.commit()
@@ -213,7 +213,7 @@ def register():
     # Generate token
     token = jwt.encode({
         'userId': user['id'],
-        'sub': user['email'],
+        'sub': user['username'],
         'iat': datetime.datetime.utcnow(),
         'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=JWT_EXPIRES_HOURS)
     }, JWT_SECRET, algorithm='HS256')
@@ -221,23 +221,23 @@ def register():
     return jsonify({
         'token': token,
         'expiresIn': JWT_EXPIRES_IN,
-        'user': {'id': user['id'], 'email': user['email']}
+        'user': {'id': user['id'], 'username': user['username']}
     }), 201
 
 @app.route('/api/auth/login', methods=['POST'])
 @limiter.limit("100 per 15 minutes")
 def login():
     data = request.get_json()
-    email = data.get('email', '').strip().lower()
+    username = data.get('username', '').strip()
     password = data.get('password', '')
     
-    user = query_db('SELECT id, email, password FROM "user" WHERE email = %s', [email], one=True)
+    user = query_db('SELECT id, username, password FROM "user" WHERE username = %s', [username], one=True)
     if not user or not bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')):
         return jsonify({'message': 'Authentication failed.'}), 401
     
     token = jwt.encode({
         'userId': user['id'],
-        'sub': user['email'],
+        'sub': user['username'],
         'iat': datetime.datetime.utcnow(),
         'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=JWT_EXPIRES_HOURS)
     }, JWT_SECRET, algorithm='HS256')
@@ -245,7 +245,7 @@ def login():
     return jsonify({
         'token': token,
         'expiresIn': JWT_EXPIRES_IN,
-        'user': {'id': user['id'], 'email': user['email']}
+        'user': {'id': user['id'], 'username': user['username']}
     })
 
 @app.route('/api/auth/delete-account', methods=['DELETE'])

@@ -12,7 +12,7 @@ async function withRetry(fn, retries = 3) {
   }
 }
 
-async function register(page, email, password, success) {
+async function register(page, username, password, success) {
 
   // Use environment variable or fallback URL
   const baseURL = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
@@ -41,14 +41,14 @@ async function register(page, email, password, success) {
     }
   }
   
-  // Find the email and password inputs within the register section
+  // Find the username and password inputs within the register section
   const registerSection = page.locator('section:has-text("Create Account")');
   
-  // Wait for inputs to be ready
-  await registerSection.locator('input[type="email"]').waitFor({ state: 'visible', timeout: 5000 });
+  // Wait for inputs to be ready - use more specific selectors for Tailwind layout
+  await registerSection.locator('input[placeholder="Username"]').waitFor({ state: 'visible', timeout: 5000 });
   await registerSection.locator('input[id="register-password"]').waitFor({ state: 'visible', timeout: 5000 });
   
-  await registerSection.locator('input[type="email"]').fill(email);
+  await registerSection.locator('input[placeholder="Username"]').fill(username);
   await registerSection.locator('input[id="register-password"]').fill(password);
   // Wait for password validation to complete
   await page.waitForTimeout(500); // Give time for validation
@@ -72,8 +72,18 @@ async function register(page, email, password, success) {
 
   if (success !== undefined) {
     if (success) {
-      // Look for success message in the register section
-      await expect(page.locator('#register-message')).toContainText('successful', { timeout: 5000 });
+      // For successful registration, either see success message OR automatic redirect to quiz
+      // Auto-login works so fast that we might miss the success message
+      try {
+        // Try to catch the success message briefly
+        await expect(page.locator('#register-message')).toContainText('successful', { timeout: 2000 });
+        console.log('Caught success message');
+      } catch {
+        console.log('Success message too fast, checking for redirect');
+      }
+      
+      // Either way, we should end up on the quiz page due to auto-login
+      await expect(page.locator('#quiz-select')).toBeVisible({ timeout: 8000 });
     } else {
       // Look for error message
       await expect(page.locator('#register-message')).toBeVisible({ timeout: 5000 });
@@ -83,7 +93,7 @@ async function register(page, email, password, success) {
   }
 }
 
-async function login(page, email, password) {
+async function login(page, username, password) {
   // Use environment variable or fallback URL
   const baseURL = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
   
@@ -98,14 +108,14 @@ async function login(page, email, password) {
   // Wait for the login form to be visible
   await page.waitForSelector('section:has-text("Sign In")', { state: 'visible', timeout: 2000 });
   
-  // Find the email and password inputs within the login section
+  // Find the username and password inputs within the login section
   const loginSection = page.locator('section:has-text("Sign In")');
   
-  // Wait for inputs to be ready
-  await loginSection.locator('input[type="email"]').waitFor({ state: 'visible', timeout: 5000 });
+  // Wait for inputs to be ready - use more specific selectors for Tailwind layout
+  await loginSection.locator('input[placeholder="Username"]').waitFor({ state: 'visible', timeout: 5000 });
   await loginSection.locator('input[id="password"]').waitFor({ state: 'visible', timeout: 5000 });
   
-  await loginSection.locator('input[type="email"]').fill(email);
+  await loginSection.locator('input[placeholder="Username"]').fill(username);
   await loginSection.locator('input[id="password"]').fill(password);
   
   // Wait for submit button to be ready and click with retry for Firefox compatibility

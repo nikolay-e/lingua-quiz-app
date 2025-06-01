@@ -18,7 +18,7 @@ test.describe.serial('User Authentication', () => {
 
   // Track if user has been registered
   let userRegistered = false;
-  let actualTestUser = testUser; // Track the actual user email used
+  let actualTestUser = testUser; // Track the actual user username used
 
   test.beforeEach(async ({ page }) => {
     // Use environment variable directly since baseURL is not being set
@@ -30,12 +30,12 @@ test.describe.serial('User Authentication', () => {
     try {
       await register(page, testUser, testPassword, true);
       userRegistered = true;
-      actualTestUser = testUser; // Store the successful email
+      actualTestUser = testUser; // Store the successful username
     } catch (error) {
       if (error.message && error.message.includes('Conflict')) {
-        // If there's still a conflict with our highly unique email, try once more
+        // If there's still a conflict with our highly unique username, try once more
         const fallbackUser = generateUniqueEmail();
-        console.log(`Registration conflict detected (unlikely), trying with new email: ${fallbackUser}`);
+        console.log(`Registration conflict detected (unlikely), trying with new username: ${fallbackUser}`);
         await register(page, fallbackUser, testPassword, true);
         userRegistered = true;
         actualTestUser = fallbackUser;
@@ -60,6 +60,14 @@ test.describe.serial('User Authentication', () => {
       test.skip();
       return;
     }
+    // First logout if already logged in from registration
+    try {
+      await page.locator('#login-logout-btn').click({ timeout: 2000 });
+      await expect(page.locator('section:has-text("Sign In")')).toBeVisible();
+    } catch {
+      // Not logged in, that's fine
+    }
+    
     await login(page, actualTestUser, testPassword);
     // In a SPA, we check for the quiz select element instead of URL
     await expect(page.locator('#quiz-select')).toBeVisible();
@@ -71,6 +79,14 @@ test.describe.serial('User Authentication', () => {
       test.skip();
       return;
     }
+    // First logout if already logged in from registration
+    try {
+      await page.locator('#login-logout-btn').click({ timeout: 2000 });
+      await expect(page.locator('section:has-text("Sign In")')).toBeVisible();
+    } catch {
+      // Not logged in, that's fine
+    }
+    
     await login(page, actualTestUser, 'wrongPassword');
     // Check for error message in the login message element
     const loginMessage = page.locator('#login-message');
@@ -120,20 +136,20 @@ test.describe.serial('User Authentication', () => {
     // Verify initial storage state
     const initialStorage = await page.evaluate(() => {
       const token = localStorage.getItem('token');
-      const email = localStorage.getItem('email');
+      const username = localStorage.getItem('username');
       const tokenExpiration = localStorage.getItem('tokenExpiration');
       return {
         token,
-        email,
+        username,
         tokenExpiration,
         hasToken: !!token,
-        hasEmail: !!email,
+        hasUsername: !!username,
         hasExpiration: !!tokenExpiration,
       };
     });
 
     expect(initialStorage.hasToken, 'Token should be present after login').toBeTruthy();
-    expect(initialStorage.hasEmail, 'Email should be present after login').toBeTruthy();
+    expect(initialStorage.hasUsername, 'Username should be present after login').toBeTruthy();
     expect(initialStorage.hasExpiration, 'Token expiration should be present after login').toBeTruthy();
 
     // Perform logout and wait for navigation
@@ -145,13 +161,13 @@ test.describe.serial('User Authentication', () => {
     // Verify final storage state
     const finalStorage = await page.evaluate(() => ({
       token: localStorage.getItem('token'),
-      email: localStorage.getItem('email'),
+      username: localStorage.getItem('username'),
       tokenExpiration: localStorage.getItem('tokenExpiration'),
     }));
 
     // Verify storage is cleared
     expect(finalStorage.token, 'Token should be null after logout').toBeNull();
-    expect(finalStorage.email, 'Email should be null after logout').toBeNull();
+    expect(finalStorage.username, 'Username should be null after logout').toBeNull();
     expect(finalStorage.tokenExpiration, 'Token expiration should be null after logout').toBeNull();
   });
 
@@ -176,9 +192,9 @@ test.describe.serial('User Authentication', () => {
     await expect(loginSection).toBeVisible();
     
     // Fill form fields with explicit waits
-    const emailInput = loginSection.locator('input[type="email"]');
-    await expect(emailInput).toBeVisible();
-    await emailInput.fill(actualTestUser);
+    const usernameInput = loginSection.locator('input[placeholder="Username"]');
+    await expect(usernameInput).toBeVisible();
+    await usernameInput.fill(actualTestUser);
     
     const passwordInput = loginSection.locator('input[id="password"]');
     await expect(passwordInput).toBeVisible();
@@ -228,7 +244,7 @@ test.describe.serial('User Authentication', () => {
     // Set invalid token
     await page.evaluate(() => {
       localStorage.setItem('token', 'invalid-token');
-      localStorage.setItem('email', 'test@example.com');
+      localStorage.setItem('username', 'testuser');
     });
 
     const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
@@ -244,7 +260,7 @@ test.describe.serial('User Authentication', () => {
 
     await page.evaluate((token) => {
       localStorage.setItem('token', token);
-      localStorage.setItem('email', 'test@example.com');
+      localStorage.setItem('username', 'testuser');
     }, expiredToken);
 
     const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
