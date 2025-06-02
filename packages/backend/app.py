@@ -27,11 +27,17 @@ DB_PORT = int(os.getenv('DB_PORT', 5432))
 DB_NAME = os.getenv('POSTGRES_DB', 'linguaquiz_db')
 DB_USER = os.getenv('POSTGRES_USER', 'linguaquiz_user')
 DB_PASSWORD = os.getenv('POSTGRES_PASSWORD', 'password')
-JWT_SECRET = os.getenv('JWT_SECRET', 'your_jwt_secret_key_here')
+JWT_SECRET = os.getenv('JWT_SECRET')
+if not JWT_SECRET:
+    raise RuntimeError("JWT_SECRET environment variable must be set - never use default secrets in production!")
 JWT_EXPIRES_IN = os.getenv('JWT_EXPIRES_IN', '24h')
 JWT_EXPIRES_HOURS = int(os.getenv('JWT_EXPIRES_HOURS', '24'))
 PORT = int(os.getenv('PORT', 9000))
-CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '*').split(',') if os.getenv('CORS_ALLOWED_ORIGINS') != '*' else ['*']
+CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', 
+    'http://localhost:8080,http://localhost:5173,https://lingua-quiz.nikolay-eremeev.com,https://test-lingua-quiz.nikolay-eremeev.com'
+).split(',')
+if '*' in CORS_ALLOWED_ORIGINS:
+    print("WARNING: CORS is open to all origins (*) - this is insecure for production!")
 
 # Flask app
 app = Flask(__name__)
@@ -46,7 +52,7 @@ limiter = Limiter(
 
 # Database pool
 db_pool = SimpleConnectionPool(
-    1, 10,
+    20, 100,
     host=DB_HOST,
     port=DB_PORT,
     database=DB_NAME,

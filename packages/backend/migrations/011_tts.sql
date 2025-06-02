@@ -1,7 +1,68 @@
--- TTS Database Functions Migration
--- Creates functions for TTS text validation and caching operations
+-- TTS cache table and functions
 
--- Function to get TTS cache entry with built-in text validation
+-- Critical fixes for existing production table
+ALTER TABLE IF EXISTS tts_cache ADD COLUMN IF NOT EXISTS audio_data BYTEA;
+ALTER TABLE IF EXISTS tts_cache ADD COLUMN IF NOT EXISTS file_size INTEGER;
+
+-- Enhanced TTS cache function for better compatibility
+CREATE OR REPLACE FUNCTION get_tts_cache_entry_validated_fixed(
+    p_cache_key VARCHAR(32),
+    p_text TEXT
+) RETURNS TABLE(audio_data BYTEA, is_valid_text BOOLEAN) AS $$
+DECLARE
+    text_clean TEXT;
+    is_allowed BOOLEAN := FALSE;
+BEGIN
+    text_clean := LOWER(TRIM(p_text));
+    
+    -- Check if text exists in valid texts view
+    SELECT EXISTS (
+        SELECT 1 FROM valid_tts_texts 
+        WHERE clean_text = text_clean
+    ) INTO is_allowed;
+    
+    IF is_allowed THEN
+        RETURN QUERY
+        UPDATE tts_cache 
+        SET last_accessed_at = CURRENT_TIMESTAMP
+        WHERE cache_key = p_cache_key
+        RETURNING COALESCE(tts_cache.audio_data, NULL), TRUE;
+        
+        IF NOT FOUND THEN
+            RETURN QUERY SELECT NULL::BYTEA, TRUE;
+        END IF;
+    ELSE
+        RETURN QUERY SELECT NULL::BYTEA, FALSE;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TABLE IF NOT EXISTS tts_cache (
+    id SERIAL PRIMARY KEY,
+    cache_key VARCHAR(32) UNIQUE NOT NULL,
+    text_content TEXT NOT NULL,
+    language VARCHAR(50) NOT NULL,
+    audio_data BYTEA NOT NULL,
+    file_size INTEGER NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    last_accessed_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Indexes
+CREATE INDEX IF NOT EXISTS idx_tts_cache_key ON tts_cache (cache_key);
+CREATE INDEX IF NOT EXISTS idx_tts_cache_created_at ON tts_cache (created_at);
+CREATE INDEX IF NOT EXISTS idx_tts_cache_last_accessed ON tts_cache (last_accessed_at);
+
+-- Views
+CREATE OR REPLACE VIEW valid_tts_texts AS 
+SELECT DISTINCT lower(trim(text)) as clean_text FROM (
+    SELECT w1.text FROM word w1 
+    UNION ALL SELECT w2.text FROM word w2
+    UNION ALL SELECT w1.usage_example FROM word w1 WHERE w1.usage_example IS NOT NULL
+    UNION ALL SELECT w2.usage_example FROM word w2 WHERE w2.usage_example IS NOT NULL
+) t;
+
+-- Functions
 CREATE OR REPLACE FUNCTION get_tts_cache_entry_validated(
     p_cache_key VARCHAR(32),
     p_text TEXT
@@ -13,15 +74,10 @@ BEGIN
     -- Clean the text for comparison
     text_clean := LOWER(TRIM(p_text));
     
-    -- Check if text exists in database words/phrases using correct schema
+    -- Check if text exists in valid texts view
     SELECT EXISTS (
-        SELECT 1 FROM word w1
-        JOIN translation t ON w1.id = t.source_word_id
-        JOIN word w2 ON t.target_word_id = w2.id
-        WHERE LOWER(w1.text) = text_clean 
-           OR LOWER(w2.text) = text_clean
-           OR LOWER(w1.usage_example) = text_clean
-           OR LOWER(w2.usage_example) = text_clean
+        SELECT 1 FROM valid_tts_texts 
+        WHERE clean_text = text_clean
     ) INTO is_allowed;
     
     -- Only return cache data if text is allowed
@@ -111,7 +167,4 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Add comments for documentation
-COMMENT ON FUNCTION get_tts_cache_entry_validated(VARCHAR(32), TEXT) IS 'Retrieves TTS cache entry with built-in text validation against database words (fixed schema)';
-COMMENT ON FUNCTION save_tts_cache_entry_validated(VARCHAR(32), TEXT, VARCHAR(50), BYTEA, INTEGER) IS 'Saves TTS cache entry permanently if text exists in database words/phrases (fixed schema)';
-COMMENT ON FUNCTION get_tts_cache_stats() IS 'Returns statistics about TTS cache usage';
+
