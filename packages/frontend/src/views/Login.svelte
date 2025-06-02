@@ -4,7 +4,7 @@
   
   const dispatch = createEventDispatcher();
   
-  let loginEmail = '';
+  let loginUsername = '';
   let loginPassword = '';
   let loginMessage = '';
   let showLoginPassword = false;
@@ -16,7 +16,7 @@
     loginMessage = '';
     
     try {
-      await authStore.login(loginEmail, loginPassword);
+      await authStore.login(loginUsername, loginPassword);
       loginMessage = 'Login successful!';
     } catch (error) {
       loginMessage = error.message;
@@ -43,9 +43,9 @@
       <form on:submit={handleLogin}>
         <div class="input-group">
           <input 
-            type="email" 
-            bind:value={loginEmail} 
-            placeholder="Email" 
+            type="text" 
+            bind:value={loginUsername} 
+            placeholder="Username" 
             required 
             disabled={isLoading}
           />

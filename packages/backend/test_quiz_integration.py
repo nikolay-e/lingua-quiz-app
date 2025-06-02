@@ -30,10 +30,10 @@ class QuizIntegrationTester:
         self.token = None
         self.word_list_name = None
         
-    def random_email(self):
-        """Generate random test email"""
+    def random_username(self):
+        """Generate random test username"""
         suffix = ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
-        return f"quiz_test_{suffix}@example.com"
+        return f"quiz_test_{suffix}"
     
     def get_headers(self):
         """Get authorization headers"""
@@ -114,7 +114,7 @@ class QuizIntegrationTester:
     def test_register(self):
         """Register a test user"""
         self.test_user = {
-            'email': self.random_email(),
+            'username': self.random_username(),
             'password': 'TestPassword123!'
         }
         r = requests.post(f"{API_URL}/auth/register", json=self.test_user, timeout=TIMEOUT)

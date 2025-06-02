@@ -511,6 +511,31 @@ class QuizManager:
                     # If a word moved from L1 to L2, replenish L1 from L0
                     if new_status == 'LEVEL_2':
                         self._populate_focus_words(conn, user_id, data['id'])
+                    
+                    # If a word was degraded to L0, replenish L1 from L0
+                    if new_status == 'LEVEL_0':
+                        self._populate_focus_words(conn, user_id, data['id'])
+                    
+                    # If a word moved out of L2 (either to L1 or L3), check if L2 is now empty
+                    # and switch direction to normal if it is
+                    if new_status in ['LEVEL_1', 'LEVEL_3']:
+                        cur.execute("""
+                            SELECT COUNT(*) as l2_count
+                            FROM word_list_entry wle
+                            JOIN user_translation_progress utp 
+                                ON utp.word_pair_id = wle.translation_id 
+                                AND utp.user_id = %s
+                            WHERE wle.word_list_id = %s AND utp.status = 'LEVEL_2'
+                        """, (user_id, data['word_list_id']))
+                        
+                        l2_result = cur.fetchone()
+                        if l2_result['l2_count'] == 0:
+                            # L2 is now empty, switch to normal direction
+                            cur.execute("""
+                                UPDATE quiz_session 
+                                SET direction = true, current_translation_id = NULL
+                                WHERE id = %s
+                            """, (data['id']))
                 
                 # Get updated state
                 cur.execute("SELECT * FROM get_quiz_state(%s, %s)", (user_id, word_list_name))

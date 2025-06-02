@@ -28,3 +28,6 @@ CREATE TABLE IF NOT EXISTS quiz_session_stats (
 CREATE INDEX IF NOT EXISTS idx_quiz_session_user_list ON quiz_session(user_id, word_list_id);
 CREATE INDEX IF NOT EXISTS idx_quiz_session_stats_session ON quiz_session_stats(session_id);
 CREATE INDEX IF NOT EXISTS idx_quiz_session_stats_translation ON quiz_session_stats(translation_id);
+
+-- Critical composite index for quiz performance
+CREATE INDEX IF NOT EXISTS idx_quiz_session_stats_session_translation_direction ON quiz_session_stats(session_id, translation_id, direction);

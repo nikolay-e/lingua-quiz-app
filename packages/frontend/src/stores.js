@@ -64,7 +64,7 @@ export const themeStore = createThemeStore();
 function createAuthStore() {
   const { subscribe, set, update } = writable({
     token: localStorage.getItem('token'),
-    email: localStorage.getItem('email'),
+    username: localStorage.getItem('username'),
     isAuthenticated: false,
   });
 
@@ -77,7 +77,7 @@ function createAuthStore() {
       const isValid = payload.exp * 1000 > Date.now() + 60000;
       if (!isValid) {
         localStorage.removeItem('token');
-        localStorage.removeItem('email');
+        localStorage.removeItem('username');
         localStorage.removeItem('tokenExpiration');
       }
       return isValid;
@@ -103,10 +103,10 @@ function createAuthStore() {
   return {
     subscribe,
     cleanup,
-    login: async (email, password) => {
-      const data = await api.login(email, password);
+    login: async (username, password) => {
+      const data = await api.login(username, password);
       localStorage.setItem('token', data.token);
-      localStorage.setItem('email', email);
+      localStorage.setItem('username', username);
 
       // Calculate and store token expiration
       try {
@@ -117,18 +117,32 @@ function createAuthStore() {
         console.error('Failed to parse token expiration:', e);
       }
 
-      set({ token: data.token, email, isAuthenticated: true });
+      set({ token: data.token, username, isAuthenticated: true });
       return data;
     },
     logout: () => {
       cleanup();
       localStorage.removeItem('token');
-      localStorage.removeItem('email');
+      localStorage.removeItem('username');
       localStorage.removeItem('tokenExpiration');
-      set({ token: null, email: null, isAuthenticated: false });
+      set({ token: null, username: null, isAuthenticated: false });
     },
-    register: async (email, password) => {
-      return api.register(email, password);
+    register: async (username, password) => {
+      const data = await api.register(username, password);
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('username', username);
+
+      // Calculate and store token expiration
+      try {
+        const payload = JSON.parse(atob(data.token.split('.')[1]));
+        const expirationMs = payload.exp * 1000;
+        localStorage.setItem('tokenExpiration', expirationMs.toString());
+      } catch (e) {
+        console.error('Failed to parse token expiration:', e);
+      }
+
+      set({ token: data.token, username, isAuthenticated: true });
+      return data;
     },
   };
 }
@@ -208,14 +222,15 @@ function createQuizStore() {
       const state = get(quizStore);
       if (!state.currentQuestion || !state.selectedQuiz) return null;
       
-      // Capture the displayed word before making the API call
+      // Capture the current question details before making the API call
+      const currentTranslationId = state.currentQuestion.translationId;
       const displayedWord = state.currentQuestion.word;
       
       try {
         const result = await api.submitAnswer(
           token, 
           state.selectedQuiz,
-          state.currentQuestion.translationId, 
+          currentTranslationId, 
           answer,
           displayedWord
         );

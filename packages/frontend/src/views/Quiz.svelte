@@ -54,7 +54,7 @@
   $: targetLanguage = $quizStore.targetLanguage;
   $: loading = $quizStore.loading;
   $: wordLists = $quizStore.wordLists;
-  $: email = $authStore.email;
+  $: username = $authStore.username;
 
   // TTS reactive state
   $: currentLanguage = direction === 'normal' ? sourceLanguage : targetLanguage;
@@ -227,6 +227,7 @@
   function logout() {
     authStore.logout();
   }
+  
 </script>
 
 <main class="quiz-container">
@@ -332,7 +333,7 @@
     <div id="user-status">
       <button id="login-logout-btn" on:click={logout}>
         <i class="fas fa-sign-out-alt"></i> 
-        <span>Logout ({email})</span>
+        <span>Logout ({username})</span>
       </button>
     </div>
     
@@ -357,7 +358,7 @@
         {#if !foldedLists.level1}
           <ol id="level-1-list" class="foldable-content">
             {#each level1Words as word}
-              <li>{word}</li>
+              <li class="word-item">{word}</li>
             {/each}
           </ol>
         {/if}
@@ -371,7 +372,7 @@
         {#if !foldedLists.level2}
           <ol id="level-2-list" class="foldable-content">
             {#each level2Words as word}
-              <li>{word}</li>
+              <li class="word-item">{word}</li>
             {/each}
           </ol>
         {/if}
@@ -385,7 +386,7 @@
         {#if !foldedLists.level3}
           <ol id="level-3-list" class="foldable-content">
             {#each level3Words as word}
-              <li>{word}</li>
+              <li class="word-item">{word}</li>
             {/each}
           </ol>
         {/if}
@@ -399,7 +400,7 @@
         {#if !foldedLists.level0}
           <ol id="level-0-list" class="foldable-content">
             {#each level0Words as word}
-              <li>{word}</li>
+              <li class="word-item">{word}</li>
             {/each}
           </ol>
         {/if}

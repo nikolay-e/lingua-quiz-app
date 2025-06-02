@@ -4,7 +4,7 @@
   
   const dispatch = createEventDispatcher();
   
-  let registerEmail = '';
+  let registerUsername = '';
   let registerPassword = '';
   let registerMessage = '';
   let showRegisterPassword = false;
@@ -36,14 +36,14 @@
     registerMessage = '';
     
     try {
-      await authStore.register(registerEmail, registerPassword);
-      registerMessage = 'Registration successful. You can now log in.';
-      registerEmail = '';
+      await authStore.register(registerUsername, registerPassword);
+      registerMessage = 'Registration successful! Redirecting...';
+      registerUsername = '';
       registerPassword = '';
-      // Navigate back to login after successful registration
+      // Auto-login successful - redirect to quiz page
       setTimeout(() => {
-        dispatch('navigate', { page: 'login' });
-      }, 2000);
+        dispatch('navigate', { page: 'quiz' });
+      }, 1000);
     } catch (error) {
       registerMessage = error.message;
     } finally {
@@ -69,9 +69,9 @@
       <form on:submit={handleRegister}>
         <div class="input-group">
           <input 
-            type="email" 
-            bind:value={registerEmail} 
-            placeholder="Email" 
+            type="text" 
+            bind:value={registerUsername} 
+            placeholder="Username" 
             required 
             disabled={isLoading}
           />

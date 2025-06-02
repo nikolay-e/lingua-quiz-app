@@ -18,3 +18,6 @@ CREATE TABLE IF NOT EXISTS word_list_entry (
 CREATE INDEX IF NOT EXISTS idx_word_list_entry_translation ON word_list_entry (translation_id);
 
 CREATE INDEX IF NOT EXISTS idx_word_list_entry_list ON word_list_entry (word_list_id);
+
+-- Critical composite index for quiz performance
+CREATE INDEX IF NOT EXISTS idx_word_list_entry_list_translation ON word_list_entry (word_list_id, translation_id);
