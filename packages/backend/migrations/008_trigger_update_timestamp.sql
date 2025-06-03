@@ -1,12 +1,4 @@
--- LinguaQuiz - Copyright © 2025 Nikolay Eremeev
---
--- Dual-licensed:
---  - Non-Commercial Source-Available v2  →  see LICENSE-NONCOMMERCIAL.md
---  - Commercial License v2               →  see LICENSE-COMMERCIAL.md
---
--- Contact: lingua-quiz@nikolay-eremeev.com
--- Repository: https://github.com/nikolay-e/lingua-quiz
--- File: packages/backend/migrations/012_create_trigger_update_timestamp.sql
+-- Timestamp update trigger function and triggers
 CREATE OR REPLACE FUNCTION update_timestamp () RETURNS TRIGGER AS $$
 BEGIN
    NEW.updated_at = CURRENT_TIMESTAMP;
@@ -14,6 +6,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- User table trigger
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'update_user_timestamp') THEN
@@ -24,6 +17,7 @@ BEGIN
   END IF;
 END $$;
 
+-- Word list table trigger
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'update_word_list_timestamp') THEN

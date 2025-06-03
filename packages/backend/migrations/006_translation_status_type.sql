@@ -1,12 +1,4 @@
--- LinguaQuiz - Copyright © 2025 Nikolay Eremeev
---
--- Dual-licensed:
---  - Non-Commercial Source-Available v2  →  see LICENSE-NONCOMMERCIAL.md
---  - Commercial License v2               →  see LICENSE-COMMERCIAL.md
---
--- Contact: lingua-quiz@nikolay-eremeev.com
--- Repository: https://github.com/nikolay-e/lingua-quiz
--- File: packages/backend/migrations/007_create_translation_status_type.sql
+-- Translation status enum type
 DO $$
 BEGIN
     IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'translation_status') THEN

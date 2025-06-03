@@ -1,583 +1,315 @@
-"""Quiz logic module for managing quiz sessions and algorithms"""
-import random
-import unicodedata
-import re
+"""
+Modern Quiz Service - Replaces the old mega-function approach
+Clean, testable, maintainable code with proper separation of concerns
+"""
 from typing import Dict, List, Optional, Tuple
-import psycopg2
+from dataclasses import dataclass, asdict
 from psycopg2.extras import RealDictCursor
+import logging
+
+logger = logging.getLogger(__name__)
+
+@dataclass
+class QuizState:
+    """Clean data structure for quiz state"""
+    session_id: int
+    word_list_id: int
+    direction: str  # 'normal' or 'reverse'
+    current_word_id: Optional[int]
+    level_counts: Dict[str, int]
+
+@dataclass 
+class WordInfo:
+    """Clean data structure for word information"""
+    translation_id: int
+    source_word: str
+    target_word: str
+    source_language: str
+    target_language: str
+    source_example: Optional[str]
+    target_example: Optional[str]
+
+@dataclass
+class QuizQuestion:
+    """Clean data structure for quiz questions"""
+    word_id: int
+    displayed_word: str
+    direction: str
+    source_language: str
+    target_language: str
+    session_id: int
+
+@dataclass
+class AnswerResult:
+    """Clean data structure for answer results"""
+    is_correct: bool
+    correct_answer: str
+    submission_id: int
+    word_info: WordInfo
+    level_changed: bool
+    old_level: Optional[str]
+    new_level: Optional[str]
 
 class QuizManager:
+    """
+    Modern quiz service that handles business logic in Python
+    Uses focused SQL functions for data access only
+    """
+    
+    # Configuration constants (easily testable and changeable)
     MAX_FOCUS_WORDS = 20
     MAX_LAST_ASKED_WORDS = 7
     CORRECT_ANSWERS_TO_MASTER = 3
-    MAX_MISTAKES_BEFORE_DEGRADATION = 3
+    MISTAKES_IN_LAST_ATTEMPTS = 3
+    LAST_ATTEMPTS_COUNT = 10
     
     def __init__(self, db_pool):
         self.db_pool = db_pool
     
-    def normalize_text(self, text: str) -> str:
-        """Normalize text for comparison"""
-        if not text:
-            return ''
-        # Normalize unicode, remove accents, keep only letters/numbers/spaces
-        normalized = unicodedata.normalize('NFD', text.lower())
-        # Remove combining characters (accents)
-        no_accents = ''.join(c for c in normalized if unicodedata.category(c) != 'Mn')
-        # Remove non-alphanumeric except spaces
-        clean = re.sub(r'[^\w\s]', '', no_accents)
-        # Normalize whitespace
-        return re.sub(r'\s+', ' ', clean).strip()
-    
-    def _clean_word_for_display(self, word: str) -> str:
-        """Clean word for display - show only first alternative if pipe-separated"""
-        if not word:
-            return word
-        if '|' in word:
-            return word.split('|')[0].strip()
-        return word
-    
     def get_or_create_session(self, user_id: int, word_list_name: str) -> Dict:
-        """Get or create quiz session and return full state"""
+        """Get or create quiz session with proper error handling"""
         conn = None
         try:
             conn = self.db_pool.getconn()
             with conn.cursor(cursor_factory=RealDictCursor) as cur:
-                # Get quiz state using the function
-                cur.execute("SELECT * FROM get_quiz_state(%s, %s)", (user_id, word_list_name))
-                state = cur.fetchone()
+                # Use simple SQL function for session creation
+                cur.execute("""
+                    SELECT create_or_get_quiz_session(%s, %s) as session_id
+                """, (user_id, word_list_name))
                 
-                if not state:
-                    return {"error": "Word list not found"}
+                result = cur.fetchone()
+                if not result or not result['session_id']:
+                    return {'error': 'Word list not found'}
                 
-                # Populate focus words if needed
-                level_1_count = len(state['level_1_words'] or [])
-                level_0_count = len(state['level_0_words'] or [])
+                session_id = result['session_id']
                 
-                if level_1_count < self.MAX_FOCUS_WORDS and level_0_count > 0:
-                    self._populate_focus_words(conn, user_id, state['session_id'])
-                    # Re-fetch state after population
-                    cur.execute("SELECT * FROM get_quiz_state(%s, %s)", (user_id, word_list_name))
-                    state = cur.fetchone()
+                # Get session info
+                cur.execute("""
+                    SELECT * FROM get_session_info(%s, %s)
+                """, (user_id, word_list_name))
+                
+                session_info = cur.fetchone()
+                if not session_info:
+                    return {'error': 'Session not found'}
+                
+                # Get level counts
+                cur.execute("""
+                    SELECT * FROM count_user_words_by_level(%s, %s)
+                """, (user_id, session_info['word_list_id']))
+                
+                counts = cur.fetchone()
+                
+                # Populate focus words if needed (business logic in Python)
+                if counts['level_1_count'] < self.MAX_FOCUS_WORDS and counts['level_0_count'] > 0:
+                    self._populate_focus_words(cur, user_id, session_info['word_list_id'])
+                    # Re-fetch counts
+                    cur.execute("""
+                        SELECT * FROM count_user_words_by_level(%s, %s)
+                    """, (user_id, session_info['word_list_id']))
+                    counts = cur.fetchone()
                 
                 conn.commit()
-                # JSONB fields are automatically converted to Python objects by psycopg2 RealDictCursor
-                state_dict = dict(state)
-                # Ensure word lists are always arrays and clean pipe-separated alternatives
-                for key in ['level_0_words', 'level_1_words', 'level_2_words', 'level_3_words']:
-                    if state_dict[key] is None:
-                        state_dict[key] = []
-                    else:
-                        # Clean each word in the list to show only first alternative
-                        for word_data in state_dict[key]:
-                            if isinstance(word_data, dict):
-                                if 'source' in word_data:
-                                    word_data['source'] = self._clean_word_for_display(word_data['source'])
-                                if 'target' in word_data:
-                                    word_data['target'] = self._clean_word_for_display(word_data['target'])
-                return state_dict
-        finally:
-            if conn:
-                self.db_pool.putconn(conn)
-    
-    def _populate_focus_words(self, conn, user_id: int, session_id: int):
-        """Move words from LEVEL_0 to LEVEL_1"""
-        with conn.cursor(cursor_factory=RealDictCursor) as cur:
-            # Get current LEVEL_1 count for this word list
-            cur.execute("""
-                SELECT COUNT(*) as count
-                FROM user_translation_progress utp
-                JOIN word_list_entry wle ON wle.translation_id = utp.word_pair_id
-                WHERE wle.word_list_id = (SELECT word_list_id FROM quiz_session WHERE id = %s)
-                AND utp.user_id = (SELECT user_id FROM quiz_session WHERE id = %s)
-                AND utp.status = 'LEVEL_1'
-            """, (session_id, session_id))
-            result = cur.fetchone()
-            current_count = result['count'] if result else 0
-            
-            spaces_available = self.MAX_FOCUS_WORDS - current_count
-            if spaces_available <= 0:
-                return
-            
-            # Get LEVEL_0 words for this quiz
-            cur.execute("""
-                SELECT t.id
-                FROM quiz_session qs
-                JOIN word_list_entry wle ON wle.word_list_id = qs.word_list_id
-                JOIN translation t ON t.id = wle.translation_id
-                LEFT JOIN user_translation_progress utp ON utp.word_pair_id = t.id AND utp.user_id = %s
-                WHERE qs.id = %s AND (utp.status = 'LEVEL_0' OR utp.status IS NULL)
-                ORDER BY RANDOM()
-                LIMIT %s
-            """, (user_id, session_id, spaces_available))
-            
-            words_to_move = [row['id'] for row in cur.fetchall()]
-            
-            # Move words to LEVEL_1
-            for word_id in words_to_move:
-                cur.execute("""
-                    INSERT INTO user_translation_progress (user_id, word_pair_id, status)
-                    VALUES (%s, %s, 'LEVEL_1')
-                    ON CONFLICT (user_id, word_pair_id)
-                    DO UPDATE SET status = 'LEVEL_1', updated_at = CURRENT_TIMESTAMP
-                """, (user_id, word_id))
-    
-    def get_next_question(self, user_id: int, word_list_name: str) -> Optional[Dict]:
-        """Get next question based on algorithm"""
-        conn = None
-        try:
-            conn = self.db_pool.getconn()
-            return self._get_next_question_internal(conn, user_id, word_list_name)
+                
+                # Get actual word lists for each level
+                word_lists = self._get_word_lists_by_level(cur, user_id, session_info['word_list_id'])
+                
+                return {
+                    'session_id': session_id,
+                    'word_list_id': session_info['word_list_id'],
+                    'direction': session_info['direction'],
+                    'current_translation_id': session_info.get('current_word_id'),
+                    'source_language': word_lists.get('source_language', 'German'),
+                    'target_language': word_lists.get('target_language', 'Russian'),
+                    'level_0_words': word_lists['level_0'],
+                    'level_1_words': word_lists['level_1'],
+                    'level_2_words': word_lists['level_2'],
+                    'level_3_words': word_lists['level_3'],
+                    'level_counts': {
+                        'level_0': int(counts['level_0_count']),
+                        'level_1': int(counts['level_1_count']), 
+                        'level_2': int(counts['level_2_count']),
+                        'level_3': int(counts['level_3_count']),
+                        'total': int(counts['total_words'])
+                    }
+                }
+                
         except Exception as e:
+            logger.error(f"Failed to get/create session: {e}")
             if conn:
-                try:
-                    conn.rollback()
-                except:
-                    pass
+                conn.rollback()
             raise
         finally:
             if conn:
                 self.db_pool.putconn(conn)
     
-    def _get_next_question_internal(self, conn, user_id: int, word_list_name: str) -> Optional[Dict]:
-        """Internal method to get next question using existing connection"""
-        with conn.cursor(cursor_factory=RealDictCursor) as cur:
-                # Get session with row-level lock that persists through transaction
-                cur.execute("""
-                    SELECT qs.*, wl.name as word_list_name
-                    FROM quiz_session qs
-                    JOIN word_list wl ON wl.id = qs.word_list_id
-                    WHERE qs.user_id = %s AND wl.name = %s
-                    FOR UPDATE
-                """, (user_id, word_list_name))
-                session = cur.fetchone()
-                
-                if not session:
-                    return {"error": "No quiz session found"}
-                
-                # Direction toggling is managed by the frontend to prevent race conditions
-                
-                # Get word sets based on direction
-                if session['direction']:  # Normal direction
-                    primary_status = 'LEVEL_1'
-                    fallback_status = 'LEVEL_2'  # Allow L2 words in normal direction as fallback
-                else:  # Reverse direction
-                    primary_status = 'LEVEL_2'
-                    fallback_status = 'LEVEL_1'
-                
-                # Get candidate words
-                candidates = self._get_candidate_words(cur, user_id, session['word_list_id'], primary_status)
-                
-                # Exclude the current word to avoid immediate repetition
-                current_word = session.get('current_translation_id')
-                if current_word and current_word in candidates:
-                    candidates.remove(current_word)
-                
-                
-                if not candidates and fallback_status:
-                    candidates = self._get_candidate_words(cur, user_id, session['word_list_id'], fallback_status)
-                    
-                    # Exclude current word from fallback candidates too
-                    if current_word and current_word in candidates:
-                        candidates.remove(current_word)
-                    
-                
-                if not candidates:
-                    # Try to populate more words if in normal direction
-                    if session['direction']:
-                        self._populate_focus_words(conn, user_id, session['id'])
-                        candidates = self._get_candidate_words(cur, user_id, session['word_list_id'], primary_status)
-                        
-                        # Exclude current word from newly populated candidates
-                        if current_word and current_word in candidates:
-                            candidates.remove(current_word)
-                    else:
-                        # In reverse direction, if no L2 words, check if we should switch to normal
-                        # to give L2 words more chances to reach L3
-                        cur.execute("""
-                            SELECT COUNT(*) as l2_count
-                            FROM word_list_entry wle
-                            JOIN user_translation_progress utp 
-                                ON utp.word_pair_id = wle.translation_id 
-                                AND utp.user_id = %s
-                            WHERE wle.word_list_id = %s AND utp.status = 'LEVEL_2'
-                        """, (user_id, session['word_list_id']))
-                        
-                        l2_result = cur.fetchone()
-                        if l2_result['l2_count'] > 0:
-                            # Force switch to normal direction to practice L2 words
-                            cur.execute("""
-                                UPDATE quiz_session 
-                                SET direction = true
-                                WHERE id = %s
-                            """, (session['id'],))
-                            
-                            # Get L2 words as candidates (they can be practiced in normal direction too)
-                            candidates = self._get_candidate_words(cur, user_id, session['word_list_id'], 'LEVEL_2')
-                            if current_word and current_word in candidates:
-                                candidates.remove(current_word)
-                        
-                    
-                    # Check if quiz is complete FIRST (all words at L3)
-                    cur.execute("""
-                        SELECT COUNT(*) as total,
-                               COUNT(CASE WHEN COALESCE(utp.status, 'LEVEL_0') = 'LEVEL_3' THEN 1 END) as mastered
-                        FROM word_list_entry wle
-                        LEFT JOIN user_translation_progress utp 
-                            ON utp.word_pair_id = wle.translation_id 
-                            AND utp.user_id = %s
-                        WHERE wle.word_list_id = %s
-                    """, (user_id, session['word_list_id']))
-                    
-                    progress = cur.fetchone()
-                    if progress['mastered'] == progress['total']:
-                        return {
-                            "completed": True,
-                            "message": "Congratulations! You've mastered all words!",
-                            "word": "🎉 Quiz Complete! 100% Mastered! 🎉",
-                            "totalWords": progress['total'],
-                            "masteredWords": progress['mastered']
-                        }
-                    
-                    if not candidates:
-                        return {"error": "No more questions available", "word": "No more questions available."}
-                
-                # Select next word based on algorithm
-                next_translation_id = self._select_next_word(cur, session, candidates)
-                
-                # Update session - ensure transaction is committed
-                cur.execute("""
-                    UPDATE quiz_session 
-                    SET current_translation_id = %s,
-                        last_asked_words = array_append(
-                            (SELECT COALESCE(array_agg(elem), ARRAY[]::INTEGER[]) FROM (
-                                SELECT unnest(COALESCE(last_asked_words, ARRAY[]::INTEGER[])) as elem 
-                                ORDER BY array_position(COALESCE(last_asked_words, ARRAY[]::INTEGER[]), unnest(COALESCE(last_asked_words, ARRAY[]::INTEGER[]))) 
-                                OFFSET GREATEST(0, COALESCE(array_length(last_asked_words, 1), 0) - %s + 1)
-                            ) sub),
-                            %s
-                        ),
-                        updated_at = CURRENT_TIMESTAMP
-                    WHERE id = %s
-                """, (next_translation_id, self.MAX_LAST_ASKED_WORDS, next_translation_id, session['id']))
-                
-                # Verify the update was successful
-                cur.execute("SELECT current_translation_id FROM quiz_session WHERE id = %s", (session['id'],))
-                updated_current = cur.fetchone()
-                
-                # Commit the transaction to persist the changes
-                conn.commit()
-                
-                # Get word details
-                cur.execute("""
-                    SELECT t.id, sw.text as source_word, tw.text as target_word,
-                           sl.name as source_language, tl.name as target_language
-                    FROM translation t
-                    JOIN word sw ON t.source_word_id = sw.id
-                    JOIN word tw ON t.target_word_id = tw.id
-                    JOIN language sl ON sw.language_id = sl.id
-                    JOIN language tl ON tw.language_id = tl.id
-                    WHERE t.id = %s
-                """, (next_translation_id,))
-                word_data = cur.fetchone()
-                
-                # Get the word to display (only show first alternative if pipe-separated)
-                displayed_word = word_data['source_word'] if session['direction'] else word_data['target_word']
-                if '|' in displayed_word:
-                    displayed_word = displayed_word.split('|')[0].strip()
-                
-                return {
-                    "word": displayed_word,
-                    "translationId": word_data['id'],
-                    "direction": "normal" if session['direction'] else "reverse",
-                    "sourceLanguage": word_data['source_language'],
-                    "targetLanguage": word_data['target_language']
-                }
-    
-    
-    def _get_candidate_words(self, cur, user_id: int, word_list_id: int, status: str) -> List[int]:
-        """Get candidate words for given status"""
-        cur.execute("""
-            SELECT DISTINCT t.id
-            FROM word_list_entry wle
-            JOIN translation t ON t.id = wle.translation_id
-            LEFT JOIN user_translation_progress utp ON utp.word_pair_id = t.id AND utp.user_id = %s
-            WHERE wle.word_list_id = %s 
-            AND (
-                (%s = 'LEVEL_0' AND (utp.status = 'LEVEL_0' OR utp.status IS NULL)) OR
-                (utp.status = %s)
-            )
-        """, (user_id, word_list_id, status, status))
-        return [row['id'] for row in cur.fetchall()]
-    
-    def _select_next_word(self, cur, session: Dict, candidates: List[int]) -> int:
-        """Select next word based on error frequency and recency"""
-        
-        if not candidates:
-            raise Exception("No candidates provided to _select_next_word")
-        
-        # Get error counts
-        cur.execute("""
-            SELECT translation_id, SUM(incorrect) as error_count
-            FROM quiz_session_stats
-            WHERE session_id = %s AND translation_id = ANY(%s)
-            GROUP BY translation_id
-        """, (session['id'], candidates))
-        
-        error_counts = {row['translation_id']: row['error_count'] for row in cur.fetchall()}
-        
-        # Sort by error count (descending) with randomization for ties
-        sorted_candidates = sorted(candidates, key=lambda x: (error_counts.get(x, 0), random.random()), reverse=True)
-        
-        # Get top candidates
-        top_candidates = sorted_candidates[:10]
-        
-        # Filter out recently asked
-        last_asked = session['last_asked_words'] or []
-        available = [c for c in top_candidates if c not in last_asked[-self.MAX_LAST_ASKED_WORDS:]]
-        
-        if not available:
-            available = top_candidates
-        
-        if not available:
-            raise Exception(f"No available candidates after filtering. Top candidates: {top_candidates}, Last asked: {last_asked[-self.MAX_LAST_ASKED_WORDS:]}")
-        
-        selected = random.choice(available)
-        return selected
-    
-    def submit_answer(self, user_id: int, word_list_name: str, translation_id: int, user_answer: str, displayed_word: str = None) -> Dict:
-        """Process answer submission with optional displayed word validation"""
+    def get_next_question(self, user_id: int, word_list_name: str) -> Optional[Dict]:
+        """Get next question using focused SQL functions"""
         conn = None
         try:
             conn = self.db_pool.getconn()
             with conn.cursor(cursor_factory=RealDictCursor) as cur:
-                # Get session and validate translation_id matches current question with row lock
+                # Use the optimized SQL function
                 cur.execute("""
-                    SELECT qs.*, sw.text as source_word, tw.text as target_word,
-                           sw.usage_example as source_example, tw.usage_example as target_example
-                    FROM quiz_session qs
-                    JOIN word_list wl ON wl.id = qs.word_list_id
-                    JOIN translation t ON t.id = %s
-                    JOIN word sw ON t.source_word_id = sw.id
-                    JOIN word tw ON t.target_word_id = tw.id
-                    WHERE qs.user_id = %s AND wl.name = %s
-                    FOR UPDATE OF qs
-                """, (translation_id, user_id, word_list_name))
+                    SELECT * FROM get_next_quiz_question(%s, %s)
+                """, (user_id, word_list_name))
                 
-                data = cur.fetchone()
-                if not data:
-                    return {"error": "Invalid session or translation"}
-                
-                # Validate the displayed word matches what we expect
-                if displayed_word:
-                    expected_word = data['source_word'] if data['direction'] else data['target_word']
-                    if displayed_word != expected_word:
-                        return {
-                            "error": "Session out of sync. The question has changed.",
-                            "needsRefresh": True,
-                            "currentWord": expected_word
-                        }
-                
-                # Validate that the translation_id matches the current question
-                if data['current_translation_id'] != translation_id:
-                    return {
-                        "error": "This question has already been answered. Moving to next question.",
-                        "needsRefresh": True
-                    }
-                
-                # Determine correct answer
-                correct_answer = data['target_word'] if data['direction'] else data['source_word']
-                
-                # Check for intentionally wrong answers first
-                if "INTENTIONALLY_WRONG" in user_answer:
-                    is_correct = False  # Force to be incorrect for test purposes
-                else:
-                    # First, check if correct answer has pipe-separated alternatives
-                    if '|' in correct_answer:
-                        # User can provide any one of the alternatives
-                        alternatives = [self.normalize_text(alt.strip()) for alt in correct_answer.split('|')]
-                        normalized_user = self.normalize_text(user_answer)
-                        is_correct = normalized_user in alternatives
-                    # Then check if either answer contains commas (multiple meanings)
-                    elif ',' in user_answer or ',' in correct_answer:
-                        # Split and normalize all parts
-                        user_parts = {self.normalize_text(part.strip()) for part in user_answer.split(',')}
-                        correct_parts = {self.normalize_text(part.strip()) for part in correct_answer.split(',')}
-                        # Order doesn't matter - check if sets are equal
-                        is_correct = user_parts == correct_parts
-                    else:
-                        # Single answer - use simple comparison
-                        normalized_user = self.normalize_text(user_answer)
-                        normalized_correct = self.normalize_text(correct_answer)
-                        is_correct = normalized_user == normalized_correct
-                
-                # Update statistics
-                direction = 'normal' if data['direction'] else 'reverse'
-                cur.execute("""
-                    INSERT INTO quiz_session_stats 
-                    (session_id, translation_id, direction, attempts, correct, incorrect, consecutive_mistakes)
-                    VALUES (%s, %s, %s, 1, %s, %s, %s)
-                    ON CONFLICT (session_id, translation_id, direction)
-                    DO UPDATE SET
-                        attempts = quiz_session_stats.attempts + 1,
-                        correct = quiz_session_stats.correct + %s,
-                        incorrect = quiz_session_stats.incorrect + %s,
-                        consecutive_mistakes = CASE WHEN %s THEN 0 ELSE quiz_session_stats.consecutive_mistakes + 1 END,
-                        last_answered_at = CURRENT_TIMESTAMP
-                """, (data['id'], translation_id, direction, 
-                      1 if is_correct else 0, 0 if is_correct else 1, 0 if is_correct else 1,
-                      1 if is_correct else 0, 0 if is_correct else 1, is_correct))
-                
-                # Get updated stats
-                cur.execute("""
-                    SELECT * FROM quiz_session_stats 
-                    WHERE session_id = %s AND translation_id = %s AND direction = %s
-                """, (data['id'], translation_id, direction))
-                stats = cur.fetchone()
-                
-                # Check for status changes
-                status_changed = False
-                new_status = None
-                
-                # Check for level advancement (aggregate correct answers from both directions)
-                if is_correct:
-                    # Check current status first
-                    cur.execute("""
-                        SELECT status FROM user_translation_progress 
-                        WHERE user_id = %s AND word_pair_id = %s
-                    """, (user_id, translation_id))
-                    current = cur.fetchone()
-                    current_status = current['status'] if current else 'LEVEL_0'
-                    
-                    # Get correct answers since last status change
-                    # We use the stats that were just updated above
-                    cur.execute("""
-                        SELECT correct, direction FROM quiz_session_stats 
-                        WHERE session_id = %s AND translation_id = %s
-                    """, (data['id'], translation_id))
-                    all_stats = cur.fetchall()
-                    
-                    # Sum up correct answers from both directions
-                    total_correct = sum(stat['correct'] for stat in all_stats)
-                    
-                    
-                    # Each level requires 3 correct answers to advance
-                    required_correct = self.CORRECT_ANSWERS_TO_MASTER
-                    
-                    if total_correct >= required_correct:
-                        # Simple progression: each level advances to the next after 3 correct answers
-                        upgrade_map = {
-                            'LEVEL_0': 'LEVEL_1',
-                            'LEVEL_1': 'LEVEL_2', 
-                            'LEVEL_2': 'LEVEL_3'
-                        }
-                        
-                        if current_status in upgrade_map:
-                            new_status = upgrade_map[current_status]
-                            status_changed = True
-                
-                elif not is_correct and stats['consecutive_mistakes'] >= self.MAX_MISTAKES_BEFORE_DEGRADATION:
-                    # Degrade status
-                    cur.execute("""
-                        SELECT status FROM user_translation_progress 
-                        WHERE user_id = %s AND word_pair_id = %s
-                    """, (user_id, translation_id))
-                    current = cur.fetchone()
-                    if current:
-                        degrade_map = {
-                            'LEVEL_3': 'LEVEL_2',
-                            'LEVEL_2': 'LEVEL_1', 
-                            'LEVEL_1': 'LEVEL_0'
-                        }
-                        if current['status'] in degrade_map:
-                            new_status = degrade_map[current['status']]
-                            status_changed = True
-                
-                # Update status if changed
-                if status_changed and new_status:
-                    cur.execute("""
-                        INSERT INTO user_translation_progress (user_id, word_pair_id, status)
-                        VALUES (%s, %s, %s)
-                        ON CONFLICT (user_id, word_pair_id)
-                        DO UPDATE SET status = %s, updated_at = CURRENT_TIMESTAMP
-                    """, (user_id, translation_id, new_status, new_status))
-                    
-                    # Reset stats for both directions when status changes (up or down)
-                    cur.execute("""
-                        UPDATE quiz_session_stats 
-                        SET correct = 0, consecutive_mistakes = 0 
-                        WHERE session_id = %s AND translation_id = %s
-                    """, (data['id'], translation_id))
-                    
-                    # If a word moved from L1 to L2, replenish L1 from L0
-                    if new_status == 'LEVEL_2':
-                        self._populate_focus_words(conn, user_id, data['id'])
-                    
-                    # If a word was degraded to L0, replenish L1 from L0
-                    if new_status == 'LEVEL_0':
-                        self._populate_focus_words(conn, user_id, data['id'])
-                    
-                    # If a word moved out of L2 (either to L1 or L3), check if L2 is now empty
-                    # and switch direction to normal if it is
-                    if new_status in ['LEVEL_1', 'LEVEL_3']:
-                        cur.execute("""
-                            SELECT COUNT(*) as l2_count
-                            FROM word_list_entry wle
-                            JOIN user_translation_progress utp 
-                                ON utp.word_pair_id = wle.translation_id 
-                                AND utp.user_id = %s
-                            WHERE wle.word_list_id = %s AND utp.status = 'LEVEL_2'
-                        """, (user_id, data['word_list_id']))
-                        
-                        l2_result = cur.fetchone()
-                        if l2_result['l2_count'] == 0:
-                            # L2 is now empty, switch to normal direction
-                            cur.execute("""
-                                UPDATE quiz_session 
-                                SET direction = true, current_translation_id = NULL
-                                WHERE id = %s
-                            """, (data['id']))
-                
-                # Get updated state
-                cur.execute("SELECT * FROM get_quiz_state(%s, %s)", (user_id, word_list_name))
-                updated_state = cur.fetchone()
-                
-                # JSONB fields are automatically converted to Python objects by psycopg2 RealDictCursor
-                updated_state_dict = dict(updated_state)
-                # Ensure word lists are always arrays (COALESCE in SQL should handle this)
-                for key in ['level_0_words', 'level_1_words', 'level_2_words', 'level_3_words']:
-                    if updated_state_dict[key] is None:
-                        updated_state_dict[key] = []
+                result = cur.fetchone()
+                if not result:
+                    # Check if quiz is complete
+                    session_data = self.get_or_create_session(user_id, word_list_name)
+                    if 'level_counts' in session_data:
+                        counts = session_data['level_counts']
+                        if counts['level_3'] == counts['total'] and counts['total'] > 0:
+                            return {
+                                'completed': True,
+                                'message': 'Congratulations! You\'ve mastered all words!',
+                                'word': '🎉 Quiz Complete! 100% Mastered! 🎉',
+                                'totalWords': counts['total'],
+                                'masteredWords': counts['level_3']
+                            }
+                    return {'error': 'No questions available'}
                 
                 conn.commit()
                 
-                # Prepare response
-                feedback_message = "Correct!" if is_correct else f"{data['source_word']} ↔ {data['target_word']}"
-                
-                feedback = {
-                    "message": feedback_message,
-                    "isSuccess": is_correct
-                }
-                
-                usage_examples = {
-                    "source": data['source_example'] or "No source example available",
-                    "target": data['target_example'] or "No target example available"
-                }
-                
-                # Get next question before returning
-                next_question = self._get_next_question_internal(conn, user_id, word_list_name)
-                
                 return {
-                    "feedback": feedback,
-                    "usageExamples": usage_examples,
-                    "statusChanged": status_changed,
-                    "wordLists": {
-                        "level0": updated_state_dict['level_0_words'],
-                        "level1": updated_state_dict['level_1_words'],
-                        "level2": updated_state_dict['level_2_words'],
-                        "level3": updated_state_dict['level_3_words']
-                    },
-                    "nextQuestion": next_question
+                    'word': result['displayed_word'],
+                    'translationId': result['word_id'],
+                    'direction': 'normal' if result['direction'] else 'reverse',
+                    'sourceLanguage': result['source_language'],
+                    'targetLanguage': result['target_language']
                 }
+                
+        except Exception as e:
+            logger.error(f"Failed to get next question: {e}")
+            if conn:
+                conn.rollback()
+            raise
+        finally:
+            if conn:
+                self.db_pool.putconn(conn)
+    
+    def submit_answer(self, user_id: int, word_list_name: str, translation_id: int, 
+                     user_answer: str, displayed_word: str = None) -> Dict:
+        """Submit answer with business logic in Python"""
+        conn = None
+        try:
+            conn = self.db_pool.getconn()
+            with conn.cursor(cursor_factory=RealDictCursor) as cur:
+                # Get session ID first
+                cur.execute("""
+                    SELECT qs.id as session_id, qs.direction
+                    FROM quiz_session qs
+                    JOIN word_list wl ON wl.id = qs.word_list_id
+                    WHERE qs.user_id = %s AND wl.name = %s
+                """, (user_id, word_list_name))
+                
+                session_info = cur.fetchone()
+                if not session_info:
+                    return {'error': 'Session not found'}
+                
+                session_id = session_info['session_id']
+                
+                # Validate translation_id belongs to this word list
+                cur.execute("""
+                    SELECT 1 FROM word_list_entry wle
+                    JOIN quiz_session qs ON qs.word_list_id = wle.word_list_id
+                    WHERE qs.id = %s AND wle.translation_id = %s
+                """, (session_id, translation_id))
+                
+                if not cur.fetchone():
+                    return {'error': 'Invalid translation ID for this quiz'}
+                
+                # Process answer using focused SQL function
+                cur.execute("""
+                    SELECT * FROM process_quiz_answer(%s, %s, %s, %s, %s)
+                """, (user_id, session_id, translation_id, user_answer, displayed_word))
+                
+                answer_result = cur.fetchone()
+                if not answer_result:
+                    return {'error': 'Invalid submission'}
+                
+                # Check if level should change
+                cur.execute("""
+                    SELECT * FROM check_level_progression(%s, %s, %s, %s)
+                """, (user_id, translation_id, session_id, session_info['direction']))
+                
+                progression = cur.fetchone()
+                
+                level_changed = False
+                old_level = progression['current_level']
+                new_level = progression['new_level']
+                
+                # Apply level change if needed
+                if progression['should_advance'] or progression['should_degrade']:
+                    cur.execute("""
+                        SELECT update_user_word_level(%s, %s, %s) as updated
+                    """, (user_id, translation_id, new_level))
+                    
+                    level_changed = cur.fetchone()['updated']
+                    
+                    # Handle post-level-change actions (business logic)
+                    if level_changed:
+                        self._handle_level_change(cur, user_id, session_id, old_level, new_level)
+                
+                conn.commit()
+                
+                # Prepare response (compatible with old API format)
+                response = {
+                    'feedback': {
+                        'message': 'Correct!' if answer_result['is_correct'] 
+                                  else f"{answer_result['source_word']} ↔ {answer_result['target_word']}",
+                        'isSuccess': answer_result['is_correct']
+                    },
+                    'usageExamples': {
+                        'source': answer_result['source_example'] or 'No source example available',
+                        'target': answer_result['target_example'] or 'No target example available'
+                    },
+                    'statusChanged': level_changed
+                }
+                
+                if level_changed:
+                    response['levelChange'] = {
+                        'oldLevel': old_level,
+                        'newLevel': new_level
+                    }
+                
+                # Get next question for seamless flow
+                try:
+                    next_question = self.get_next_question(user_id, word_list_name)
+                    if next_question and 'error' not in next_question:
+                        response['nextQuestion'] = next_question
+                except:
+                    logger.warning("Failed to get next question after answer submission")
+                
+                # Get updated word lists to include in response
+                cur.execute("""
+                    SELECT word_list_id FROM quiz_session WHERE id = %s
+                """, (session_id,))
+                word_list_id = cur.fetchone()['word_list_id']
+                
+                # Get updated counts and word lists
+                cur.execute("""
+                    SELECT * FROM count_user_words_by_level(%s, %s)
+                """, (user_id, word_list_id))
+                counts = cur.fetchone()
+                
+                # Get actual word lists for each level
+                word_lists = self._get_word_lists_by_level(cur, user_id, word_list_id)
+                
+                response['wordLists'] = {
+                    'level0': word_lists['level_0'],
+                    'level1': word_lists['level_1'],
+                    'level2': word_lists['level_2'],
+                    'level3': word_lists['level_3']
+                }
+                
+                return response
+                
+        except Exception as e:
+            logger.error(f"Failed to submit answer: {e}")
+            if conn:
+                conn.rollback()
+            raise
         finally:
             if conn:
                 self.db_pool.putconn(conn)
@@ -588,48 +320,185 @@ class QuizManager:
         try:
             conn = self.db_pool.getconn()
             with conn.cursor(cursor_factory=RealDictCursor) as cur:
-                # Get session
                 cur.execute("""
-                    UPDATE quiz_session qs
+                    UPDATE quiz_session 
                     SET direction = NOT direction, 
-                        current_translation_id = NULL,  -- Reset current question to force new selection
+                        current_translation_id = NULL,
                         updated_at = CURRENT_TIMESTAMP
-                    FROM word_list wl
-                    WHERE qs.word_list_id = wl.id 
-                    AND qs.user_id = %s 
-                    AND wl.name = %s
-                    RETURNING qs.direction
+                    FROM word_list
+                    WHERE quiz_session.word_list_id = word_list.id
+                    AND quiz_session.user_id = %s 
+                    AND word_list.name = %s
+                    RETURNING quiz_session.direction
                 """, (user_id, word_list_name))
                 
                 result = cur.fetchone()
+                if not result:
+                    return {'error': 'Quiz session not found'}
+                
+                # Get updated level counts
+                cur.execute("""
+                    SELECT wl.id as word_list_id FROM word_list wl WHERE wl.name = %s
+                """, (word_list_name,))
+                word_list_id = cur.fetchone()['word_list_id']
+                
+                cur.execute("""
+                    SELECT * FROM count_user_words_by_level(%s, %s)
+                """, (user_id, word_list_id))
+                counts = cur.fetchone()
+                
                 conn.commit()
                 
-                if result:
-                    # Return updated quiz state including word lists
-                    cur.execute("SELECT * FROM get_quiz_state(%s, %s)", (user_id, word_list_name))
-                    updated_state = cur.fetchone()
-                    
-                    if updated_state:
-                        # JSONB fields are automatically converted to Python objects by psycopg2 RealDictCursor
-                        state_dict = dict(updated_state)
-                        # Ensure word lists are always arrays (COALESCE in SQL should handle this)
-                        for key in ['level_0_words', 'level_1_words', 'level_2_words', 'level_3_words']:
-                            if state_dict[key] is None:
-                                state_dict[key] = []
-                        
-                        return {
-                            "direction": "normal" if result['direction'] else "reverse",
-                            "wordLists": {
-                                "level0": state_dict['level_0_words'],
-                                "level1": state_dict['level_1_words'],
-                                "level2": state_dict['level_2_words'],
-                                "level3": state_dict['level_3_words']
-                            }
-                        }
-                    else:
-                        return {"direction": "normal" if result['direction'] else "reverse"}
-                else:
-                    return {"error": "Quiz session not found"}
+                return {
+                    'direction': 'normal' if result['direction'] else 'reverse',
+                    'level_counts': {
+                        'level_0': int(counts['level_0_count']),
+                        'level_1': int(counts['level_1_count']), 
+                        'level_2': int(counts['level_2_count']),
+                        'level_3': int(counts['level_3_count']),
+                        'total': int(counts['total_words'])
+                    }
+                }
+                
+        except Exception as e:
+            logger.error(f"Failed to toggle direction: {e}")
+            if conn:
+                conn.rollback()
+            raise
         finally:
             if conn:
                 self.db_pool.putconn(conn)
+    
+    def _populate_focus_words(self, cursor, user_id: int, word_list_id: int) -> int:
+        """Private method to populate focus words (business logic)"""
+        cursor.execute("""
+            SELECT COUNT(*) as level_1_count
+            FROM word_list_entry wle
+            JOIN user_translation_progress utp 
+                ON utp.word_pair_id = wle.translation_id 
+                AND utp.user_id = %s
+            WHERE wle.word_list_id = %s AND utp.status = 'LEVEL_1'
+        """, (user_id, word_list_id))
+        
+        current_count = cursor.fetchone()['level_1_count']
+        spaces_available = self.MAX_FOCUS_WORDS - current_count
+        
+        if spaces_available <= 0:
+            return 0
+        
+        # Get LEVEL_0 words to promote
+        cursor.execute("""
+            SELECT t.id
+            FROM word_list_entry wle
+            JOIN translation t ON t.id = wle.translation_id
+            LEFT JOIN user_translation_progress utp 
+                ON utp.word_pair_id = t.id AND utp.user_id = %s
+            WHERE wle.word_list_id = %s 
+            AND (utp.status = 'LEVEL_0' OR utp.status IS NULL)
+            ORDER BY RANDOM()
+            LIMIT %s
+        """, (user_id, word_list_id, spaces_available))
+        
+        words_to_promote = cursor.fetchall()
+        
+        # Promote words to LEVEL_1
+        for word in words_to_promote:
+            cursor.execute("""
+                INSERT INTO user_translation_progress (user_id, word_pair_id, status)
+                VALUES (%s, %s, 'LEVEL_1'::translation_status)
+                ON CONFLICT (user_id, word_pair_id)
+                DO UPDATE SET status = 'LEVEL_1'::translation_status, updated_at = CURRENT_TIMESTAMP
+            """, (user_id, word['id']))
+        
+        return len(words_to_promote)
+    
+    def _handle_level_change(self, cursor, user_id: int, session_id: int, 
+                           old_level: str, new_level: str) -> None:
+        """Handle post-level-change actions (business logic)"""
+        # If word moved from L1 to L2 or degraded to L0, replenish L1
+        if new_level in ('LEVEL_2', 'LEVEL_0'):
+            cursor.execute("""
+                SELECT word_list_id FROM quiz_session WHERE id = %s
+            """, (session_id,))
+            word_list_id = cursor.fetchone()['word_list_id']
+            self._populate_focus_words(cursor, user_id, word_list_id)
+        
+        # If word moved from L2 to L3 or L1, check if L2 is empty and switch direction
+        if new_level in ('LEVEL_1', 'LEVEL_3') and old_level == 'LEVEL_2':
+            cursor.execute("""
+                SELECT COUNT(*) as l2_count
+                FROM word_list_entry wle
+                JOIN user_translation_progress utp 
+                    ON utp.word_pair_id = wle.translation_id 
+                    AND utp.user_id = %s
+                JOIN quiz_session qs ON qs.word_list_id = wle.word_list_id
+                WHERE qs.id = %s AND utp.status = 'LEVEL_2'
+            """, (user_id, session_id))
+            
+            l2_count = cursor.fetchone()['l2_count']
+            
+            # If L2 is empty, switch to normal direction
+            if l2_count == 0:
+                cursor.execute("""
+                    UPDATE quiz_session 
+                    SET direction = true, current_translation_id = NULL
+                    WHERE id = %s
+                """, (session_id,))
+    
+    def _get_word_lists_by_level(self, cursor, user_id: int, word_list_id: int) -> Dict:
+        """Get word lists organized by level"""
+        # Get all words with their current status
+        cursor.execute("""
+            SELECT 
+                t.id,
+                util_clean_pipe_alternatives(sw.text) as source,
+                util_clean_pipe_alternatives(tw.text) as target,
+                sl.name as source_language,
+                tl.name as target_language,
+                sw.usage_example as source_example,
+                tw.usage_example as target_example,
+                COALESCE(utp.status::TEXT, 'LEVEL_0') as status
+            FROM word_list_entry wle
+            JOIN translation t ON t.id = wle.translation_id
+            JOIN word sw ON t.source_word_id = sw.id
+            JOIN word tw ON t.target_word_id = tw.id
+            JOIN language sl ON sw.language_id = sl.id
+            JOIN language tl ON tw.language_id = tl.id
+            LEFT JOIN user_translation_progress utp 
+                ON utp.word_pair_id = t.id AND utp.user_id = %s
+            WHERE wle.word_list_id = %s
+            ORDER BY t.id
+        """, (user_id, word_list_id))
+        
+        words = cursor.fetchall()
+        
+        # Organize by level
+        levels = {
+            'level_0': [],
+            'level_1': [],
+            'level_2': [],
+            'level_3': [],
+            'source_language': None,
+            'target_language': None
+        }
+        
+        for word in words:
+            word_data = {
+                'id': word['id'],
+                'source': word['source'],
+                'target': word['target'],
+                'sourceExample': word['source_example'],
+                'targetExample': word['target_example']
+            }
+            
+            # Set languages from first word
+            if levels['source_language'] is None:
+                levels['source_language'] = word['source_language']
+                levels['target_language'] = word['target_language']
+            
+            # Add to appropriate level
+            status = word['status'].lower()
+            if status in levels:
+                levels[status].append(word_data)
+        
+        return levels
