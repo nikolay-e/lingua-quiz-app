@@ -1,6 +1,9 @@
 -- Modern quiz functions - focused and clean
 -- Replaces the old complex get_quiz_state function
 
+-- Drop existing function if it exists (handles signature changes)
+DROP FUNCTION IF EXISTS get_quiz_state(INTEGER, VARCHAR(255)) CASCADE;
+
 -- Replacement for the complex get_quiz_state function (now lightweight)
 CREATE OR REPLACE FUNCTION get_quiz_state(
     p_user_id INTEGER, 
@@ -54,6 +57,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- Drop existing function if it exists (handles signature changes)
+DROP FUNCTION IF EXISTS is_quiz_complete(INTEGER, INTEGER) CASCADE;
+
 -- Function to check if quiz is complete
 CREATE OR REPLACE FUNCTION is_quiz_complete(
     p_user_id INTEGER,
@@ -68,6 +74,9 @@ BEGIN
     RETURN v_counts.level_3_count = v_counts.total_words AND v_counts.total_words > 0;
 END;
 $$ LANGUAGE plpgsql;
+
+-- Drop existing function if it exists (handles signature changes)
+DROP FUNCTION IF EXISTS get_quiz_completion_percentage(INTEGER, INTEGER) CASCADE;
 
 -- Function to get quiz completion percentage
 CREATE OR REPLACE FUNCTION get_quiz_completion_percentage(
@@ -87,6 +96,9 @@ BEGIN
     RETURN ROUND((v_counts.level_3_count::NUMERIC / v_counts.total_words) * 100, 1);
 END;
 $$ LANGUAGE plpgsql;
+
+-- Drop existing function if it exists (handles signature changes)
+DROP FUNCTION IF EXISTS get_words_by_level(INTEGER, INTEGER, VARCHAR, INTEGER) CASCADE;
 
 -- Function to get words by level (simple list, not complex JSONB)
 CREATE OR REPLACE FUNCTION get_words_by_level(
