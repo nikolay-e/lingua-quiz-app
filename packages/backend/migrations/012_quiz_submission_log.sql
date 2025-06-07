@@ -194,7 +194,46 @@ $$ LANGUAGE plpgsql;
 
 
 -- Utility functions
--- Function to check answer correctness with multiple alternatives support
+-- Helper function to remove brackets from text for comparison
+CREATE OR REPLACE FUNCTION util_remove_brackets(p_text TEXT) 
+RETURNS TEXT AS $$
+BEGIN
+    -- Remove content within round brackets but keep the text outside
+    RETURN trim(regexp_replace(p_text, '\s*\([^)]*\)\s*', ' ', 'g'));
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+
+-- Helper function to create bracket alternatives
+CREATE OR REPLACE FUNCTION util_create_bracket_alternatives(p_text TEXT) 
+RETURNS TEXT[] AS $$
+DECLARE
+    v_main_text TEXT;
+    v_bracket_content TEXT;
+    v_alternatives TEXT[] := '{}';
+BEGIN
+    -- If no brackets, return original text
+    IF position('(' in p_text) = 0 THEN
+        RETURN ARRAY[p_text];
+    END IF;
+    
+    -- Extract main text (without brackets)
+    v_main_text := util_remove_brackets(p_text);
+    
+    -- Extract bracket content
+    v_bracket_content := trim(regexp_replace(p_text, '^[^(]*\(([^)]*)\).*$', '\1', 'g'));
+    
+    -- Create alternatives
+    v_alternatives := ARRAY[
+        trim(v_main_text),                                    -- "есть" 
+        trim(v_main_text || ' ' || v_bracket_content),        -- "есть имеется"
+        trim(v_main_text || ', ' || v_bracket_content)        -- "есть, имеется"
+    ];
+    
+    RETURN v_alternatives;
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+
+-- Function to check answer correctness with enhanced separator support
 CREATE OR REPLACE FUNCTION util_check_answer_correctness(
     p_user_answer TEXT,
     p_correct_answer TEXT
@@ -205,36 +244,80 @@ DECLARE
     v_normalized_correct TEXT;
     v_user_parts TEXT[];
     v_correct_parts TEXT[];
+    v_bracket_alternatives TEXT[];
     i INTEGER;
+    j INTEGER;
 BEGIN
     -- Handle special test cases
     IF position('INTENTIONALLY_WRONG' in p_user_answer) > 0 THEN
         RETURN false;
     END IF;
     
-    -- Handle pipe-separated alternatives
+    -- Handle pipe-separated alternatives FIRST
     IF position('|' in p_correct_answer) > 0 THEN
         v_alternatives := string_to_array(p_correct_answer, '|');
         v_normalized_user := util_normalize_answer(p_user_answer);
         
         FOR i IN 1..array_length(v_alternatives, 1) LOOP
-            v_normalized_correct := util_normalize_answer(v_alternatives[i]);
-            IF v_normalized_user = v_normalized_correct THEN
-                RETURN true;
-            END IF;
+            -- For each pipe alternative, check if it has brackets
+            v_bracket_alternatives := util_create_bracket_alternatives(v_alternatives[i]);
+            
+            FOR j IN 1..array_length(v_bracket_alternatives, 1) LOOP
+                v_normalized_correct := util_normalize_answer(v_bracket_alternatives[j]);
+                IF v_normalized_user = v_normalized_correct THEN
+                    RETURN true;
+                END IF;
+            END LOOP;
         END LOOP;
         RETURN false;
     END IF;
     
     -- Handle comma-separated multiple meanings
-    IF position(',' in p_user_answer) > 0 OR position(',' in p_correct_answer) > 0 THEN
-        v_user_parts := array(SELECT util_normalize_answer(trim(unnest(string_to_array(p_user_answer, ',')))));
-        v_correct_parts := array(SELECT util_normalize_answer(trim(unnest(string_to_array(p_correct_answer, ',')))));
-        RETURN (v_user_parts = v_correct_parts);
+    IF position(',' in p_correct_answer) > 0 THEN
+        -- First check if this is a bracket alternative format "word, clarification"
+        v_bracket_alternatives := util_create_bracket_alternatives(p_correct_answer);
+        v_normalized_user := util_normalize_answer(p_user_answer);
+        
+        -- Check if user input matches any bracket alternative
+        FOR j IN 1..array_length(v_bracket_alternatives, 1) LOOP
+            v_normalized_correct := util_normalize_answer(v_bracket_alternatives[j]);
+            IF v_normalized_user = v_normalized_correct THEN
+                RETURN true;
+            END IF;
+        END LOOP;
+        
+        -- Handle traditional comma-separated (all parts required, order independent)
+        IF position(',' in p_user_answer) > 0 THEN
+            v_user_parts := array(SELECT trim(util_normalize_answer(unnest(string_to_array(p_user_answer, ',')))));
+            v_correct_parts := array(SELECT trim(util_normalize_answer(unnest(string_to_array(p_correct_answer, ',')))));
+            
+            -- Check if arrays contain same elements (order independent)
+            -- Both arrays must have same length and each element in one must exist in the other
+            IF array_length(v_user_parts, 1) = array_length(v_correct_parts, 1) THEN
+                FOR i IN 1..array_length(v_correct_parts, 1) LOOP
+                    IF NOT (v_correct_parts[i] = ANY(v_user_parts)) THEN
+                        RETURN false;
+                    END IF;
+                END LOOP;
+                RETURN true;
+            END IF;
+        END IF;
+        
+        RETURN false;
     END IF;
     
-    -- Simple single answer comparison
-    RETURN util_normalize_answer(p_user_answer) = util_normalize_answer(p_correct_answer);
+    -- Handle single answer with possible brackets
+    v_bracket_alternatives := util_create_bracket_alternatives(p_correct_answer);
+    v_normalized_user := util_normalize_answer(p_user_answer);
+    
+    FOR j IN 1..array_length(v_bracket_alternatives, 1) LOOP
+        v_normalized_correct := util_normalize_answer(v_bracket_alternatives[j]);
+        IF v_normalized_user = v_normalized_correct THEN
+            RETURN true;
+        END IF;
+    END LOOP;
+    
+    RETURN false;
 END;
 $$ LANGUAGE plpgsql;
 
