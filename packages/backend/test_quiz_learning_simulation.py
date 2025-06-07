@@ -48,6 +48,14 @@ class QuizLearningSimulation:
         
         # Cache for next question from submit response
         self.next_question_cache = None
+        
+        # Answer format testing
+        self.answer_format_tests = {
+            'bracket_tests': [],
+            'comma_tests': [],
+            'pipe_tests': [],
+            'mixed_tests': []
+        }
     
     def log(self, message, color=None, force=False):
         """Log message with optional color and prefix"""
@@ -167,6 +175,92 @@ class QuizLearningSimulation:
                         if word_pair.get('target') == word:
                             return word_pair.get('source')
         return None
+    
+    def test_answer_formats(self, correct_answer, word, translation_id):
+        """Test different answer formats for enhanced validation"""
+        if not correct_answer:
+            return []
+        
+        test_cases = []
+        
+        # Test bracket handling: "есть (имеется)"
+        if '(' in correct_answer and ')' in correct_answer:
+            # Main word only should work
+            main_word = correct_answer.split('(')[0].strip()
+            test_cases.append({
+                'type': 'bracket_main_only',
+                'answer': main_word,
+                'expected': True,
+                'description': f"Main word only: '{main_word}'"
+            })
+            
+            # Full text with brackets should work too
+            test_cases.append({
+                'type': 'bracket_full',
+                'answer': correct_answer,
+                'expected': True,
+                'description': f"Full with brackets: '{correct_answer}'"
+            })
+            
+            # Clarification alone should NOT work
+            bracket_content = correct_answer.split('(')[1].split(')')[0].strip()
+            test_cases.append({
+                'type': 'bracket_clarification_only',
+                'answer': bracket_content,
+                'expected': False,
+                'description': f"Clarification only: '{bracket_content}'"
+            })
+        
+        # Test comma-separated handling: "начало, принцип"
+        if ',' in correct_answer and '(' not in correct_answer:
+            parts = [p.strip() for p in correct_answer.split(',')]
+            if len(parts) == 2:
+                # Original order should work
+                test_cases.append({
+                    'type': 'comma_original_order',
+                    'answer': correct_answer,
+                    'expected': True,
+                    'description': f"Original order: '{correct_answer}'"
+                })
+                
+                # Reversed order should work (order independence)
+                reversed_answer = f"{parts[1]}, {parts[0]}"
+                test_cases.append({
+                    'type': 'comma_reversed_order',
+                    'answer': reversed_answer,
+                    'expected': True,
+                    'description': f"Reversed order: '{reversed_answer}'"
+                })
+                
+                # Partial answer should NOT work
+                test_cases.append({
+                    'type': 'comma_partial',
+                    'answer': parts[0],
+                    'expected': False,
+                    'description': f"Partial answer: '{parts[0]}'"
+                })
+        
+        # Test pipe alternatives (if we had any)
+        if '|' in correct_answer:
+            alternatives = [alt.strip() for alt in correct_answer.split('|')]
+            # First alternative should work
+            test_cases.append({
+                'type': 'pipe_first',
+                'answer': alternatives[0],
+                'expected': True,
+                'description': f"First alternative: '{alternatives[0]}'"
+            })
+            
+            # Other alternatives should work too
+            if len(alternatives) > 1:
+                test_cases.append({
+                    'type': 'pipe_second',
+                    'answer': alternatives[1],
+                    'expected': True,
+                    'description': f"Second alternative: '{alternatives[1]}'"
+                })
+        
+        return test_cases
     
     def should_intentionally_fail(self, translation_id, current_progress=0):
         """Determine if we should intentionally fail this word for testing"""
@@ -299,6 +393,33 @@ class QuizLearningSimulation:
                     self.consecutive_errors += 1
                     continue
                 
+                # Run answer format tests occasionally
+                if self.question_counter % 50 == 0:  # Test every 50th question
+                    test_cases = self.test_answer_formats(correct_answer, word, translation_id)
+                    for test_case in test_cases:
+                        try:
+                            result = self.submit_answer(translation_id, test_case['answer'], word)
+                            actual_result = result['feedback']['isSuccess']
+                            
+                            if actual_result == test_case['expected']:
+                                self.answer_format_tests[f"{test_case['type'].split('_')[0]}_tests"].append({
+                                    'word': word,
+                                    'test': test_case['description'],
+                                    'status': 'PASS'
+                                })
+                                self.log(f"✓ Format test PASSED: {test_case['description']}", GREEN)
+                            else:
+                                self.answer_format_tests[f"{test_case['type'].split('_')[0]}_tests"].append({
+                                    'word': word,
+                                    'test': test_case['description'],
+                                    'status': 'FAIL',
+                                    'expected': test_case['expected'],
+                                    'actual': actual_result
+                                })
+                                self.log(f"✗ Format test FAILED: {test_case['description']} (expected {test_case['expected']}, got {actual_result})", RED, force=True)
+                        except Exception as e:
+                            self.log(f"✗ Format test ERROR: {test_case['description']} - {e}", RED, force=True)
+                
                 # Determine if we should intentionally fail
                 progress_pct = (initial_counts['level3'] / target_mastered) if target_mastered > 0 else 0
                 intentionally_wrong = self.should_intentionally_fail(translation_id, progress_pct)
@@ -418,6 +539,24 @@ class QuizLearningSimulation:
             # Log final results
             completion_pct = (final_counts['level3'] / target_mastered * 100) if target_mastered > 0 else 0
             self.log(f"Completed: {self.question_counter} questions, {completion_pct:.1f}% mastered ({final_counts['level3']}/{target_mastered} L3), Accuracy: {accuracy:.1f}%", YELLOW, force=True)
+            
+            # Answer format testing results
+            total_format_tests = sum(len(tests) for tests in self.answer_format_tests.values())
+            if total_format_tests > 0:
+                print(f"\n{YELLOW}Answer Format Testing Results:{RESET}")
+                
+                for test_type, tests in self.answer_format_tests.items():
+                    if tests:
+                        passed = sum(1 for t in tests if t['status'] == 'PASS')
+                        failed = len(tests) - passed
+                        
+                        status_color = GREEN if failed == 0 else RED
+                        print(f"  {test_type.replace('_', ' ').title()}: {status_color}{passed}/{len(tests)} passed{RESET}")
+                        
+                        # Show failures
+                        for test in tests:
+                            if test['status'] == 'FAIL':
+                                print(f"    ✗ {test['word']}: {test['test']} (expected {test.get('expected')}, got {test.get('actual')})")
             
             # Only show detailed stats in verbose mode
             if self.verbose:
