@@ -589,7 +589,7 @@ def test_answer_comparison():
                 
     except Exception as e:
         print(f"Error in test endpoint: {e}")
-        return jsonify({'error': f'Database error: {str(e)}'}), 500
+        return jsonify({'error': 'An internal error has occurred.'}), 500
 
 # Error handler
 @app.errorhandler(404)
