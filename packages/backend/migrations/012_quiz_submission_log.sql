@@ -194,16 +194,16 @@ $$ LANGUAGE plpgsql;
 
 
 -- Utility functions
--- Helper function to remove brackets from text for comparison
+-- Helper function to remove square brackets from text for comparison
 CREATE OR REPLACE FUNCTION util_remove_brackets(p_text TEXT) 
 RETURNS TEXT AS $$
 BEGIN
-    -- Remove content within round brackets but keep the text outside
-    RETURN trim(regexp_replace(p_text, '\s*\([^)]*\)\s*', ' ', 'g'));
+    -- Remove content within square brackets but keep the text outside
+    RETURN trim(regexp_replace(p_text, '\s*\[[^\]]*\]\s*', ' ', 'g'));
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
--- Helper function to create bracket alternatives
+-- Helper function to create square bracket alternatives
 CREATE OR REPLACE FUNCTION util_create_bracket_alternatives(p_text TEXT) 
 RETURNS TEXT[] AS $$
 DECLARE
@@ -211,16 +211,16 @@ DECLARE
     v_bracket_content TEXT;
     v_alternatives TEXT[] := '{}';
 BEGIN
-    -- If no brackets, return original text
-    IF position('(' in p_text) = 0 THEN
+    -- If no square brackets, return original text
+    IF position('[' in p_text) = 0 THEN
         RETURN ARRAY[p_text];
     END IF;
     
-    -- Extract main text (without brackets)
+    -- Extract main text (without square brackets)
     v_main_text := util_remove_brackets(p_text);
     
-    -- Extract bracket content
-    v_bracket_content := trim(regexp_replace(p_text, '^[^(]*\(([^)]*)\).*$', '\1', 'g'));
+    -- Extract square bracket content
+    v_bracket_content := trim(regexp_replace(p_text, '^[^\[]*\[([^\]]*)\].*$', '\1', 'g'));
     
     -- Create alternatives
     v_alternatives := ARRAY[
@@ -230,6 +230,75 @@ BEGIN
     ];
     
     RETURN v_alternatives;
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
+
+-- Helper function to expand parentheses groups like (a|b), (c|d) -> a, c | a, d | b, c | b, d
+CREATE OR REPLACE FUNCTION util_expand_parentheses_groups(p_text TEXT) 
+RETURNS TEXT[] AS $$
+DECLARE
+    v_groups TEXT[];
+    v_result TEXT[] := '{}';
+    v_group1_alternatives TEXT[];
+    v_group2_alternatives TEXT[];
+    v_current_combination TEXT;
+    i INTEGER;
+    j INTEGER;
+BEGIN
+    -- If no parentheses, return original text as single element
+    IF position('(' in p_text) = 0 THEN
+        RETURN ARRAY[p_text];
+    END IF;
+    
+    -- Split by commas outside parentheses to get groups like "(a|b)" and "(c|d)"
+    v_groups := regexp_split_to_array(trim(p_text), '\s*,\s*');
+    
+    -- Handle case with exactly 2 groups (most common case)
+    IF array_length(v_groups, 1) = 2 THEN
+        -- Extract alternatives from first group
+        IF position('(' in v_groups[1]) > 0 THEN
+            v_group1_alternatives := string_to_array(
+                trim(regexp_replace(v_groups[1], '^\s*\(([^)]*)\)\s*$', '\1')), 
+                '|'
+            );
+        ELSE
+            v_group1_alternatives := ARRAY[trim(v_groups[1])];
+        END IF;
+        
+        -- Extract alternatives from second group
+        IF position('(' in v_groups[2]) > 0 THEN
+            v_group2_alternatives := string_to_array(
+                trim(regexp_replace(v_groups[2], '^\s*\(([^)]*)\)\s*$', '\1')), 
+                '|'
+            );
+        ELSE
+            v_group2_alternatives := ARRAY[trim(v_groups[2])];
+        END IF;
+        
+        -- Generate all combinations
+        FOR i IN 1..array_length(v_group1_alternatives, 1) LOOP
+            FOR j IN 1..array_length(v_group2_alternatives, 1) LOOP
+                v_current_combination := trim(v_group1_alternatives[i]) || ', ' || trim(v_group2_alternatives[j]);
+                v_result := array_append(v_result, v_current_combination);
+            END LOOP;
+        END LOOP;
+    ELSE
+        -- For single group or more complex cases, return simplified expansion
+        FOR i IN 1..array_length(v_groups, 1) LOOP
+            IF position('(' in v_groups[i]) > 0 THEN
+                -- Extract first alternative from parentheses
+                v_groups[i] := trim(split_part(
+                    regexp_replace(v_groups[i], '^\s*\(([^)]*)\)\s*$', '\1'), 
+                    '|', 1
+                ));
+            ELSE
+                v_groups[i] := trim(v_groups[i]);
+            END IF;
+        END LOOP;
+        v_result := ARRAY[array_to_string(v_groups, ', ')];
+    END IF;
+    
+    RETURN v_result;
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
@@ -245,6 +314,7 @@ DECLARE
     v_user_parts TEXT[];
     v_correct_parts TEXT[];
     v_bracket_alternatives TEXT[];
+    v_group_expansions TEXT[];
     i INTEGER;
     j INTEGER;
 BEGIN
@@ -253,13 +323,52 @@ BEGIN
         RETURN false;
     END IF;
     
-    -- Handle pipe-separated alternatives FIRST
-    IF position('|' in p_correct_answer) > 0 THEN
+    -- NEW: Handle parentheses grouping FIRST (e.g., "(a|b), (c|d)")
+    IF position('(' in p_correct_answer) > 0 AND position(',' in p_correct_answer) > 0 THEN
+        v_group_expansions := util_expand_parentheses_groups(p_correct_answer);
+        
+        FOR i IN 1..array_length(v_group_expansions, 1) LOOP
+            -- For each expanded combination, check if it has square brackets
+            v_bracket_alternatives := util_create_bracket_alternatives(v_group_expansions[i]);
+            
+            FOR j IN 1..array_length(v_bracket_alternatives, 1) LOOP
+                -- Handle order-independent comparison for comma-separated values
+                IF position(',' in v_bracket_alternatives[j]) > 0 AND position(',' in p_user_answer) > 0 THEN
+                    v_user_parts := array(SELECT trim(util_normalize_answer(unnest(string_to_array(p_user_answer, ',')))));
+                    v_correct_parts := array(SELECT trim(util_normalize_answer(unnest(string_to_array(v_bracket_alternatives[j], ',')))));
+                    
+                    -- Check if arrays contain same elements (order independent)
+                    IF array_length(v_user_parts, 1) = array_length(v_correct_parts, 1) THEN
+                        FOR k IN 1..array_length(v_correct_parts, 1) LOOP
+                            IF NOT (v_correct_parts[k] = ANY(v_user_parts)) THEN
+                                EXIT; -- Move to next alternative
+                            END IF;
+                            -- If we made it through all parts, they match
+                            IF k = array_length(v_correct_parts, 1) THEN
+                                RETURN true;
+                            END IF;
+                        END LOOP;
+                    END IF;
+                ELSE
+                    -- Direct comparison for single answers
+                    v_normalized_user := util_normalize_answer(p_user_answer);
+                    v_normalized_correct := util_normalize_answer(v_bracket_alternatives[j]);
+                    IF v_normalized_user = v_normalized_correct THEN
+                        RETURN true;
+                    END IF;
+                END IF;
+            END LOOP;
+        END LOOP;
+        RETURN false;
+    END IF;
+    
+    -- Handle pipe-separated alternatives (no parentheses grouping)
+    IF position('|' in p_correct_answer) > 0 AND position('(' in p_correct_answer) = 0 THEN
         v_alternatives := string_to_array(p_correct_answer, '|');
         v_normalized_user := util_normalize_answer(p_user_answer);
         
         FOR i IN 1..array_length(v_alternatives, 1) LOOP
-            -- For each pipe alternative, check if it has brackets
+            -- For each pipe alternative, check if it has square brackets
             v_bracket_alternatives := util_create_bracket_alternatives(v_alternatives[i]);
             
             FOR j IN 1..array_length(v_bracket_alternatives, 1) LOOP
@@ -272,9 +381,9 @@ BEGIN
         RETURN false;
     END IF;
     
-    -- Handle comma-separated multiple meanings
-    IF position(',' in p_correct_answer) > 0 THEN
-        -- First check if this is a bracket alternative format "word, clarification"
+    -- Handle comma-separated multiple meanings (no parentheses grouping)
+    IF position(',' in p_correct_answer) > 0 AND position('(' in p_correct_answer) = 0 THEN
+        -- First check if this is a square bracket alternative format "word, clarification"
         v_bracket_alternatives := util_create_bracket_alternatives(p_correct_answer);
         v_normalized_user := util_normalize_answer(p_user_answer);
         
@@ -306,7 +415,7 @@ BEGIN
         RETURN false;
     END IF;
     
-    -- Handle single answer with possible brackets
+    -- Handle single answer with possible square brackets
     v_bracket_alternatives := util_create_bracket_alternatives(p_correct_answer);
     v_normalized_user := util_normalize_answer(p_user_answer);
     

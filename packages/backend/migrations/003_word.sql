@@ -22,7 +22,30 @@ DROP INDEX IF EXISTS idx_word_unique_per_language;
 -- Function to clean pipe-separated alternatives (show only first alternative)
 CREATE OR REPLACE FUNCTION util_clean_pipe_alternatives(p_text TEXT) 
 RETURNS TEXT AS $$
+DECLARE
+    v_groups TEXT[];
+    v_cleaned_groups TEXT[] := '{}';
+    v_group TEXT;
+    i INTEGER;
 BEGIN
+    -- Handle parentheses grouping like "(a|b), (c|d)" -> "a, c"
+    IF position('(' in p_text) > 0 AND position(',' in p_text) > 0 THEN
+        v_groups := regexp_split_to_array(trim(p_text), '\s*,\s*');
+        
+        FOR i IN 1..array_length(v_groups, 1) LOOP
+            v_group := trim(v_groups[i]);
+            IF position('(' in v_group) > 0 THEN
+                -- Extract content within parentheses and take first pipe alternative
+                v_group := trim(regexp_replace(v_group, '^\s*\(([^)]*)\)\s*$', '\1'));
+                v_group := split_part(v_group, '|', 1);
+            END IF;
+            v_cleaned_groups := array_append(v_cleaned_groups, trim(v_group));
+        END LOOP;
+        
+        RETURN array_to_string(v_cleaned_groups, ', ');
+    END IF;
+    
+    -- Handle simple pipe separation
     RETURN CASE 
         WHEN position('|' in p_text) > 0 THEN split_part(p_text, '|', 1)
         ELSE p_text 

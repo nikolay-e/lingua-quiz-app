@@ -96,7 +96,7 @@ class AdvancedSpanishNLPAnalyzer:
     def get_existing_spanish_words(self) -> Set[str]:
         """Extract existing Spanish words from migration"""
         files = self.validator.find_migration_files()
-        spanish_file = [f for f in files if '902_import_spanish_russian_words.sql' in f][0]
+        spanish_file = [f for f in files if '902_spanish_russian_words.sql' in f][0]
         
         data = self.validator.extract_data_from_file(spanish_file)
         spanish_words = set()
@@ -635,7 +635,7 @@ def main():
         
         print("\n📝 SQL INSERT statements:")
         print(",\n".join(sql_entries))
-        print("\nAdd these entries before the '-- End of word pairs data' comment in 902_import_spanish_russian_words.sql")
+        print("\nAdd these entries before the '-- End of word pairs data' comment in 902_spanish_russian_words.sql")
 
 
 if __name__ == "__main__":

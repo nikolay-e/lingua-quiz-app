@@ -256,8 +256,7 @@ class QuizManager:
                 # Prepare response (compatible with old API format)
                 response = {
                     'feedback': {
-                        'message': 'Correct!' if answer_result['is_correct'] 
-                                  else f"{answer_result['source_word']} ↔ {answer_result['target_word']}",
+                        'message': f"{answer_result['source_word']} ↔ {answer_result['target_word']}" ,
                         'isSuccess': answer_result['is_correct']
                     },
                     'usageExamples': {
