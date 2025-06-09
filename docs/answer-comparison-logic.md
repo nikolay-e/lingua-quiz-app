@@ -1,103 +1,151 @@
 # Answer Comparison Logic
 
 ## Overview
-
-LinguaQuiz uses three types of separators in translation answers to provide flexible learning experiences. Each separator type has specific behavior for how user answers are validated.
+LinguaQuiz uses four types of separators in translation answers to provide flexible learning experiences. Each separator type has specific behavior for how user answers are validated.
 
 ## Answer Formats
 
-### Comma Separation `,` - Multiple Required Values
-**What it means**: All comma-separated words represent different meanings that the user must know.
+### Comma Separation `,` - Multiple Distinct Meanings
+**What it means**: The word has multiple DIFFERENT meanings that cannot substitute for each other. The user must learn ALL meanings.
 
-**User requirement**: Must provide ALL parts, but order doesn't matter.
+**User requirement**: Must provide ALL comma-separated parts (order doesn't matter).
+
+**When to use**: When a Spanish word translates to multiple unrelated Russian words.
 
 **Example**:
-- Translation shown: `начало, принцип`
-- ✅ Accepted answers: `начало, принцип` or `принцип, начало`
-- ❌ Rejected answers: `начало` or `принцип` (incomplete)
+- Spanish word: `piso` (means both "floor" AND "apartment")
+- Translation stored/shown: `этаж, квартира`
+- ✅ Accepted answers: `этаж, квартира` or `квартира, этаж`
+- ❌ Rejected answers: `этаж` or `квартира` (incomplete - user must know both meanings)
 
-### Pipe Separation `|` - Alternative Values  
-**What it means**: Multiple ways to say the same thing - any one is correct.
+### Pipe Separation `|` - Alternative Values (Synonyms)
+**What it means**: Multiple ways to express the SAME meaning - synonyms or regional variations.
 
 **User requirement**: Provide any ONE of the alternatives.
 
 **Display behavior**: Only the first alternative is shown to the user.
 
-**Example**:
-- Translation stored: `до свидания|пока|прощай`
-- Translation shown: `до свидания`
-- ✅ Accepted answers: `до свидания`, `пока`, or `прощай`
-
-### Round Brackets `()` - Optional Clarifications
-**What it means**: Extra context to help understanding, but not required for correctness.
-
-**User requirement**: Can include or ignore the bracketed content completely.
-
-**Display behavior**: Full text with brackets is shown to provide context.
+**When to use**: When there are different but equally correct ways to translate the same meaning.
 
 **Example**:
-- Translation shown: `есть (имеется)`
+- Spanish word: `gracias` 
+- Translation stored: `спасибо|благодарю`
+- Translation shown: `спасибо`
+- ✅ Accepted answers: `спасибо` OR `благодарю` (either synonym is correct)
+- ❌ Rejected answers: `пожалуйста` (wrong meaning)
+
+### Parentheses Grouping `()` - Operation Priority Groups
+**What it means**: Groups alternatives together to determine parsing priority when combining with commas.
+
+**User requirement**: Must match the pattern for each comma-separated group.
+
+**When to use**: When you have multiple meanings AND alternatives within those meanings.
+
+**Problem without grouping**:
+- `равный|одинаковый, сейчас|сразу` is ambiguous - could be parsed as:
+  - `равный | (одинаковый, сейчас) | сразу` (3 alternatives where user can choose any one)
+  - `(равный|одинаковый), (сейчас|сразу)` (2 meaning groups where user must know both)
+
+**Solution with grouping**:
+- Translation stored: `(равный|одинаковый), (сейчас|сразу)`
 - ✅ Accepted answers: 
-  - `есть` (just the main word)
-  - `есть имеется` (with clarification as one phrase)
-  - `есть, имеется`
-- ❌ Rejected answers: `имеется` (clarification alone is insufficient)
+  - `равный, сейчас` - first alternative from each group
+  - `одинаковый, сразу` - other alternatives from each group
+  - `равный, сразу` - mixing alternatives across groups
+- ❌ Rejected answers: 
+  - `равный` - incomplete (missing second meaning group)
+
+### Square Brackets `[]` - Optional Clarifications
+**What it means**: Additional context to help understanding or disambiguation. The bracketed part is NOT a separate meaning.
+
+**User requirement**: Can include or exclude the bracketed content.
+
+**Display behavior**: Full text with brackets is shown to provide helpful context.
+
+**When to use**: To clarify which specific meaning is intended when a word could be ambiguous.
+
+**Example**:
+- Spanish word: `mundo` 
+- Translation shown: `мир [вселенная]`
+- ✅ Accepted answers: 
+  - `мир` - main word only
+  - `мир вселенная` - with clarification (as one concept)
+- ❌ Rejected answers: 
+  - `вселенная` - clarification alone is insufficient
+  - `мир, вселенная` - NOT accepted (brackets don't indicate separate meanings)
+
+## Decision Guide for Translators
+
+### Use COMMAS when:
+- The Spanish word has multiple distinct, unrelated meanings
+- Example: `banco` → `банк, скамейка` (bank, bench - completely different things)
+- Example: `hombre` → `мужчина, человек` (man, person - different concepts)
+
+### Use PIPES when:
+- There are synonyms or equally valid translations for the same concept
+- Example: `bonito|hermoso|lindo` → all mean "beautiful"
+- Example: `empezar|comenzar|iniciar` → all mean "to begin"
+
+### Use PARENTHESES when:
+- You have both multiple meanings AND alternatives within those meanings
+- You need to avoid parsing ambiguity with mixed commas and pipes
+- Example: `(равный|одинаковый), (сейчас|сразу)` → two meaning groups with alternatives in each
+
+### Use SQUARE BRACKETS when:
+- You need to disambiguate between similar words
+- Example: `paz` → `мир [гармония]` to distinguish from `mundo` → `мир [вселенная]`
+- The clarification helps but isn't essential for understanding
 
 ## Complete Examples
 
-### Brackets - Optional Clarifications
-**Translation**: `есть (имеется)`
-- ✅ `есть` - main word only
-- ✅ `есть имеется` - with clarification  
-- ✅ `есть, имеется` - treating as separate meanings
-- ✅ `ЕСТЬ` - case doesn't matter
-- ❌ `имеется` - clarification alone isn't enough
-- ❌ `быть` - completely wrong word
+### Example 1: Comma Separation (Multiple Meanings)
+**Spanish**: `carta` (means letter, card, AND menu)
+**Translation**: `письмо, карта, меню`
+- ✅ `письмо, карта, меню` - all three meanings
+- ✅ `меню, письмо, карта` - any order
+- ❌ `письмо` - incomplete (missing two meanings)
+- ❌ `письмо, карта` - incomplete (missing menu)
 
-### Comma Separation - All Parts Required  
-**Translation**: `начало, принцип`
-- ✅ `начало, принцип` - correct order
-- ✅ `принцип, начало` - any order works
-- ✅ `  принцип  ,  начало  ` - extra spaces ignored
-- ❌ `начало` - missing second part
-- ❌ `принцип` - missing first part  
-- ❌ `старт, принцип` - wrong word
+### Example 2: Pipe Separation (Synonyms)
+**Spanish**: `coche` (car)
+**Translation stored**: `машина|автомобиль`
+**Translation shown**: `машина`
+- ✅ `машина` - first synonym
+- ✅ `автомобиль` - alternative synonym
+- ❌ `машина, автомобиль` - don't need both synonyms
 
-### Pipe Separation - Any Alternative Works
-**Translation stored**: `до свидания|пока|прощай`  
-**Translation shown**: `до свидания`
-- ✅ `до свидания` - the shown option
-- ✅ `пока` - alternative option
-- ✅ `прощай` - another alternative
-- ✅ `ПОКА` - case doesn't matter
-- ❌ `привет` - not one of the alternatives
+### Example 3: Brackets (Clarification)
+**Spanish**: `planta` (in context of building levels)
+**Translation**: `этаж (здания)`
+- ✅ `этаж` - main word sufficient
+- ✅ `этаж здания` - with clarification
+- ❌ `здания` - clarification alone not accepted
 
-### Complex Cases
-**Translation**: `оставаться (встречаться)`
-- ✅ `оставаться` - main word only
-- ✅ `оставаться встречаться` - with clarification
-- ✅ `оставаться, встречаться` - as separate meanings
-- ❌ `встречаться` - clarification alone
+### Example 4: Parentheses Grouping (Multiple Meanings with Alternatives)
+**German**: `gleich` (means both "equal/same" AND "now/immediately")  
+**Translation**: `(равный|одинаковый), (сейчас|сразу)`
+- ✅ `равный, сейчас` - first alternative from each group
+- ✅ `одинаковый, сразу` - other alternatives from each group  
+- ✅ `сейчас, равный` - order doesn't matter
+- ❌ `равный` - incomplete (missing second meaning group)
+- ❌ `равный, одинаковый, сейчас` - wrong (treating as 3 separate meanings)
 
-**Translation**: `его, её, их`  
-- ✅ `его, её, их` - correct order
-- ✅ `её, его, их` - different order
-- ✅ `их, её, его` - any order
-- ❌ `его, её` - missing third part
-- ❌ `его` - incomplete answer
+### Example 5: Combined Usage
+**Spanish**: `tiempo` (means both time AND weather)
+**Translation**: `время, погода`
+- NOT `время|погода` (these are different meanings, not synonyms)
+- NOT `время [погода]` (weather is not a clarification of time)
 
 ## General Rules
 
 ### Case Sensitivity
-All comparisons are case-insensitive. `ЕСТЬ`, `есть`, and `Есть` are treated the same.
+All comparisons are case-insensitive.
 
 ### Whitespace
-Extra spaces before, after, or around commas are ignored.
+Extra spaces are ignored.
 
-### Punctuation
-Most punctuation is ignored during comparison, except for the special separators (commas, pipes, brackets).
-
-### Partial Answers
-- For comma-separated translations: partial answers are rejected
-- For pipe-separated translations: any single alternative is accepted
-- For bracketed translations: the main word alone is accepted
+### Important Notes
+1. **Use parentheses to avoid ambiguity** when mixing commas and pipes
+2. **Commas = must know all**, Pipes = any one is fine, Parentheses = grouping for priority, Square brackets = helpful context
+3. **Parsing order**: Parentheses first, then commas, then pipes within groups
+4. When in doubt, prefer clarity over complexity

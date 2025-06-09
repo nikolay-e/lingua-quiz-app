@@ -201,11 +201,13 @@ DECLARE
     v_should_degrade BOOLEAN := FALSE;
     v_new_level VARCHAR(20);
 BEGIN
-    -- Get current level
-    SELECT COALESCE(status, 'LEVEL_0') 
+    -- Get current level (treat missing entries as LEVEL_0)
+    SELECT COALESCE(utp.status::TEXT, 'LEVEL_0') 
     INTO v_current_level
-    FROM user_translation_progress 
-    WHERE user_id = p_user_id AND word_pair_id = p_translation_id;
+    FROM translation t
+    LEFT JOIN user_translation_progress utp 
+        ON utp.user_id = p_user_id AND utp.word_pair_id = t.id
+    WHERE t.id = p_translation_id;
     
     -- Get statistics
     SELECT * INTO v_stats

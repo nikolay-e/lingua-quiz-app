@@ -38,9 +38,13 @@ class MigrationValidator:
         if is_german:
             # Remove articles at the beginning
             word = re.sub(r'^(der|die|das)\s+', '', word, flags=re.IGNORECASE)
-            # Remove everything after comma (plural forms, declensions)
-            if ',' in word:
+            # Remove everything after semicolon or comma (plural forms, declensions)
+            if ';' in word:
+                word = word.split(';')[0].strip()
+            elif ',' in word:
                 word = word.split(',')[0].strip()
+            # Remove the article again if it's still there after semicolon split
+            word = re.sub(r'^(der|die|das)\s+', '', word, flags=re.IGNORECASE)
         
         # For German, don't normalize umlauts as they're meaningful
         if is_german:
