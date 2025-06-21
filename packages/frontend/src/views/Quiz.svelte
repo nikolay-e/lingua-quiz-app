@@ -1,30 +1,38 @@
-<script>
+<script lang="ts">
   import { onMount } from 'svelte';
-  import { authStore, quizStore } from '../stores.js';
-  import api from '../api.js';
+  import { authStore, quizStore } from '../stores';
+  import api from '../api';
+  import type { SubmissionResult, QuizQuestion } from '../quiz-core';
+  import { formatForDisplay } from '../quiz-core';
+  import type { QuizFeedback } from '../types';
   
-  let userAnswer = '';
-  let answerInput;
-  let feedback = null;
-  let usageExamples = null;
-  let isSubmitting = false;
+  // Component-specific state
+  
+  // Basic component state
+  let userAnswer: string = '';
+  let answerInput: HTMLInputElement;
+  let feedback: SubmissionResult | QuizFeedback | null = null;
+  let usageExamples: { source: string; target: string } | null = null;
+  let isSubmitting: boolean = false;
 
   // TTS variables
-  let ttsAvailable = false;
-  let ttsLanguages = [];
-  let isPlayingTTS = false;
-  let currentAudio = null;
+  let ttsAvailable: boolean = false;
+  let ttsLanguages: string[] = [];
+  let isPlayingTTS: boolean = false;
+  let currentAudio: HTMLAudioElement | null = null;
   
   // Request queuing to prevent concurrent requests
-  let requestQueue = Promise.resolve();
-  let currentRequestId = 0;
+  let requestQueue: Promise<void> = Promise.resolve();
+  let currentRequestId: number = 0;
   
   // Foldable lists state
-  let foldedLists = {
+  let foldedLists: Record<string, boolean> = {
     level0: false,
     level1: false,
     level2: false,
-    level3: false
+    level3: false,
+    level4: false,
+    level5: false
   };
   
   // Load saved fold states from localStorage
@@ -39,7 +47,7 @@
     }
   }
   
-  function toggleFold(level) {
+  function toggleFold(level: string) {
     foldedLists[level] = !foldedLists[level];
     // Save to localStorage
     localStorage.setItem('foldedLists', JSON.stringify(foldedLists));
@@ -49,42 +57,119 @@
   $: wordSets = $quizStore.wordSets;
   $: selectedQuiz = $quizStore.selectedQuiz;
   $: currentQuestion = $quizStore.currentQuestion;
-  $: direction = $quizStore.direction;
-  $: sourceLanguage = $quizStore.sourceLanguage;
-  $: targetLanguage = $quizStore.targetLanguage;
   $: loading = $quizStore.loading;
-  $: wordLists = $quizStore.wordLists;
   $: username = $authStore.username;
+  
+  // Derived reactive state from currentQuestion and quizManager
+  $: direction = currentQuestion?.direction || 'normal';
+  $: sourceLanguage = currentQuestion?.sourceLanguage || '';
+  $: targetLanguage = currentQuestion?.targetLanguage || '';
+  
+  // Sync currentLevel with quiz manager's level (for auto-adjustment)
+  $: if ($quizStore.quizManager) {
+    const managerLevel = $quizStore.quizManager.getState().currentLevel;
+    if (managerLevel !== currentLevel) {
+      currentLevel = managerLevel;
+    }
+  }
+  
+  // Get word lists from quiz manager state
+  $: wordLists = $quizStore.quizManager ? (() => {
+    const state = $quizStore.quizManager.getState();
+    const manager = $quizStore.quizManager;
+    
+    return {
+      level0: state.queues.LEVEL_0.map(id => {
+        return manager.getTranslationForDisplay(id);
+      }).filter(Boolean),
+      level1: state.queues.LEVEL_1.map(id => {
+        return manager.getTranslationForDisplay(id);
+      }).filter(Boolean),
+      level2: state.queues.LEVEL_2.map(id => {
+        return manager.getTranslationForDisplay(id);
+      }).filter(Boolean),
+      level3: state.queues.LEVEL_3.map(id => {
+        return manager.getTranslationForDisplay(id);
+      }).filter(Boolean),
+      level4: state.queues.LEVEL_4.map(id => {
+        return manager.getTranslationForDisplay(id);
+      }).filter(Boolean),
+      level5: state.queues.LEVEL_5.map(id => {
+        return manager.getTranslationForDisplay(id);
+      }).filter(Boolean)
+    };
+  })() : {
+    level0: [] as any[],
+    level1: [] as any[], 
+    level2: [] as any[],
+    level3: [] as any[],
+    level4: [] as any[],
+    level5: [] as any[]
+  };
 
   // TTS reactive state
   $: currentLanguage = direction === 'normal' ? sourceLanguage : targetLanguage;
   $: canUseTTS = ttsAvailable && currentQuestion && ttsLanguages.includes(currentLanguage);
   
   // Reactive word lists for display
-  $: level0Words = wordLists.level0.map(w => `${w.source} (${w.target})`);
-  $: level1Words = wordLists.level1.map(w => `${w.source} (${w.target})`);
-  $: level2Words = wordLists.level2.map(w => `${w.source} (${w.target})`);
-  $: level3Words = wordLists.level3.map(w => `${w.source} (${w.target})`);
+  $: level0Words = wordLists.level0?.map((w: any) => `${w.source} -> ${w.target}`) || [];
+  $: level1Words = wordLists.level1?.map((w: any) => `${w.source} -> ${w.target}`) || [];
+  $: level2Words = wordLists.level2?.map((w: any) => `${w.source} -> ${w.target}`) || [];
+  $: level3Words = wordLists.level3?.map((w: any) => `${w.source} -> ${w.target}`) || [];
+  $: level4Words = wordLists.level4?.map((w: any) => `${w.source} -> ${w.target}`) || [];
+  $: level5Words = wordLists.level5?.map((w: any) => `${w.source} -> ${w.target}`) || [];
   
-  // Direction text
-  $: directionText = direction === 'normal' 
-    ? `${sourceLanguage} ➔ ${targetLanguage}`
-    : `${targetLanguage} ➔ ${sourceLanguage}`;
+  // Level selector for practice
+  let currentLevel: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' = 'LEVEL_1';
+  
+  async function setLevel(level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4'): Promise<void> {
+    try {
+      const result = await quizStore.setLevel($authStore.token!, level);
+      
+      if (result.success) {
+        currentLevel = result.actualLevel;
+        feedback = null;
+      } else {
+        currentLevel = result.actualLevel;
+        feedback = { 
+          message: result.message || `${level} has no available words. Switched to ${result.actualLevel}.`, 
+          isSuccess: false 
+        } as QuizFeedback;
+      }
+      
+      usageExamples = null;
+      userAnswer = '';
+      if (answerInput) answerInput.focus();
+    } catch (error: unknown) {
+      console.error('Failed to set level:', error);
+      feedback = { message: 'Failed to change level. Please try again.', isSuccess: false };
+    }
+  }
+  
+  function getLevelDescription(level: string): string {
+    switch (level) {
+      case 'LEVEL_1': return `New Words Practice (${sourceLanguage} ➔ ${targetLanguage})`;
+      case 'LEVEL_2': return `Reverse Practice (${targetLanguage} ➔ ${sourceLanguage})`;
+      case 'LEVEL_3': return `Context Practice (${sourceLanguage} ➔ ${targetLanguage})`;
+      case 'LEVEL_4': return `Reverse Context (${targetLanguage} ➔ ${sourceLanguage})`;
+      default: return '';
+    }
+  }
     
   // TTS functions
-  async function loadTTSLanguages() {
+  async function loadTTSLanguages(): Promise<void> {
     try {
-      const ttsData = await api.getTTSLanguages($authStore.token);
+      const ttsData = await api.getTTSLanguages($authStore.token!);
       ttsAvailable = ttsData.available;
       ttsLanguages = ttsData.supportedLanguages || [];
-    } catch (error) {
+    } catch (error: unknown) {
       console.warn('Failed to load TTS languages:', error);
       ttsAvailable = false;
       ttsLanguages = [];
     }
   }
 
-  async function playTTS(text, language) {
+  async function playTTS(text: string, language: string): Promise<void> {
     if (!canUseTTS || isPlayingTTS) return;
     
     if (currentAudio) {
@@ -95,40 +180,41 @@
     isPlayingTTS = true;
     
     try {
-      const ttsData = await api.synthesizeSpeech($authStore.token, text, language);
-      const audioBlob = new Blob(
-        [Uint8Array.from(atob(ttsData.audioData), c => c.charCodeAt(0))],
-        { type: ttsData.contentType }
+      const ttsData = await api.synthesizeSpeech($authStore.token!, text, language);
+      const audioBlob: Blob = new Blob(
+        [Uint8Array.from(atob(ttsData.audioUrl), (c: string) => c.charCodeAt(0))],
+        { type: 'audio/mpeg' }
       );
-      const audioUrl = URL.createObjectURL(audioBlob);
+      const audioUrl: string = URL.createObjectURL(audioBlob);
       
       currentAudio = new Audio(audioUrl);
-      currentAudio.onended = () => {
+      currentAudio.onended = (): void => {
         isPlayingTTS = false;
         URL.revokeObjectURL(audioUrl);
         currentAudio = null;
       };
-      currentAudio.onerror = () => {
+      currentAudio.onerror = (): void => {
         isPlayingTTS = false;
         URL.revokeObjectURL(audioUrl);
         currentAudio = null;
       };
       
       await currentAudio.play();
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('TTS playback failed:', error);
       isPlayingTTS = false;
     }
   }
 
-  onMount(async () => {
-    await quizStore.loadWordSets($authStore.token);
+  onMount(async (): Promise<void> => {
+    await quizStore.loadWordSets($authStore.token!);
     await loadTTSLanguages();
     if (answerInput) answerInput.focus();
   });
   
-  async function handleQuizSelect(e) {
-    const quiz = e.target.value;
+  async function handleQuizSelect(e: Event): Promise<void> {
+    const target = e.target as HTMLSelectElement;
+    const quiz: string = target.value;
     
     // Reset state
     quizStore.reset();
@@ -139,28 +225,29 @@
     if (!quiz) return;
     
     try {
-      await quizStore.startQuiz($authStore.token, quiz);
-      const question = await quizStore.getNextQuestion($authStore.token);
+      await quizStore.startQuiz($authStore.token!, quiz);
+      const question: QuizQuestion | null = await quizStore.getNextQuestion();
       if (!question) {
-        feedback = { message: 'No questions available for this quiz.', isSuccess: false };
+        feedback = { message: 'No questions available for this quiz.', isSuccess: false } as QuizFeedback;
       }
       if (answerInput) answerInput.focus();
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Failed to start quiz:', error);
-      feedback = { message: 'Failed to start quiz. Please try again.', isSuccess: false };
+      const errorMessage = error instanceof Error ? error.message : 'Failed to start quiz. Please try again.';
+      feedback = { message: errorMessage, isSuccess: false } as QuizFeedback;
     }
   }
   
-  async function submitAnswer() {
+  async function submitAnswer(): Promise<void> {
     if (!currentQuestion || isSubmitting) return;
     
     // Keep focus on input
     if (answerInput) answerInput.focus();
     
-    const requestId = ++currentRequestId;
+    const requestId: number = ++currentRequestId;
     
     // Queue this request
-    requestQueue = requestQueue.then(async () => {
+    requestQueue = requestQueue.then(async (): Promise<void> => {
       // Check if this request is still valid
       if (requestId !== currentRequestId) {
         console.log('Request cancelled - newer request exists');
@@ -172,22 +259,23 @@
       usageExamples = null;
       
       try {
-        const result = await quizStore.submitAnswer($authStore.token, userAnswer);
+        const result = await quizStore.submitAnswer($authStore.token!, userAnswer);
         
         // Only update UI if this is still the current request
         if (requestId === currentRequestId) {
           if (result) {
-            feedback = result.feedback;
-            usageExamples = result.usageExamples;
+            feedback = result;
+            usageExamples = null;
             userAnswer = '';
             // Immediately focus the input after clearing
             if (answerInput) answerInput.focus();
           }
         }
-      } catch (error) {
+      } catch (error: unknown) {
         if (requestId === currentRequestId) {
           console.error('Error submitting answer:', error);
-          feedback = { message: error.message || 'Error submitting answer. Please try again.', isSuccess: false };
+          const errorMessage = error instanceof Error ? error.message : 'Error submitting answer. Please try again.';
+          feedback = { message: errorMessage, isSuccess: false } as QuizFeedback;
         }
       } finally {
         if (requestId === currentRequestId) {
@@ -200,31 +288,16 @@
     await requestQueue;
   }
   
-  function handleKeydown(e) {
+  function handleKeydown(e: KeyboardEvent): void {
     if (e.key === 'Enter') {
       e.preventDefault();
       submitAnswer();
     }
   }
   
-  async function toggleDirection() {
-    try {
-      await quizStore.toggleDirection($authStore.token);
-      const question = await quizStore.getNextQuestion($authStore.token);
-      if (!question) {
-        feedback = { message: 'No questions available in this direction.', isSuccess: false };
-      }
-      feedback = null;
-      usageExamples = null;
-      userAnswer = '';
-      if (answerInput) answerInput.focus();
-    } catch (error) {
-      console.error('Failed to toggle direction:', error);
-      feedback = { message: 'Failed to toggle direction. Please try again.', isSuccess: false };
-    }
-  }
+  // Direction is now handled automatically by level progression
   
-  function logout() {
+  function logout(): void {
     authStore.logout();
   }
   
@@ -272,12 +345,12 @@
         {:else}
           <div class="question">
             <span id="word">
-              {currentQuestion ? currentQuestion.word : 'No more questions available.'}
+              {currentQuestion ? currentQuestion.questionText : 'No more questions available.'}
             </span>
             {#if canUseTTS && currentQuestion}
               <button 
                 class="tts-button {isPlayingTTS ? 'speaking' : ''}"
-                on:click={() => playTTS(currentQuestion.word, currentLanguage)}
+                on:click={() => playTTS(currentQuestion.questionText, currentLanguage)}
                 disabled={isPlayingTTS}
                 title="Listen to pronunciation"
                 aria-label="Listen to pronunciation"
@@ -300,7 +373,7 @@
             />
             <button 
               id="submit" 
-              on:mousedown|preventDefault={submitAnswer}
+              on:mousedown|preventDefault={() => submitAnswer()}
               disabled={isSubmitting}
               tabindex="-1"
             >
@@ -312,9 +385,9 @@
       
       {#if feedback}
         <div class="feedback-container">
-          <div class="feedback-text {feedback.isSuccess ? 'success' : 'error'}">
+          <div class="feedback-text {('isSuccess' in feedback ? feedback.isSuccess : feedback.isCorrect) ? 'success' : 'error'}">
             <span class="feedback-icon"></span>
-            <span class="feedback-message">{feedback.message}</span>
+            <span class="feedback-message">{'message' in feedback ? feedback.message : `${formatForDisplay(feedback.translation.sourceWord.text)} ↔ ${formatForDisplay(feedback.translation.targetWord.text)}`}</span>
           </div>
           {#if usageExamples}
             <div class="usage-examples">
@@ -338,13 +411,15 @@
     </div>
     
     {#if selectedQuiz}
-      <button 
-        class="direction-toggle-btn" 
-        id="direction-toggle"
-        on:click={toggleDirection}
-      >
-        <i class="fas fa-exchange-alt"></i> {directionText}
-      </button>
+      <div class="level-selector">
+        <label for="level-select">Practice Level:</label>
+        <select id="level-select" bind:value={currentLevel} on:change={() => setLevel(currentLevel)}>
+          <option value="LEVEL_1">{getLevelDescription('LEVEL_1')}</option>
+          <option value="LEVEL_2">{getLevelDescription('LEVEL_2')}</option>
+          <option value="LEVEL_3">{getLevelDescription('LEVEL_3')}</option>
+          <option value="LEVEL_4">{getLevelDescription('LEVEL_4')}</option>
+        </select>
+      </div>
     {/if}
     
     <section class="sidebar-section learning-progress">
@@ -353,7 +428,7 @@
       <div id="level-1" class="foldable-section">
         <h3 class="foldable-header" on:click={() => toggleFold('level1')}>
           <i class="fas fa-{foldedLists.level1 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-          <i class="fas fa-tasks"></i> Learning ({level1Words.length})
+          <i class="fas fa-tasks"></i> Learning ({$quizStore.quizManager?.getState().queues.LEVEL_1.length || 0})
         </h3>
         {#if !foldedLists.level1}
           <ol id="level-1-list" class="foldable-content">
@@ -367,7 +442,7 @@
       <div id="level-2" class="foldable-section">
         <h3 class="foldable-header" on:click={() => toggleFold('level2')}>
           <i class="fas fa-{foldedLists.level2 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-          <i class="fas fa-check-circle"></i> Translation Mastered One Way ({level2Words.length})
+          <i class="fas fa-check-circle"></i> Translation Mastered One Way ({$quizStore.quizManager?.getState().queues.LEVEL_2.length || 0})
         </h3>
         {#if !foldedLists.level2}
           <ol id="level-2-list" class="foldable-content">
@@ -381,7 +456,7 @@
       <div id="level-3" class="foldable-section">
         <h3 class="foldable-header" on:click={() => toggleFold('level3')}>
           <i class="fas fa-{foldedLists.level3 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-          <i class="fas fa-check-circle"></i> Translation Mastered Both Ways ({level3Words.length})
+          <i class="fas fa-check-circle"></i> Translation Mastered Both Ways ({$quizStore.quizManager?.getState().queues.LEVEL_3.length || 0})
         </h3>
         {#if !foldedLists.level3}
           <ol id="level-3-list" class="foldable-content">
@@ -392,10 +467,38 @@
         {/if}
       </div>
       
+      <div id="level-4" class="foldable-section">
+        <h3 class="foldable-header" on:click={() => toggleFold('level4')}>
+          <i class="fas fa-{foldedLists.level4 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
+          <i class="fas fa-star"></i> Examples Mastered One Way ({$quizStore.quizManager?.getState().queues.LEVEL_4.length || 0})
+        </h3>
+        {#if !foldedLists.level4}
+          <ol id="level-4-list" class="foldable-content">
+            {#each level4Words as word}
+              <li class="word-item">{word}</li>
+            {/each}
+          </ol>
+        {/if}
+      </div>
+      
+      <div id="level-5" class="foldable-section">
+        <h3 class="foldable-header" on:click={() => toggleFold('level5')}>
+          <i class="fas fa-{foldedLists.level5 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
+          <i class="fas fa-trophy"></i> Fully Mastered ({$quizStore.quizManager?.getState().queues.LEVEL_5.length || 0})
+        </h3>
+        {#if !foldedLists.level5}
+          <ol id="level-5-list" class="foldable-content">
+            {#each level5Words as word}
+              <li class="word-item">{word}</li>
+            {/each}
+          </ol>
+        {/if}
+      </div>
+      
       <div id="level-0" class="foldable-section">
         <h3 class="foldable-header" on:click={() => toggleFold('level0')}>
           <i class="fas fa-{foldedLists.level0 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-          <i class="fas fa-list"></i> New ({level0Words.length})
+          <i class="fas fa-list"></i> New ({$quizStore.quizManager?.getState().queues.LEVEL_0.length || 0})
         </h3>
         {#if !foldedLists.level0}
           <ol id="level-0-list" class="foldable-content">

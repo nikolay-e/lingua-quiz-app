@@ -13,7 +13,7 @@ RUN pip install --no-cache-dir -r requirements.txt -r requirements-migrate.txt &
     apk --purge del .build-deps
 
 # Copy application and migrations
-COPY app.py migrate.py quiz_logic.py tts_service.py ./
+COPY app.py migrate.py tts_service.py ./
 COPY migrations/ ./migrations/
 
 # Set Python optimizations for production

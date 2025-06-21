@@ -105,6 +105,15 @@ async function login(page, username, password) {
     throw error;
   }
   
+  // Check if we're already logged in (quiz selector is visible)
+  try {
+    await page.waitForSelector('#quiz-select', { state: 'visible', timeout: 2000 });
+    console.log('Already logged in, skipping login process');
+    return; // Already logged in
+  } catch {
+    // Not logged in, continue with login process
+  }
+  
   // Wait for the login form to be visible
   await page.waitForSelector('section:has-text("Sign In")', { state: 'visible', timeout: 2000 });
   

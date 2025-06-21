@@ -18,7 +18,7 @@ from psycopg2.pool import SimpleConnectionPool
 import bcrypt
 import jwt
 import werkzeug.exceptions
-from quiz_logic import QuizManager
+# from quiz_logic import QuizManager  # Removed - business logic moved to frontend
 from tts_service import TTSService
 
 # Configuration
@@ -65,8 +65,7 @@ db_pool = SimpleConnectionPool(
     password=DB_PASSWORD
 )
 
-# Quiz manager
-quiz_manager = QuizManager(db_pool)
+# Quiz manager removed - business logic moved to frontend quiz-core.ts
 
 # TTS service
 tts_service = TTSService(db_pool)
@@ -331,154 +330,6 @@ def update_user_word_sets():
     
     return jsonify({'message': 'Word sets status updated successfully'})
 
-@app.route('/api/quiz/start', methods=['POST'])
-@auth_required
-def start_quiz():
-    """Start or resume a quiz session"""
-    data = request.get_json()
-    word_list_name = data.get('wordListName')
-    
-    if not word_list_name:
-        return jsonify({'message': 'wordListName is required'}), 400
-    
-    try:
-        state = quiz_manager.get_or_create_session(request.user_id, word_list_name)
-        
-        if 'error' in state:
-            return jsonify({'message': state['error']}), 404
-        
-        # Convert to camelCase for frontend
-        return jsonify({
-            'sessionId': state['session_id'],
-            'direction': 'normal' if state['direction'] else 'reverse',
-            'currentTranslationId': state['current_translation_id'],
-            'sourceLanguage': state['source_language'],
-            'targetLanguage': state['target_language'],
-            'wordLists': {
-                'level0': state['level_0_words'] or [],
-                'level1': state['level_1_words'] or [],
-                'level2': state['level_2_words'] or [],
-                'level3': state['level_3_words'] or []
-            }
-        })
-    except Exception as e:
-        import traceback
-        print(f"[ERROR] Error starting quiz for user {request.user_id}, word_list {word_list_name}: {e}")
-        print(f"[ERROR] Exception type: {type(e).__name__}")
-        traceback.print_exc()
-        return jsonify({'message': 'Failed to start quiz'}), 500
-
-@app.route('/api/quiz/next-question', methods=['GET'])
-@auth_required
-def get_next_question():
-    """Get the next question"""
-    word_list_name = request.args.get('wordListName')
-    
-    print(f"[DEBUG] get_next_question called - user_id: {request.user_id}, word_list: {word_list_name}")
-    
-    if not word_list_name:
-        return jsonify({'message': 'wordListName is required'}), 400
-    
-    try:
-        question = quiz_manager.get_next_question(request.user_id, word_list_name)
-        print(f"[DEBUG] Question retrieved: {question}")
-        return jsonify(question)
-    except Exception as e:
-        import traceback
-        print(f"[ERROR] Error getting next question for user {request.user_id}, word_list {word_list_name}: {e}")
-        print(f"[ERROR] Exception type: {type(e).__name__}")
-        traceback.print_exc()
-        return jsonify({'message': 'Failed to get next question'}), 500
-
-@app.route('/api/quiz/submit-answer', methods=['POST'])
-@auth_required  
-def submit_answer():
-    """Submit an answer"""
-    data = request.get_json()
-    word_list_name = data.get('wordListName')
-    translation_id = data.get('translationId')
-    user_answer = data.get('answer', '')
-    displayed_word = data.get('displayedWord')  # Optional field for validation
-    
-    if not all([word_list_name, translation_id]):
-        return jsonify({'message': 'Missing required fields'}), 400
-    
-    try:
-        result = quiz_manager.submit_answer(
-            request.user_id, 
-            word_list_name, 
-            translation_id, 
-            user_answer,
-            displayed_word
-        )
-        
-        if 'error' in result:
-            return jsonify({'message': result['error']}), 400
-            
-        return jsonify(result)
-    except Exception as e:
-        import traceback
-        print(f"[ERROR] Error submitting answer for user {request.user_id}: {e}")
-        print(f"[ERROR] Exception type: {type(e).__name__}")
-        traceback.print_exc()
-        return jsonify({'message': 'Failed to submit answer'}), 500
-
-@app.route('/api/quiz/toggle-direction', methods=['POST'])
-@auth_required
-def toggle_direction():
-    """Toggle quiz direction"""
-    data = request.get_json()
-    word_list_name = data.get('wordListName')
-    
-    if not word_list_name:
-        return jsonify({'message': 'wordListName is required'}), 400
-    
-    try:
-        result = quiz_manager.toggle_direction(request.user_id, word_list_name)
-        
-        if 'error' in result:
-            return jsonify({'message': result['error']}), 404
-            
-        return jsonify(result)
-    except Exception as e:
-        import traceback
-        print(f"Error toggling direction: {e}")
-        traceback.print_exc()
-        return jsonify({'message': 'Failed to toggle direction'}), 500
-
-@app.route('/api/quiz/state', methods=['GET'])
-@auth_required
-def get_quiz_state():
-    """Get current quiz state"""
-    word_list_name = request.args.get('wordListName')
-    
-    if not word_list_name:
-        return jsonify({'message': 'wordListName is required'}), 400
-    
-    try:
-        state = quiz_manager.get_or_create_session(request.user_id, word_list_name)
-        
-        if 'error' in state:
-            return jsonify({'message': state['error']}), 404
-        
-        return jsonify({
-            'sessionId': state['session_id'],
-            'direction': 'normal' if state['direction'] else 'reverse',
-            'currentTranslationId': state['current_translation_id'],
-            'sourceLanguage': state['source_language'],
-            'targetLanguage': state['target_language'],
-            'wordLists': {
-                'level0': state['level_0_words'] or [],
-                'level1': state['level_1_words'] or [],
-                'level2': state['level_2_words'] or [],
-                'level3': state['level_3_words'] or []
-            }
-        })
-    except Exception as e:
-        import traceback
-        print(f"Error getting quiz state: {e}")
-        traceback.print_exc()
-        return jsonify({'message': 'Failed to get quiz state'}), 500
 
 # TTS Routes
 @app.route('/api/tts/synthesize', methods=['POST'])

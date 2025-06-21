@@ -1,12 +1,12 @@
-<script>
+<script lang="ts">
   import { onDestroy } from 'svelte';
-  import { authStore, quizStore } from './stores.js';
+  import { authStore, quizStore } from './stores';
   import Login from './views/Login.svelte';
   import Register from './views/Register.svelte';
   import Quiz from './views/Quiz.svelte';
   
   let isAuthenticated = false;
-  let currentPage = 'login';
+  let currentPage: 'login' | 'register' = 'login';
   
   authStore.subscribe(state => {
     isAuthenticated = state.isAuthenticated;
@@ -19,7 +19,7 @@
     authStore.cleanup();
   });
   
-  function handleNavigation(event) {
+  function handleNavigation(event: CustomEvent<{ page: 'login' | 'register' }>) {
     currentPage = event.detail.page;
   }
 </script>

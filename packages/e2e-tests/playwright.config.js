@@ -16,6 +16,13 @@ module.exports = defineConfig({
     headless: true,
     actionTimeout: 10000,
     navigationTimeout: 30000,
+    // Enable console logging
+    launchOptions: {
+      logger: {
+        isEnabled: (name, severity) => true,
+        log: (name, severity, message, args) => console.log(`${name} ${severity}: ${message}`)
+      }
+    }
   },
   reporter: [['html', { open: 'never' }], ['list']],
   // Retry failed tests
