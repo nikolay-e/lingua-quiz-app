@@ -65,11 +65,8 @@
   $: sourceLanguage = currentQuestion?.sourceLanguage || '';
   $: targetLanguage = currentQuestion?.targetLanguage || '';
   
-  // Track if we're in the middle of a user-initiated level change
-  let userChangingLevel = false;
-  
-  // Sync currentLevel with quiz manager's level only for automatic adjustments
-  $: if ($quizStore.quizManager && !userChangingLevel) {
+  // Sync currentLevel with quiz manager's level for initialization
+  $: if ($quizStore.quizManager && currentLevel === 'LEVEL_1') {
     const managerLevel = $quizStore.quizManager.getState().currentLevel;
     if (managerLevel !== currentLevel) {
       currentLevel = managerLevel;
@@ -127,7 +124,6 @@
   
   async function setLevel(level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4'): Promise<void> {
     try {
-      userChangingLevel = true;
       const result = await quizStore.setLevel($authStore.token!, level);
       
       // Always update currentLevel to the actual level (whether success or auto-adjusted)
@@ -149,8 +145,6 @@
     } catch (error: unknown) {
       console.error('Failed to set level:', error);
       feedback = { message: 'Failed to change level. Please try again.', isSuccess: false };
-    } finally {
-      userChangingLevel = false;
     }
   }
   
@@ -421,7 +415,7 @@
     {#if selectedQuiz}
       <div class="level-selector">
         <label for="level-select">Practice Level:</label>
-        <select id="level-select" bind:value={currentLevel} on:change={(e) => setLevel(e.target.value)}>
+        <select id="level-select" value={currentLevel} on:change={(e) => setLevel(e.target.value)}>
           <option value="LEVEL_1">{getLevelDescription('LEVEL_1')}</option>
           <option value="LEVEL_2">{getLevelDescription('LEVEL_2')}</option>
           <option value="LEVEL_3">{getLevelDescription('LEVEL_3')}</option>
