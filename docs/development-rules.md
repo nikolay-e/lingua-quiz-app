@@ -87,7 +87,7 @@ There are two distinct types of tasks, each with its own set of rules:
 - **Efficient Debugging**: The combination of a minimal codebase and detailed logging allows for the root cause of a failing integration test to be found quickly.
 - **Deployment Confidence**: Guarantees that what works in testing will work when deployed.
 
-## **Git Commit Guidelines**
+## **Git Commit and PR Guidelines**
 
 ### **Commit Message Format**
 Keep commit messages as a single concise line:
@@ -105,3 +105,13 @@ Brief action-oriented summary describing the change
   - ✅ "Add user authentication with JWT tokens"
   - ✅ "Update Spanish-Russian translations and fix typos"
   - ❌ Multi-line commits with detailed explanations
+
+### **Pull Request Guidelines**
+Keep PRs concise and focused for LLM-based development:
+
+- **Title**: Same format as commit messages - single line, action-oriented
+- **Description**: Brief summary of changes, no checklists or verbose explanations
+- **No test plans**: In LLM-based development, E2E tests are automated and mandatory
+- **Examples**:
+  - ✅ "Fix level switching UI interference and add Cyrillic text normalization"
+  - ❌ Long descriptions with bullet points, test checklists, or detailed explanations
