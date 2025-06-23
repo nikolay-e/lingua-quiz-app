@@ -1,8 +1,18 @@
-<script>
-  import { authStore } from '../stores.js';
+<script lang="ts">
+  import { authStore } from '../stores';
   import { createEventDispatcher } from 'svelte';
   
-  const dispatch = createEventDispatcher();
+  interface PasswordRequirement {
+    id: string;
+    label: string;
+    test: (pwd: string) => boolean;
+  }
+
+  interface PasswordValidation extends PasswordRequirement {
+    valid: boolean;
+  }
+
+  const dispatch = createEventDispatcher<{ navigate: { page: 'login' | 'register' } }>();
   
   let registerUsername = '';
   let registerPassword = '';
@@ -10,22 +20,22 @@
   let showRegisterPassword = false;
   let isLoading = false;
   
-  const passwordRequirements = [
-    { id: 'length', label: 'At least 8 characters long', test: pwd => pwd.length >= 8 },
-    { id: 'uppercase', label: 'Contains at least one uppercase letter', test: pwd => /[A-Z]/.test(pwd) },
-    { id: 'lowercase', label: 'Contains at least one lowercase letter', test: pwd => /[a-z]/.test(pwd) },
-    { id: 'number', label: 'Contains at least one number', test: pwd => /\d/.test(pwd) },
-    { id: 'special', label: 'Contains at least one special character', test: pwd => /[!@#$%^&*(),.?":{}|<>]/.test(pwd) }
+  const passwordRequirements: PasswordRequirement[] = [
+    { id: 'length', label: 'At least 8 characters long', test: (pwd: string) => pwd.length >= 8 },
+    { id: 'uppercase', label: 'Contains at least one uppercase letter', test: (pwd: string) => /[A-Z]/.test(pwd) },
+    { id: 'lowercase', label: 'Contains at least one lowercase letter', test: (pwd: string) => /[a-z]/.test(pwd) },
+    { id: 'number', label: 'Contains at least one number', test: (pwd: string) => /\d/.test(pwd) },
+    { id: 'special', label: 'Contains at least one special character', test: (pwd: string) => /[!@#$%^&*(),.?":{}|<>]/.test(pwd) }
   ];
   
   $: passwordValidation = passwordRequirements.map(req => ({
     ...req,
     valid: req.test(registerPassword)
-  }));
+  })) as PasswordValidation[];
   
-  $: isPasswordValid = passwordValidation.every(req => req.valid);
+  $: isPasswordValid = passwordValidation.every((req: PasswordValidation) => req.valid);
   
-  async function handleRegister(e) {
+  async function handleRegister(e: Event) {
     e.preventDefault();
     if (!isPasswordValid) {
       registerMessage = 'Please meet all password requirements';
@@ -40,11 +50,9 @@
       registerMessage = 'Registration successful! Redirecting...';
       registerUsername = '';
       registerPassword = '';
-      // Auto-login successful - redirect to quiz page
-      setTimeout(() => {
-        dispatch('navigate', { page: 'quiz' });
-      }, 1000);
-    } catch (error) {
+      // Auto-login successful - user will be automatically redirected by auth state change
+      // No need to dispatch navigation event
+    } catch (error: any) {
       registerMessage = error.message;
     } finally {
       isLoading = false;

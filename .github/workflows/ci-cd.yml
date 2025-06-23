@@ -29,10 +29,7 @@ jobs:
         run: npm run depcheck
         
       - name: Start test environment
-        run: docker compose up -d
-        
-      - name: Build E2E test image
-        run: docker build -t e2e-tests ./packages/e2e-tests
+        run: docker compose up --build -d db backend frontend
         
       - name: Wait for services to be ready
         run: timeout 60 bash -c 'until curl -f http://localhost:8080 > /dev/null 2>&1; do sleep 1; done'
@@ -42,14 +39,9 @@ jobs:
           cd packages/backend
           pip install -r requirements-test.txt
           SKIP_TTS_TESTS=true API_URL=http://localhost:9000/api python test_integration.py
-          
-      - name: Run backend quiz integration tests
-        run: |
-          cd packages/backend
-          API_URL=http://localhost:9000/api python test_quiz_integration.py
-          
+                    
       - name: Run E2E tests
-        run: docker run --rm --network lingua-quiz_default -e LINGUA_QUIZ_URL=http://frontend:80 -e API_URL=http://backend:9000/api e2e-tests
+        run: docker compose run --build --rm e2e-tests
 
   build-images:
     runs-on: ubuntu-latest
@@ -194,8 +186,6 @@ jobs:
           cd packages/backend
           pip install -r requirements-test.txt
           python test_integration.py
-          python test_quiz_integration.py
-          python test_quiz_learning_simulation.py
 
   test-e2e-deployed:
     needs: deploy

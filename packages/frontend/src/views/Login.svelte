@@ -1,8 +1,8 @@
-<script>
-  import { authStore } from '../stores.js';
+<script lang="ts">
+  import { authStore } from '../stores';
   import { createEventDispatcher } from 'svelte';
   
-  const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher<{ navigate: { page: 'register' } }>();
   
   let loginUsername = '';
   let loginPassword = '';
@@ -10,7 +10,7 @@
   let showLoginPassword = false;
   let isLoading = false;
   
-  async function handleLogin(e) {
+  async function handleLogin(e: Event) {
     e.preventDefault();
     isLoading = true;
     loginMessage = '';
@@ -18,7 +18,7 @@
     try {
       await authStore.login(loginUsername, loginPassword);
       loginMessage = 'Login successful!';
-    } catch (error) {
+    } catch (error: any) {
       loginMessage = error.message;
     } finally {
       isLoading = false;

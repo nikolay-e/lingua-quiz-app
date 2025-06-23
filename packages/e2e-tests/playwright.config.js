@@ -16,6 +16,16 @@ module.exports = defineConfig({
     headless: true,
     actionTimeout: 10000,
     navigationTimeout: 30000,
+    // Enable console logging
+    launchOptions: {
+      logger: {
+        isEnabled: (_name, _severity) => true,
+        log: (_name, _severity, message, _args) => {
+          // eslint-disable-next-line no-console
+          console.log(`playwright: ${message}`);
+        }
+      }
+    }
   },
   reporter: [['html', { open: 'never' }], ['list']],
   // Retry failed tests
