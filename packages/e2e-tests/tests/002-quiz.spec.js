@@ -109,6 +109,21 @@ async function getCurrentLevel(page) {
 }
 
 /**
+ * Helper function to check if words match (handles formatted vs raw text)
+ * @param {string} displayWord - Word from the display list (formatted)
+ * @param {string} questionWord - Word from the question (raw)
+ * @returns {boolean}
+ */
+function wordsMatch(displayWord, questionWord) {
+  if (displayWord === questionWord) return true;
+  // If question has pipes, check if display word matches first alternative
+  if (questionWord.includes('|')) {
+    return displayWord === questionWord.split('|')[0].trim();
+  }
+  return false;
+}
+
+/**
  * Sets the quiz level.
  * @param {import('@playwright/test').Page} page
  * @param {string} level - 'LEVEL_1', 'LEVEL_2', 'LEVEL_3', or 'LEVEL_4'
@@ -268,10 +283,10 @@ test.describe.serial('Quiz Tests', () => {
           const words = await getWordsOrCountFromList(page, listId, false);
           if (Array.isArray(words)) {
             for (const wordPair of words) {
-              if (!isReverse && wordPair.sourceWord === currentWord) {
+              if (!isReverse && wordsMatch(wordPair.sourceWord, currentWord)) {
                 correctAnswer = wordPair.targetWord;
                 break;
-              } else if (isReverse && wordPair.targetWord === currentWord) {
+              } else if (isReverse && wordsMatch(wordPair.targetWord, currentWord)) {
                 correctAnswer = wordPair.sourceWord;
                 break;
               }
@@ -403,10 +418,10 @@ test.describe.serial('Quiz Tests', () => {
       const words = await getWordsOrCountFromList(page, listId, false);
       if (Array.isArray(words)) {
         for (const wordPair of words) {
-          if (!isReverse && wordPair.sourceWord === currentWord) {
+          if (!isReverse && wordsMatch(wordPair.sourceWord, currentWord)) {
             correctAnswer = wordPair.targetWord;
             break;
-          } else if (isReverse && wordPair.targetWord === currentWord) {
+          } else if (isReverse && wordsMatch(wordPair.targetWord, currentWord)) {
             correctAnswer = wordPair.sourceWord;
             break;
           }
@@ -622,10 +637,10 @@ test.describe.serial('Quiz Tests', () => {
           const words = await getWordsOrCountFromList(page, listId, false);
           if (Array.isArray(words)) {
             for (const wordPair of words) {
-              if (!isReverse && wordPair.sourceWord === currentWord) {
+              if (!isReverse && wordsMatch(wordPair.sourceWord, currentWord)) {
                 correctAnswer = wordPair.targetWord;
                 break;
-              } else if (isReverse && wordPair.targetWord === currentWord) {
+              } else if (isReverse && wordsMatch(wordPair.targetWord, currentWord)) {
                 correctAnswer = wordPair.sourceWord;
                 break;
               }
@@ -745,10 +760,10 @@ test.describe.serial('Quiz Tests', () => {
           const words = await getWordsOrCountFromList(page, listId, false);
           if (Array.isArray(words)) {
             for (const wordPair of words) {
-              if (!isReverse && wordPair.sourceWord === currentWord) {
+              if (!isReverse && wordsMatch(wordPair.sourceWord, currentWord)) {
                 correctAnswer = wordPair.targetWord;
                 break;
-              } else if (isReverse && wordPair.targetWord === currentWord) {
+              } else if (isReverse && wordsMatch(wordPair.targetWord, currentWord)) {
                 correctAnswer = wordPair.sourceWord;
                 break;
               }
