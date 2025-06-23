@@ -144,6 +144,16 @@ All comparisons are case-insensitive.
 ### Whitespace
 Extra spaces are ignored.
 
+### Cyrillic Text Normalization
+For languages using Cyrillic script (Russian, etc.), the following character equivalences are applied:
+
+1. **ё/е Equivalence**: The letters ё and е are treated as identical during comparison
+   - Example: `тёмный` and `темный` are considered equal
+
+2. **Latin/Cyrillic Similar Characters**: Visually similar Latin and Cyrillic characters are normalized to their Cyrillic equivalents
+   - Latin characters that look like Cyrillic are converted: `c→с`, `p→р`, `o→о`, `a→а`, `e→е`, `x→х`, `y→у`, etc.
+   - This prevents confusion when users accidentally type Latin characters that look identical to Cyrillic ones
+
 ### Important Notes
 1. **Use parentheses to avoid ambiguity** when mixing commas and pipes
 2. **Commas = must know all**, Pipes = any one is fine, Parentheses = grouping for priority, Square brackets = helpful context

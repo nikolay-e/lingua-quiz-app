@@ -86,3 +86,22 @@ There are two distinct types of tasks, each with its own set of rules:
 - **Reliability**: Verifying inter-service communication ensures the system works as a whole.
 - **Efficient Debugging**: The combination of a minimal codebase and detailed logging allows for the root cause of a failing integration test to be found quickly.
 - **Deployment Confidence**: Guarantees that what works in testing will work when deployed.
+
+## **Git Commit Guidelines**
+
+### **Commit Message Format**
+Keep commit messages as a single concise line:
+
+```
+Brief action-oriented summary describing the change
+```
+
+### **Commit Message Rules**
+- **Single line only**: No multi-line commits, keep everything in one descriptive line
+- **Imperative mood**: Start with action verbs (e.g., "Fix", "Add", "Update", "Remove")
+- **50-72 characters max**: Keep it concise but descriptive
+- **Examples**:
+  - ✅ "Fix level switching and improve Cyrillic text normalization"
+  - ✅ "Add user authentication with JWT tokens"
+  - ✅ "Update Spanish-Russian translations and fix typos"
+  - ❌ Multi-line commits with detailed explanations

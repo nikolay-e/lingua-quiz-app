@@ -65,8 +65,11 @@
   $: sourceLanguage = currentQuestion?.sourceLanguage || '';
   $: targetLanguage = currentQuestion?.targetLanguage || '';
   
-  // Sync currentLevel with quiz manager's level (for auto-adjustment)
-  $: if ($quizStore.quizManager) {
+  // Track if we're in the middle of a user-initiated level change
+  let userChangingLevel = false;
+  
+  // Sync currentLevel with quiz manager's level only for automatic adjustments
+  $: if ($quizStore.quizManager && !userChangingLevel) {
     const managerLevel = $quizStore.quizManager.getState().currentLevel;
     if (managerLevel !== currentLevel) {
       currentLevel = managerLevel;
@@ -124,13 +127,16 @@
   
   async function setLevel(level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4'): Promise<void> {
     try {
+      userChangingLevel = true;
       const result = await quizStore.setLevel($authStore.token!, level);
       
+      // Always update currentLevel to the actual level (whether success or auto-adjusted)
+      currentLevel = result.actualLevel;
+      
       if (result.success) {
-        currentLevel = result.actualLevel;
         feedback = null;
       } else {
-        currentLevel = result.actualLevel;
+        // Show feedback when level was auto-adjusted due to no words
         feedback = { 
           message: result.message || `${level} has no available words. Switched to ${result.actualLevel}.`, 
           isSuccess: false 
@@ -143,6 +149,8 @@
     } catch (error: unknown) {
       console.error('Failed to set level:', error);
       feedback = { message: 'Failed to change level. Please try again.', isSuccess: false };
+    } finally {
+      userChangingLevel = false;
     }
   }
   
