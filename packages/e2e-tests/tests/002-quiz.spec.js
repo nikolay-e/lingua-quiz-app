@@ -608,7 +608,6 @@ test.describe.serial('Quiz Tests', () => {
     console.log(`Initial status: ${JSON.stringify(initialStatus)}`);
 
     // Submit several correct answers to trigger progression
-    let progressMade = false;
     for (let i = 0; i < 5; i++) { // Reduced for performance
       try {
         const currentWord = await page.locator('#word').innerText();
