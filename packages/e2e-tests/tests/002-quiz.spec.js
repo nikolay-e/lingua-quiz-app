@@ -720,21 +720,22 @@ test.describe.serial('Quiz Tests', () => {
           }
           
           // Intelligently switch levels based on word distribution to progress words
-          if (currentStatus.level2 > 30 && currentStatus.level3 < 10) {
-            // Many words at LEVEL_2, switch to LEVEL_2 to practice reverse direction
-            console.log(`Switching to LEVEL_2 to progress ${currentStatus.level2} words`);
-            await setLevel(page, 'LEVEL_2');
-          } else if (currentStatus.level3 > 20 && currentStatus.level4 < 10) {
-            // Many words at LEVEL_3, switch to LEVEL_3 for usage examples
-            console.log(`Switching to LEVEL_3 to progress ${currentStatus.level3} words`);
-            await setLevel(page, 'LEVEL_3');
-          } else if (currentStatus.level4 > 15 && currentStatus.level5 < 50) {
-            // Many words at LEVEL_4, switch to LEVEL_4 for reverse usage examples
-            console.log(`Switching to LEVEL_4 to progress ${currentStatus.level4} words`);
+          // Priority: Practice at the highest level that has words to progress them further
+          if (currentStatus.level4 > 0 && currentStatus.level5 < 50) {
+            // Practice LEVEL_4 to get words to LEVEL_5
+            console.log(`Switching to LEVEL_4 to progress ${currentStatus.level4} words to LEVEL_5`);
             await setLevel(page, 'LEVEL_4');
-          } else if (currentStatus.level1 > 30) {
-            // Still have words at LEVEL_1, keep practicing there
-            console.log(`Continuing at LEVEL_1 to progress ${currentStatus.level1} words`);
+          } else if (currentStatus.level3 > 0 && currentStatus.level4 < 30) {
+            // Practice LEVEL_3 to get words to LEVEL_4
+            console.log(`Switching to LEVEL_3 to progress ${currentStatus.level3} words to LEVEL_4`);
+            await setLevel(page, 'LEVEL_3');
+          } else if (currentStatus.level2 > 30 && currentStatus.level3 < 20) {
+            // Practice LEVEL_2 to get words to LEVEL_3
+            console.log(`Switching to LEVEL_2 to progress ${currentStatus.level2} words to LEVEL_3`);
+            await setLevel(page, 'LEVEL_2');
+          } else {
+            // Default to LEVEL_1 to build up the pipeline
+            console.log(`Continuing at LEVEL_1 to build pipeline (level1: ${currentStatus.level1})`);
             await setLevel(page, 'LEVEL_1');
           }
         }
