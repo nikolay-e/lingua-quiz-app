@@ -41,7 +41,7 @@ jobs:
           SKIP_TTS_TESTS=true API_URL=http://localhost:9000/api python test_integration.py
                     
       - name: Run E2E tests
-        run: docker compose up --build e2e-tests
+        run: docker compose run --build --rm e2e-tests
 
   build-images:
     runs-on: ubuntu-latest
