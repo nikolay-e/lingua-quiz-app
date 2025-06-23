@@ -421,7 +421,7 @@
     {#if selectedQuiz}
       <div class="level-selector">
         <label for="level-select">Practice Level:</label>
-        <select id="level-select" bind:value={currentLevel} on:change={() => setLevel(currentLevel)}>
+        <select id="level-select" bind:value={currentLevel} on:change={(e) => setLevel(e.target.value)}>
           <option value="LEVEL_1">{getLevelDescription('LEVEL_1')}</option>
           <option value="LEVEL_2">{getLevelDescription('LEVEL_2')}</option>
           <option value="LEVEL_3">{getLevelDescription('LEVEL_3')}</option>
