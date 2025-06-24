@@ -1,9 +1,32 @@
 /**
+ * Normalizes text for comparison by handling Cyrillic ё/е equivalence and similar-looking characters
+ * @param text - The text to normalize
+ * @returns The normalized text
+ */
+const normalizeForComparison = (text: string): string => {
+  // Map of similar-looking characters to their canonical form (Cyrillic preferred)
+  const charMap: Record<string, string> = {
+    // Cyrillic ё/е equivalence
+    'ё': 'е', 'Ё': 'Е',
+    // Latin to Cyrillic mapping for visually similar characters
+    'c': 'с', 'C': 'С', 'p': 'р', 'P': 'Р', 'o': 'о', 'O': 'О',
+    'a': 'а', 'A': 'А', 'e': 'е', 'E': 'Е', 'x': 'х', 'X': 'Х',
+    'y': 'у', 'Y': 'У', 'k': 'к', 'K': 'К', 'h': 'н', 'H': 'Н',
+    'm': 'м', 'M': 'М', 't': 'т', 'T': 'Т', 'b': 'в', 'B': 'В',
+    'i': 'і', 'I': 'І', 'z': 'з', 'Z': 'З', 'd': 'д', 'D': 'Д',
+    'g': 'г', 'G': 'Г', 'l': 'л', 'L': 'Л', 'n': 'н', 'N': 'Н',
+    'r': 'р', 'R': 'Р', 's': 'с', 'S': 'С', 'f': 'ф', 'F': 'Ф'
+  };
+  
+  return text.replace(/[a-zA-ZёЁ]/g, char => charMap[char] || char);
+};
+
+/**
  * Normalizes text by trimming, lowercasing, and collapsing whitespace
  * @param text - The text to normalize
  * @returns The normalized text
  */
-export const _normalize = (text: string): string => text.trim().toLowerCase().replace(/\s+/g, ' ');
+export const _normalize = (text: string): string => normalizeForComparison(text.trim().toLowerCase().replace(/\s+/g, ' '));
 
 /**
  * Formats text for display according to documentation rules:

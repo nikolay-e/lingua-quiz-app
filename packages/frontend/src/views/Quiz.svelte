@@ -65,8 +65,8 @@
   $: sourceLanguage = currentQuestion?.sourceLanguage || '';
   $: targetLanguage = currentQuestion?.targetLanguage || '';
   
-  // Sync currentLevel with quiz manager's level (for auto-adjustment)
-  $: if ($quizStore.quizManager) {
+  // Sync currentLevel with quiz manager's level for initialization
+  $: if ($quizStore.quizManager && currentLevel === 'LEVEL_1') {
     const managerLevel = $quizStore.quizManager.getState().currentLevel;
     if (managerLevel !== currentLevel) {
       currentLevel = managerLevel;
@@ -126,11 +126,13 @@
     try {
       const result = await quizStore.setLevel($authStore.token!, level);
       
+      // Always update currentLevel to the actual level (whether success or auto-adjusted)
+      currentLevel = result.actualLevel;
+      
       if (result.success) {
-        currentLevel = result.actualLevel;
         feedback = null;
       } else {
-        currentLevel = result.actualLevel;
+        // Show feedback when level was auto-adjusted due to no words
         feedback = { 
           message: result.message || `${level} has no available words. Switched to ${result.actualLevel}.`, 
           isSuccess: false 
@@ -413,7 +415,7 @@
     {#if selectedQuiz}
       <div class="level-selector">
         <label for="level-select">Practice Level:</label>
-        <select id="level-select" bind:value={currentLevel} on:change={() => setLevel(currentLevel)}>
+        <select id="level-select" value={currentLevel} on:change={(e) => setLevel(e.target.value)}>
           <option value="LEVEL_1">{getLevelDescription('LEVEL_1')}</option>
           <option value="LEVEL_2">{getLevelDescription('LEVEL_2')}</option>
           <option value="LEVEL_3">{getLevelDescription('LEVEL_3')}</option>
