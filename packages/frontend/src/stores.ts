@@ -1,6 +1,6 @@
 import { writable, get, type Writable } from 'svelte/store';
 import api from './api';
-import { QuizManager, type QuizQuestion } from './quiz-core';
+import { QuizManager, type QuizQuestion } from '@linguaquiz/core';
 import type { WordSet } from './types';
 
 interface ThemeState {
@@ -245,10 +245,10 @@ function createQuizStore(): QuizStore {
         
         const progress = userWordSets.map(word => ({
           translationId: word.wordPairId,
-          status: word.status || 'LEVEL_0',  // Use the actual backend status or default to LEVEL_0
+          status: (word.status || 'LEVEL_0') as 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5',
           queuePosition: 0,
           consecutiveCorrect: 0,
-          recentHistory: []
+          recentHistory: [] as boolean[]
         }));
         
         const manager = new QuizManager(translations, { 
@@ -294,11 +294,13 @@ function createQuizStore(): QuizStore {
         
         // For simplified approach, we only persist level changes using word-sets API
         if (feedback.levelChange) {
-          // Update word status in background
-          api.saveWordStatus(token, feedback.levelChange.to as any, [feedback.translation.id]).catch(console.error);
+          // levelChange.to already contains the full level string (e.g., 'LEVEL_2')
+          const levelString = feedback.levelChange.to;
+          // Wait for persistence to complete before updating UI to avoid race conditions
+          await api.saveWordStatus(token, levelString as any, [feedback.translation.id]);
         }
         
-        // Update UI immediately
+        // Update UI after persistence completes
         update(s => ({ ...s, currentQuestion: nextQuestion }));
         
         return feedback;

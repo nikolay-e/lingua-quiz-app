@@ -10,7 +10,7 @@
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch"
   },
   "dependencies": {
-    "@linguaquiz/core": "../lingua-quiz-core"
+    "@linguaquiz/core": "file:../core"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.1.2",

@@ -20,20 +20,20 @@ DECLARE
   v_target_language_id INTEGER;
 BEGIN
   -- Insert or update the source language
-  INSERT INTO language (id, name)
+  INSERT INTO languages (id, name)
   VALUES (DEFAULT, p_source_language_name)
   ON CONFLICT (name) DO UPDATE SET name = EXCLUDED.name
   RETURNING id INTO v_source_language_id;
 
   -- Insert or update the target language
-  INSERT INTO language (id, name)
+  INSERT INTO languages (id, name)
   VALUES (DEFAULT, p_target_language_name)
   ON CONFLICT (name) DO UPDATE SET name = EXCLUDED.name
   RETURNING id INTO v_target_language_id;
 
   -- Insert or update the source word
   -- Force update all fields to ensure data is overwritten
-  INSERT INTO word (id, text, language_id, usage_example)
+  INSERT INTO words (id, text, language_id, usage_example)
   VALUES (p_source_word_id, p_source_word, v_source_language_id, p_source_word_usage_example)
   ON CONFLICT (id) DO UPDATE
   SET text = EXCLUDED.text,
@@ -42,7 +42,7 @@ BEGIN
 
   -- Insert or update the target word
   -- Force update all fields to ensure data is overwritten
-  INSERT INTO word (id, text, language_id, usage_example)
+  INSERT INTO words (id, text, language_id, usage_example)
   VALUES (p_target_word_id, p_target_word, v_target_language_id, p_target_word_usage_example)
   ON CONFLICT (id) DO UPDATE
   SET text = EXCLUDED.text,
@@ -50,20 +50,20 @@ BEGIN
       usage_example = EXCLUDED.usage_example;
 
   -- Insert or update the translation
-  INSERT INTO translation (id, source_word_id, target_word_id)
+  INSERT INTO translations (id, source_word_id, target_word_id)
   VALUES (p_translation_id, p_source_word_id, p_target_word_id)
   ON CONFLICT (id) DO UPDATE
   SET source_word_id = EXCLUDED.source_word_id,
       target_word_id = EXCLUDED.target_word_id;
 
   -- Insert or update the word list
-  INSERT INTO word_list (id, name)
+  INSERT INTO word_lists (id, name)
   VALUES (DEFAULT, p_word_list_name)
   ON CONFLICT (name) DO UPDATE SET name = EXCLUDED.name
   RETURNING id INTO v_word_list_id;
 
   -- Insert or update the translation in the word list
-  INSERT INTO word_list_entry (translation_id, word_list_id)
+  INSERT INTO word_list_entries (translation_id, word_list_id)
   VALUES (p_translation_id, v_word_list_id)
   ON CONFLICT (translation_id, word_list_id) DO NOTHING;
 
@@ -81,43 +81,43 @@ BEGIN
   -- Get the source and target word IDs
   SELECT source_word_id, target_word_id
   INTO v_source_word_id, v_target_word_id
-  FROM translation
+  FROM translations
   WHERE id = p_translation_id;
 
   -- Get the language IDs
-  SELECT language_id INTO v_source_language_id FROM word WHERE id = v_source_word_id;
-  SELECT language_id INTO v_target_language_id FROM word WHERE id = v_target_word_id;
+  SELECT language_id INTO v_source_language_id FROM words WHERE id = v_source_word_id;
+  SELECT language_id INTO v_target_language_id FROM words WHERE id = v_target_word_id;
 
   -- Get the word list ID
   SELECT word_list_id INTO v_word_list_id
-  FROM word_list_entry
+  FROM word_list_entries
   WHERE translation_id = p_translation_id;
 
   -- Delete the word list entry
-  DELETE FROM word_list_entry
+  DELETE FROM word_list_entries
   WHERE translation_id = p_translation_id;
 
   -- Delete the translation
-  DELETE FROM translation
+  DELETE FROM translations
   WHERE id = p_translation_id;
 
   -- Delete the source and target words
-  DELETE FROM word
+  DELETE FROM words
   WHERE id IN (v_source_word_id, v_target_word_id);
 
   -- Delete user translation progress
-  DELETE FROM user_translation_progress
+  DELETE FROM user_translation_progresses
   WHERE word_pair_id = p_translation_id;
 
   -- Remove languages if no words exist for them
-  DELETE FROM language
+  DELETE FROM languages
   WHERE id IN (v_source_language_id, v_target_language_id)
-    AND NOT EXISTS (SELECT 1 FROM word WHERE language_id = language.id);
+    AND NOT EXISTS (SELECT 1 FROM words WHERE language_id = languages.id);
 
   -- Remove word list if no entries exist for it
-  DELETE FROM word_list
+  DELETE FROM word_lists
   WHERE id = v_word_list_id
-    AND NOT EXISTS (SELECT 1 FROM word_list_entry WHERE word_list_id = word_list.id);
+    AND NOT EXISTS (SELECT 1 FROM word_list_entries WHERE word_list_id = word_lists.id);
 END;
 $$ LANGUAGE plpgsql;
 
@@ -144,21 +144,21 @@ BEGIN
       sw.usage_example AS source_word_usage_example,
       tw.usage_example AS target_word_usage_example
     FROM 
-      word_list_entry wle
+      word_list_entries wle
     JOIN 
-      translation t ON wle.translation_id = t.id
+      translations t ON wle.translation_id = t.id
     JOIN 
-      word sw ON t.source_word_id = sw.id
+      words sw ON t.source_word_id = sw.id
     JOIN 
-      word tw ON t.target_word_id = tw.id
+      words tw ON t.target_word_id = tw.id
     JOIN 
-      language sl ON sw.language_id = sl.id
+      languages sl ON sw.language_id = sl.id
     JOIN 
-      language tl ON tw.language_id = tl.id
+      languages tl ON tw.language_id = tl.id
     JOIN 
-      word_list wl ON wle.word_list_id = wl.id
+      word_lists wl ON wle.word_list_id = wl.id
     LEFT JOIN 
-      user_translation_progress utp ON utp.word_pair_id = t.id AND utp.user_id = p_user_id
+      user_translation_progresses utp ON utp.word_pair_id = t.id AND utp.user_id = p_user_id
     WHERE 
       wl.name = p_word_list_name
   )

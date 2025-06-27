@@ -1,5 +1,8 @@
--- User table
-CREATE TABLE IF NOT EXISTS "user" (
+-- Rename old table if it exists, then create new one
+ALTER TABLE IF EXISTS "user" RENAME TO "users";
+
+-- Users table
+CREATE TABLE IF NOT EXISTS "users" (
   id SERIAL PRIMARY KEY,
   username VARCHAR(255) UNIQUE NOT NULL,
   password VARCHAR(255) NOT NULL,
@@ -8,5 +11,5 @@ CREATE TABLE IF NOT EXISTS "user" (
 );
 
 -- Indexes
-CREATE INDEX IF NOT EXISTS idx_user_username ON "user" (username);
+CREATE INDEX IF NOT EXISTS idx_users_username ON "users" (username);
 

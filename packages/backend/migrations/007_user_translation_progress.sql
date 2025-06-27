@@ -1,8 +1,11 @@
--- User translation progress table
-CREATE TABLE IF NOT EXISTS user_translation_progress (
+-- Rename old table if it exists
+ALTER TABLE IF EXISTS user_translation_progress RENAME TO user_translation_progresses;
+
+-- User translation progresses table
+CREATE TABLE IF NOT EXISTS user_translation_progresses (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES "user" (id) ON DELETE CASCADE,
-  word_pair_id INTEGER REFERENCES translation (id) ON DELETE CASCADE,
+  user_id INTEGER REFERENCES users (id) ON DELETE CASCADE,
+  word_pair_id INTEGER REFERENCES translations (id) ON DELETE CASCADE,
   status translation_status NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
@@ -10,11 +13,11 @@ CREATE TABLE IF NOT EXISTS user_translation_progress (
 );
 
 -- Indexes
-CREATE INDEX IF NOT EXISTS idx_user_translation_progress_user ON user_translation_progress (user_id);
-CREATE INDEX IF NOT EXISTS idx_user_translation_progress_word_pair ON user_translation_progress (word_pair_id);
-CREATE INDEX IF NOT EXISTS idx_user_translation_progress_user_status ON user_translation_progress (user_id, status);
-CREATE INDEX IF NOT EXISTS idx_user_translation_progress_word_pair_status ON user_translation_progress (word_pair_id, status);
-CREATE INDEX IF NOT EXISTS idx_user_translation_progress_user_updated ON user_translation_progress(user_id, updated_at DESC);
+CREATE INDEX IF NOT EXISTS idx_user_translation_progresses_user ON user_translation_progresses (user_id);
+CREATE INDEX IF NOT EXISTS idx_user_translation_progresses_word_pair ON user_translation_progresses (word_pair_id);
+CREATE INDEX IF NOT EXISTS idx_user_translation_progresses_user_status ON user_translation_progresses (user_id, status);
+CREATE INDEX IF NOT EXISTS idx_user_translation_progresses_word_pair_status ON user_translation_progresses (word_pair_id, status);
+CREATE INDEX IF NOT EXISTS idx_user_translation_progresses_user_updated ON user_translation_progresses(user_id, updated_at DESC);
 
 -- Functions
 CREATE OR REPLACE FUNCTION update_user_word_level(
@@ -25,13 +28,13 @@ CREATE OR REPLACE FUNCTION update_user_word_level(
 DECLARE
     v_row_count INTEGER;
 BEGIN
-    INSERT INTO user_translation_progress (user_id, word_pair_id, status)
+    INSERT INTO user_translation_progresses (user_id, word_pair_id, status)
     VALUES (p_user_id, p_translation_id, p_new_level::translation_status)
     ON CONFLICT (user_id, word_pair_id)
     DO UPDATE SET 
         status = p_new_level::translation_status, 
         updated_at = CURRENT_TIMESTAMP
-    WHERE user_translation_progress.status::TEXT != p_new_level;
+    WHERE user_translation_progresses.status::TEXT != p_new_level;
     
     GET DIAGNOSTICS v_row_count = ROW_COUNT;
     RETURN v_row_count > 0;
@@ -55,7 +58,7 @@ BEGIN
   IF EXISTS (
     SELECT 1
     FROM unnest(p_word_pair_ids) AS wpid
-    LEFT JOIN translation t ON t.id = wpid
+    LEFT JOIN translations t ON t.id = wpid
     WHERE t.id IS NULL
   ) THEN
     RAISE EXCEPTION 'One or more word pair IDs do not exist in the translations table';
@@ -65,7 +68,7 @@ BEGIN
   FOREACH v_word_pair_id IN ARRAY p_word_pair_ids
   LOOP
     -- Insert or update progress for the word pair
-    INSERT INTO user_translation_progress (user_id, word_pair_id, status, updated_at)
+    INSERT INTO user_translation_progresses (user_id, word_pair_id, status, updated_at)
     VALUES (p_user_id, v_word_pair_id, p_status, CURRENT_TIMESTAMP)
     ON CONFLICT (user_id, word_pair_id)
     DO UPDATE SET status = EXCLUDED.status, updated_at = EXCLUDED.updated_at;

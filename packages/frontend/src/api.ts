@@ -14,17 +14,23 @@ declare global {
 const getServerAddress = (): string => {
   const { hostname, port, protocol } = window.location;
 
+  // Debug logging
+  console.log(`Frontend API detection: hostname=${hostname}, port=${port}, protocol=${protocol}`);
+
   // Environment variable override (for Docker and other deployment scenarios)
   if (window.LINGUA_QUIZ_API_URL) {
+    console.log(`Using environment API URL: ${window.LINGUA_QUIZ_API_URL}`);
     return window.LINGUA_QUIZ_API_URL;
   }
 
   // Development scenarios
   if (hostname === 'localhost') {
     if (port === '8080') {
+      console.log('Using localhost development API');
       return 'http://localhost:9000/api';
     }
     // Handle other development ports
+    console.log('Using localhost fallback API');
     return `http://localhost:9000/api`;
   }
   
@@ -35,9 +41,11 @@ const getServerAddress = (): string => {
   
   // Generic production fallback - assume API is on same domain with /api path
   if (protocol === 'https:') {
+    console.log('Using HTTPS same-domain API');
     return `https://${hostname}/api`;
   }
   
+  console.log('Using fallback same-origin API');
   return '/api'; // fallback for same-origin deployment
 };
 
@@ -67,7 +75,14 @@ const api = {
     });
 
     const data = await response.json();
-    if (!response.ok) throw new Error(data.message || 'Login failed');
+    if (!response.ok) {
+      // Handle FastAPI validation errors
+      if (data.detail && Array.isArray(data.detail)) {
+        const errors = data.detail.map((err: any) => err.msg || err.message).join(', ');
+        throw new Error(errors || 'Login failed');
+      }
+      throw new Error(data.message || data.detail || 'Login failed');
+    }
     return data;
   },
 
@@ -79,7 +94,14 @@ const api = {
     });
 
     const data = await response.json();
-    if (!response.ok) throw new Error(data.message || 'Registration failed');
+    if (!response.ok) {
+      // Handle FastAPI validation errors
+      if (data.detail && Array.isArray(data.detail)) {
+        const errors = data.detail.map((err: any) => err.msg || err.message).join(', ');
+        throw new Error(errors || 'Registration failed');
+      }
+      throw new Error(data.message || data.detail || 'Registration failed');
+    }
     return data;
   },
 
@@ -98,7 +120,7 @@ const api = {
   },
 
   async fetchUserWordSets(token: string, wordListName: string): Promise<UserWordSet[]> {
-    const response = await fetch(`${serverAddress}/word-sets/user?wordListName=${encodeURIComponent(wordListName)}`, {
+    const response = await fetch(`${serverAddress}/word-sets/user?word_list_name=${encodeURIComponent(wordListName)}`, {
       method: 'GET',
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -111,7 +133,7 @@ const api = {
     return response.json();
   },
 
-  async saveWordStatus(token: string, status: 'learning' | 'known' | 'unknown', wordPairIds: number[]): Promise<void> {
+  async saveWordStatus(token: string, status: 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5', wordPairIds: number[]): Promise<void> {
     const response = await fetch(`${serverAddress}/word-sets/user`, {
       method: 'POST',
       headers: {
@@ -150,6 +172,33 @@ const api = {
     const data = await response.json();
     if (!response.ok) throw new Error(data.message || 'Failed to get TTS languages');
     return data;
+  },
+
+  async deleteAccount(token: string): Promise<void> {
+    const response = await fetch(`${serverAddress}/auth/delete-account`, {
+      method: 'DELETE',
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.message || data.detail || 'Failed to delete account');
+    }
+  },
+
+  async fetchWordSet(token: string, wordSetId: number): Promise<WordSet & { words: any[] }> {
+    const response = await fetch(`${serverAddress}/word-sets/${wordSetId}`, {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (!response.ok) {
+      if (response.status === 401) throw new Error('Unauthorized');
+      if (response.status === 404) throw new Error('Word set not found');
+      throw new Error('Failed to fetch word set');
+    }
+
+    return response.json();
   },
 };
 

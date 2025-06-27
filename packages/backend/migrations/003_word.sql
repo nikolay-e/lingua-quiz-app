@@ -1,22 +1,22 @@
--- Word table
-CREATE TABLE IF NOT EXISTS word (
+-- Rename old table if it exists, then create new one
+ALTER TABLE IF EXISTS word RENAME TO words;
+
+-- Words table
+CREATE TABLE IF NOT EXISTS words (
   id SERIAL PRIMARY KEY,
   text VARCHAR(255) NOT NULL,
-  language_id INTEGER NOT NULL REFERENCES language (id),
+  language_id INTEGER NOT NULL REFERENCES languages (id),
   usage_example TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Indexes
-CREATE INDEX IF NOT EXISTS idx_word_language ON word (language_id);
-CREATE INDEX IF NOT EXISTS idx_word_text ON word (text);
-CREATE INDEX IF NOT EXISTS idx_word_language_text ON word (language_id, text);
+CREATE INDEX IF NOT EXISTS idx_words_language ON words (language_id);
+CREATE INDEX IF NOT EXISTS idx_words_text ON words (text);
+CREATE INDEX IF NOT EXISTS idx_words_language_text ON words (language_id, text);
 
 -- Note: Removed unique constraint to allow data import flexibility
 -- Words can have duplicates across imports, handled at application level
-
--- Drop the unique constraint if it exists (for migration compatibility)
-DROP INDEX IF EXISTS idx_word_unique_per_language;
 
 -- Text utility functions
 -- Function to clean pipe-separated alternatives (show only first alternative)

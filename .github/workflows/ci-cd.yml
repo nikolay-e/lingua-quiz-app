@@ -37,7 +37,7 @@ jobs:
       - name: Run backend integration tests (no TTS)
         run: |
           cd packages/backend
-          pip install -r requirements-test.txt
+          pip install -r requirements.txt
           SKIP_TTS_TESTS=true API_URL=http://localhost:9000/api python test_integration.py
                     
       - name: Run E2E tests
@@ -53,8 +53,8 @@ jobs:
           - context: ./packages/backend
             dockerfile: Dockerfile
             image: lingua-quiz-backend
-          - context: ./packages/frontend
-            dockerfile: Dockerfile
+          - context: .
+            dockerfile: ./packages/frontend/Dockerfile
             image: lingua-quiz-frontend
     steps:
       - uses: actions/checkout@v4
@@ -184,7 +184,7 @@ jobs:
       - name: Test deployed API
         run: |
           cd packages/backend
-          pip install -r requirements-test.txt
+          pip install -r requirements.txt
           python test_integration.py
 
   test-e2e-deployed:
@@ -197,5 +197,5 @@ jobs:
       API_URL: ${{ github.ref == 'refs/heads/main' && 'https://lingua-quiz.nikolay-eremeev.com/api' || 'https://test-lingua-quiz.nikolay-eremeev.com/api' }}
     steps:
       - uses: actions/checkout@v4
-      - run: docker build -t e2e-tests ./packages/e2e-tests
+      - run: docker build -t e2e-tests -f ./packages/e2e-tests/Dockerfile .
       - run: docker run --rm -e LINGUA_QUIZ_URL -e API_URL e2e-tests playwright test

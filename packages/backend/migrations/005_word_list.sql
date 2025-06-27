@@ -1,25 +1,29 @@
--- Word list table
-CREATE TABLE IF NOT EXISTS word_list (
+-- Rename old tables if they exist
+ALTER TABLE IF EXISTS word_list RENAME TO word_lists;
+ALTER TABLE IF EXISTS word_list_entry RENAME TO word_list_entries;
+
+-- Word lists table
+CREATE TABLE IF NOT EXISTS word_lists (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL UNIQUE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- Word list entry table
-CREATE TABLE IF NOT EXISTS word_list_entry (
+-- Word list entries table
+CREATE TABLE IF NOT EXISTS word_list_entries (
   id SERIAL PRIMARY KEY,
-  translation_id INTEGER REFERENCES translation (id) ON DELETE CASCADE,
-  word_list_id INTEGER REFERENCES word_list (id) ON DELETE CASCADE,
+  translation_id INTEGER REFERENCES translations (id) ON DELETE CASCADE,
+  word_list_id INTEGER REFERENCES word_lists (id) ON DELETE CASCADE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   UNIQUE (translation_id, word_list_id)
 );
 
 -- Indexes
-CREATE INDEX IF NOT EXISTS idx_word_list_name ON word_list (name);
-CREATE INDEX IF NOT EXISTS idx_word_list_entry_translation ON word_list_entry (translation_id);
-CREATE INDEX IF NOT EXISTS idx_word_list_entry_list ON word_list_entry (word_list_id);
-CREATE INDEX IF NOT EXISTS idx_word_list_entry_list_translation ON word_list_entry (word_list_id, translation_id);
+CREATE INDEX IF NOT EXISTS idx_word_lists_name ON word_lists (name);
+CREATE INDEX IF NOT EXISTS idx_word_list_entries_translation ON word_list_entries (translation_id);
+CREATE INDEX IF NOT EXISTS idx_word_list_entries_list ON word_list_entries (word_list_id);
+CREATE INDEX IF NOT EXISTS idx_word_list_entries_list_translation ON word_list_entries (word_list_id, translation_id);
 
 
 -- Functions
@@ -35,12 +39,12 @@ CREATE OR REPLACE FUNCTION get_word_lists () RETURNS TABLE (
 BEGIN
   RETURN QUERY
   SELECT
-    word_list.id,
-    word_list.name,
-    (SELECT COUNT(*) FROM word_list_entry WHERE word_list_id = word_list.id)::INTEGER AS word_count,
-    word_list.created_at::TEXT AS created_at,
-    word_list.updated_at::TEXT AS updated_at
-  FROM word_list
-  ORDER BY word_list.name ASC;
+    wl.id,
+    wl.name,
+    (SELECT COUNT(*) FROM word_list_entries WHERE word_list_id = wl.id)::INTEGER AS word_count,
+    wl.created_at::TEXT AS created_at,
+    wl.updated_at::TEXT AS updated_at
+  FROM word_lists wl
+  ORDER BY wl.name ASC;
 END;
 $$ LANGUAGE plpgsql;
