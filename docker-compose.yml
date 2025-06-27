@@ -42,7 +42,9 @@ services:
       - lingua-quiz-local-net
   
   frontend:
-    build: packages/frontend
+    build:
+      context: .
+      dockerfile: packages/frontend/Dockerfile
     ports: ["8080:80"]
     depends_on:
       backend:
@@ -74,8 +76,8 @@ services:
     networks:
       - lingua-quiz-local-net
     volumes:
-      - ./packages/e2e-tests/playwright-report:/app/packages/e2e-tests/playwright-report
-      - ./packages/e2e-tests/test-results:/app/packages/e2e-tests/test-results
+      - ./packages/e2e-tests/playwright-report:/app/playwright-report
+      - ./packages/e2e-tests/test-results:/app/test-results
 
 volumes:
   pgdata_local:

@@ -76,6 +76,29 @@ DROP SEQUENCE IF EXISTS quiz_session_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS quiz_submission_log_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS session_word_history_id_seq CASCADE;
 
+-- Drop old singular table indexes that were renamed to plural
+-- These indexes were created in earlier migrations but need cleanup after table renames
+DROP INDEX IF EXISTS idx_user_username;
+DROP INDEX IF EXISTS idx_language_name;
+DROP INDEX IF EXISTS idx_word_language;
+DROP INDEX IF EXISTS idx_word_text;
+DROP INDEX IF EXISTS idx_word_language_text;
+DROP INDEX IF EXISTS idx_word_unique_per_language;
+DROP INDEX IF EXISTS idx_translation_source;
+DROP INDEX IF EXISTS idx_translation_target;
+DROP INDEX IF EXISTS idx_word_list_name;
+DROP INDEX IF EXISTS idx_word_list_entry_translation;
+DROP INDEX IF EXISTS idx_word_list_entry_list;
+DROP INDEX IF EXISTS idx_word_list_entry_list_translation;
+DROP INDEX IF EXISTS idx_user_translation_progress_user;
+DROP INDEX IF EXISTS idx_user_translation_progress_word_pair;
+DROP INDEX IF EXISTS idx_user_translation_progress_user_status;
+DROP INDEX IF EXISTS idx_user_translation_progress_word_pair_status;
+DROP INDEX IF EXISTS idx_user_translation_progress_user_updated;
+DROP INDEX IF EXISTS idx_tts_cache_key;
+DROP INDEX IF EXISTS idx_tts_cache_created_at;
+DROP INDEX IF EXISTS idx_tts_cache_last_accessed;
+
 -- VERIFICATION: After this migration, only these functions should remain:
 -- Essential functions that are still in use:
 -- 1. get_user_word_sets (API endpoint /api/word-sets/user)

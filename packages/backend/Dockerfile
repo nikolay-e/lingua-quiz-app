@@ -6,14 +6,13 @@ WORKDIR /app
 RUN apk add --no-cache postgresql-libs curl netcat-openbsd \
   && apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev
 
-# Copy and install dependencies with gunicorn
-COPY requirements.txt requirements-migrate.txt ./
-RUN pip install --no-cache-dir -r requirements.txt -r requirements-migrate.txt && \
-    pip install --no-cache-dir gunicorn && \
+# Copy and install dependencies
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt && \
     apk --purge del .build-deps
 
 # Copy application and migrations
-COPY app.py migrate.py tts_service.py ./
+COPY main.py migrate.py tts_service.py ./
 COPY migrations/ ./migrations/
 
 # Set Python optimizations for production
@@ -37,14 +36,11 @@ if [ "$MIGRATE" = "true" ]; then\n\
 fi\n\
 \n\
 # Calculate workers with a lower cap for database connections\n\
-# Each worker gets its own connection pool, so we need to limit workers\n\
+# FastAPI with uvicorn handles async requests efficiently\n\
 WORKERS=$(python -c "import multiprocessing; print(min(multiprocessing.cpu_count() + 1, 4))")\n\
-echo "Starting gunicorn with $WORKERS workers..."\n\
+echo "Starting uvicorn with $WORKERS workers..."\n\
 \n\
-# Set rate limiter to use memory:// to suppress warning\n\
-export RATELIMIT_STORAGE_URL=memory://\n\
-\n\
-exec gunicorn --bind 0.0.0.0:9000 --workers $WORKERS --timeout 30 --access-logfile - --error-logfile - app:app\n' > /app/start.sh && \
+exec uvicorn main:app --host 0.0.0.0 --port 9000 --workers $WORKERS --log-level info\n' > /app/start.sh && \
     chmod +x /app/start.sh
 
 # Run as non-root

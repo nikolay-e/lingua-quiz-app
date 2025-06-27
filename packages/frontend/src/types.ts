@@ -24,7 +24,11 @@ export interface UserWordSet {
   wordPairId: number;
   sourceWord: string;
   targetWord: string;
-  status: 'learning' | 'known' | 'unknown';
+  sourceLanguage: string;
+  targetLanguage: string;
+  sourceWordUsageExample?: string;
+  targetWordUsageExample?: string;
+  status?: 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5';
 }
 
 // API Request/Response types
@@ -87,7 +91,10 @@ export interface SessionData {
 
 // TTS types
 export interface TTSResponse {
-  audioUrl: string;
+  audioData: string;
+  contentType: string;
+  text: string;
+  language: string;
 }
 
 export interface TTSLanguagesResponse {

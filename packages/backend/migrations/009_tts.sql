@@ -1,8 +1,11 @@
 -- TTS cache table and functions
 
+-- Rename old table if it exists
+ALTER TABLE IF EXISTS tts_cache RENAME TO tts_caches;
+
 -- Critical fixes for existing production table
-ALTER TABLE IF EXISTS tts_cache ADD COLUMN IF NOT EXISTS audio_data BYTEA;
-ALTER TABLE IF EXISTS tts_cache ADD COLUMN IF NOT EXISTS file_size INTEGER;
+ALTER TABLE IF EXISTS tts_caches ADD COLUMN IF NOT EXISTS audio_data BYTEA;
+ALTER TABLE IF EXISTS tts_caches ADD COLUMN IF NOT EXISTS file_size INTEGER;
 
 -- Enhanced TTS cache function for better compatibility
 CREATE OR REPLACE FUNCTION get_tts_cache_entry_validated_fixed(
@@ -23,10 +26,10 @@ BEGIN
     
     IF is_allowed THEN
         RETURN QUERY
-        UPDATE tts_cache 
+        UPDATE tts_caches 
         SET last_accessed_at = CURRENT_TIMESTAMP
         WHERE cache_key = p_cache_key
-        RETURNING COALESCE(tts_cache.audio_data, NULL), TRUE;
+        RETURNING COALESCE(tts_caches.audio_data, NULL), TRUE;
         
         IF NOT FOUND THEN
             RETURN QUERY SELECT NULL::BYTEA, TRUE;
@@ -37,7 +40,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TABLE IF NOT EXISTS tts_cache (
+CREATE TABLE IF NOT EXISTS tts_caches (
     id SERIAL PRIMARY KEY,
     cache_key VARCHAR(32) UNIQUE NOT NULL,
     text_content TEXT NOT NULL,
@@ -49,17 +52,17 @@ CREATE TABLE IF NOT EXISTS tts_cache (
 );
 
 -- Indexes
-CREATE INDEX IF NOT EXISTS idx_tts_cache_key ON tts_cache (cache_key);
-CREATE INDEX IF NOT EXISTS idx_tts_cache_created_at ON tts_cache (created_at);
-CREATE INDEX IF NOT EXISTS idx_tts_cache_last_accessed ON tts_cache (last_accessed_at);
+CREATE INDEX IF NOT EXISTS idx_tts_caches_key ON tts_caches (cache_key);
+CREATE INDEX IF NOT EXISTS idx_tts_caches_created_at ON tts_caches (created_at);
+CREATE INDEX IF NOT EXISTS idx_tts_caches_last_accessed ON tts_caches (last_accessed_at);
 
 -- Views
 CREATE OR REPLACE VIEW valid_tts_texts AS 
 SELECT DISTINCT lower(trim(text)) as clean_text FROM (
-    SELECT w1.text FROM word w1 
-    UNION ALL SELECT w2.text FROM word w2
-    UNION ALL SELECT w1.usage_example FROM word w1 WHERE w1.usage_example IS NOT NULL
-    UNION ALL SELECT w2.usage_example FROM word w2 WHERE w2.usage_example IS NOT NULL
+    SELECT w1.text FROM words w1 
+    UNION ALL SELECT w2.text FROM words w2
+    UNION ALL SELECT w1.usage_example FROM words w1 WHERE w1.usage_example IS NOT NULL
+    UNION ALL SELECT w2.usage_example FROM words w2 WHERE w2.usage_example IS NOT NULL
 ) t;
 
 -- Functions
@@ -83,10 +86,10 @@ BEGIN
     -- Only return cache data if text is allowed
     IF is_allowed THEN
         RETURN QUERY
-        UPDATE tts_cache 
+        UPDATE tts_caches 
         SET last_accessed_at = CURRENT_TIMESTAMP
         WHERE cache_key = p_cache_key
-        RETURNING tts_cache.audio_data, TRUE;
+        RETURNING tts_caches.audio_data, TRUE;
         
         -- If no cache hit, return null audio but valid text flag
         IF NOT FOUND THEN
@@ -116,9 +119,9 @@ BEGIN
     
     -- Check if text exists in database words/phrases using correct schema
     SELECT EXISTS (
-        SELECT 1 FROM word w1
-        JOIN translation t ON w1.id = t.source_word_id
-        JOIN word w2 ON t.target_word_id = w2.id
+        SELECT 1 FROM words w1
+        JOIN translations t ON w1.id = t.source_word_id
+        JOIN words w2 ON t.target_word_id = w2.id
         WHERE LOWER(w1.text) = text_clean 
            OR LOWER(w2.text) = text_clean
            OR LOWER(w1.usage_example) = text_clean
@@ -127,7 +130,7 @@ BEGIN
     
     -- Only save if text is allowed
     IF is_allowed THEN
-        INSERT INTO tts_cache 
+        INSERT INTO tts_caches 
         (cache_key, text_content, language, audio_data, file_size)
         VALUES (p_cache_key, LEFT(p_text_content, 500), p_language, p_audio_data, p_file_size)
         ON CONFLICT (cache_key) DO UPDATE SET
@@ -163,7 +166,7 @@ BEGIN
         MIN(created_at) as oldest_entry,
         MAX(created_at) as newest_entry,
         COUNT(DISTINCT language) as languages_cached
-    FROM tts_cache;
+    FROM tts_caches;
 END;
 $$ LANGUAGE plpgsql;
 

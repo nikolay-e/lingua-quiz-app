@@ -1,16 +1,13 @@
-const { test, expect } = require('@playwright/test');
-const { register, login, logout } = require('./helpers');
+import { test, expect } from '@playwright/test';
+import { register, login, logout } from './helpers';
 
 test.describe.serial('User Authentication', () => {
   // Generate a unique user for this test suite with extra entropy
-  const generateUniqueEmail = () => {
+  const generateUniqueEmail = (): string => {
     const timestamp = Date.now();
-    const random1 = Math.random().toString(36).substring(2, 15);
-    const random2 = Math.random().toString(36).substring(2, 15);
-    const processId = process.pid || Math.floor(Math.random() * 10000);
-    // Add additional randomness with high precision timestamp
-    const nanoTime = process.hrtime ? process.hrtime.bigint().toString() : Date.now() + Math.random();
-    return `test_${timestamp}_${random1}_${random2}_${processId}_${nanoTime}@example.com`;
+    const random = Math.random().toString(36).substring(2, 8);
+    // Keep username under 50 characters (backend limit)
+    return `test_${timestamp}_${random}`;
   };
   
   const testUser = generateUniqueEmail();
@@ -32,7 +29,7 @@ test.describe.serial('User Authentication', () => {
       userRegistered = true;
       actualTestUser = testUser; // Store the successful username
     } catch (error) {
-      if (error.message && error.message.includes('Conflict')) {
+      if (error instanceof Error && error.message && error.message.includes('Conflict')) {
         // If there's still a conflict with our highly unique username, try once more
         const fallbackUser = generateUniqueEmail();
         console.log(`Registration conflict detected (unlikely), trying with new username: ${fallbackUser}`);
@@ -298,7 +295,12 @@ test.describe.serial('User Authentication', () => {
     const token = await page.evaluate(() => localStorage.getItem('token'));
     const apiUrl = process.env.API_URL || 'http://localhost:9000/api';
     
-    const response = await page.evaluate(async ({ token, apiUrl }) => {
+    interface DeleteResponse {
+      status: number;
+      ok: boolean;
+    }
+    
+    const response = await page.evaluate(async ({ token, apiUrl }): Promise<DeleteResponse> => {
       const response = await fetch(`${apiUrl}/auth/delete-account`, {
         method: 'DELETE',
         headers: {

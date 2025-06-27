@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "E2E tests for your monorepo",
   "scripts": {
-    "test": "playwright test"
+    "test": "playwright test",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@playwright/test": "^1.32.0"
+    "@playwright/test": "^1.32.0",
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3"
   }
 }

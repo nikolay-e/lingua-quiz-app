@@ -11,6 +11,7 @@ import requests
 import random
 import string
 import base64
+from urllib.parse import quote
 
 # Configuration
 API_URL = os.getenv('API_URL', 'http://localhost:9000/api')
@@ -75,12 +76,23 @@ class TestRunner:
         self.test("Reject duplicate registration", self.test_duplicate_register)
         self.test("Reject invalid credentials", self.test_invalid_login)
         
+        # Enhanced auth validation tests
+        self.test("Reject weak password", self.test_weak_password)
+        self.test("Reject short username", self.test_short_username)
+        self.test("Reject empty credentials", self.test_empty_credentials)
+        self.test("Reject malformed JWT token", self.test_malformed_token)
+        
         # Protected endpoint tests
         self.test("Get word lists (authenticated)", self.test_get_word_lists)
         self.test("Get user word sets", self.test_get_user_word_sets)
         self.test("Get specific word set by ID", self.test_get_word_set_by_id)
         self.test("Update word set status", self.test_update_word_status)
         self.test("Access denied without token", self.test_unauthorized)
+        
+        # Enhanced word set tests
+        self.test("Get non-existent word set", self.test_get_nonexistent_word_set)
+        self.test("Update word status with invalid data", self.test_invalid_word_status_update)
+        self.test("Get user word sets with invalid list name", self.test_invalid_word_list_name)
         
         # TTS tests (only run on deployed environments)
         if not SKIP_TTS_TESTS:
@@ -114,7 +126,8 @@ class TestRunner:
         self.assert_equal(r.status_code, 200)
         data = r.json()
         self.assert_equal(data['status'], 'ok')
-        self.assert_in('components', data)
+        self.assert_equal(data['database'], 'connected')
+        self.assert_in('timestamp', data)
     
     def test_register(self):
         """Test user registration"""
@@ -141,8 +154,8 @@ class TestRunner:
     def test_duplicate_register(self):
         """Test duplicate registration rejection"""
         r = requests.post(f"{API_URL}/auth/register", json=self.test_user, timeout=TIMEOUT)
-        self.assert_equal(r.status_code, 409)
-        self.assert_in('Conflict', r.json()['message'])
+        self.assert_equal(r.status_code, 400)
+        self.assert_in('already exists', r.json()['detail'])
     
     def test_invalid_login(self):
         """Test invalid login rejection"""
@@ -175,10 +188,10 @@ class TestRunner:
         r = requests.get(f"{API_URL}/word-sets", headers=headers, timeout=TIMEOUT)
         if r.status_code == 200 and r.json():
             word_list_name = r.json()[0]['name']
-            # Get user word sets
+            # Get user word sets - API expects snake_case parameter
             r = requests.get(
                 f"{API_URL}/word-sets/user",
-                params={'wordListName': word_list_name},
+                params={'word_list_name': word_list_name},
                 headers=headers,
                 timeout=TIMEOUT
             )
@@ -243,7 +256,7 @@ class TestRunner:
     def test_unauthorized(self):
         """Test unauthorized access"""
         r = requests.get(f"{API_URL}/word-sets", timeout=TIMEOUT)
-        self.assert_equal(r.status_code, 401)
+        self.assert_equal(r.status_code, 403)
     
     def test_delete_account(self):
         """Test account deletion"""
@@ -309,30 +322,28 @@ class TestRunner:
         # Use text that definitely won't be in the database
         payload = {'text': 'xyzzyx_invalid_word_12345', 'language': 'German'}
         r = requests.post(f"{API_URL}/tts/synthesize", json=payload, headers=headers, timeout=TIMEOUT)
+        # The API returns 400 when the word is not found in database
         self.assert_equal(r.status_code, 400)
         data = r.json()
-        self.assert_in('message', data)
-        self.assert_in('not found in database', data['message'])
+        self.assert_in('detail', data)
     
     def test_tts_synthesize_unsupported_language(self):
         """Test TTS synthesis with unsupported language"""
         headers = {'Authorization': f'Bearer {self.token}'}
         payload = {'text': 'hello', 'language': 'Klingon'}
         r = requests.post(f"{API_URL}/tts/synthesize", json=payload, headers=headers, timeout=TIMEOUT)
-        self.assert_equal(r.status_code, 400)
+        self.assert_equal(r.status_code, 422)
         data = r.json()
-        self.assert_in('message', data)
-        self.assert_in('not supported', data['message'])
+        self.assert_in('detail', data)
     
     def test_tts_synthesize_empty_text(self):
         """Test TTS synthesis with empty text"""
         headers = {'Authorization': f'Bearer {self.token}'}
         payload = {'text': '', 'language': 'German'}
         r = requests.post(f"{API_URL}/tts/synthesize", json=payload, headers=headers, timeout=TIMEOUT)
-        self.assert_equal(r.status_code, 400)
+        self.assert_equal(r.status_code, 422)
         data = r.json()
-        self.assert_in('message', data)
-        self.assert_in('must be between 1 and 500 characters', data['message'])
+        self.assert_in('detail', data)
     
     def test_tts_synthesize_too_long_text(self):
         """Test TTS synthesis with text too long"""
@@ -340,16 +351,15 @@ class TestRunner:
         long_text = 'a' * 501  # 501 characters
         payload = {'text': long_text, 'language': 'German'}
         r = requests.post(f"{API_URL}/tts/synthesize", json=payload, headers=headers, timeout=TIMEOUT)
-        self.assert_equal(r.status_code, 400)
+        self.assert_equal(r.status_code, 422)
         data = r.json()
-        self.assert_in('message', data)
-        self.assert_in('must be between 1 and 500 characters', data['message'])
+        self.assert_in('detail', data)
     
     def test_tts_synthesize_unauthorized(self):
         """Test TTS synthesis without authentication"""
         payload = {'text': 'hello', 'language': 'German'}
         r = requests.post(f"{API_URL}/tts/synthesize", json=payload, timeout=TIMEOUT)
-        self.assert_equal(r.status_code, 401)
+        self.assert_equal(r.status_code, 403)
     
     def test_tts_rate_limiting(self):
         """Test TTS rate limiting (user-based)"""
@@ -364,6 +374,87 @@ class TestRunner:
             self.assert_true(r.status_code in [200, 400])  # 400 if text not in DB
             
         # Note: Testing actual rate limit would require 100+ requests which is impractical for integration tests
+    
+    # Enhanced validation tests
+    def test_weak_password(self):
+        """Test registration with weak password"""
+        weak_user = {
+            'username': self.random_username(),
+            'password': '123'  # Too short
+        }
+        r = requests.post(f"{API_URL}/auth/register", json=weak_user, timeout=TIMEOUT)
+        self.assert_equal(r.status_code, 422)
+        data = r.json()
+        self.assert_in('detail', data)
+    
+    def test_short_username(self):
+        """Test registration with short username"""
+        short_user = {
+            'username': 'ab',  # Too short
+            'password': 'ValidPassword123!'
+        }
+        r = requests.post(f"{API_URL}/auth/register", json=short_user, timeout=TIMEOUT)
+        self.assert_equal(r.status_code, 422)
+        data = r.json()
+        self.assert_in('detail', data)
+    
+    def test_empty_credentials(self):
+        """Test registration with empty credentials"""
+        empty_user = {
+            'username': '',
+            'password': ''
+        }
+        r = requests.post(f"{API_URL}/auth/register", json=empty_user, timeout=TIMEOUT)
+        self.assert_equal(r.status_code, 422)
+        data = r.json()
+        self.assert_in('detail', data)
+    
+    def test_malformed_token(self):
+        """Test access with malformed JWT token"""
+        headers = {'Authorization': 'Bearer invalid.token.here'}
+        r = requests.get(f"{API_URL}/word-sets", headers=headers, timeout=TIMEOUT)
+        self.assert_equal(r.status_code, 401)
+    
+    def test_get_nonexistent_word_set(self):
+        """Test getting non-existent word set"""
+        headers = {'Authorization': f'Bearer {self.token}'}
+        r = requests.get(f"{API_URL}/word-sets/999999", headers=headers, timeout=TIMEOUT)
+        self.assert_equal(r.status_code, 404)
+    
+    def test_invalid_word_status_update(self):
+        """Test updating word status with invalid data"""
+        headers = {'Authorization': f'Bearer {self.token}'}
+        
+        # Test with invalid status
+        invalid_data = {
+            'status': 'INVALID_LEVEL',
+            'wordPairIds': [1]
+        }
+        r = requests.post(f"{API_URL}/word-sets/user", json=invalid_data, headers=headers, timeout=TIMEOUT)
+        self.assert_equal(r.status_code, 422)
+        
+        # Test with missing fields
+        incomplete_data = {
+            'status': 'LEVEL_1'
+            # Missing wordPairIds
+        }
+        r = requests.post(f"{API_URL}/word-sets/user", json=incomplete_data, headers=headers, timeout=TIMEOUT)
+        self.assert_equal(r.status_code, 422)
+    
+    def test_invalid_word_list_name(self):
+        """Test getting user word sets with invalid list name"""
+        headers = {'Authorization': f'Bearer {self.token}'}
+        r = requests.get(
+            f"{API_URL}/word-sets/user",
+            params={'word_list_name': 'NonExistentList'},
+            headers=headers,
+            timeout=TIMEOUT
+        )
+        # Should still return 200 with empty list, not error
+        self.assert_equal(r.status_code, 200)
+        data = r.json()
+        self.assert_true(isinstance(data, list))
+        self.assert_equal(len(data), 0)
 
 def main():
     """Run integration tests"""

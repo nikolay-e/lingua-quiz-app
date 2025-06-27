@@ -1,8 +1,8 @@
-const { defineConfig, devices } = require('@playwright/test');
+import { defineConfig, devices } from '@playwright/test';
 
 const baseURL = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
 
-module.exports = defineConfig({
+export default defineConfig({
   testDir: './tests',
   timeout: 60 * 1000,
   expect: {
@@ -16,22 +16,12 @@ module.exports = defineConfig({
     headless: true,
     actionTimeout: 10000,
     navigationTimeout: 30000,
-    // Enable console logging
-    launchOptions: {
-      logger: {
-        isEnabled: (_name, _severity) => true,
-        log: (_name, _severity, message, _args) => {
-          // eslint-disable-next-line no-console
-          console.log(`playwright: ${message}`);
-        }
-      }
-    }
   },
   reporter: [['html', { open: 'never' }], ['list']],
   // Retry failed tests
   retries: process.env.CI ? 2 : 0,
-  // Run tests in parallel
-  workers: process.env.CI ? 1 : undefined,
+  // Run tests in parallel - tests use unique usernames to avoid conflicts
+  workers: process.env.CI ? 4 : undefined, // undefined = auto-detect based on CPU cores
 
   projects: [
     // Desktop configurations
@@ -40,37 +30,31 @@ module.exports = defineConfig({
       use: { 
         browserName: 'chromium', 
         viewport: { width: 1280, height: 720 },
-        launchOptions: {
-          args: ['--enable-logging', '--v=1'],
-        },
       },
     },
     {
       name: 'Desktop Firefox',
-      testIgnore: 'tests/002-quiz.spec.js',
+      testIgnore: 'tests/002-quiz.spec.js.deprecated',
       use: { browserName: 'firefox', viewport: { width: 1280, height: 720 } },
     },
     {
       name: 'Desktop WebKit',
-      testIgnore: 'tests/002-quiz.spec.js',
+      testIgnore: 'tests/002-quiz.spec.js.deprecated',
       use: { browserName: 'webkit', viewport: { width: 1280, height: 720 } },
     },
 
     // Mobile configurations
     {
       name: 'Mobile Chrome',
-      testIgnore: 'tests/002-quiz.spec.js',
+      testIgnore: 'tests/002-quiz.spec.js.deprecated',
       use: {
         browserName: 'chromium',
         ...devices['Pixel 5'],
-        launchOptions: {
-          args: ['--enable-logging', '--v=1'],
-        },
       },
     },
     {
       name: 'Mobile Safari',
-      testIgnore: 'tests/002-quiz.spec.js',
+      testIgnore: 'tests/002-quiz.spec.js.deprecated',
       use: {
         browserName: 'webkit',
         ...devices['iPhone 12'],

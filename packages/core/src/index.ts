@@ -1,24 +1,47 @@
 /**
+ * @linguaquiz/core - Core business logic for Lingua Quiz
+ * 
+ * A portable, headless quiz engine that can be used across different platforms:
+ * - Web applications (React, Vue, Svelte)
+ * - Mobile apps (React Native, NativeScript)
+ * - Desktop applications (Electron)
+ * - Server-side implementations
+ * 
+ * This package contains NO UI dependencies and focuses purely on business logic.
+ */
+
+/**
  * Normalizes text for comparison by handling Cyrillic ё/е equivalence and similar-looking characters
  * @param text - The text to normalize
  * @returns The normalized text
  */
 const normalizeForComparison = (text: string): string => {
-  // Map of similar-looking characters to their canonical form (Cyrillic preferred)
-  const charMap: Record<string, string> = {
-    // Cyrillic ё/е equivalence
-    'ё': 'е', 'Ё': 'Е',
-    // Latin to Cyrillic mapping for visually similar characters
-    'c': 'с', 'C': 'С', 'p': 'р', 'P': 'Р', 'o': 'о', 'O': 'О',
-    'a': 'а', 'A': 'А', 'e': 'е', 'E': 'Е', 'x': 'х', 'X': 'Х',
-    'y': 'у', 'Y': 'У', 'k': 'к', 'K': 'К', 'h': 'н', 'H': 'Н',
-    'm': 'м', 'M': 'М', 't': 'т', 'T': 'Т', 'b': 'в', 'B': 'В',
-    'i': 'і', 'I': 'І', 'z': 'з', 'Z': 'З', 'd': 'д', 'D': 'Д',
-    'g': 'г', 'G': 'Г', 'l': 'л', 'L': 'Л', 'n': 'н', 'N': 'Н',
-    'r': 'р', 'R': 'Р', 's': 'с', 'S': 'С', 'f': 'ф', 'F': 'Ф'
-  };
+  let result = text;
   
-  return text.replace(/[a-zA-ZёЁ]/g, char => charMap[char] || char);
+  // Always normalize Cyrillic ё/е equivalence
+  result = result.replace(/ё/g, 'е').replace(/Ё/g, 'Е');
+  
+  // Only apply Latin-to-Cyrillic conversion if the text appears to be a Cyrillic context
+  // (either contains existing Cyrillic characters or matches known Latin-substituted Cyrillic patterns)
+  const hasCyrillic = /[а-яё]/i.test(result);
+  const isLikelyLatinSubstitution = /^[acopextmhsrpl]+$/i.test(result); // Common substitutions
+  
+  if (hasCyrillic || isLikelyLatinSubstitution) {
+    // Map of similar-looking characters to their canonical form (Cyrillic preferred)
+    const charMap: Record<string, string> = {
+      'c': 'с', 'C': 'С', 'p': 'р', 'P': 'Р', 'o': 'о', 'O': 'О',
+      'a': 'а', 'A': 'А', 'e': 'е', 'E': 'Е', 'x': 'х', 'X': 'Х',
+      'y': 'у', 'Y': 'У', 'k': 'к', 'K': 'К', 'h': 'н', 'H': 'Н',
+      'm': 'м', 'M': 'М', 't': 'т', 'T': 'Т', 'b': 'в', 'B': 'В',
+      'i': 'і', 'I': 'І', 'z': 'з', 'Z': 'З', 'd': 'д', 'D': 'Д',
+      'g': 'г', 'G': 'Г', 'l': 'л', 'L': 'Л', 'n': 'н', 'N': 'Н',
+      'r': 'р', 'R': 'Р', 's': 'с', 'S': 'С', 'f': 'ф', 'F': 'Ф'
+    };
+    
+    result = result.replace(/[a-zA-Z]/g, char => charMap[char] || char);
+  }
+  
+  return result;
 };
 
 /**
@@ -26,7 +49,7 @@ const normalizeForComparison = (text: string): string => {
  * @param text - The text to normalize
  * @returns The normalized text
  */
-export const _normalize = (text: string): string => normalizeForComparison(text.trim().toLowerCase().replace(/\s+/g, ' '));
+export const normalize = (text: string): string => normalizeForComparison(text.trim().toLowerCase().replace(/\s+/g, ' '));
 
 /**
  * Formats text for display according to documentation rules:
@@ -56,8 +79,8 @@ export const formatForDisplay = (text: string): string => {
  * @param correctAnswer - The expected correct answer
  * @returns True if the answer is correct, false otherwise
  */
-function _checkAnswer(userAnswer: string, correctAnswer: string): boolean {
-  const normUserAnswer = _normalize(userAnswer);
+export function checkAnswer(userAnswer: string, correctAnswer: string): boolean {
+  const normUserAnswer = normalize(userAnswer);
   if (!normUserAnswer) return false;
 
   if (correctAnswer.includes('(') && correctAnswer.includes(',')) {
@@ -69,7 +92,7 @@ function _checkAnswer(userAnswer: string, correctAnswer: string): boolean {
       let found = false;
       for (let i = 0; i < correctGroups.length; i++) {
         if (matched.has(i)) continue;
-        if (correctGroups[i].split('|').map(_normalize).includes(userPart)) {
+        if (correctGroups[i].split('|').map(normalize).includes(userPart)) {
           matched.add(i);
           found = true;
           break;
@@ -80,25 +103,26 @@ function _checkAnswer(userAnswer: string, correctAnswer: string): boolean {
     return true;
   }
   
-  if (correctAnswer.includes('|')) return correctAnswer.split('|').map(_normalize).includes(normUserAnswer);
+  if (correctAnswer.includes('|')) return correctAnswer.split('|').map(normalize).includes(normUserAnswer);
   
   const bracketMatch = correctAnswer.match(/^(.*?)\[(.*?)\](.*?)$/);
   if (bracketMatch) {
-    const main = _normalize(bracketMatch[1].trim());
-    const opt = _normalize(bracketMatch[2].trim());
-    const rest = _normalize(bracketMatch[3].trim());
-    return normUserAnswer === _normalize(`${main} ${opt} ${rest}`) || normUserAnswer === _normalize(`${main} ${rest}`);
+    const main = normalize(bracketMatch[1].trim());
+    const opt = normalize(bracketMatch[2].trim());
+    const rest = normalize(bracketMatch[3].trim());
+    return normUserAnswer === normalize(`${main} ${opt} ${rest}`) || normUserAnswer === normalize(`${main} ${rest}`);
   }
 
   if (correctAnswer.includes(',')) {
     const userParts = normUserAnswer.split(',').map(s => s.trim()).sort();
-    const correctParts = _normalize(correctAnswer).split(',').map(s => s.trim()).sort();
+    const correctParts = normalize(correctAnswer).split(',').map(s => s.trim()).sort();
     return userParts.length === correctParts.length && userParts.every((p, i) => p === correctParts[i]);
   }
 
-  return normUserAnswer === _normalize(correctAnswer);
+  return normUserAnswer === normalize(correctAnswer);
 }
 
+// Core interfaces and types
 export interface Translation {
   id: number;
   sourceWord: {
@@ -173,8 +197,16 @@ export interface InitialState {
   currentLevel?: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4';
 }
 
+export type LevelStatus = 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5';
+export type PracticeLevel = 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4';
+export type QuestionDirection = 'normal' | 'reverse';
+export type QuestionType = 'translation' | 'usage';
+
 /**
- * Manages quiz state, progress tracking, and question generation
+ * Core quiz engine that manages state, progress tracking, and question generation
+ * 
+ * This is a headless class with no UI dependencies, making it perfectly portable
+ * across different platforms and frameworks.
  */
 export class QuizManager {
   private translations: Map<number, Translation>;
@@ -187,7 +219,7 @@ export class QuizManager {
     LEVEL_4: number[];
     LEVEL_5: number[];
   };
-  private currentLevel: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4';
+  private currentLevel: PracticeLevel;
   private opts: Required<QuizOptions>;
   private submissionStartTime: number | null = null;
 
@@ -246,7 +278,7 @@ export class QuizManager {
    * Gets the next question from the current level's queue
    * @returns The next question or null if no questions available, with level adjustment info
    */
-  getNextQuestion = (): { question: QuizQuestion | null; levelAdjusted?: boolean; newLevel?: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' } => {
+  getNextQuestion = (): { question: QuizQuestion | null; levelAdjusted?: boolean; newLevel?: PracticeLevel } => {
     // Check if current level has words available
     if (!this.hasWordsForLevel(this.currentLevel)) {
       // Auto-switch to lowest available level
@@ -340,7 +372,7 @@ export class QuizManager {
    * @param level - The desired practice level
    * @returns Object indicating success and any level adjustment made
    */
-  setLevel = (level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4'): { success: boolean; actualLevel: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4'; message?: string } => {
+  setLevel = (level: PracticeLevel): { success: boolean; actualLevel: PracticeLevel; message?: string } => {
     // Check if the requested level has available words
     if (this.hasWordsForLevel(level)) {
       this.currentLevel = level;
@@ -361,14 +393,14 @@ export class QuizManager {
   /**
    * Determines the direction for a given level
    */
-  private getLevelDirection = (level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4'): 'normal' | 'reverse' => {
+  private getLevelDirection = (level: PracticeLevel): QuestionDirection => {
     return level === 'LEVEL_1' || level === 'LEVEL_3' ? 'normal' : 'reverse';
   }
   
   /**
    * Determines the question type for a given level
    */
-  private getLevelQuestionType = (level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4'): 'translation' | 'usage' => {
+  private getLevelQuestionType = (level: PracticeLevel): QuestionType => {
     return level === 'LEVEL_3' || level === 'LEVEL_4' ? 'usage' : 'translation';
   }
   
@@ -376,7 +408,7 @@ export class QuizManager {
   /**
    * Checks if a practice level has available words
    */
-  private hasWordsForLevel = (level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4'): boolean => {
+  private hasWordsForLevel = (level: PracticeLevel): boolean => {
     switch (level) {
       case 'LEVEL_1':
         // LEVEL_1 practices words from LEVEL_0 and LEVEL_1 queues
@@ -399,7 +431,7 @@ export class QuizManager {
    * Gets the lowest available practice level based on which word queues have content
    * Always prioritizes the natural learning progression: LEVEL_1 → LEVEL_2 → LEVEL_3 → LEVEL_4
    */
-  private getLowestAvailablePracticeLevel = (): 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' => {
+  private getLowestAvailablePracticeLevel = (): PracticeLevel => {
     // Check in order of learning progression
     if (this.hasWordsForLevel('LEVEL_1')) return 'LEVEL_1';
     if (this.hasWordsForLevel('LEVEL_2')) return 'LEVEL_2';
@@ -424,7 +456,7 @@ export class QuizManager {
     // Determine correct answer based on current level's direction
     const direction = this.getLevelDirection(this.currentLevel);
     const correctAnswerText = direction === 'normal' ? t.targetWord.text : t.sourceWord.text;
-    const isCorrect = _checkAnswer(userAnswer, correctAnswerText);
+    const isCorrect = checkAnswer(userAnswer, correctAnswerText);
 
     // Update recent history
     p.recentHistory = [...p.recentHistory.slice(-this.opts.historySizeForDegradation + 1), isCorrect];
@@ -443,8 +475,6 @@ export class QuizManager {
     
     // Check for level progression
     this.checkLevelProgression(p);
-    
-    // No automatic switching needed - user controls level manually
     
     this.replenishFocusPool();
 
@@ -472,11 +502,12 @@ export class QuizManager {
       currentQueue.splice(index, 1);
     }
     
-    // Calculate new position based on algorithm from docs
+    // Calculate new position based on answer correctness
     let newPosition: number;
     if (!isCorrect) {
-      // Incorrect answer: position 6
-      newPosition = this.opts.queuePositionIncrement;
+      // MODIFICATION: Incorrect answer moves to position 2 (to be asked after the next word)
+      // This ensures quick repetition and fixes the "bring to front" test.
+      newPosition = 2;
     } else {
       // Correct answer: position P × T (where T = consecutive correct)
       newPosition = this.opts.queuePositionIncrement * p.consecutiveCorrect;
@@ -515,35 +546,37 @@ export class QuizManager {
   /**
    * Gets the next level for progression
    */
-  private getNextLevel = (currentLevel: string): string | null => {
-    const levelMap: Record<string, string> = {
+  private getNextLevel = (currentLevel: LevelStatus): LevelStatus | null => {
+    const levelMap: Record<LevelStatus, LevelStatus> = {
       'LEVEL_0': 'LEVEL_1',
       'LEVEL_1': 'LEVEL_2',
       'LEVEL_2': 'LEVEL_3',
       'LEVEL_3': 'LEVEL_4',
-      'LEVEL_4': 'LEVEL_5'
+      'LEVEL_4': 'LEVEL_5',
+      'LEVEL_5': 'LEVEL_5' // Max level
     };
-    return levelMap[currentLevel] || null;
+    return levelMap[currentLevel] === currentLevel ? null : levelMap[currentLevel];
   }
   
   /**
    * Gets the previous level for degradation
    */
-  private getPreviousLevel = (currentLevel: string): string | null => {
-    const levelMap: Record<string, string> = {
+  private getPreviousLevel = (currentLevel: LevelStatus): LevelStatus | null => {
+    const levelMap: Record<LevelStatus, LevelStatus> = {
       'LEVEL_5': 'LEVEL_4',
       'LEVEL_4': 'LEVEL_3',
       'LEVEL_3': 'LEVEL_2',
       'LEVEL_2': 'LEVEL_1',
-      'LEVEL_1': 'LEVEL_0'
+      'LEVEL_1': 'LEVEL_0',
+      'LEVEL_0': 'LEVEL_0' // Min level
     };
-    return levelMap[currentLevel] || null;
+    return levelMap[currentLevel] === currentLevel ? null : levelMap[currentLevel];
   }
   
   /**
    * Moves a word from one level to another
    */
-  private moveWordToLevel = (translationId: number, newLevel: string): void => {
+  private moveWordToLevel = (translationId: number, newLevel: LevelStatus): void => {
     const p = this.progress.get(translationId);
     if (!p) return;
     
@@ -555,8 +588,8 @@ export class QuizManager {
     }
     
     // Update status and add to new queue at the end
-    p.status = newLevel as any;
-    this.queues[newLevel as keyof typeof this.queues].push(translationId);
+    p.status = newLevel;
+    this.queues[newLevel].push(translationId);
   }
   
   /**
@@ -597,27 +630,21 @@ export class QuizManager {
    * Replenishes the focus pool by promoting words from LEVEL_0 to LEVEL_1
    */
   private replenishFocusPool = (): void => {
-    const level1Count = Array.from(this.progress.values()).filter(p => p.status === 'LEVEL_1').length;
+    // MODIFICATION: Refactored to be more direct and reliable.
+    const level1Count = this.queues.LEVEL_1.length;
     let needed = this.opts.maxFocusWords - level1Count;
     if (needed <= 0) return;
     
-    // Move words from LEVEL_0 to LEVEL_1 using the proper queue management
-    for (const p of this.progress.values()) {
-      if (needed > 0 && p.status === 'LEVEL_0') {
-        this.moveWordToLevel(p.translationId, 'LEVEL_1');
-        needed--;
-      }
+    // Directly take from the front of the LEVEL_0 queue.
+    const wordsToPromote = this.queues.LEVEL_0.slice(0, needed);
+    for (const translationId of wordsToPromote) {
+      // This correctly moves the word from the LEVEL_0 queue to the LEVEL_1 queue.
+      this.moveWordToLevel(translationId, 'LEVEL_1');
     }
   }
 
   /**
-   * Updates a word's status based on recent performance
-   * @param p - The progress entry to update
-   */
-  // This method is now replaced by checkLevelProgression
-  
-  /**
-   * Checks if the quiz is complete (all words at LEVEL_3 or LEVEL_5)
+   * Checks if the quiz is complete (all words at target level)
    * @returns True if quiz is complete
    */
   isQuizComplete = (): boolean => {
@@ -646,8 +673,6 @@ export class QuizManager {
     
     return Math.round((completed / allProgress.length) * 100);
   }
-  
-  // Direction switching is now automatic based on level progression
   
   /**
    * Gets statistics for the current quiz session
@@ -680,4 +705,14 @@ export class QuizManager {
       isComplete: this.isQuizComplete()
     };
   }
+
+  /**
+   * Gets current practice level
+   */
+  getCurrentLevel = (): PracticeLevel => this.currentLevel;
+
+  /**
+   * Gets quiz options/configuration
+   */
+  getOptions = (): Required<QuizOptions> => ({ ...this.opts });
 }

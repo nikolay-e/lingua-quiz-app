@@ -30,15 +30,21 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-COPY package*.json ./
-
-COPY . .
+# Copy e2e-tests package files
+COPY packages/e2e-tests/package*.json ./
+COPY packages/e2e-tests/tsconfig.json ./
 
 RUN npm install
+
+# Copy all e2e test files
+COPY packages/e2e-tests/ .
 
 # Install playwright browsers
 RUN npx playwright install-deps
 RUN npx playwright install
+
+# Verify TypeScript compilation works
+RUN npm run typecheck
 
 # Make playwright available in PATH
 ENV PATH="/app/node_modules/.bin:${PATH}"

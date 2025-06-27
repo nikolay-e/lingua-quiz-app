@@ -2,8 +2,8 @@
   import { onMount } from 'svelte';
   import { authStore, quizStore } from '../stores';
   import api from '../api';
-  import type { SubmissionResult, QuizQuestion } from '../quiz-core';
-  import { formatForDisplay } from '../quiz-core';
+  import type { SubmissionResult, QuizQuestion } from '@linguaquiz/core';
+  import { formatForDisplay } from '@linguaquiz/core';
   import type { QuizFeedback } from '../types';
   
   // Component-specific state
@@ -65,13 +65,8 @@
   $: sourceLanguage = currentQuestion?.sourceLanguage || '';
   $: targetLanguage = currentQuestion?.targetLanguage || '';
   
-  // Sync currentLevel with quiz manager's level for initialization
-  $: if ($quizStore.quizManager && currentLevel === 'LEVEL_1') {
-    const managerLevel = $quizStore.quizManager.getState().currentLevel;
-    if (managerLevel !== currentLevel) {
-      currentLevel = managerLevel;
-    }
-  }
+  // Get current level from quiz manager for display purposes only
+  $: currentLevel = $quizStore.quizManager?.getState().currentLevel || 'LEVEL_1';
   
   // Get word lists from quiz manager state
   $: wordLists = $quizStore.quizManager ? (() => {
@@ -119,34 +114,7 @@
   $: level4Words = wordLists.level4?.map((w: any) => `${w.source} -> ${w.target}`) || [];
   $: level5Words = wordLists.level5?.map((w: any) => `${w.source} -> ${w.target}`) || [];
   
-  // Level selector for practice
-  let currentLevel: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' = 'LEVEL_1';
-  
-  async function setLevel(level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4'): Promise<void> {
-    try {
-      const result = await quizStore.setLevel($authStore.token!, level);
-      
-      // Always update currentLevel to the actual level (whether success or auto-adjusted)
-      currentLevel = result.actualLevel;
-      
-      if (result.success) {
-        feedback = null;
-      } else {
-        // Show feedback when level was auto-adjusted due to no words
-        feedback = { 
-          message: result.message || `${level} has no available words. Switched to ${result.actualLevel}.`, 
-          isSuccess: false 
-        } as QuizFeedback;
-      }
-      
-      usageExamples = null;
-      userAnswer = '';
-      if (answerInput) answerInput.focus();
-    } catch (error: unknown) {
-      console.error('Failed to set level:', error);
-      feedback = { message: 'Failed to change level. Please try again.', isSuccess: false };
-    }
-  }
+  // Current level is now automatically managed by the quiz system
   
   function getLevelDescription(level: string): string {
     switch (level) {
@@ -184,7 +152,7 @@
     try {
       const ttsData = await api.synthesizeSpeech($authStore.token!, text, language);
       const audioBlob: Blob = new Blob(
-        [Uint8Array.from(atob(ttsData.audioUrl), (c: string) => c.charCodeAt(0))],
+        [Uint8Array.from(atob(ttsData.audioData), (c: string) => c.charCodeAt(0))],
         { type: 'audio/mpeg' }
       );
       const audioUrl: string = URL.createObjectURL(audioBlob);
@@ -267,7 +235,19 @@
         if (requestId === currentRequestId) {
           if (result) {
             feedback = result;
-            usageExamples = null;
+            // Set usage examples if they exist in the translation
+            if ('translation' in result && result.translation) {
+              usageExamples = {
+                source: result.translation.sourceWord.usageExample || '',
+                target: result.translation.targetWord.usageExample || ''
+              };
+              // Only show if at least one example exists
+              if (!usageExamples.source && !usageExamples.target) {
+                usageExamples = null;
+              }
+            } else {
+              usageExamples = null;
+            }
             userAnswer = '';
             // Immediately focus the input after clearing
             if (answerInput) answerInput.focus();
@@ -302,6 +282,7 @@
   function logout(): void {
     authStore.logout();
   }
+  
   
 </script>
 
@@ -413,14 +394,9 @@
     </div>
     
     {#if selectedQuiz}
-      <div class="level-selector">
-        <label for="level-select">Practice Level:</label>
-        <select id="level-select" value={currentLevel} on:change={(e) => setLevel(e.target.value)}>
-          <option value="LEVEL_1">{getLevelDescription('LEVEL_1')}</option>
-          <option value="LEVEL_2">{getLevelDescription('LEVEL_2')}</option>
-          <option value="LEVEL_3">{getLevelDescription('LEVEL_3')}</option>
-          <option value="LEVEL_4">{getLevelDescription('LEVEL_4')}</option>
-        </select>
+      <div class="current-level-display">
+        <span class="level-label">Current Practice Level:</span>
+        <span class="level-description">{getLevelDescription(currentLevel)}</span>
       </div>
     {/if}
     
