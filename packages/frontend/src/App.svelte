@@ -8,7 +8,7 @@
   let isAuthenticated = false;
   let currentPage: 'login' | 'register' = 'login';
   
-  authStore.subscribe(state => {
+  const unsubscribe = authStore.subscribe(state => {
     isAuthenticated = state.isAuthenticated;
     if (!isAuthenticated) {
       quizStore.reset();
@@ -16,7 +16,7 @@
   });
   
   onDestroy(() => {
-    authStore.cleanup();
+    unsubscribe();
   });
   
   function handleNavigation(event: CustomEvent<{ page: 'login' | 'register' }>) {

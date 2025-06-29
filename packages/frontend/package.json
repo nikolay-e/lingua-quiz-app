@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "predev": "npm run build --workspace=@linguaquiz/core",
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run build --workspace=@linguaquiz/core && vite build",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch"

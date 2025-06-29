@@ -48,7 +48,7 @@ RUN echo "server { \
     add_header Cross-Origin-Opener-Policy \"same-origin\" always; \
     \
     # Content Security Policy \
-    add_header Content-Security-Policy \"default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://lingua-quiz.nikolay-eremeev.com https://test-lingua-quiz.nikolay-eremeev.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';\" always; \
+    add_header Content-Security-Policy \"default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' http://localhost:9000 http://backend:9000 https://lingua-quiz.nikolay-eremeev.com https://test-lingua-quiz.nikolay-eremeev.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';\" always; \
     \
     # Static asset caching \
     location ~* \\\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)\$ { \
