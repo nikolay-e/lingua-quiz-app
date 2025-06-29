@@ -7,7 +7,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@linguaquiz/core": "workspace:*"
+    "@linguaquiz/core": "file:../core"
   },
   "devDependencies": {
     "@playwright/test": "^1.32.0",
