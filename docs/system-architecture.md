@@ -79,21 +79,21 @@ LinguaQuiz implements a learning system driven by a **decoupled, portable logic 
 LEVEL_0 (New) 
     ↓ [Auto-promotion to focus pool]
 LEVEL_1 (Learning: source → target) 
-    ↓ [3 consecutive correct]
+    ↓ [T_promo consecutive correct]
 LEVEL_2 (Learning: target → source) 
-    ↓ [3 consecutive correct]
+    ↓ [T_promo consecutive correct]
 LEVEL_3 (Examples: source → target) 
-    ↓ [3 consecutive correct]
+    ↓ [T_promo consecutive correct]
 LEVEL_4 (Examples: target → source) 
-    ↓ [3 consecutive correct]
+    ↓ [T_promo consecutive correct]
 LEVEL_5 (Mastered)
 ```
 
 ### **Queue-Based Word Selection**
 
   - **Deterministic ordering**: No randomization.
-  - **Error-based positioning**: Incorrect answers → position 6.
-  - **Success-based spacing**: Correct answers → position (6 × consecutive\_correct).
+  - **Error-based positioning**: Incorrect answers → position F (Focus Loop Size = 5).
+  - **Success-based spacing**: Correct answers → position (K × F) × consecutive\_correct = 10 × consecutive\_correct.
 
 ## **Answer Validation System**
 

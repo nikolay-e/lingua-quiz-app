@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { QuizManager, Translation, checkAnswer, normalize, formatForDisplay } from '../src/index';
+import { QuizManager, Translation, checkAnswer, normalize, formatForDisplay, K, F } from '../src/index';
 
 describe('Text Processing Functions', () => {
   describe('normalize', () => {
@@ -266,9 +266,14 @@ describe('QuizManager', () => {
       const newState = quizManager.getState();
       const newLevel1Queue = newState.queues.LEVEL_1;
       
-      // Word should be moved to position 6 (queuePositionIncrement × consecutiveCorrect)
+      // Word should be moved to position (K × F) × consecutiveCorrect
+      // With a 3-word queue, position (K × F) should place it at the end
+      const expectedQueuePosition = K * F * 1; // 1 consecutive correct answer
+      const queueLength = newLevel1Queue.length;
+      const expectedIndex = Math.min(expectedQueuePosition, queueLength - 1);
+      
       const newPosition = newLevel1Queue.indexOf(translationId);
-      expect(newPosition).toBe(2); // Position 6 = index 2 (end) in 3-word queue
+      expect(newPosition).toBe(expectedIndex);
     });
 
     it('should handle queue replenishment', () => {

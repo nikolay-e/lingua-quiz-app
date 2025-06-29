@@ -254,7 +254,7 @@ Authorization: Bearer <token>
 The application uses a 6-level mastery system:
 
 - **LEVEL_0**: New/unlearned words
-- **LEVEL_1**: Focus pool (max 20 words) - normal direction
+- **LEVEL_1**: Focus pool (max K × F × T_promo = 30 words) - normal direction
 - **LEVEL_2**: Reverse direction mastery
 - **LEVEL_3**: Normal direction with examples
 - **LEVEL_4**: Reverse direction with examples
