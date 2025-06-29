@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { register, login, getWordCountFromHeader, selectQuiz, waitForQuizReady, findCorrectAnswer } from './helpers';
+import { T_PROMO } from '@linguaquiz/core';
 
 interface StatusSummary {
   level0: number;
@@ -158,8 +159,8 @@ test.describe.serial('Quiz Automatic Level Progression', () => {
       const initialLevel = await getCurrentLevelDisplay(page);
       console.log('Starting level for progression test:', initialLevel);
       
-      // Answer a few questions correctly to trigger progression
-      for (let i = 0; i < 3; i++) {
+      // Answer T_PROMO questions correctly to trigger progression
+      for (let i = 0; i < T_PROMO; i++) {
         try {
           const questionWord = await page.locator('#word').innerText();
           console.log(`Question ${i + 1}: ${questionWord}`);
