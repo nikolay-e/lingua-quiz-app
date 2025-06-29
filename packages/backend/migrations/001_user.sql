@@ -1,6 +1,3 @@
--- Rename old table if it exists, then create new one
-ALTER TABLE IF EXISTS "user" RENAME TO "users";
-
 -- Users table
 CREATE TABLE IF NOT EXISTS "users" (
   id SERIAL PRIMARY KEY,
@@ -12,4 +9,3 @@ CREATE TABLE IF NOT EXISTS "users" (
 
 -- Indexes
 CREATE INDEX IF NOT EXISTS idx_users_username ON "users" (username);
-

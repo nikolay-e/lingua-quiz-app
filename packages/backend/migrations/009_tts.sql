@@ -1,12 +1,4 @@
 -- TTS cache table and functions
-
--- Rename old table if it exists
-ALTER TABLE IF EXISTS tts_cache RENAME TO tts_caches;
-
--- Critical fixes for existing production table
-ALTER TABLE IF EXISTS tts_caches ADD COLUMN IF NOT EXISTS audio_data BYTEA;
-ALTER TABLE IF EXISTS tts_caches ADD COLUMN IF NOT EXISTS file_size INTEGER;
-
 -- Enhanced TTS cache function for better compatibility
 CREATE OR REPLACE FUNCTION get_tts_cache_entry_validated_fixed(
     p_cache_key VARCHAR(32),
@@ -169,5 +161,3 @@ BEGIN
     FROM tts_caches;
 END;
 $$ LANGUAGE plpgsql;
-
-

@@ -53,6 +53,7 @@ DROP FUNCTION IF EXISTS update_user_word_level(INTEGER, INTEGER, VARCHAR);
 -- Drop unused word utility functions (from 003_word.sql)
 DROP FUNCTION IF EXISTS util_normalize_answer(TEXT);
 DROP FUNCTION IF EXISTS util_clean_word_data(JSONB);
+DROP FUNCTION IF EXISTS util_clean_pipe_alternatives(TEXT);
 
 -- Drop additional functions that exist in staging/production but not in cleaned local migrations
 DROP FUNCTION IF EXISTS get_quiz_completion_percentage(INTEGER, INTEGER);
@@ -102,7 +103,6 @@ DROP INDEX IF EXISTS idx_tts_cache_last_accessed;
 -- VERIFICATION: After this migration, only these functions should remain:
 -- Essential functions that are still in use:
 -- 1. get_user_word_sets (API endpoint /api/word-sets/user)
--- 2. util_clean_pipe_alternatives (used by get_word_display_info in 014)
 -- 3. get_word_lists (API endpoint /api/word-sets)
 -- 4. update_user_word_set_status (API endpoint /api/word-sets/user POST)
 -- 5. get_tts_cache_entry_validated (TTS service)

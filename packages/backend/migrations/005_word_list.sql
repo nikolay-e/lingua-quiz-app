@@ -1,7 +1,3 @@
--- Rename old tables if they exist
-ALTER TABLE IF EXISTS word_list RENAME TO word_lists;
-ALTER TABLE IF EXISTS word_list_entry RENAME TO word_list_entries;
-
 -- Word lists table
 CREATE TABLE IF NOT EXISTS word_lists (
   id SERIAL PRIMARY KEY,

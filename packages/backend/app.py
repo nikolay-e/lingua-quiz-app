@@ -380,68 +380,6 @@ def get_tts_languages():
         'available': tts_service.is_available()
     })
 
-# Test endpoint for answer comparison logic (NON-PRODUCTION)
-@app.route('/api/test/answer-comparison', methods=['POST'])
-def test_answer_comparison():
-    """
-    Test endpoint for validating answer comparison logic.
-    WARNING: This endpoint should only be used for testing and development.
-    """
-    # Prevent production usage
-    if os.getenv('ENVIRONMENT', '').lower() == 'production':
-        return jsonify({'error': 'Test endpoints are not available in production'}), 403
-    
-    data = request.get_json()
-    if not data:
-        return jsonify({'error': 'JSON data required'}), 400
-    
-    user_answer = data.get('userAnswer', '').strip()
-    correct_answer = data.get('correctAnswer', '').strip()
-    
-    if not user_answer or not correct_answer:
-        return jsonify({'error': 'Both userAnswer and correctAnswer are required'}), 400
-    
-    try:
-        # Use the same pattern as other endpoints - use the utility functions
-        is_correct_result = query_db("""
-            SELECT util_check_answer_correctness(%s, %s) as is_correct
-        """, (user_answer, correct_answer), one=True)
-        
-        display_result = query_db("""
-            SELECT util_clean_pipe_alternatives(%s) as display_text
-        """, (correct_answer,), one=True)
-        
-        bracket_result = query_db("""
-            SELECT util_create_bracket_alternatives(%s) as bracket_alternatives
-        """, (correct_answer,), one=True)
-        
-        group_result = query_db("""
-            SELECT util_expand_parentheses_groups(%s) as group_expansions
-        """, (correct_answer,), one=True)
-        
-        return jsonify({
-            'input': {
-                'userAnswer': user_answer,
-                'correctAnswer': correct_answer
-            },
-            'result': {
-                'isCorrect': is_correct_result['is_correct'],
-                'displayText': display_result['display_text'],
-                'bracketAlternatives': bracket_result['bracket_alternatives'],
-                'groupExpansions': group_result['group_expansions']
-            },
-            'explanation': {
-                'hasParenthesesGrouping': '(' in correct_answer and ',' in correct_answer,
-                'hasPipes': '|' in correct_answer,
-                'hasCommas': ',' in correct_answer,
-                'hasSquareBrackets': '[' in correct_answer
-            }
-        })
-                
-    except Exception as e:
-        print(f"Error in test endpoint: {e}")
-        return jsonify({'error': 'An internal error has occurred.'}), 500
-
 # Error handler
 @app.errorhandler(404)
 def not_found(e):
