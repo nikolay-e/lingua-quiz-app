@@ -1,6 +1,3 @@
--- Rename old table if it exists, then create new one
-ALTER TABLE IF EXISTS translation RENAME TO translations;
-
 -- Translations table
 CREATE TABLE IF NOT EXISTS translations (
   id SERIAL PRIMARY KEY,
@@ -13,4 +10,3 @@ CREATE TABLE IF NOT EXISTS translations (
 -- Indexes
 CREATE INDEX IF NOT EXISTS idx_translations_source ON translations (source_word_id);
 CREATE INDEX IF NOT EXISTS idx_translations_target ON translations (target_word_id);
-

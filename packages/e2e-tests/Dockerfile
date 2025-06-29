@@ -30,10 +30,24 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Copy e2e-tests package files
-COPY packages/e2e-tests/package*.json ./
-COPY packages/e2e-tests/tsconfig.json ./
+# Copy core package first (needed for dependency resolution)
+COPY packages/core/package*.json ./packages/core/
+COPY packages/core/tsconfig.json ./packages/core/
+COPY packages/core/src/ ./packages/core/src/
 
+# Copy e2e-tests package files
+COPY packages/e2e-tests/package*.json ./packages/e2e-tests/
+COPY packages/e2e-tests/tsconfig.json ./packages/e2e-tests/
+
+# Install dependencies in the correct order
+WORKDIR /app/packages/core
+RUN npm install
+
+# Build core package to generate type declarations
+RUN npm run build
+
+# Install e2e-tests dependencies
+WORKDIR /app/packages/e2e-tests
 RUN npm install
 
 # Copy all e2e test files
@@ -47,7 +61,7 @@ RUN npx playwright install
 RUN npm run typecheck
 
 # Make playwright available in PATH
-ENV PATH="/app/node_modules/.bin:${PATH}"
+ENV PATH="/app/packages/e2e-tests/node_modules/.bin:${PATH}"
 
 # Default command runs all tests
-CMD ["playwright", "test"]
+CMD ["npx", "playwright", "test"]

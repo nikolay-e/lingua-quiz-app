@@ -10,6 +10,8 @@
  * This package contains NO UI dependencies and focuses purely on business logic.
  */
 
+import { F, K, T_PROMO, MISTAKE_THRESHOLD, MISTAKE_WINDOW, MAX_FOCUS_POOL_SIZE, RECENTLY_ASKED_SIZE, MIN_HISTORY_FOR_DEGRADATION } from './constants';
+
 /**
  * Normalizes text for comparison by handling Cyrillic ё/е equivalence and similar-looking characters
  * @param text - The text to normalize
@@ -232,12 +234,12 @@ export class QuizManager {
   constructor(translations: Translation[], initialState: InitialState = {}, options: QuizOptions = {}) {
     this.translations = new Map(translations.map(t => [t.id, t]));
     this.opts = {
-      maxFocusWords: options.maxFocusWords ?? 20,
-      correctAnswersToLevelUp: options.correctAnswersToLevelUp ?? 3,
-      mistakesToLevelDown: options.mistakesToLevelDown ?? 3,
-      historySizeForDegradation: options.historySizeForDegradation ?? 10,
-      recentlyAskedSize: options.recentlyAskedSize ?? 5,
-      queuePositionIncrement: options.queuePositionIncrement ?? 6,
+      maxFocusWords: options.maxFocusWords ?? MAX_FOCUS_POOL_SIZE,
+      correctAnswersToLevelUp: options.correctAnswersToLevelUp ?? T_PROMO,
+      mistakesToLevelDown: options.mistakesToLevelDown ?? MISTAKE_THRESHOLD,
+      historySizeForDegradation: options.historySizeForDegradation ?? MISTAKE_WINDOW,
+      recentlyAskedSize: options.recentlyAskedSize ?? RECENTLY_ASKED_SIZE,
+      queuePositionIncrement: options.queuePositionIncrement ?? (K * F),
       enableUsageExamples: options.enableUsageExamples ?? true,
     };
 
@@ -505,9 +507,9 @@ export class QuizManager {
     // Calculate new position based on answer correctness
     let newPosition: number;
     if (!isCorrect) {
-      // MODIFICATION: Incorrect answer moves to position 2 (to be asked after the next word)
-      // This ensures quick repetition and fixes the "bring to front" test.
-      newPosition = 2;
+      // Incorrect answer moves to position F (Focus Loop Size)
+      // This ensures quick repetition while maintaining the focus loop size
+      newPosition = F;
     } else {
       // Correct answer: position P × T (where T = consecutive correct)
       newPosition = this.opts.queuePositionIncrement * p.consecutiveCorrect;
@@ -534,7 +536,7 @@ export class QuizManager {
     
     // Check degradation (3 mistakes in last 10 attempts)
     const recentMistakes = p.recentHistory.filter(h => !h).length;
-    if (recentMistakes >= this.opts.mistakesToLevelDown && p.recentHistory.length >= 3) {
+    if (recentMistakes >= this.opts.mistakesToLevelDown && p.recentHistory.length >= MIN_HISTORY_FOR_DEGRADATION) {
       const prevLevel = this.getPreviousLevel(p.status);
       if (prevLevel) {
         this.moveWordToLevel(p.translationId, prevLevel);
@@ -716,3 +718,6 @@ export class QuizManager {
    */
   getOptions = (): Required<QuizOptions> => ({ ...this.opts });
 }
+
+// Export algorithm constants
+export { F, K, T_PROMO, MISTAKE_THRESHOLD, MISTAKE_WINDOW, MAX_FOCUS_POOL_SIZE, RECENTLY_ASKED_SIZE, MIN_HISTORY_FOR_DEGRADATION } from './constants';

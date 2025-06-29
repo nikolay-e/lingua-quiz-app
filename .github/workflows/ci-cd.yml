@@ -28,6 +28,11 @@ jobs:
       - name: Check dependencies
         run: npm run depcheck
         
+      - name: Run core package tests
+        run: |
+          cd packages/core
+          npm test
+        
       - name: Start test environment
         run: docker compose up --build -d db backend frontend
         

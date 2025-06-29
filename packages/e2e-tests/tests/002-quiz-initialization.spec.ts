@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { register, login } from './helpers';
+import { MAX_FOCUS_POOL_SIZE } from '@linguaquiz/core';
 
 test.describe.serial('Quiz Initialization', () => {
   const testUser = `init_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
@@ -92,9 +93,9 @@ test.describe.serial('Quiz Initialization', () => {
     const match = level1HeaderText.match(/\((\d+)\)/);
     const level1Count = match ? parseInt(match[1], 10) : 0;
     
-    // Verify Level 1 has a reasonable initial count (not more than 20 as per business logic)
+    // Verify Level 1 has a reasonable initial count (not more than MAX_FOCUS_POOL_SIZE as per business logic)
     expect(level1Count).toBeGreaterThan(0);
-    expect(level1Count).toBeLessThanOrEqual(20);
+    expect(level1Count).toBeLessThanOrEqual(MAX_FOCUS_POOL_SIZE);
     
     // Verify first question is shown
     const firstQuestion = await page.locator('#word').innerText();

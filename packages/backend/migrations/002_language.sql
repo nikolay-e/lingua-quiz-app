@@ -1,6 +1,3 @@
--- Rename old table if it exists, then create new one
-ALTER TABLE IF EXISTS language RENAME TO languages;
-
 -- Languages table
 CREATE TABLE IF NOT EXISTS languages (
   id SERIAL PRIMARY KEY,

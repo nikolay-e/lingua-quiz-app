@@ -1,6 +1,3 @@
--- Rename old table if it exists
-ALTER TABLE IF EXISTS user_translation_progress RENAME TO user_translation_progresses;
-
 -- User translation progresses table
 CREATE TABLE IF NOT EXISTS user_translation_progresses (
   id SERIAL PRIMARY KEY,
