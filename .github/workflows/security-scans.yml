@@ -4,6 +4,8 @@ on:
   schedule:
     - cron: '0 0 * * 0' # Weekly on Sunday
   workflow_dispatch:
+  push:
+    branches: [main]
 
 permissions:
   contents: read
@@ -12,17 +14,57 @@ permissions:
   security-events: write
 
 jobs:
-  zap-security-scan:
+  zap-full-scan:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+          - name: "Frontend"
+            url: "https://lingua-quiz.nikolay-eremeev.com"
+          - name: "Backend-API"
+            url: "https://lingua-quiz.nikolay-eremeev.com/api"
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Run ZAP Full Scan - ${{ matrix.target.name }}
+        uses: zaproxy/action-full-scan@v0.10.0
+        with:
+          target: ${{ matrix.target.url }}
+          fail_action: false
+          cmd_options: '-a -j -m 10 -T 120'
+          artifact_name: 'zap-${{ matrix.target.name }}-report'
+          
+      - name: Upload ZAP results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-${{ matrix.target.name }}-results
+          path: |
+            report_html.html
+            report_json.json
+            report_md.md
+            
+  dependency-scan:
     runs-on: ubuntu-latest
     steps:
-      - name: Run ZAP Baseline Scan (Frontend)
-        uses: zaproxy/action-baseline@v0.12.0
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Run OWASP Dependency Check
+        uses: dependency-check/Dependency-Check_Action@main
         with:
-          target: 'https://lingua-quiz.nikolay-eremeev.com'
-          fail_action: false
-
-      - name: Run ZAP Baseline Scan (Backend API)
-        uses: zaproxy/action-baseline@v0.12.0
+          project: 'LinguaQuiz'
+          path: '.'
+          format: 'ALL'
+          args: >
+            --enableRetired
+            --enableExperimental
+            
+      - name: Upload dependency check results
+        if: always()
+        uses: actions/upload-artifact@v4
         with:
-          target: 'https://api-lingua-quiz.nikolay-eremeev.com'
-          fail_action: false
+          name: dependency-check-report
+          path: reports/

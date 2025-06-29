@@ -15,37 +15,35 @@ interface ThemeStore {
 
 // Theme Store for dark mode (follows system preference)
 function createThemeStore(): ThemeStore {
-  // Check if user has a saved preference, otherwise use system preference
   const getInitialTheme = () => {
+    if (typeof window === 'undefined') return false;
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      return savedTheme === 'dark';
-    }
-    // Check system preference
+    if (savedTheme) return savedTheme === 'dark';
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   };
 
-  const { subscribe, update } = writable({
+  const { subscribe, set, update } = writable({
     isDarkMode: getInitialTheme()
   });
 
-  // Apply theme on initialization
   const applyTheme = (isDark: boolean) => {
-    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    if (typeof document !== 'undefined') {
+      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    }
   };
 
-  // Set initial theme
+  // Apply initial theme
   applyTheme(getInitialTheme());
 
   // Listen for system theme changes
-  if (window.matchMedia) {
+  if (typeof window !== 'undefined' && window.matchMedia) {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    mediaQuery.addEventListener('change', (e: MediaQueryListEvent) => {
-      // Only update if user hasn't set a manual preference
+    mediaQuery.addEventListener('change', (e) => {
       if (!localStorage.getItem('theme')) {
         const isDark = e.matches;
         applyTheme(isDark);
-        update(() => ({ isDarkMode: isDark }));
+        // Use `set` to avoid creating orphaned effects
+        set({ isDarkMode: isDark });
       }
     });
   }
@@ -55,17 +53,20 @@ function createThemeStore(): ThemeStore {
     toggleTheme: () => {
       update(state => {
         const newTheme = !state.isDarkMode;
-        const theme = newTheme ? 'dark' : 'light';
-        localStorage.setItem('theme', theme);
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('theme', newTheme ? 'dark' : 'light');
+        }
         applyTheme(newTheme);
         return { isDarkMode: newTheme };
       });
     },
     clearPreference: () => {
-      localStorage.removeItem('theme');
-      const systemPreference = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (typeof localStorage !== 'undefined') {
+        localStorage.removeItem('theme');
+      }
+      const systemPreference = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       applyTheme(systemPreference);
-      update(() => ({ isDarkMode: systemPreference }));
+      set({ isDarkMode: systemPreference });
     }
   };
 }
@@ -80,60 +81,52 @@ interface AuthState {
 
 interface AuthStore {
   subscribe: Writable<AuthState>['subscribe'];
-  cleanup: () => void;
   login: (username: string, password: string) => Promise<any>;
   logout: () => void;
   register: (username: string, password: string) => Promise<any>;
 }
 
-// Auth Store (unchanged)
+// Auth Store with SSR-safe initialization
 function createAuthStore(): AuthStore {
-  const { subscribe, set, update } = writable({
-    token: localStorage.getItem('token'),
-    username: localStorage.getItem('username'),
+  const { subscribe, set } = writable<AuthState>({
+    token: null,
+    username: null,
     isAuthenticated: false,
   });
 
-  const checkAuth = () => {
+  // Function to check token validity and update store
+  function checkToken() {
+    if (typeof localStorage === 'undefined') return;
+    
     const token = localStorage.getItem('token');
-    if (!token) return false;
+    const username = localStorage.getItem('username');
+
+    if (!token || !username) {
+      set({ token: null, username: null, isAuthenticated: false });
+      return;
+    }
 
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
-      const isValid = payload.exp * 1000 > Date.now() + 60000;
-      if (!isValid) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('username');
-        localStorage.removeItem('tokenExpiration');
+      const isExpired = payload.exp * 1000 < Date.now();
+
+      if (isExpired) {
+        logoutUser(); // Token is expired, log out
+      } else {
+        set({ token, username, isAuthenticated: true });
       }
-      return isValid;
-    } catch {
-      return false;
+    } catch (e) {
+      console.error('Invalid token found, logging out.');
+      logoutUser(); // Token is malformed
     }
-  };
-
-  update((state) => ({ ...state, isAuthenticated: checkAuth() }));
-
-  let authCheckInterval: NodeJS.Timeout | null = setInterval(() => {
-    update((state) => ({ ...state, isAuthenticated: checkAuth() }));
-  }, 60000);
-
-  // Cleanup function to clear interval
-  const cleanup = () => {
-    if (authCheckInterval) {
-      clearInterval(authCheckInterval);
-      authCheckInterval = null;
-    }
-  };
-
-  return {
-    subscribe,
-    cleanup,
-    login: async (username: string, password: string) => {
-      const data = await api.login(username, password);
+  }
+  
+  // Function to set user data in localStorage and the store
+  function setUser(data: { token: string; username: string }) {
+    if (typeof localStorage !== 'undefined') {
       localStorage.setItem('token', data.token);
-      localStorage.setItem('username', username);
-
+      localStorage.setItem('username', data.username);
+      
       // Calculate and store token expiration
       try {
         const payload = JSON.parse(atob(data.token.split('.')[1]));
@@ -142,32 +135,38 @@ function createAuthStore(): AuthStore {
       } catch (e) {
         console.error('Failed to parse token expiration:', e);
       }
+    }
+    set({ token: data.token, username: data.username, isAuthenticated: true });
+  }
 
-      set({ token: data.token, username, isAuthenticated: true });
-      return data;
-    },
-    logout: () => {
-      cleanup();
+  // Function to clear user data
+  function logoutUser() {
+    if (typeof localStorage !== 'undefined') {
       localStorage.removeItem('token');
       localStorage.removeItem('username');
       localStorage.removeItem('tokenExpiration');
-      set({ token: null, username: null, isAuthenticated: false });
+    }
+    set({ token: null, username: null, isAuthenticated: false });
+  }
+  
+  // Initial check when the store is created
+  if (typeof window !== 'undefined') {
+    checkToken();
+  }
+
+  return {
+    subscribe,
+    login: async (username: string, password: string) => {
+      const data = await api.login(username, password);
+      setUser({ token: data.token, username });
+      return data;
+    },
+    logout: () => {
+      logoutUser();
     },
     register: async (username: string, password: string) => {
       const data = await api.register(username, password);
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('username', username);
-
-      // Calculate and store token expiration
-      try {
-        const payload = JSON.parse(atob(data.token.split('.')[1]));
-        const expirationMs = payload.exp * 1000;
-        localStorage.setItem('tokenExpiration', expirationMs.toString());
-      } catch (e) {
-        console.error('Failed to parse token expiration:', e);
-      }
-
-      set({ token: data.token, username, isAuthenticated: true });
+      setUser({ token: data.token, username });
       return data;
     },
   };
@@ -190,13 +189,13 @@ interface QuizStore {
   startQuiz: (token: string, quizName: string) => Promise<void>;
   getNextQuestion: () => any | null;
   submitAnswer: (token: string, answer: string) => Promise<any>;
-  setLevel: (token: string, level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4') => Promise<{ success: boolean; actualLevel: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4'; message?: string }>;
+  setLevel: (level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4') => Promise<{ success: boolean; actualLevel: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4'; message?: string }>;
   reset: () => void;
 }
 
 // Quiz Store with @linguaquiz/core integration
 function createQuizStore(): QuizStore {
-  const { subscribe, update } = writable({
+  const { subscribe, set, update } = writable({
     wordSets: [],
     selectedQuiz: null,
     quizManager: null,
@@ -206,17 +205,19 @@ function createQuizStore(): QuizStore {
     error: null
   });
 
-  return {
+  const store = {
     subscribe,
     
     loadWordSets: async (token: string) => {
       update(state => ({ ...state, loading: true, error: null }));
       try {
         const wordSets = await api.fetchWordSets(token);
-        update(state => ({ ...state, wordSets, loading: false }));
+        // Use set/get pattern after await to avoid orphaned effects
+        set({ ...get(store), wordSets, loading: false });
       } catch (error: unknown) {
         const message = error instanceof Error ? error.message : 'Unknown error';
-        update(state => ({ ...state, error: message, loading: false }));
+        // Use set/get pattern after await to avoid orphaned effects
+        set({ ...get(store), error: message, loading: false });
         throw error;
       }
     },
@@ -260,21 +261,24 @@ function createQuizStore(): QuizStore {
         const questionResult = manager.getNextQuestion();
         const currentQuestion = questionResult.question;
         console.log('First question:', currentQuestion);
-        update(state => ({
-          ...state,
+        
+        // Use set/get pattern after await to avoid orphaned effects
+        set({
+          ...get(store),
           loading: false,
           quizManager: manager,
           currentQuestion
-        }));
+        });
       } catch (error: unknown) {
         const message = error instanceof Error ? error.message : 'Unknown error';
-        update(state => ({ ...state, error: message, loading: false }));
+        // Use set/get pattern after await to avoid orphaned effects
+        set({ ...get(store), error: message, loading: false });
         throw error;
       }
     },
     
     getNextQuestion: () => {
-      const state = get(quizStore);
+      const state = get(store);
       if (!state.quizManager) return null;
       
       const questionResult = state.quizManager.getNextQuestion();
@@ -284,7 +288,7 @@ function createQuizStore(): QuizStore {
     },
     
     submitAnswer: async (token: string, answer: string) => {
-      const state = get(quizStore);
+      const state = get(store);
       if (!state.quizManager || !state.currentQuestion) return null;
       
       try {
@@ -300,8 +304,8 @@ function createQuizStore(): QuizStore {
           await api.saveWordStatus(token, levelString as any, [feedback.translation.id]);
         }
         
-        // Update UI after persistence completes
-        update(s => ({ ...s, currentQuestion: nextQuestion }));
+        // Use set/get pattern after await to avoid orphaned effects
+        set({ ...get(store), currentQuestion: nextQuestion });
         
         return feedback;
       } catch (error) {
@@ -310,8 +314,8 @@ function createQuizStore(): QuizStore {
       }
     },
     
-    setLevel: async (token: string, level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4') => {
-      const state = get(quizStore);
+    setLevel: async (level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4') => {
+      const state = get(store);
       if (!state.quizManager) {
         return { success: false, actualLevel: 'LEVEL_1', message: 'Quiz not initialized' };
       }
@@ -321,7 +325,7 @@ function createQuizStore(): QuizStore {
         const questionResult = state.quizManager.getNextQuestion();
         const nextQuestion = questionResult.question;
         
-        // Update UI immediately
+        // Update UI immediately (this is synchronous, so update is fine)
         update(s => ({ ...s, currentQuestion: nextQuestion }));
         
         return result;
@@ -332,17 +336,19 @@ function createQuizStore(): QuizStore {
     },
     
     reset: () => {
-      update(state => ({
-        ...state,
+      set({
+        wordSets: get(store).wordSets, // Keep the loaded word sets
         selectedQuiz: null,
         quizManager: null,
         currentQuestion: null,
         sessionId: null,
         loading: false,
         error: null
-      }));
+      });
     }
   };
+  
+  return store;
 }
 
 export const authStore = createAuthStore();
