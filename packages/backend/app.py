@@ -43,6 +43,64 @@ if '*' in CORS_ALLOWED_ORIGINS:
 app = Flask(__name__)
 CORS(app, origins=CORS_ALLOWED_ORIGINS, methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'])
 
+# Security headers middleware
+@app.after_request
+def add_security_headers(response):
+    """Add security headers to all responses"""
+    # Content Security Policy (CSP) - prevents XSS and code injection
+    csp_policy = (
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; "
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+        "font-src 'self' https://fonts.gstatic.com; "
+        "img-src 'self' data: blob:; "
+        "connect-src 'self' https://lingua-quiz.nikolay-eremeev.com https://test-lingua-quiz.nikolay-eremeev.com; "
+        "object-src 'none'; "
+        "base-uri 'self'; "
+        "form-action 'self'; "
+        "frame-ancestors 'none';"
+    )
+    response.headers['Content-Security-Policy'] = csp_policy
+    
+    # X-Frame-Options - prevents clickjacking
+    response.headers['X-Frame-Options'] = 'DENY'
+    
+    # X-Content-Type-Options - prevents MIME type sniffing
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    
+    # Strict-Transport-Security (HSTS) - enforces HTTPS
+    response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains; preload'
+    
+    # Cross-Origin-Embedder-Policy - helps mitigate Spectre attacks
+    response.headers['Cross-Origin-Embedder-Policy'] = 'require-corp'
+    
+    # Cross-Origin-Opener-Policy - provides isolation
+    response.headers['Cross-Origin-Opener-Policy'] = 'same-origin'
+    
+    # Permissions Policy - controls browser features
+    permissions_policy = (
+        "geolocation=(), "
+        "microphone=(), "
+        "camera=(), "
+        "payment=(), "
+        "usb=(), "
+        "magnetometer=(), "
+        "gyroscope=(), "
+        "accelerometer=()"
+    )
+    response.headers['Permissions-Policy'] = permissions_policy
+    
+    # Referrer Policy - controls referrer information
+    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+    
+    # Cache control for dynamic content
+    if request.endpoint and not request.endpoint.startswith('static'):
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '0'
+    
+    return response
+
 # Rate limiting
 limiter = Limiter(
     app=app,

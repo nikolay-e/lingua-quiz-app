@@ -12,8 +12,28 @@ export default defineConfig({
   publicDir: 'public',
   build: {
     target: ['es2020', 'edge88', 'firefox78', 'chrome87', 'safari14'],
+    sourcemap: false, // Disable sourcemaps in production to avoid information disclosure
+    minify: 'esbuild',
+    cssMinify: true,
+    rollupOptions: {
+      output: {
+        // Generate hashed filenames for better caching
+        assetFileNames: 'assets/[name]-[hash][extname]',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
+        // Remove comments from build
+        banner: '',
+        footer: '',
+        intro: '',
+        outro: '',
+      }
+    }
   },
   esbuild: {
     target: 'es2020',
+    // Remove console.log and debugger statements in production
+    drop: ['console', 'debugger'],
+    // Remove comments
+    legalComments: 'none',
   },
 });

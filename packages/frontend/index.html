@@ -3,6 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Security meta tags -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  
+  <!-- App meta tags -->
+  <meta name="description" content="LinguaQuiz - Advanced language learning with spaced repetition" />
+  <meta name="keywords" content="language learning, spaced repetition, quiz, vocabulary" />
+  <meta name="author" content="Nikolay Eremeev" />
+  
+  <!-- Favicon and app icons -->
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
@@ -11,9 +24,19 @@
   <meta name="application-name" content="LinguaQuiz" />
   <meta name="msapplication-TileColor" content="#4a90e2" />
   <meta name="theme-color" content="#4a90e2" />
-  <title>LinguaQuiz</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  
+  <title>LinguaQuiz - Advanced Language Learning</title>
+  
+  <!-- External resources with SRI -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" 
+        rel="stylesheet" 
+        integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" 
+        crossorigin="anonymous" 
+        referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" 
+        rel="stylesheet"
+        crossorigin="anonymous" />
+  
   <script type="module" src="/src/main.ts"></script>
 </head>
 <body>

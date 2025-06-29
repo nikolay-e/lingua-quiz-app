@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://lingua-quiz.nikolay-eremeev.com/sitemap.xml
