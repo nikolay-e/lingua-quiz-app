@@ -121,6 +121,8 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP FUNCTION IF EXISTS get_user_word_sets(INTEGER, VARCHAR);
+
 CREATE OR REPLACE FUNCTION get_user_word_sets (p_user_id INTEGER, p_word_list_name VARCHAR) RETURNS TABLE (
   word_pair_id INTEGER,
   status VARCHAR,
@@ -129,7 +131,9 @@ CREATE OR REPLACE FUNCTION get_user_word_sets (p_user_id INTEGER, p_word_list_na
   source_language VARCHAR(50),
   target_language VARCHAR(50),
   source_word_usage_example TEXT,
-  target_word_usage_example TEXT
+  target_word_usage_example TEXT,
+  created_at TIMESTAMP WITH TIME ZONE,
+  updated_at TIMESTAMP WITH TIME ZONE
 ) AS $$
 BEGIN
   RETURN QUERY
@@ -142,7 +146,9 @@ BEGIN
       sl.name AS source_language,
       tl.name AS target_language,
       sw.usage_example AS source_word_usage_example,
-      tw.usage_example AS target_word_usage_example
+      tw.usage_example AS target_word_usage_example,
+      utp.created_at,
+      utp.updated_at
     FROM 
       word_list_entries wle
     JOIN 
@@ -173,6 +179,7 @@ BEGIN
       WHEN user_words.status = 'LEVEL_5' THEN 6   -- Usage (Both Ways)
       ELSE 7
     END,
+    COALESCE(user_words.updated_at, user_words.created_at, CURRENT_TIMESTAMP) DESC,
     word_pair_id;
 END;
 $$ LANGUAGE plpgsql;
