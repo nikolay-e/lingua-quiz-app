@@ -106,7 +106,7 @@ BEGIN
   WHERE id IN (v_source_word_id, v_target_word_id);
 
   -- Delete user translation progress
-  DELETE FROM user_translation_progresses
+  DELETE FROM user_translation_progress
   WHERE word_pair_id = p_translation_id;
 
   -- Remove languages if no words exist for them
@@ -131,9 +131,7 @@ CREATE OR REPLACE FUNCTION get_user_word_sets (p_user_id INTEGER, p_word_list_na
   source_language VARCHAR(50),
   target_language VARCHAR(50),
   source_word_usage_example TEXT,
-  target_word_usage_example TEXT,
-  created_at TIMESTAMP WITH TIME ZONE,
-  updated_at TIMESTAMP WITH TIME ZONE
+  target_word_usage_example TEXT
 ) AS $$
 BEGIN
   RETURN QUERY
@@ -147,8 +145,7 @@ BEGIN
       tl.name AS target_language,
       sw.usage_example AS source_word_usage_example,
       tw.usage_example AS target_word_usage_example,
-      utp.created_at,
-      utp.updated_at
+      COALESCE(utp.queue_position, 0) AS queue_position
     FROM 
       word_list_entries wle
     JOIN 
@@ -164,11 +161,20 @@ BEGIN
     JOIN 
       word_lists wl ON wle.word_list_id = wl.id
     LEFT JOIN 
-      user_translation_progresses utp ON utp.word_pair_id = t.id AND utp.user_id = p_user_id
+      user_translation_progress utp ON utp.word_pair_id = t.id AND utp.user_id = p_user_id
     WHERE 
       wl.name = p_word_list_name
   )
-  SELECT * FROM user_words
+  SELECT 
+    user_words.word_pair_id,
+    user_words.status,
+    user_words.source_word,
+    user_words.target_word,
+    user_words.source_language,
+    user_words.target_language,
+    user_words.source_word_usage_example,
+    user_words.target_word_usage_example
+  FROM user_words
   ORDER BY 
     CASE 
       WHEN user_words.status = 'LEVEL_1' THEN 1   -- Learning
@@ -179,7 +185,7 @@ BEGIN
       WHEN user_words.status = 'LEVEL_5' THEN 6   -- Usage (Both Ways)
       ELSE 7
     END,
-    COALESCE(user_words.updated_at, user_words.created_at, CURRENT_TIMESTAMP) DESC,
-    word_pair_id;
+    user_words.queue_position,
+    user_words.word_pair_id;
 END;
 $$ LANGUAGE plpgsql;

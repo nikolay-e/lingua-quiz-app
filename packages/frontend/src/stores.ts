@@ -207,9 +207,38 @@ function createQuizStore(): QuizStore {
     autoSaveTimer: null
   });
 
-  const AUTO_SAVE_DELAY = 30000; // 30 seconds
+  const BULK_SAVE_DELAY = 5000; // 5 seconds
   
-  const scheduleAutoSave = (token: string) => {
+  const bulkSaveProgress = async (token: string) => {
+    const state = get(store);
+    if (!state.quizManager) return;
+    
+    console.log('Bulk saving quiz progress...');
+    
+    try {
+      const wordsByLevel = state.quizManager.getWordsByLevel();
+      const persistencePromises: Promise<any>[] = [];
+      
+      for (const [level, wordIds] of Object.entries(wordsByLevel)) {
+        const wordArray = wordIds as number[];
+        if (wordArray.length > 0) {
+          persistencePromises.push(
+            api.saveWordStatus(token, level as any, wordArray)
+              .catch(err => console.error(`Bulk save failed for ${level}:`, err))
+          );
+        }
+      }
+      
+      if (persistencePromises.length > 0) {
+        await Promise.all(persistencePromises);
+        console.log('Bulk save completed successfully');
+      }
+    } catch (error) {
+      console.error('Bulk save error:', error);
+    }
+  };
+  
+  const scheduleBulkSave = (token: string) => {
     const state = get(store);
     
     // Clear existing timer
@@ -217,37 +246,8 @@ function createQuizStore(): QuizStore {
       clearTimeout(state.autoSaveTimer);
     }
     
-    // Schedule new auto-save
-    const timer = setTimeout(async () => {
-      const currentState = get(store);
-      if (!currentState.quizManager) return;
-      
-      console.log('Auto-saving quiz state after 30 seconds of inactivity...');
-      
-      try {
-        // Get all words grouped by level from QuizManager
-        const wordsByLevel = currentState.quizManager.getWordsByLevel();
-        const persistencePromises: Promise<any>[] = [];
-        
-        // Save each level's words
-        for (const [level, wordIds] of Object.entries(wordsByLevel)) {
-          const wordArray = wordIds as number[];
-          if (wordArray.length > 0) {
-            persistencePromises.push(
-              api.saveWordStatus(token, level as any, wordArray)
-                .catch(err => console.error(`Auto-save failed for ${level}:`, err))
-            );
-          }
-        }
-        
-        if (persistencePromises.length > 0) {
-          await Promise.all(persistencePromises);
-          console.log('Auto-save completed successfully');
-        }
-      } catch (error) {
-        console.error('Auto-save error:', error);
-      }
-    }, AUTO_SAVE_DELAY);
+    // Schedule new bulk save
+    const timer = setTimeout(() => bulkSaveProgress(token), BULK_SAVE_DELAY);
     
     // Update state with new timer
     update(s => ({ ...s, autoSaveTimer: timer }));
@@ -306,31 +306,8 @@ function createQuizStore(): QuizStore {
         });
         console.log('QuizManager initialized with state:', manager.getState());
         
-        // Persist all current levels after initialization (handles promotions from LEVEL_0 to LEVEL_1)
-        const wordsByLevel = manager.getWordsByLevel();
-        const persistencePromises: Promise<any>[] = [];
-        
-        // Compare with original progress to find changes
-        const originalLevels = new Map(progress.map(p => [p.translationId, p.status]));
-        
-        for (const [level, wordIds] of Object.entries(wordsByLevel)) {
-          // Find words that changed to this level
-          const changedWords = wordIds.filter(id => originalLevels.get(id) !== level);
-          
-          if (changedWords.length > 0) {
-            console.log(`Persisting ${changedWords.length} words that changed to ${level}`);
-            persistencePromises.push(
-              api.saveWordStatus(token, level as any, changedWords)
-                .catch(err => console.error(`Failed to persist ${level}:`, err))
-            );
-          }
-        }
-        
-        // Wait for all persistence operations to complete
-        if (persistencePromises.length > 0) {
-          await Promise.all(persistencePromises);
-          console.log('Level persistence completed');
-        }
+        // Bulk save all progress after initialization (handles promotions from LEVEL_0 to LEVEL_1)
+        await bulkSaveProgress(token);
         
         const questionResult = manager.getNextQuestion();
         const currentQuestion = questionResult.question;
@@ -370,19 +347,12 @@ function createQuizStore(): QuizStore {
         const questionResult = state.quizManager.getNextQuestion();
         const nextQuestion = questionResult.question;
         
-        // For simplified approach, we only persist level changes using word-sets API
-        if (feedback.levelChange) {
-          // levelChange.to already contains the full level string (e.g., 'LEVEL_2')
-          const levelString = feedback.levelChange.to;
-          // Wait for persistence to complete before updating UI to avoid race conditions
-          await api.saveWordStatus(token, levelString as any, [feedback.translation.id]);
-        }
+        // Schedule bulk save after any answer (removed immediate level change saves)
+        scheduleBulkSave(token);
         
         // Use set/get pattern after await to avoid orphaned effects
         set({ ...get(store), currentQuestion: nextQuestion });
         
-        // Schedule auto-save after user activity
-        scheduleAutoSave(token);
         
         return feedback;
       } catch (error) {
@@ -427,6 +397,18 @@ function createQuizStore(): QuizStore {
         error: null,
         autoSaveTimer: null
       });
+    },
+    
+    saveAndCleanup: async (token: string) => {
+      const state = get(store);
+      // Clear any pending save timer
+      if (state.autoSaveTimer) {
+        clearTimeout(state.autoSaveTimer);
+      }
+      // Save current progress
+      if (state.quizManager) {
+        await bulkSaveProgress(token);
+      }
     }
   };
   
