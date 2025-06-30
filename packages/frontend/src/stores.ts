@@ -258,6 +258,32 @@ function createQuizStore(): QuizStore {
         });
         console.log('QuizManager initialized with state:', manager.getState());
         
+        // Persist all current levels after initialization (handles promotions from LEVEL_0 to LEVEL_1)
+        const wordsByLevel = manager.getWordsByLevel();
+        const persistencePromises: Promise<any>[] = [];
+        
+        // Compare with original progress to find changes
+        const originalLevels = new Map(progress.map(p => [p.translationId, p.status]));
+        
+        for (const [level, wordIds] of Object.entries(wordsByLevel)) {
+          // Find words that changed to this level
+          const changedWords = wordIds.filter(id => originalLevels.get(id) !== level);
+          
+          if (changedWords.length > 0) {
+            console.log(`Persisting ${changedWords.length} words that changed to ${level}`);
+            persistencePromises.push(
+              api.saveWordStatus(token, level as any, changedWords)
+                .catch(err => console.error(`Failed to persist ${level}:`, err))
+            );
+          }
+        }
+        
+        // Wait for all persistence operations to complete
+        if (persistencePromises.length > 0) {
+          await Promise.all(persistencePromises);
+          console.log('Level persistence completed');
+        }
+        
         const questionResult = manager.getNextQuestion();
         const currentQuestion = questionResult.question;
         console.log('First question:', currentQuestion);

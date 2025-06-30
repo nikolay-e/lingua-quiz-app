@@ -630,12 +630,13 @@ export class QuizManager {
 
   /**
    * Replenishes the focus pool by promoting words from LEVEL_0 to LEVEL_1
+   * @returns Array of translation IDs that were promoted to LEVEL_1
    */
-  private replenishFocusPool = (): void => {
+  private replenishFocusPool = (): number[] => {
     // MODIFICATION: Refactored to be more direct and reliable.
     const level1Count = this.queues.LEVEL_1.length;
     let needed = this.opts.maxFocusWords - level1Count;
-    if (needed <= 0) return;
+    if (needed <= 0) return [];
     
     // Directly take from the front of the LEVEL_0 queue.
     const wordsToPromote = this.queues.LEVEL_0.slice(0, needed);
@@ -643,6 +644,7 @@ export class QuizManager {
       // This correctly moves the word from the LEVEL_0 queue to the LEVEL_1 queue.
       this.moveWordToLevel(translationId, 'LEVEL_1');
     }
+    return wordsToPromote;
   }
 
   /**
@@ -717,6 +719,21 @@ export class QuizManager {
    * Gets quiz options/configuration
    */
   getOptions = (): Required<QuizOptions> => ({ ...this.opts });
+
+  /**
+   * Gets all words grouped by their current level for bulk persistence
+   * @returns Map of levels to arrays of translation IDs
+   */
+  getWordsByLevel = (): Record<LevelStatus, number[]> => {
+    return {
+      LEVEL_0: [...this.queues.LEVEL_0],
+      LEVEL_1: [...this.queues.LEVEL_1],
+      LEVEL_2: [...this.queues.LEVEL_2],
+      LEVEL_3: [...this.queues.LEVEL_3],
+      LEVEL_4: [...this.queues.LEVEL_4],
+      LEVEL_5: [...this.queues.LEVEL_5]
+    };
+  };
 }
 
 // Export algorithm constants
