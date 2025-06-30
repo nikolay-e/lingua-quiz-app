@@ -181,6 +181,7 @@ interface QuizState {
   sessionId: string | null;
   loading: boolean;
   error: string | null;
+  autoSaveTimer: ReturnType<typeof setTimeout> | null;
 }
 
 interface QuizStore {
@@ -202,9 +203,56 @@ function createQuizStore(): QuizStore {
     currentQuestion: null,
     sessionId: null,
     loading: false,
-    error: null
+    error: null,
+    autoSaveTimer: null
   });
 
+  const AUTO_SAVE_DELAY = 30000; // 30 seconds
+  
+  const scheduleAutoSave = (token: string) => {
+    const state = get(store);
+    
+    // Clear existing timer
+    if (state.autoSaveTimer) {
+      clearTimeout(state.autoSaveTimer);
+    }
+    
+    // Schedule new auto-save
+    const timer = setTimeout(async () => {
+      const currentState = get(store);
+      if (!currentState.quizManager) return;
+      
+      console.log('Auto-saving quiz state after 30 seconds of inactivity...');
+      
+      try {
+        // Get all words grouped by level from QuizManager
+        const wordsByLevel = currentState.quizManager.getWordsByLevel();
+        const persistencePromises: Promise<any>[] = [];
+        
+        // Save each level's words
+        for (const [level, wordIds] of Object.entries(wordsByLevel)) {
+          const wordArray = wordIds as number[];
+          if (wordArray.length > 0) {
+            persistencePromises.push(
+              api.saveWordStatus(token, level as any, wordArray)
+                .catch(err => console.error(`Auto-save failed for ${level}:`, err))
+            );
+          }
+        }
+        
+        if (persistencePromises.length > 0) {
+          await Promise.all(persistencePromises);
+          console.log('Auto-save completed successfully');
+        }
+      } catch (error) {
+        console.error('Auto-save error:', error);
+      }
+    }, AUTO_SAVE_DELAY);
+    
+    // Update state with new timer
+    update(s => ({ ...s, autoSaveTimer: timer }));
+  };
+  
   const store = {
     subscribe,
     
@@ -258,6 +306,32 @@ function createQuizStore(): QuizStore {
         });
         console.log('QuizManager initialized with state:', manager.getState());
         
+        // Persist all current levels after initialization (handles promotions from LEVEL_0 to LEVEL_1)
+        const wordsByLevel = manager.getWordsByLevel();
+        const persistencePromises: Promise<any>[] = [];
+        
+        // Compare with original progress to find changes
+        const originalLevels = new Map(progress.map(p => [p.translationId, p.status]));
+        
+        for (const [level, wordIds] of Object.entries(wordsByLevel)) {
+          // Find words that changed to this level
+          const changedWords = wordIds.filter(id => originalLevels.get(id) !== level);
+          
+          if (changedWords.length > 0) {
+            console.log(`Persisting ${changedWords.length} words that changed to ${level}`);
+            persistencePromises.push(
+              api.saveWordStatus(token, level as any, changedWords)
+                .catch(err => console.error(`Failed to persist ${level}:`, err))
+            );
+          }
+        }
+        
+        // Wait for all persistence operations to complete
+        if (persistencePromises.length > 0) {
+          await Promise.all(persistencePromises);
+          console.log('Level persistence completed');
+        }
+        
         const questionResult = manager.getNextQuestion();
         const currentQuestion = questionResult.question;
         console.log('First question:', currentQuestion);
@@ -307,6 +381,9 @@ function createQuizStore(): QuizStore {
         // Use set/get pattern after await to avoid orphaned effects
         set({ ...get(store), currentQuestion: nextQuestion });
         
+        // Schedule auto-save after user activity
+        scheduleAutoSave(token);
+        
         return feedback;
       } catch (error) {
         console.error('Failed to submit answer:', error);
@@ -336,14 +413,19 @@ function createQuizStore(): QuizStore {
     },
     
     reset: () => {
+      const state = get(store);
+      if (state.autoSaveTimer) {
+        clearTimeout(state.autoSaveTimer);
+      }
       set({
-        wordSets: get(store).wordSets, // Keep the loaded word sets
+        wordSets: state.wordSets, // Keep the loaded word sets
         selectedQuiz: null,
         quizManager: null,
         currentQuestion: null,
         sessionId: null,
         loading: false,
-        error: null
+        error: null,
+        autoSaveTimer: null
       });
     }
   };
