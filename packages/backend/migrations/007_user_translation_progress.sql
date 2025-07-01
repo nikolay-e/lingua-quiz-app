@@ -1,22 +1,37 @@
--- User translation progresses table
-CREATE TABLE IF NOT EXISTS user_translation_progresses (
-  id SERIAL PRIMARY KEY,
+-- Migration: Handle both fresh installs and updates
+DO $$
+BEGIN
+  -- Check if the old table exists
+  IF EXISTS (SELECT FROM pg_tables WHERE tablename = 'user_translation_progresses') THEN
+    -- Perform migration steps
+    ALTER TABLE user_translation_progresses DROP COLUMN IF EXISTS created_at;
+    ALTER TABLE user_translation_progresses DROP COLUMN IF EXISTS updated_at;
+    ALTER TABLE user_translation_progresses ADD COLUMN IF NOT EXISTS queue_position INTEGER DEFAULT 0;
+    ALTER TABLE user_translation_progresses DROP CONSTRAINT IF EXISTS user_translation_progresses_pkey;
+    ALTER TABLE user_translation_progresses DROP COLUMN IF EXISTS id;
+    ALTER TABLE user_translation_progresses ADD PRIMARY KEY (user_id, word_pair_id);
+    ALTER TABLE user_translation_progresses RENAME TO user_translation_progress;
+  END IF;
+END $$;
+
+-- User translation progress table
+CREATE TABLE IF NOT EXISTS user_translation_progress (
   user_id INTEGER REFERENCES users (id) ON DELETE CASCADE,
   word_pair_id INTEGER REFERENCES translations (id) ON DELETE CASCADE,
   status translation_status NOT NULL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE (user_id, word_pair_id)
+  queue_position INTEGER DEFAULT 0,
+  PRIMARY KEY (user_id, word_pair_id)
 );
 
 -- Indexes
-CREATE INDEX IF NOT EXISTS idx_user_translation_progresses_user ON user_translation_progresses (user_id);
-CREATE INDEX IF NOT EXISTS idx_user_translation_progresses_word_pair ON user_translation_progresses (word_pair_id);
-CREATE INDEX IF NOT EXISTS idx_user_translation_progresses_user_status ON user_translation_progresses (user_id, status);
-CREATE INDEX IF NOT EXISTS idx_user_translation_progresses_word_pair_status ON user_translation_progresses (word_pair_id, status);
-CREATE INDEX IF NOT EXISTS idx_user_translation_progresses_user_updated ON user_translation_progresses(user_id, updated_at DESC);
+CREATE INDEX IF NOT EXISTS idx_user_translation_progress_user ON user_translation_progress (user_id);
+CREATE INDEX IF NOT EXISTS idx_user_translation_progress_word_pair ON user_translation_progress (word_pair_id);
+CREATE INDEX IF NOT EXISTS idx_user_translation_progress_user_status ON user_translation_progress (user_id, status);
+CREATE INDEX IF NOT EXISTS idx_user_translation_progress_word_pair_status ON user_translation_progress (word_pair_id, status);
+CREATE INDEX IF NOT EXISTS idx_user_translation_progress_user_queue ON user_translation_progress (user_id, status, queue_position);
 
 -- Functions
+DROP FUNCTION IF EXISTS update_user_word_set_status(INTEGER, INTEGER[], translation_status);
 CREATE OR REPLACE FUNCTION update_user_word_set_status (
   p_user_id INTEGER,
   p_word_pair_ids INTEGER[],
@@ -25,8 +40,8 @@ CREATE OR REPLACE FUNCTION update_user_word_set_status (
 DECLARE
   v_word_pair_id INTEGER;
 BEGIN
-  -- If the array is null, just return without doing anything
-  IF p_word_pair_ids IS NULL THEN
+  -- If the array is null or empty, just return without doing anything
+  IF p_word_pair_ids IS NULL OR array_length(p_word_pair_ids, 1) IS NULL OR array_length(p_word_pair_ids, 1) = 0 THEN
     RETURN;
   END IF;
 
@@ -40,14 +55,16 @@ BEGIN
     RAISE EXCEPTION 'One or more word pair IDs do not exist in the translations table';
   END IF;
 
-  -- Update status for each word pair
-  FOREACH v_word_pair_id IN ARRAY p_word_pair_ids
-  LOOP
-    -- Insert or update progress for the word pair
-    INSERT INTO user_translation_progresses (user_id, word_pair_id, status, updated_at)
-    VALUES (p_user_id, v_word_pair_id, p_status, CURRENT_TIMESTAMP)
-    ON CONFLICT (user_id, word_pair_id)
-    DO UPDATE SET status = EXCLUDED.status, updated_at = EXCLUDED.updated_at;
-  END LOOP;
+  -- Update status for each word pair using array index as queue position
+  IF array_length(p_word_pair_ids, 1) IS NOT NULL THEN
+    FOR i IN 1..array_length(p_word_pair_ids, 1)
+    LOOP
+      -- Insert or update progress for the word pair with queue position
+      INSERT INTO user_translation_progress (user_id, word_pair_id, status, queue_position)
+      VALUES (p_user_id, p_word_pair_ids[i], p_status, i - 1)  -- 0-based indexing
+      ON CONFLICT (user_id, word_pair_id)
+      DO UPDATE SET status = EXCLUDED.status, queue_position = EXCLUDED.queue_position;
+    END LOOP;
+  END IF;
 END;
 $$ LANGUAGE plpgsql;

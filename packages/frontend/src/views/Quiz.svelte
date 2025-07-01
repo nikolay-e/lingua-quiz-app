@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { authStore, quizStore } from '../stores';
   import api from '../api';
   import type { SubmissionResult, QuizQuestion } from '@linguaquiz/core';
@@ -279,10 +279,32 @@
   
   // Direction is now handled automatically by level progression
   
-  function logout(): void {
+  async function logout(): Promise<void> {
+    // Save progress before logout
+    await quizStore.saveAndCleanup($authStore.token!);
     authStore.logout();
   }
   
+  // Initialize component
+  onMount(async () => {
+    if ($authStore.token) {
+      await loadTTSLanguages();
+    }
+    
+    // Save progress before page unload
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if ($quizStore.quizManager && $authStore.token) {
+        // Try to save synchronously (modern browsers may not wait for async)
+        quizStore.saveAndCleanup($authStore.token).catch(() => {});
+      }
+    };
+    
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  });
   
 </script>
 
