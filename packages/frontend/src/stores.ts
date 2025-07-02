@@ -300,9 +300,18 @@ function createQuizStore(): QuizStore {
           recentHistory: [] as boolean[]
         }));
         
+        // Get user's current level from backend
+        let currentLevel: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' = 'LEVEL_1';
+        try {
+          const userLevelData = await api.getCurrentLevel(token);
+          currentLevel = userLevelData.currentLevel as 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4';
+        } catch (error) {
+          console.warn('Failed to load user level, using default LEVEL_1:', error);
+        }
+        
         const manager = new QuizManager(translations, { 
           progress, 
-          currentLevel: 'LEVEL_1'
+          currentLevel
         });
         console.log('QuizManager initialized with state:', manager.getState());
         
@@ -343,9 +352,21 @@ function createQuizStore(): QuizStore {
       if (!state.quizManager || !state.currentQuestion) return null;
       
       try {
+        const oldLevel = state.quizManager.getCurrentLevel();
         const feedback = state.quizManager.submitAnswer(state.currentQuestion.translationId, answer);
         const questionResult = state.quizManager.getNextQuestion();
         const nextQuestion = questionResult.question;
+        const newLevel = state.quizManager.getCurrentLevel();
+        
+        // If level changed automatically, persist it
+        if (questionResult.levelAdjusted && oldLevel !== newLevel) {
+          try {
+            await api.updateCurrentLevel(token, newLevel);
+            console.log('Auto level change persisted:', oldLevel, '->', newLevel);
+          } catch (error) {
+            console.error('Failed to persist level change:', error);
+          }
+        }
         
         // Schedule bulk save after any answer (removed immediate level change saves)
         scheduleBulkSave(token);
@@ -361,7 +382,7 @@ function createQuizStore(): QuizStore {
       }
     },
     
-    setLevel: async (level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4') => {
+    setLevel: async (level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4', token?: string) => {
       const state = get(store);
       if (!state.quizManager) {
         return { success: false, actualLevel: 'LEVEL_1', message: 'Quiz not initialized' };
@@ -374,6 +395,17 @@ function createQuizStore(): QuizStore {
         
         // Update UI immediately (this is synchronous, so update is fine)
         update(s => ({ ...s, currentQuestion: nextQuestion }));
+        
+        // Persist level change to backend if token provided
+        if (token) {
+          try {
+            await api.updateCurrentLevel(token, result.actualLevel);
+            console.log('Level persisted to backend:', result.actualLevel);
+          } catch (error) {
+            console.error('Failed to persist level to backend:', error);
+            // Don't fail the level change if persistence fails
+          }
+        }
         
         return result;
       } catch (error) {

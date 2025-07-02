@@ -256,7 +256,7 @@ def register():
         return jsonify({'message': 'Password must be at least 8 characters long'}), 400
     
     # Check if user exists
-    if query_db('SELECT EXISTS(SELECT 1 FROM "user" WHERE username = %s)', [username], one=True)['exists']:
+    if query_db('SELECT EXISTS(SELECT 1 FROM "users" WHERE username = %s)', [username], one=True)['exists']:
         return jsonify({'message': 'Conflict: The resource already exists or cannot be created.'}), 409
     
     # Create user
@@ -266,7 +266,7 @@ def register():
     try:
         with conn.cursor(cursor_factory=RealDictCursor) as cur:
             cur.execute(
-                'INSERT INTO "user" (username, password) VALUES (%s, %s) RETURNING id, username',
+                'INSERT INTO "users" (username, password) VALUES (%s, %s) RETURNING id, username',
                 [username, hashed]
             )
             user = cur.fetchone()
@@ -299,7 +299,7 @@ def login():
     username = data.get('username', '').strip()
     password = data.get('password', '')
     
-    user = query_db('SELECT id, username, password FROM "user" WHERE username = %s', [username], one=True)
+    user = query_db('SELECT id, username, password FROM "users" WHERE username = %s', [username], one=True)
     if not user or not bcrypt.checkpw(password.encode('utf-8'), user['password'].encode('utf-8')):
         return jsonify({'message': 'Authentication failed.'}), 401
     
@@ -319,8 +319,31 @@ def login():
 @app.route('/api/auth/delete-account', methods=['DELETE'])
 @auth_required
 def delete_account():
-    execute_db('DELETE FROM "user" WHERE id = %s', [request.user_id])
+    execute_db('DELETE FROM "users" WHERE id = %s', [request.user_id])
     return jsonify({'message': 'Account deleted successfully'})
+
+@app.route('/api/user/current-level', methods=['GET'])
+@auth_required
+def get_current_level():
+    user = query_db('SELECT current_level FROM "users" WHERE id = %s', [request.user_id], one=True)
+    if not user:
+        return jsonify({'message': 'User not found'}), 404
+    return jsonify({'currentLevel': user['current_level']})
+
+@app.route('/api/user/current-level', methods=['POST'])
+@auth_required
+def update_current_level():
+    data = request.get_json()
+    level = data.get('currentLevel', '').strip()
+    
+    valid_levels = ['LEVEL_1', 'LEVEL_2', 'LEVEL_3', 'LEVEL_4']
+    if level not in valid_levels:
+        return jsonify({'message': 'Invalid level value. Must be one of: LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4'}), 400
+    
+    execute_db('UPDATE "users" SET current_level = %s::translation_status WHERE id = %s', 
+               [level, request.user_id])
+    
+    return jsonify({'message': 'Current level updated successfully', 'currentLevel': level})
 
 @app.route('/api/word-sets')
 @auth_required

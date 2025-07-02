@@ -1,10 +1,26 @@
+-- Alter existing users table if it exists
+DO $$
+BEGIN
+    -- Drop updated_at column if it exists
+    IF EXISTS (SELECT 1 FROM information_schema.columns 
+               WHERE table_name = 'users' AND column_name = 'updated_at') THEN
+        ALTER TABLE users DROP COLUMN updated_at;
+    END IF;
+    
+    -- Add current_level column if it doesn't exist
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
+                   WHERE table_name = 'users' AND column_name = 'current_level') THEN
+        ALTER TABLE users ADD COLUMN current_level translation_status DEFAULT 'LEVEL_1';
+    END IF;
+END $$;
+
 -- Users table
 CREATE TABLE IF NOT EXISTS "users" (
   id SERIAL PRIMARY KEY,
   username VARCHAR(255) UNIQUE NOT NULL,
   password VARCHAR(255) NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+  current_level translation_status DEFAULT 'LEVEL_1'
 );
 
 -- Indexes
