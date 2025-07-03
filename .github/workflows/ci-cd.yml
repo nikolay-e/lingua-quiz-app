@@ -188,27 +188,61 @@ jobs:
           
           # Check if migration job exists
           if kubectl get job lingua-quiz-migrations -n $NAMESPACE 2>/dev/null; then
-            echo "Migration job found. Waiting for completion..."
-            kubectl wait --for=condition=complete \
-              job/lingua-quiz-migrations \
-              -n $NAMESPACE \
-              --timeout=5m || {
-                echo "Migration job did not complete successfully."
-              }
+            echo "Migration job found. Monitoring for completion or failure..."
+            
+            # Monitor job status in a loop to catch failure immediately
+            for i in $(seq 1 60); do
+              sleep 5
+              
+              # Check job status
+              JOB_STATUS=$(kubectl get job lingua-quiz-migrations -n $NAMESPACE -o jsonpath='{.status}' 2>/dev/null || echo '{}')
+              COMPLETED=$(echo "$JOB_STATUS" | jq -r '.succeeded // 0')
+              FAILED=$(echo "$JOB_STATUS" | jq -r '.failed // 0')
+              
+              echo "Attempt $i/60: Completed: $COMPLETED, Failed: $FAILED"
+              
+              # If completed successfully
+              if [ "$COMPLETED" -gt "0" ]; then
+                echo "Migration job completed successfully!"
+                break
+              fi
+              
+              # If failed, immediately capture logs before cleanup
+              if [ "$FAILED" -gt "0" ]; then
+                echo "Migration job failed! Capturing logs immediately..."
+                
+                echo ""
+                echo "=== Migration Job Status ==="
+                kubectl describe job/lingua-quiz-migrations -n $NAMESPACE || true
+                
+                echo ""
+                echo "=== Migration Pod Logs ==="
+                kubectl logs job/lingua-quiz-migrations -n $NAMESPACE --all-containers=true || true
+                
+                # Also try to get logs from pods directly
+                echo ""
+                echo "=== Migration Pod Status ==="
+                kubectl get pods -l job-name=lingua-quiz-migrations -n $NAMESPACE || true
+                
+                echo ""
+                echo "=== Direct Pod Logs ==="
+                kubectl logs -l job-name=lingua-quiz-migrations -n $NAMESPACE --all-containers=true || true
+                
+                echo "Migration job failed!"
+                exit 1
+              fi
+            done
+            
+            # If we exit the loop without completion, something's wrong
+            echo "Migration job monitoring timed out after 5 minutes"
             
             echo ""
-            echo "=== Migration Job Status ==="
+            echo "=== Final Migration Job Status ==="
             kubectl describe job/lingua-quiz-migrations -n $NAMESPACE || true
             
             echo ""
-            echo "=== Migration Logs ==="
+            echo "=== Final Migration Logs ==="
             kubectl logs job/lingua-quiz-migrations -n $NAMESPACE --all-containers=true || true
-            
-            # Check if job failed
-            if kubectl get job lingua-quiz-migrations -n $NAMESPACE -o jsonpath='{.status.failed}' | grep -q "1"; then
-              echo "Migration job failed!"
-              exit 1
-            fi
           else
             echo "Migration job not found. Helm deployment may have failed."
           fi

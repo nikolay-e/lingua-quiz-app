@@ -1,19 +1,3 @@
--- Migration: Handle both fresh installs and updates
-DO $$
-BEGIN
-  -- Check if the old table exists
-  IF EXISTS (SELECT FROM pg_tables WHERE tablename = 'user_translation_progresses') THEN
-    -- Perform migration steps
-    ALTER TABLE user_translation_progresses DROP COLUMN IF EXISTS created_at;
-    ALTER TABLE user_translation_progresses DROP COLUMN IF EXISTS updated_at;
-    ALTER TABLE user_translation_progresses ADD COLUMN IF NOT EXISTS queue_position INTEGER DEFAULT 0;
-    ALTER TABLE user_translation_progresses DROP CONSTRAINT IF EXISTS user_translation_progresses_pkey;
-    ALTER TABLE user_translation_progresses DROP COLUMN IF EXISTS id;
-    ALTER TABLE user_translation_progresses ADD PRIMARY KEY (user_id, word_pair_id);
-    ALTER TABLE user_translation_progresses RENAME TO user_translation_progress;
-  END IF;
-END $$;
-
 -- User translation progress table
 CREATE TABLE IF NOT EXISTS user_translation_progress (
   user_id INTEGER REFERENCES users (id) ON DELETE CASCADE,
@@ -31,7 +15,6 @@ CREATE INDEX IF NOT EXISTS idx_user_translation_progress_word_pair_status ON use
 CREATE INDEX IF NOT EXISTS idx_user_translation_progress_user_queue ON user_translation_progress (user_id, status, queue_position);
 
 -- Functions
-DROP FUNCTION IF EXISTS update_user_word_set_status(INTEGER, INTEGER[], translation_status);
 CREATE OR REPLACE FUNCTION update_user_word_set_status (
   p_user_id INTEGER,
   p_word_pair_ids INTEGER[],

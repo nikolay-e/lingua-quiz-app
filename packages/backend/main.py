@@ -248,6 +248,16 @@ class HealthResponse(BaseModel):
 class ErrorResponse(BaseModel):
     error: str
 
+class UserLevelResponse(BaseModel):
+    currentLevel: str
+
+class UserLevelUpdateRequest(BaseModel):
+    currentLevel: str
+
+class UserLevelUpdateResponse(BaseModel):
+    message: str
+    currentLevel: str
+
 # =================================================================
 # 5. Database Connection & Utilities
 # =================================================================
@@ -550,6 +560,75 @@ async def delete_account(current_user: dict = Depends(get_current_user)):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to delete account"
+        )
+
+# User Level routes
+@app.get("/api/user/current-level", response_model=UserLevelResponse, tags=["User"])
+async def get_current_level(current_user: dict = Depends(get_current_user)):
+    """Get the current level for the authenticated user"""
+    try:
+        user = query_db(
+            'SELECT current_level FROM users WHERE id = %s',
+            (current_user['user_id'],),
+            one=True
+        )
+        
+        if not user:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="User not found"
+            )
+        
+        return UserLevelResponse(currentLevel=user['current_level'])
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error fetching current level: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to fetch current level"
+        )
+
+@app.post("/api/user/current-level", response_model=UserLevelUpdateResponse, tags=["User"])
+async def update_current_level(
+    level_data: UserLevelUpdateRequest,
+    current_user: dict = Depends(get_current_user)
+):
+    """Update the current level for the authenticated user"""
+    try:
+        # Validate level value
+        valid_levels = ['LEVEL_1', 'LEVEL_2', 'LEVEL_3', 'LEVEL_4']
+        if level_data.currentLevel not in valid_levels:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Invalid level value. Must be one of: {', '.join(valid_levels)}"
+            )
+        
+        # Update user level
+        result = execute_db(
+            'UPDATE users SET current_level = %s::translation_status WHERE id = %s',
+            (level_data.currentLevel, current_user['user_id'])
+        )
+        
+        if result == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="User not found"
+            )
+        
+        return UserLevelUpdateResponse(
+            message="Current level updated successfully",
+            currentLevel=level_data.currentLevel
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error updating current level: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to update current level"
         )
 
 # Word Sets routes

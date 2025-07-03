@@ -21,6 +21,24 @@ CREATE INDEX IF NOT EXISTS idx_word_list_entries_translation ON word_list_entrie
 CREATE INDEX IF NOT EXISTS idx_word_list_entries_list ON word_list_entries (word_list_id);
 CREATE INDEX IF NOT EXISTS idx_word_list_entries_list_translation ON word_list_entries (word_list_id, translation_id);
 
+-- Timestamp update trigger function
+CREATE OR REPLACE FUNCTION update_timestamp () RETURNS TRIGGER AS $$
+BEGIN
+   NEW.updated_at = CURRENT_TIMESTAMP;
+   RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Word list table trigger
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'update_word_list_timestamp') THEN
+    CREATE TRIGGER update_word_list_timestamp
+    BEFORE UPDATE ON word_lists
+    FOR EACH ROW
+    EXECUTE FUNCTION update_timestamp();
+  END IF;
+END $$;
 
 -- Functions
 DROP FUNCTION IF EXISTS get_word_lists();

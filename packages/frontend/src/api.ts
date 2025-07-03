@@ -186,6 +186,37 @@ const api = {
     }
   },
 
+  async getCurrentLevel(token: string): Promise<{ currentLevel: string }> {
+    const response = await fetch(`${serverAddress}/user/current-level`, {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (!response.ok) {
+      if (response.status === 401) throw new Error('Unauthorized');
+      const data = await response.json();
+      throw new Error(data.message || 'Failed to get current level');
+    }
+
+    return response.json();
+  },
+
+  async updateCurrentLevel(token: string, currentLevel: string): Promise<void> {
+    const response = await fetch(`${serverAddress}/user/current-level`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ currentLevel }),
+    });
+
+    if (!response.ok) {
+      const data = await response.json();
+      throw new Error(data.message || 'Failed to update current level');
+    }
+  },
+
   async fetchWordSet(token: string, wordSetId: number): Promise<WordSet & { words: any[] }> {
     const response = await fetch(`${serverAddress}/word-sets/${wordSetId}`, {
       method: 'GET',
