@@ -1,4 +1,15 @@
 -- TTS cache table and functions
+CREATE TABLE IF NOT EXISTS tts_caches (
+    id SERIAL PRIMARY KEY,
+    cache_key VARCHAR(32) UNIQUE NOT NULL,
+    text_content TEXT NOT NULL,
+    language VARCHAR(50) NOT NULL,
+    audio_data BYTEA NOT NULL,
+    file_size INTEGER NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    last_accessed_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Enhanced TTS cache function for better compatibility
 CREATE OR REPLACE FUNCTION get_tts_cache_entry_validated_fixed(
     p_cache_key VARCHAR(32),
@@ -31,17 +42,6 @@ BEGIN
     END IF;
 END;
 $$ LANGUAGE plpgsql;
-
-CREATE TABLE IF NOT EXISTS tts_caches (
-    id SERIAL PRIMARY KEY,
-    cache_key VARCHAR(32) UNIQUE NOT NULL,
-    text_content TEXT NOT NULL,
-    language VARCHAR(50) NOT NULL,
-    audio_data BYTEA NOT NULL,
-    file_size INTEGER NOT NULL,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    last_accessed_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);
 
 -- Indexes
 CREATE INDEX IF NOT EXISTS idx_tts_caches_key ON tts_caches (cache_key);

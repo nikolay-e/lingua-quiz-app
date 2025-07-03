@@ -121,7 +121,8 @@ serviceAccount:
 migrations:
   enabled: true
   command: ["python", "migrate.py"]
-  ttlSecondsAfterFinished: 120
+  # Keep failed migration pods for 1 hour for debugging (was 120 seconds)
+  ttlSecondsAfterFinished: 3600
   restartPolicy: OnFailure
   backoffLimit: 4
   resources:

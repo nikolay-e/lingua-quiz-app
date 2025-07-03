@@ -66,6 +66,18 @@ DROP FUNCTION IF EXISTS util_remove_brackets(TEXT);
 DROP FUNCTION IF EXISTS acquire_migration_lock();
 DROP FUNCTION IF EXISTS release_migration_lock();
 
+-- Drop leftover quiz functions that exist in staging but not in cleaned local migrations
+DROP FUNCTION IF EXISTS count_user_words_by_level(INTEGER, INTEGER);
+DROP FUNCTION IF EXISTS get_available_words(INTEGER, INTEGER, VARCHAR, INTEGER[]);
+DROP FUNCTION IF EXISTS get_word_display_info(INTEGER);
+DROP FUNCTION IF EXISTS get_word_statistics(INTEGER, INTEGER, BOOLEAN, INTEGER);
+DROP FUNCTION IF EXISTS get_words_by_level(INTEGER, INTEGER, VARCHAR, INTEGER);
+DROP FUNCTION IF EXISTS log_quiz_submission(INTEGER, INTEGER, BOOLEAN, TEXT, TEXT, BOOLEAN, VARCHAR, TEXT, INTEGER, INTEGER, INTEGER, INTEGER);
+DROP FUNCTION IF EXISTS record_quiz_answer(INTEGER, INTEGER, BOOLEAN, TEXT, TEXT, BOOLEAN, INTEGER);
+
+-- Drop wrong version of TTS function (staging has _fixed version, we want the clean version)
+DROP FUNCTION IF EXISTS get_tts_cache_entry_validated_fixed(VARCHAR, TEXT);
+
 -- Drop quiz session tables and related infrastructure (completely unused)
 -- Note: CASCADE will automatically drop related indexes, sequences, and constraints
 DROP TABLE IF EXISTS session_word_history CASCADE;
@@ -99,6 +111,26 @@ DROP INDEX IF EXISTS idx_user_translation_progress_user_updated;
 DROP INDEX IF EXISTS idx_tts_cache_key;
 DROP INDEX IF EXISTS idx_tts_cache_created_at;
 DROP INDEX IF EXISTS idx_tts_cache_last_accessed;
+
+-- Drop wrong index names that exist in staging (using wrong plural table names)
+DROP INDEX IF EXISTS idx_user_translation_progresses_user;
+DROP INDEX IF EXISTS idx_user_translation_progresses_word_pair;
+DROP INDEX IF EXISTS idx_user_translation_progresses_user_status;
+DROP INDEX IF EXISTS idx_user_translation_progresses_word_pair_status;
+
+-- Drop extra staging index that doesn't exist in local migrations
+DROP INDEX IF EXISTS idx_user_translation_progress_batch_update;
+
+-- Drop wrong primary key constraint name (it's a constraint, not an index)
+DO $$
+BEGIN
+    IF EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'user_translation_progresses_pkey') THEN
+        ALTER TABLE user_translation_progress DROP CONSTRAINT user_translation_progresses_pkey;
+    END IF;
+END $$;
+
+-- Drop obsolete trigger from users table (updated_at column was removed)
+DROP TRIGGER IF EXISTS update_user_timestamp ON users;
 
 -- VERIFICATION: After this migration, only these functions should remain:
 -- Essential functions that are still in use:

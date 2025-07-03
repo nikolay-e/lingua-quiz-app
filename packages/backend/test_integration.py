@@ -94,6 +94,12 @@ class TestRunner:
         self.test("Update word status with invalid data", self.test_invalid_word_status_update)
         self.test("Get user word sets with invalid list name", self.test_invalid_word_list_name)
         
+        # User level persistence tests
+        self.test("Get user current level", self.test_get_current_level)
+        self.test("Update user current level", self.test_update_current_level)
+        self.test("Update current level with invalid value", self.test_invalid_current_level)
+        self.test("Get current level without authentication", self.test_current_level_unauthorized)
+        
         # TTS tests (only run on deployed environments)
         if not SKIP_TTS_TESTS:
             self.test("Get TTS supported languages", self.test_tts_languages)
@@ -311,7 +317,7 @@ class TestRunner:
             elif r.status_code == 400:
                 # Word might not be in database, which is acceptable
                 data = r.json()
-                self.assert_in('message', data)
+                self.assert_in('detail', data)
                 print(f"  {YELLOW}Note: '{case['text']}' not in database{RESET}")
             else:
                 raise AssertionError(f"Unexpected status code: {r.status_code}")
@@ -455,6 +461,81 @@ class TestRunner:
         data = r.json()
         self.assert_true(isinstance(data, list))
         self.assert_equal(len(data), 0)
+    
+    def test_get_current_level(self):
+        """Test getting user current level"""
+        headers = {'Authorization': f'Bearer {self.token}'}
+        r = requests.get(f"{API_URL}/user/current-level", headers=headers, timeout=TIMEOUT)
+        self.assert_equal(r.status_code, 200)
+        data = r.json()
+        self.assert_in('currentLevel', data)
+        # Should be default level for new user
+        self.assert_equal(data['currentLevel'], 'LEVEL_1')
+    
+    def test_update_current_level(self):
+        """Test updating user current level"""
+        headers = {'Authorization': f'Bearer {self.token}'}
+        
+        # Test updating to each valid level
+        valid_levels = ['LEVEL_1', 'LEVEL_2', 'LEVEL_3', 'LEVEL_4']
+        
+        for level in valid_levels:
+            # Update to new level
+            update_data = {'currentLevel': level}
+            r = requests.post(f"{API_URL}/user/current-level", json=update_data, headers=headers, timeout=TIMEOUT)
+            self.assert_equal(r.status_code, 200)
+            data = r.json()
+            self.assert_in('message', data)
+            self.assert_in('currentLevel', data)
+            self.assert_equal(data['currentLevel'], level)
+            
+            # Verify the level was actually updated by getting it
+            r = requests.get(f"{API_URL}/user/current-level", headers=headers, timeout=TIMEOUT)
+            self.assert_equal(r.status_code, 200)
+            data = r.json()
+            self.assert_equal(data['currentLevel'], level)
+    
+    def test_invalid_current_level(self):
+        """Test updating current level with invalid values"""
+        headers = {'Authorization': f'Bearer {self.token}'}
+        
+        # Test with invalid level value
+        invalid_data = {'currentLevel': 'INVALID_LEVEL'}
+        r = requests.post(f"{API_URL}/user/current-level", json=invalid_data, headers=headers, timeout=TIMEOUT)
+        self.assert_equal(r.status_code, 400)
+        data = r.json()
+        self.assert_in('detail', data)
+        
+        # Test with missing currentLevel field
+        empty_data = {}
+        r = requests.post(f"{API_URL}/user/current-level", json=empty_data, headers=headers, timeout=TIMEOUT)
+        self.assert_equal(r.status_code, 422)  # FastAPI validation error
+        
+        # Test with invalid level values (business logic errors)
+        invalid_levels = ['LEVEL_0', 'LEVEL_5', 'level_1', 'INVALID_LEVEL']
+        for invalid_level in invalid_levels:
+            invalid_data = {'currentLevel': invalid_level}
+            r = requests.post(f"{API_URL}/user/current-level", json=invalid_data, headers=headers, timeout=TIMEOUT)
+            self.assert_equal(r.status_code, 400)
+        
+        # Test with validation errors (None and empty string are treated as business logic errors by our validation)
+        # Empty string passes JSON schema but fails business validation
+        edge_case_levels = ['']
+        for invalid_level in edge_case_levels:
+            invalid_data = {'currentLevel': invalid_level}
+            r = requests.post(f"{API_URL}/user/current-level", json=invalid_data, headers=headers, timeout=TIMEOUT)
+            self.assert_equal(r.status_code, 400)  # Our business logic validation
+    
+    def test_current_level_unauthorized(self):
+        """Test current level endpoints without authentication"""
+        # Test GET without token
+        r = requests.get(f"{API_URL}/user/current-level", timeout=TIMEOUT)
+        self.assert_equal(r.status_code, 403)
+        
+        # Test POST without token
+        data = {'currentLevel': 'LEVEL_2'}
+        r = requests.post(f"{API_URL}/user/current-level", json=data, timeout=TIMEOUT)
+        self.assert_equal(r.status_code, 403)
 
 def main():
     """Run integration tests"""
