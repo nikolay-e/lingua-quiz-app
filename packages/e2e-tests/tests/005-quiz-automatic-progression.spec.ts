@@ -49,7 +49,7 @@ test.describe.serial('Quiz Automatic Level Progression', () => {
 
   test.beforeEach(async ({ page }) => {
     page.setDefaultTimeout(30000);
-    const baseURL = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
+    const baseURL = process.env.LINGUA_QUIZ_URL ?? 'http://localhost:8080';
     await page.goto(baseURL, { waitUntil: 'domcontentloaded', timeout: 30000 });
   });
 
@@ -60,9 +60,6 @@ test.describe.serial('Quiz Automatic Level Progression', () => {
     // Setup quiz for subsequent tests
     await selectQuiz(page, 'German Russian A1');
     await waitForQuizReady(page);
-    
-    const statusSummary = await getStatusSummary(page);
-    console.log('Initial status summary:', statusSummary);
   });
 
   test('should automatically start with appropriate level', async ({ page }) => {
@@ -95,7 +92,6 @@ test.describe.serial('Quiz Automatic Level Progression', () => {
     await waitForQuizReady(page);
 
     const initialStatus = await getStatusSummary(page);
-    console.log('Initial status for auto-switch test:', initialStatus);
 
     // If all LEVEL_0 and LEVEL_1 are empty, system should auto-switch to lowest available level
     if (initialStatus.level0 === 0 && initialStatus.level1 === 0) {
@@ -149,9 +145,6 @@ test.describe.serial('Quiz Automatic Level Progression', () => {
     await login(page, testUser, testPassword);
     await selectQuiz(page, 'German Russian A1');
     await waitForQuizReady(page);
-
-    const initialStatus = await getStatusSummary(page);
-    console.log('Initial status for progression test:', initialStatus);
 
     // If there are questions available, try answering some
     const questionElement = page.locator('.question-text');
@@ -216,7 +209,7 @@ test.describe.serial('Quiz Automatic Level Progression', () => {
     
     // Delete the account via API call
     const token = await page.evaluate(() => localStorage.getItem('token'));
-    const apiUrl = process.env.API_URL || 'http://localhost:9000/api';
+    const apiUrl = process.env.API_URL ?? 'http://localhost:9000/api';
     
     interface DeleteResponse {
       status: number;

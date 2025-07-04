@@ -1,3 +1,7 @@
+# Optimized for fast builds on powerful machines
+x-build-args: &build-args
+  BUILDKIT_INLINE_CACHE: 1
+
 services:
   db:
     image: postgres:13
@@ -16,7 +20,10 @@ services:
       - pgdata_local:/var/lib/postgresql/data
   
   backend:
-    build: packages/backend
+    build:
+      context: packages/backend
+      args:
+        <<: *build-args
     ports: ["9000:9000"]
     environment:
       DB_HOST: db
@@ -24,7 +31,8 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      JWT_SECRET: dev-secret
+      JWT_PRIMARY_SECRET: dev-primary-secret
+      JWT_SECONDARY_SECRET: dev-secondary-secret
       DOCKER_ENVIRONMENT: true
       MIGRATE: true
       GOOGLE_CLOUD_CREDENTIALS_B64: ${GOOGLE_CLOUD_CREDENTIALS_B64}
@@ -34,40 +42,62 @@ services:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/api/health"]
-      interval: 10s
-      timeout: 3s
-      retries: 5
-      start_period: 5s
+      interval: 5s
+      timeout: 2s
+      retries: 3
+      start_period: 3s
     networks:
       - lingua-quiz-local-net
+    deploy:
+      resources:
+        limits:
+          cpus: '${BACKEND_CPUS_LIMIT:-3.5}'
+          memory: '${BACKEND_MEMORY_LIMIT:-2G}'
+        reservations:
+          cpus: '${BACKEND_CPUS_RESERVATION:-2.0}'
+          memory: '${BACKEND_MEMORY_RESERVATION:-1G}'
   
   frontend:
     build:
       context: .
       dockerfile: packages/frontend/Dockerfile
+      args:
+        <<: *build-args
     ports: ["8080:80"]
     depends_on:
       backend:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:80"]
-      interval: 10s
-      timeout: 3s
-      retries: 5
-      start_period: 5s
+      interval: 5s
+      timeout: 2s
+      retries: 3
+      start_period: 3s
     networks:
       - lingua-quiz-local-net
+    deploy:
+      resources:
+        limits:
+          cpus: '${FRONTEND_CPUS_LIMIT:-1.0}'
+          memory: '${FRONTEND_MEMORY_LIMIT:-512M}'
+        reservations:
+          cpus: '${FRONTEND_CPUS_RESERVATION:-0.5}'
+          memory: '${FRONTEND_MEMORY_RESERVATION:-256M}'
 
   e2e-tests:
     container_name: lingua-quiz-e2e-tests
     build:
       context: .
       dockerfile: packages/e2e-tests/Dockerfile
+      args:
+        <<: *build-args
     environment:
       LINGUA_QUIZ_URL: http://frontend:80
       API_URL: http://backend:9000/api
       NODE_ENV: test
-      # DEBUG: pw:api
+      PLAYWRIGHT_WORKERS: '${PLAYWRIGHT_WORKERS:-4}'
+      PLAYWRIGHT_PARALLEL: '${PLAYWRIGHT_PARALLEL:-4}'
+      NODE_OPTIONS: "--max-old-space-size=4096"
     depends_on:
       frontend:
         condition: service_healthy
@@ -78,6 +108,14 @@ services:
     volumes:
       - ./packages/e2e-tests/playwright-report:/app/playwright-report
       - ./packages/e2e-tests/test-results:/app/test-results
+    deploy:
+      resources:
+        limits:
+          cpus: '${E2E_CPUS_LIMIT:-3.5}'
+          memory: '${E2E_MEMORY_LIMIT:-7G}' # GitHub runners have 7GB of RAM
+        reservations:
+          cpus: '${E2E_CPUS_RESERVATION:-2.0}'
+          memory: '${E2E_MEMORY_RESERVATION:-4G}'
 
 volumes:
   pgdata_local:

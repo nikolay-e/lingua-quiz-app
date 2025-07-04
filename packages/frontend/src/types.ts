@@ -21,7 +21,7 @@ export interface WordSet {
 }
 
 export interface UserWordSet {
-  wordPairId: number;
+  translationId: number;
   sourceWord: string;
   targetWord: string;
   sourceLanguage: string;

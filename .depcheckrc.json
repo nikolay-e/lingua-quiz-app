@@ -1,0 +1,8 @@
+{
+  "ignores": [
+    "@eslint/eslintrc",
+    "@typescript-eslint/eslint-plugin", 
+    "@typescript-eslint/parser"
+  ],
+  "skip-missing": false
+}

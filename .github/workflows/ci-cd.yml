@@ -6,90 +6,49 @@ on:
   pull_request:
 
 jobs:
-  # Static analysis jobs run in parallel
-  lint:
-    runs-on: ubuntu-latest
+  setup:
     permissions:
       contents: read
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: 'npm'
-          
-      - name: Install dependencies
-        run: npm ci
-        
-      - name: Run linting
-        run: npm run lint
-        
-      - name: Check dependencies
-        run: npm run depcheck
+    uses: ./.github/workflows/reusable-nodejs-setup.yml
 
-  # Unit tests run in parallel
-  unit-tests:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: 'npm'
-          
-      - name: Install dependencies
-        run: npm ci
-        
-      - name: Run core package tests
-        run: |
-          cd packages/core
-          npm test
-
-  # Integration tests
-  integration-tests:
+  test-suite:
+    needs: setup
     runs-on: ubuntu-latest
     permissions:
       contents: read
     strategy:
+      fail-fast: false
       matrix:
-        test-type: [backend, e2e]
+        include:
+          - name: Linting, Depcheck & Unit Tests
+            run_script: |
+              npm run lint
+              npm run depcheck
+              cd packages/core && npm test
+          - name: Backend Integration Tests
+            run_script: |
+              docker compose up --build -d db backend
+              timeout 60 bash -c 'until curl -f http://localhost:9000/api/health > /dev/null 2>&1; do sleep 1; done'
+              cd packages/backend
+              pip install -r requirements.txt
+              SKIP_TTS_TESTS=true API_URL=http://localhost:9000/api python test_integration.py
+          - name: E2E Tests
+            run_script: |
+              docker compose up --build -d db backend frontend
+              timeout 60 bash -c 'until curl -f http://localhost:8080 > /dev/null 2>&1; do sleep 1; done'
+              docker compose run --build --rm e2e-tests
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Download workspace archive
+        uses: actions/download-artifact@v4
         with:
-          node-version: "20"
-          cache: 'npm'
-          
-      - name: Install dependencies
-        run: npm ci
+          name: workspace-archive
+          path: .
+      
+      - name: Extract workspace
+        run: tar -xzf workspace.tar.gz
         
-      - name: Start test environment
-        run: docker compose up --build -d db backend frontend
-        
-      - name: Wait for services to be ready
-        run: timeout 60 bash -c 'until curl -f http://localhost:8080 > /dev/null 2>&1; do sleep 1; done'
-        
-      - name: Run backend integration tests
-        if: matrix.test-type == 'backend'
-        run: |
-          cd packages/backend
-          pip install -r requirements.txt
-          SKIP_TTS_TESTS=true API_URL=http://localhost:9000/api python test_integration.py
-                    
-      - name: Run E2E tests
-        if: matrix.test-type == 'e2e'
-        run: docker compose run --build --rm e2e-tests
+      - name: Run ${{ matrix.name }}
+        run: ${{ matrix.run_script }}
 
   build-images:
     runs-on: ubuntu-latest
@@ -109,17 +68,17 @@ jobs:
       - uses: docker/setup-buildx-action@v3
       - uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+          username: nikolajer
           password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
       - uses: docker/build-push-action@v5
         with:
           context: ${{ matrix.context }}
           file: ${{ matrix.context }}/${{ matrix.dockerfile }}
           push: true
-          tags: ${{ secrets.DOCKER_REGISTRY_USERNAME }}/${{ matrix.image }}:${{ github.event.pull_request.head.sha || github.sha }},${{ secrets.DOCKER_REGISTRY_USERNAME }}/${{ matrix.image }}:latest
+          tags: nikolajer/${{ matrix.image }}:${{ github.event.pull_request.head.sha || github.sha }},nikolajer/${{ matrix.image }}:latest
 
   deploy:
-    needs: [lint, unit-tests, integration-tests, build-images]
+    needs: [test-suite, build-images]
     runs-on: ubuntu-latest
     environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
     permissions:
@@ -163,17 +122,19 @@ jobs:
           sleep 10
           
           IMAGE_TAG="${{ github.event.pull_request.head.sha || github.sha }}"
-          echo "Deploying with image tag: $IMAGE_TAG"
+          VALUES_FILE="values-$ENVIRONMENT.yaml"
+          echo "Deploying with image tag: $IMAGE_TAG using $VALUES_FILE"
+          
           helm upgrade --install lingua-quiz ./helm/lingua-quiz-app \
             --namespace $NAMESPACE \
-            --set namespace=$NAMESPACE \
-            --set backend.image.repository=${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-backend \
+            -f ./helm/lingua-quiz-app/$VALUES_FILE \
+            --set backend.image.repository=nikolajer/lingua-quiz-backend \
             --set backend.image.tag=$IMAGE_TAG \
-            --set frontend.image.repository=${{ secrets.DOCKER_REGISTRY_USERNAME }}/lingua-quiz-frontend \
+            --set frontend.image.repository=nikolajer/lingua-quiz-frontend \
             --set frontend.image.tag=$IMAGE_TAG \
-            --set ingress.frontend.host=${{ github.ref == 'refs/heads/main' && 'lingua-quiz.nikolay-eremeev.com' || 'test-lingua-quiz.nikolay-eremeev.com' }} \
-            --set secrets.jwtSecret="${{ secrets.JWT_SECRET }}" \
-            --set secrets.postgresDb="${{ secrets.POSTGRES_DB }}" \
+            --set secrets.jwtPrimarySecret="${{ secrets.JWT_PRIMARY_SECRET }}" \
+            --set secrets.jwtSecondarySecret="${{ secrets.JWT_SECONDARY_SECRET }}" \
+            --set secrets.postgresDb="lingua-quiz" \
             --set secrets.postgresUser="${{ secrets.POSTGRES_USER }}" \
             --set secrets.postgresPassword="${{ secrets.POSTGRES_PASSWORD }}" \
             --set secrets.googleCloudCredentialsB64="${{ secrets.GOOGLE_CLOUD_CREDENTIALS_B64 }}" \
@@ -181,71 +142,7 @@ jobs:
             
       - name: Check Migration Logs
         if: always()
-        run: |
-          echo "Checking for migration job..."
-          # Give it a moment for the job to be created
-          sleep 5
-          
-          # Check if migration job exists
-          if kubectl get job lingua-quiz-migrations -n $NAMESPACE 2>/dev/null; then
-            echo "Migration job found. Monitoring for completion or failure..."
-            
-            # Monitor job status in a loop to catch failure immediately
-            for i in $(seq 1 60); do
-              sleep 5
-              
-              # Check job status
-              JOB_STATUS=$(kubectl get job lingua-quiz-migrations -n $NAMESPACE -o jsonpath='{.status}' 2>/dev/null || echo '{}')
-              COMPLETED=$(echo "$JOB_STATUS" | jq -r '.succeeded // 0')
-              FAILED=$(echo "$JOB_STATUS" | jq -r '.failed // 0')
-              
-              echo "Attempt $i/60: Completed: $COMPLETED, Failed: $FAILED"
-              
-              # If completed successfully
-              if [ "$COMPLETED" -gt "0" ]; then
-                echo "Migration job completed successfully!"
-                break
-              fi
-              
-              # If failed, immediately capture logs before cleanup
-              if [ "$FAILED" -gt "0" ]; then
-                echo "Migration job failed! Capturing logs immediately..."
-                
-                echo ""
-                echo "=== Migration Job Status ==="
-                kubectl describe job/lingua-quiz-migrations -n $NAMESPACE || true
-                
-                echo ""
-                echo "=== Migration Pod Logs ==="
-                kubectl logs job/lingua-quiz-migrations -n $NAMESPACE --all-containers=true || true
-                
-                # Also try to get logs from pods directly
-                echo ""
-                echo "=== Migration Pod Status ==="
-                kubectl get pods -l job-name=lingua-quiz-migrations -n $NAMESPACE || true
-                
-                echo ""
-                echo "=== Direct Pod Logs ==="
-                kubectl logs -l job-name=lingua-quiz-migrations -n $NAMESPACE --all-containers=true || true
-                
-                echo "Migration job failed!"
-                exit 1
-              fi
-            done
-            
-            # If we exit the loop without completion, something's wrong
-            echo "Migration job monitoring timed out after 5 minutes"
-            
-            echo ""
-            echo "=== Final Migration Job Status ==="
-            kubectl describe job/lingua-quiz-migrations -n $NAMESPACE || true
-            
-            echo ""
-            echo "=== Final Migration Logs ==="
-            kubectl logs job/lingua-quiz-migrations -n $NAMESPACE --all-containers=true || true
-          else
-            echo "Migration job not found. Helm deployment may have failed."
-          fi
+        run: ./.github/scripts/check-migration-status.sh $NAMESPACE
           
       - name: Check Deployment Status
         if: steps.helm-deploy.outcome == 'failure'

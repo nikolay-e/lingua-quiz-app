@@ -84,11 +84,11 @@ spec:
               secretKeyRef:
                 name: {{ include "lingua-quiz-app.fullname" . }}-postgres
                 key: POSTGRES_PASSWORD
-          - name: JWT_SECRET
+          - name: JWT_PRIMARY_SECRET
             valueFrom:
               secretKeyRef:
                 name: {{ include "lingua-quiz-app.fullname" . }}-jwt
-                key: JWT_SECRET
+                key: JWT_PRIMARY_SECRET
           - name: NODE_ENV
             value: "production"
           {{- if .Values.migrations.env }}

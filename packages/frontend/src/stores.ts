@@ -3,6 +3,18 @@ import api from './api';
 import { QuizManager, type QuizQuestion } from '@linguaquiz/core';
 import type { WordSet } from './types';
 
+// State type definitions
+interface QuizState {
+  wordSets: WordSet[];
+  selectedQuiz: string | null;
+  quizManager: QuizManager | null;
+  currentQuestion: QuizQuestion | null;
+  sessionId: string | null;
+  loading: boolean;
+  error: string | null;
+  autoSaveTimer: NodeJS.Timeout | null;
+}
+
 interface ThemeState {
   isDarkMode: boolean;
 }
@@ -15,7 +27,7 @@ interface ThemeStore {
 
 // Theme Store for dark mode (follows system preference)
 function createThemeStore(): ThemeStore {
-  const getInitialTheme = () => {
+  const getInitialTheme = (): boolean => {
     if (typeof window === 'undefined') return false;
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) return savedTheme === 'dark';
@@ -26,7 +38,7 @@ function createThemeStore(): ThemeStore {
     isDarkMode: getInitialTheme()
   });
 
-  const applyTheme = (isDark: boolean) => {
+  const applyTheme = (isDark: boolean): void => {
     if (typeof document !== 'undefined') {
       document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
     }
@@ -81,9 +93,9 @@ interface AuthState {
 
 interface AuthStore {
   subscribe: Writable<AuthState>['subscribe'];
-  login: (username: string, password: string) => Promise<any>;
+  login: (username: string, password: string) => Promise<void>;
   logout: () => void;
-  register: (username: string, password: string) => Promise<any>;
+  register: (username: string, password: string) => Promise<void>;
 }
 
 // Auth Store with SSR-safe initialization
@@ -95,7 +107,7 @@ function createAuthStore(): AuthStore {
   });
 
   // Function to check token validity and update store
-  function checkToken() {
+  function checkToken(): void {
     if (typeof localStorage === 'undefined') return;
     
     const token = localStorage.getItem('token');
@@ -115,14 +127,14 @@ function createAuthStore(): AuthStore {
       } else {
         set({ token, username, isAuthenticated: true });
       }
-    } catch (e) {
+    } catch (_e) {
       console.error('Invalid token found, logging out.');
       logoutUser(); // Token is malformed
     }
   }
   
   // Function to set user data in localStorage and the store
-  function setUser(data: { token: string; username: string }) {
+  function setUser(data: { token: string; username: string }): void {
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('token', data.token);
       localStorage.setItem('username', data.username);
@@ -140,7 +152,7 @@ function createAuthStore(): AuthStore {
   }
 
   // Function to clear user data
-  function logoutUser() {
+  function logoutUser(): void {
     if (typeof localStorage !== 'undefined') {
       localStorage.removeItem('token');
       localStorage.removeItem('username');
@@ -159,7 +171,6 @@ function createAuthStore(): AuthStore {
     login: async (username: string, password: string) => {
       const data = await api.login(username, password);
       setUser({ token: data.token, username });
-      return data;
     },
     logout: () => {
       logoutUser();
@@ -167,7 +178,6 @@ function createAuthStore(): AuthStore {
     register: async (username: string, password: string) => {
       const data = await api.register(username, password);
       setUser({ token: data.token, username });
-      return data;
     },
   };
 }
@@ -188,15 +198,16 @@ interface QuizStore {
   subscribe: Writable<QuizState>['subscribe'];
   loadWordSets: (token: string) => Promise<void>;
   startQuiz: (token: string, quizName: string) => Promise<void>;
-  getNextQuestion: () => any | null;
-  submitAnswer: (token: string, answer: string) => Promise<any>;
+  getNextQuestion: () => unknown | null;
+  submitAnswer: (token: string, answer: string) => Promise<unknown>;
   setLevel: (level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4') => Promise<{ success: boolean; actualLevel: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4'; message?: string }>;
   reset: () => void;
+  saveAndCleanup: (token: string) => Promise<void>;
 }
 
 // Quiz Store with @linguaquiz/core integration
 function createQuizStore(): QuizStore {
-  const { subscribe, set, update } = writable({
+  const { subscribe, set, update } = writable<QuizState>({
     wordSets: [],
     selectedQuiz: null,
     quizManager: null,
@@ -209,21 +220,21 @@ function createQuizStore(): QuizStore {
 
   const BULK_SAVE_DELAY = 5000; // 5 seconds
   
-  const bulkSaveProgress = async (token: string) => {
+  const bulkSaveProgress = async (token: string): Promise<void> => {
     const state = get(store);
     if (!state.quizManager) return;
     
-    console.log('Bulk saving quiz progress...');
+    // Bulk saving quiz progress...
     
     try {
       const wordsByLevel = state.quizManager.getWordsByLevel();
-      const persistencePromises: Promise<any>[] = [];
+      const persistencePromises: Promise<void>[] = [];
       
       for (const [level, wordIds] of Object.entries(wordsByLevel)) {
         const wordArray = wordIds as number[];
         if (wordArray.length > 0) {
           persistencePromises.push(
-            api.saveWordStatus(token, level as any, wordArray)
+            api.saveWordStatus(token, level as 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5', wordArray)
               .catch(err => console.error(`Bulk save failed for ${level}:`, err))
           );
         }
@@ -231,14 +242,14 @@ function createQuizStore(): QuizStore {
       
       if (persistencePromises.length > 0) {
         await Promise.all(persistencePromises);
-        console.log('Bulk save completed successfully');
+        // Bulk save completed successfully
       }
     } catch (error) {
       console.error('Bulk save error:', error);
     }
   };
   
-  const scheduleBulkSave = (token: string) => {
+  const scheduleBulkSave = (token: string): void => {
     const state = get(store);
     
     // Clear existing timer
@@ -247,7 +258,7 @@ function createQuizStore(): QuizStore {
     }
     
     // Schedule new bulk save
-    const timer = setTimeout(() => bulkSaveProgress(token), BULK_SAVE_DELAY);
+    const timer = setTimeout(() => void bulkSaveProgress(token), BULK_SAVE_DELAY);
     
     // Update state with new timer
     update(s => ({ ...s, autoSaveTimer: timer }));
@@ -275,26 +286,26 @@ function createQuizStore(): QuizStore {
       try {
         // Use the word-sets API to get translations and progress
         const userWordSets = await api.fetchUserWordSets(token, quizName);
-        console.log(`Fetched ${userWordSets.length} words for quiz: ${quizName}`);
+        // Fetched words for quiz
         
         // Convert UserWordSet[] to the format expected by QuizManager
         const translations = userWordSets.map(word => ({
-          id: word.wordPairId,
+          id: word.translationId,
           sourceWord: {
             text: word.sourceWord,
             language: word.sourceLanguage,
-            usageExample: word.sourceWordUsageExample || ''
+            usageExample: word.sourceWordUsageExample ?? ''
           },
           targetWord: {
             text: word.targetWord,
             language: word.targetLanguage,
-            usageExample: word.targetWordUsageExample || ''
+            usageExample: word.targetWordUsageExample ?? ''
           }
         }));
         
         const progress = userWordSets.map(word => ({
-          translationId: word.wordPairId,
-          status: (word.status || 'LEVEL_0') as 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5',
+          translationId: word.translationId,
+          status: (word.status ?? 'LEVEL_0') as 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5',
           queuePosition: 0,
           consecutiveCorrect: 0,
           recentHistory: [] as boolean[]
@@ -313,14 +324,14 @@ function createQuizStore(): QuizStore {
           progress, 
           currentLevel
         });
-        console.log('QuizManager initialized with state:', manager.getState());
+        // QuizManager initialized
         
         // Bulk save all progress after initialization (handles promotions from LEVEL_0 to LEVEL_1)
         await bulkSaveProgress(token);
         
         const questionResult = manager.getNextQuestion();
         const currentQuestion = questionResult.question;
-        console.log('First question:', currentQuestion);
+        // First question generated
         
         // Use set/get pattern after await to avoid orphaned effects
         set({
@@ -362,7 +373,7 @@ function createQuizStore(): QuizStore {
         if (questionResult.levelAdjusted && oldLevel !== newLevel) {
           try {
             await api.updateCurrentLevel(token, newLevel);
-            console.log('Auto level change persisted:', oldLevel, '->', newLevel);
+            // Auto level change persisted
           } catch (error) {
             console.error('Failed to persist level change:', error);
           }
@@ -385,7 +396,7 @@ function createQuizStore(): QuizStore {
     setLevel: async (level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4', token?: string) => {
       const state = get(store);
       if (!state.quizManager) {
-        return { success: false, actualLevel: 'LEVEL_1', message: 'Quiz not initialized' };
+        return { success: false, actualLevel: 'LEVEL_1' as 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4', message: 'Quiz not initialized' };
       }
       
       try {
@@ -400,7 +411,7 @@ function createQuizStore(): QuizStore {
         if (token) {
           try {
             await api.updateCurrentLevel(token, result.actualLevel);
-            console.log('Level persisted to backend:', result.actualLevel);
+            // Level persisted to backend
           } catch (error) {
             console.error('Failed to persist level to backend:', error);
             // Don't fail the level change if persistence fails
@@ -410,7 +421,7 @@ function createQuizStore(): QuizStore {
         return result;
       } catch (error) {
         console.error('Failed to set level:', error);
-        return { success: false, actualLevel: 'LEVEL_1', message: 'Failed to set level' };
+        return { success: false, actualLevel: 'LEVEL_1' as 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4', message: 'Failed to set level' };
       }
     },
     

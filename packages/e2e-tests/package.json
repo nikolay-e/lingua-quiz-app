@@ -1,7 +1,6 @@
 {
   "name": "@linguaquiz/e2e-tests",
-  "version": "1.0.0",
-  "description": "E2E tests for your monorepo",
+  "description": "E2E tests for linguaquiz",
   "scripts": {
     "test": "playwright test",
     "typecheck": "tsc --noEmit"

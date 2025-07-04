@@ -1,0 +1,21 @@
+{{- $components := list "frontend" "backend" }}
+{{- range $component := $components }}
+{{- $config := index $.Values $component }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include (printf "lingua-quiz-app.%s.fullname" $component) $ }}
+  namespace: {{ include "lingua-quiz-app.namespace" $ }}
+  labels:
+    {{- include (printf "lingua-quiz-app.%s.labels" $component) $ | nindent 4 }}
+spec:
+  type: {{ $config.service.type }}
+  ports:
+    - port: {{ $config.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include (printf "lingua-quiz-app.%s.selectorLabels" $component) $ | nindent 4 }}
+{{- end }}

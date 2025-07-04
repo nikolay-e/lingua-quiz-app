@@ -83,11 +83,13 @@ DROP FUNCTION IF EXISTS get_tts_cache_entry_validated_fixed(VARCHAR, TEXT);
 DROP TABLE IF EXISTS session_word_history CASCADE;
 DROP TABLE IF EXISTS quiz_session CASCADE;
 DROP TABLE IF EXISTS quiz_submission_log CASCADE;
+DROP TABLE IF EXISTS schema_migrations CASCADE;
 
 -- Drop orphaned sequences that may remain (if CASCADE didn't catch them)
 DROP SEQUENCE IF EXISTS quiz_session_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS quiz_submission_log_id_seq CASCADE;
 DROP SEQUENCE IF EXISTS session_word_history_id_seq CASCADE;
+DROP SEQUENCE IF EXISTS schema_migrations_id_seq CASCADE;
 
 -- Drop old singular table indexes that were renamed to plural
 -- These indexes were created in earlier migrations but need cleanup after table renames
@@ -103,10 +105,6 @@ DROP INDEX IF EXISTS idx_word_list_name;
 DROP INDEX IF EXISTS idx_word_list_entry_translation;
 DROP INDEX IF EXISTS idx_word_list_entry_list;
 DROP INDEX IF EXISTS idx_word_list_entry_list_translation;
-DROP INDEX IF EXISTS idx_user_translation_progress_user;
-DROP INDEX IF EXISTS idx_user_translation_progress_word_pair;
-DROP INDEX IF EXISTS idx_user_translation_progress_user_status;
-DROP INDEX IF EXISTS idx_user_translation_progress_word_pair_status;
 DROP INDEX IF EXISTS idx_user_translation_progress_user_updated;
 DROP INDEX IF EXISTS idx_tts_cache_key;
 DROP INDEX IF EXISTS idx_tts_cache_created_at;
@@ -147,9 +145,8 @@ DROP TRIGGER IF EXISTS update_user_timestamp ON users;
 -- Expected result: ~10 functions remaining (down from 50+ in staging, 52+ in production)
 --
 -- OBJECTS THAT SHOULD REMAIN AFTER CLEANUP:
--- Tables: user, language, word, translation, word_list, word_list_entry, user_translation_progress, tts_cache, valid_tts_texts
+-- Tables: users, languages, words, translations, word_lists, word_list_entries, user_translation_progress, tts_caches
 -- Views: valid_tts_texts
 -- Types: translation_status
--- Triggers: update_user_timestamp, update_word_list_timestamp
--- Sequences: language_id_seq, translation_id_seq, user_id_seq, word_id_seq, word_list_id_seq, word_list_entry_id_seq, user_translation_progress_id_seq, tts_cache_id_seq
--- Additional in production: schema_migrations table and schema_migrations_id_seq sequence
+-- Triggers: update_word_list_timestamp
+-- Sequences: language_id_seq, translation_id_seq, user_id_seq, word_id_seq, word_list_id_seq, word_list_entry_id_seq, tts_cache_id_seq

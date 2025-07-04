@@ -1,0 +1,38 @@
+name: Reusable Node.js Setup
+
+on:
+  workflow_call:
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Archive workspace
+        run: >
+          tar
+          --ignore-failed-read
+          --warning=no-file-changed
+          --exclude='./workspace.tar.gz'
+          -czf workspace.tar.gz
+          .
+
+      - name: Upload workspace artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: workspace-archive
+          path: workspace.tar.gz
+          retention-days: 1

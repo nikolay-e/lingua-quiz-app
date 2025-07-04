@@ -1,0 +1,23 @@
+# Staging environment values for lingua-quiz-app chart.
+
+# Namespace configuration
+namespace: lingua-quiz-staging
+
+# Backend configuration
+backend:
+  corsAllowedOrigins: "https://test-lingua-quiz.nikolay-eremeev.com"
+
+# Ingress configuration for external access
+ingress:
+  frontend:
+    host: test-lingua-quiz.nikolay-eremeev.com
+
+# Database migrations configuration  
+migrations:
+  env:
+    - name: NODE_ENV
+      value: "staging"
+
+# Database backup configuration
+backup:
+  enabled: false  # Disable backup in staging

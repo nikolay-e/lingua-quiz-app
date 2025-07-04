@@ -11,7 +11,7 @@ test.describe.serial('Quiz Initialization', () => {
     page.setDefaultTimeout(30000);
     
     // Use environment variable or fallback URL
-    const baseURL = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
+    const baseURL = process.env.LINGUA_QUIZ_URL ?? 'http://localhost:8080';
     await page.goto(baseURL);
   });
 
@@ -113,7 +113,7 @@ test.describe.serial('Quiz Initialization', () => {
     
     // Delete the account via API call
     const token = await page.evaluate(() => localStorage.getItem('token'));
-    const apiUrl = process.env.API_URL || 'http://localhost:9000/api';
+    const apiUrl = process.env.API_URL ?? 'http://localhost:9000/api';
     
     interface DeleteResponse {
       status: number;

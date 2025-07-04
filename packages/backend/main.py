@@ -13,6 +13,7 @@ import datetime
 import functools
 import base64
 import logging
+from contextlib import contextmanager
 from typing import List, Optional, Dict, Any, Union
 
 import psycopg2
@@ -26,6 +27,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, ValidationError, field_validator
+from pydantic.alias_generators import to_camel
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
@@ -44,9 +46,13 @@ DB_PORT = int(os.getenv('DB_PORT', 5432))
 DB_NAME = os.getenv('POSTGRES_DB', 'linguaquiz_db')
 DB_USER = os.getenv('POSTGRES_USER', 'linguaquiz_user')
 DB_PASSWORD = os.getenv('POSTGRES_PASSWORD', 'password')
-JWT_SECRET = os.getenv('JWT_SECRET')
-if not JWT_SECRET:
-    raise RuntimeError("JWT_SECRET environment variable must be set - never use default secrets in production!")
+# JWT Configuration with dual secret support for graceful rotation
+JWT_PRIMARY_SECRET = os.getenv('JWT_PRIMARY_SECRET')
+JWT_SECONDARY_SECRET = os.getenv('JWT_SECONDARY_SECRET')
+
+if not JWT_PRIMARY_SECRET:
+    raise RuntimeError("JWT_PRIMARY_SECRET environment variable must be set - never use default secrets in production!")
+
 JWT_EXPIRES_IN = os.getenv('JWT_EXPIRES_IN', '24h')
 JWT_EXPIRES_HOURS = int(os.getenv('JWT_EXPIRES_HOURS', '24'))
 PORT = int(os.getenv('PORT', 9000))
@@ -77,7 +83,7 @@ app.add_middleware(
     allow_origins=CORS_ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allow_headers=["*"],
+    allow_headers=["Content-Type", "Authorization", "Accept", "Origin", "X-Requested-With"],
 )
 
 # Security headers middleware
@@ -89,7 +95,7 @@ async def add_security_headers(request: Request, call_next):
     # Content Security Policy (CSP) - prevents XSS and code injection
     csp_policy = (
         "default-src 'self'; "
-        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; "
+        "script-src 'self' https://cdnjs.cloudflare.com; "
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
         "font-src 'self' https://fonts.gstatic.com; "
         "img-src 'self' data: blob:; "
@@ -140,8 +146,21 @@ async def add_security_headers(request: Request, call_next):
     
     return response
 
-# Rate limiting
-limiter = Limiter(key_func=get_remote_address)
+# Rate limiting - use user-based instead of IP-based due to Cloudflare proxy
+def get_user_id_for_rate_limit(request: Request):
+    """Extract user ID from JWT token for rate limiting, fallback to IP"""
+    try:
+        auth_header = request.headers.get("Authorization")
+        if auth_header and auth_header.startswith("Bearer "):
+            token = auth_header.split(" ")[1]
+            payload = jwt.decode(token, JWT_PRIMARY_SECRET, algorithms=['HS256'])
+            return f"user:{payload.get('userId', 'anonymous')}"
+    except:
+        pass
+    # Fallback to IP for unauthenticated requests
+    return f"ip:{get_remote_address(request)}"
+
+limiter = Limiter(key_func=get_user_id_for_rate_limit)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
@@ -169,53 +188,60 @@ class TokenResponse(BaseModel):
 class WordSetResponse(BaseModel):
     id: int
     name: str
-    created_at: str = Field(alias="createdAt")
-    updated_at: str = Field(alias="updatedAt")
+    created_at: str
+    updated_at: str
+    word_count: Optional[int] = None
     
     class Config:
+        alias_generator = to_camel
         populate_by_name = True
 
 class WordResponse(BaseModel):
-    translation_id: int = Field(alias="translationId")
-    source_word_id: int = Field(alias="sourceWordId")
-    target_word_id: int = Field(alias="targetWordId")
-    source_word: str = Field(alias="sourceWord")
-    target_word: str = Field(alias="targetWord")
-    source_language: str = Field(alias="sourceLanguage")
-    target_language: str = Field(alias="targetLanguage")
-    source_example: Optional[str] = Field(alias="sourceExample")
-    target_example: Optional[str] = Field(alias="targetExample")
+    translation_id: int
+    source_word_id: Optional[int] = None
+    target_word_id: Optional[int] = None
+    source_word: str
+    target_word: str
+    source_language: str
+    target_language: str
+    source_example: Optional[str] = None
+    target_example: Optional[str] = None
+    status: Optional[str] = None
     
     class Config:
+        alias_generator = to_camel
         populate_by_name = True
 
 class WordSetWithWordsResponse(WordSetResponse):
     words: List[WordResponse]
 
 class UserWordSetRequest(BaseModel):
-    word_list_name: str = Field(alias="wordListName")
+    word_list_name: str
     
     class Config:
+        alias_generator = to_camel
         populate_by_name = True
 
 class UserWordSetResponse(BaseModel):
-    word_pair_id: int = Field(alias="wordPairId")
-    source_word: str = Field(alias="sourceWord")
-    target_word: str = Field(alias="targetWord")
-    source_language: str = Field(alias="sourceLanguage")
-    target_language: str = Field(alias="targetLanguage")
-    source_word_usage_example: Optional[str] = Field(alias="sourceWordUsageExample")
-    target_word_usage_example: Optional[str] = Field(alias="targetWordUsageExample")
+    translation_id: int
+    source_word: str
+    target_word: str
+    source_language: str
+    target_language: str
+    source_word_usage_example: Optional[str] = None
+    target_word_usage_example: Optional[str] = None
     status: Optional[str] = None
     
     class Config:
+        alias_generator = to_camel
         populate_by_name = True
 
 class UserWordSetStatusUpdate(BaseModel):
     status: str = Field(..., pattern="^(LEVEL_0|LEVEL_1|LEVEL_2|LEVEL_3|LEVEL_4|LEVEL_5)$")
-    word_pair_ids: List[int] = Field(alias="wordPairIds")
+    translation_ids: List[int]
     
     class Config:
+        alias_generator = to_camel
         populate_by_name = True
 
 class TTSRequest(BaseModel):
@@ -223,19 +249,21 @@ class TTSRequest(BaseModel):
     language: str = Field(..., pattern="^(German|Russian|Spanish)$")
 
 class TTSResponse(BaseModel):
-    audio_data: str = Field(alias="audioData")
-    content_type: str = Field(alias="contentType", default="audio/mpeg")
+    audio_data: str
+    content_type: str = "audio/mpeg"
     text: str
     language: str
     
     class Config:
+        alias_generator = to_camel
         populate_by_name = True
 
 class TTSLanguagesResponse(BaseModel):
     available: bool
-    supported_languages: List[str] = Field(alias="supportedLanguages")
+    supported_languages: List[str]
     
     class Config:
+        alias_generator = to_camel
         populate_by_name = True
 
 # Answer comparison models removed - logic moved to @linguaquiz/core
@@ -275,20 +303,7 @@ db_pool = SimpleConnectionPool(
 # TTS service
 tts_service = TTSService(db_pool)
 
-# Helper functions
-def snake_to_camel(snake_str):
-    """Convert snake_case to camelCase"""
-    components = snake_str.split('_')
-    return components[0] + ''.join(x.title() for x in components[1:])
-
-def convert_keys_to_camel_case(obj):
-    """Convert all keys in dict/list from snake_case to camelCase"""
-    if isinstance(obj, list):
-        return [convert_keys_to_camel_case(item) for item in obj]
-    elif isinstance(obj, dict):
-        return {snake_to_camel(k): convert_keys_to_camel_case(v) for k, v in obj.items()}
-    else:
-        return obj
+# Helper functions removed - using Pydantic alias_generator instead
 
 # Database helpers
 def get_db():
@@ -297,25 +312,20 @@ def get_db():
 def put_db(conn):
     db_pool.putconn(conn)
 
-def query_db(query, args=(), one=False):
+@contextmanager
+def db_cursor(commit=False):
+    """Provides a database cursor and handles connection pooling and transactions."""
     conn = None
     try:
         conn = get_db()
         if not conn:
             raise Exception("Failed to get database connection")
         with conn.cursor(cursor_factory=RealDictCursor) as cur:
-            cur.execute(query, args)
-            # Always fetch results first (even for write operations with RETURNING)
-            rv = cur.fetchall()
-            
-            # Determine if this is a write operation and commit if needed
-            is_write_operation = query.strip().upper().startswith(('INSERT', 'UPDATE', 'DELETE'))
-            if is_write_operation:
-                logger.info(f"Committing transaction for query: {query[:50]}...")
+            yield cur
+            if commit:
+                logger.info(f"Committing transaction")
                 conn.commit()
                 logger.info("Transaction committed successfully")
-            
-            return (rv[0] if rv else None) if one else rv
     except psycopg2.pool.PoolError as e:
         logger.error(f"Connection pool error: {e}")
         if conn:
@@ -325,7 +335,7 @@ def query_db(query, args=(), one=False):
                 pass
         raise
     except Exception as e:
-        logger.error(f"Database query error: {e}")
+        logger.error(f"Database error: {e}")
         if conn:
             try:
                 conn.rollback()
@@ -343,37 +353,19 @@ def query_db(query, args=(), one=False):
                 except:
                     pass
 
+def query_db(query, args=(), one=False):
+    """Execute a query and return results (with auto-commit for write operations)."""
+    is_write_operation = query.strip().upper().startswith(('INSERT', 'UPDATE', 'DELETE'))
+    with db_cursor(commit=is_write_operation) as cur:
+        cur.execute(query, args)
+        rv = cur.fetchall()
+        return (rv[0] if rv else None) if one else rv
+
 def execute_db(query, args=()):
-    conn = None
-    try:
-        conn = get_db()
-        if not conn:
-            raise Exception("Failed to get database connection")
-        with conn.cursor(cursor_factory=RealDictCursor) as cur:
-            cur.execute(query, args)
-            conn.commit()
-            return cur.rowcount
-    except psycopg2.pool.PoolError as e:
-        logger.error(f"Connection pool error: {e}")
-        raise
-    except Exception as e:
-        logger.error(f"Database execute error: {e}")
-        if conn:
-            try:
-                conn.rollback()
-            except:
-                pass
-        raise
-    finally:
-        if conn:
-            try:
-                put_db(conn)
-            except Exception as e:
-                logger.critical(f"Failed to return connection to pool: {e}")
-                try:
-                    conn.close()
-                except:
-                    pass
+    """Execute a write operation and return row count."""
+    with db_cursor(commit=True) as cur:
+        cur.execute(query, args)
+        return cur.rowcount
 
 # =================================================================
 # 6. Security & Dependencies
@@ -387,17 +379,22 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
 
 def create_access_token(data: dict) -> str:
+    """Create JWT token using the primary secret"""
     to_encode = data.copy()
     expire = datetime.datetime.utcnow() + datetime.timedelta(hours=JWT_EXPIRES_HOURS)
     to_encode.update({
         "exp": expire,
         "iat": datetime.datetime.utcnow()
     })
-    return jwt.encode(to_encode, JWT_SECRET, algorithm="HS256")
+    return jwt.encode(to_encode, JWT_PRIMARY_SECRET, algorithm="HS256")
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> dict:
+    """Verify JWT token with graceful fallback to secondary secret"""
+    token = credentials.credentials
+    
+    # Try primary secret first
     try:
-        payload = jwt.decode(credentials.credentials, JWT_SECRET, algorithms=['HS256'])
+        payload = jwt.decode(token, JWT_PRIMARY_SECRET, algorithms=['HS256'])
         user_id = payload.get('userId')
         username = payload.get('sub')
         if user_id is None or username is None:
@@ -407,15 +404,42 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
             )
         return {"user_id": user_id, "username": username}
     except jwt.ExpiredSignatureError:
+        # Token is expired regardless of which secret was used
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Token has expired"
         )
     except jwt.PyJWTError:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid token"
-        )
+        # If primary secret fails and we have a secondary secret, try it
+        if JWT_SECONDARY_SECRET:
+            try:
+                logger.debug("Primary JWT verification failed, trying secondary secret")
+                payload = jwt.decode(token, JWT_SECONDARY_SECRET, algorithms=['HS256'])
+                user_id = payload.get('userId')
+                username = payload.get('sub')
+                if user_id is None or username is None:
+                    raise HTTPException(
+                        status_code=status.HTTP_401_UNAUTHORIZED,
+                        detail="Invalid token payload"
+                    )
+                return {"user_id": user_id, "username": username}
+            except jwt.ExpiredSignatureError:
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Token has expired"
+                )
+            except jwt.PyJWTError:
+                # Both secrets failed
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Invalid token"
+                )
+        else:
+            # No secondary secret configured, token is invalid
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Invalid token"
+            )
 
 # =================================================================
 # 7. API Routes
@@ -534,7 +558,8 @@ async def login_user(request: Request, user_data: UserLogin):
         )
 
 @app.delete("/api/auth/delete-account", tags=["Authentication"])
-async def delete_account(current_user: dict = Depends(get_current_user)):
+@limiter.limit("5/hour")
+async def delete_account(request: Request, current_user: dict = Depends(get_current_user)):
     """Delete the current user's account"""
     logger.info(f"Account deletion request for user: {current_user['username']}")
     try:
@@ -591,7 +616,9 @@ async def get_current_level(current_user: dict = Depends(get_current_user)):
         )
 
 @app.post("/api/user/current-level", response_model=UserLevelUpdateResponse, tags=["User"])
+@limiter.limit("30/minute")
 async def update_current_level(
+    request: Request,
     level_data: UserLevelUpdateRequest,
     current_user: dict = Depends(get_current_user)
 ):
@@ -638,7 +665,7 @@ async def get_word_sets(current_user: dict = Depends(get_current_user)):
     logger.debug(f"Fetching word sets for user: {current_user['username']}")
     try:
         word_sets = query_db("SELECT * FROM get_word_lists()")
-        return [convert_keys_to_camel_case(dict(ws)) for ws in word_sets]
+        return [WordSetResponse(**dict(ws)) for ws in word_sets]
         
     except Exception as e:
         logger.error(f"Error fetching word sets: {e}")
@@ -655,11 +682,14 @@ async def get_user_word_sets(
     """Get user-specific word sets with progress status"""
     try:
         user_word_sets = query_db(
-            "SELECT * FROM get_user_word_sets(%s, %s)",
+            """SELECT word_pair_id as translation_id, status, source_word, target_word, 
+                      source_language, target_language, source_word_usage_example, 
+                      target_word_usage_example 
+               FROM get_user_word_sets(%s, %s)""",
             (current_user['user_id'], word_list_name)
         )
         
-        return [convert_keys_to_camel_case(dict(uws)) for uws in user_word_sets]
+        return [UserWordSetResponse(**dict(uws)) for uws in user_word_sets]
         
     except Exception as e:
         logger.error(f"Error fetching user word sets: {e}")
@@ -702,10 +732,10 @@ async def get_word_set(word_set_id: int, current_user: dict = Depends(get_curren
             (word_set_id,)
         )
         
-        result = convert_keys_to_camel_case(dict(word_set))
-        result['words'] = [convert_keys_to_camel_case(dict(word)) for word in words]
+        word_set_data = WordSetResponse(**dict(word_set))
+        word_responses = [WordResponse(**dict(word)) for word in words]
         
-        return result
+        return WordSetWithWordsResponse(**word_set_data.dict(), words=word_responses)
         
     except HTTPException:
         raise
@@ -717,7 +747,9 @@ async def get_word_set(word_set_id: int, current_user: dict = Depends(get_curren
         )
 
 @app.post("/api/word-sets/user", tags=["Word Sets"])
+@limiter.limit("200/minute")
 async def update_user_word_sets(
+    request: Request,
     update_data: UserWordSetStatusUpdate,
     current_user: dict = Depends(get_current_user)
 ):
@@ -734,10 +766,10 @@ async def update_user_word_sets(
         # Update word sets
         execute_db(
             "SELECT update_user_word_set_status(%s, %s, %s)",
-            (current_user['user_id'], update_data.word_pair_ids, update_data.status)
+            (current_user['user_id'], update_data.translation_ids, update_data.status)
         )
         
-        return {"message": f"Updated {len(update_data.word_pair_ids)} word sets to {update_data.status}"}
+        return {"message": f"Updated {len(update_data.translation_ids)} word sets to {update_data.status}"}
         
     except HTTPException:
         raise

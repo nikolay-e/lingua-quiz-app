@@ -5,14 +5,6 @@ interface WordPair {
   targetWord: string;
 }
 
-interface StatusSummary {
-  level0: number;
-  level1: number;
-  level2: number;
-  level3: number;
-  level4: number;
-  level5: number;
-}
 
 async function withRetry<T>(fn: () => Promise<T>, retries = 3): Promise<T> {
   for (let i = 0; i < retries; i++) {
@@ -28,15 +20,11 @@ async function withRetry<T>(fn: () => Promise<T>, retries = 3): Promise<T> {
 
 export async function register(page: Page, username: string, password: string, success?: boolean): Promise<void> {
   // Use environment variable or fallback URL
-  const baseURL = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
+  const baseURL = process.env.LINGUA_QUIZ_URL ?? 'http://localhost:8080';
   
-  try {
-    await withRetry(async () => {
-      await page.goto(baseURL, { waitUntil: 'domcontentloaded', timeout: 30000 });
-    });
-  } catch (error) {
-    throw error;
-  }
+  await withRetry(async () => {
+    await page.goto(baseURL, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  });
   
   // First check if we're on login page and need to navigate to register
   try {
@@ -45,13 +33,9 @@ export async function register(page: Page, username: string, password: string, s
     await page.click('button:has-text("Register here")');
     // Wait for register page to load
     await page.waitForSelector('section:has-text("Create Account")', { state: 'visible', timeout: 2000 });
-  } catch (error) {
+  } catch (_error) {
     // Check if we're already on register page
-    try {
-      await page.waitForSelector('section:has-text("Create Account")', { state: 'visible', timeout: 2000 });
-    } catch (error2) {
-      throw error2;
-    }
+    await page.waitForSelector('section:has-text("Create Account")', { state: 'visible', timeout: 2000 });
   }
   
   // Find the username and password inputs within the register section
@@ -59,10 +43,10 @@ export async function register(page: Page, username: string, password: string, s
   
   // Wait for inputs to be ready - use more specific selectors for Tailwind layout
   await registerSection.locator('input[placeholder="Username"]').waitFor({ state: 'visible', timeout: 5000 });
-  await registerSection.locator('input[id="register-password"]').waitFor({ state: 'visible', timeout: 5000 });
+  await registerSection.locator('input[id="password"]').waitFor({ state: 'visible', timeout: 5000 });
   
   await registerSection.locator('input[placeholder="Username"]').fill(username);
-  await registerSection.locator('input[id="register-password"]').fill(password);
+  await registerSection.locator('input[id="password"]').fill(password);
   // Wait for password validation to complete
   await page.waitForFunction(() => {
     const sections = Array.from(document.querySelectorAll('section'));
@@ -84,7 +68,7 @@ export async function register(page: Page, username: string, password: string, s
   // Click with retry for Firefox compatibility
   try {
     await submitButton.click({ timeout: 15000 });
-  } catch (error) {
+  } catch (_error) {
     // Retry with force click if normal click fails
     await submitButton.click({ force: true });
   }
@@ -117,15 +101,11 @@ export async function register(page: Page, username: string, password: string, s
 
 export async function login(page: Page, username: string, password: string): Promise<void> {
   // Use environment variable or fallback URL
-  const baseURL = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
+  const baseURL = process.env.LINGUA_QUIZ_URL ?? 'http://localhost:8080';
   
-  try {
-    await withRetry(async () => {
-      await page.goto(baseURL, { waitUntil: 'domcontentloaded', timeout: 30000 });
-    });
-  } catch (error) {
-    throw error;
-  }
+  await withRetry(async () => {
+    await page.goto(baseURL, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  });
   
   // Check if we're already logged in (quiz selector is visible)
   try {
@@ -165,7 +145,7 @@ export async function login(page: Page, username: string, password: string): Pro
   
   try {
     await submitButton.click({ timeout: 15000 }); // Increased timeout for Firefox
-  } catch (error) {
+  } catch (_error) {
     // Retry with force click if normal click fails
     await submitButton.click({ force: true });
   }
@@ -287,9 +267,7 @@ export async function answerCorrectly(page: Page): Promise<boolean> {
   const questionWord = await page.locator('#word').innerText();
   // Since level selection is automatic, we'll determine direction by trying both
   let correctAnswer = await findCorrectAnswer(page, questionWord, false);
-  if (!correctAnswer) {
-    correctAnswer = await findCorrectAnswer(page, questionWord, true);
-  }
+  correctAnswer ??= await findCorrectAnswer(page, questionWord, true);
   
   if (!correctAnswer) {
     console.warn(`Could not find correct answer for "${questionWord}"`);

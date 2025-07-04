@@ -1,0 +1,54 @@
+# Production environment values for lingua-quiz-app chart.
+
+# Namespace configuration
+namespace: lingua-quiz-production
+
+# Backend configuration
+backend:
+  corsAllowedOrigins: "https://lingua-quiz.nikolay-eremeev.com"
+  resources:
+    limits:
+      cpu: "1000m"
+      memory: "1Gi"
+    requests:
+      cpu: "500m"
+      memory: "512Mi"
+
+# Frontend configuration
+frontend:
+  replicaCount: 2  # Multiple replicas for production
+  resources:
+    limits:
+      cpu: "400m"
+      memory: "512Mi"
+    requests:
+      cpu: "200m"
+      memory: "256Mi"
+
+# Ingress configuration for external access
+ingress:
+  frontend:
+    host: lingua-quiz.nikolay-eremeev.com
+
+# PostgreSQL configuration
+postgres:
+  persistence:
+    size: 10Gi  # Larger storage for production
+  resources:
+    limits:
+      cpu: "500m"
+      memory: "1Gi"
+    requests:
+      cpu: "250m"
+      memory: "512Mi"
+
+# Database migrations configuration  
+migrations:
+  env:
+    - name: NODE_ENV
+      value: "production"
+
+# Database backup configuration
+backup:
+  enabled: true  # Enable backup in production
+  schedule: "0 2 * * *"  # Daily at 2 AM

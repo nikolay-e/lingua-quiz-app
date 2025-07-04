@@ -4,26 +4,37 @@
   import api from '../api';
   import type { SubmissionResult, QuizQuestion } from '@linguaquiz/core';
   import { formatForDisplay } from '@linguaquiz/core';
-  import type { QuizFeedback } from '../types';
+  import type { QuizFeedback, Translation } from '../types';
+  
+  // Type definitions for reactive variables
+  type WordDisplay = { source: string; target: string };
+  type WordLists = {
+    level0: WordDisplay[];
+    level1: WordDisplay[];
+    level2: WordDisplay[];
+    level3: WordDisplay[];
+    level4: WordDisplay[];
+    level5: WordDisplay[];
+  };
   
   // Component-specific state
   
   // Basic component state
-  let userAnswer: string = '';
-  let answerInput: HTMLInputElement;
+  let userAnswer = '';
+  let answerInput: HTMLInputElement | undefined;
   let feedback: SubmissionResult | QuizFeedback | null = null;
   let usageExamples: { source: string; target: string } | null = null;
-  let isSubmitting: boolean = false;
+  let isSubmitting = false;
 
   // TTS variables
-  let ttsAvailable: boolean = false;
+  let ttsAvailable = false;
   let ttsLanguages: string[] = [];
-  let isPlayingTTS: boolean = false;
-  let currentAudio: HTMLAudioElement | null = null;
+  let isPlayingTTS = false;
+  let currentAudio: HTMLAudioElement | undefined = undefined;
   
   // Request queuing to prevent concurrent requests
   let requestQueue: Promise<void> = Promise.resolve();
-  let currentRequestId: number = 0;
+  let currentRequestId = 0;
   
   // Foldable lists state
   let foldedLists: Record<string, boolean> = {
@@ -41,19 +52,19 @@
     if (savedFoldStates) {
       try {
         foldedLists = JSON.parse(savedFoldStates);
-      } catch (e) {
+      } catch (_e) {
         // Use defaults if parsing fails
       }
     }
   }
   
-  function toggleFold(level: string) {
+  function toggleFold(level: string): void {
     foldedLists[level] = !foldedLists[level];
     // Save to localStorage
     localStorage.setItem('foldedLists', JSON.stringify(foldedLists));
   }
   
-  // Reactive state from stores  
+  // Reactive state from stores
   $: wordSets = $quizStore.wordSets;
   $: selectedQuiz = $quizStore.selectedQuiz;
   $: currentQuestion = $quizStore.currentQuestion;
@@ -61,58 +72,54 @@
   $: username = $authStore.username;
   
   // Derived reactive state from currentQuestion and quizManager
-  $: direction = currentQuestion?.direction || 'normal';
-  $: sourceLanguage = currentQuestion?.sourceLanguage || '';
-  $: targetLanguage = currentQuestion?.targetLanguage || '';
+  $: direction = currentQuestion?.direction ?? 'normal';
+  $: sourceLanguage = currentQuestion?.sourceLanguage ?? '';
+  $: targetLanguage = currentQuestion?.targetLanguage ?? '';
   
   // Get current level from quiz manager for display purposes only
-  $: currentLevel = $quizStore.quizManager?.getState().currentLevel || 'LEVEL_1';
+  $: currentLevel = $quizStore.quizManager?.getState().currentLevel ?? 'LEVEL_1';
   
-  // Get word lists from quiz manager state
-  $: wordLists = $quizStore.quizManager ? (() => {
+  // Get word lists from quiz manager state with proper typing
+  $: wordLists = (() => {
+    if (!$quizStore.quizManager) {
+      return {
+        level0: [] as WordDisplay[],
+        level1: [] as WordDisplay[], 
+        level2: [] as WordDisplay[],
+        level3: [] as WordDisplay[],
+        level4: [] as WordDisplay[],
+        level5: [] as WordDisplay[]
+      } as WordLists;
+    }
+    
     const state = $quizStore.quizManager.getState();
     const manager = $quizStore.quizManager;
     
-    return {
-      level0: state.queues.LEVEL_0.map(id => {
-        return manager.getTranslationForDisplay(id);
-      }).filter(Boolean),
-      level1: state.queues.LEVEL_1.map(id => {
-        return manager.getTranslationForDisplay(id);
-      }).filter(Boolean),
-      level2: state.queues.LEVEL_2.map(id => {
-        return manager.getTranslationForDisplay(id);
-      }).filter(Boolean),
-      level3: state.queues.LEVEL_3.map(id => {
-        return manager.getTranslationForDisplay(id);
-      }).filter(Boolean),
-      level4: state.queues.LEVEL_4.map(id => {
-        return manager.getTranslationForDisplay(id);
-      }).filter(Boolean),
-      level5: state.queues.LEVEL_5.map(id => {
-        return manager.getTranslationForDisplay(id);
-      }).filter(Boolean)
+    const filterValidTranslations = (translations: Array<WordDisplay | undefined>): WordDisplay[] => {
+      return translations.filter((t): t is WordDisplay => t !== undefined);
     };
-  })() : {
-    level0: [] as any[],
-    level1: [] as any[], 
-    level2: [] as any[],
-    level3: [] as any[],
-    level4: [] as any[],
-    level5: [] as any[]
-  };
+    
+    return {
+      level0: filterValidTranslations(state.queues.LEVEL_0.map((id: number) => manager.getTranslationForDisplay(id))),
+      level1: filterValidTranslations(state.queues.LEVEL_1.map((id: number) => manager.getTranslationForDisplay(id))),
+      level2: filterValidTranslations(state.queues.LEVEL_2.map((id: number) => manager.getTranslationForDisplay(id))),
+      level3: filterValidTranslations(state.queues.LEVEL_3.map((id: number) => manager.getTranslationForDisplay(id))),
+      level4: filterValidTranslations(state.queues.LEVEL_4.map((id: number) => manager.getTranslationForDisplay(id))),
+      level5: filterValidTranslations(state.queues.LEVEL_5.map((id: number) => manager.getTranslationForDisplay(id)))
+    } as WordLists;
+  })();
 
   // TTS reactive state
   $: currentLanguage = direction === 'normal' ? sourceLanguage : targetLanguage;
   $: canUseTTS = ttsAvailable && currentQuestion && ttsLanguages.includes(currentLanguage);
   
-  // Reactive word lists for display
-  $: level0Words = wordLists.level0?.map((w: any) => `${w.source} -> ${w.target}`) || [];
-  $: level1Words = wordLists.level1?.map((w: any) => `${w.source} -> ${w.target}`) || [];
-  $: level2Words = wordLists.level2?.map((w: any) => `${w.source} -> ${w.target}`) || [];
-  $: level3Words = wordLists.level3?.map((w: any) => `${w.source} -> ${w.target}`) || [];
-  $: level4Words = wordLists.level4?.map((w: any) => `${w.source} -> ${w.target}`) || [];
-  $: level5Words = wordLists.level5?.map((w: any) => `${w.source} -> ${w.target}`) || [];
+  // Reactive word lists for display with proper typing
+  $: level0Words = wordLists.level0.map((w: WordDisplay) => `${w.source} -> ${w.target}`);
+  $: level1Words = wordLists.level1.map((w: WordDisplay) => `${w.source} -> ${w.target}`);
+  $: level2Words = wordLists.level2.map((w: WordDisplay) => `${w.source} -> ${w.target}`);
+  $: level3Words = wordLists.level3.map((w: WordDisplay) => `${w.source} -> ${w.target}`);
+  $: level4Words = wordLists.level4.map((w: WordDisplay) => `${w.source} -> ${w.target}`);
+  $: level5Words = wordLists.level5.map((w: WordDisplay) => `${w.source} -> ${w.target}`);
   
   // Current level is now automatically managed by the quiz system
   
@@ -144,7 +151,7 @@
     
     if (currentAudio) {
       currentAudio.pause();
-      currentAudio = null;
+      currentAudio = undefined;
     }
     
     isPlayingTTS = true;
@@ -161,12 +168,12 @@
       currentAudio.onended = (): void => {
         isPlayingTTS = false;
         URL.revokeObjectURL(audioUrl);
-        currentAudio = null;
+        currentAudio = undefined;
       };
       currentAudio.onerror = (): void => {
         isPlayingTTS = false;
         URL.revokeObjectURL(audioUrl);
-        currentAudio = null;
+        currentAudio = undefined;
       };
       
       await currentAudio.play();
@@ -220,7 +227,7 @@
     requestQueue = requestQueue.then(async (): Promise<void> => {
       // Check if this request is still valid
       if (requestId !== currentRequestId) {
-        console.log('Request cancelled - newer request exists');
+        // Request cancelled - newer request exists
         return;
       }
       
@@ -234,12 +241,13 @@
         // Only update UI if this is still the current request
         if (requestId === currentRequestId) {
           if (result) {
-            feedback = result;
+            feedback = result as SubmissionResult | QuizFeedback;
             // Set usage examples if they exist in the translation
-            if ('translation' in result && result.translation) {
+            if ('translation' in result && result.translation && 'sourceWord' in result.translation && 'targetWord' in result.translation) {
+              const translation = result.translation as Translation;
               usageExamples = {
-                source: result.translation.sourceWord.usageExample || '',
-                target: result.translation.targetWord.usageExample || ''
+                source: translation.sourceWord.usageExample ?? '',
+                target: translation.targetWord.usageExample ?? ''
               };
               // Only show if at least one example exists
               if (!usageExamples.source && !usageExamples.target) {
@@ -273,7 +281,7 @@
   function handleKeydown(e: KeyboardEvent): void {
     if (e.key === 'Enter') {
       e.preventDefault();
-      submitAnswer();
+      void submitAnswer();
     }
   }
   
@@ -285,6 +293,9 @@
     authStore.logout();
   }
   
+  // Store cleanup function reference
+  let handleBeforeUnload: (e: BeforeUnloadEvent) => void;
+  
   // Initialize component
   onMount(async () => {
     if ($authStore.token) {
@@ -292,18 +303,21 @@
     }
     
     // Save progress before page unload
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+    handleBeforeUnload = (_e: BeforeUnloadEvent): void => {
       if ($quizStore.quizManager && $authStore.token) {
         // Try to save synchronously (modern browsers may not wait for async)
-        quizStore.saveAndCleanup($authStore.token).catch(() => {});
+        void quizStore.saveAndCleanup($authStore.token).catch(() => {});
       }
     };
     
     window.addEventListener('beforeunload', handleBeforeUnload);
-    
-    return () => {
+  });
+  
+  // Cleanup on component destroy
+  onDestroy(() => {
+    if (handleBeforeUnload) {
       window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
+    }
   });
   
 </script>
@@ -322,12 +336,12 @@
               class="quiz-select"
               on:change={handleQuizSelect}
               disabled={loading}
-              value={selectedQuiz || ''}
+              value={selectedQuiz ?? ''}
             >
               <option value="">
                 {loading ? 'Loading quizzes...' : '🎯 Select a quiz to start learning'}
               </option>
-              {#each wordSets as set}
+              {#each wordSets as set (set.id)}
                 <option value={set.name}>{set.name}</option>
               {/each}
             </select>
@@ -426,13 +440,15 @@
       <h2>Learning Progress</h2>
       
       <div id="level-1" class="foldable-section">
-        <h3 class="foldable-header" on:click={() => toggleFold('level1')}>
-          <i class="fas fa-{foldedLists.level1 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-          <i class="fas fa-tasks"></i> Learning ({$quizStore.quizManager?.getState().queues.LEVEL_1.length || 0})
+        <h3 class="foldable-header">
+          <button type="button" class="fold-toggle" on:click={() => toggleFold('level1')} aria-expanded={!foldedLists.level1}>
+            <i class="fas fa-{foldedLists.level1 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
+            <i class="fas fa-tasks"></i> Learning ({($quizStore.quizManager?.getState().queues.LEVEL_1.length) ?? 0})
+          </button>
         </h3>
         {#if !foldedLists.level1}
           <ol id="level-1-list" class="foldable-content">
-            {#each level1Words as word}
+            {#each level1Words as word (word)}
               <li class="word-item">{word}</li>
             {/each}
           </ol>
@@ -440,13 +456,15 @@
       </div>
       
       <div id="level-2" class="foldable-section">
-        <h3 class="foldable-header" on:click={() => toggleFold('level2')}>
-          <i class="fas fa-{foldedLists.level2 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-          <i class="fas fa-check-circle"></i> Translation Mastered One Way ({$quizStore.quizManager?.getState().queues.LEVEL_2.length || 0})
+        <h3 class="foldable-header">
+          <button type="button" class="fold-toggle" on:click={() => toggleFold('level2')} aria-expanded={!foldedLists.level2}>
+            <i class="fas fa-{foldedLists.level2 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
+            <i class="fas fa-check-circle"></i> Translation Mastered One Way ({($quizStore.quizManager?.getState().queues.LEVEL_2.length) ?? 0})
+          </button>
         </h3>
         {#if !foldedLists.level2}
           <ol id="level-2-list" class="foldable-content">
-            {#each level2Words as word}
+            {#each level2Words as word (word)}
               <li class="word-item">{word}</li>
             {/each}
           </ol>
@@ -454,13 +472,15 @@
       </div>
       
       <div id="level-3" class="foldable-section">
-        <h3 class="foldable-header" on:click={() => toggleFold('level3')}>
-          <i class="fas fa-{foldedLists.level3 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-          <i class="fas fa-check-circle"></i> Translation Mastered Both Ways ({$quizStore.quizManager?.getState().queues.LEVEL_3.length || 0})
+        <h3 class="foldable-header">
+          <button type="button" class="fold-toggle" on:click={() => toggleFold('level3')} aria-expanded={!foldedLists.level3}>
+            <i class="fas fa-{foldedLists.level3 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
+            <i class="fas fa-check-circle"></i> Translation Mastered Both Ways ({($quizStore.quizManager?.getState().queues.LEVEL_3.length) ?? 0})
+          </button>
         </h3>
         {#if !foldedLists.level3}
           <ol id="level-3-list" class="foldable-content">
-            {#each level3Words as word}
+            {#each level3Words as word (word)}
               <li class="word-item">{word}</li>
             {/each}
           </ol>
@@ -468,13 +488,15 @@
       </div>
       
       <div id="level-4" class="foldable-section">
-        <h3 class="foldable-header" on:click={() => toggleFold('level4')}>
-          <i class="fas fa-{foldedLists.level4 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-          <i class="fas fa-star"></i> Examples Mastered One Way ({$quizStore.quizManager?.getState().queues.LEVEL_4.length || 0})
+        <h3 class="foldable-header">
+          <button type="button" class="fold-toggle" on:click={() => toggleFold('level4')} aria-expanded={!foldedLists.level4}>
+            <i class="fas fa-{foldedLists.level4 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
+            <i class="fas fa-star"></i> Examples Mastered One Way ({($quizStore.quizManager?.getState().queues.LEVEL_4.length) ?? 0})
+          </button>
         </h3>
         {#if !foldedLists.level4}
           <ol id="level-4-list" class="foldable-content">
-            {#each level4Words as word}
+            {#each level4Words as word (word)}
               <li class="word-item">{word}</li>
             {/each}
           </ol>
@@ -482,13 +504,15 @@
       </div>
       
       <div id="level-5" class="foldable-section">
-        <h3 class="foldable-header" on:click={() => toggleFold('level5')}>
-          <i class="fas fa-{foldedLists.level5 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-          <i class="fas fa-trophy"></i> Fully Mastered ({$quizStore.quizManager?.getState().queues.LEVEL_5.length || 0})
+        <h3 class="foldable-header">
+          <button type="button" class="fold-toggle" on:click={() => toggleFold('level5')} aria-expanded={!foldedLists.level5}>
+            <i class="fas fa-{foldedLists.level5 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
+            <i class="fas fa-trophy"></i> Fully Mastered ({($quizStore.quizManager?.getState().queues.LEVEL_5.length) ?? 0})
+          </button>
         </h3>
         {#if !foldedLists.level5}
           <ol id="level-5-list" class="foldable-content">
-            {#each level5Words as word}
+            {#each level5Words as word (word)}
               <li class="word-item">{word}</li>
             {/each}
           </ol>
@@ -496,13 +520,15 @@
       </div>
       
       <div id="level-0" class="foldable-section">
-        <h3 class="foldable-header" on:click={() => toggleFold('level0')}>
-          <i class="fas fa-{foldedLists.level0 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-          <i class="fas fa-list"></i> New ({$quizStore.quizManager?.getState().queues.LEVEL_0.length || 0})
+        <h3 class="foldable-header">
+          <button type="button" class="fold-toggle" on:click={() => toggleFold('level0')} aria-expanded={!foldedLists.level0}>
+            <i class="fas fa-{foldedLists.level0 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
+            <i class="fas fa-list"></i> New ({($quizStore.quizManager?.getState().queues.LEVEL_0.length) ?? 0})
+          </button>
         </h3>
         {#if !foldedLists.level0}
           <ol id="level-0-list" class="foldable-content">
-            {#each level0Words as word}
+            {#each level0Words as word (word)}
               <li class="word-item">{word}</li>
             {/each}
           </ol>

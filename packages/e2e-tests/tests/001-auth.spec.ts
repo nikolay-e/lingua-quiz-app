@@ -19,7 +19,7 @@ test.describe.serial('User Authentication', () => {
 
   test.beforeEach(async ({ page }) => {
     // Use environment variable directly since baseURL is not being set
-    const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
+    const url = process.env.LINGUA_QUIZ_URL ?? 'http://localhost:8080';
     await page.goto(url);
   });
 
@@ -29,7 +29,7 @@ test.describe.serial('User Authentication', () => {
       userRegistered = true;
       actualTestUser = testUser; // Store the successful username
     } catch (error) {
-      if (error instanceof Error && error.message && error.message.includes('Conflict')) {
+      if (error instanceof Error && error.message?.includes('Conflict')) {
         // If there's still a conflict with our highly unique username, try once more
         const fallbackUser = generateUniqueEmail();
         console.log(`Registration conflict detected (unlikely), trying with new username: ${fallbackUser}`);
@@ -170,7 +170,7 @@ test.describe.serial('User Authentication', () => {
 
   test('should redirect to login page when accessing protected route', async ({ page, context }) => {
     await context.clearCookies();
-    const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
+    const url = process.env.LINGUA_QUIZ_URL ?? 'http://localhost:8080';
     await page.goto(`${url}/`);
     // Should see the login form when not authenticated
     await expect(page.locator('section:has-text("Sign In")')).toBeVisible();
@@ -178,7 +178,7 @@ test.describe.serial('User Authentication', () => {
 
   test('should handle server errors gracefully', async ({ page }) => {
     await page.route('**/api/auth/login', (route) => {
-      route.fulfill({
+      void route.fulfill({
         status: 500,
         body: JSON.stringify({ message: 'Internal Server Error' }),
       });
@@ -230,7 +230,7 @@ test.describe.serial('User Authentication', () => {
     await page.waitForTimeout(1000); // Ensure storage is cleared
 
     // Try to access protected route and verify redirect
-    const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
+    const url = process.env.LINGUA_QUIZ_URL ?? 'http://localhost:8080';
     await page.goto(`${url}/`);
     // After logout, should see the login form
     await page.waitForSelector('section:has-text("Sign In")', { state: 'visible' });
@@ -244,7 +244,7 @@ test.describe.serial('User Authentication', () => {
       localStorage.setItem('username', 'testuser');
     });
 
-    const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
+    const url = process.env.LINGUA_QUIZ_URL ?? 'http://localhost:8080';
     await page.goto(`${url}/`);
     // After logout, should see the login form
     await page.waitForSelector('section:has-text("Sign In")', { state: 'visible' });
@@ -260,7 +260,7 @@ test.describe.serial('User Authentication', () => {
       localStorage.setItem('username', 'testuser');
     }, expiredToken);
 
-    const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
+    const url = process.env.LINGUA_QUIZ_URL ?? 'http://localhost:8080';
     await page.goto(`${url}/`);
     // After logout, should see the login form
     await page.waitForSelector('section:has-text("Sign In")', { state: 'visible' });
@@ -273,7 +273,7 @@ test.describe.serial('User Authentication', () => {
       localStorage.clear();
     });
 
-    const url = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
+    const url = process.env.LINGUA_QUIZ_URL ?? 'http://localhost:8080';
     await page.goto(`${url}/`);
     // After logout, should see the login form
     await page.waitForSelector('section:has-text("Sign In")', { state: 'visible' });
@@ -293,7 +293,7 @@ test.describe.serial('User Authentication', () => {
     
     // Delete the account via API call
     const token = await page.evaluate(() => localStorage.getItem('token'));
-    const apiUrl = process.env.API_URL || 'http://localhost:9000/api';
+    const apiUrl = process.env.API_URL ?? 'http://localhost:9000/api';
     
     interface DeleteResponse {
       status: number;

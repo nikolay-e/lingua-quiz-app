@@ -83,11 +83,17 @@ spec:
                 secretKeyRef:
                   name: {{ include "lingua-quiz-app.fullname" . }}-postgres
                   key: POSTGRES_PASSWORD
-            - name: JWT_SECRET
+            - name: JWT_PRIMARY_SECRET
               valueFrom:
                 secretKeyRef:
                   name: {{ include "lingua-quiz-app.fullname" . }}-jwt
-                  key: JWT_SECRET
+                  key: JWT_PRIMARY_SECRET
+            - name: JWT_SECONDARY_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "lingua-quiz-app.fullname" . }}-jwt
+                  key: JWT_SECONDARY_SECRET
+                  optional: true
             - name: CORS_ALLOWED_ORIGINS
               value: {{ .Values.backend.corsAllowedOrigins | quote }}
             {{- if .Values.secrets.googleCloudCredentialsB64 }}

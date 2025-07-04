@@ -107,11 +107,14 @@ export function checkAnswer(userAnswer: string, correctAnswer: string): boolean 
   
   if (correctAnswer.includes('|')) return correctAnswer.split('|').map(normalize).includes(normUserAnswer);
   
-  const bracketMatch = correctAnswer.match(/^(.*?)\[(.*?)\](.*?)$/);
-  if (bracketMatch) {
-    const main = normalize(bracketMatch[1].trim());
-    const opt = normalize(bracketMatch[2].trim());
-    const rest = normalize(bracketMatch[3].trim());
+  // Handle optional text in square brackets without regex to avoid ReDoS
+  const firstBracket = correctAnswer.indexOf('[');
+  const lastBracket = correctAnswer.lastIndexOf(']');
+  
+  if (firstBracket !== -1 && lastBracket !== -1 && firstBracket < lastBracket) {
+    const main = normalize(correctAnswer.substring(0, firstBracket).trim());
+    const opt = normalize(correctAnswer.substring(firstBracket + 1, lastBracket).trim());
+    const rest = normalize(correctAnswer.substring(lastBracket + 1).trim());
     return normUserAnswer === normalize(`${main} ${opt} ${rest}`) || normUserAnswer === normalize(`${main} ${rest}`);
   }
 
@@ -211,9 +214,9 @@ export type QuestionType = 'translation' | 'usage';
  * across different platforms and frameworks.
  */
 export class QuizManager {
-  private translations: Map<number, Translation>;
-  private progress: Map<number, ProgressEntry>;
-  private queues: {
+  private readonly translations: Map<number, Translation>;
+  private readonly progress: Map<number, ProgressEntry>;
+  private readonly queues: {
     LEVEL_0: number[];
     LEVEL_1: number[];
     LEVEL_2: number[];
@@ -222,7 +225,7 @@ export class QuizManager {
     LEVEL_5: number[];
   };
   private currentLevel: PracticeLevel;
-  private opts: Required<QuizOptions>;
+  private readonly opts: Required<QuizOptions>;
   private submissionStartTime: number | null = null;
 
   /**
@@ -259,7 +262,7 @@ export class QuizManager {
     
     translations.forEach(t => {
       const existing = initialProgressMap.get(t.id);
-      const progress: ProgressEntry = existing || {
+      const progress: ProgressEntry = existing ?? {
         translationId: t.id,
         status: 'LEVEL_0',
         queuePosition: 0,
@@ -305,7 +308,7 @@ export class QuizManager {
   /**
    * Generates a question based on current level and available words
    */
-  private generateQuestion = (): QuizQuestion | null => {
+  private readonly generateQuestion = (): QuizQuestion | null => {
     // Get words available for current level based on level-specific queues
     let candidateId: number | null = null;
     
@@ -395,14 +398,14 @@ export class QuizManager {
   /**
    * Determines the direction for a given level
    */
-  private getLevelDirection = (level: PracticeLevel): QuestionDirection => {
+  private readonly getLevelDirection = (level: PracticeLevel): QuestionDirection => {
     return level === 'LEVEL_1' || level === 'LEVEL_3' ? 'normal' : 'reverse';
   }
   
   /**
    * Determines the question type for a given level
    */
-  private getLevelQuestionType = (level: PracticeLevel): QuestionType => {
+  private readonly getLevelQuestionType = (level: PracticeLevel): QuestionType => {
     return level === 'LEVEL_3' || level === 'LEVEL_4' ? 'usage' : 'translation';
   }
   
@@ -410,7 +413,7 @@ export class QuizManager {
   /**
    * Checks if a practice level has available words
    */
-  private hasWordsForLevel = (level: PracticeLevel): boolean => {
+  private readonly hasWordsForLevel = (level: PracticeLevel): boolean => {
     switch (level) {
       case 'LEVEL_1':
         // LEVEL_1 practices words from LEVEL_0 and LEVEL_1 queues
@@ -433,7 +436,7 @@ export class QuizManager {
    * Gets the lowest available practice level based on which word queues have content
    * Always prioritizes the natural learning progression: LEVEL_1 → LEVEL_2 → LEVEL_3 → LEVEL_4
    */
-  private getLowestAvailablePracticeLevel = (): PracticeLevel => {
+  private readonly getLowestAvailablePracticeLevel = (): PracticeLevel => {
     // Check in order of learning progression
     if (this.hasWordsForLevel('LEVEL_1')) return 'LEVEL_1';
     if (this.hasWordsForLevel('LEVEL_2')) return 'LEVEL_2';
@@ -493,7 +496,7 @@ export class QuizManager {
   /**
    * Updates word's position in queue based on answer correctness
    */
-  private updateQueuePosition = (translationId: number, isCorrect: boolean): void => {
+  private readonly updateQueuePosition = (translationId: number, isCorrect: boolean): void => {
     const p = this.progress.get(translationId);
     if (!p) return;
     
@@ -523,7 +526,7 @@ export class QuizManager {
   /**
    * Checks and updates word level progression
    */
-  private checkLevelProgression = (p: ProgressEntry): void => {
+  private readonly checkLevelProgression = (p: ProgressEntry): void => {
     // Check advancement (3 consecutive correct)
     if (p.consecutiveCorrect >= this.opts.correctAnswersToLevelUp) {
       const nextLevel = this.getNextLevel(p.status);
@@ -548,7 +551,7 @@ export class QuizManager {
   /**
    * Gets the next level for progression
    */
-  private getNextLevel = (currentLevel: LevelStatus): LevelStatus | null => {
+  private readonly getNextLevel = (currentLevel: LevelStatus): LevelStatus | null => {
     const levelMap: Record<LevelStatus, LevelStatus> = {
       'LEVEL_0': 'LEVEL_1',
       'LEVEL_1': 'LEVEL_2',
@@ -563,7 +566,7 @@ export class QuizManager {
   /**
    * Gets the previous level for degradation
    */
-  private getPreviousLevel = (currentLevel: LevelStatus): LevelStatus | null => {
+  private readonly getPreviousLevel = (currentLevel: LevelStatus): LevelStatus | null => {
     const levelMap: Record<LevelStatus, LevelStatus> = {
       'LEVEL_5': 'LEVEL_4',
       'LEVEL_4': 'LEVEL_3',
@@ -578,7 +581,7 @@ export class QuizManager {
   /**
    * Moves a word from one level to another
    */
-  private moveWordToLevel = (translationId: number, newLevel: LevelStatus): void => {
+  private readonly moveWordToLevel = (translationId: number, newLevel: LevelStatus): void => {
     const p = this.progress.get(translationId);
     if (!p) return;
     
@@ -632,10 +635,10 @@ export class QuizManager {
    * Replenishes the focus pool by promoting words from LEVEL_0 to LEVEL_1
    * @returns Array of translation IDs that were promoted to LEVEL_1
    */
-  private replenishFocusPool = (): number[] => {
+  private readonly replenishFocusPool = (): number[] => {
     // MODIFICATION: Refactored to be more direct and reliable.
     const level1Count = this.queues.LEVEL_1.length;
-    let needed = this.opts.maxFocusWords - level1Count;
+    const needed = this.opts.maxFocusWords - level1Count;
     if (needed <= 0) return [];
     
     // Directly take from the front of the LEVEL_0 queue.

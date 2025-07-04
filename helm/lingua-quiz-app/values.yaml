@@ -90,8 +90,6 @@ ingress:
     # cert-manager.io/cluster-issuer: letsencrypt-prod # If using cert-manager
   frontend:
     host: lingua-quiz.nikolay-eremeev.com # To be set by CI/env
-  backend:
-    host: api-lingua-quiz.nikolay-eremeev.com # To be set by CI/env
   tls:
     enabled: true
     secretName: lingua-quiz-tls # Name of the K8s secret holding the cert/key
@@ -100,11 +98,18 @@ ingress:
 secrets:
   # Values should be plain text, Helm will Base64 encode them
   # These are placeholder values only; real values must be provided at deployment time
-  # In production, use --set-file secrets.jwtSecret=./jwt-secret.txt or similar for secure handling
-  jwtSecret: "" # Must be set at deployment time
+  # In production, use --set-file secrets.jwtPrimarySecret=./jwt-primary.txt or similar for secure handling
+  
+  # JWT secrets for graceful rotation
+  jwtPrimarySecret: "" # Primary JWT secret - must be set at deployment time
+  jwtSecondarySecret: "" # Secondary JWT secret - optional, for graceful rotation
+  
+  # Database secrets
   postgresDb: "" # Must be set at deployment time
   postgresUser: "" # Must be set at deployment time
   postgresPassword: "" # Must be set at deployment time
+  
+  # Optional TTS service
   googleCloudCredentialsB64: "" # Base64-encoded Google Cloud service account JSON for TTS (optional)
 
 # Service Account configuration

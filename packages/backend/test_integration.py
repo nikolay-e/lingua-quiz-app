@@ -207,7 +207,7 @@ class TestRunner:
             # Check camelCase field names if data exists
             if data:
                 first_item = data[0]
-                self.assert_in('wordPairId', first_item)  # Should be camelCase
+                self.assert_in('translationId', first_item)  # Should be camelCase
                 self.assert_in('status', first_item)
                 self.assert_in('sourceWord', first_item)  # Should be camelCase
                 self.assert_in('targetWord', first_item)  # Should be camelCase
@@ -249,7 +249,7 @@ class TestRunner:
         headers = {'Authorization': f'Bearer {self.token}'}
         data = {
             'status': 'LEVEL_1',
-            'wordPairIds': []  # Empty list should still work
+            'translationIds': []  # Empty list should still work
         }
         r = requests.post(
             f"{API_URL}/word-sets/user",
@@ -434,7 +434,7 @@ class TestRunner:
         # Test with invalid status
         invalid_data = {
             'status': 'INVALID_LEVEL',
-            'wordPairIds': [1]
+            'translationIds': [1]
         }
         r = requests.post(f"{API_URL}/word-sets/user", json=invalid_data, headers=headers, timeout=TIMEOUT)
         self.assert_equal(r.status_code, 422)
@@ -442,7 +442,7 @@ class TestRunner:
         # Test with missing fields
         incomplete_data = {
             'status': 'LEVEL_1'
-            # Missing wordPairIds
+            # Missing translationIds
         }
         r = requests.post(f"{API_URL}/word-sets/user", json=incomplete_data, headers=headers, timeout=TIMEOUT)
         self.assert_equal(r.status_code, 422)

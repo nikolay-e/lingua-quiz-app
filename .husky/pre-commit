@@ -1,0 +1,136 @@
+#!/bin/bash
+
+# Pre-commit hook for LinguaQuiz
+# This runs all the tests and checks before allowing a commit
+# Since we develop with LLMs, we can afford comprehensive checks
+
+set -e  # Exit on any error
+
+echo "🚀 Running pre-commit checks..."
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+# Function to print colored status
+print_status() {
+    if [ $1 -eq 0 ]; then
+        echo "${GREEN}✓ $2${NC}"
+    else
+        echo "${RED}✗ $2${NC}"
+        exit 1
+    fi
+}
+
+# 1. Run Linting
+echo "\n${YELLOW}1. Running ESLint...${NC}"
+npm run lint
+print_status $? "Linting passed"
+
+# 2. Run Depcheck
+echo "\n${YELLOW}2. Running dependency check...${NC}"
+npm run depcheck
+print_status $? "Dependency check passed"
+
+# 3. Run Unit Tests
+echo "\n${YELLOW}3. Running unit tests...${NC}"
+cd packages/core
+npm test
+cd ../..
+print_status $? "Unit tests passed"
+
+# 4. Build and Start Docker Containers
+echo "\n${YELLOW}4. Building and starting Docker containers (using all ${GREEN}14 CPUs${YELLOW})...${NC}"
+
+# Load Docker optimizations
+set -a && source .env && set +a
+
+# Use fast parallel builds with buildx
+export DOCKER_BUILDKIT=1
+export COMPOSE_DOCKER_CLI_BUILD=1
+
+# Clean shutdown with volume cleanup (as requested)
+echo "Cleaning up previous containers and volumes..."
+docker compose down -v
+
+# Build with maximum parallelism
+echo "Building with fast-builder (14 CPUs)..."
+docker compose build --parallel
+
+# Start services
+docker compose up -d
+print_status $? "Docker build and startup successful"
+
+# Wait for services to be ready
+echo "\n${YELLOW}Waiting for services to be ready...${NC}"
+timeout 60 bash -c 'until curl -f http://localhost:9000/api/health > /dev/null 2>&1; do echo -n "."; sleep 1; done'
+echo ""
+print_status $? "Backend is ready"
+
+timeout 60 bash -c 'until curl -f http://localhost:8080 > /dev/null 2>&1; do echo -n "."; sleep 1; done'
+echo ""
+print_status $? "Frontend is ready"
+
+# 5. Run Backend Integration Tests
+echo "\n${YELLOW}5. Running backend integration tests...${NC}"
+cd packages/backend
+pip install -r requirements.txt > /dev/null 2>&1
+SKIP_TTS_TESTS=true API_URL=http://localhost:9000/api python test_integration.py
+BACKEND_TEST_RESULT=$?
+cd ../..
+print_status $BACKEND_TEST_RESULT "Backend integration tests passed"
+
+# 6. Check E2E Tests Results (Running with 12 parallel workers)
+echo "\n${YELLOW}6. Running E2E tests with ${GREEN}12 parallel workers${YELLOW}...${NC}"
+
+# Show real-time progress of E2E tests
+echo "Starting E2E tests with maximum parallelism..."
+docker compose logs -f e2e-tests &
+LOGS_PID=$!
+
+# Wait for e2e-tests container to complete with a reasonable timeout
+TIMEOUT=300  # 5 minutes max for E2E tests
+START_TIME=$(date +%s)
+
+while docker compose ps | grep -q "e2e-tests.*Up" 2>/dev/null; do
+    CURRENT_TIME=$(date +%s)
+    ELAPSED=$((CURRENT_TIME - START_TIME))
+    
+    if [ $ELAPSED -gt $TIMEOUT ]; then
+        echo "\n${RED}E2E tests timed out after $TIMEOUT seconds!${NC}"
+        kill $LOGS_PID 2>/dev/null || true
+        docker compose logs e2e-tests | tail -30
+        print_status 1 "E2E tests timed out"
+    fi
+    
+    echo -n "."
+    sleep 2
+done
+
+# Stop logs
+kill $LOGS_PID 2>/dev/null || true
+echo ""
+
+# Check if the e2e-tests container exited successfully
+E2E_EXIT_CODE=$(docker compose ps -a | grep e2e-tests | grep -o "Exited ([0-9]*)" | head -1)
+
+if [[ "$E2E_EXIT_CODE" == "Exited (0)" ]]; then
+    # Get test summary
+    SUMMARY=$(docker compose logs e2e-tests | tail -50 | grep "passed|failed" | tail -1)
+    echo "${GREEN}E2E Tests: $SUMMARY${NC}"
+    print_status 0 "E2E tests passed"
+else
+    echo "${RED}E2E tests failed! Exit status: $E2E_EXIT_CODE${NC}"
+    echo "Showing last 30 lines of E2E test logs:"
+    docker compose logs e2e-tests | tail -30
+    print_status 1 "E2E tests failed"
+fi
+
+# 7. Cleanup (optional - comment out if you want to keep containers running)
+echo "\n${YELLOW}7. Cleaning up Docker containers...${NC}"
+docker compose down
+print_status $? "Cleanup complete"
+
+echo "\n${GREEN}✅ All pre-commit checks passed! Your commit is ready.${NC}"

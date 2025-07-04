@@ -119,10 +119,6 @@ def get_migration_files(migration_config: MigrationConfig) -> List[MigrationFile
     
     files = []
     for filepath in migration_config.migrations_dir.glob('*.sql'):
-        # Skip the old schema migrations table file
-        if filepath.name == '000_schema_migrations_table.sql':
-            continue
-            
         try:
             content = filepath.read_text(encoding='utf-8')
             migration_file = MigrationFile(

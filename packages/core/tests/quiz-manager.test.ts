@@ -225,7 +225,7 @@ describe('QuizManager', () => {
       // Now make 3 mistakes
       quizManager.submitAnswer(translationId, 'wrong1');
       quizManager.submitAnswer(translationId, 'wrong2');
-      const result = quizManager.submitAnswer(translationId, 'wrong3');
+      quizManager.submitAnswer(translationId, 'wrong3');
       
       // Should be degraded back to LEVEL_1
       const state = quizManager.getState();

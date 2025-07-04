@@ -2,6 +2,8 @@
   import { authStore } from '../stores';
   import { createEventDispatcher } from 'svelte';
   
+  export let mode: 'login' | 'register' = 'login';
+  
   interface PasswordRequirement {
     id: string;
     label: string;
@@ -12,12 +14,12 @@
     valid: boolean;
   }
 
-  const dispatch = createEventDispatcher<{ navigate: { page: 'login' | 'register' } }>();
+  const _dispatch = createEventDispatcher<{ navigate: { page: 'login' | 'register' } }>();
   
-  let registerUsername = '';
-  let registerPassword = '';
-  let registerMessage = '';
-  let showRegisterPassword = false;
+  let username = '';
+  let password = '';
+  let message = '';
+  let showPassword = false;
   let isLoading = false;
   
   const passwordRequirements: PasswordRequirement[] = [
@@ -30,37 +32,44 @@
   
   $: passwordValidation = passwordRequirements.map(req => ({
     ...req,
-    valid: req.test(registerPassword)
+    valid: req.test(password)
   })) as PasswordValidation[];
   
   $: isPasswordValid = passwordValidation.every((req: PasswordValidation) => req.valid);
   
-  async function handleRegister(e: Event) {
+  async function handleSubmit(e: Event): Promise<void> {
     e.preventDefault();
-    if (!isPasswordValid) {
-      registerMessage = 'Please meet all password requirements';
+    
+    if (mode === 'register' && !isPasswordValid) {
+      message = 'Please meet all password requirements';
       return;
     }
     
     isLoading = true;
-    registerMessage = '';
+    message = '';
     
     try {
-      await authStore.register(registerUsername, registerPassword);
-      registerMessage = 'Registration successful! Redirecting...';
-      registerUsername = '';
-      registerPassword = '';
-      // Auto-login successful - user will be automatically redirected by auth state change
-      // No need to dispatch navigation event
-    } catch (error: any) {
-      registerMessage = error.message;
+      if (mode === 'login') {
+        await authStore.login(username, password);
+        message = 'Login successful!';
+      } else {
+        await authStore.register(username, password);
+        message = 'Registration successful! Redirecting...';
+        username = '';
+        password = '';
+      }
+    } catch (error: unknown) {
+      message = error instanceof Error ? error.message : 'An error occurred';
     } finally {
       isLoading = false;
     }
   }
   
-  function navigateToLogin() {
-    dispatch('navigate', { page: 'login' });
+  function toggleMode(): void {
+    mode = mode === 'login' ? 'register' : 'login';
+    message = '';
+    username = '';
+    password = '';
   }
 </script>
 
@@ -73,51 +82,52 @@
   
   <div class="main-content login-content">
     <section class="sidebar-section">
-      <h2>Create Account</h2>
-      <form on:submit={handleRegister}>
+      <h2>{mode === 'login' ? 'Sign In' : 'Create Account'}</h2>
+      <form on:submit={handleSubmit}>
         <div class="input-group">
           <input 
             type="text" 
-            bind:value={registerUsername} 
+            bind:value={username} 
             placeholder="Username" 
             required 
             disabled={isLoading}
           />
         </div>
         <div class="input-group">
-          {#if showRegisterPassword}
+          {#if showPassword}
             <input 
               type="text" 
-              bind:value={registerPassword} 
+              bind:value={password} 
               placeholder="Password" 
               required 
               disabled={isLoading}
-              id="register-password"
+              id="password"
             />
           {:else}
             <input 
               type="password" 
-              bind:value={registerPassword} 
+              bind:value={password} 
               placeholder="Password" 
               required 
               disabled={isLoading}
-              id="register-password"
+              id="password"
             />
           {/if}
           <button 
             type="button" 
             class="toggle-password-btn"
-            on:click={() => showRegisterPassword = !showRegisterPassword}
+            on:click={() => showPassword = !showPassword}
+            aria-label={showPassword ? 'Hide password' : 'Show password'}
           >
-            <i class="fas fa-eye{showRegisterPassword ? '-slash' : ''}"></i>
+            <i class="fas fa-eye{showPassword ? '-slash' : ''}"></i>
           </button>
         </div>
         
-        {#if registerPassword}
+        {#if mode === 'register' && password}
           <div class="password-requirements">
             <div class="password-requirements-title">Password Requirements:</div>
             <div class="requirements-list">
-              {#each passwordValidation as req}
+              {#each passwordValidation as req (req.label)}
                 <div class="requirement {req.valid ? 'valid' : ''}">
                   <span class="requirement-icon {req.valid ? 'valid' : ''}">
                     {req.valid ? '✓' : '○'}
@@ -129,18 +139,23 @@
           </div>
         {/if}
         
-        <button type="submit" disabled={!isPasswordValid || isLoading}>
-          <i class="fas fa-user-plus"></i> Create Account
+        <button type="submit" disabled={isLoading || (mode === 'register' && !isPasswordValid)}>
+          <i class="fas fa-{mode === 'login' ? 'sign-in-alt' : 'user-plus'}"></i> 
+          {mode === 'login' ? 'Sign In' : 'Create Account'}
         </button>
       </form>
-      {#if registerMessage}
-        <p id="register-message" style:color={registerMessage.includes('successful') ? 'var(--success-color)' : 'var(--error-color)'}>
-          {registerMessage}
+      {#if message}
+        <p id="{mode}-message" style:color={message.includes('successful') ? 'var(--success-color)' : 'var(--error-color)'}>
+          {message}
         </p>
       {/if}
       
       <div class="auth-link">
-        <p>Already have an account? <button on:click={navigateToLogin} class="link-button">Sign in here</button></p>
+        {#if mode === 'login'}
+          <p>Need an account? <button on:click={toggleMode} class="link-button">Register here</button></p>
+        {:else}
+          <p>Already have an account? <button on:click={toggleMode} class="link-button">Sign in here</button></p>
+        {/if}
       </div>
     </section>
   </div>

@@ -73,10 +73,10 @@ RUN echo "server { \
         index index.html; \
         try_files \$uri \$uri/ /index.html; \
         \
-        # No caching for the main HTML file \
-        expires -1; \
-        add_header Cache-Control \"no-cache, no-store, must-revalidate\"; \
+        # Prevent caching of the main HTML file to ensure users get the latest version \
+        add_header Cache-Control \"no-store, no-cache, must-revalidate\"; \
         add_header Pragma \"no-cache\"; \
+        expires -1; \
     } \
     \
     # Security - hide server info \
