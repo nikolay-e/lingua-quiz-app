@@ -2,7 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
   import { authStore, quizStore } from '../stores';
   import api from '../api';
-  import type { SubmissionResult, QuizQuestion } from '@linguaquiz/core';
+  import type { SubmissionResult } from '@linguaquiz/core';
   import { formatForDisplay } from '@linguaquiz/core';
   import type { QuizFeedback, Translation } from '../types';
   
@@ -79,6 +79,19 @@
   // Get current level from quiz manager for display purposes only
   $: currentLevel = $quizStore.quizManager?.getState().currentLevel ?? 'LEVEL_1';
   
+  // Get languages from quiz configuration for level descriptions
+  $: quizLanguages = (() => {
+    if (!selectedQuiz || !wordSets) return { source: '', target: '' };
+    const quiz = wordSets.find(ws => ws.name === selectedQuiz);
+    if (!quiz) return { source: '', target: '' };
+    // Extract languages from quiz name (e.g., "German Russian A1" -> German, Russian)
+    const parts = quiz.name.split(' ');
+    if (parts.length >= 2) {
+      return { source: parts[0], target: parts[1] };
+    }
+    return { source: '', target: '' };
+  })();
+  
   // Get word lists from quiz manager state with proper typing
   $: wordLists = (() => {
     if (!$quizStore.quizManager) {
@@ -124,11 +137,13 @@
   // Current level is now automatically managed by the quiz system
   
   function getLevelDescription(level: string): string {
+    const source = quizLanguages.source || sourceLanguage;
+    const target = quizLanguages.target || targetLanguage;
     switch (level) {
-      case 'LEVEL_1': return `New Words Practice (${sourceLanguage} ➔ ${targetLanguage})`;
-      case 'LEVEL_2': return `Reverse Practice (${targetLanguage} ➔ ${sourceLanguage})`;
-      case 'LEVEL_3': return `Context Practice (${sourceLanguage} ➔ ${targetLanguage})`;
-      case 'LEVEL_4': return `Reverse Context (${targetLanguage} ➔ ${sourceLanguage})`;
+      case 'LEVEL_1': return `New Words Practice (${source} ➔ ${target})`;
+      case 'LEVEL_2': return `Reverse Practice (${target} ➔ ${source})`;
+      case 'LEVEL_3': return `Context Practice (${source} ➔ ${target})`;
+      case 'LEVEL_4': return `Reverse Context (${target} ➔ ${source})`;
       default: return '';
     }
   }
@@ -203,7 +218,7 @@
     
     try {
       await quizStore.startQuiz($authStore.token!, quiz);
-      const question: QuizQuestion | null = await quizStore.getNextQuestion();
+      const question = await quizStore.getNextQuestion();
       if (!question) {
         feedback = { message: 'No questions available for this quiz.', isSuccess: false } as QuizFeedback;
       }
@@ -243,7 +258,8 @@
           if (result) {
             feedback = result as SubmissionResult | QuizFeedback;
             // Set usage examples if they exist in the translation
-            if ('translation' in result && result.translation && 'sourceWord' in result.translation && 'targetWord' in result.translation) {
+            if (result && typeof result === 'object' && 'translation' in result && result.translation && 
+                typeof result.translation === 'object' && 'sourceWord' in result.translation && 'targetWord' in result.translation) {
               const translation = result.translation as Translation;
               usageExamples = {
                 source: translation.sourceWord.usageExample ?? '',
@@ -440,11 +456,9 @@
       <h2>Learning Progress</h2>
       
       <div id="level-1" class="foldable-section">
-        <h3 class="foldable-header">
-          <button type="button" class="fold-toggle" on:click={() => toggleFold('level1')} aria-expanded={!foldedLists.level1}>
-            <i class="fas fa-{foldedLists.level1 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-            <i class="fas fa-tasks"></i> Learning ({($quizStore.quizManager?.getState().queues.LEVEL_1.length) ?? 0})
-          </button>
+        <h3 class="foldable-header" on:click={() => toggleFold('level1')}>
+          <i class="fas fa-{foldedLists.level1 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
+          <i class="fas fa-tasks"></i> Learning ({$quizStore.quizManager?.getState().queues.LEVEL_1.length || 0})
         </h3>
         {#if !foldedLists.level1}
           <ol id="level-1-list" class="foldable-content">
@@ -456,11 +470,9 @@
       </div>
       
       <div id="level-2" class="foldable-section">
-        <h3 class="foldable-header">
-          <button type="button" class="fold-toggle" on:click={() => toggleFold('level2')} aria-expanded={!foldedLists.level2}>
-            <i class="fas fa-{foldedLists.level2 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-            <i class="fas fa-check-circle"></i> Translation Mastered One Way ({($quizStore.quizManager?.getState().queues.LEVEL_2.length) ?? 0})
-          </button>
+        <h3 class="foldable-header" on:click={() => toggleFold('level2')}>
+          <i class="fas fa-{foldedLists.level2 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
+          <i class="fas fa-check-circle"></i> Translation Mastered One Way ({$quizStore.quizManager?.getState().queues.LEVEL_2.length || 0})
         </h3>
         {#if !foldedLists.level2}
           <ol id="level-2-list" class="foldable-content">
@@ -472,11 +484,9 @@
       </div>
       
       <div id="level-3" class="foldable-section">
-        <h3 class="foldable-header">
-          <button type="button" class="fold-toggle" on:click={() => toggleFold('level3')} aria-expanded={!foldedLists.level3}>
-            <i class="fas fa-{foldedLists.level3 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-            <i class="fas fa-check-circle"></i> Translation Mastered Both Ways ({($quizStore.quizManager?.getState().queues.LEVEL_3.length) ?? 0})
-          </button>
+        <h3 class="foldable-header" on:click={() => toggleFold('level3')}>
+          <i class="fas fa-{foldedLists.level3 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
+          <i class="fas fa-check-circle"></i> Translation Mastered Both Ways ({$quizStore.quizManager?.getState().queues.LEVEL_3.length || 0})
         </h3>
         {#if !foldedLists.level3}
           <ol id="level-3-list" class="foldable-content">
@@ -488,11 +498,9 @@
       </div>
       
       <div id="level-4" class="foldable-section">
-        <h3 class="foldable-header">
-          <button type="button" class="fold-toggle" on:click={() => toggleFold('level4')} aria-expanded={!foldedLists.level4}>
-            <i class="fas fa-{foldedLists.level4 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-            <i class="fas fa-star"></i> Examples Mastered One Way ({($quizStore.quizManager?.getState().queues.LEVEL_4.length) ?? 0})
-          </button>
+        <h3 class="foldable-header" on:click={() => toggleFold('level4')}>
+          <i class="fas fa-{foldedLists.level4 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
+          <i class="fas fa-star"></i> Examples Mastered One Way ({$quizStore.quizManager?.getState().queues.LEVEL_4.length || 0})
         </h3>
         {#if !foldedLists.level4}
           <ol id="level-4-list" class="foldable-content">
@@ -504,11 +512,9 @@
       </div>
       
       <div id="level-5" class="foldable-section">
-        <h3 class="foldable-header">
-          <button type="button" class="fold-toggle" on:click={() => toggleFold('level5')} aria-expanded={!foldedLists.level5}>
-            <i class="fas fa-{foldedLists.level5 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-            <i class="fas fa-trophy"></i> Fully Mastered ({($quizStore.quizManager?.getState().queues.LEVEL_5.length) ?? 0})
-          </button>
+        <h3 class="foldable-header" on:click={() => toggleFold('level5')}>
+          <i class="fas fa-{foldedLists.level5 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
+          <i class="fas fa-trophy"></i> Fully Mastered ({$quizStore.quizManager?.getState().queues.LEVEL_5.length || 0})
         </h3>
         {#if !foldedLists.level5}
           <ol id="level-5-list" class="foldable-content">
@@ -520,11 +526,9 @@
       </div>
       
       <div id="level-0" class="foldable-section">
-        <h3 class="foldable-header">
-          <button type="button" class="fold-toggle" on:click={() => toggleFold('level0')} aria-expanded={!foldedLists.level0}>
-            <i class="fas fa-{foldedLists.level0 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-            <i class="fas fa-list"></i> New ({($quizStore.quizManager?.getState().queues.LEVEL_0.length) ?? 0})
-          </button>
+        <h3 class="foldable-header" on:click={() => toggleFold('level0')}>
+          <i class="fas fa-{foldedLists.level0 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
+          <i class="fas fa-list"></i> New ({$quizStore.quizManager?.getState().queues.LEVEL_0.length || 0})
         </h3>
         {#if !foldedLists.level0}
           <ol id="level-0-list" class="foldable-content">
