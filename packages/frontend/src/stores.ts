@@ -220,14 +220,13 @@ function createQuizStore(): QuizStore {
 
   const BULK_SAVE_DELAY = 5000; // 5 seconds
   
-  const bulkSaveProgress = async (token: string): Promise<void> => {
-    const state = get(store);
-    if (!state.quizManager) return;
+  const bulkSaveProgress = async (token: string, quizManager: QuizManager): Promise<void> => {
+    if (!quizManager) return;
     
     // Bulk saving quiz progress...
     
     try {
-      const wordsByLevel = state.quizManager.getWordsByLevel();
+      const wordsByLevel = quizManager.getWordsByLevel();
       const persistencePromises: Promise<void>[] = [];
       
       for (const [level, wordIds] of Object.entries(wordsByLevel)) {
@@ -256,9 +255,13 @@ function createQuizStore(): QuizStore {
     if (state.autoSaveTimer) {
       clearTimeout(state.autoSaveTimer);
     }
-    
-    // Schedule new bulk save
-    const timer = setTimeout(() => void bulkSaveProgress(token), BULK_SAVE_DELAY);
+
+    // Capture the current manager instance
+    const managerToSave = state.quizManager;
+    if (!managerToSave) return;
+
+    // Schedule new bulk save with the captured instance
+    const timer = setTimeout(() => void bulkSaveProgress(token, managerToSave), BULK_SAVE_DELAY);
     
     // Update state with new timer
     update(s => ({ ...s, autoSaveTimer: timer }));
@@ -326,8 +329,10 @@ function createQuizStore(): QuizStore {
         });
         // QuizManager initialized
         
-        // Bulk save all progress after initialization (handles promotions from LEVEL_0 to LEVEL_1)
-        await bulkSaveProgress(token);
+        // Run bulk save in background without blocking UI
+        bulkSaveProgress(token, manager).catch(err => {
+          console.error("Initial background save failed:", err);
+        });
         
         const questionResult = manager.getNextQuestion();
         const currentQuestion = questionResult.question;
@@ -450,7 +455,7 @@ function createQuizStore(): QuizStore {
       }
       // Save current progress
       if (state.quizManager) {
-        await bulkSaveProgress(token);
+        await bulkSaveProgress(token, state.quizManager);
       }
     }
   };

@@ -6,16 +6,6 @@
   import { formatForDisplay } from '@linguaquiz/core';
   import type { QuizFeedback, Translation } from '../types';
   
-  // Type definitions for reactive variables
-  type WordDisplay = { source: string; target: string };
-  type WordLists = {
-    level0: WordDisplay[];
-    level1: WordDisplay[];
-    level2: WordDisplay[];
-    level3: WordDisplay[];
-    level4: WordDisplay[];
-    level5: WordDisplay[];
-  };
   
   // Component-specific state
   
@@ -96,20 +86,20 @@
   $: wordLists = (() => {
     if (!$quizStore.quizManager) {
       return {
-        level0: [] as WordDisplay[],
-        level1: [] as WordDisplay[], 
-        level2: [] as WordDisplay[],
-        level3: [] as WordDisplay[],
-        level4: [] as WordDisplay[],
-        level5: [] as WordDisplay[]
-      } as WordLists;
+        level0: [] as Array<{ source: string; target: string }>,
+        level1: [] as Array<{ source: string; target: string }>, 
+        level2: [] as Array<{ source: string; target: string }>,
+        level3: [] as Array<{ source: string; target: string }>,
+        level4: [] as Array<{ source: string; target: string }>,
+        level5: [] as Array<{ source: string; target: string }>
+      };
     }
     
     const state = $quizStore.quizManager.getState();
     const manager = $quizStore.quizManager;
     
-    const filterValidTranslations = (translations: Array<WordDisplay | undefined>): WordDisplay[] => {
-      return translations.filter((t): t is WordDisplay => t !== undefined);
+    const filterValidTranslations = (translations: Array<{ source: string; target: string } | undefined>): Array<{ source: string; target: string }> => {
+      return translations.filter((t): t is { source: string; target: string } => t !== undefined);
     };
     
     return {
@@ -119,7 +109,7 @@
       level3: filterValidTranslations(state.queues.LEVEL_3.map((id: number) => manager.getTranslationForDisplay(id))),
       level4: filterValidTranslations(state.queues.LEVEL_4.map((id: number) => manager.getTranslationForDisplay(id))),
       level5: filterValidTranslations(state.queues.LEVEL_5.map((id: number) => manager.getTranslationForDisplay(id)))
-    } as WordLists;
+    };
   })();
 
   // TTS reactive state
@@ -127,12 +117,12 @@
   $: canUseTTS = ttsAvailable && currentQuestion && ttsLanguages.includes(currentLanguage);
   
   // Reactive word lists for display with proper typing
-  $: level0Words = wordLists.level0.map((w: WordDisplay) => `${w.source} -> ${w.target}`);
-  $: level1Words = wordLists.level1.map((w: WordDisplay) => `${w.source} -> ${w.target}`);
-  $: level2Words = wordLists.level2.map((w: WordDisplay) => `${w.source} -> ${w.target}`);
-  $: level3Words = wordLists.level3.map((w: WordDisplay) => `${w.source} -> ${w.target}`);
-  $: level4Words = wordLists.level4.map((w: WordDisplay) => `${w.source} -> ${w.target}`);
-  $: level5Words = wordLists.level5.map((w: WordDisplay) => `${w.source} -> ${w.target}`);
+  $: level0Words = wordLists.level0.map((w: { source: string; target: string }) => `${w.source} -> ${w.target}`);
+  $: level1Words = wordLists.level1.map((w: { source: string; target: string }) => `${w.source} -> ${w.target}`);
+  $: level2Words = wordLists.level2.map((w: { source: string; target: string }) => `${w.source} -> ${w.target}`);
+  $: level3Words = wordLists.level3.map((w: { source: string; target: string }) => `${w.source} -> ${w.target}`);
+  $: level4Words = wordLists.level4.map((w: { source: string; target: string }) => `${w.source} -> ${w.target}`);
+  $: level5Words = wordLists.level5.map((w: { source: string; target: string }) => `${w.source} -> ${w.target}`);
   
   // Current level is now automatically managed by the quiz system
   
