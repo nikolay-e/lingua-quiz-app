@@ -7,7 +7,7 @@ Leverages Spanish's excellent NLP resources without hardcoding
 import spacy
 from typing import Dict, List, Tuple, Set, Optional
 from collections import defaultdict
-from wordfreq import word_frequency, top_n_list
+from wordfreq import word_frequency
 import sys
 import os
 
@@ -19,17 +19,22 @@ except ImportError:
     STANZA_AVAILABLE = False
 
 try:
-    from transformers import pipeline, AutoTokenizer, AutoModelForTokenClassification
+    from transformers import pipeline
     TRANSFORMERS_AVAILABLE = True
 except ImportError:
     TRANSFORMERS_AVAILABLE = False
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from validate_migrations import MigrationValidator
+from base_analyzer import BaseWordAnalyzer
+from migration_utils import get_language_migration_files, normalize_word_generic, load_spacy_model
 
-class AdvancedSpanishNLPAnalyzer:
+class SpanishWordAnalyzer(BaseWordAnalyzer):
+    """
+    Analyzes Spanish vocabulary using advanced NLP approach to find missing
+    essential words for a learning application.
+    """
     def __init__(self, migrations_dir: Optional[str] = None):
         """Initialize with multiple Spanish NLP models"""
+        super().__init__(migrations_dir, language_code="es")
         print("🔧 Initializing Advanced Spanish NLP tools...")
         
         # Primary: spaCy transformer model (best Spanish support)
@@ -75,43 +80,29 @@ class AdvancedSpanishNLPAnalyzer:
             except:
                 print("⚠️  Could not load Spanish BERT model")
         
-        if migrations_dir is None:
-            script_dir = os.path.dirname(os.path.abspath(__file__))
-            migrations_dir = os.path.join(script_dir, "..", "packages", "backend", "migrations")
-        
-        self.migrations_dir = os.path.abspath(migrations_dir)
-        self.validator = MigrationValidator(self.migrations_dir)
-        
-        # Essential POS tags with Spanish-specific thresholds
-        self.pos_thresholds = {
-            'VERB': 0.00008,   # Lower threshold - Spanish verbs are well-lemmatized
-            'NOUN': 0.00006,   
-            'ADJ': 0.00008,    
-            'ADV': 0.00008,    
-            'CCONJ': 0.00008,  
-            'SCONJ': 0.00008,
-            'AUX': 0.00008,    # Auxiliary verbs
-        }
+        # POS thresholds are inherited from base class (standardized)
     
-    def get_existing_spanish_words(self) -> Set[str]:
+    def normalize_word(self, word: str) -> str:
+        """Normalize Spanish word by removing accents and converting to lowercase"""
+        return normalize_word_generic(word)
+    
+    def get_migration_filename(self) -> str:
+        """Get the migration filename for Spanish."""
+        return get_language_migration_files()['es']
+    
+    def get_existing_words(self) -> Set[str]:
         """Extract existing Spanish words from migration"""
-        files = self.validator.find_migration_files()
-        spanish_file = [f for f in files if '902_spanish_russian_words.sql' in f][0]
+        spanish_file = os.path.join(self.migrations_dir, self.get_migration_filename())
         
-        data = self.validator.extract_data_from_file(spanish_file)
+        data = self.extract_data_from_file(spanish_file)
         spanish_words = set()
         
-        for id1, id2, id3, word, translation, example, example_translation in data:
+        for _, _, _, word, _, _, _ in data:
             if word and word != 'word':
-                normalized = self.validator.normalize_word(word, is_german=False)
-                spanish_words.add(normalized)
+                # Use common word processing method
+                spanish_words.update(self.process_word_variants(word))
+                # Also keep the original lowercased form
                 spanish_words.add(word.lower())
-                
-                if '|' in word:
-                    for alt in word.split('|'):
-                        alt_normalized = self.validator.normalize_word(alt.strip(), is_german=False)
-                        spanish_words.add(alt_normalized)
-                        spanish_words.add(alt.strip().lower())
         
         return spanish_words
     
@@ -221,10 +212,10 @@ class AdvancedSpanishNLPAnalyzer:
         
         return None
     
-    def analyze_word_comprehensive(self, word: str, existing_words: Set[str]) -> Tuple[str, str, str, Dict]:
+    def analyze_word(self, word: str, existing_words: Set[str]) -> Tuple[str, str, str]:
         """
         Comprehensive word analysis using pure NLP
-        Returns: (category, pos_tag, reason, metadata)
+        Returns: (category, pos_tag, reason)
         """
         # Get best lemma with metadata
         lemma, lemma_confidence, metadata = self.get_best_lemma(word)
@@ -233,7 +224,7 @@ class AdvancedSpanishNLPAnalyzer:
         # Use spaCy for POS and basic analysis
         doc = self.nlp(word)
         if not doc:
-            return 'other', 'UNKNOWN', 'Could not analyze', metadata
+            return 'other', 'UNKNOWN', 'Could not analyze'
         
         token = doc[0]
         pos = token.pos_
@@ -246,18 +237,18 @@ class AdvancedSpanishNLPAnalyzer:
             
             # Special check for past participles (often tagged as ADJ)
             if pos == 'ADJ' and metadata.get('features', {}).get('VerbForm') == 'Part':
-                return 'inflected_verbs', 'VERB', f'Past participle of "{lemma}"{features_str}', metadata
+                return 'inflected_form', pos, f'Past participle of "{lemma}"{features_str}'
             elif pos == 'VERB':
-                return 'inflected_verbs', pos, f'Inflected form of "{lemma}"{features_str}', metadata
+                return 'inflected_form', pos, f'Inflected form of "{lemma}"{features_str}'
             elif pos == 'NOUN':
                 number = metadata.get('features', {}).get('Number', '')
-                return 'inflected_nouns', pos, f'{"Plural" if "Plur" in number else "Inflected"} form of "{lemma}"', metadata
+                return 'inflected_form', pos, f'{"Plural" if "Plur" in number else "Inflected"} form of "{lemma}"'
             elif pos == 'ADJ':
-                return 'inflected_adjectives', pos, f'Inflected form of "{lemma}"{features_str}', metadata
+                return 'inflected_form', pos, f'Inflected form of "{lemma}"{features_str}'
             elif pos == 'DET':
-                return 'inflected_determiners', pos, f'Inflected form of "{lemma}"{features_str}', metadata
+                return 'inflected_form', pos, f'Inflected form of "{lemma}"{features_str}'
             else:
-                return f'inflected_other', pos, f'Inflected form of "{lemma}" [{pos}]', metadata
+                return 'inflected_form', pos, f'Inflected form of "{lemma}" [{pos}]'
         
         # Check diminutives/augmentatives (Spanish-specific)
         dim_aug_result = self.is_diminutive_augmentative(word, lemma)
@@ -277,7 +268,7 @@ class AdvancedSpanishNLPAnalyzer:
             
             for base in potential_bases:
                 if base in existing_words:
-                    return 'diminutive_augmentative', pos, f'{dim_aug_result} of "{base}"', metadata
+                    return 'morphological_variant', pos, f'{dim_aug_result} of "{base}"'
         
         # Check if it's a reflexive pronoun attached to verb
         if word_lower.endswith(('me', 'te', 'se', 'nos', 'os')) and len(word_lower) > 4:
@@ -286,23 +277,23 @@ class AdvancedSpanishNLPAnalyzer:
                 if word_lower.endswith(pronoun):
                     verb_part = word_lower[:-len(pronoun)]
                     if verb_part in existing_words or verb_part + 'r' in existing_words:
-                        return 'reflexive_verbs', 'VERB', f'Reflexive form with attached pronoun', metadata
+                        return 'morphological_variant', pos, f'Reflexive form with attached pronoun'
         
         # Named entity recognition
         if token.ent_type_ or pos == 'PROPN':
             ent_type = token.ent_type_ if token.ent_type_ else 'name'
-            return 'proper_nouns', pos, f'Named entity ({ent_type})', metadata
+            return 'proper_noun', pos, f'Named entity ({ent_type})'
         
         # Grammatical words
         if pos in ['DET', 'PRON', 'ADP', 'CCONJ', 'SCONJ', 'PART']:
-            return 'grammatical_words', pos, f'{pos} - grammatical function word', metadata
+            return 'grammatical_word', pos, f'{pos} - grammatical function word'
         
         # Check frequency for essential words
         freq = word_frequency(word_lower, 'es')
         
         # Very low frequency filter
         if freq < 0.00003:
-            return 'low_frequency', pos, f'Very low frequency ({freq:.6f})', metadata
+            return 'low_frequency', pos, f'Very low frequency ({freq:.6f})'
         
         # Enhanced false positive detection for common Spanish patterns
         # Common inflected words that should never be recommended
@@ -329,13 +320,17 @@ class AdvancedSpanishNLPAnalyzer:
             'deja', 'dejas', 'dejo', 'dejamos', 'dejan', 'dejaba', 'dejabas', 'dejábamos', 'dejaban', 'dejó', 'dejaron',
             # Common plural nouns
             'veces', 'años', 'días', 'meses', 'horas', 'minutos', 'personas', 'cosas', 'mujeres', 'hombres', 'niños',
-            # Common adjective forms
+            # Common adjective forms and apocopated forms
             'nueva', 'nuevos', 'nuevas', 'primera', 'primeros', 'primeras', 'buena', 'buenos', 'buenas',
-            'gran', 'grande', 'grandes', 'mejor', 'mejores', 'peor', 'peores'
+            'gran', 'grande', 'grandes', 'mejor', 'mejores', 'peor', 'peores',
+            'buen',  # apocopated form of "bueno"
+            'mal',   # apocopated form of "malo"
+            'primer', # apocopated form of "primero"
+            'tercer', # apocopated form of "tercero"
         }
         
         if word_lower in common_inflections:
-            return 'common_inflections', pos, f'Common inflected form - should not be recommended', metadata
+            return 'inflected_form', pos, f'Common inflected form - should not be recommended'
         
         # Essential word categories
         if pos in self.pos_thresholds:
@@ -343,34 +338,26 @@ class AdvancedSpanishNLPAnalyzer:
             if freq >= threshold:
                 # Additional quality checks using metadata
                 if lemma_confidence < 0.5 and len(metadata.get('all_lemmas', [])) > 2:
-                    return 'uncertain_lemma', pos, 'Multiple possible lemmas - needs review', metadata
+                    return 'uncertain_lemma', pos, 'Multiple possible lemmas - needs review'
                 
-                category_map = {
-                    'VERB': 'essential_verbs',
-                    'NOUN': 'essential_nouns',
-                    'ADJ': 'essential_adjectives',
-                    'ADV': 'essential_adverbs',
-                    'AUX': 'essential_verbs',  # Auxiliary verbs
-                }
-                
-                category = category_map.get(pos, 'other')
-                features_str = ""
-                if 'features' in metadata:
-                    features_str = f" ({', '.join(metadata['features'].values())})"
-                
-                return category, pos, f'High-frequency {pos}{features_str}', metadata
+                if pos in self.category_mapping:
+                    features_str = ""
+                    if 'features' in metadata:
+                        features_str = f" ({', '.join(metadata['features'].values())})"
+                    
+                    return self.category_mapping[pos], pos, f'High-frequency {pos}{features_str}'
             else:
-                return 'below_threshold', pos, f'{pos} below frequency threshold', metadata
+                return 'below_threshold', pos, f'{pos} below frequency threshold'
         
         # Abbreviations
         if word.isupper() and len(word) <= 4:
-            return 'abbreviations', pos, 'Likely abbreviation', metadata
+            return 'abbreviations', pos, 'Likely abbreviation'
         
         # Foreign words (basic detection)
         if not any(c in 'áéíóúüñ' for c in word_lower) and token.is_oov:
-            return 'foreign_words', pos, 'Possible foreign word', metadata
+            return 'foreign_words', pos, 'Possible foreign word'
         
-        return 'other', pos, f'Uncategorized {pos}', metadata
+        return 'other', pos, f'Uncategorized {pos}'
     
     def analyze(self, top_n: int = 1000, show_details: bool = True, limit_analysis: Optional[int] = None) -> List[Tuple[str, float, str, str]]:
         """
@@ -393,24 +380,12 @@ class AdvancedSpanishNLPAnalyzer:
             print("="*80)
         
         # Get existing words
-        existing_words = self.get_existing_spanish_words()
+        existing_words = self.get_existing_words()
         if show_details:
             print(f"Found {len(existing_words)} existing Spanish words")
         
         # Get top Spanish words
-        raw_spanish = top_n_list('es', top_n)
-        
-        # Filter valid words
-        def is_valid_word(word):
-            if word.isdigit() or len(word) == 1:
-                return False
-            if word in ['°', '–', '—', '...', '«', '»', '"', '"']:
-                return False
-            if '.' in word and (word.startswith('www.') or '.com' in word):
-                return False
-            return True
-        
-        top_spanish = [word for word in raw_spanish if is_valid_word(word)]
+        top_spanish = self.get_top_words(top_n)
         
         # Find missing words
         missing_words = []
@@ -430,16 +405,11 @@ class AdvancedSpanishNLPAnalyzer:
         # Apply optional limit
         words_to_analyze = missing_words[:limit_analysis] if limit_analysis else missing_words
         
-        for i, word in enumerate(words_to_analyze):
-            if i % 20 == 0 and show_details:
-                print(f"  Analyzing word {i+1}/{len(words_to_analyze)}...", end='\r')
-            
-            category, pos_tag, reason, metadata = self.analyze_word_comprehensive(word, existing_words)
+        for word in words_to_analyze:
+            category, pos_tag, reason = self.analyze_word(word, existing_words)
             freq = word_frequency(word.lower(), 'es')
             
-            # Store with metadata
-            entry = (word, freq, reason, pos_tag, metadata)
-            categories[category].append(entry)
+            categories[category].append((word, freq, reason, pos_tag))
         
         if show_details:
             print("\n")
@@ -448,110 +418,26 @@ class AdvancedSpanishNLPAnalyzer:
         for category in categories:
             categories[category].sort(key=lambda x: x[1], reverse=True)
         
-        # Generate recommendations
+        # Generate recommendations using common function
         recommendations = []
-        for category in ['essential_verbs', 'essential_nouns', 'essential_adjectives', 
-                        'essential_adverbs']:
+        from migration_utils import get_essential_categories
+        for category in get_essential_categories():
             if category in categories:
-                for entry in categories[category]:
-                    word, freq, reason, pos_tag, metadata = entry
-                    sources = metadata.get('sources', [])
-                    source_info = f" [{'&'.join(sources)}]" if sources else ""
-                    recommendations.append((word, freq, category, f"{reason}{source_info}"))
+                for word, freq, reason, pos_tag in categories[category]:
+                    recommendations.append((word, freq, category, f"{reason} [{pos_tag}]"))
         
         # Sort by frequency
         recommendations.sort(key=lambda x: x[1], reverse=True)
         
         if show_details:
-            self._display_results(dict(categories), recommendations)
+            self._display_spanish_results(dict(categories), recommendations)
         
-        return recommendations  # Return ALL recommendations, let caller decide how many to use
+        return recommendations
     
-    def _display_results(self, categories: Dict, recommendations: List):
-        """Display analysis results"""
-        print(f"\n✅ WORDS TO ADD (Pure NLP Analysis):")
-        
-        total_to_add = 0
-        
-        for cat_name, cat_display in [
-            ('essential_verbs', '🟢 ESSENTIAL VERBS'),
-            ('essential_nouns', '🟢 ESSENTIAL NOUNS'),
-            ('essential_adjectives', '🟢 ESSENTIAL ADJECTIVES'),
-            ('essential_adverbs', '🟢 ESSENTIAL ADVERBS')
-        ]:
-            if cat_name in categories and categories[cat_name]:
-                print(f"\n{cat_display} ({len(categories[cat_name])}):")
-                for entry in categories[cat_name][:15]:  # Show more results
-                    word, freq, reason, pos_tag, metadata = entry
-                    agreement = metadata.get('agreement', 0)
-                    print(f"   ✅ {word:15s} (freq: {freq:.6f}) - {reason} [conf: {agreement:.0%}]")
-                total_to_add += len(categories[cat_name])
-        
-        print(f"\n❌ WORDS NOT TO ADD (NLP-detected):")
-        
-        total_not_to_add = 0
-        
-        # Group inflected forms by lemma
-        inflected_by_lemma = defaultdict(list)
-        for cat_name in ['inflected_verbs', 'inflected_nouns', 'inflected_adjectives', 'inflected_determiners']:
-            if cat_name in categories:
-                for entry in categories[cat_name]:
-                    word, freq, reason, pos, metadata = entry
-                    # Extract lemma from reason
-                    import re
-                    lemma_match = re.search(r'"([^"]+)"', reason)
-                    if lemma_match:
-                        lemma = lemma_match.group(1)
-                        features = metadata.get('features', {})
-                        inflected_by_lemma[lemma].append((word, features))
-        
-        if inflected_by_lemma:
-            print(f"\n🔴 INFLECTED FORMS (grouped by lemma):")
-            for lemma, forms in list(inflected_by_lemma.items())[:20]:  # Show more lemmas
-                form_strs = []
-                for word, features in forms[:5]:  # Show more forms per lemma
-                    feat_str = ', '.join(features.values()) if features else 'inflected'
-                    form_strs.append(f"{word} ({feat_str})")
-                print(f"   {lemma}: {', '.join(form_strs)}{'...' if len(forms) > 5 else ''}")
-            total_not_to_add += sum(len(forms) for forms in inflected_by_lemma.values())
-        
-        # Other categories
-        for cat_name, cat_display, explanation in [
-            ('common_inflections', '🔴 COMMON INFLECTIONS', 'Hardcoded list of inflected forms'),
-            ('diminutive_augmentative', '🔴 DIMINUTIVES/AUGMENTATIVES', 'Spanish morphological variations'),
-            ('reflexive_verbs', '🔴 REFLEXIVE VERB FORMS', 'Verbs with attached pronouns'),
-            ('proper_nouns', '🔴 PROPER NOUNS', 'Named entities (NER-detected)'),
-            ('grammatical_words', '🔴 GRAMMATICAL WORDS', 'Function words'),
-            ('low_frequency', '🔴 LOW FREQUENCY', 'Below practical threshold'),
-            ('uncertain_lemma', '🔴 UNCERTAIN ANALYSIS', 'Multiple possible lemmas')
-        ]:
-            if cat_name in categories and categories[cat_name]:
-                print(f"\n{cat_display} ({len(categories[cat_name])}): DON'T ADD")
-                print(f"   Reason: {explanation}")
-                if cat_name in ['diminutive_augmentative', 'reflexive_verbs'] and categories[cat_name]:
-                    for entry in categories[cat_name][:5]:
-                        word, freq, reason, pos, metadata = entry
-                        print(f"   Example: {word} - {reason}")
-                total_not_to_add += len(categories[cat_name])
-        
-        print(f"\n🎯 FINAL RECOMMENDATIONS:")
-        print("="*80)
-        
-        # Show top 50 or all if less than 50
-        num_to_show = min(50, len(recommendations))
-        print(f"TOP {num_to_show} WORDS TO ADD (of {len(recommendations)} total):")
-        
-        for i, (word, freq, category, reason) in enumerate(recommendations[:num_to_show], 1):
-            cat_short = category.replace('essential_', '').upper()[:6]
-            print(f"{i:2d}. {word:15s} (freq: {freq:.6f}) [{cat_short:6s}] - {reason}")
-        
-        print(f"\n📊 SUMMARY:")
-        print(f"   ✅ Recommend adding: {total_to_add} words")
-        print(f"   ❌ Don't add: {total_not_to_add} words")
-        print(f"   🧠 NLP confidence: Multi-tool validation with agreement scores")
-        
-        if 'other' in categories:
-            print(f"   🔍 Uncategorized: {len(categories['other'])} words")
+    def _display_spanish_results(self, categories: Dict, recommendations: List):
+        """Display Spanish-specific analysis results using standardized format."""
+        from migration_utils import display_standard_results
+        display_standard_results(categories, recommendations, "Advanced NLP (Multi-tool)")
 
 
 def main():
@@ -564,78 +450,8 @@ def main():
     print("   pip install stanza transformers")
     print("   python -m spacy download es_dep_news_trf")
     
-    analyzer = AdvancedSpanishNLPAnalyzer()
-    
-    # You can analyze more words by changing these parameters
-    recommendations = analyzer.analyze(
-        top_n=1000,  # Check top 1000 Spanish words (can increase to 2000, 5000, etc.)
-        show_details=True,
-        limit_analysis=None  # Analyze ALL missing words (set a number to limit)
-    )
-    
-    print(f"\n💡 Tip: You can analyze more words by increasing top_n parameter")
-    print(f"   Example: analyzer.analyze(top_n=2000)")
-    
-    if recommendations:
-        print(f"\n🎯 Found {len(recommendations)} words to add to Spanish vocabulary!")
-        
-        # Generate SQL entries for the first 25 most important words
-        num_entries = min(25, len(recommendations))
-        print(f"\nGenerating SQL entries for top {num_entries} words...")
-        
-        # Get the last used IDs from the migration file
-        next_translation_id = 4001452  # Start after the last one we added
-        next_source_id = 4002905
-        next_target_id = 4002906
-        
-        sql_entries = []
-        
-        for i, (word, freq, category, reason) in enumerate(recommendations[:num_entries]):
-            # Generate Russian translation (placeholder - would need real translation)
-            russian_translations = {
-                'mierda': 'чёрт',
-                'mayoría': 'большинство', 
-                'web': 'веб',
-                'mundial': 'мировой',
-                'respecto': 'отношение',
-                'población': 'население',
-                'debido': 'должен',
-                'tenido': 'имевший',
-                'hacerlo': 'делать это',
-                'producción': 'производство',
-                'cabo': 'конец',
-                'campaña': 'кампания',
-                'provincia': 'провинция',
-                'recursos': 'ресурсы',
-                'anterior': 'предыдущий',
-                'ex': 'бывший',
-                'fútbol': 'футбол',
-                'hija': 'дочь',
-                'acceso': 'доступ',
-                'armas': 'оружие',
-                'finalmente': 'наконец',
-                'conocido': 'известный',
-                'necesidad': 'необходимость',
-                'trabajadores': 'рабочие',
-                'administración': 'администрация'
-            }
-            
-            russian = russian_translations.get(word, f'перевод_{word}')
-            
-            # Generate example sentences (placeholder)
-            spanish_example = f"Ejemplo con {word}."
-            russian_example = f"Пример с {russian}."
-            
-            sql_entry = f"    ({next_translation_id}, {next_source_id}, {next_target_id}, '{word}', '{russian}', '{spanish_example}', '{russian_example}')"
-            sql_entries.append(sql_entry)
-            
-            next_translation_id += 1
-            next_source_id += 2
-            next_target_id += 2
-        
-        print("\n📝 SQL INSERT statements:")
-        print(",\n".join(sql_entries))
-        print("\nAdd these entries before the '-- End of word pairs data' comment in 902_spanish_russian_words.sql")
+    analyzer = SpanishWordAnalyzer()
+    analyzer.run_main('Analyze Spanish words for LinguaQuiz using advanced NLP.')
 
 
 if __name__ == "__main__":

@@ -4,36 +4,26 @@ Perfect German Word Analyzer for LinguaQuiz
 Combines NLP + linguistic patterns to find missing essential German vocabulary
 """
 
-import spacy
-import re
 import os
-import sys
-import argparse
 from typing import Dict, List, Tuple, Set, Optional
 from collections import defaultdict
-from wordfreq import word_frequency, top_n_list
-import unicodedata
+from wordfreq import word_frequency
+from base_analyzer import BaseWordAnalyzer
+from migration_utils import get_language_migration_files, normalize_word_german, load_spacy_model
 
-class GermanAnalyzer:
+class GermanWordAnalyzer(BaseWordAnalyzer):
+    """
+    Analyzes German vocabulary using NLP + linguistic patterns to find missing
+    essential words for a learning application.
+    """
     def __init__(self, migrations_dir: Optional[str] = None):
         """Initialize the German analyzer"""
+        super().__init__(migrations_dir, language_code="de")
         print("🚀 Initializing German Word Analyzer...")
         
-        # Load spaCy German model
-        try:
-            self.nlp = spacy.load("de_core_news_lg")
-            print("✅ German NLP model loaded")
-        except OSError:
-            print("📦 Installing German NLP model...")
-            import subprocess
-            subprocess.run([sys.executable, "-m", "spacy", "download", "de_core_news_lg"])
-            self.nlp = spacy.load("de_core_news_lg")
-        
-        # Set migrations directory
-        if migrations_dir is None:
-            script_dir = os.path.dirname(os.path.abspath(__file__))
-            migrations_dir = os.path.join(script_dir, "..", "packages", "backend", "migrations")
-        self.migrations_dir = os.path.abspath(migrations_dir)
+        # Use common model loading function
+        model_preferences = ["de_core_news_lg"]
+        self.nlp = load_spacy_model("de", model_preferences)
         
         # Initialize linguistic patterns
         self._setup_patterns()
@@ -72,92 +62,32 @@ class GermanAnalyzer:
             'schliesslich': 'schließlich',
         }
         
-        # POS tag thresholds for essential words
-        self.pos_thresholds = {
-            'VERB': 0.00005,
-            'NOUN': 0.00004,
-            'ADJ': 0.00005,
-            'ADV': 0.00005,
-            'CCONJ': 0.00005,
-            'SCONJ': 0.00005,
-        }
+        # POS thresholds are inherited from base class (standardized)
     
     def normalize_word(self, word: str) -> str:
         """Normalize German word by removing articles and declension info"""
-        # Remove articles at the beginning
-        word = re.sub(r'^(der|die|das)\s+', '', word, flags=re.IGNORECASE)
-        
-        # Remove everything after semicolon or comma (plural forms, declensions)
-        if ';' in word:
-            word = word.split(';')[0].strip()
-        elif ',' in word:
-            word = word.split(',')[0].strip()
-        
-        # Remove the article again if it's still there after semicolon split
-        word = re.sub(r'^(der|die|das)\s+', '', word, flags=re.IGNORECASE)
-        
-        return word.lower()
+        return normalize_word_german(word)
     
-    def extract_data_from_file(self, file_path: str) -> List[Tuple]:
-        """Extract data tuples from migration file"""
-        data = []
-        with open(file_path, 'r', encoding='utf-8') as f:
-            content = f.read()
-        
-        # Pattern to match data tuples
-        pattern = r'\(\s*(\d+),\s*(\d+),\s*(\d+),\s*\'([^\']*)\',\s*\'([^\']*)\',\s*\'([^\']*)\',\s*\'([^\']*)\'\s*\)'
-        matches = re.findall(pattern, content)
-        
-        for match in matches:
-            try:
-                id1, id2, id3, word, translation, example, example_translation = match
-                data.append((int(id1), int(id2), int(id3), word, translation, example, example_translation))
-            except ValueError:
-                continue
-        
-        return data
+    def get_migration_filename(self) -> str:
+        """Get the migration filename for German."""
+        return get_language_migration_files()['de']
     
-    def get_existing_german_words(self) -> Set[str]:
+    def get_existing_words(self) -> Set[str]:
         """Extract all existing German words from the migration file"""
-        # Find German migration file
-        german_file = os.path.join(self.migrations_dir, "901_german_russian_words.sql")
+        german_file = os.path.join(self.migrations_dir, self.get_migration_filename())
         if not os.path.exists(german_file):
             raise FileNotFoundError(f"German migration file not found: {german_file}")
         
         data = self.extract_data_from_file(german_file)
         german_words = set()
         
-        for id1, id2, id3, word, translation, example, example_translation in data:
+        # German articles and function words to skip
+        skip_words = {'der', 'die', 'das', 'ein', 'eine', 'einen', 'einem', 'einer', 'eines'}
+        
+        for _, _, _, word, _, _, _ in data:
             if word and word != 'word':
-                # Handle compound phrases like "ein bisschen"
-                if ' ' in word:
-                    # Add the full normalized phrase
-                    normalized_full = self.normalize_word(word)
-                    german_words.add(normalized_full)
-                    
-                    # Extract individual meaningful words (skip articles)
-                    skip_words = {'der', 'die', 'das', 'ein', 'eine', 'einen', 'einem', 'einer', 'eines'}
-                    for part in word.split():
-                        part_normalized = self.normalize_word(part.strip())
-                        if part_normalized not in skip_words and len(part_normalized) > 2:
-                            german_words.add(part_normalized)
-                else:
-                    normalized = self.normalize_word(word)
-                    german_words.add(normalized)
-                
-                # Handle pipe-separated alternatives
-                if '|' in word:
-                    for alt in word.split('|'):
-                        alt_normalized = self.normalize_word(alt.strip())
-                        german_words.add(alt_normalized)
-                        
-                        # Also handle spaces in alternatives
-                        if ' ' in alt:
-                            for part in alt.split():
-                                part_normalized = self.normalize_word(part.strip())
-                                skip_words = {'der', 'die', 'das', 'ein', 'eine', 'einen', 'einem', 'einer', 'eines'}
-                                if part_normalized not in skip_words and len(part_normalized) > 2:
-                                    german_words.add(part_normalized)
+                # Use common word processing method with German-specific skip words
+                german_words.update(self.process_word_variants(word, skip_words))
         
         return german_words
     
@@ -165,6 +95,43 @@ class GermanAnalyzer:
         """Detect if word is a verb inflection"""
         word_lower = word.lower()
         
+        # Common modal verb forms and their infinitives
+        modal_forms = {
+            'muss': 'müssen', 'musst': 'müssen', 'musste': 'müssen',
+            'kann': 'können', 'kannst': 'können', 'konnte': 'können',
+            'will': 'wollen', 'willst': 'wollen', 'wollte': 'wollen',
+            'soll': 'sollen', 'sollst': 'sollen', 'sollte': 'sollen',
+            'darf': 'dürfen', 'darfst': 'dürfen', 'durfte': 'dürfen',
+            'mag': 'mögen', 'magst': 'mögen', 'mochte': 'mögen',
+        }
+        
+        # Common auxiliary verb forms
+        aux_forms = {
+            'bin': 'sein', 'bist': 'sein', 'ist': 'sein', 'sind': 'sein', 'seid': 'sein',
+            'war': 'sein', 'warst': 'sein', 'waren': 'sein', 'wart': 'sein',
+            'hab': 'haben', 'habe': 'haben', 'hast': 'haben', 'hat': 'haben', 'habt': 'haben',
+            'hatte': 'haben', 'hattest': 'haben', 'hatten': 'haben', 'hattet': 'haben',
+            'werde': 'werden', 'wirst': 'werden', 'wird': 'werden', 'werdet': 'werden',
+            'wurde': 'werden', 'wurdest': 'werden', 'wurden': 'werden', 'wurdet': 'werden',
+        }
+        
+        # Common irregular verb forms
+        irregular_forms = {
+            'liess': 'lassen', 'ließ': 'lassen', 'lässt': 'lassen',
+            'ging': 'gehen', 'gingst': 'gehen', 'gingen': 'gehen', 'gingt': 'gehen',
+            'kam': 'kommen', 'kamst': 'kommen', 'kamen': 'kommen', 'kamt': 'kommen',
+            'gab': 'geben', 'gabst': 'geben', 'gaben': 'geben', 'gabt': 'geben',
+            'sah': 'sehen', 'sahst': 'sehen', 'sahen': 'sehen', 'saht': 'sehen',
+        }
+        
+        # Check hardcoded forms first
+        all_verb_forms = {**modal_forms, **aux_forms, **irregular_forms}
+        if word_lower in all_verb_forms:
+            infinitive = all_verb_forms[word_lower]
+            if infinitive in existing_words:
+                return infinitive, f"Inflected form of '{infinitive}'"
+        
+        # Then try pattern-based detection
         for ending, properties in self.verb_endings.items():
             if word_lower.endswith(ending):
                 stem = word_lower[:-len(ending)]
@@ -194,6 +161,38 @@ class GermanAnalyzer:
         """Detect if word is an adjective declension"""
         word_lower = word.lower()
         
+        # Common adjective forms with their base forms
+        common_adj_forms = {
+            # Forms of "groß"
+            'grosser': 'groß', 'grosse': 'groß', 'grossen': 'groß', 'grosses': 'groß',
+            'grösser': 'groß', 'grössere': 'groß', 'grösseren': 'groß', 'grösseres': 'groß',
+            'grösste': 'groß', 'grössten': 'groß', 'grösstes': 'groß', 'grösstem': 'groß',
+            'größer': 'groß', 'größere': 'groß', 'größeren': 'groß', 'größeres': 'groß',
+            'größte': 'groß', 'größten': 'groß', 'größtes': 'groß', 'größtem': 'groß',
+            
+            # Forms of "gut"
+            'gute': 'gut', 'guten': 'gut', 'guter': 'gut', 'gutes': 'gut', 'gutem': 'gut',
+            'bessere': 'gut', 'besseren': 'gut', 'besserer': 'gut', 'besseres': 'gut',
+            'beste': 'gut', 'besten': 'gut', 'bester': 'gut', 'bestes': 'gut',
+            
+            # Forms of "klein"
+            'kleine': 'klein', 'kleinen': 'klein', 'kleiner': 'klein', 'kleines': 'klein',
+            'kleinere': 'klein', 'kleineren': 'klein', 'kleinerer': 'klein', 'kleineres': 'klein',
+            'kleinste': 'klein', 'kleinsten': 'klein', 'kleinster': 'klein', 'kleinstes': 'klein',
+            
+            # Forms of "neu"
+            'neue': 'neu', 'neuen': 'neu', 'neuer': 'neu', 'neues': 'neu', 'neuem': 'neu',
+            'neuere': 'neu', 'neueren': 'neu', 'neuerer': 'neu', 'neueres': 'neu',
+            'neueste': 'neu', 'neuesten': 'neu', 'neuester': 'neu', 'neuestes': 'neu',
+        }
+        
+        # Check hardcoded forms first
+        if word_lower in common_adj_forms:
+            base_form = common_adj_forms[word_lower]
+            if base_form in existing_words:
+                return base_form, f"Inflected form of '{base_form}'"
+        
+        # Then try pattern-based detection
         for ending, properties in self.adj_endings.items():
             if word_lower.endswith(ending) and len(word_lower) > len(ending) + 2:
                 stem = word_lower[:-len(ending)]
@@ -211,6 +210,35 @@ class GermanAnalyzer:
                             declension_info.append('strong')
                         
                         return base, f"Declined form of '{base}' ({', '.join(declension_info)})"
+        
+        return None
+    
+    def detect_colloquial_form(self, word: str, existing_words: Set[str]) -> Optional[Tuple[str, str]]:
+        """Detect colloquial forms and contractions"""
+        word_lower = word.lower()
+        
+        # Common colloquial forms and contractions
+        colloquial_forms = {
+            'drauf': 'darauf',
+            'draus': 'daraus', 
+            'drin': 'darin',
+            'drunter': 'darunter',
+            'drüber': 'darüber',
+            'rein': 'hinein',
+            'raus': 'hinaus',
+            'rauf': 'hinauf',
+            'runter': 'hinunter',
+            'rüber': 'hinüber',
+            'rum': 'herum',
+            'weg': 'hinweg',
+            'selber': 'selbst',
+            'halt': 'eben',  # particle meaning "just/simply"
+        }
+        
+        if word_lower in colloquial_forms:
+            standard_form = colloquial_forms[word_lower]
+            if standard_form in existing_words:
+                return standard_form, f"Colloquial form of '{standard_form}'"
         
         return None
     
@@ -261,23 +289,27 @@ class GermanAnalyzer:
         """Detect if word is a plural form"""
         word_lower = word.lower()
         
-        # Check common plural endings
-        plural_endings = ['e', 'er', 'en', 'n', 's']
+        # Skip very short words that are likely not plurals
+        if len(word_lower) <= 2:
+            return None
+        
+        # Check common plural endings (but be more conservative)
+        plural_endings = ['er', 'en', 's']  # Removed 'e' and 'n' as too aggressive
         
         for ending in plural_endings:
-            if word_lower.endswith(ending):
+            if word_lower.endswith(ending) and len(word_lower) > len(ending) + 2:
                 possible_singular = word_lower[:-len(ending)]
                 
                 # Also check with umlaut reversal
                 umlaut_reversals = [
-                    (possible_singular, possible_singular),
-                    (possible_singular.replace('ä', 'a'), possible_singular),
-                    (possible_singular.replace('ö', 'o'), possible_singular),
-                    (possible_singular.replace('ü', 'u'), possible_singular),
+                    possible_singular,
+                    possible_singular.replace('ä', 'a'),
+                    possible_singular.replace('ö', 'o'),
+                    possible_singular.replace('ü', 'u'),
                 ]
                 
-                for singular, original in umlaut_reversals:
-                    if singular in existing_words:
+                for singular in umlaut_reversals:
+                    if singular in existing_words and len(singular) >= 3:
                         return singular, f"Plural of '{singular}'"
         
         return None
@@ -294,37 +326,43 @@ class GermanAnalyzer:
         
         # Check if lemma exists (and is different from word)
         if lemma != word.lower() and lemma in existing_words:
-            return f'inflected_{token.pos_.lower()}', token.pos_, f'Form of "{lemma}"'
+            return 'inflected_form', token.pos_, f'Form of "{lemma}"'
         
         # Try pattern-based detection in order of priority
         
         # 1. Spelling variants FIRST
         spelling_result = self.detect_spelling_variant(word, existing_words)
         if spelling_result:
-            base, reason = spelling_result
-            return 'spelling_variants', token.pos_, reason
+            _, reason = spelling_result
+            return 'morphological_variant', token.pos_, reason
         
-        # 2. Verb forms
+        # 2. Colloquial forms and contractions
+        colloquial_result = self.detect_colloquial_form(word, existing_words)
+        if colloquial_result:
+            _, reason = colloquial_result
+            return 'morphological_variant', token.pos_, reason
+        
+        # 3. Verb forms
         verb_result = self.detect_verb_form(word, existing_words)
         if verb_result:
-            base, reason = verb_result
-            return 'inflected_verbs', token.pos_, reason
+            _, reason = verb_result
+            return 'inflected_form', token.pos_, reason
         
-        # 3. Adjective forms
+        # 4. Adjective forms
         adj_result = self.detect_adjective_form(word, existing_words)
         if adj_result:
-            base, reason = adj_result
-            return 'inflected_adjectives', token.pos_, reason
+            _, reason = adj_result
+            return 'inflected_form', token.pos_, reason
         
-        # 4. Plural forms
+        # 5. Plural forms
         plural_result = self.detect_plural_form(word, existing_words)
         if plural_result:
-            base, reason = plural_result
-            return 'inflected_nouns', token.pos_, reason
+            _, reason = plural_result
+            return 'inflected_form', token.pos_, reason
         
         # Check if it's a proper noun
         if token.pos_ == 'PROPN' or token.ent_type_:
-            return 'proper_nouns', token.pos_, f'Proper noun ({token.ent_type_ or "name"})'
+            return 'proper_noun', token.pos_, f'Proper noun ({token.ent_type_ or "name"})'
         
         # Check for English loanwords that shouldn't be in German learning
         english_loanwords = {
@@ -333,44 +371,36 @@ class GermanAnalyzer:
             'facebook', 'google', 'twitter', 'youtube', 'blog', 'chat'
         }
         if word.lower() in english_loanwords:
-            return 'english_loanwords', token.pos_, 'English loanword - not suitable for German learning'
+            return 'foreign_word', token.pos_, 'English loanword - not suitable for German learning'
         
         # Check for essential categories with frequency
         freq = word_frequency(word.lower(), 'de')
         
         if token.pos_ in ['DET', 'PRON', 'ADP', 'PART']:
-            return 'grammatical_words', token.pos_, 'Grammatical word'
+            return 'grammatical_word', token.pos_, 'Grammatical word'
         
         if token.pos_ in self.pos_thresholds and freq >= self.pos_thresholds[token.pos_]:
-            category_map = {
-                'VERB': 'essential_verbs',
-                'NOUN': 'essential_nouns',
-                'ADJ': 'essential_adjectives',
-                'ADV': 'essential_adverbs',
-                'CCONJ': 'essential_conjunctions',
-                'SCONJ': 'essential_conjunctions',
-            }
-            return category_map[token.pos_], token.pos_, f'High-frequency {token.pos_}'
+            if token.pos_ in self.category_mapping:
+                return self.category_mapping[token.pos_], token.pos_, f'High-frequency {token.pos_}'
         
         if freq < 0.00002:
             return 'low_frequency', token.pos_, f'Low frequency'
         
         return 'other', token.pos_, f'Uncategorized {token.pos_}'
     
-    def analyze(self, top_n: int = 1000, show_details: bool = True) -> List[Tuple[str, float, str, str]]:
+    def analyze(self, top_n: int = 1000, show_details: bool = True, limit_analysis: Optional[int] = None) -> List[Tuple[str, float, str, str]]:
         """Main analysis function"""
         if show_details:
             print("\n🔍 GERMAN WORD ANALYSIS")
             print("="*80)
         
         # Get existing words
-        existing_words = self.get_existing_german_words()
+        existing_words = self.get_existing_words()
         if show_details:
             print(f"Found {len(existing_words)} existing German words")
         
         # Get top N German words
-        raw_german = top_n_list('de', top_n)
-        top_german = [w for w in raw_german if not w.isdigit() and len(w) > 1]
+        top_german = self.get_top_words(top_n)
         
         # Find missing words
         missing_words = []
@@ -381,12 +411,17 @@ class GermanAnalyzer:
         
         if show_details:
             print(f"Found {len(missing_words)} missing words from top {top_n}")
+            if limit_analysis and limit_analysis < len(missing_words):
+                print(f"⚠️  Limiting analysis to first {limit_analysis} words")
             print("Analyzing using NLP + linguistic patterns...")
+        
+        # Apply optional limit
+        words_to_analyze = missing_words[:limit_analysis] if limit_analysis else missing_words
         
         # Analyze words
         categories = defaultdict(list)
         
-        for word in missing_words:
+        for word in words_to_analyze:
             category, pos_tag, reason = self.analyze_word(word, existing_words)
             freq = word_frequency(word.lower(), 'de')
             categories[category].append((word, freq, reason, pos_tag))
@@ -395,10 +430,10 @@ class GermanAnalyzer:
         for category in categories:
             categories[category].sort(key=lambda x: x[1], reverse=True)
         
-        # Generate recommendations
+        # Generate recommendations using common function
         recommendations = []
-        for category in ['essential_verbs', 'essential_nouns', 'essential_adjectives', 
-                        'essential_adverbs', 'essential_conjunctions']:
+        from migration_utils import get_essential_categories
+        for category in get_essential_categories():
             if category in categories:
                 for word, freq, reason, pos_tag in categories[category]:
                     recommendations.append((word, freq, category, f"{reason} [{pos_tag}]"))
@@ -408,79 +443,17 @@ class GermanAnalyzer:
         if show_details:
             self._display_results(dict(categories), recommendations)
         
-        return recommendations[:30]
+        return recommendations
     
     def _display_results(self, categories: Dict, recommendations: List):
-        """Display analysis results"""
-        print(f"\n✅ WORDS TO ADD:")
-        
-        total_to_add = 0
-        for cat_name, cat_display in [
-            ('essential_verbs', '🟢 ESSENTIAL VERBS'),
-            ('essential_nouns', '🟢 ESSENTIAL NOUNS'),
-            ('essential_adjectives', '🟢 ESSENTIAL ADJECTIVES'),
-            ('essential_adverbs', '🟢 ESSENTIAL ADVERBS'),
-            ('essential_conjunctions', '🟢 ESSENTIAL CONJUNCTIONS')
-        ]:
-            if cat_name in categories and categories[cat_name]:
-                print(f"\n{cat_display} ({len(categories[cat_name])}):")
-                for word, freq, reason, pos_tag in categories[cat_name][:10]:
-                    print(f"   ✅ {word:15s} (freq: {freq:.6f}) - {reason}")
-                total_to_add += len(categories[cat_name])
-        
-        print(f"\n❌ WORDS NOT TO ADD:")
-        
-        total_not_to_add = 0
-        for cat_name, cat_display, explanation in [
-            ('inflected_verbs', '🔴 VERB INFLECTIONS', 'Detected by morphological patterns'),
-            ('inflected_adjectives', '🔴 ADJECTIVE DECLENSIONS', 'Detected by ending patterns'),
-            ('inflected_nouns', '🔴 PLURAL FORMS', 'Detected by plural patterns'),
-            ('spelling_variants', '🔴 SPELLING VARIANTS', 'Swiss German / alternative spellings'),
-            ('english_loanwords', '🔴 ENGLISH LOANWORDS', 'Not suitable for German learning'),
-            ('proper_nouns', '🔴 PROPER NOUNS', 'Named entities'),
-            ('grammatical_words', '🔴 GRAMMATICAL WORDS', 'Function words'),
-            ('low_frequency', '🔴 LOW FREQUENCY', 'Too rare for practical use')
-        ]:
-            if cat_name in categories and categories[cat_name]:
-                print(f"\n{cat_display} ({len(categories[cat_name])}): DON'T ADD")
-                print(f"   Reason: {explanation}")
-                # Show examples for key categories
-                if cat_name in ['inflected_verbs', 'inflected_adjectives', 'spelling_variants']:
-                    examples = categories[cat_name][:5]
-                    for word, freq, reason, pos in examples:
-                        print(f"   Example: {word} - {reason}")
-                total_not_to_add += len(categories[cat_name])
-        
-        print(f"\n🎯 FINAL RECOMMENDATIONS:")
-        print("="*80)
-        print(f"TOP {min(30, len(recommendations))} WORDS TO ADD:")
-        
-        for i, (word, freq, category, reason) in enumerate(recommendations[:30], 1):
-            cat_short = category.replace('essential_', '').upper()[:6]
-            print(f"{i:2d}. {word:15s} (freq: {freq:.6f}) [{cat_short:6s}] - {reason}")
-        
-        print(f"\n📊 SUMMARY:")
-        print(f"   ✅ Recommend adding: {total_to_add} words")
-        print(f"   ❌ Don't add: {total_not_to_add} words")
-        print(f"   🎨 Using: NLP + Linguistic patterns")
-        
-        if 'other' in categories:
-            print(f"   🔍 Uncategorized: {len(categories['other'])} words")
+        """Display analysis results using standardized format."""
+        from migration_utils import display_standard_results
+        display_standard_results(categories, recommendations, "NLP + Linguistic patterns")
 
 def main():
     """Main entry point"""
-    parser = argparse.ArgumentParser(description='Analyze German words for LinguaQuiz')
-    parser.add_argument('--top-n', type=int, default=1000, 
-                       help='Number of top frequency words to analyze (default: 1000)')
-    parser.add_argument('--no-details', action='store_true',
-                       help='Suppress detailed output')
-    args = parser.parse_args()
-    
-    analyzer = GermanAnalyzer()
-    recommendations = analyzer.analyze(top_n=args.top_n, show_details=not args.no_details)
-    
-    if recommendations:
-        print(f"\n💡 Found {len(recommendations)} German words that could be added")
+    analyzer = GermanWordAnalyzer()
+    analyzer.run_main('Analyze German words for LinguaQuiz using NLP + linguistic patterns')
 
 if __name__ == "__main__":
     main()

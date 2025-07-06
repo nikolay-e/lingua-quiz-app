@@ -13,14 +13,13 @@ Copyright © 2025 Nikolay Eremeev
 """
 
 import os
-import re
 import sys
 from typing import Dict, List, Tuple, Set
 from collections import defaultdict
 import glob
 import argparse
 from wordfreq import word_frequency, top_n_list
-import unicodedata
+from migration_utils import extract_data_from_file, normalize_word, get_migrations_directory
 
 class MigrationValidator:
     def __init__(self, migrations_dir: str, update_files: bool = False):
@@ -34,26 +33,7 @@ class MigrationValidator:
         """Normalize word by removing accents and converting to lowercase
         For German: also removes articles (der, die, das) and content after comma
         """
-        # For German words, remove article and plural/declension forms
-        if is_german:
-            # Remove articles at the beginning
-            word = re.sub(r'^(der|die|das)\s+', '', word, flags=re.IGNORECASE)
-            # Remove everything after semicolon or comma (plural forms, declensions)
-            if ';' in word:
-                word = word.split(';')[0].strip()
-            elif ',' in word:
-                word = word.split(',')[0].strip()
-            # Remove the article again if it's still there after semicolon split
-            word = re.sub(r'^(der|die|das)\s+', '', word, flags=re.IGNORECASE)
-        
-        # For German, don't normalize umlauts as they're meaningful
-        if is_german:
-            return word.lower()
-        else:
-            # Remove accents using Unicode normalization for other languages
-            nfd_form = unicodedata.normalize('NFD', word)
-            normalized = ''.join(char for char in nfd_form if unicodedata.category(char) != 'Mn')
-            return normalized.lower()
+        return normalize_word(word, is_german)
     
     def get_word_stem(self, word: str, is_german: bool = False) -> str:
         """Get a simplified stem of the word for better matching"""
@@ -236,27 +216,11 @@ class MigrationValidator:
     
     def extract_data_from_file(self, file_path: str) -> List[Tuple[int, int, int, str, str, str, str]]:
         """Extract data tuples from a migration file"""
-        data = []
-        
-        with open(file_path, 'r', encoding='utf-8') as f:
-            content = f.read()
-        
-        # Pattern to match data tuples: (id1, id2, id3, 'word', 'translation', 'example', 'example_translation')
-        pattern = r'\(\s*(\d+),\s*(\d+),\s*(\d+),\s*\'([^\']*)\',\s*\'([^\']*)\',\s*\'([^\']*)\',\s*\'([^\']*)\'\s*\)'
-        
-        matches = re.findall(pattern, content)
-        
-        for match in matches:
-            try:
-                id1, id2, id3, word, translation, example, example_translation = match
-                data.append((
-                    int(id1), int(id2), int(id3),
-                    word, translation, example, example_translation
-                ))
-            except ValueError as e:
-                self.errors.append(f"Error parsing line in {file_path}: {match} - {e}")
-        
-        return data
+        try:
+            return extract_data_from_file(file_path)
+        except Exception as e:
+            self.errors.append(f"Error extracting data from {file_path}: {e}")
+            return []
     
     def validate_id_consistency(self, all_data: List[Tuple], file_data_map: Dict[str, List[Tuple]]) -> None:
         """Check for ID consistency - detect gaps in sequences"""
@@ -357,7 +321,7 @@ class MigrationValidator:
                 self.warnings.append(f"Range {lang_range}xxx has {count} missing entries that need to be filled (marked with placeholder 'word')")
         
         # Find and report duplicates with suggestions
-        print("\n🔧 DUPLICATE ANALYSIS AND FIX SUGGESTIONS:")
+        print("\n🔧 DUPLICATE ANALYSIS:")
         
         # Translation ID duplicates
         translation_duplicates = {tid: entries for tid, entries in translation_id_usage.items() if len(entries) > 1}
@@ -375,14 +339,9 @@ class MigrationValidator:
                 
                 # Report findings
                 for entry_idx, (line_idx, wpid, swid, tid, word, trans, ex, ex_trans) in enumerate(entries):
-                    expected_source_id = wpid * 2 + 1
-                    expected_translation_id = wpid * 2 + 2
-                    if entry_idx in correct_entries:
-                        print(f"    ✓ CORRECT: Line {line_idx+1}: ({wpid}, {swid}, {tid}, '{word}', '{trans}', ...)")
-                    else:
-                        print(f"    ❌ FIX: Line {line_idx+1}: ({wpid}, {swid}, {tid}, '{word}', '{trans}', ...) -> ({wpid}, {expected_source_id}, {expected_translation_id}, ...)")
-                        if swid != expected_source_id or tid != expected_translation_id:
-                            self.errors.append(f"Duplicate translation_id: {translation_id} at line {line_idx+1}")
+                    print(f"    Line {line_idx+1}: ({wpid}, {swid}, {tid}, '{word}', '{trans}', ...)")
+                    if entry_idx not in correct_entries:
+                        self.errors.append(f"Duplicate translation_id: {translation_id} at line {line_idx+1}")
         
         # Word pair ID duplicates
         word_pair_duplicates = {wpid: entries for wpid, entries in word_pair_id_usage.items() if len(entries) > 1}
@@ -391,13 +350,8 @@ class MigrationValidator:
             for word_pair_id, entries in sorted(word_pair_duplicates.items()):
                 print(f"  Word Pair ID {word_pair_id} used {len(entries)} times:")
                 for i, (line_idx, wpid, swid, tid, word, trans, ex, ex_trans) in enumerate(entries):
-                    if i == 0:
-                        print(f"    ✓ KEEP: Line {line_idx+1}: ({wpid}, {swid}, {tid}, '{word}', '{trans}', ...)")
-                    else:
-                        # Suggest new word pair ID
-                        max_word_pair_id = max(word_pair_id_usage.keys())
-                        new_word_pair_id = max_word_pair_id + 1 + (i-1)
-                        print(f"    ❌ FIX:  Line {line_idx+1}: ({wpid}, {swid}, {tid}, '{word}', '{trans}', ...) -> ({new_word_pair_id}, {swid}, {tid}, ...)")
+                    print(f"    Line {line_idx+1}: ({wpid}, {swid}, {tid}, '{word}', '{trans}', ...)")
+                    if i > 0:
                         self.errors.append(f"Duplicate word_pair_id: {word_pair_id} at line {line_idx+1}")
         
         # Source word ID duplicates
@@ -408,10 +362,8 @@ class MigrationValidator:
                 if len(entries) > 1:
                     print(f"  Source Word ID {source_word_id} used {len(entries)} times:")
                     for i, (line_idx, wpid, swid, tid, word, trans, ex, ex_trans) in enumerate(entries):
-                        if i == 0:
-                            print(f"    ✓ KEEP: Line {line_idx+1}: ({wpid}, {swid}, {tid}, '{word}', '{trans}', ...)")
-                        else:
-                            print(f"    ❌ FIX:  Line {line_idx+1}: ({wpid}, {swid}, {tid}, '{word}', '{trans}', ...) -> needs new source_word_id")
+                        print(f"    Line {line_idx+1}: ({wpid}, {swid}, {tid}, '{word}', '{trans}', ...)")
+                        if i > 0:
                             self.errors.append(f"Duplicate source_word_id: {source_word_id} at line {line_idx+1}")
         
         print(f"\n📊 Summary: Found {len(translation_duplicates)} translation ID conflicts, {len(word_pair_duplicates)} word pair ID conflicts, {len([x for x in source_word_duplicates.values() if len(x) > 1])} source word ID conflicts")
@@ -652,9 +604,7 @@ class MigrationValidator:
             if numbers:
                 print(f"    🔸 Numbers ({len(numbers)}): {', '.join(numbers)}")
             if other:
-                print(f"    🔸 Other ({len(other)}): {', '.join(other[:30])}")
-                if len(other) > 30:
-                    print(f"        ... and {len(other) - 30} more")
+                print(f"    🔸 Other ({len(other)}): {', '.join(other)}")
         
         # Similar analysis for Spanish
         print("\n📚 Spanish Essential Vocabulary Coverage:")
@@ -677,10 +627,8 @@ class MigrationValidator:
         
         if spanish_missing_concepts:
             print(f"  Missing essential concepts ({len(spanish_missing_concepts)}):")
-            # Show first 30 missing concepts
-            print(f"    {', '.join(spanish_missing_concepts[:30])}")
-            if len(spanish_missing_concepts) > 30:
-                print(f"    ... and {len(spanish_missing_concepts) - 30} more")
+            # Show all missing concepts
+            print(f"    {', '.join(spanish_missing_concepts)}")
 
     def validate_top1k_coverage(self, all_data: List[Tuple]) -> None:
         """Check if top 1k words are present in the migrations for German and Spanish"""
@@ -1121,9 +1069,7 @@ def main():
     args = parser.parse_args()
     
     # Get migrations directory
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    migrations_dir = os.path.join(script_dir, "..", "packages", "backend", "migrations")
-    migrations_dir = os.path.abspath(migrations_dir)
+    migrations_dir = get_migrations_directory()
     
     if not os.path.exists(migrations_dir):
         print(f"❌ Migrations directory not found: {migrations_dir}")
