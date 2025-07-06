@@ -554,7 +554,7 @@ BEGIN
     (4000524, 4001049, 4001050, 'vestir', 'одевать', 'Se viste bien.', 'Он хорошо одевается.'),
     (4000525, 4001051, 4001052, 'ropa', 'одежда', 'Necesito ropa nueva.', 'Мне нужна новая одежда.'),
     (4000526, 4001053, 4001054, 'uno', 'один', 'Solo tengo uno.', 'У меня только один.'),
-    (4000527, 4001055, 4001056, 'solo', 'одинокий, только', 'Me siento solo.', 'Я чувствую себя одиноким.'),
+    (4000527, 4001055, 4001056, 'sólo', 'только', 'Sólo quiero ayudarte.', 'Я только хочу помочь тебе.'),
     (4000528, 4001057, 4001058, 'favor', 'одолжение', '¿Me haces un favor?', 'Сделаешь мне одолжение?'),
     (4000529, 4001059, 4001060, 'lago', 'озеро', 'El lago es profundo.', 'Озеро глубокое.'),
     (4000530, 4001061, 4001062, 'océano', 'океан', 'Me encanta el océano.', 'Я обожаю океан.'),
@@ -1431,8 +1431,22 @@ BEGIN
     (4001401, 4002803, 4002804, 'totalmente', 'полностью', 'Estoy totalmente de acuerdo.', 'Я полностью согласен.'),
     (4001402, 4002805, 4002806, 'ti', 'тебя', 'Este regalo es para ti.', 'Этот подарок для тебя.'),
     (4001403, 4002807, 4002808, 'tercero', 'третий', 'Vivo en el tercero piso.', 'Я живу на третьем этаже.'),
-    (4001404, 4002809, 4002810, 'terminado', 'законченный', 'Ya he terminado mi trabajo.', 'Я уже закончил свою работу.')
-    -- End of word pairs data
+    (4001404, 4002809, 4002810, 'terminado', 'законченный', 'Ya he terminado mi trabajo.', 'Я уже закончил свою работу.'),
+    (4001405, 4002811, 4002812, 'mierda', 'дерьмо|чёрт', '¡Mierda! Me olvidé las llaves.', 'Чёрт! Я забыл ключи.'),
+    (4001406, 4002813, 4002814, 'muestra', 'образец, показывает', 'Esta muestra es gratuita.', 'Этот образец бесплатный.'),
+    (4001407, 4002815, 4002816, 'participación', 'участие', 'Tu participación es importante.', 'Твоё участие важно.'),
+    (4001408, 4002817, 4002818, 'violencia', 'насилие', 'No tolero la violencia.', 'Я не терплю насилие.'),
+    (4001409, 4002819, 4002820, 'contenido', 'содержание|содержимое', 'El contenido del libro es interesante.', 'Содержание книги интересное.'),
+    (4001410, 4002821, 4002822, 'televisión', 'телевидение|телевизор', 'No veo mucha televisión.', 'Я не смотрю много телевизор.'),
+    (4001411, 4002823, 4002824, 'comentarios', 'комментарии', 'Lee los comentarios del artículo.', 'Прочитай комментарии к статье.'),
+    (4001412, 4002825, 4002826, 'análisis', 'анализ', 'Necesitamos un análisis detallado.', 'Нам нужен подробный анализ.'),
+    (4001413, 4002827, 4002828, 'presencia', 'присутствие', 'Su presencia es necesaria.', 'Его присутствие необходимо.'),
+    (4001414, 4002829, 4002830, 'versión', 'версия', 'Esta es la última versión.', 'Это последняя версия.'),
+    (4001415, 4002831, 4002832, 'quizás', 'может быть|возможно', 'Quizás venga mañana.', 'Может быть, он придёт завтра.'),
+    (4001416, 4002833, 4002834, 'importancia', 'важность|значение', 'No entiendes la importancia de esto.', 'Ты не понимаешь важность этого.'),
+    (4001417, 4002835, 4002836, 'origen', 'происхождение|источник', '¿Cuál es el origen de esta palabra?', 'Каково происхождение этого слова?'),
+    (4001418, 4002837, 4002838, 'canal', 'канал', 'Este canal transmite noticias.', 'Этот канал передаёт новости.'),
+    (4001419, 4002839, 4002840, 'juicio', 'суд|судебный процесс', 'El juicio comenzó ayer.', 'Судебный процесс начался вчера.')
     ) AS t(translation_id, source_word_id, target_word_id, source_word, target_word, source_example, target_example)
   ) LOOP
     -- Use the existing function to handle word insertion with proper conflict resolution

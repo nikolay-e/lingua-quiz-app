@@ -1,0 +1,299 @@
+🚀 STARTING ENHANCED WORD ANALYSIS WITH MIGRATION VALIDATION
+================================================================================
+🔍 MIGRATION VALIDATION
+================================================================================
+🚀 Starting migration validation...
+
+📂 Found 3 migration files:
+  - 901_german_russian_a1_words.sql
+  - 902_spanish_russian_a1_words.sql
+  - 903_english_russian_a1_words.sql
+
+📖 Processing 901_german_russian_a1_words.sql...
+  Extracted 1362 entries
+📖 Processing 902_spanish_russian_a1_words.sql...
+  Extracted 1420 entries
+📖 Processing 903_english_russian_a1_words.sql...
+  Extracted 1126 entries
+
+📈 Total entries: 3908
+
+🔍 Checking ID consistency...
+🔍 Checking translation ID uniqueness...
+
+🔧 DUPLICATE ANALYSIS:
+
+📊 Summary: Found 0 translation ID conflicts, 0 word pair ID conflicts, 0 source word ID conflicts
+🔍 Checking injectiveness...
+🔍 Checking data integrity...
+🔍 Checking ID ranges...
+
+📊 Range Statistics:
+  Range 3xxx: 1362 entries, IDs 3000000-3001361
+  Range 4xxx: 1420 entries, IDs 4000000-4001419
+  Range 8xxx: 1126 entries, IDs 8000000-8001125
+🔍 Analyzing stem/root coverage for essential vocabulary...
+  Essential vocabulary: German 958 words, Spanish 963 words
+
+📚 German Essential Vocabulary Coverage:
+  Coverage: 917/958 (95.7%)
+  Missing essential concepts (41):
+    🔸 Other (41): berlin, bzw, münchen, spd, bayern, ii, österreich, hamburg, wien, krieg, afd, cdu, frankfurt, peter, new, köln, schweiz, job, michael, sex, hinaus, menge, tv, berliner, thomas, gemeinde, stuttgart, boden, frankreich, kreis, licht, russland, staat, europäischen, fc, martin, bürger, okay, hans, staaten, einzelnen
+
+📚 Spanish Essential Vocabulary Coverage:
+  Coverage: 914/963 (94.9%)
+  Missing essential concepts (49):
+    nosotros, millones, argentina, unidos, países, madrid, juan, video, etc, josé, chile, venezuela, elecciones, internet, ustedes, condiciones, colombia, carlos, mediante, podía, américa, relaciones, ministerio, congreso, puta, acciones, corte, comisión, habrá, jóvenes, brasil, china, francia, francisco, pedro, pp, constitución, código, habría, perú, post, respeto, sr, barcelona, ii, instituto, premio, cultural, gustaría
+🔍 Checking top 1k words coverage (with normalized comparison)...
+  Filtered top 1k: German 968 words, Spanish 949 words
+
+📚 German (Range 3xxx):
+  Note: Top 1k includes inflected forms (e.g., bin, bist, ist, sind from 'sein')
+        Migration uses dictionary/base forms (e.g., 'sein' not 'bin/bist/ist')
+  ⚠️  Missing 567 words from German top 1k:
+    - 30 verb conjugations (e.g., hatten, konnten, kann, musste, hat...)
+    - 30 articles/pronouns inflected forms
+    - 18 proper nouns (cities, names, organizations)
+    - 8 English/internet terms
+    - 481 other words
+
+  Analyzing 'other' category in detail:
+    More detailed breakdown of 481 'other' words:
+      - 43 additional verb forms
+      - 10 prepositions/contractions
+      - 3 adverbs/particles
+      - 31 adjective inflected forms
+      - 1 compound word parts
+      - 6 abbreviations
+      - 387 truly other words
+        First 30: abend, ach, afd, ahnung, all, allem, allen, aller, anderem, anderer, anfang, angebot, angst, antwort, april, arbeit, art, artikel, augen, august, ausbildung, ausser, ausserdem, auto, bad, bahn, band, bedeutet, bedeutung, beginn
+  📊 Found 958 German words in migration that are NOT in top 1k
+    abend [die abende], abends, absagen, achtzehn, achtzig, adresse [die adressen], afrika, ahnung [die ahnungen], alles gute!, alltag [die alltage], altbau [die altbauten], am liebsten, am meisten, amerika, amerikanisch, ampel [die ampeln], andere [die anderen], anfang [die anfänge], anfangen, angabe [die angaben], angebot [die angebote], angst [die ängste], ankunftszeit [die ankunftszeiten], anmeldung [die anmeldungen], anrufen, ansage [die ansagen], antwort [die antworten], antworten, anzeige [die anzeigen], anziehen, anzug [die anzüge], apfel [die äpfel], apfelsaft [die apfelsäfte], apotheke [die apotheken], april [die aprile], arabisch, arbeit [die arbeiten], arbeitstag [die arbeitstage], arbeitszimmer [die arbeitszimmer], arm [die arme], art [die arten], artikel [die artikel], arzt [die ärzte], asien, atmen, auf wiedersehen, aufgabe [die aufgaben], aufgeregt, aufstehen, aufwachsen, auge [die augen], august [die auguste], ausbildung [die ausbildungen], ausfüllen, auskunft [die auskünfte], aussage [die aussagen], auto [die autos], außer, außerdem, backen, bad [die bäder], baden, badewanne [die badewannen], badezimmer [die badezimmer], bahn [die bahnen], bahnhof [die bahnhöfe], balkon [die balkone], ball [die bälle], banane [die bananen], band [die bands], bank [die banken], bauch [die bäuche], bauchschmerzen, bauen, bauernhof [die bauernhöfe], baum [die bäume], beachten, beantworten, becher [die becher], bedeuten, bedeutung [die bedeutungen], beginn [die beginne], beginnen, behandeln, beige, bein [die beine], beispiel [die beispiele], benutzen, bequem, bereich [die bereiche], berichten, beruf [die berufe], beschreiben, bestehen, besuchen, betreffen, bett [die betten], bevölkerung [die bevölkerungen], bewegung [die bewegungen], bewölkt, bezahlen, bibliothek [die bibliotheken], bier [die biere], bieten, bild [die bilder], bilden, billig, biologie, birne [die birnen], bistro [die bistros], blatt [die blätter], blau, blaubeere [die blaubeeren], bleistift [die bleistifte], blick [die blicke], blume [die blumen], bluse [die blusen], blöd, bohne [die bohnen], braun, braut [die bräute], breit, brief [die briefe], brot [die brote], bruder [die brüder], brust [die brüste], brötchen [die brötchen], brücke [die brücken], buch [die bücher], buchstabieren, bus [die busse], bushaltestelle [die bushaltestellen], butter, bäcker [die bäcker], büro [die büros], café [die cafés], cent [die cent], chance [die chancen], chef [die chefs], chemie, chinesisch, circa, cola [die colas], computer [die computer], dank [die danke], datum [die daten], dauern, dezember [die dezember], dialog [die dialoge], diele [die dielen], dienst [die dienste], dienstag [die dienstage], ding [die dinge], donnerstag [die donnerstage], dose [die dosen], draußen, dreimal, dreizehn, dreißig, dringend, dritte [die dritten], dritter, dunkel, durchsage [die durchsagen], dusche [die duschen], dänisch, e-mail [die e-mails], ei [die eier], ein bisschen, einfamilienhaus [die einfamilienhäuser], einkaufen, einkaufszettel [die einkaufszettel], einladen, einladung [die einladungen], einsatz [die einsätze], einverstanden, einzig, eis [die eis], elektrogerät [die elektrogeräte], elf, ellbogen [die ellbogen], empfänger [die empfänger], ende [die enden], eng, englisch, ente [die enten], entscheiden, entscheidung [die entscheidungen], entschuldigung [die entschuldigungen], entwickeln, entwicklung [die entwicklungen], erbse [die erbsen], erdbeere [die erdbeeren], erdgeschoss [die erdgeschosse], erfahrung [die erfahrungen], erfolg [die erfolge], ergebnis [die ergebnisse], erkältung [die erkältungen], ersetzen, erste [die ersten], erwachsene [die erwachsenen], erwarten, erzählen, es tut mir leid, esel [die esel], euer, euro [die euro], extra, fahrer [die fahrer], fahrgast [die fahrgäste], fahrkarte [die fahrkarten], fahrrad [die fahrräder], fall [die fälle], familie [die familien], familienfoto [die familienfotos], fangen, farbe [die farben], februar [die februare], fehlen, fehler [die fehler], feier [die feiern], feierabend [die feierabende], feiern, feiertag [die feiertage], fenster [die fenster], ferien [die ferien], ferienhaus [die ferienhäuser], fernsehen, fernseher [die fernseher], fest [die feste], fieber [die fieber], film [die filme], finger [die finger], firma [die firmen], fisch [die fische], flasche [die flaschen], fleisch [die fleisch], flexibel, fliegen, flughafen [die flughäfen], flugzeug [die flugzeuge], flur [die flure], folge [die folgen], folgende, form [die formen], formular [die formulare], foto [die fotos], fotografieren, frage [die fragen], französisch, frau [die frauen], freitag [die freitage], freund [die freunde], freundlich, frisch, friseur [die friseure], froh, früh, frühstück [die frühstücke], frühstücken, funktionieren, furchtbar, fuß [die füße], fußball [die fußbälle], fußballspieler [die fußballspieler], fühlen, führerschein [die führerscheine], fünfzehn, fünfzig, garage [die garagen], garten [die gärten], gartenparty [die gartenpartys], gast [die gäste], geboren sein, geburtstag [die geburtstage], geburtstagstorte [die geburtstagstorten], gebäude [die gebäude], gedanke [die gedanken], geehrter, gefahr [die gefahren], gefühl [die gefühle], gegenseitig, gelb, geld [die gelder], gelten, gemüse [die gemüse], gemütlich, geografie, gepflegt, geradeaus, gerät [die geräte], geschenk [die geschenke], geschieden, geschirr, geschwister, geschäft [die geschäfte], gesellschaft [die gesellschaften], gesicht [die gesichter], gespräch [die gespräche], gesund, gesundheit, gesundheitskarte [die gesundheitskarten], getränk [die getränke], geöffnet, gitarre [die gitarren], glas [die gläser], gleis [die gleise], glücklich, gott [die götter], grad [die grade], grammatik [die grammatiken], grau, griechisch, grillen, grippe [die grippen], groß, großeltern, grund [die gründe], gruppe [die gruppen], gruß [die grüße], größe [die größen], größer, größte, grün, gucken, gute nacht, guten abend, guten morgen, guten tag, gültig, günstig, haar [die haare], hageln, halbtags, hals [die hälse], halsweh, haltestelle [die haltestellen], hand [die hände], handeln, handschuh [die handschuhe], handy [die handys], handynummer [die handynummern], hase [die hasen], hauptsache [die hauptsachen], haus [die häuser], hausarzt [die hausärzte], hausaufgabe [die hausaufgaben], hausflur [die hausflure], hausfrau [die hausfrauen], hausnummer [die hausnummern], haustier [die haustiere], heft [die hefte], heimatland [die heimatländer], heizung [die heizungen], heiß, heißen, hell, hemd [die hemden], herbst [die herbste], herd [die herde], herr [die herren], herz [die herzen], herzlichen glückwunsch!, hilfe [die hilfen], himbeere [die himbeeren], himmelsrichtung [die himmelsrichtungen], hinten, hobby [die hobbys], hochzeit [die hochzeiten], hoffen, honig [die honige], hose [die hosen], huhn [die hühner], hund [die hunde], hundert, hunger [die hunger], husten [die husten], hälfte [die hälften], hängen, hässlich, höhe [die höhen], idee [die ideen], indisch, informatik, information [die informationen], ingenieur [die ingenieure], insel [die inseln], installieren, interessant, interesse [die interessen], interview [die interviews], irgendwo, italienisch, jacke [die jacken], jahr [die jahre], jahreszeit [die jahreszeiten], januar [die januare], japanisch, jeans, joghurt [die joghurts], juli [die julis], jung, juni [die junis], jünger, kaffee [die kaffees], kaffeemaschine [die kaffeemaschinen], kalender [die kalender], kampf [die kämpfe], kantine [die kantinen], kaputt, karte [die karten], kartoffel [die kartoffeln], kasse [die kassen], kassenbon [die kassenbons], kassierer [die kassierer], katze [die katzen], kaufhaus [die kaufhäuser], keks [die kekse], keller [die keller], kellner [die kellner], kilo [die kilos], kind [die kinder], kindergarten [die kindergärten], kinderzimmer [die kinderzimmer], kino [die kinos], kirche [die kirchen], kirsche [die kirschen], kiwi [die kiwis], klamotten, kleid [die kleider], kleiderschrank [die kleiderschränke], kleidung, kleidungsstücke, klingeln, knie [die knie], koch [die köche], kochen, koffer [die koffer], kollege [die kollegen], kontakt [die kontakte], kopf [die köpfe], kopfschmerzen, koreanisch, korrigieren, kostenlos, kraft [die kräfte], krank, krankenhaus [die krankenhäuser], krankenkasse [die krankenkassen], krankenpfleger [die krankenpfleger], krankenschwester [die krankenschwestern], krankheit [die krankheiten], krankmeldung [die krankmeldungen], kreativ, kreuzung [die kreuzungen], kritik [die kritiken], kuchen [die kuchen], kugelschreiber [die kugelschreiber], kuh [die kühe], kultur [die kulturen], kunde [die kunden], kurs [die kurse], kursbuch [die kursbücher], kursraum [die kursräume], kursteilnehmer [die kursteilnehmer], käse [die käse], könig [die könige], körper [die körper], körperteil [die körperteile], küche [die küchen], kühl, kühlschrank [die kühlschränke], lachen, lage [die lagen], lammfleisch, lampe [die lampen], land [die länder], landkarte [die landkarten], laptop [die laptops], lebensmittel, lecker, ledig, legen, lehrer [die lehrer], lieben, lila, limonade [die limonaden], linie [die linien], liste [die listen], liter [die liter], lustig, lösung [die lösungen], mai [die mais], mama [die mamas], mandarine [die mandarinen], mango [die mangos], mann [die männer], mantel [die mäntel], markt [die märkte], marmelade [die marmeladen], mathematik, maus [die mäuse], maximal, medikament [die medikamente], meer [die meere], mehl, meinung [die meinungen], meistens, melone [die melonen], mensch [die menschen], meter [die meter], metzger [die metzger], miete [die mieten], milch, minus, minute [die minuten], mitarbeiter [die mitarbeiter], mitbringen, mitglied [die mitglieder], mittag [die mittage], mittagessen [die mittagessen], mittags, mittagspause [die mittagspausen], mode [die moden], modell [die modelle], modern, moment [die momente], monat [die monate], mond [die monde], montag [die montage], morgen [die morgen], morgens, motorrad [die motorräder], mund [die münder], musiklehrer [die musiklehrer], mutter [die mütter], mädchen [die mädchen], märz [die märze], möbel, möbliert, möchten, mögen, möglichkeit [die möglichkeiten], möhre [die möhren], müde, müll, mülleimer [die mülleimer], mütze [die mützen], nachmittag [die nachmittage], nachmittags, nachname [die nachnamen], nacht [die nächte], nachtdienst [die nachtdienste], nachts, nacken [die nacken], name [die namen], nase [die nasen], nass, natur [die naturen], nebelig, nennen, nervös, nett, neun, neunzehn, neunzig, niederländisch, nirgendwo, norden [die norden], norwegisch, november [die november], nudel [die nudeln], obergeschoss [die obergeschosse], obst, obstsalat [die obstsalate], ohr [die ohren], oktober [die oktober], olivenöl [die olivenöle], oma [die omas], onkel [die onkel], opa [die opas], opfer [die opfer], orange, orange [die orangen], ordnen, ordnung [die ordnungen], ort [die orte], osten [die osten], ostern, paar [die paare], packen, packung [die packungen], papa [die papas], papierkorb [die papierkörbe], paprika [die paprikas], park [die parks], parkgebühr [die parkgebühren], parkplatz [die parkplätze], partei [die parteien], partner [die partner], passen, patient [die patienten], pause [die pausen], per post, person [die personen], pferd [die pferde], pflanze [die pflanzen], pflaster [die pflaster], pflege, pfund [die pfunde], physik, pizza [die pizzas], pizzeria [die pizzerias], plan [die pläne], planen, platz [die plätze], politiker [die politiker], politisch, polizist [die polizisten], polnisch, portugiesisch, position [die positionen], positiv, post, postkarte [die postkarten], postleitzahl [die postleitzahlen], praktikum [die praktika], praktisch, praxis [die praxen], preis [die preise], probieren, problem [die probleme], programm [die programme], projekt [die projekte], projektor [die projektoren], prospekt [die prospekte], prozent [die prozente], präsident [die präsidenten], prüfen, pudding [die puddings], pullover [die pullover], punkt [die punkte], putzen, pünktlich, quadratmeter [die quadratmeter], radio [die radios], rahmen [die rahmen], raten, rathaus [die rathäuser], rauchen, rechnen, recht [die rechte], regal [die regale], regel [die regeln], regelmäßig, regenschirm [die regenschirme], regierung [die regierungen], region [die regionen], regnen, reichen, reihe [die reihen], reihenhaus [die reihenhäuser], reis, reise [die reisen], religion, rentner [die rentner], reparatur [die reparaturen], reparieren, reporter [die reporter], restaurant [die restaurants], rezept [die rezepte], richtung [die richtungen], rindfleisch, rock [die röcke], rolle [die rollen], roman [die romane], rot, rucksack [die rucksäcke], ruhe, ruhig, russisch, räumen, rücken [die rücken], sache [die sachen], saft [die säfte], sahne, saison [die saisons], salat [die salate], salbe [die salben], salz, samstag [die samstage], samstags, satz [die sätze], schade, schaf [die schafe], schatz [die schätze], scheinen, schenken, schicken, schiff [die schiffe], schlafen, schlafzimmer [die schlafzimmer], schlechter, schließen, schließlich, schlimm, schluss [die schlüsse], schlüssel [die schlüssel], schmal, schmecken, schmerz [die schmerzen], schnee, schneemann [die schneemänner], schneien, schnupfen [die schnupfen], schokolade [die schokoladen], schrank [die schränke], schritt [die schritte], schuh [die schuhe], schuld [die schulden], schule [die schulen], schulter [die schultern], schwanger, schwedisch, schwein [die schweine], schweinefleisch, schwester [die schwestern], schwimmbad [die schwimmbäder], schwimmen, schüler [die schüler], sechzehn, sechzig, seite [die seiten], sekt [die sekte], september [die september], sessel [die sessel], shirt [die shirts], sich anmelden, sich anziehen, sich aufregen, sich erkälten, sich freuen, sich setzen, siebzehn, siebzig, singen, situation [die situationen], sitzen, ski [die skier], socke [die socken], sofa [die sofas], sohn [die söhne], sommer [die sommer], sonderangebot [die sonderangebote], sonne [die sonnen], sonnig, sonntag [die sonntage], sonstiges, sowieso, spanisch, spazieren, spaß, spezialität [die spezialitäten], spiegel [die spiegel], spiel [die spiele], spieler [die spieler], spitzer [die spitzer], sportschuh [die sportschuhe], sprache [die sprachen], sprachschule [die sprachschulen], sprechstunde [die sprechstunden], spät, spülen, spülmaschine [die spülmaschinen], stadt [die städte], stadtplan [die stadtpläne], stadtwald [die stadtwälder], steigen, stimme [die stimmen], stirn [die stirnen], strand [die strände], straße [die straßen], straßenbahn [die straßenbahnen], streichen, stress, stressig, student [die studenten], studieren, studium [die studien], stuhl [die stühle], stunde [die stunden], stundenplan [die stundenpläne], stück [die stücke], supergut, supermarkt [die supermärkte], suppe [die suppen], system [die systeme], süden [die süden], süß, tabelle [die tabellen], tablette [die tabletten], tafel [die tafeln], tag [die tage], tante [die tanten], tanzen, tasche [die taschen], tasse [die tassen], tausend, taxi [die taxis], taxifahrer [die taxifahrer], team [die teams], techniker [die techniker], tee [die tees], teil [die teile], telefon [die telefone], telefonieren, telefonnummer [die telefonnummern], teller [die teller], tennis, teppich [die teppiche], termin [die termine], terrasse [die terrassen], teuer, text [die texte], thema [die themen], tipp [die tipps], tisch [die tische], titel [die titel], tochter [die töchter], toilette [die toiletten], tomate [die tomaten], torte [die torten], tourist [die touristen], traurig, trinken, trocken, tropfen [die tropfen], tschüss, typ [die typen], typisch, tür [die türen], türkisch, u-bahn [die u-bahnen], uhr [die uhren], uhrzeit [die uhrzeiten], umsteigen, umtauschen, ungefähr, ungemütlich, unglücklich, universität [die universitäten], unternehmen [die unternehmen], unterricht [die unterrichte], unterrichten, unterschrift [die unterschriften], unterstützung [die unterstützungen], untersuchung [die untersuchungen], urlaub [die urlaube], vater [die väter], verbinden, verbindung [die verbindungen], verdienen, verein [die vereine], verfügung [die verfügungen], vergleich [die vergleiche], vergleichen, verheiratet, verkäufer [die verkäufer], verlieren, verschieden, verstanden, verwenden, verzögern, verändern, video [die videos], viel glück!, viertel [die viertel], vierzehn, vierzig, vogel [die vögel], vorgestern, vormittag [die vormittage], vormittags, vorname [die vornamen], vorne, vorstellen, wahl [die wahlen], wand [die wände], warm, wartezimmer [die wartezimmer], waschen, waschmaschine [die waschmaschinen], wasser [die wasser], wechsel [die wechsel], wechseln, weg [die wege], wegziehen, wehtun, weihnachten, wein [die weine], weise [die weisen], weiß, werkstatt [die werkstätten], wert [die werte], westen, wetter, wetterbericht [die wetterberichte], wie bitte?, wie viel, wie viele, wiederkommen, willkommen, windig, winter [die winter], wintermantel [die wintermäntel], woche [die wochen], wochenende [die wochenenden], wochenmarkt [die wochenmärkte], woher, wohin, wohnen, wohnort [die wohnorte], wohnung [die wohnungen], wohnzimmer [die wohnzimmer], wort [die wörter], wunderschön, wörterbuch [die wörterbücher], wünschen, wütend, zahl [die zahlen], zahn [die zähne], zeh [die zehen], zeichnen, zeit [die zeiten], zeitung [die zeitungen], zentrum [die zentren], zettel [die zettel], ziege [die ziegen], ziel [die ziele], zimmer [die zimmer], zitrone [die zitronen], zu fuß, zu hause, zu sein, zucker, zug [die züge], zurzeit, zwanzig, zweimal, zweite [die zweiten], zwiebel [die zwiebeln], zwölf, älter, öffentlich, öffnen, übermorgen, übung [die übungen], übungsbuch [die übungsbücher]
+
+📚 Spanish (Range 4xxx):
+  ⚠️  Missing 345 words from Spanish top 1k:
+    acciones, actividades, aires, al, algun, alguna, algunas, alta, america, amigos, and, anos, aquellos, argentina, baja, barcelona, brasil, buen, buenas, buenos, busca, cambios, carlos, casos, chicos, chile, china, ciudadanos, ciudades, clases, codigo, colombia, comision, condiciones, congreso, constitucion, contigo, corte, cosas, cree, creo, cuales, cualquier, cuentas, cultural, dan, dando, darle, datos, debe, debemos, deben, deja, dejo, derecha, derechos, di, dias, dice, dicen, diciendo, diferentes, digo, dije, dijo, dio, economica, elecciones, ellas, ello, ellos, empresas, encuentra, encuentro, entiendo, eran, eres, es, esa, esas, esos, espana, espanola, espera, esperando, espero, esta, estaba, estaban, estados, estamos, estan, estas, esto, estos, estoy, estudios, estuvo, etc, europa, existe, existen, facebook, falta, formacion, formas, fotos, francia, francisco, fue, fueron, fuerzas, fui, grandes, grupos, gusta, gustaria, ha, habia, habian, hablando, habra, habria, hace, hacen, haces, haciendo, hago, han, has, haya, he, hechos, hemos, hice, hicieron, hijos, hizo, hombres, horas, hubiera, hubo, humanos, i, iba, ideas, ii, importa, importantes, in, instituto, internet, jose, jovenes, juan, juegos, juntos, la, las, le, les, leyes, libros, llamada, llega, llego, lleva, lo, los, lugares, luis, madrid, mala, manos, maria, mayores, me, media, mediante, medidas, medios, mejores, meses, mexico, miembros, miles, millones, ministerio, minutos, mira, mis, misma, mismos, mucha, muchas, muchos, mujeres, necesito, ningun, ninguna, ninos, nos, nosotros, noticias, nuestra, nuestras, nuestros, nueva, nuevas, nuevos, obras, of, ojos, os, otra, otras, otros, padres, paises, palabras, parece, partes, partidos, pasa, pedro, pequena, permite, personas, peru, pienso, pocos, podemos, podia, politicas, politicos, pone, post, pp, precios, preguntas, premio, primer, primera, primeros, principales, principios, problemas, productos, propia, proyectos, publica, pudo, pueda, puede, pueden, puedes, puedo, puntos, puta, queda, queremos, quienes, quiere, quieren, quieres, quiero, re, recuerdo, redes, relaciones, respeto, resultados, sabe, sabemos, saben, sabes, sale, san, santa, se, sean, segunda, semanas, sera, seran, seria, servicios, sido, siendo, siento, significa, sigue, siguen, siguientes, sociales, sola, somos, son, soy, sr, sus, tan, temas, tenemos, tengo, tenia, tenian, the, tiempos, tiene, tienen, tienes, toda, todas, todos, toma, trata, tus, tuvo, twitter, ultima, ultimos, un, una, unas, unica, unidos, union, unos, ustedes, vale, vamos, van, varias, vas, ve, veces, ven, venezuela, vi, video, viene, vive, vos, voy
+  📊 Found 809 Spanish words in migration that are NOT in top 1k
+    a, abandonar, abierto, abogado, abrigo, abrir, abuelo, acabar, accidente, aceite, aceptar, acordar, actitud, adecuado, adentro, adios, adivinar, adonde, advertir, afectar, afirmar, afuera, agente, agregar, agudo, al [a + el], ala, alcance, alcanzar, alegrar, alegria, aleman, algodon, alguno, alimento, aliviar, alumno, amable, amar, amarillo, ambiente, amplio, anadir, andar, anillo, animal, anoche, anunciar, aparecer, aplicar, apoyar, aprender, aprovechar, aquel, arbol, arena, arroz, artista, ascenso, ascensor, asegurar, asiento, aspecto, asunto, aumentar, autoridad, avanzar, avion, aviso, ay, azucar, azul, bailar, baile, danza, bajar, bano, barco, barrio, basico, bastar, basura, batir, bebe, beber, bebida, bebido, belleza, blog, bloque, bola, bonito, borde, bosque, brazo, brillante, broma, busqueda, caballero, caballo, cadena, caer, cafe, caja, caliente, callar, callate, calma, calor, cama, caminar, camion, campamento, cantar, capitan, captura, caracter, carcel, carino, carne, carretera, catorce, caza, cazar, celebrar, celular, cena, cenar, cerebro, cerrar, cerveza, charla, charlar, chico, cien, ciencia, ciento ..., cima, cincuenta, circulo, cita, ciudadano, clave, cobrar, coche, cocina, cocinero, coger, cola, colina, colocar, colonia, comentar, comenzar, comercio, como?, companero, comparar, compartir, completamente, completo, comprado, comprender, comprobar, concepto, condicion, conducir, conectar, conjunto, consecuencia, conseguido, considerar, construir, contacto, contar, contener, contento, contestar, continente, continuar, conversacion, convertir, copia, correcto, correr, corriente, cortado, cortar, corto, costar, costo, costumbre, crecer, crees, cruzar, cuando?, cuanto?, cuarto, cubierto, cubrir, cuello, cuento, cuidado, cuidar, cumpleanos, cumplir, curso, dale, dama, dame, dano, dato, de nada, deber, decada, decidir, declarar, dedicar, dedo, defender, dejado, dejame, delante, deletrear, delgado, demostrar, depender, desarrollar, desayuno, describir, descubrir, desear, desierto, deslizar, despertar, destacado, destacar, detalle, detener, determinar, detras, dibujar, diccionario, diecinueve, dieciocho, diecisiete, diente, diga, dijiste, dile, dime, directo, dirigir, disculpa, disculpar, discurso, discutir, diseno, disfrutar, disponer, distancia, distante, distinto, diversion, divertido, division, doble, doce, doctor, documento, dolar, donde?, dormir, dulce, duro, echar, economico, edificio, eh, ejecutar, ejercicio, eleccion, electrico, elegir, elemento, empate, emplear, empujar, encajar, encantar, encontrado, enemigo, enfermedad, enfrentar, enorme, enseguida, ensenar, entendido, entregar, enviar, escala, escapar, escucha, escuchame, escuchar, esfuerzo, espada, espalda, especie, esperanza, esposo, esquina, establecer, estacion, estes, estrella, estructura, estudiante, estudiar, estupido, europeo, evento, exactamente, exacto, excelente, excepto, excitar, exigir, existir, explicar, expresar, extender, extranjero, extrano, factor, faltar, famoso, favorecer, figura, fijar, fila, fino, fisico, flor, formar, frances, frase, fresco, frio, frotar, fruta, funcion, funcionar, fundamental, gas, gasto, gato, generar, gesto, gobernar, golpe, golpear, gracia, gracioso, grado, granja, grasa, grave, gris, gritar, grito, guardar, guiar, gustar, habilidad, habitacion, habitual, hallar, hambre, haras, haz, hazlo, hermoso, herramienta, hiciste, hielo, hierba, hierro, hoja, hombro, honor, hospital, hotel, hueso, huevo, humano, idioma, idiota, ido, imaginar, iman, imponer, importar, impuesto, incluir, increible, indicar, inferior, infierno, influencia, iniciar, inicio, insecto, instantaneo, instante, institucion, instrumento, intentar, inventar, investigar, invierno, invitar, jardin, jueves, jurar, juro, lago, lanzar, lata, lavado, lavar, leche, lengua, lento, letra, levantar, libra, limpio, lindo, liquido, listo, literatura, llamar, llave, llenar, lleno, llorar, lluvia, lo siento, localizar, lograr, longitud, luna, lunes, madera, maestro, maiz, mandar, manzana, mapa, maquina, maravilla, maravilloso, marca, marido, marron, martes, masa, matar, materia, material, matrimonio, maximo, medico, mediodia, medir, melodia, memoria, mentira, menudo, mesa, meter, metodo, metro, mexicano, mezclar, miembro, miercoles, millon, minuto, mio, mirada, mirar, mire, mision, moderno, montana, morir, mostrar, motivo, motor, mover, muchacho, muerto, multiplicar, multitud, nacer, nacido, nacion, nadar, nariz, naturaleza, nave, navidad, necesitar, negar, negocio, nervio, nieve, nina, ninguno, novela, novio, nube, nueve, o, objeto, observar, obtener, ocasion, oceano, ocho, ocupado, ocupar, ocurrir, odiar, oeste, oferta, ofrecer, oh, oi, oido, oir, ojo, ola, oler, olor, olvidar, once, operar, opuesta, organizar, orilla, oscuro, pajaro, pan, papa, parar, parecer, pared, pareja, parrafo, participar, particular, pasear, patio, pato, patron, pecho, pedir, pelea, peligro, peligroso, pelo, pensado, perdido, perdon, perfecto, periodo, permanecer, permiso, permitir, perro, pesado, pescado, pez, pie, piedra, piel, piensa, pierna, pieza, pintar, piso, pista, pistola, placer, planeta, plano, planta, plantear, plazo, plegar, poema, pollo, por favor, portal, potencia, practico, preferir, preguntar, preocupar, preparar, presentar, presion, primavera, prisa, probable, producir, producto, profundo, prometer, propiedad, proponer, proteger, proximo, publicar, puente, puro, quebrar, quedar, quedarse, quedate, quemar, querer, querido, quien?, quieto, quince, quitar, quiza, raiz, rama, raro, rato, realizar, recibir, recoger, reconocer, recordar, recta, recto, recuerda, reducir, referir, regalo, registro, regla, regresar, regreso, reir, religion, reloj, repetir, repito, representar, resolver, responder, restar, resultar, reunion, reunir, revista, riesgo, risa, roca, rodar, rodear, rojo, romper, ronda, rosa, rostro, roto, rueda, ruido, sabado, sacar, sal, sala, saltar, salvaje, salvar, salvo, santo, seccion, seco, secreto, segmento, seleccionar, semilla, senal, sencillo, senora, senorita, sentar, sentir, separar, servir, sientate, significado, significar, signo, silencio, silla, simbolo, similar, soldado, solitario, solucion, sombra, sombrero, sonar, sonreir, sonrisa, soportar, sorpresa, suave, subir, suceder, suelo, sueno, sufrir, sugerir, superficie, suponer, surgir, sustancia, tabla, tamano, tarea, tarjeta, teatro, techo, tecnica, telefono, temer, temperatura, temporada, temprano, ten, teoria, tercero, terminado, terminar, terrible, territorio, tienda, tio, tirar, tocar, tono, tonto, traer, traje, tramo, tranquilo, trasero, tratar de, trato, trece, treinta, tren, triste, tuyo, unir, utilizar, vaca, valer, valle, vamonos, vapor, variar, vecino, veinte, vela, velocidad, vender, venido, venir, ventana, vera, verano, verbo, verdadero, verde, verdura, verte, vestido, vestir, vidrio, viento, viernes, visita, visitar, volar, vosotros, vuelto, y, zapato
+
+⚠️  MIGRATION WARNINGS (43):
+  1. Translation 'отвечать' in range 3 maps to multiple words: ['antworten', 'beantworten']
+  2. Translation 'уже' in range 3 maps to multiple words: ['bereits', 'schon']
+  3. Translation 'наружу' in range 3 maps to multiple words: ['heraus', 'raus']
+  4. Translation 'начало' in range 3 maps to multiple words: ['der Anfang [die Anfänge]', 'der Beginn [die Beginne]']
+  5. Translation 'хватать' in range 4 maps to multiple words: ['coger', 'bastar']
+  6. Translation 'добавлять' in range 4 maps to multiple words: ['añadir', 'agregar']
+  7. Translation 'достаточно' in range 4 maps to multiple words: ['bastante', 'suficiente']
+  8. Translation 'применять' in range 4 maps to multiple words: ['aplicar', 'emplear']
+  9. Translation 'использовать' in range 4 maps to multiple words: ['usar', 'utilizar']
+  10. Translation 'к' in range 4 maps to multiple words: ['a', 'al [a + el]', 'hacia']
+  11. Translation 'ключ' in range 4 maps to multiple words: ['llave', 'clave']
+  12. Translation 'конец' in range 4 maps to multiple words: ['final', 'fin']
+  13. Translation 'кроме' in range 4 maps to multiple words: ['excepto', 'salvo']
+  14. Translation 'место' in range 4 maps to multiple words: ['lugar', 'puesto']
+  15. Translation 'начинать' in range 4 maps to multiple words: ['comenzar', 'empezar']
+  16. Translation 'оставаться' in range 4 maps to multiple words: ['permanecer', 'quedarse']
+  17. Translation 'простой' in range 4 maps to multiple words: ['sencillo', 'simple']
+  18. Translation 'пытаться' in range 4 maps to multiple words: ['intentar', 'tratar de']
+  19. Translation 'с' in range 4 maps to multiple words: ['desde', 'con']
+  20. Translation 'следующий' in range 4 maps to multiple words: ['próximo', 'siguiente']
+  21. Translation 'собирать' in range 4 maps to multiple words: ['reunir', 'recoger']
+  22. Translation 'производить' in range 4 maps to multiple words: ['generar', 'producir']
+  23. Translation 'даже' in range 4 maps to multiple words: ['incluso', 'aun', 'siquiera']
+  24. Translation 'девушка' in range 4 maps to multiple words: ['chica', 'señorita']
+  25. Translation 'полностью' in range 4 maps to multiple words: ['completamente', 'totalmente']
+  26. Translation 'мой' in range 4 maps to multiple words: ['mío', 'mi']
+  27. Translation 'для' in range 4 maps to multiple words: ['por', 'para']
+  28. Translation 'ну' in range 4 maps to multiple words: ['pues', 'vaya']
+  29. Translation 'что' in range 4 maps to multiple words: ['que', 'qué']
+  30. Translation 'твой' in range 4 maps to multiple words: ['tu', 'tuyo']
+  31. Translation 'большой|крупный' in range 8 maps to multiple words: ['big', 'large']
+  32. Translation 'парень' in range 8 maps to multiple words: ['guy', 'boyfriend']
+  33. Translation 'высокий' in range 8 maps to multiple words: ['tall', 'high']
+  34. Translation 'много' in range 8 maps to multiple words: ['many', 'much', 'lot']
+  35. Translation 'никто' in range 8 maps to multiple words: ['no one', 'nobody']
+  36. Translation 'пара' in range 8 maps to multiple words: ['pair', 'couple']
+  37. Translation 'телефон' in range 8 maps to multiple words: ['telephone', 'phone']
+  38. Translation 'кто-то|кто-нибудь' in range 8 maps to multiple words: ['someone', 'somebody']
+  39. Translation 'начал' in range 8 maps to multiple words: ['began', 'started']
+  40. Missing 567 words from German top 1k
+  41. Found 958 German words not in top 1k list
+  42. Missing 345 words from Spanish top 1k
+  43. Found 809 Spanish words not in top 1k list
+
+================================================================================
+
+🔍 DE WORD ANALYSIS
+================================================================================
+🚀 Initializing German Word Analyzer...
+✅ Loaded spaCy model: de_core_news_lg
+
+🔍 GERMAN WORD ANALYSIS
+================================================================================
+Found 2582 existing German words
+Found 380 missing words from top 1000
+Analyzing using NLP + linguistic patterns...
+
+✅ WORDS TO ADD
+================================================================================
+
+❌ WORDS TO IGNORE
+================================================================================
+
+🔴 INFLECTED FORMS (269):
+   Reason: Base form likely exists
+   Example: ist - Form of "sein"
+   Example: im - Form of "in"
+   Example: hat - Form of "haben"
+   Example: sind - Form of "sein"
+   Example: war - Form of "sein"
+
+🔴 MORPHOLOGICAL VARIANTS (14):
+   Reason: Alternative forms and spellings
+   Example: weiss - Swiss German spelling of 'weiß'
+   Example: heisst - Swiss German spelling of conjugated form - related to 'heißen'
+   Example: ausserdem - Swiss German spelling of 'außerdem'
+   Example: halt - Colloquial form of 'eben'
+   Example: strasse - Swiss German spelling of 'straße' (ss→ß)
+
+🔴 PROPER NOUNS (45):
+   Reason: Names of people, places, etc.
+
+🔴 GRAMMATICAL WORDS (30):
+   Reason: Function words
+
+🔴 FOREIGN WORDS (9):
+   Reason: Not suitable for language learning
+
+🔴 OTHER (13):
+   Reason: Uncategorized
+
+🎯 FINAL RECOMMENDATIONS
+================================================================================
+ALL 0 WORDS TO ADD:
+
+📊 SUMMARY:
+   ✅ Recommend adding: 0 words
+   ❌ Don't add: 380 words
+   🎯 Final recommendations: 0 words
+   🔬 Analysis method: NLP + Linguistic patterns
+
+🔍 EN WORD ANALYSIS
+================================================================================
+🚀 Initializing English Word Analyzer...
+✅ Loaded spaCy model: en_core_web_lg
+
+🔍 EN WORD ANALYSIS - EN
+================================================================================
+Found 1132 existing words in the database.
+Found 251 missing words from the top 1000 most frequent.
+Analyzing missing words...
+
+✅ WORDS TO ADD
+================================================================================
+
+❌ WORDS TO IGNORE
+================================================================================
+
+🔴 INFLECTED FORMS (163):
+   Reason: Base form likely exists
+   Example: is - Inflected form of 'be'
+   Example: was - Past tense of 'be'
+   Example: are - Inflected form of 'be'
+   Example: has - Inflected form of 'have'
+   Example: were - Past tense of 'be'
+
+🔴 PROPER NOUNS (38):
+   Reason: Names of people, places, etc.
+
+🔴 GRAMMATICAL WORDS (46):
+   Reason: Function words
+
+🔴 SYMBOLS/OTHER (1):
+   Reason: Non-linguistic tokens
+
+🔴 OTHER (3):
+   Reason: Uncategorized
+
+🎯 FINAL RECOMMENDATIONS
+================================================================================
+ALL 0 WORDS TO ADD:
+
+📊 SUMMARY:
+   ✅ Recommend adding: 0 words
+   ❌ Don't add: 251 words
+   🎯 Final recommendations: 0 words
+   🔬 Analysis method: NLP
+
+🔍 ES WORD ANALYSIS
+================================================================================
+🔧 Initializing Advanced Spanish NLP tools...
+✅ Loaded spaCy large model
+✅ Stanza Spanish pipeline ready
+✅ Spanish BERT model ready
+
+🔍 ADVANCED SPANISH WORD ANALYSIS (Pure NLP)
+================================================================================
+Using: spaCy, Stanza, Spanish BERT
+================================================================================
+Found 1629 existing Spanish words
+Found 352 missing words from top 1000
+Performing deep NLP analysis...
+
+
+
+✅ WORDS TO ADD
+================================================================================
+
+❌ WORDS TO IGNORE
+================================================================================
+
+🔴 INFLECTED FORMS (290):
+   Reason: Base form likely exists
+   Example: la - Inflected form of "el" (Fem, Sing)
+   Example: los - Inflected form of "el" (Masc, Plur)
+   Example: un - Inflected form of "uno" (Masc, Sing)
+   Example: se - Inflected form of "él" [PRON]
+   Example: es - Inflected form of "ser" [AUX]
+
+🔴 MORPHOLOGICAL VARIANTS (4):
+   Reason: Alternative forms and spellings
+   Example: políticas - diminutive (_icas_) of "política"
+   Example: formación - Derived from "formar" which exists in migration
+   Example: cultural - Derived from "cultura" which exists in migration
+   Example: derecha - Derived from "derecho" which exists in migration
+
+🔴 PROPER NOUNS (50):
+   Reason: Names of people, places, etc.
+
+🔴 GRAMMATICAL WORDS (6):
+   Reason: Function words
+
+🔴 FOREIGN WORDS (1):
+   Reason: Not suitable for language learning
+
+🔴 OTHER (1):
+   Reason: Uncategorized
+
+🎯 FINAL RECOMMENDATIONS
+================================================================================
+ALL 0 WORDS TO ADD:
+
+📊 SUMMARY:
+   ✅ Recommend adding: 0 words
+   ❌ Don't add: 352 words
+   🎯 Final recommendations: 0 words
+   🔬 Analysis method: Advanced NLP (Multi-tool)
+
+🎯 OVERALL ANALYSIS SUMMARY
+================================================================================
+📊 German: 0 words recommended
+📊 English: 0 words recommended
+📊 Spanish: 0 words recommended
+
+🔍 Total words recommended across all languages: 0
+🔧 Migration validation: 0 errors, 43 warnings
+
+================================================================================
+
+🎉 Enhanced analysis complete!

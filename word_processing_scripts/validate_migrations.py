@@ -13,14 +13,13 @@ Copyright © 2025 Nikolay Eremeev
 """
 
 import os
-import re
 import sys
 from typing import Dict, List, Tuple, Set
 from collections import defaultdict
 import glob
 import argparse
 from wordfreq import word_frequency, top_n_list
-import unicodedata
+from migration_utils import extract_data_from_file, normalize_word, get_migrations_directory, get_language_base_offsets, calculate_migration_ids, validate_migration_ids
 
 class MigrationValidator:
     def __init__(self, migrations_dir: str, update_files: bool = False):
@@ -34,26 +33,7 @@ class MigrationValidator:
         """Normalize word by removing accents and converting to lowercase
         For German: also removes articles (der, die, das) and content after comma
         """
-        # For German words, remove article and plural/declension forms
-        if is_german:
-            # Remove articles at the beginning
-            word = re.sub(r'^(der|die|das)\s+', '', word, flags=re.IGNORECASE)
-            # Remove everything after semicolon or comma (plural forms, declensions)
-            if ';' in word:
-                word = word.split(';')[0].strip()
-            elif ',' in word:
-                word = word.split(',')[0].strip()
-            # Remove the article again if it's still there after semicolon split
-            word = re.sub(r'^(der|die|das)\s+', '', word, flags=re.IGNORECASE)
-        
-        # For German, don't normalize umlauts as they're meaningful
-        if is_german:
-            return word.lower()
-        else:
-            # Remove accents using Unicode normalization for other languages
-            nfd_form = unicodedata.normalize('NFD', word)
-            normalized = ''.join(char for char in nfd_form if unicodedata.category(char) != 'Mn')
-            return normalized.lower()
+        return normalize_word(word, is_german)
     
     def get_word_stem(self, word: str, is_german: bool = False) -> str:
         """Get a simplified stem of the word for better matching"""
@@ -113,18 +93,22 @@ class MigrationValidator:
             # sein (to be)
             'bin': ['sein'], 'bist': ['sein'], 'ist': ['sein'], 'sind': ['sein'], 'seid': ['sein'],
             'war': ['sein'], 'warst': ['sein'], 'waren': ['sein'], 'wart': ['sein'],
+            'gewesen': ['sein'],
             
             # haben (to have)
             'habe': ['haben'], 'hast': ['haben'], 'hat': ['haben'], 'habt': ['haben'],
             'hatte': ['haben'], 'hattest': ['haben'], 'hatten': ['haben'], 'hattet': ['haben'],
+            'gehabt': ['haben'],
             
             # werden (to become/will)
             'werde': ['werden'], 'wirst': ['werden'], 'wird': ['werden'], 'werdet': ['werden'],
             'wurde': ['werden'], 'wurdest': ['werden'], 'wurden': ['werden'], 'wurdet': ['werden'],
+            'worden': ['werden'], 'geworden': ['werden'],
             
             # können (can)
             'kann': ['können'], 'kannst': ['können'], 'könnt': ['können'],
             'konnte': ['können'], 'konntest': ['können'], 'konnten': ['können'], 'konntet': ['können'],
+            'könnten': ['können'],
             
             # müssen (must)
             'muss': ['müssen'], 'musst': ['müssen'], 'müsst': ['müssen'],
@@ -132,7 +116,7 @@ class MigrationValidator:
             
             # lassen (to let)
             'lasse': ['lassen'], 'lässt': ['lassen'], 'lasst': ['lassen'],
-            'ließ': ['lassen'], 'ließt': ['lassen'], 'ließen': ['lassen'],
+            'ließ': ['lassen'], 'liess': ['lassen'], 'ließt': ['lassen'], 'ließen': ['lassen'],
             
             # wollen (to want)
             'will': ['wollen'], 'willst': ['wollen'], 'wollt': ['wollen'],
@@ -145,42 +129,52 @@ class MigrationValidator:
             # gehen (to go)
             'gehe': ['gehen'], 'gehst': ['gehen'], 'geht': ['gehen'],
             'ging': ['gehen'], 'gingst': ['gehen'], 'gingen': ['gehen'], 'gingt': ['gehen'],
+            'gegangen': ['gehen'],
             
             # kommen (to come)
             'komme': ['kommen'], 'kommst': ['kommen'], 'kommt': ['kommen'],
             'kam': ['kommen'], 'kamst': ['kommen'], 'kamen': ['kommen'], 'kamt': ['kommen'],
+            'gekommen': ['kommen'],
             
             # machen (to make/do)
             'mache': ['machen'], 'machst': ['machen'], 'macht': ['machen'],
             'machte': ['machen'], 'machtest': ['machen'], 'machten': ['machen'], 'machtet': ['machen'],
+            'gemacht': ['machen'],
             
             # geben (to give)
             'gebe': ['geben'], 'gibst': ['geben'], 'gibt': ['geben'], 'gebt': ['geben'],
             'gab': ['geben'], 'gabst': ['geben'], 'gaben': ['geben'], 'gabt': ['geben'],
+            'gegeben': ['geben'],
             
             # sehen (to see)
             'sehe': ['sehen'], 'siehst': ['sehen'], 'sieht': ['sehen'], 'seht': ['sehen'],
             'sah': ['sehen'], 'sahst': ['sehen'], 'sahen': ['sehen'], 'saht': ['sehen'],
+            'gesehen': ['sehen'],
             
             # stehen (to stand)
             'stehe': ['stehen'], 'stehst': ['stehen'], 'steht': ['stehen'],
             'stand': ['stehen'], 'standest': ['stehen'], 'standen': ['stehen'], 'standet': ['stehen'],
+            'gestanden': ['stehen'],
             
             # sagen (to say)
             'sage': ['sagen'], 'sagst': ['sagen'], 'sagt': ['sagen'],
             'sagte': ['sagen'], 'sagtest': ['sagen'], 'sagten': ['sagen'], 'sagtet': ['sagen'],
+            'gesagt': ['sagen'],
             
             # nehmen (to take)
             'nehme': ['nehmen'], 'nimmst': ['nehmen'], 'nimmt': ['nehmen'], 'nehmt': ['nehmen'],
             'nahm': ['nehmen'], 'nahmst': ['nehmen'], 'nahmen': ['nehmen'], 'nahmt': ['nehmen'],
+            'genommen': ['nehmen'],
             
             # bringen (to bring)
             'bringe': ['bringen'], 'bringst': ['bringen'], 'bringt': ['bringen'],
             'brachte': ['bringen'], 'brachtest': ['bringen'], 'brachten': ['bringen'], 'brachtet': ['bringen'],
+            'gebracht': ['bringen'],
             
             # denken (to think)
             'denke': ['denken'], 'denkst': ['denken'], 'denkt': ['denken'],
             'dachte': ['denken'], 'dachtest': ['denken'], 'dachten': ['denken'], 'dachtet': ['denken'],
+            'gedacht': ['denken'],
             
             # mögen (to like)
             'mag': ['mögen'], 'magst': ['mögen'], 'mögt': ['mögen'],
@@ -189,6 +183,43 @@ class MigrationValidator:
             # dürfen (may/to be allowed)
             'darf': ['dürfen'], 'darfst': ['dürfen'], 'dürft': ['dürfen'],
             'durfte': ['dürfen'], 'durftest': ['dürfen'], 'durften': ['dürfen'], 'durftet': ['dürfen'],
+            
+            # Additional common verbs
+            'finden': ['finden'], 'findet': ['finden'], 'fand': ['finden'], 'gefunden': ['finden'],
+            'zeigen': ['zeigen'], 'zeigt': ['zeigen'], 'zeigte': ['zeigen'], 'gezeigt': ['zeigen'],
+            'bleiben': ['bleiben'], 'bleibt': ['bleiben'], 'blieb': ['bleiben'], 'geblieben': ['bleiben'],
+            'liegen': ['liegen'], 'liegt': ['liegen'], 'lag': ['liegen'], 'gelegen': ['liegen'],
+            'stellen': ['stellen'], 'stellt': ['stellen'], 'stellte': ['stellen'], 'gestellt': ['stellen'],
+            'führen': ['führen'], 'führt': ['führen'], 'führte': ['führen'], 'geführt': ['führen'],
+            'halten': ['halten'], 'hält': ['halten'], 'hielt': ['halten'], 'gehalten': ['halten'],
+            'laufen': ['laufen'], 'läuft': ['laufen'], 'lief': ['laufen'], 'gelaufen': ['laufen'],
+            'fallen': ['fallen'], 'fällt': ['fallen'], 'fiel': ['fallen'], 'gefallen': ['fallen'],
+            'spielen': ['spielen'], 'spielt': ['spielen'], 'spielte': ['spielen'], 'gespielt': ['spielen'],
+            'sprechen': ['sprechen'], 'spricht': ['sprechen'], 'sprach': ['sprechen'], 'gesprochen': ['sprechen'],
+            'bekommen': ['bekommen'], 'bekommt': ['bekommen'], 'bekam': ['bekommen'],
+            'erreichen': ['erreichen'], 'erreicht': ['erreichen'], 'erreichte': ['erreichen'],
+            'versuchen': ['versuchen'], 'versucht': ['versuchen'], 'versuchte': ['versuchen'],
+            'bestehen': ['bestehen'], 'besteht': ['bestehen'], 'bestand': ['bestehen'],
+            'brauchen': ['brauchen'], 'braucht': ['brauchen'], 'brauchte': ['brauchen'],
+            'scheinen': ['scheinen'], 'scheint': ['scheinen'], 'schien': ['scheinen'],
+            'gelten': ['gelten'], 'gilt': ['gelten'], 'galt': ['gelten'],
+            'handeln': ['handeln'], 'handelt': ['handeln'], 'handelte': ['handeln'],
+            'verlieren': ['verlieren'], 'verliert': ['verlieren'], 'verlor': ['verlieren'], 'verloren': ['verlieren'],
+            'erklären': ['erklären'], 'erklärt': ['erklären'], 'erklärte': ['erklären'],
+            'erzählen': ['erzählen'], 'erzählt': ['erzählen'], 'erzählte': ['erzählen'],
+            'funktionieren': ['funktionieren'], 'funktioniert': ['funktionieren'],
+            'beginnen': ['beginnen'], 'beginnt': ['beginnen'], 'begann': ['beginnen'],
+            'reichen': ['reichen'], 'reicht': ['reichen'], 'reichte': ['reichen'],
+            'gehören': ['gehören'], 'gehört': ['gehören'], 'gehörte': ['gehören'],
+            'suchen': ['suchen'], 'sucht': ['suchen'], 'suchte': ['suchen'],
+            'setzen': ['setzen'], 'setzt': ['setzen'], 'setzte': ['setzen'],
+            'kennen': ['kennen'], 'kennt': ['kennen'], 'kannte': ['kennen'],
+            'schreiben': ['schreiben'], 'schreibt': ['schreiben'], 'schrieb': ['schreiben'], 'geschrieben': ['schreiben'],
+            'hören': ['hören'], 'hört': ['hören'], 'hörte': ['hören'],
+            'helfen': ['helfen'], 'hilft': ['helfen'], 'half': ['helfen'],
+            'fehlen': ['fehlen'], 'fehlt': ['fehlen'], 'fehlte': ['fehlen'],
+            'nennen': ['nennen'], 'nennt': ['nennen'], 'nannte': ['nennen'], 'genannt': ['nennen'],
+            'hätten': ['haben'],
         }
         
         # Pronoun cases
@@ -216,6 +247,76 @@ class MigrationValidator:
             'eine': ['ein'], 'einen': ['ein'], 'einem': ['ein'], 'einer': ['ein'],
         }
         
+        # Adjective inflections  
+        adjective_mappings = {
+            # groß (big/large)
+            'grosse': ['groß'], 'grossen': ['groß'], 'grosser': ['groß'], 'grosses': ['groß'],
+            'grösste': ['groß'], 'grössten': ['groß'], 'grössere': ['groß'], 'grösseren': ['groß'],
+            'große': ['groß'], 'großen': ['groß'], 'großer': ['groß'], 'großes': ['groß'],
+            'größte': ['groß'], 'größten': ['groß'], 'größere': ['groß'], 'größeren': ['groß'],
+            
+            # hoch (high)
+            'hohen': ['hoch'], 'hohe': ['hoch'], 'hoher': ['hoch'], 'hohes': ['hoch'],
+            'höhere': ['hoch'], 'höheren': ['hoch'], 'höchste': ['hoch'], 'höchsten': ['hoch'],
+            
+            # lang (long)  
+            'länger': ['lang'], 'längere': ['lang'], 'längeren': ['lang'],
+            'längste': ['lang'], 'längsten': ['lang'],
+            
+            # europäisch (European)
+            'europäischen': ['europäisch'], 'europäische': ['europäisch'], 'europäischer': ['europäisch'],
+            
+            # einzeln (individual/single)
+            'einzelnen': ['einzeln'], 'einzelne': ['einzeln'], 'einzelner': ['einzeln'],
+            
+            # mehrere (several) - actually an adjective/determiner
+            'mehrere': ['mehr'], 'mehreren': ['mehr'],
+        }
+        
+        # Proper nouns and their variations
+        proper_noun_mappings = {
+            # Cities - these are proper nouns, should be filtered out
+            'berlin': [], 'münchen': [], 'hamburg': [], 'wien': [], 'frankfurt': [], 'köln': [], 'stuttgart': [],
+            
+            # Countries/regions - these are proper nouns
+            'österreich': [], 'schweiz': [], 'bayern': [], 'frankreich': [], 'russland': [],
+            
+            # Political parties/organizations - proper nouns
+            'spd': [], 'afd': [], 'cdu': [], 'fc': [],
+            
+            # Names - proper nouns
+            'peter': [], 'michael': [], 'thomas': [], 'hans': [], 'martin': [],
+            
+            # Demonyms - proper nouns 
+            'berliner': [],
+        }
+        
+        # Compound words and special cases
+        compound_mappings = {
+            # Compound nouns - check if base forms exist
+            'fussball': ['fußball', 'ball'], 
+            'freundin': ['freund'],
+            
+            # Nouns with different forms - these should be recognized as valid words
+            'kindern': ['kind'], 'staaten': ['staat'], 'bürger': ['bürger'],
+            'menge': ['menge'], 'licht': ['licht'], 'boden': ['boden'], 
+            'kreis': ['kreis'], 'krieg': ['krieg'], 'gemeinde': ['gemeinde'],
+            'staat': ['staat'], 'einzelnen': ['einzeln'],
+            
+            # Adverbs/particles
+            'zumindest': ['mindestens'], 'drauf': ['darauf'], 'hinaus': ['hinaus'], 'heraus': ['heraus'],
+            'sowas': ['etwas'], 'siehe': ['sehen'],
+            
+            # Verbs that might be missed
+            'gefällt': ['gefallen'],
+            
+            # Abbreviations and foreign words - should be filtered
+            'bzw': [], 'tv': [], 'ii': [], 'job': [], 'sex': [], 'new': [], 'okay': [], 'spass': ['spaß'],
+            
+            # Special Swiss German forms
+            'weiss': ['weiß'], 'schliesslich': ['schließlich'],
+        }
+        
         # Check all mappings
         if word in verb_mappings:
             possible_bases.extend(verb_mappings[word])
@@ -225,6 +326,180 @@ class MigrationValidator:
             possible_bases.extend(contraction_mappings[word])
         if word in article_mappings:
             possible_bases.extend(article_mappings[word])
+        if word in adjective_mappings:
+            possible_bases.extend(adjective_mappings[word])
+        if word in proper_noun_mappings:
+            possible_bases.extend(proper_noun_mappings[word])
+        if word in compound_mappings:
+            possible_bases.extend(compound_mappings[word])
+            
+        return list(set(possible_bases))  # Remove duplicates
+    
+    def map_inflected_to_base_spanish(self, word: str) -> List[str]:
+        """Map Spanish inflected forms to their base forms that might be in the migration"""
+        word = word.lower()
+        possible_bases = [word]  # Always include the word itself
+        
+        # Spanish verb conjugations to infinitives
+        spanish_verb_mappings = {
+            # ser (to be)
+            'soy': ['ser'], 'eres': ['ser'], 'es': ['ser'], 'somos': ['ser'], 'sois': ['ser'], 'son': ['ser'],
+            'era': ['ser'], 'eras': ['ser'], 'éramos': ['ser'], 'erais': ['ser'], 'eran': ['ser'],
+            'fui': ['ser'], 'fuiste': ['ser'], 'fue': ['ser'], 'fuimos': ['ser'], 'fuisteis': ['ser'], 'fueron': ['ser'],
+            'sido': ['ser'], 'siendo': ['ser'],
+            
+            # estar (to be - temporary)
+            'estoy': ['estar'], 'estás': ['estar'], 'está': ['estar'], 'estamos': ['estar'], 'estáis': ['estar'], 'están': ['estar'],
+            'estaba': ['estar'], 'estabas': ['estar'], 'estábamos': ['estar'], 'estabais': ['estar'], 'estaban': ['estar'],
+            'estuve': ['estar'], 'estuviste': ['estar'], 'estuvo': ['estar'], 'estuvimos': ['estar'], 'estuvisteis': ['estar'], 'estuvieron': ['estar'],
+            
+            # haber (auxiliary verb)
+            'he': ['haber'], 'has': ['haber'], 'ha': ['haber'], 'hemos': ['haber'], 'habéis': ['haber'], 'han': ['haber'],
+            'había': ['haber'], 'habías': ['haber'], 'habíamos': ['haber'], 'habíais': ['haber'], 'habían': ['haber'],
+            'hube': ['haber'], 'hubiste': ['haber'], 'hubo': ['haber'], 'hubimos': ['haber'], 'hubisteis': ['haber'], 'hubieron': ['haber'],
+            'habré': ['haber'], 'habrás': ['haber'], 'habrá': ['haber'], 'habremos': ['haber'], 'habréis': ['haber'], 'habrán': ['haber'],
+            'habría': ['haber'], 'habrías': ['haber'], 'habríamos': ['haber'], 'habríais': ['haber'], 'habrían': ['haber'],
+            'haya': ['haber'], 'hayas': ['haber'], 'hayamos': ['haber'], 'hayáis': ['haber'], 'hayan': ['haber'],
+            'hubiera': ['haber'], 'hubieras': ['haber'], 'hubiéramos': ['haber'], 'hubierais': ['haber'], 'hubieran': ['haber'],
+            
+            # tener (to have)
+            'tengo': ['tener'], 'tienes': ['tener'], 'tiene': ['tener'], 'tenemos': ['tener'], 'tenéis': ['tener'], 'tienen': ['tener'],
+            'tenía': ['tener'], 'tenías': ['tener'], 'teníamos': ['tener'], 'teníais': ['tener'], 'tenían': ['tener'],
+            'tuve': ['tener'], 'tuviste': ['tener'], 'tuvo': ['tener'], 'tuvimos': ['tener'], 'tuvisteis': ['tener'], 'tuvieron': ['tener'],
+            
+            # hacer (to do/make)
+            'hago': ['hacer'], 'haces': ['hacer'], 'hace': ['hacer'], 'hacemos': ['hacer'], 'hacéis': ['hacer'], 'hacen': ['hacer'],
+            'hacía': ['hacer'], 'hacías': ['hacer'], 'hacíamos': ['hacer'], 'hacíais': ['hacer'], 'hacían': ['hacer'],
+            'hice': ['hacer'], 'hiciste': ['hacer'], 'hizo': ['hacer'], 'hicimos': ['hacer'], 'hicisteis': ['hacer'], 'hicieron': ['hacer'],
+            'haciendo': ['hacer'], 'hecho': ['hacer'],
+            
+            # decir (to say)
+            'digo': ['decir'], 'dices': ['decir'], 'dice': ['decir'], 'decimos': ['decir'], 'decís': ['decir'], 'dicen': ['decir'],
+            'decía': ['decir'], 'decías': ['decir'], 'decíamos': ['decir'], 'decíais': ['decir'], 'decían': ['decir'],
+            'dije': ['decir'], 'dijiste': ['decir'], 'dijo': ['decir'], 'dijimos': ['decir'], 'dijisteis': ['decir'], 'dijeron': ['decir'],
+            'diciendo': ['decir'], 'dicho': ['decir'],
+            
+            # ir (to go)
+            'voy': ['ir'], 'vas': ['ir'], 'va': ['ir'], 'vamos': ['ir'], 'vais': ['ir'], 'van': ['ir'],
+            'iba': ['ir'], 'ibas': ['ir'], 'íbamos': ['ir'], 'ibais': ['ir'], 'iban': ['ir'],
+            'fui': ['ir'], 'fuiste': ['ir'], 'fue': ['ir'], 'fuimos': ['ir'], 'fuisteis': ['ir'], 'fueron': ['ir'],
+            'yendo': ['ir'], 'ido': ['ir'],
+            
+            # ver (to see)
+            'veo': ['ver'], 'ves': ['ver'], 've': ['ver'], 'vemos': ['ver'], 'veis': ['ver'], 'ven': ['ver'],
+            'veía': ['ver'], 'veías': ['ver'], 'veíamos': ['ver'], 'veíais': ['ver'], 'veían': ['ver'],
+            'vi': ['ver'], 'viste': ['ver'], 'vio': ['ver'], 'vimos': ['ver'], 'visteis': ['ver'], 'vieron': ['ver'],
+            'viendo': ['ver'], 'visto': ['ver'],
+            
+            # dar (to give)
+            'doy': ['dar'], 'das': ['dar'], 'da': ['dar'], 'damos': ['dar'], 'dais': ['dar'], 'dan': ['dar'],
+            'daba': ['dar'], 'dabas': ['dar'], 'dábamos': ['dar'], 'dabais': ['dar'], 'daban': ['dar'],
+            'di': ['dar'], 'diste': ['dar'], 'dio': ['dar'], 'dimos': ['dar'], 'disteis': ['dar'], 'dieron': ['dar'],
+            'dando': ['dar'], 'dado': ['dar'],
+            
+            # saber (to know)
+            'sé': ['saber'], 'sabes': ['saber'], 'sabe': ['saber'], 'sabemos': ['saber'], 'sabéis': ['saber'], 'saben': ['saber'],
+            'sabía': ['saber'], 'sabías': ['saber'], 'sabíamos': ['saber'], 'sabíais': ['saber'], 'sabían': ['saber'],
+            'supe': ['saber'], 'supiste': ['saber'], 'supo': ['saber'], 'supimos': ['saber'], 'supisteis': ['saber'], 'supieron': ['saber'],
+            
+            # poder (can/to be able)
+            'puedo': ['poder'], 'puedes': ['poder'], 'puede': ['poder'], 'podemos': ['poder'], 'podéis': ['poder'], 'pueden': ['poder'],
+            'podía': ['poder'], 'podías': ['poder'], 'podíamos': ['poder'], 'podíais': ['poder'], 'podían': ['poder'],
+            'pude': ['poder'], 'pudiste': ['poder'], 'pudo': ['poder'], 'pudimos': ['poder'], 'pudisteis': ['poder'], 'pudieron': ['poder'],
+            'pueda': ['poder'], 'puedas': ['poder'], 'podamos': ['poder'], 'podáis': ['poder'], 'puedan': ['poder'],
+            
+            # querer (to want)
+            'quiero': ['querer'], 'quieres': ['querer'], 'quiere': ['querer'], 'queremos': ['querer'], 'queréis': ['querer'], 'quieren': ['querer'],
+            'quería': ['querer'], 'querías': ['querer'], 'queríamos': ['querer'], 'queríais': ['querer'], 'querían': ['querer'],
+            'quise': ['querer'], 'quisiste': ['querer'], 'quiso': ['querer'], 'quisimos': ['querer'], 'quisisteis': ['querer'], 'quisieron': ['querer'],
+            
+            # venir (to come)
+            'vengo': ['venir'], 'vienes': ['venir'], 'viene': ['venir'], 'venimos': ['venir'], 'venís': ['venir'], 'vienen': ['venir'],
+            'venía': ['venir'], 'venías': ['venir'], 'veníamos': ['venir'], 'veníais': ['venir'], 'venían': ['venir'],
+            'vine': ['venir'], 'viniste': ['venir'], 'vino': ['venir'], 'vinimos': ['venir'], 'vinisteis': ['venir'], 'vinieron': ['venir'],
+            
+            # salir (to go out)
+            'salgo': ['salir'], 'sales': ['salir'], 'sale': ['salir'], 'salimos': ['salir'], 'salís': ['salir'], 'salen': ['salir'],
+            
+            # poner (to put)
+            'pongo': ['poner'], 'pones': ['poner'], 'pone': ['poner'], 'ponemos': ['poner'], 'ponéis': ['poner'], 'ponen': ['poner'],
+            
+            # seguir (to follow/continue)
+            'sigo': ['seguir'], 'sigues': ['seguir'], 'sigue': ['seguir'], 'seguimos': ['seguir'], 'seguís': ['seguir'], 'siguen': ['seguir'],
+            
+            # Other common verbs
+            'encuentro': ['encontrar'], 'encuentra': ['encontrar'], 'encuentran': ['encontrar'],
+            'existe': ['existir'], 'existen': ['existir'],
+            'vive': ['vivir'], 'viven': ['vivir'],
+            'permite': ['permitir'], 'permiten': ['permitir'],
+            'entiendo': ['entender'], 'entiende': ['entender'], 'entienden': ['entender'],
+            'hablando': ['hablar'], 'hablado': ['hablar'],
+            'esperando': ['esperar'], 'esperado': ['esperar'],
+            'deben': ['deber'], 'debe': ['deber'], 'debemos': ['deber'],
+            'sean': ['ser'], 'sea': ['ser'],
+        }
+        
+        # Spanish plural forms and other inflections
+        spanish_plural_mappings = {
+            'veces': ['vez'], 'mujeres': ['mujer'], 'millones': ['millón'], 'meses': ['mes'],
+            'países': ['país'], 'jóvenes': ['joven'], 'leyes': ['ley'], 'ciudades': ['ciudad'],
+            'lugares': ['lugar'], 'actividades': ['actividad'], 'relaciones': ['relación'],
+            'condiciones': ['condición'], 'acciones': ['acción'], 'mayores': ['mayor'],
+            'mejores': ['mejor'], 'principales': ['principal'], 'sociales': ['social'],
+            'comentarios': ['comentario'], 'análisis': ['análisis'], 'miles': ['mil'],
+            
+            # Additional valid Spanish words that should be recognized
+            'unidos': ['unido'], 'elecciones': ['elección'], 'mediante': ['mediante'],
+            'muestra': ['muestra'], 'participación': ['participación'], 'violencia': ['violencia'],
+            'contenido': ['contenido'], 'presencia': ['presencia'], 'respeto': ['respeto'],
+            'importancia': ['importancia'], 'origen': ['origen'], 'premio': ['premio'],
+            'canal': ['canal'], 'cultural': ['cultural'], 'juicio': ['juicio'],
+            
+            # More verbs and forms
+            'podía': ['poder'], 'habrá': ['haber'], 'habría': ['haber'], 'gustaría': ['gustar'],
+            'darle': ['dar'], 'código': ['código'],
+        }
+        
+        # Spanish proper nouns - should be filtered out
+        spanish_proper_nouns = {
+            # Countries and regions
+            'argentina': [], 'chile': [], 'venezuela': [], 'colombia': [], 'brasil': [], 'china': [],
+            'perú': [], 'francia': [], 'américa': [],
+            
+            # Cities
+            'madrid': [], 'barcelona': [],
+            
+            # Names
+            'juan': [], 'josé': [], 'carlos': [], 'francisco': [], 'pedro': [],
+            
+            # Organizations/institutions
+            'pp': [], 'congreso': [], 'ministerio': [], 'comisión': [], 'corte': [], 'instituto': [],
+            'constitución': [], 'sr': [],
+        }
+        
+        # Abbreviations and foreign words - should be filtered out
+        spanish_foreign_mappings = {
+            'etc': [], 'ii': [], 'post': [], 'internet': [], 'video': [], 'televisión': [], 
+            'puta': [],  # vulgar word
+        }
+        
+        # Pronouns and other grammatical words
+        spanish_pronoun_mappings = {
+            'nosotros': ['nosotros'], 'ustedes': ['ustedes'], 'tus': ['tu'], 'contigo': ['con'],
+            'quienes': ['quien'], 'cuales': ['cual'], 'aquellos': ['aquel'],
+        }
+        
+        # Check all mappings
+        if word in spanish_verb_mappings:
+            possible_bases.extend(spanish_verb_mappings[word])
+        if word in spanish_plural_mappings:
+            possible_bases.extend(spanish_plural_mappings[word])
+        if word in spanish_proper_nouns:
+            possible_bases.extend(spanish_proper_nouns[word])
+        if word in spanish_foreign_mappings:
+            possible_bases.extend(spanish_foreign_mappings[word])
+        if word in spanish_pronoun_mappings:
+            possible_bases.extend(spanish_pronoun_mappings[word])
             
         return list(set(possible_bases))  # Remove duplicates
         
@@ -236,27 +511,11 @@ class MigrationValidator:
     
     def extract_data_from_file(self, file_path: str) -> List[Tuple[int, int, int, str, str, str, str]]:
         """Extract data tuples from a migration file"""
-        data = []
-        
-        with open(file_path, 'r', encoding='utf-8') as f:
-            content = f.read()
-        
-        # Pattern to match data tuples: (id1, id2, id3, 'word', 'translation', 'example', 'example_translation')
-        pattern = r'\(\s*(\d+),\s*(\d+),\s*(\d+),\s*\'([^\']*)\',\s*\'([^\']*)\',\s*\'([^\']*)\',\s*\'([^\']*)\'\s*\)'
-        
-        matches = re.findall(pattern, content)
-        
-        for match in matches:
-            try:
-                id1, id2, id3, word, translation, example, example_translation = match
-                data.append((
-                    int(id1), int(id2), int(id3),
-                    word, translation, example, example_translation
-                ))
-            except ValueError as e:
-                self.errors.append(f"Error parsing line in {file_path}: {match} - {e}")
-        
-        return data
+        try:
+            return extract_data_from_file(file_path)
+        except Exception as e:
+            self.errors.append(f"Error extracting data from {file_path}: {e}")
+            return []
     
     def validate_id_consistency(self, all_data: List[Tuple], file_data_map: Dict[str, List[Tuple]]) -> None:
         """Check for ID consistency - detect gaps in sequences"""
@@ -357,7 +616,7 @@ class MigrationValidator:
                 self.warnings.append(f"Range {lang_range}xxx has {count} missing entries that need to be filled (marked with placeholder 'word')")
         
         # Find and report duplicates with suggestions
-        print("\n🔧 DUPLICATE ANALYSIS AND FIX SUGGESTIONS:")
+        print("\n🔧 DUPLICATE ANALYSIS:")
         
         # Translation ID duplicates
         translation_duplicates = {tid: entries for tid, entries in translation_id_usage.items() if len(entries) > 1}
@@ -367,22 +626,24 @@ class MigrationValidator:
                 print(f"  Translation ID {translation_id} used {len(entries)} times:")
                 # Check which entry has the correct IDs based on the formula
                 correct_entries = []
+                base_offsets = get_language_base_offsets()
+                
                 for entry_idx, (line_idx, wpid, swid, tid, word, trans, ex, ex_trans) in enumerate(entries):
-                    expected_source_id = wpid * 2 + 1
-                    expected_translation_id = wpid * 2 + 2
-                    if swid == expected_source_id and tid == expected_translation_id:
-                        correct_entries.append(entry_idx)
+                    # Determine base offset from word_pair_id
+                    base_offset = None
+                    for lang_code, offset in base_offsets.items():
+                        if str(wpid).startswith(str(offset)[0]):
+                            base_offset = offset
+                            break
+                    
+                    if base_offset:
+                        sequence_number = wpid - base_offset
+                        if validate_migration_ids(wpid, swid, tid, base_offset, sequence_number):
+                            correct_entries.append(entry_idx)
                 
                 # Report findings
                 for entry_idx, (line_idx, wpid, swid, tid, word, trans, ex, ex_trans) in enumerate(entries):
-                    expected_source_id = wpid * 2 + 1
-                    expected_translation_id = wpid * 2 + 2
-                    if entry_idx in correct_entries:
-                        print(f"    ✓ CORRECT: Line {line_idx+1}: ({wpid}, {swid}, {tid}, '{word}', '{trans}', ...)")
-                    else:
-                        print(f"    ❌ FIX: Line {line_idx+1}: ({wpid}, {swid}, {tid}, '{word}', '{trans}', ...) -> ({wpid}, {expected_source_id}, {expected_translation_id}, ...)")
-                        if swid != expected_source_id or tid != expected_translation_id:
-                            self.errors.append(f"Duplicate translation_id: {translation_id} at line {line_idx+1}")
+                    print(f"    Line {line_idx+1}: ({wpid}, {swid}, {tid}, '{word}', '{trans}', ...)")
         
         # Word pair ID duplicates
         word_pair_duplicates = {wpid: entries for wpid, entries in word_pair_id_usage.items() if len(entries) > 1}
@@ -391,14 +652,7 @@ class MigrationValidator:
             for word_pair_id, entries in sorted(word_pair_duplicates.items()):
                 print(f"  Word Pair ID {word_pair_id} used {len(entries)} times:")
                 for i, (line_idx, wpid, swid, tid, word, trans, ex, ex_trans) in enumerate(entries):
-                    if i == 0:
-                        print(f"    ✓ KEEP: Line {line_idx+1}: ({wpid}, {swid}, {tid}, '{word}', '{trans}', ...)")
-                    else:
-                        # Suggest new word pair ID
-                        max_word_pair_id = max(word_pair_id_usage.keys())
-                        new_word_pair_id = max_word_pair_id + 1 + (i-1)
-                        print(f"    ❌ FIX:  Line {line_idx+1}: ({wpid}, {swid}, {tid}, '{word}', '{trans}', ...) -> ({new_word_pair_id}, {swid}, {tid}, ...)")
-                        self.errors.append(f"Duplicate word_pair_id: {word_pair_id} at line {line_idx+1}")
+                    print(f"    Line {line_idx+1}: ({wpid}, {swid}, {tid}, '{word}', '{trans}', ...)")
         
         # Source word ID duplicates
         source_word_duplicates = {swid: entries for swid, entries in source_word_id_usage.items() if len(entries) > 1}
@@ -408,13 +662,18 @@ class MigrationValidator:
                 if len(entries) > 1:
                     print(f"  Source Word ID {source_word_id} used {len(entries)} times:")
                     for i, (line_idx, wpid, swid, tid, word, trans, ex, ex_trans) in enumerate(entries):
-                        if i == 0:
-                            print(f"    ✓ KEEP: Line {line_idx+1}: ({wpid}, {swid}, {tid}, '{word}', '{trans}', ...)")
-                        else:
-                            print(f"    ❌ FIX:  Line {line_idx+1}: ({wpid}, {swid}, {tid}, '{word}', '{trans}', ...) -> needs new source_word_id")
-                            self.errors.append(f"Duplicate source_word_id: {source_word_id} at line {line_idx+1}")
+                        print(f"    Line {line_idx+1}: ({wpid}, {swid}, {tid}, '{word}', '{trans}', ...)")
         
         print(f"\n📊 Summary: Found {len(translation_duplicates)} translation ID conflicts, {len(word_pair_duplicates)} word pair ID conflicts, {len([x for x in source_word_duplicates.values() if len(x) > 1])} source word ID conflicts")
+        
+        # Add summary errors instead of individual duplicate entries
+        if translation_duplicates:
+            self.errors.append(f"Found {len(translation_duplicates)} translation ID duplicates (see detailed analysis above)")
+        if word_pair_duplicates:
+            self.errors.append(f"Found {len(word_pair_duplicates)} word pair ID duplicates (see detailed analysis above)")
+        source_dups_count = len([x for x in source_word_duplicates.values() if len(x) > 1])
+        if source_dups_count > 0:
+            self.errors.append(f"Found {source_dups_count} source word ID duplicates (see detailed analysis above)")
     
     def validate_injectiveness(self, all_data: List[Tuple]) -> None:
         """Check for injectiveness (one-to-one mapping between words and translations)"""
@@ -652,9 +911,7 @@ class MigrationValidator:
             if numbers:
                 print(f"    🔸 Numbers ({len(numbers)}): {', '.join(numbers)}")
             if other:
-                print(f"    🔸 Other ({len(other)}): {', '.join(other[:30])}")
-                if len(other) > 30:
-                    print(f"        ... and {len(other) - 30} more")
+                print(f"    🔸 Other ({len(other)}): {', '.join(other)}")
         
         # Similar analysis for Spanish
         print("\n📚 Spanish Essential Vocabulary Coverage:")
@@ -665,9 +922,20 @@ class MigrationValidator:
             normalized = self.normalize_word(word, is_german=False)
             stem = self.get_word_stem(normalized, is_german=False)
             
-            if (normalized in spanish_stems_in_migration or 
-                stem in spanish_stems_in_migration or
-                any(stem in existing_stem for existing_stem in spanish_stems_in_migration)):
+            # Get possible base forms this word could map to
+            possible_bases = self.map_inflected_to_base_spanish(normalized)
+            
+            # Check if we have this concept (exact match, stem match, base form match, or related form)
+            found = False
+            for base in possible_bases:
+                if (base in spanish_stems_in_migration or 
+                    stem in spanish_stems_in_migration or
+                    any(stem in existing_stem for existing_stem in spanish_stems_in_migration) or
+                    any(base in existing_stem for existing_stem in spanish_stems_in_migration)):
+                    found = True
+                    break
+            
+            if found:
                 spanish_covered += 1
             else:
                 spanish_missing_concepts.append(word)
@@ -677,10 +945,8 @@ class MigrationValidator:
         
         if spanish_missing_concepts:
             print(f"  Missing essential concepts ({len(spanish_missing_concepts)}):")
-            # Show first 30 missing concepts
-            print(f"    {', '.join(spanish_missing_concepts[:30])}")
-            if len(spanish_missing_concepts) > 30:
-                print(f"    ... and {len(spanish_missing_concepts) - 30} more")
+            # Show all missing concepts
+            print(f"    {', '.join(spanish_missing_concepts)}")
 
     def validate_top1k_coverage(self, all_data: List[Tuple]) -> None:
         """Check if top 1k words are present in the migrations for German and Spanish"""
@@ -1121,9 +1387,7 @@ def main():
     args = parser.parse_args()
     
     # Get migrations directory
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    migrations_dir = os.path.join(script_dir, "..", "packages", "backend", "migrations")
-    migrations_dir = os.path.abspath(migrations_dir)
+    migrations_dir = get_migrations_directory()
     
     if not os.path.exists(migrations_dir):
         print(f"❌ Migrations directory not found: {migrations_dir}")
