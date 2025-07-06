@@ -1385,7 +1385,9 @@ BEGIN
     (3001356, 3002713, 3002714, 'die Unterstützung [die Unterstützungen]', 'поддержка', 'Ich brauche deine Unterstützung.', 'Мне нужна твоя поддержка.'),
     (3001357, 3002715, 3002716, 'daran', 'об этом|на этом', 'Ich denke daran.', 'Я думаю об этом.'),
     (3001358, 3002717, 3002718, 'hallo', 'привет|здравствуй', 'Hallo, wie geht''s?', 'Привет, как дела?'),
-    (3001359, 3002719, 3002720, 'sich anziehen', 'одеваться', 'Ich muss mich schnell anziehen.', 'Мне нужно быстро одеться.')
+    (3001359, 3002719, 3002720, 'sich anziehen', 'одеваться', 'Ich muss mich schnell anziehen.', 'Мне нужно быстро одеться.'),
+    (3001360, 3002721, 3002722, 'heraus', 'наружу', 'Komm heraus!', 'Выходи наружу!'),
+    (3001361, 3002723, 3002724, 'der Beginn [die Beginne]', 'начало', 'Der Beginn ist wichtig.', 'Начало важно.')
     -- End of word pairs data
     ) AS t(translation_id, source_word_id, target_word_id, source_word, target_word, source_example, target_example)
   ) LOOP

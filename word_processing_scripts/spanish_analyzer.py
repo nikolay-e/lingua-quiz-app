@@ -298,39 +298,147 @@ class SpanishWordAnalyzer(BaseWordAnalyzer):
         # Enhanced false positive detection for common Spanish patterns
         # Common inflected words that should never be recommended
         common_inflections = {
-            'tiene', 'tienes', 'tengo', 'tenemos', 'tienen', 'tenía', 'tenías', 'teníamos', 'tenían',
+            # TENER (to have)
+            'tiene', 'tienes', 'tengo', 'tenemos', 'tienen', 'tenía', 'tenías', 'teníamos', 'tenían', 'tuvo',
+            # HACER (to do/make)
             'hace', 'haces', 'hago', 'hacemos', 'hacen', 'hacía', 'hacías', 'hacíamos', 'hacían', 'hizo', 'hicieron',
+            'haciendo', 'habrá',
+            # DECIR (to say)
             'dice', 'dices', 'digo', 'decimos', 'dicen', 'decía', 'decías', 'decíamos', 'decían', 'dijo', 'dijeron',
+            'diciendo', 'dije',
+            # PODER (can/to be able)
             'puede', 'puedes', 'puedo', 'podemos', 'pueden', 'podía', 'podías', 'podíamos', 'podían', 'pudo', 'pudieron',
+            'pueda', 'podía',
+            # QUERER (to want)
             'quiere', 'quieres', 'quiero', 'queremos', 'quieren', 'quería', 'querías', 'queríamos', 'querían', 'quiso', 'quisieron',
+            'quienes',
+            # VENIR (to come)
             'viene', 'vienes', 'vengo', 'venimos', 'vienen', 'venía', 'venías', 'veníamos', 'venían', 'vino', 'vinieron',
-            'va', 'vas', 'voy', 'vamos', 'van', 'iba', 'ibas', 'íbamos', 'iban', 'fue', 'fueron',
+            # IR (to go)
+            'va', 'vas', 'voy', 'vamos', 'van', 'iba', 'ibas', 'íbamos', 'iban', 'fue', 'fueron', 'fui',
+            # ESTAR (to be - temporary)
             'está', 'estás', 'estoy', 'estamos', 'están', 'estaba', 'estabas', 'estábamos', 'estaban', 'estuvo', 'estuvieron',
-            'es', 'eres', 'soy', 'somos', 'son', 'era', 'eras', 'éramos', 'eran', 'fue', 'fueron',
-            'gusta', 'gustas', 'gusto', 'gustamos', 'gustan', 'gustaba', 'gustabas', 'gustábamos', 'gustaban',
+            # SER (to be - permanent)
+            'es', 'eres', 'soy', 'somos', 'son', 'era', 'eras', 'éramos', 'eran', 'fue', 'fueron', 'siendo', 'sean',
+            # HABER (auxiliary verb)
+            'han', 'hemos', 'hubo', 'hubiera', 'habría', 'hice',
+            # GUSTAR (to like)
+            'gusta', 'gustas', 'gusto', 'gustamos', 'gustan', 'gustaba', 'gustabas', 'gustábamos', 'gustaban', 'gustaría',
+            # PARECER (to seem)
             'parece', 'pareces', 'parezco', 'parecemos', 'parecen', 'parecía', 'parecías', 'parecíamos', 'parecían',
+            # SABER (to know)
             'sabe', 'sabes', 'sé', 'sabemos', 'saben', 'sabía', 'sabías', 'sabíamos', 'sabían', 'supo', 'supieron',
+            # PASAR (to pass/happen)
             'pasa', 'pasas', 'paso', 'pasamos', 'pasan', 'pasaba', 'pasabas', 'pasábamos', 'pasaban', 'pasó', 'pasaron',
+            # SEGUIR (to follow/continue)
             'sigue', 'sigues', 'sigo', 'seguimos', 'siguen', 'seguía', 'seguías', 'seguíamos', 'seguían', 'siguió', 'siguieron',
+            'siguen',
+            # TRATAR (to try/treat)
             'trata', 'tratas', 'trato', 'tratamos', 'tratan', 'trataba', 'tratabas', 'tratábamos', 'trataban', 'trató', 'trataron',
+            # QUEDAR (to remain/stay)
             'queda', 'quedas', 'quedo', 'quedamos', 'quedan', 'quedaba', 'quedabas', 'quedábamos', 'quedaban', 'quedó', 'quedaron',
+            # SENTIR (to feel)
             'siente', 'sientes', 'siento', 'sentimos', 'sienten', 'sentía', 'sentías', 'sentíamos', 'sentían', 'sintió', 'sintieron',
+            # VER (to see)
             've', 'ves', 'veo', 'vemos', 'ven', 'veía', 'veías', 'veíamos', 'veían', 'vio', 'vieron',
-            'da', 'das', 'doy', 'damos', 'dan', 'daba', 'dabas', 'dábamos', 'daban', 'dio', 'dieron',
+            # DAR (to give)
+            'da', 'das', 'doy', 'damos', 'dan', 'daba', 'dabas', 'dábamos', 'daban', 'dio', 'dieron', 'darle', 'dando',
+            # DEJAR (to leave/let)
             'deja', 'dejas', 'dejo', 'dejamos', 'dejan', 'dejaba', 'dejabas', 'dejábamos', 'dejaban', 'dejó', 'dejaron',
+            # DEBER (must/should)
+            'deben', 'debemos',
+            # ENCONTRAR (to find)
+            'encuentra', 'encuentro',
+            # EXISTIR (to exist)
+            'existe', 'existen',
+            # SALIR (to go out)
+            'sale',
+            # VIVIR (to live)
+            'vive',
+            # PERMITIR (to allow)
+            'permite',
+            # ENTENDER (to understand)
+            'entiendo',
+            # HABLAR (to speak)
+            'hablando',
+            # ESPERAR (to wait/hope)
+            'esperando',
+            
+            # FALTAR (to be missing/lack) - "falta" is 3rd person singular
+            'falta',
+            
+            # RESPETAR (to respect) - "respeto" is 1st person singular
+            'respeto',
+            
             # Common plural nouns
             'veces', 'años', 'días', 'meses', 'horas', 'minutos', 'personas', 'cosas', 'mujeres', 'hombres', 'niños',
+            'millones', 'lugares', 'actividades', 'ciudades', 'leyes', 'jóvenes', 'acciones', 'relaciones',
+            'condiciones', 'mayores', 'miles',
+            
             # Common adjective forms and apocopated forms
             'nueva', 'nuevos', 'nuevas', 'primera', 'primeros', 'primeras', 'buena', 'buenos', 'buenas',
-            'gran', 'grande', 'grandes', 'mejor', 'mejores', 'peor', 'peores',
+            'gran', 'grande', 'grandes', 'mejor', 'mejores', 'peor', 'peores', 'principales', 'sociales',
+            'unidos', 'aquellos', 'cuales',
             'buen',  # apocopated form of "bueno"
             'mal',   # apocopated form of "malo"
             'primer', # apocopated form of "primero"
             'tercer', # apocopated form of "tercero"
+            
+            # Pronouns and possessives
+            'nosotros', 'ustedes', 'tus', 'contigo',
         }
         
         if word_lower in common_inflections:
             return 'inflected_form', pos, f'Common inflected form - should not be recommended'
+        
+        # Check for derived forms that have base words in different forms
+        derived_word_mappings = {
+            'formación': 'formar',      # noun from verb
+            'derecha': 'derecho',       # feminine form of masculine noun (right side vs. right/law)
+            'cultural': 'cultura',      # adjective from noun
+        }
+        
+        if word_lower in derived_word_mappings:
+            base_form = derived_word_mappings[word_lower]
+            if base_form in existing_words:
+                return 'morphological_variant', pos, f'Derived from "{base_form}" which exists in migration'
+        
+        # Check for proper nouns (countries, cities, names, etc.)
+        proper_nouns = {
+            # Countries
+            'argentina', 'chile', 'venezuela', 'colombia', 'brasil', 'china', 'francia', 'perú',
+            'españa', 'méxico', 'ecuador', 'bolivia', 'paraguay', 'uruguay', 'cuba', 'panama',
+            'guatemala', 'honduras', 'nicaragua', 'costa', 'rica', 'salvador', 'república', 'dominicana',
+            'puerto', 'rico', 'estados', 'unidos', 'alemania', 'italia', 'portugal', 'rusia',
+            # Cities
+            'madrid', 'barcelona', 'buenos', 'aires', 'bogotá', 'lima', 'santiago', 'caracas',
+            'quito', 'la', 'paz', 'montevideo', 'asunción', 'ciudad', 'méxico', 'guadalajara',
+            'valencia', 'sevilla', 'bilbao', 'zaragoza', 'málaga', 'murcia', 'palma', 'córdoba',
+            # Common names
+            'juan', 'josé', 'carlos', 'francisco', 'pedro', 'antonio', 'manuel', 'luis', 'miguel',
+            'david', 'daniel', 'alejandro', 'rafael', 'javier', 'mario', 'sergio', 'alberto',
+            'maría', 'ana', 'carmen', 'pilar', 'teresa', 'rosa', 'dolores', 'mercedes', 'josefa',
+            'francisca', 'antonia', 'isabel', 'concepción', 'esperanza', 'angeles', 'cristina',
+            # Political/institutional
+            'pp', 'congreso', 'ministerio', 'comisión', 'corte', 'constitución', 'instituto',
+            'sr', 'sra', 'señor', 'señora', 'don', 'doña',
+            # Regions/places
+            'américa', 'cataluña', 'andalucía', 'valencia', 'galicia', 'país', 'vasco', 'navarra',
+            'asturias', 'cantabria', 'murcia', 'extremadura', 'castilla', 'león', 'mancha',
+            'aragón', 'rioja', 'baleares', 'canarias', 'ceuta', 'melilla',
+        }
+        
+        if token.ent_type_ or pos == 'PROPN' or word.lower() in proper_nouns:
+            return 'proper_noun', pos, f'Proper noun ({token.ent_type_ or "name"})'
+        
+        # Check for foreign words and abbreviations
+        foreign_words = {
+            'internet', 'video', 'post', 'etc', 'ii', 'puta',  # vulgar
+        }
+        
+        if word.lower() in foreign_words:
+            return 'foreign_word', pos, 'Foreign word/abbreviation - not suitable for Spanish learning'
+        
         
         # Essential word categories
         if pos in self.pos_thresholds:

@@ -101,6 +101,50 @@ def get_language_migration_files() -> dict:
     }
 
 
+def get_language_base_offsets() -> dict:
+    """Get mapping of language codes to their base ID offsets."""
+    return {
+        'de': 3000000,
+        'es': 4000000,
+        'en': 8000000
+    }
+
+
+def calculate_migration_ids(base_offset: int, sequence_number: int) -> Tuple[int, int, int]:
+    """
+    Calculate migration IDs using the standard formula.
+    
+    Args:
+        base_offset: Language base offset (3000000, 4000000, or 8000000)
+        sequence_number: Sequential position starting from 0
+        
+    Returns:
+        Tuple of (word_pair_id, source_id, target_id)
+    """
+    word_pair_id = base_offset + sequence_number
+    source_id = base_offset + sequence_number * 2 + 1
+    target_id = base_offset + sequence_number * 2 + 2
+    return word_pair_id, source_id, target_id
+
+
+def validate_migration_ids(word_pair_id: int, source_id: int, target_id: int, base_offset: int, sequence_number: int) -> bool:
+    """
+    Validate that given IDs follow the correct formula.
+    
+    Args:
+        word_pair_id, source_id, target_id: The IDs to validate
+        base_offset: Expected language base offset
+        sequence_number: Expected sequence number
+        
+    Returns:
+        True if IDs are correct, False otherwise
+    """
+    expected_word_pair_id, expected_source_id, expected_target_id = calculate_migration_ids(base_offset, sequence_number)
+    return (word_pair_id == expected_word_pair_id and 
+            source_id == expected_source_id and 
+            target_id == expected_target_id)
+
+
 def is_valid_word_for_analysis(word: str) -> bool:
     """Check if a word is valid for analysis (not digit, not too short, etc.)"""
     if word.isdigit() or len(word) <= 1:

@@ -62,6 +62,22 @@ class GermanWordAnalyzer(BaseWordAnalyzer):
             'schliesslich': 'schließlich',
         }
         
+        # Common noun forms (plural forms, compound nouns, etc.)
+        self.noun_forms = {
+            'kindern': 'kind',
+            'bürger': 'bürger',  # This is both singular and plural
+            'staaten': 'staat',
+            'menge': 'menge',  # Can be singular
+            'licht': 'licht',  # Singular noun
+            'kreis': 'kreis',  # Singular noun
+            'boden': 'boden',  # Singular noun
+            'gemeinde': 'gemeinde',  # Singular noun
+            'fussball': 'fußball',  # Swiss spelling
+            'krieg': 'krieg',  # Singular noun
+            'spass': 'spaß',  # Swiss spelling
+            'berliner': 'berlin',  # Demonym
+        }
+        
         # POS thresholds are inherited from base class (standardized)
     
     def normalize_word(self, word: str) -> str:
@@ -122,6 +138,22 @@ class GermanWordAnalyzer(BaseWordAnalyzer):
             'kam': 'kommen', 'kamst': 'kommen', 'kamen': 'kommen', 'kamt': 'kommen',
             'gab': 'geben', 'gabst': 'geben', 'gaben': 'geben', 'gabt': 'geben',
             'sah': 'sehen', 'sahst': 'sehen', 'sahen': 'sehen', 'saht': 'sehen',
+            # Additional common verb forms
+            'gemacht': 'machen', 'gesagt': 'sagen', 'gesehen': 'sehen', 'gewesen': 'sein',
+            'worden': 'werden', 'geworden': 'werden', 'gefunden': 'finden', 'gekommen': 'kommen',
+            'gegeben': 'geben', 'gebracht': 'bringen', 'gedacht': 'denken', 'geschrieben': 'schreiben',
+            'genommen': 'nehmen', 'gestellt': 'stellen', 'erreicht': 'erreichen', 'versucht': 'versuchen',
+            'bekommt': 'bekommen', 'spricht': 'sprechen', 'erklärt': 'erklären', 'erzählt': 'erzählen',
+            'funktioniert': 'funktionieren', 'beginnt': 'beginnen', 'reicht': 'reichen',
+            'gehört': 'gehören', 'liegt': 'liegen', 'zeigt': 'zeigen', 'bleibt': 'bleiben',
+            'gilt': 'gelten', 'braucht': 'brauchen', 'scheint': 'scheinen', 'fand': 'finden',
+            'stellt': 'stellen', 'besteht': 'bestehen', 'führt': 'führen', 'läuft': 'laufen',
+            'hält': 'halten', 'spielt': 'spielen', 'fällt': 'fallen', 'handelt': 'handeln',
+            'verloren': 'verlieren', 'hinaus': 'hinausgehen', 'kennt': 'kennen', 'setzt': 'setzen',
+            'sucht': 'suchen', 'hört': 'hören', 'blieb': 'bleiben', 'gefällt': 'gefallen',
+            'genannt': 'nennen', 'hilft': 'helfen', 'fehlt': 'fehlen',
+            # hätten, könnten are conditional forms
+            'hätten': 'haben', 'könnten': 'können',
         }
         
         # Check hardcoded forms first
@@ -169,6 +201,7 @@ class GermanWordAnalyzer(BaseWordAnalyzer):
             'grösste': 'groß', 'grössten': 'groß', 'grösstes': 'groß', 'grösstem': 'groß',
             'größer': 'groß', 'größere': 'groß', 'größeren': 'groß', 'größeres': 'groß',
             'größte': 'groß', 'größten': 'groß', 'größtes': 'groß', 'größtem': 'groß',
+            'grösste': 'groß', 'grössten': 'groß',  # More Swiss German forms
             
             # Forms of "gut"
             'gute': 'gut', 'guten': 'gut', 'guter': 'gut', 'gutes': 'gut', 'gutem': 'gut',
@@ -184,6 +217,18 @@ class GermanWordAnalyzer(BaseWordAnalyzer):
             'neue': 'neu', 'neuen': 'neu', 'neuer': 'neu', 'neues': 'neu', 'neuem': 'neu',
             'neuere': 'neu', 'neueren': 'neu', 'neuerer': 'neu', 'neueres': 'neu',
             'neueste': 'neu', 'neuesten': 'neu', 'neuester': 'neu', 'neuestes': 'neu',
+            
+            # Forms of "hoch"
+            'hohen': 'hoch', 'hohe': 'hoch', 'höher': 'hoch', 'höchste': 'hoch',
+            
+            # Forms of "mehrere" -> "mehr" or "viel"
+            'mehrere': 'mehr',
+            
+            # Forms of "einzelnen" -> "einzeln"
+            'einzelnen': 'einzeln',
+            
+            # Forms of "europäischen" -> "europäisch"
+            'europäischen': 'europäisch',
         }
         
         # Check hardcoded forms first
@@ -233,6 +278,12 @@ class GermanWordAnalyzer(BaseWordAnalyzer):
             'weg': 'hinweg',
             'selber': 'selbst',
             'halt': 'eben',  # particle meaning "just/simply"
+            'heraus': 'hinaus',  # variant of hinaus
+            'hinaus': 'hinaus',  # can be adverb or part of separable verb
+            'zumindest': 'mindestens',  # at least
+            'sowas': 'so etwas',  # something like that (colloquial)
+            'siehe': 'sehen',  # imperative form
+            'länger': 'lang',  # comparative form
         }
         
         if word_lower in colloquial_forms:
@@ -314,6 +365,18 @@ class GermanWordAnalyzer(BaseWordAnalyzer):
         
         return None
     
+    def detect_noun_form(self, word: str, existing_words: Set[str]) -> Optional[Tuple[str, str]]:
+        """Detect if word is a noun form"""
+        word_lower = word.lower()
+        
+        # Check hardcoded noun forms
+        if word_lower in self.noun_forms:
+            base_form = self.noun_forms[word_lower]
+            if base_form in existing_words:
+                return base_form, f"Form of '{base_form}'"
+        
+        return None
+    
     def analyze_word(self, word: str, existing_words: Set[str]) -> Tuple[str, str, str]:
         """Analyze a single word using NLP + patterns"""
         # Use spaCy for basic analysis
@@ -360,18 +423,56 @@ class GermanWordAnalyzer(BaseWordAnalyzer):
             _, reason = plural_result
             return 'inflected_form', token.pos_, reason
         
-        # Check if it's a proper noun
-        if token.pos_ == 'PROPN' or token.ent_type_:
+        # 6. Noun forms (including Swiss spellings, demonyms, etc.)
+        noun_result = self.detect_noun_form(word, existing_words)
+        if noun_result:
+            _, reason = noun_result
+            return 'morphological_variant', token.pos_, reason
+        
+        # Check for proper nouns (cities, names, political parties, etc.)
+        proper_nouns = {
+            # Cities and places
+            'berlin', 'münchen', 'hamburg', 'wien', 'zürich', 'frankfurt', 'stuttgart', 'köln',
+            'düsseldorf', 'dortmund', 'essen', 'leipzig', 'dresden', 'hannover', 'nürnberg',
+            'duisburg', 'bochum', 'wuppertal', 'bielefeld', 'bonn', 'mannheim', 'karlsruhe',
+            'augsburg', 'wiesbaden', 'mönchengladbach', 'gelsenkirchen', 'aachen', 'braunschweig',
+            'kiel', 'chemnitz', 'halle', 'magdeburg', 'freiburg', 'krefeld', 'mainz', 'lübeck',
+            # Countries and regions
+            'deutschland', 'österreich', 'schweiz', 'bayern', 'sachsen', 'thüringen',
+            'baden-württemberg', 'nordrhein-westfalen', 'niedersachsen', 'hessen', 'rheinland-pfalz',
+            'schleswig-holstein', 'brandenburg', 'mecklenburg-vorpommern', 'saarland', 'bremen',
+            'hamburg', 'berlin', 'europa', 'amerika', 'russland', 'frankreich', 'england',
+            'italien', 'spanien', 'polen', 'tschechien', 'ungarn',
+            # Political parties
+            'cdu', 'spd', 'afd', 'fdp', 'grüne', 'linke', 'csu',
+            # Common names
+            'peter', 'michael', 'thomas', 'hans', 'martin', 'andreas', 'wolfgang', 'klaus',
+            'jürgen', 'günter', 'stefan', 'christian', 'uwe', 'werner', 'frank', 'markus',
+            'maria', 'petra', 'sabine', 'gabriele', 'martina', 'andrea', 'barbara', 'claudia',
+            'ursula', 'monika', 'elisabeth', 'eva', 'anna', 'brigitte', 'heike', 'angelika',
+            # Organizations
+            'nato', 'uno', 'eu', 'usa', 'udssr', 'ddr', 'brd', 'bundeswehr', 'polizei',
+            # Sports teams
+            'fc', 'bvb', 'bayern', 'schalke', 'werder', 'hsv', 'vfb', 'eintracht',
+            # Media
+            'ard', 'zdf', 'rtl', 'sat1', 'pro7', 'vox', 'ntv', 'n24', 'tagesschau',
+            'spiegel', 'focus', 'stern', 'bild', 'zeit', 'welt', 'faz', 'sz',
+        }
+        
+        if token.pos_ == 'PROPN' or token.ent_type_ or word.lower() in proper_nouns:
             return 'proper_noun', token.pos_, f'Proper noun ({token.ent_type_ or "name"})'
         
-        # Check for English loanwords that shouldn't be in German learning
+        # Check for English loanwords and abbreviations that shouldn't be in German learning
         english_loanwords = {
             'ok', 'okay', 'cool', 'wow', 'hey', 'hi', 'bye', 'sorry', 'baby', 
             'party', 'team', 'job', 'boss', 'email', 'computer', 'internet',
-            'facebook', 'google', 'twitter', 'youtube', 'blog', 'chat'
+            'facebook', 'google', 'twitter', 'youtube', 'blog', 'chat',
+            'new', 'sex', 'tv', 'ii',  # Roman numerals
+            # Common abbreviations
+            'bzw', 'ca', 'etc', 'usw', 'ff', 'ggf', 'inkl', 'evtl', 'z.b', 'u.a',
         }
         if word.lower() in english_loanwords:
-            return 'foreign_word', token.pos_, 'English loanword - not suitable for German learning'
+            return 'foreign_word', token.pos_, 'English loanword/abbreviation - not suitable for German learning'
         
         # Check for essential categories with frequency
         freq = word_frequency(word.lower(), 'de')
