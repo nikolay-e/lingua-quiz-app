@@ -83,11 +83,11 @@ postgres:
 # Ingress configuration for external access
 ingress:
   enabled: true
-  className: "" # Specify if you have a specific ingress class, e.g., "nginx"
+  className: "traefik" # Using Traefik ingress controller
   annotations:
-    {}
-    # kubernetes.io/ingress.class: nginx
-    # cert-manager.io/cluster-issuer: letsencrypt-prod # If using cert-manager
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    traefik.ingress.kubernetes.io/router.tls: "true"
   frontend:
     host: lingua-quiz.nikolay-eremeev.com # To be set by CI/env
   backend:
