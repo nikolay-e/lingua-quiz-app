@@ -12,117 +12,223 @@
 
 import { F, K, T_PROMO, MISTAKE_THRESHOLD, MISTAKE_WINDOW, MAX_FOCUS_POOL_SIZE, RECENTLY_ASKED_SIZE, MIN_HISTORY_FOR_DEGRADATION } from './constants';
 
-/**
- * Normalizes text for comparison by handling Cyrillic ё/е equivalence and similar-looking characters
- * @param text - The text to normalize
- * @returns The normalized text
- */
-const normalizeForComparison = (text: string): string => {
+/* --------------------------------------------------
+ * Normalisation helpers
+ * -------------------------------------------------- */
+
+// Mapping of visually close Latin → Cyrillic characters when the string is
+// clearly meant to be Cyrillic (avoids accidental Latin input).
+const latinToCyrillic: Record<string, string> = {
+  c: 'с', C: 'С', p: 'р', P: 'Р', o: 'о', O: 'О', a: 'а', A: 'А',
+  e: 'е', E: 'Е', x: 'х', X: 'Х', y: 'у', Y: 'У', k: 'к', K: 'К',
+  h: 'н', H: 'Н', m: 'м', M: 'М', t: 'т', T: 'Т', b: 'в', B: 'В',
+  i: 'і', I: 'І', z: 'з', Z: 'З', d: 'д', D: 'Д', g: 'г', G: 'Г',
+  l: 'л', L: 'Л', n: 'н', N: 'Н', r: 'р', R: 'Р', s: 'с', S: 'С',
+  f: 'ф', F: 'Ф'
+};
+
+/** Remove diacritics from the Latin script (NFD → strip marks). */
+const stripLatinDiacritics = (s: string): string =>
+  s.normalize('NFD').replace(/\p{M}/gu, '');
+
+/** Collapse German umlaut/ß variants to a single form for comparison. */
+const collapseGerman = (s: string): string => {
+  return s
+    // 1. Single‑character umlauts → plain vowel.
+    .replace(/ä/g, 'a').replace(/ö/g, 'o').replace(/ü/g, 'u')
+    .replace(/Ä/g, 'a').replace(/Ö/g, 'o').replace(/Ü/g, 'u')
+    .replace(/ß/g, 'ss')
+    // 2. Two‑character replacements (ae/oe/ue) → same plain vowel.
+    .replace(/ae/g, 'a').replace(/oe/g, 'o').replace(/ue/g, 'u');
+};
+
+/** Full script‑/accent‑aware canonicalisation used for matching logic. */
+export const normalizeForComparison = (text: string): string => {
+  if (!text) return '';
   let result = text;
-  
-  // Always normalize Cyrillic ё/е equivalence
-  result = result.replace(/ё/g, 'е').replace(/Ё/g, 'Е');
-  
-  // Only apply Latin-to-Cyrillic conversion if the text appears to be a Cyrillic context
-  // (either contains existing Cyrillic characters or matches known Latin-substituted Cyrillic patterns)
-  const hasCyrillic = /[а-яё]/i.test(result);
-  const isLikelyLatinSubstitution = /^[acopextmhsrpl]+$/i.test(result); // Common substitutions
-  
-  if (hasCyrillic || isLikelyLatinSubstitution) {
-    // Map of similar-looking characters to their canonical form (Cyrillic preferred)
-    const charMap: Record<string, string> = {
-      'c': 'с', 'C': 'С', 'p': 'р', 'P': 'Р', 'o': 'о', 'O': 'О',
-      'a': 'а', 'A': 'А', 'e': 'е', 'E': 'Е', 'x': 'х', 'X': 'Х',
-      'y': 'у', 'Y': 'У', 'k': 'к', 'K': 'К', 'h': 'н', 'H': 'Н',
-      'm': 'м', 'M': 'М', 't': 'т', 'T': 'Т', 'b': 'в', 'B': 'В',
-      'i': 'і', 'I': 'І', 'z': 'з', 'Z': 'З', 'd': 'д', 'D': 'Д',
-      'g': 'г', 'G': 'Г', 'l': 'л', 'L': 'Л', 'n': 'н', 'N': 'Н',
-      'r': 'р', 'R': 'Р', 's': 'с', 'S': 'С', 'f': 'ф', 'F': 'Ф'
-    };
-    
-    result = result.replace(/[a-zA-Z]/g, char => charMap[char] || char);
+
+  // 1. Trim + lower + remove all whitespace (spaces are ignored).
+  result = result.trim().toLowerCase().replace(/\s+/g, '');
+
+  // 2. Cyrillic ё ⇢ е mapping (always, never harmful).
+  result = result.replace(/ё/g, 'е');
+
+  // 3. Handle Latin → Cyrillic substitution only when clearly in a Cyrillic
+  //    context to avoid mangling Spanish/German inputs.
+  const containsCyr = /[а-я]/i.test(result);
+  const looksLikeFakeCyr = /^[acopextmhsrpl]+$/i.test(result);
+  if (containsCyr || looksLikeFakeCyr) {
+    result = result.replace(/[A-Za-z]/g, ch => latinToCyrillic[ch] || ch);
   }
-  
+
+  // 4. German & Spanish (plus general Latin) accent handling.
+  result = collapseGerman(stripLatinDiacritics(result));
+
   return result;
 };
 
-/**
- * Normalizes text by trimming, lowercasing, and collapsing whitespace
- * @param text - The text to normalize
- * @returns The normalized text
- */
-export const normalize = (text: string): string => normalizeForComparison(text.trim().toLowerCase().replace(/\s+/g, ' '));
+/** Shorthand that callers use everywhere. */
+export const normalize = (text: string): string => normalizeForComparison(text);
+
+/* --------------------------------------------------
+ * formatForDisplay
+ * -------------------------------------------------- */
+
+// Sentinel to mask pipes inside square brackets so we can safely split later.
+const PIPE_SENTINEL = '§§PIPE§§';
 
 /**
- * Formats text for display according to documentation rules:
- * - For pipes (|): shows only the first alternative
- * - For brackets ([]): shows the full text with brackets (helpful context)
- * - For commas (,): shows all parts (multiple meanings)
- * - For parentheses (()): shows the full text (grouping)
- * @param text - The text to format for display
- * @returns The formatted text for display
+ * Render stored translation for UI according to docs:
+ *   – show only first alt of any pipe list
+ *   – if pipes inside parentheses → first alt, remove the parentheses
+ *   – keep commas intact, [] intact
  */
-export const formatForDisplay = (text: string): string => {
-  if (!text) return text;
-  
-  // Handle pipes - show only the first alternative
-  if (text.includes('|') && !text.includes('(')) {
-    return text.split('|')[0].trim();
+export const formatForDisplay = (input: string): string => {
+  if (!input) return input;
+  let text = input;
+
+  // 1. Replace each ( ... ) group containing a pipe with its first alternative.
+  text = text.replace(/\(([^)]+)\)/g, (match, inner) => {
+    if (!inner.includes('|')) return match; // leave untouched.
+    const firstAlt = inner.split('|').map((s: string) => s.trim()).find((s: string) => s) || '';
+    return firstAlt; // drop surrounding parentheses.
+  });
+
+  // Remove any leftover empty parentheses "()" (possibly multiple).
+  while (/\(\s*\)/.test(text)) text = text.replace(/\(\s*\)/g, '');
+
+  // 2. Temporarily mask pipes inside square brackets so we don't treat them as
+  //    synonym separators.
+  text = text.replace(/\[[^\]]*\]/g, br => br.replace(/\|/g, PIPE_SENTINEL));
+
+  // 3. For any remaining standalone pipes, keep only the segment before the
+  //    first one.
+  if (text.includes('|')) {
+    text = text.split('|')[0].trim();
   }
-  
-  // For all other cases (brackets, commas, parentheses), show the full text
-  // as they provide helpful context or represent multiple required meanings
+
+  // 4. Unmask bracket pipes and tidy up whitespace / commas.
+  text = text.replace(new RegExp(PIPE_SENTINEL, 'g'), '|')
+    .replace(/\s*,\s*/g, ', ')   // single space after comma.
+    .replace(/\s+/g, ' ')       // collapse runs of spaces.
+    .trim()
+    .replace(/^,\s*/, '')        // no leading commas
+    .replace(/\s*,\s*$/, '');    // no trailing commas.
+
   return text;
 };
 
-/**
- * Checks if a user's answer matches the correct answer using various matching strategies
- * @param userAnswer - The user's submitted answer
- * @param correctAnswer - The expected correct answer
- * @returns True if the answer is correct, false otherwise
- */
-export function checkAnswer(userAnswer: string, correctAnswer: string): boolean {
-  const normUserAnswer = normalize(userAnswer);
-  if (!normUserAnswer) return false;
+/* --------------------------------------------------
+ * checkAnswer – heavy‑duty matcher
+ * -------------------------------------------------- */
 
-  if (correctAnswer.includes('(') && correctAnswer.includes(',')) {
-    const correctGroups = correctAnswer.split(',').map(g => g.trim().replace(/^\(|\)$/g, ''));
-    const userGroups = normUserAnswer.split(',').map(g => g.trim());
-    if (correctGroups.length !== userGroups.length) return false;
-    const matched = new Set();
-    for (const userPart of userGroups) {
-      let found = false;
-      for (let i = 0; i < correctGroups.length; i++) {
-        if (matched.has(i)) continue;
-        if (correctGroups[i].split('|').map(normalize).includes(userPart)) {
-          matched.add(i);
-          found = true;
-          break;
-        }
-      }
-      if (!found) return false;
+type AltSet = Set<string>; // Normalised alternatives allowed for ONE meaning group.
+
+/** Split by top‑level commas (commas not nested in () or []). */
+const splitTopLevelCommas = (s: string): string[] => {
+  const parts: string[] = [];
+  let current = '';
+  let depthPar = 0;
+  let depthBr = 0;
+  for (const ch of s) {
+    if (ch === '(') depthPar++;
+    else if (ch === ')') depthPar = Math.max(0, depthPar - 1);
+    else if (ch === '[') depthBr++;
+    else if (ch === ']') depthBr = Math.max(0, depthBr - 1);
+
+    if (ch === ',' && depthPar === 0 && depthBr === 0) {
+      parts.push(current.trim());
+      current = '';
+      continue;
     }
-    return true;
+    current += ch;
   }
-  
-  if (correctAnswer.includes('|')) return correctAnswer.split('|').map(normalize).includes(normUserAnswer);
-  
-  const bracketMatch = correctAnswer.match(/^(.*?)\[(.*?)\](.*?)$/);
+  if (current.trim()) parts.push(current.trim());
+  return parts;
+};
+
+/** Expand one meaning‑group string (which may hold pipes + brackets) into all
+ *  acceptable raw alternatives (still UNnormalized). */
+const expandGroup = (group: string): string[] => {
+  let g = group.trim();
+
+  // 1. Strip outer parentheses *if* they wrap the whole group and contain pipes.
+  if (g.startsWith('(') && g.endsWith(')') && g.includes('|')) {
+    g = g.slice(1, -1);
+  }
+
+  const bracketMatch = g.match(/^(.*?)(\[(.*?)\])(.*)$/);
+  let baseVariants: string[] = [];
   if (bracketMatch) {
-    const main = normalize(bracketMatch[1].trim());
-    const opt = normalize(bracketMatch[2].trim());
-    const rest = normalize(bracketMatch[3].trim());
-    return normUserAnswer === normalize(`${main} ${opt} ${rest}`) || normUserAnswer === normalize(`${main} ${rest}`);
+    const pre = bracketMatch[1];
+    const opt = bracketMatch[3];
+    const post = bracketMatch[4];
+    // With whitespace removal in normalize(), we only need to generate logical combinations.
+    baseVariants.push(`${pre}${opt}${post}`);
+    baseVariants.push(`${pre}${post}`);
+  } else {
+    baseVariants = [g];
   }
 
-  if (correctAnswer.includes(',')) {
-    const userParts = normUserAnswer.split(',').map(s => s.trim()).sort();
-    const correctParts = normalize(correctAnswer).split(',').map(s => s.trim()).sort();
-    return userParts.length === correctParts.length && userParts.every((p, i) => p === correctParts[i]);
+  // Finally, split any pipes inside each base variant.
+  const alts: string[] = [];
+  baseVariants.forEach(b => {
+    if (b.includes('|')) {
+      b.split('|').forEach(p => {
+        const t = p.trim();
+        if (t) alts.push(t);
+      });
+    } else if (b) {
+      alts.push(b);
+    }
+  });
+
+  return Array.from(new Set(alts)); // unique
+};
+
+/** Build an array of acceptable alternative sets for every meaning group. */
+const buildGroups = (correct: string): AltSet[] => {
+  const groups = splitTopLevelCommas(correct);
+  return groups.map(g => {
+    const set: AltSet = new Set(expandGroup(g).map((n: string) => normalize(n)));
+    // Add the un-expanded normalized group as well for simple cases
+    const normalizedGroup = normalize(g);
+    if (normalizedGroup) set.add(normalizedGroup);
+    return set;
+  });
+};
+
+/** Core public matcher. */
+export const checkAnswer = (userAnswer: string, correctAnswer: string): boolean => {
+  // Early true if BOTH empty after normalization.
+  if (normalize(userAnswer) === '' && normalize(correctAnswer) === '') return true;
+
+  const correctGroups = buildGroups(correctAnswer);
+
+  // If pattern has only one group & no commas, we can treat pipes/brackets only.
+  if (correctGroups.length === 1) {
+    return correctGroups[0].has(normalize(userAnswer));
   }
 
-  return normUserAnswer === normalize(correctAnswer);
-}
+  // Multi‑meaning answer – user must supply same number of comma parts in any order.
+  const userTokens = splitTopLevelCommas(userAnswer).map((t: string) => normalize(t));
+  if (userTokens.length !== correctGroups.length) return false;
+
+  const used = new Set<number>();
+  for (const token of userTokens) {
+    let matched = false;
+    for (let i = 0; i < correctGroups.length; i++) {
+      if (used.has(i)) continue;
+      if (correctGroups[i].has(token)) {
+        used.add(i);
+        matched = true;
+        break;
+      }
+    }
+    if (!matched) return false; // token didn't fit any group.
+  }
+  return true;
+};
 
 // Core interfaces and types
 export interface Translation {
