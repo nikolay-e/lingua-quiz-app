@@ -69,10 +69,19 @@ LinguaQuiz uses four types of separators in translation answers to provide flexi
 - Translation shown: `мир [вселенная]`
 - ✅ Accepted answers: 
   - `мир` - main word only
-  - `мир вселенная` - with clarification (as one concept)
+  - `мир вселенная` - with clarification (with space)
+  - `мирвселенная` - with clarification (without space)
 - ❌ Rejected answers: 
   - `вселенная` - clarification alone is insufficient
   - `мир, вселенная` - NOT accepted (brackets don't indicate separate meanings)
+
+**Special Case - Verb Suffixes**:
+- Spanish word: `park`
+- Translation shown: `парковать[ся]`
+- ✅ Accepted answers:
+  - `парковать` - base verb only
+  - `парковаться` - with reflexive suffix (no space)
+  - `парковать ся` - with reflexive suffix (with space)
 
 ## Decision Guide for Translators
 
@@ -142,7 +151,16 @@ LinguaQuiz uses four types of separators in translation answers to provide flexi
 All comparisons are case-insensitive.
 
 ### Whitespace
-Extra spaces are ignored.
+All whitespace is removed during comparison.
+
+### German Text Normalization
+German umlauts and ß are normalized:
+- `ä/ae → a`, `ö/oe → o`, `ü/ue → u`, `ß → ss`
+- Example: `Müller` and `Mueller` are considered equal
+
+### Spanish Text Normalization  
+Accented characters are normalized to their base forms:
+- Example: `José` and `Jose` are considered equal
 
 ### Cyrillic Text Normalization
 For languages using Cyrillic script (Russian, etc.), the following character equivalences are applied:
