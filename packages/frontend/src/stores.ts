@@ -192,6 +192,7 @@ interface QuizStore {
   submitAnswer: (token: string, answer: string) => Promise<any>;
   setLevel: (level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4') => Promise<{ success: boolean; actualLevel: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4'; message?: string }>;
   reset: () => void;
+  saveAndCleanup: (token: string) => Promise<void>;
 }
 
 // Quiz Store with @linguaquiz/core integration

@@ -176,12 +176,6 @@
     }
   }
 
-  onMount(async (): Promise<void> => {
-    await quizStore.loadWordSets($authStore.token!);
-    await loadTTSLanguages();
-    if (answerInput) answerInput.focus();
-  });
-  
   async function handleQuizSelect(e: Event): Promise<void> {
     const target = e.target as HTMLSelectElement;
     const quiz: string = target.value;
@@ -285,14 +279,42 @@
     authStore.logout();
   }
   
+  async function handleDeleteAccount(): Promise<void> {
+    // 1. First confirmation prompt
+    if (!confirm('Are you absolutely sure you want to delete your account? This action is irreversible and all your progress will be lost.')) {
+      return;
+    }
+    
+    // 2. Second, more explicit confirmation prompt
+    const confirmationText = `delete my account ${$authStore.username}`;
+    const userInput = prompt(`This will permanently delete your account. This cannot be undone. To confirm, please type exactly: "${confirmationText}"`);
+    
+    if (userInput !== confirmationText) {
+      alert('Account deletion cancelled. The entered text did not match.');
+      return;
+    }
+    
+    // 3. Call API and handle the response
+    try {
+      await api.deleteAccount($authStore.token!);
+      alert('Your account has been successfully deleted.');
+      authStore.logout(); // This will clear local storage and redirect
+    } catch (error: any) {
+      console.error('Failed to delete account:', error);
+      alert(`Failed to delete account: ${error.message}`);
+    }
+  }
+  
   // Initialize component
   onMount(async () => {
+    await quizStore.loadWordSets($authStore.token!);
     if ($authStore.token) {
       await loadTTSLanguages();
     }
+    if (answerInput) answerInput.focus();
     
     // Save progress before page unload
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+    const handleBeforeUnload = (_e: BeforeUnloadEvent) => {
       if ($quizStore.quizManager && $authStore.token) {
         // Try to save synchronously (modern browsers may not wait for async)
         quizStore.saveAndCleanup($authStore.token).catch(() => {});
@@ -413,6 +435,10 @@
         <i class="fas fa-sign-out-alt"></i> 
         <span>Logout ({username})</span>
       </button>
+      <button id="delete-account-btn" class="delete-button" on:click={handleDeleteAccount}>
+        <i class="fas fa-trash-alt"></i>
+        <span>Delete Account</span>
+      </button>
     </div>
     
     {#if selectedQuiz}
@@ -511,3 +537,29 @@
     </section>
   </div>
 </main>
+
+<style>
+  .delete-button {
+    background-color: var(--error-color);
+  }
+  
+  .delete-button:hover {
+    background-color: #c0392b; /* Darker red for light mode */
+  }
+  
+  [data-theme='dark'] .delete-button:hover {
+    background-color: #d66a60; /* Lighter red for dark mode */
+  }
+  
+  #user-status {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  
+  #user-status button {
+    width: 100%;
+    margin-bottom: 0;
+  }
+</style>
