@@ -1,6 +1,5 @@
 version: 2
 updates:
-  # Maintain dependencies for npm (root workspace)
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
@@ -8,13 +7,16 @@ updates:
     labels:
       - "npm"
       - "dependencies"
-    # Group all npm updates together
+    # Group all npm updates, including major versions
     groups:
-       all-dependencies:
-         patterns:
-           - "*"
+      all-dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+          - "major"
 
-  # Maintain dependencies for Python (backend)
   - package-ecosystem: "pip"
     directory: "/packages/backend/"
     schedule:
@@ -22,13 +24,16 @@ updates:
     labels:
       - "python"
       - "dependencies"
-    # Use the same group name to combine with other ecosystems
+    # Use the same group to combine with other ecosystems
     groups:
-       all-dependencies:
-         patterns:
-           - "*"
+      all-dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+          - "major"
 
-  # Maintain dependencies for Docker
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
@@ -36,13 +41,16 @@ updates:
     labels:
       - "docker"
       - "dependencies"
-    # Use the same group name
+    # Use the same group
     groups:
-       all-dependencies:
-         patterns:
-           - "*"
+      all-dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+          - "major"
 
-  # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -50,8 +58,12 @@ updates:
     labels:
       - "github-actions"
       - "dependencies"
-    # Use the same group name
+    # Use the same group
     groups:
-       all-dependencies:
-         patterns:
-           - "*"
+      all-dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+          - "major"
