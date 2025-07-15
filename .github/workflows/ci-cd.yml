@@ -111,7 +111,7 @@ jobs:
         with:
           username: nikolajer
           password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
-      - uses: docker/build-push-action@v5
+      - uses: docker/build-push-action@v6
         with:
           context: ${{ matrix.context }}
           file: ${{ matrix.context }}/${{ matrix.dockerfile }}
