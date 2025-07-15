@@ -10,7 +10,7 @@
     "@linguaquiz/core": "file:../core"
   },
   "devDependencies": {
-    "@playwright/test": "^1.32.0",
+    "@playwright/test": "^1.54.1",
     "@types/node": "^20.11.0",
     "typescript": "^5.3.3"
   }
