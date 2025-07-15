@@ -13,7 +13,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Opened cache');
+        // Cache opened successfully
         return cache.addAll(urlsToCache);
       })
       .catch(error => {
@@ -32,7 +32,7 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
-            console.log('Deleting old cache:', cacheName);
+            // Delete old cache version
             return caches.delete(cacheName);
           }
         })
