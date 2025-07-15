@@ -8,6 +8,11 @@ updates:
     labels:
       - "npm"
       - "dependencies"
+    # Group all npm updates together
+    groups:
+       all-dependencies:
+         patterns:
+           - "*"
 
   # Maintain dependencies for Python (backend)
   - package-ecosystem: "pip"
@@ -17,6 +22,11 @@ updates:
     labels:
       - "python"
       - "dependencies"
+    # Use the same group name to combine with other ecosystems
+    groups:
+       all-dependencies:
+         patterns:
+           - "*"
 
   # Maintain dependencies for Docker
   - package-ecosystem: "docker"
@@ -26,6 +36,11 @@ updates:
     labels:
       - "docker"
       - "dependencies"
+    # Use the same group name
+    groups:
+       all-dependencies:
+         patterns:
+           - "*"
 
   # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
@@ -35,3 +50,8 @@ updates:
     labels:
       - "github-actions"
       - "dependencies"
+    # Use the same group name
+    groups:
+       all-dependencies:
+         patterns:
+           - "*"
