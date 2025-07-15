@@ -7,15 +7,11 @@ updates:
     labels:
       - "npm"
       - "dependencies"
-    # Group all npm updates, including major versions
+    automerge: true # Enable auto-merge
     groups:
       all-dependencies:
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
-          - "major"
+        patterns: ["*"]
+        update-types: ["minor", "patch", "major"]
 
   - package-ecosystem: "pip"
     directory: "/packages/backend/"
@@ -24,15 +20,11 @@ updates:
     labels:
       - "python"
       - "dependencies"
-    # Use the same group to combine with other ecosystems
+    automerge: true # Enable auto-merge
     groups:
       all-dependencies:
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
-          - "major"
+        patterns: ["*"]
+        update-types: ["minor", "patch", "major"]
 
   - package-ecosystem: "docker"
     directory: "/"
@@ -41,15 +33,11 @@ updates:
     labels:
       - "docker"
       - "dependencies"
-    # Use the same group
+    automerge: true # Enable auto-merge
     groups:
       all-dependencies:
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
-          - "major"
+        patterns: ["*"]
+        update-types: ["minor", "patch", "major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -58,12 +46,8 @@ updates:
     labels:
       - "github-actions"
       - "dependencies"
-    # Use the same group
+    automerge: true # Enable auto-merge
     groups:
       all-dependencies:
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
-          - "major"
+        patterns: ["*"]
+        update-types: ["minor", "patch", "major"]
