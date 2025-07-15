@@ -21,7 +21,7 @@ services:
     environment:
       DB_HOST: db
       DB_PORT: 5432
-      POSTGRES_DB: postgres
+      POSTGRES_DB: lingua-quiz
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       JWT_SECRET: dev-secret

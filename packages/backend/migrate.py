@@ -72,7 +72,7 @@ def load_config() -> tuple[DatabaseConfig, MigrationConfig]:
         db_config = DatabaseConfig(
             host=os.getenv('DB_HOST', 'localhost'),
             port=int(os.getenv('DB_PORT', '5432')),
-            name=os.getenv('POSTGRES_DB', 'linguaquiz_db'),
+            name=os.getenv('POSTGRES_DB', 'lingua-quiz'),
             user=os.getenv('POSTGRES_USER', 'linguaquiz_user'),
             password=os.getenv('POSTGRES_PASSWORD', '')
         )

@@ -172,7 +172,7 @@ jobs:
             --set frontend.image.tag=$IMAGE_TAG \
             --set ingress.frontend.host=${{ github.ref == 'refs/heads/main' && 'lingua-quiz.nikolay-eremeev.com' || 'test-lingua-quiz.nikolay-eremeev.com' }} \
             --set secrets.jwtSecret="${{ secrets.JWT_SECRET }}" \
-            --set secrets.postgresDb="${{ secrets.POSTGRES_DB }}" \
+            --set secrets.postgresDb="lingua-quiz" \
             --set secrets.postgresUser="${{ secrets.POSTGRES_USER }}" \
             --set secrets.postgresPassword="${{ secrets.POSTGRES_PASSWORD }}" \
             --set secrets.googleCloudCredentialsB64="${{ secrets.GOOGLE_CLOUD_CREDENTIALS_B64 }}" \

@@ -41,7 +41,7 @@ logger = logging.getLogger(__name__)
 # =================================================================
 DB_HOST = os.getenv('DB_HOST', 'localhost')
 DB_PORT = int(os.getenv('DB_PORT', 5432))
-DB_NAME = os.getenv('POSTGRES_DB', 'linguaquiz_db')
+DB_NAME = os.getenv('POSTGRES_DB', 'lingua-quiz')
 DB_USER = os.getenv('POSTGRES_USER', 'linguaquiz_user')
 DB_PASSWORD = os.getenv('POSTGRES_PASSWORD', 'password')
 JWT_SECRET = os.getenv('JWT_SECRET')

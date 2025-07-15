@@ -78,7 +78,7 @@ spec:
 
                   echo "Creating dump file: ${BACKUP_FILE}"
                   # Use -Fc for custom-format archive, suitable for pg_restore
-                  pg_dump -U $POSTGRES_USER -h $POSTGRES_HOST -d $POSTGRES_DB -Fc -f $BACKUP_FILE
+                  pg_dump -U $POSTGRES_USER -h $POSTGRES_HOST -d lingua-quiz -Fc -f $BACKUP_FILE
                   echo "Dump created successfully."
 
                   echo "Configuring mc..."
