@@ -24,7 +24,10 @@ updates:
     multi-ecosystem-group: "all-dependencies"
 
   - package-ecosystem: "docker"
-    directory: "/"
+    directories:
+      - "/packages/backend"
+      - "/packages/e2e-tests"
+      - "/packages/frontend"
     patterns:
       - "*"
     multi-ecosystem-group: "all-dependencies"
