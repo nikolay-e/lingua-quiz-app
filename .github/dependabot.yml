@@ -13,24 +13,24 @@ multi-ecosystem-groups:
 updates:
   - package-ecosystem: "npm"
     directory: "/"
-    patterns: 
+    patterns:
       - "*"
     multi-ecosystem-group: "all-dependencies"
 
   - package-ecosystem: "pip"
     directory: "/packages/backend/"
-    patterns: 
+    patterns:
       - "*"
     multi-ecosystem-group: "all-dependencies"
 
   - package-ecosystem: "docker"
     directory: "/"
-    patterns: 
+    patterns:
       - "*"
     multi-ecosystem-group: "all-dependencies"
 
   - package-ecosystem: "github-actions"
     directory: "/"
-    patterns: 
+    patterns:
       - "*"
     multi-ecosystem-group: "all-dependencies"
