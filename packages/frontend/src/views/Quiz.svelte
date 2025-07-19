@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy, tick } from 'svelte';
   import { authStore, quizStore } from '../stores';
   import api from '../api';
   import type { SubmissionResult, QuizQuestion } from '@linguaquiz/core';
@@ -209,6 +209,9 @@
     const answerValue = userAnswer;
     userAnswer = ''; // Clear input right away
     
+    // Force Svelte to update the DOM
+    await tick();
+    
     // Keep focus on input
     if (answerInput) answerInput.focus();
     
@@ -403,7 +406,7 @@
             />
             <button 
               id="submit" 
-              on:mousedown|preventDefault={() => submitAnswer()}
+              on:click={() => submitAnswer()}
               disabled={isSubmitting}
               tabindex="-1"
             >
