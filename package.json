@@ -1,19 +1,6 @@
 {
-  "name": "linguaquiz",
-  "version": "1.0.0",
-  "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "lint": "eslint . --fix --max-warnings=0",
-    "depcheck": "depcheck",
-    "format": "prettier --write . --ignore-path .gitignore"
-  },
-  "workspaces": [
-    "packages/*"
-  ],
-  "keywords": [],
   "author": "",
-  "license": "ISC",
+  "description": "",
   "devDependencies": {
     "@eslint/js": "^9.31.0",
     "depcheck": "^1.4.7",
@@ -21,5 +8,18 @@
     "globals": "^16.3.0",
     "prettier": "^3.6.2"
   },
-  "description": ""
+  "keywords": [],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "linguaquiz",
+  "scripts": {
+    "depcheck": "depcheck",
+    "format": "prettier --write . --ignore-path .gitignore",
+    "lint": "eslint . --fix --max-warnings=0"
+  },
+  "type": "module",
+  "version": "1.0.0",
+  "workspaces": [
+    "packages/*"
+  ]
 }

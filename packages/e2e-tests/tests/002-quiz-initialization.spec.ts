@@ -9,7 +9,7 @@ test.describe.serial('Quiz Initialization', () => {
 
   test.beforeEach(async ({ page }) => {
     page.setDefaultTimeout(30000);
-    
+
     // Use environment variable or fallback URL
     const baseURL = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
     await page.goto(baseURL);
@@ -38,7 +38,7 @@ test.describe.serial('Quiz Initialization', () => {
     // Check that quiz options are available
     const quizOptions = await page.locator('#quiz-select option').allTextContents();
     expect(quizOptions.length).toBeGreaterThan(1); // At least the default option + one quiz
-    
+
     // Verify specific quiz exists
     expect(quizOptions).toContain('German Russian A1');
   });
@@ -51,14 +51,14 @@ test.describe.serial('Quiz Initialization', () => {
 
     // Select a quiz
     await page.selectOption('#quiz-select', 'German Russian A1');
-    
+
     // Wait for the quiz to load
     await page.waitForSelector('#word', { state: 'visible', timeout: 5000 });
-    
+
     // Verify word display elements exist
     await expect(page.locator('#word')).toBeVisible();
     await expect(page.locator('#answer')).toBeVisible();
-    
+
     // Wait for word lists to populate
     await page.waitForFunction(() => {
       const headers = document.querySelectorAll('.foldable-header');
@@ -81,7 +81,7 @@ test.describe.serial('Quiz Initialization', () => {
     // Select a quiz
     await page.selectOption('#quiz-select', 'German Russian A1');
     await page.waitForSelector('#word', { state: 'visible', timeout: 5000 });
-    
+
     // Wait for word lists to populate
     await page.waitForFunction(() => {
       const headers = document.querySelectorAll('.foldable-header');
@@ -92,11 +92,11 @@ test.describe.serial('Quiz Initialization', () => {
     const level1HeaderText = await page.locator('#level-1 h3').innerText();
     const match = level1HeaderText.match(/\((\d+)\)/);
     const level1Count = match ? parseInt(match[1], 10) : 0;
-    
+
     // Verify Level 1 has a reasonable initial count (not more than MAX_FOCUS_POOL_SIZE as per business logic)
     expect(level1Count).toBeGreaterThan(0);
     expect(level1Count).toBeLessThanOrEqual(MAX_FOCUS_POOL_SIZE);
-    
+
     // Verify first question is shown
     const firstQuestion = await page.locator('#word').innerText();
     expect(firstQuestion.trim()).not.toBe('');
@@ -106,20 +106,20 @@ test.describe.serial('Quiz Initialization', () => {
     if (!userRegistered) {
       test.skip();
     }
-    
+
     // Login to the test account
     await login(page, testUser, testPassword);
     await expect(page.locator('#quiz-select')).toBeVisible({ timeout: 5000 });
-    
+
     // Delete the account via API call
     const token = await page.evaluate(() => localStorage.getItem('token'));
     const apiUrl = process.env.API_URL || 'http://localhost:9000/api';
-    
+
     interface DeleteResponse {
       status: number;
       ok: boolean;
     }
-    
+
     const response = await page.evaluate(async ({ token, apiUrl }): Promise<DeleteResponse> => {
       const response = await fetch(`${apiUrl}/auth/delete-account`, {
         method: 'DELETE',
@@ -130,7 +130,7 @@ test.describe.serial('Quiz Initialization', () => {
       });
       return { status: response.status, ok: response.ok };
     }, { token, apiUrl });
-    
+
     expect(response.ok).toBeTruthy();
   });
 });

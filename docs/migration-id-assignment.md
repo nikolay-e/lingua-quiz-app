@@ -2,7 +2,7 @@
 
 ## Language Base Offsets
 - German: 3000000
-- Spanish: 4000000  
+- Spanish: 4000000
 - English: 8000000
 
 ## ID Formula

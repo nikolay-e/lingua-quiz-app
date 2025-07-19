@@ -31,9 +31,9 @@ A language learning web application that helps users master vocabulary through s
 
 ## Tech Stack
 
-**Frontend**: Svelte 4.0, Vite  
-**Backend**: Python 3.11, Flask, PostgreSQL  
-**Infrastructure**: Docker, Kubernetes, Helm  
+**Frontend**: Svelte 4.0, Vite
+**Backend**: Python 3.11, Flask, PostgreSQL
+**Infrastructure**: Docker, Kubernetes, Helm
 **Testing**: Playwright E2E tests
 
 ## Contributing 🤝

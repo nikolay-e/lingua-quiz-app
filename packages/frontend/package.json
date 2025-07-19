@@ -1,15 +1,4 @@
 {
-  "name": "@linguaquiz/frontend",
-  "version": "1.0.0",
-  "type": "module",
-  "scripts": {
-    "predev": "npm run build --workspace=@linguaquiz/core",
-    "dev": "vite",
-    "build": "npm run build --workspace=@linguaquiz/core && vite build",
-    "preview": "vite preview",
-    "check": "svelte-check --tsconfig ./tsconfig.json",
-    "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch"
-  },
   "dependencies": {
     "@linguaquiz/core": "file:../core"
   },
@@ -22,5 +11,16 @@
     "svelte-preprocess": "^6.0.3",
     "typescript": "^5.8.3",
     "vite": "^7.0.4"
-  }
+  },
+  "name": "@linguaquiz/frontend",
+  "scripts": {
+    "build": "npm run build --workspace=@linguaquiz/core && vite build",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
+    "dev": "vite",
+    "predev": "npm run build --workspace=@linguaquiz/core",
+    "preview": "vite preview"
+  },
+  "type": "module",
+  "version": "1.0.0"
 }
