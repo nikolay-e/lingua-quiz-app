@@ -205,6 +205,10 @@
   async function submitAnswer(): Promise<void> {
     if (!currentQuestion || isSubmitting) return;
     
+    // Clear the input immediately after capturing the value
+    const answerValue = userAnswer;
+    userAnswer = ''; // Clear input right away
+    
     // Keep focus on input
     if (answerInput) answerInput.focus();
     
@@ -223,7 +227,7 @@
       usageExamples = null;
       
       try {
-        const result = await quizStore.submitAnswer($authStore.token!, userAnswer);
+        const result = await quizStore.submitAnswer($authStore.token!, answerValue); // Use captured value
         
         // Only update UI if this is still the current request
         if (requestId === currentRequestId) {
@@ -242,8 +246,7 @@
             } else {
               usageExamples = null;
             }
-            userAnswer = '';
-            // Immediately focus the input after clearing
+            // Input already cleared above, just focus
             if (answerInput) answerInput.focus();
           }
         }
