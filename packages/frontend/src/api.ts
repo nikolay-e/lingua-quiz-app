@@ -33,18 +33,18 @@ const getServerAddress = (): string => {
     console.log('Using localhost fallback API');
     return `http://localhost:9000/api`;
   }
-  
+
   // Docker internal networking
   if (hostname === 'frontend') {
     return 'http://backend:9000/api';
   }
-  
+
   // Generic production fallback - assume API is on same domain with /api path
   if (protocol === 'https:') {
     console.log('Using HTTPS same-domain API');
     return `https://${hostname}/api`;
   }
-  
+
   console.log('Using fallback same-origin API');
   return '/api'; // fallback for same-origin deployment
 };
@@ -157,7 +157,7 @@ const api = {
       },
       body: JSON.stringify({ text, language })
     });
-    
+
     const data = await response.json();
     if (!response.ok) throw new Error(data.message || 'Failed to synthesize speech');
     return data;
@@ -168,7 +168,7 @@ const api = {
       method: 'GET',
       headers: { 'Authorization': `Bearer ${token}` }
     });
-    
+
     const data = await response.json();
     if (!response.ok) throw new Error(data.message || 'Failed to get TTS languages');
     return data;

@@ -28,7 +28,7 @@ LinguaQuiz uses four types of separators in translation answers to provide flexi
 **When to use**: When there are different but equally correct ways to translate the same meaning.
 
 **Example**:
-- Spanish word: `gracias` 
+- Spanish word: `gracias`
 - Translation stored: `спасибо|благодарю`
 - Translation shown: `спасибо`
 - ✅ Accepted answers: `спасибо` OR `благодарю` (either synonym is correct)
@@ -48,11 +48,11 @@ LinguaQuiz uses four types of separators in translation answers to provide flexi
 
 **Solution with grouping**:
 - Translation stored: `(равный|одинаковый), (сейчас|сразу)`
-- ✅ Accepted answers: 
+- ✅ Accepted answers:
   - `равный, сейчас` - first alternative from each group
   - `одинаковый, сразу` - other alternatives from each group
   - `равный, сразу` - mixing alternatives across groups
-- ❌ Rejected answers: 
+- ❌ Rejected answers:
   - `равный` - incomplete (missing second meaning group)
 
 ### Square Brackets `[]` - Optional Clarifications
@@ -65,13 +65,13 @@ LinguaQuiz uses four types of separators in translation answers to provide flexi
 **When to use**: To clarify which specific meaning is intended when a word could be ambiguous.
 
 **Example**:
-- Spanish word: `mundo` 
+- Spanish word: `mundo`
 - Translation shown: `мир [вселенная]`
-- ✅ Accepted answers: 
+- ✅ Accepted answers:
   - `мир` - main word only
   - `мир вселенная` - with clarification (with space)
   - `мирвселенная` - with clarification (without space)
-- ❌ Rejected answers: 
+- ❌ Rejected answers:
   - `вселенная` - clarification alone is insufficient
   - `мир, вселенная` - NOT accepted (brackets don't indicate separate meanings)
 

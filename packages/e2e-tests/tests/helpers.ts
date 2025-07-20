@@ -29,7 +29,7 @@ async function withRetry<T>(fn: () => Promise<T>, retries = 3): Promise<T> {
 export async function register(page: Page, username: string, password: string, success?: boolean): Promise<void> {
   // Use environment variable or fallback URL
   const baseURL = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
-  
+
   try {
     await withRetry(async () => {
       await page.goto(baseURL, { waitUntil: 'domcontentloaded', timeout: 30000 });
@@ -37,7 +37,7 @@ export async function register(page: Page, username: string, password: string, s
   } catch (error) {
     throw error;
   }
-  
+
   // First check if we're on login page and need to navigate to register
   try {
     await page.waitForSelector('section:has-text("Sign In")', { state: 'visible', timeout: 2000 });
@@ -53,16 +53,16 @@ export async function register(page: Page, username: string, password: string, s
       throw error2;
     }
   }
-  
+
   // Find the username and password inputs within the register section
   const registerSection = page.locator('section:has-text("Create Account")');
-  
+
   // Wait for inputs to be ready - use more specific selectors for Tailwind layout
   await registerSection.locator('input[placeholder="Username"]').waitFor({ state: 'visible', timeout: 5000 });
-  await registerSection.locator('input[id="register-password"]').waitFor({ state: 'visible', timeout: 5000 });
-  
+  await registerSection.locator('input[id="password"]').waitFor({ state: 'visible', timeout: 5000 });
+
   await registerSection.locator('input[placeholder="Username"]').fill(username);
-  await registerSection.locator('input[id="register-password"]').fill(password);
+  await registerSection.locator('input[id="password"]').fill(password);
   // Wait for password validation to complete
   await page.waitForFunction(() => {
     const sections = Array.from(document.querySelectorAll('section'));
@@ -80,7 +80,7 @@ export async function register(page: Page, username: string, password: string, s
 
   // Wait for network idle before clicking
   await page.waitForLoadState('networkidle');
-  
+
   // Click with retry for Firefox compatibility
   try {
     await submitButton.click({ timeout: 15000 });
@@ -103,7 +103,7 @@ export async function register(page: Page, username: string, password: string, s
       } catch {
         console.log('Success message too fast, checking for redirect');
       }
-      
+
       // Either way, we should end up on the quiz page due to auto-login
       await expect(page.locator('#quiz-select')).toBeVisible({ timeout: 8000 });
     } else {
@@ -118,7 +118,7 @@ export async function register(page: Page, username: string, password: string, s
 export async function login(page: Page, username: string, password: string): Promise<void> {
   // Use environment variable or fallback URL
   const baseURL = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
-  
+
   try {
     await withRetry(async () => {
       await page.goto(baseURL, { waitUntil: 'domcontentloaded', timeout: 30000 });
@@ -126,7 +126,7 @@ export async function login(page: Page, username: string, password: string): Pro
   } catch (error) {
     throw error;
   }
-  
+
   // Check if we're already logged in (quiz selector is visible)
   try {
     await page.waitForSelector('#quiz-select', { state: 'visible', timeout: 2000 });
@@ -135,20 +135,20 @@ export async function login(page: Page, username: string, password: string): Pro
   } catch {
     // Not logged in, continue with login process
   }
-  
+
   // Wait for the login form to be visible
   await page.waitForSelector('section:has-text("Sign In")', { state: 'visible', timeout: 2000 });
-  
+
   // Find the username and password inputs within the login section
   const loginSection = page.locator('section:has-text("Sign In")');
-  
+
   // Wait for inputs to be ready - use more specific selectors for Tailwind layout
   await loginSection.locator('input[placeholder="Username"]').waitFor({ state: 'visible', timeout: 5000 });
   await loginSection.locator('input[id="password"]').waitFor({ state: 'visible', timeout: 5000 });
-  
+
   await loginSection.locator('input[placeholder="Username"]').fill(username);
   await loginSection.locator('input[id="password"]').fill(password);
-  
+
   // Wait for submit button to be ready and click with retry for Firefox compatibility
   const submitButton = loginSection.locator('button[type="submit"]');
   await submitButton.waitFor({ state: 'visible', timeout: 5000 });
@@ -162,14 +162,14 @@ export async function login(page: Page, username: string, password: string): Pro
     }
     return false;
   }, { timeout: 5000 });
-  
+
   try {
     await submitButton.click({ timeout: 15000 }); // Increased timeout for Firefox
   } catch (error) {
     // Retry with force click if normal click fails
     await submitButton.click({ force: true });
   }
-  
+
   // Wait for either successful login (quiz select visible) or error message
   await Promise.race([
     page.waitForSelector('#quiz-select', { state: 'visible', timeout: 10000 }),
@@ -231,7 +231,7 @@ export async function getWordsFromList(page: Page, listId: string): Promise<Word
   try {
     const listLocator = page.locator(`#${listId} li`);
     await page.locator(`#${listId}`).waitFor({ state: 'attached', timeout: 3000 }).catch(() => {});
-    
+
     const listItems = await listLocator.allTextContents();
     return listItems
       .filter(text => !text.includes('No words') && !text.includes('No new words'))
@@ -266,7 +266,7 @@ export function wordsMatch(displayWord: string, questionWord: string): boolean {
  */
 export async function findCorrectAnswer(page: Page, questionWord: string, isReverse = false): Promise<string | null> {
   const lists = ['level-0-list', 'level-1-list', 'level-2-list', 'level-3-list', 'level-4-list', 'level-5-list'];
-  
+
   for (const listId of lists) {
     const words = await getWordsFromList(page, listId);
     for (const wordPair of words) {
@@ -290,15 +290,15 @@ export async function answerCorrectly(page: Page): Promise<boolean> {
   if (!correctAnswer) {
     correctAnswer = await findCorrectAnswer(page, questionWord, true);
   }
-  
+
   if (!correctAnswer) {
     console.warn(`Could not find correct answer for "${questionWord}"`);
     return false;
   }
-  
+
   await page.fill('#answer', correctAnswer);
   await page.press('#answer', 'Enter');
-  
+
   // Wait for feedback or new question
   await page.waitForFunction(() => {
     const answer = document.querySelector('#answer') as HTMLInputElement;
@@ -311,9 +311,9 @@ export async function answerCorrectly(page: Page): Promise<boolean> {
  * Progresses a specific word to a target level by answering it correctly
  */
 export async function progressWordToLevel(
-  page: Page, 
-  sourceWord: string, 
-  targetLevel: string, 
+  page: Page,
+  sourceWord: string,
+  targetLevel: string,
   maxAttempts = 50
 ): Promise<boolean> {
   const levelMap: Record<string, number> = {
@@ -324,14 +324,14 @@ export async function progressWordToLevel(
     'LEVEL_4': 4,
     'LEVEL_5': 5
   };
-  
+
   const targetLevelNum = levelMap[targetLevel];
   if (targetLevelNum === undefined) {
     throw new Error(`Invalid target level: ${targetLevel}`);
   }
 
   console.log(`Starting progression of word "${sourceWord}" to ${targetLevel}`);
-  
+
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     // Check if word reached target level
     const listId = `level-${targetLevelNum}-list`;
@@ -340,10 +340,10 @@ export async function progressWordToLevel(
       console.log(`Word "${sourceWord}" reached ${targetLevel} after ${attempt} attempts`);
       return true;
     }
-    
+
     // Get current question
     const currentWord = await page.locator('#word').innerText();
-    
+
     // Check if it's our target word (check both directions since level switching is automatic)
     let isTargetWord = false;
     if (wordsMatch(sourceWord, currentWord)) {
@@ -356,7 +356,7 @@ export async function progressWordToLevel(
         isTargetWord = true;
       }
     }
-    
+
     if (isTargetWord) {
       // Answer correctly
       await answerCorrectly(page);
@@ -366,13 +366,13 @@ export async function progressWordToLevel(
       await page.fill('#answer', 'skip');
       await page.press('#answer', 'Enter');
     }
-    
+
     await page.waitForFunction(() => {
       const answer = document.querySelector('#answer') as HTMLInputElement;
       return answer && answer.value === '';
     }, { timeout: 1000 });
   }
-  
+
   console.warn(`Failed to progress word "${sourceWord}" to ${targetLevel} after ${maxAttempts} attempts`);
   return false;
 }

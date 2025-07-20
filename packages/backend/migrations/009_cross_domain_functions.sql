@@ -136,7 +136,7 @@ CREATE OR REPLACE FUNCTION get_user_word_sets (p_user_id INTEGER, p_word_list_na
 BEGIN
   RETURN QUERY
   WITH user_words AS (
-    SELECT 
+    SELECT
       t.id AS word_pair_id,
       COALESCE(utp.status::VARCHAR, 'LEVEL_0') AS status,
       sw.text AS source_word,
@@ -146,26 +146,26 @@ BEGIN
       sw.usage_example AS source_word_usage_example,
       tw.usage_example AS target_word_usage_example,
       COALESCE(utp.queue_position, 0) AS queue_position
-    FROM 
+    FROM
       word_list_entries wle
-    JOIN 
+    JOIN
       translations t ON wle.translation_id = t.id
-    JOIN 
+    JOIN
       words sw ON t.source_word_id = sw.id
-    JOIN 
+    JOIN
       words tw ON t.target_word_id = tw.id
-    JOIN 
+    JOIN
       languages sl ON sw.language_id = sl.id
-    JOIN 
+    JOIN
       languages tl ON tw.language_id = tl.id
-    JOIN 
+    JOIN
       word_lists wl ON wle.word_list_id = wl.id
-    LEFT JOIN 
+    LEFT JOIN
       user_translation_progress utp ON utp.word_pair_id = t.id AND utp.user_id = p_user_id
-    WHERE 
+    WHERE
       wl.name = p_word_list_name
   )
-  SELECT 
+  SELECT
     user_words.word_pair_id,
     user_words.status,
     user_words.source_word,
@@ -175,8 +175,8 @@ BEGIN
     user_words.source_word_usage_example,
     user_words.target_word_usage_example
   FROM user_words
-  ORDER BY 
-    CASE 
+  ORDER BY
+    CASE
       WHEN user_words.status = 'LEVEL_1' THEN 1   -- Learning
       WHEN user_words.status = 'LEVEL_0' THEN 2   -- New
       WHEN user_words.status = 'LEVEL_2' THEN 3   -- Translation (One Way)

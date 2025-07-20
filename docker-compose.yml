@@ -14,7 +14,7 @@ services:
       - lingua-quiz-local-net
     volumes:
       - pgdata_local:/var/lib/postgresql/data
-  
+
   backend:
     build: packages/backend
     ports: ["9000:9000"]
@@ -40,7 +40,7 @@ services:
       start_period: 5s
     networks:
       - lingua-quiz-local-net
-  
+
   frontend:
     build:
       context: .

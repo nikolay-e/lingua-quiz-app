@@ -1,0 +1,66 @@
+# .pre-commit-config.yaml
+# Minimal pre-commit configuration using only pre-commit-hooks
+
+exclude: |
+  (?x)^(
+    helm/lingua-quiz-app/templates/.*\.yaml$|
+    package-lock\.json$
+  )$
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      # Remove trailing whitespace
+      - id: trailing-whitespace
+        args: ['--markdown-linebreak-ext=md']
+
+      # Ensure files end with a newline
+      - id: end-of-file-fixer
+
+      # Fix mixed line endings (convert to LF)
+      - id: mixed-line-ending
+        args: ['--fix=lf']
+
+      # Check for files that would conflict on case-insensitive filesystems
+      - id: check-case-conflict
+
+      # Check for merge conflicts
+      - id: check-merge-conflict
+
+      # Check JSON files
+      - id: check-json
+
+      # Check YAML files
+      - id: check-yaml
+        args: ['--unsafe']  # Allow extensions for Helm files
+
+      # Check for large files
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+
+      # Detect private keys
+      - id: detect-private-key
+
+      # Pretty format JSON files
+      - id: pretty-format-json
+        args: ['--autofix', '--indent=2', '--no-sort-keys']
+
+      # Fix byte order marker
+      - id: fix-byte-order-marker
+
+      # Check Python syntax
+      - id: check-ast
+
+      # Check docstrings come first in Python
+      - id: check-docstring-first
+
+      # Check for debugger imports in Python
+      - id: debug-statements
+
+      # Sort requirements.txt
+      - id: requirements-txt-fixer
+
+      # No direct commits to main/master branches
+      - id: no-commit-to-branch
+        args: ['--branch', 'main', '--branch', 'master']

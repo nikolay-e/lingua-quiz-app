@@ -50,7 +50,7 @@ if not JWT_SECRET:
 JWT_EXPIRES_IN = os.getenv('JWT_EXPIRES_IN', '24h')
 JWT_EXPIRES_HOURS = int(os.getenv('JWT_EXPIRES_HOURS', '24'))
 PORT = int(os.getenv('PORT', 9000))
-CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', 
+CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS',
     'http://localhost:8080,http://localhost:5173,https://lingua-quiz.nikolay-eremeev.com,https://test-lingua-quiz.nikolay-eremeev.com'
 ).split(',')
 if '*' in CORS_ALLOWED_ORIGINS:
@@ -85,7 +85,7 @@ app.add_middleware(
 async def add_security_headers(request: Request, call_next):
     """Add security headers to all responses"""
     response = await call_next(request)
-    
+
     # Content Security Policy (CSP) - prevents XSS and code injection
     csp_policy = (
         "default-src 'self'; "
@@ -100,22 +100,22 @@ async def add_security_headers(request: Request, call_next):
         "frame-ancestors 'none';"
     )
     response.headers["Content-Security-Policy"] = csp_policy
-    
+
     # X-Frame-Options - prevents clickjacking
     response.headers["X-Frame-Options"] = "DENY"
-    
+
     # X-Content-Type-Options - prevents MIME type sniffing
     response.headers["X-Content-Type-Options"] = "nosniff"
-    
+
     # Strict-Transport-Security (HSTS) - enforces HTTPS
     response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains; preload"
-    
+
     # Cross-Origin-Embedder-Policy - helps mitigate Spectre attacks
     response.headers["Cross-Origin-Embedder-Policy"] = "credentialless"
-    
+
     # Cross-Origin-Opener-Policy - provides isolation
     response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
-    
+
     # Permissions Policy - controls browser features
     permissions_policy = (
         "geolocation=(), "
@@ -128,16 +128,16 @@ async def add_security_headers(request: Request, call_next):
         "accelerometer=()"
     )
     response.headers["Permissions-Policy"] = permissions_policy
-    
+
     # Referrer Policy - controls referrer information
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
-    
+
     # Cache control for dynamic content
     if request.url.path.startswith("/api/"):
         response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
         response.headers["Pragma"] = "no-cache"
         response.headers["Expires"] = "0"
-    
+
     return response
 
 # Rate limiting
@@ -171,7 +171,7 @@ class WordSetResponse(BaseModel):
     name: str
     created_at: str = Field(alias="createdAt")
     updated_at: str = Field(alias="updatedAt")
-    
+
     class Config:
         populate_by_name = True
 
@@ -185,7 +185,7 @@ class WordResponse(BaseModel):
     target_language: str = Field(alias="targetLanguage")
     source_example: Optional[str] = Field(alias="sourceExample")
     target_example: Optional[str] = Field(alias="targetExample")
-    
+
     class Config:
         populate_by_name = True
 
@@ -194,7 +194,7 @@ class WordSetWithWordsResponse(WordSetResponse):
 
 class UserWordSetRequest(BaseModel):
     word_list_name: str = Field(alias="wordListName")
-    
+
     class Config:
         populate_by_name = True
 
@@ -207,14 +207,14 @@ class UserWordSetResponse(BaseModel):
     source_word_usage_example: Optional[str] = Field(alias="sourceWordUsageExample")
     target_word_usage_example: Optional[str] = Field(alias="targetWordUsageExample")
     status: Optional[str] = None
-    
+
     class Config:
         populate_by_name = True
 
 class UserWordSetStatusUpdate(BaseModel):
     status: str = Field(..., pattern="^(LEVEL_0|LEVEL_1|LEVEL_2|LEVEL_3|LEVEL_4|LEVEL_5)$")
     word_pair_ids: List[int] = Field(alias="wordPairIds")
-    
+
     class Config:
         populate_by_name = True
 
@@ -227,14 +227,14 @@ class TTSResponse(BaseModel):
     content_type: str = Field(alias="contentType", default="audio/mpeg")
     text: str
     language: str
-    
+
     class Config:
         populate_by_name = True
 
 class TTSLanguagesResponse(BaseModel):
     available: bool
     supported_languages: List[str] = Field(alias="supportedLanguages")
-    
+
     class Config:
         populate_by_name = True
 
@@ -307,14 +307,14 @@ def query_db(query, args=(), one=False):
             cur.execute(query, args)
             # Always fetch results first (even for write operations with RETURNING)
             rv = cur.fetchall()
-            
+
             # Determine if this is a write operation and commit if needed
             is_write_operation = query.strip().upper().startswith(('INSERT', 'UPDATE', 'DELETE'))
             if is_write_operation:
                 logger.info(f"Committing transaction for query: {query[:50]}...")
                 conn.commit()
                 logger.info("Transaction committed successfully")
-            
+
             return (rv[0] if rv else None) if one else rv
     except psycopg2.pool.PoolError as e:
         logger.error(f"Connection pool error: {e}")
@@ -458,7 +458,7 @@ async def register_user(request: Request, user_data: UserRegistration):
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Username already exists"
             )
-        
+
         # Hash password and create user
         hashed_password = hash_password(user_data.password)
         result = query_db(
@@ -466,25 +466,25 @@ async def register_user(request: Request, user_data: UserRegistration):
             (user_data.username, hashed_password),
             one=True
         )
-        
+
         if not result:
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail="Failed to create user"
             )
-        
+
         user_id = result['id']
         logger.info(f"Successfully created user {user_data.username} with id {user_id}")
-        
+
         # Create access token
         token = create_access_token(data={"userId": user_id, "sub": user_data.username})
-        
+
         return TokenResponse(
             token=token,
             expires_in=JWT_EXPIRES_IN,
             user=UserResponse(id=user_id, username=user_data.username)
         )
-        
+
     except HTTPException:
         raise
     except Exception as e:
@@ -506,24 +506,24 @@ async def login_user(request: Request, user_data: UserLogin):
             (user_data.username,),
             one=True
         )
-        
+
         if not user or not verify_password(user_data.password, user['password']):
             logger.warning(f"Invalid login attempt for user: {user_data.username}")
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid username or password"
             )
-        
+
         # Create access token
         token = create_access_token(data={"userId": user['id'], "sub": user['username']})
         logger.info(f"Successful login for user: {user_data.username}")
-        
+
         return TokenResponse(
             token=token,
             expires_in=JWT_EXPIRES_IN,
             user=UserResponse(id=user['id'], username=user['username'])
         )
-        
+
     except HTTPException:
         raise
     except Exception as e:
@@ -542,17 +542,17 @@ async def delete_account(current_user: dict = Depends(get_current_user)):
             "DELETE FROM users WHERE id = %s",
             (current_user['user_id'],)
         )
-        
+
         if result == 0:
             logger.warning(f"Account deletion failed - user not found: {current_user['username']}")
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="User not found"
             )
-        
+
         logger.info(f"Account successfully deleted for user: {current_user['username']}")
         return {"message": "Account deleted successfully"}
-        
+
     except HTTPException:
         raise
     except Exception as e:
@@ -572,15 +572,15 @@ async def get_current_level(current_user: dict = Depends(get_current_user)):
             (current_user['user_id'],),
             one=True
         )
-        
+
         if not user:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="User not found"
             )
-        
+
         return UserLevelResponse(currentLevel=user['current_level'])
-        
+
     except HTTPException:
         raise
     except Exception as e:
@@ -604,24 +604,24 @@ async def update_current_level(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail=f"Invalid level value. Must be one of: {', '.join(valid_levels)}"
             )
-        
+
         # Update user level
         result = execute_db(
             'UPDATE users SET current_level = %s::translation_status WHERE id = %s',
             (level_data.currentLevel, current_user['user_id'])
         )
-        
+
         if result == 0:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="User not found"
             )
-        
+
         return UserLevelUpdateResponse(
             message="Current level updated successfully",
             currentLevel=level_data.currentLevel
         )
-        
+
     except HTTPException:
         raise
     except Exception as e:
@@ -639,7 +639,7 @@ async def get_word_sets(current_user: dict = Depends(get_current_user)):
     try:
         word_sets = query_db("SELECT * FROM get_word_lists()")
         return [convert_keys_to_camel_case(dict(ws)) for ws in word_sets]
-        
+
     except Exception as e:
         logger.error(f"Error fetching word sets: {e}")
         raise HTTPException(
@@ -658,9 +658,9 @@ async def get_user_word_sets(
             "SELECT * FROM get_user_word_sets(%s, %s)",
             (current_user['user_id'], word_list_name)
         )
-        
+
         return [convert_keys_to_camel_case(dict(uws)) for uws in user_word_sets]
-        
+
     except Exception as e:
         logger.error(f"Error fetching user word sets: {e}")
         raise HTTPException(
@@ -678,13 +678,13 @@ async def get_word_set(word_set_id: int, current_user: dict = Depends(get_curren
             (word_set_id,),
             one=True
         )
-        
+
         if not word_set:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Word set not found"
             )
-        
+
         # Get words for this set
         words = query_db(
             """SELECT t.id as translation_id, sw.id as source_word_id, tw.id as target_word_id,
@@ -701,12 +701,12 @@ async def get_word_set(word_set_id: int, current_user: dict = Depends(get_curren
                ORDER BY t.id""",
             (word_set_id,)
         )
-        
+
         result = convert_keys_to_camel_case(dict(word_set))
         result['words'] = [convert_keys_to_camel_case(dict(word)) for word in words]
-        
+
         return result
-        
+
     except HTTPException:
         raise
     except Exception as e:
@@ -730,15 +730,15 @@ async def update_user_word_sets(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail=f"Invalid status. Must be one of: {', '.join(valid_statuses)}"
             )
-        
+
         # Update word sets
         execute_db(
             "SELECT update_user_word_set_status(%s, %s, %s)",
             (current_user['user_id'], update_data.word_pair_ids, update_data.status)
         )
-        
+
         return {"message": f"Updated {len(update_data.word_pair_ids)} word sets to {update_data.status}"}
-        
+
     except HTTPException:
         raise
     except Exception as e:
@@ -759,23 +759,23 @@ async def synthesize_speech(
     """Synthesize speech from text"""
     try:
         audio_data = tts_service.synthesize_speech(tts_data.text, tts_data.language)
-        
+
         if not audio_data:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Failed to synthesize speech"
             )
-        
+
         # Convert bytes to base64 string
         audio_data_b64 = base64.b64encode(audio_data).decode('utf-8')
-        
+
         return TTSResponse(
             audio_data=audio_data_b64,
             content_type="audio/mpeg",
             text=tts_data.text,
             language=tts_data.language
         )
-        
+
     except HTTPException:
         raise
     except Exception as e:
@@ -793,7 +793,7 @@ async def get_tts_languages(current_user: dict = Depends(get_current_user)):
             available=tts_service.is_available(),
             supported_languages=tts_service.get_supported_languages()
         )
-        
+
     except Exception as e:
         logger.error(f"Error getting TTS languages: {e}")
         raise HTTPException(

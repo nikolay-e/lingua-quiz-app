@@ -21,7 +21,7 @@ class EnglishWordAnalyzer(BaseWordAnalyzer):
         """Initialize the English analyzer and load NLP models."""
         super().__init__(migrations_dir, language_code="en")
         print("🚀 Initializing English Word Analyzer...")
-        
+
         # Use common model loading function
         model_preferences = ["en_core_web_trf", "en_core_web_lg"]
         self.nlp = load_spacy_model("en", model_preferences)
@@ -40,10 +40,10 @@ class EnglishWordAnalyzer(BaseWordAnalyzer):
         Extracts all existing English words from the specified A1 migration file.
         """
         english_file = os.path.join(self.migrations_dir, self.get_migration_filename())
-        
+
         data = self.extract_data_from_file(english_file)
         english_words = set()
-        
+
         for _, _, _, raw_word, translation, _, _ in data:
             if raw_word:
                 # Skip obvious placeholder entries (word with translation 'translation')
@@ -52,7 +52,7 @@ class EnglishWordAnalyzer(BaseWordAnalyzer):
                 # Use common word processing method without modifying commas
                 # English typically uses pipes for alternatives, not commas
                 english_words.update(self.process_word_variants(raw_word))
-        
+
         return english_words
 
     def analyze_word(self, word: str, existing_words: Set[str]) -> Tuple[str, str, str]:
@@ -61,7 +61,7 @@ class EnglishWordAnalyzer(BaseWordAnalyzer):
         """
         doc = self.nlp(word)
         token = doc[0]
-        
+
         lemma = token.lemma_.lower()
         pos_tag = token.pos_
         morphology = str(token.morph)
@@ -83,17 +83,17 @@ class EnglishWordAnalyzer(BaseWordAnalyzer):
 
         if token.ent_type_ or pos_tag == 'PROPN':
             return 'proper_noun', pos_tag, f"Proper noun ({token.ent_type_ or 'Name'})"
-            
+
         if "'" in word and pos_tag != 'NOUN':
              if lemma in existing_words:
                  return 'inflected_form', pos_tag, f"Contraction of '{lemma}' (e.g., it's, don't)"
 
         if pos_tag in ['PUNCT', 'SYM', 'SPACE', 'X']:
             return 'symbol_or_other', pos_tag, "Symbol, punctuation, or non-linguistic token"
-        
+
         if token.is_stop or pos_tag in ['ADP', 'AUX', 'CCONJ', 'SCONJ', 'DET', 'PART', 'PRON']:
             return 'grammatical_word', pos_tag, "Grammatical function word"
-            
+
         freq = word_frequency(word.lower(), 'en')
 
         if pos_tag in self.pos_thresholds:
@@ -102,7 +102,7 @@ class EnglishWordAnalyzer(BaseWordAnalyzer):
                     return self.category_mapping[pos_tag], pos_tag, f'High-frequency {pos_tag}'
             else:
                 return 'low_frequency', pos_tag, f"Too infrequent for learners (freq: {freq:.6f})"
-        
+
         return 'other', pos_tag, "Uncategorized word"
 
 def main():

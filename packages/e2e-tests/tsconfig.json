@@ -2,7 +2,10 @@
   "compilerOptions": {
     "target": "ES2020",
     "module": "commonjs",
-    "lib": ["ES2020", "DOM"],
+    "lib": [
+      "ES2020",
+      "DOM"
+    ],
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -12,7 +15,10 @@
     "allowJs": true,
     "noEmit": true,
     "strictNullChecks": false,
-    "types": ["@playwright/test", "node"]
+    "types": [
+      "@playwright/test",
+      "node"
+    ]
   },
   "include": [
     "tests/**/*.ts",

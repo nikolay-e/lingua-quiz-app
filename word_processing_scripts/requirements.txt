@@ -1,5 +1,5 @@
 spacy>=3.4.0
-wordfreq>=3.0.0
 stanza>=1.4.0  # Stanford NLP (optional, for Spanish analyzer advanced features)
-transformers>=4.0.0  # Hugging Face transformers (optional, for Spanish BERT)
 torch>=1.10.0  # PyTorch (required if using transformers)
+transformers>=4.0.0  # Hugging Face transformers (optional, for Spanish BERT)
+wordfreq>=3.0.0
