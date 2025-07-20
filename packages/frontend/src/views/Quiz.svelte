@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount, onDestroy, tick } from 'svelte';
   import { authStore, quizStore } from '../stores';
   import api from '../api';
   import type { SubmissionResult, QuizQuestion } from '@linguaquiz/core';
@@ -20,10 +20,6 @@
   let ttsLanguages: string[] = [];
   let isPlayingTTS: boolean = false;
   let currentAudio: HTMLAudioElement | null = null;
-  
-  // Request queuing to prevent concurrent requests
-  let requestQueue: Promise<void> = Promise.resolve();
-  let currentRequestId: number = 0;
   
   // Foldable lists state
   let foldedLists: Record<string, boolean> = {
@@ -116,6 +112,11 @@
   
   // Current level is now automatically managed by the quiz system
   
+  // Reactive focus management - focus input when it becomes available
+  $: if (answerInput && currentQuestion) {
+    answerInput.focus();
+  }
+  
   function getLevelDescription(level: string): string {
     switch (level) {
       case 'LEVEL_1': return `New Words Practice (${sourceLanguage} ➔ ${targetLanguage})`;
@@ -194,6 +195,8 @@
       if (!question) {
         feedback = { message: 'No questions available for this quiz.', isSuccess: false } as QuizFeedback;
       }
+      // Use tick to ensure DOM updates before focusing
+      await tick();
       if (answerInput) answerInput.focus();
     } catch (error: unknown) {
       console.error('Failed to start quiz:', error);
@@ -204,64 +207,38 @@
   
   async function submitAnswer(): Promise<void> {
     if (!currentQuestion || isSubmitting) return;
-    
-    // Keep focus on input
-    if (answerInput) answerInput.focus();
-    
-    const requestId: number = ++currentRequestId;
-    
-    // Queue this request
-    requestQueue = requestQueue.then(async (): Promise<void> => {
-      // Check if this request is still valid
-      if (requestId !== currentRequestId) {
-        console.log('Request cancelled - newer request exists');
-        return;
-      }
-      
-      isSubmitting = true;
-      feedback = null; // Clear any previous feedback immediately
-      usageExamples = null;
-      
-      try {
-        const result = await quizStore.submitAnswer($authStore.token!, userAnswer);
-        
-        // Only update UI if this is still the current request
-        if (requestId === currentRequestId) {
-          if (result) {
-            feedback = result;
-            // Set usage examples if they exist in the translation
-            if ('translation' in result && result.translation) {
-              usageExamples = {
-                source: result.translation.sourceWord.usageExample || '',
-                target: result.translation.targetWord.usageExample || ''
-              };
-              // Only show if at least one example exists
-              if (!usageExamples.source && !usageExamples.target) {
-                usageExamples = null;
-              }
-            } else {
-              usageExamples = null;
-            }
-            userAnswer = '';
-            // Immediately focus the input after clearing
-            if (answerInput) answerInput.focus();
+
+    isSubmitting = true;
+    feedback = null;
+    usageExamples = null;
+
+    try {
+      const result = await quizStore.submitAnswer($authStore.token!, userAnswer);
+
+      if (result) {
+        feedback = result;
+        if ('translation' in result && result.translation) {
+          usageExamples = {
+            source: result.translation.sourceWord.usageExample || '',
+            target: result.translation.targetWord.usageExample || ''
+          };
+          if (!usageExamples.source && !usageExamples.target) {
+            usageExamples = null;
           }
+        } else {
+          usageExamples = null;
         }
-      } catch (error: unknown) {
-        if (requestId === currentRequestId) {
-          console.error('Error submitting answer:', error);
-          const errorMessage = error instanceof Error ? error.message : 'Error submitting answer. Please try again.';
-          feedback = { message: errorMessage, isSuccess: false } as QuizFeedback;
-        }
-      } finally {
-        if (requestId === currentRequestId) {
-          isSubmitting = false;
-          if (answerInput) answerInput.focus();
-        }
+        // This will now execute reliably
+        userAnswer = ''; 
       }
-    });
-    
-    await requestQueue;
+    } catch (error: any) {
+      console.error('Error submitting answer:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Error submitting answer.';
+      feedback = { message: errorMessage, isSuccess: false } as QuizFeedback;
+    } finally {
+      isSubmitting = false;
+      // The reactive statement will handle the focus automatically
+    }
   }
   
   function handleKeydown(e: KeyboardEvent): void {
@@ -311,6 +288,8 @@
     if ($authStore.token) {
       await loadTTSLanguages();
     }
+    // Use tick to ensure DOM is updated before focusing
+    await tick();
     if (answerInput) answerInput.focus();
     
     // Save progress before page unload
