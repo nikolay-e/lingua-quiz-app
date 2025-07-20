@@ -21,7 +21,7 @@ class DatabaseConfig(BaseModel):
     name: str = Field(default="linguaquiz_db", min_length=1, description="Database name")
     user: str = Field(default="linguaquiz_user", min_length=1, description="Database user")
     password: str = Field(default="", description="Database password")
-    
+
     @field_validator('port')
     @classmethod
     def validate_port(cls, v):
@@ -33,7 +33,7 @@ class MigrationConfig(BaseModel):
     """Migration runner configuration with validation"""
     migrations_dir: Path = Field(default=Path("./migrations"), description="Migrations directory path")
     auto_confirm: bool = Field(default=False, description="Skip confirmation prompts")
-    
+
     @field_validator('migrations_dir')
     @classmethod
     def validate_migrations_dir(cls, v):
@@ -46,14 +46,14 @@ class MigrationFile(BaseModel):
     filename: str = Field(..., min_length=1, description="Migration filename")
     filepath: Path = Field(..., description="Full path to migration file")
     content: str = Field(..., min_length=1, description="SQL content")
-    
+
     @field_validator('filename')
     @classmethod
     def validate_filename(cls, v):
         if not v.endswith('.sql'):
             raise ValueError('Migration files must have .sql extension')
         return v
-    
+
     @field_validator('filepath')
     @classmethod
     def validate_filepath(cls, v):
@@ -76,21 +76,21 @@ def load_config() -> tuple[DatabaseConfig, MigrationConfig]:
             user=os.getenv('POSTGRES_USER', 'linguaquiz_user'),
             password=os.getenv('POSTGRES_PASSWORD', '')
         )
-        
+
         # Auto-confirm in CI/CD environments
         auto_confirm = (
-            os.getenv('CI') == 'true' or 
-            os.getenv('KUBERNETES_SERVICE_HOST') is not None or 
+            os.getenv('CI') == 'true' or
+            os.getenv('KUBERNETES_SERVICE_HOST') is not None or
             os.getenv('DOCKER_ENVIRONMENT') == 'true'
         )
-        
+
         migration_config = MigrationConfig(
             migrations_dir=Path(os.getenv('MIGRATIONS_DIR', './migrations')),
             auto_confirm=auto_confirm
         )
-        
+
         return db_config, migration_config
-        
+
     except Exception as e:
         print(f"{RED}✗ Configuration validation failed: {e}{RESET}")
         sys.exit(1)
@@ -116,13 +116,13 @@ def get_migration_files(migration_config: MigrationConfig) -> List[MigrationFile
     if not migration_config.migrations_dir.exists():
         print(f"{RED}Migration directory not found: {migration_config.migrations_dir}{RESET}")
         sys.exit(1)
-    
+
     files = []
     for filepath in migration_config.migrations_dir.glob('*.sql'):
         # Skip the old schema migrations table file
         if filepath.name == '000_schema_migrations_table.sql':
             continue
-            
+
         try:
             content = filepath.read_text(encoding='utf-8')
             migration_file = MigrationFile(
@@ -134,7 +134,7 @@ def get_migration_files(migration_config: MigrationConfig) -> List[MigrationFile
         except Exception as e:
             print(f"{RED}Error reading migration file {filepath}: {e}{RESET}")
             sys.exit(1)
-    
+
     # Sort by filename
     return sorted(files, key=lambda x: x.filename)
 
@@ -153,14 +153,14 @@ def run_migration(conn, migration_file: MigrationFile) -> bool:
 def main():
     """Main migration runner with Pydantic validation"""
     print(f"{GREEN}LinguaQuiz Migration Runner with Pydantic Validation{RESET}")
-    
+
     # Load and validate configuration
     db_config, migration_config = load_config()
-    
+
     print(f"Database: {db_config.user}@{db_config.host}:{db_config.port}/{db_config.name}")
     print(f"Migrations directory: {migration_config.migrations_dir}")
     print(f"Auto-confirm: {migration_config.auto_confirm}\n")
-    
+
     # Connect to database
     try:
         conn = get_connection(db_config)
@@ -168,16 +168,16 @@ def main():
     except Exception as e:
         print(f"{RED}✗ Failed to connect to database: {e}{RESET}")
         sys.exit(1)
-    
+
     try:
         # Get and validate migration files
         migration_files = get_migration_files(migration_config)
         print(f"Found {len(migration_files)} migration files\n")
-        
+
         if not migration_files:
             print(f"{GREEN}✓ No migrations to run{RESET}")
             return
-        
+
         # Ask for confirmation (skip if auto-confirm is enabled)
         if not migration_config.auto_confirm:
             print(f"{YELLOW}Will run the following migrations:{RESET}")
@@ -186,26 +186,26 @@ def main():
             if input("\nContinue? (y/N): ").lower() != 'y':
                 print("Aborted.")
                 return
-        
+
         # Run all migrations
         print()
         success_count = 0
         for migration_file in migration_files:
             print(f"Running {migration_file.filename}...", end=' ', flush=True)
-            
+
             if run_migration(conn, migration_file):
                 print(f"{GREEN}✓{RESET}")
                 success_count += 1
             else:
                 print(f"{RED}✗{RESET}")
                 # Continue with other migrations even if one fails
-        
+
         print(f"\n{GREEN}✓ Completed: {success_count}/{len(migration_files)} migrations successful{RESET}")
-        
+
         if success_count < len(migration_files):
             print(f"{YELLOW}⚠ Some migrations failed. Check the errors above.{RESET}")
             sys.exit(1)
-        
+
     finally:
         conn.close()
 

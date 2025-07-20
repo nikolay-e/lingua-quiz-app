@@ -69,10 +69,10 @@ There are two distinct types of tasks, each with its own set of rules:
   ```bash
   # Stop any running services
   docker compose down
-  
+
   # Start core services with health checks
   docker compose up --build -d db backend frontend
-  
+
   # Wait for services to be healthy, then run E2E tests
   docker compose up --build e2e-tests
   ```

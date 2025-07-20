@@ -29,7 +29,7 @@ def extract_data_from_file(file_path: str) -> List[Tuple[int, int, int, str, str
     # Handle escaped quotes '' properly
     pattern = r'\(\s*(\d+),\s*(\d+),\s*(\d+),\s*\'((?:[^\']|\'\')*)\',\s*\'((?:[^\']|\'\')*)\',\s*\'((?:[^\']|\'\')*)\',\s*\'((?:[^\']|\'\')*)\'\s*\)'
     matches = re.findall(pattern, content)
-    
+
     for match in matches:
         try:
             id1, id2, id3, word, translation, example, example_translation = match
@@ -39,7 +39,7 @@ def extract_data_from_file(file_path: str) -> List[Tuple[int, int, int, str, str
             ))
         except ValueError:
             continue
-    
+
     return data
 
 
@@ -61,16 +61,16 @@ def normalize_word_german(word: str) -> str:
     """
     # Remove articles at the beginning
     word = re.sub(r'^(der|die|das)\s+', '', word, flags=re.IGNORECASE)
-    
+
     # Remove everything after semicolon or comma (plural forms, declensions)
     if ';' in word:
         word = word.split(';')[0].strip()
     elif ',' in word:
         word = word.split(',')[0].strip()
-    
+
     # Remove the article again if it's still there after semicolon split
     word = re.sub(r'^(der|die|das)\s+', '', word, flags=re.IGNORECASE)
-    
+
     return word.lower()
 
 
@@ -96,7 +96,7 @@ def get_language_migration_files() -> dict:
     """Get mapping of language codes to their migration filenames."""
     return {
         'de': '901_german_russian_a1_words.sql',
-        'es': '902_spanish_russian_a1_words.sql', 
+        'es': '902_spanish_russian_a1_words.sql',
         'en': '903_english_russian_a1_words.sql'
     }
 
@@ -113,11 +113,11 @@ def get_language_base_offsets() -> dict:
 def calculate_migration_ids(base_offset: int, sequence_number: int) -> Tuple[int, int, int]:
     """
     Calculate migration IDs using the standard formula.
-    
+
     Args:
         base_offset: Language base offset (3000000, 4000000, or 8000000)
         sequence_number: Sequential position starting from 0
-        
+
     Returns:
         Tuple of (word_pair_id, source_id, target_id)
     """
@@ -130,18 +130,18 @@ def calculate_migration_ids(base_offset: int, sequence_number: int) -> Tuple[int
 def validate_migration_ids(word_pair_id: int, source_id: int, target_id: int, base_offset: int, sequence_number: int) -> bool:
     """
     Validate that given IDs follow the correct formula.
-    
+
     Args:
         word_pair_id, source_id, target_id: The IDs to validate
         base_offset: Expected language base offset
         sequence_number: Expected sequence number
-        
+
     Returns:
         True if IDs are correct, False otherwise
     """
     expected_word_pair_id, expected_source_id, expected_target_id = calculate_migration_ids(base_offset, sequence_number)
-    return (word_pair_id == expected_word_pair_id and 
-            source_id == expected_source_id and 
+    return (word_pair_id == expected_word_pair_id and
+            source_id == expected_source_id and
             target_id == expected_target_id)
 
 
@@ -208,7 +208,7 @@ def load_spacy_model(language_code: str, model_preferences: List[str]):
     """Load spaCy model with fallback options."""
     import spacy
     import subprocess
-    
+
     for model_name in model_preferences:
         try:
             nlp = spacy.load(model_name)
@@ -216,7 +216,7 @@ def load_spacy_model(language_code: str, model_preferences: List[str]):
             return nlp
         except OSError:
             continue
-    
+
     # If no model found, install the last one in the list
     fallback_model = model_preferences[-1]
     print(f"📦 Installing spaCy model: {fallback_model}")
@@ -231,59 +231,59 @@ def print_analysis_header(title: str, language: str = "") -> None:
     print("=" * 80)
 
 
-def print_category_results(categories: Dict, category_info: List[Tuple[str, str]], 
+def print_category_results(categories: Dict, category_info: List[Tuple[str, str]],
                           title: str, max_examples: int = None) -> int:
     """Print results for a group of categories."""
     print(f"\n{title}")
     print("=" * 80)
-    
+
     total_count = 0
     for cat_name, cat_display in category_info:
         if cat_name in categories and categories[cat_name]:
-            print(f"\n{cat_display} ({len(categories[cat_name])}):") 
+            print(f"\n{cat_display} ({len(categories[cat_name])}):")
             # Show all words if max_examples is None, otherwise limit
             words_to_show = categories[cat_name] if max_examples is None else categories[cat_name][:max_examples]
             for word, freq, reason, pos_tag in words_to_show:
                 print(f"   ✅ {word:15s} (freq: {freq:.6f}) - {reason}")
             total_count += len(categories[cat_name])
-    
+
     return total_count
 
 
-def print_ignore_results(categories: Dict, ignore_info: List[Tuple[str, str, str]], 
+def print_ignore_results(categories: Dict, ignore_info: List[Tuple[str, str, str]],
                         title: str, show_examples: bool = True) -> int:
     """Print results for ignored categories."""
     print(f"\n{title}")
     print("=" * 80)
-    
+
     total_count = 0
     for cat_name, cat_display, explanation in ignore_info:
         if cat_name in categories and categories[cat_name]:
-            print(f"\n{cat_display} ({len(categories[cat_name])}):") 
+            print(f"\n{cat_display} ({len(categories[cat_name])}):")
             print(f"   Reason: {explanation}")
-            
+
             if show_examples and cat_name in ['inflected_form', 'morphological_variant']:
                 for word, freq, reason, pos_tag in categories[cat_name][:5]:
                     print(f"   Example: {word} - {reason}")
             total_count += len(categories[cat_name])
-    
+
     return total_count
 
 
-def print_final_recommendations(recommendations: List[Tuple[str, float, str, str]], 
+def print_final_recommendations(recommendations: List[Tuple[str, float, str, str]],
                                max_display: int = None) -> None:
     """Print final recommendations in standardized format."""
     print(f"\n🎯 FINAL RECOMMENDATIONS")
     print("=" * 80)
-    
+
     print(f"ALL {len(recommendations)} WORDS TO ADD:")
-    
+
     for i, (word, freq, category, reason) in enumerate(recommendations, 1):
         cat_short = category.replace('essential_', '').upper()[:6]
         print(f"{i:2d}. {word:15s} (freq: {freq:.6f}) [{cat_short:6s}] - {reason}")
 
 
-def print_analysis_summary(total_to_add: int, total_not_to_add: int, 
+def print_analysis_summary(total_to_add: int, total_not_to_add: int,
                           recommendations: List, analysis_method: str = "NLP") -> None:
     """Print standardized analysis summary."""
     print(f"\n📊 SUMMARY:")
@@ -293,10 +293,10 @@ def print_analysis_summary(total_to_add: int, total_not_to_add: int,
     print(f"   🔬 Analysis method: {analysis_method}")
 
 
-def display_standard_results(categories: Dict, recommendations: List[Tuple[str, float, str, str]], 
+def display_standard_results(categories: Dict, recommendations: List[Tuple[str, float, str, str]],
                             analysis_method: str = "NLP") -> None:
     """Display results using standardized format across all analyzers."""
-    
+
     # Essential categories to add
     essential_info = [
         ('essential_verbs', '🟢 ESSENTIAL VERBS'),
@@ -305,9 +305,9 @@ def display_standard_results(categories: Dict, recommendations: List[Tuple[str, 
         ('essential_adverbs', '🟢 ESSENTIAL ADVERBS'),
         ('essential_conjunctions', '🟢 ESSENTIAL CONJUNCTIONS'),
     ]
-    
+
     total_to_add = print_category_results(categories, essential_info, "✅ WORDS TO ADD", max_examples=None)
     total_not_to_add = print_ignore_results(categories, get_ignore_categories(), "❌ WORDS TO IGNORE")
-    
+
     print_final_recommendations(recommendations)
     print_analysis_summary(total_to_add, total_not_to_add, recommendations, analysis_method)

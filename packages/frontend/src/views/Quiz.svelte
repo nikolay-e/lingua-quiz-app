@@ -5,9 +5,9 @@
   import type { SubmissionResult, QuizQuestion } from '@linguaquiz/core';
   import { formatForDisplay } from '@linguaquiz/core';
   import type { QuizFeedback } from '../types';
-  
+
   // Component-specific state
-  
+
   // Basic component state
   let userAnswer: string = '';
   let answerInput: HTMLInputElement;
@@ -20,7 +20,7 @@
   let ttsLanguages: string[] = [];
   let isPlayingTTS: boolean = false;
   let currentAudio: HTMLAudioElement | null = null;
-  
+
   // Foldable lists state
   let foldedLists: Record<string, boolean> = {
     level0: false,
@@ -30,7 +30,7 @@
     level4: false,
     level5: false
   };
-  
+
   // Load saved fold states from localStorage
   if (typeof window !== 'undefined') {
     const savedFoldStates = localStorage.getItem('foldedLists');
@@ -42,33 +42,33 @@
       }
     }
   }
-  
+
   function toggleFold(level: string) {
     foldedLists[level] = !foldedLists[level];
     // Save to localStorage
     localStorage.setItem('foldedLists', JSON.stringify(foldedLists));
   }
-  
-  // Reactive state from stores  
+
+  // Reactive state from stores
   $: wordSets = $quizStore.wordSets;
   $: selectedQuiz = $quizStore.selectedQuiz;
   $: currentQuestion = $quizStore.currentQuestion;
   $: loading = $quizStore.loading;
   $: username = $authStore.username;
-  
+
   // Derived reactive state from currentQuestion and quizManager
   $: direction = currentQuestion?.direction || 'normal';
   $: sourceLanguage = currentQuestion?.sourceLanguage || '';
   $: targetLanguage = currentQuestion?.targetLanguage || '';
-  
+
   // Get current level from quiz manager for display purposes only
   $: currentLevel = $quizStore.quizManager?.getState().currentLevel || 'LEVEL_1';
-  
+
   // Get word lists from quiz manager state
   $: wordLists = $quizStore.quizManager ? (() => {
     const state = $quizStore.quizManager.getState();
     const manager = $quizStore.quizManager;
-    
+
     return {
       level0: state.queues.LEVEL_0.map(id => {
         return manager.getTranslationForDisplay(id);
@@ -91,7 +91,7 @@
     };
   })() : {
     level0: [] as any[],
-    level1: [] as any[], 
+    level1: [] as any[],
     level2: [] as any[],
     level3: [] as any[],
     level4: [] as any[],
@@ -101,7 +101,7 @@
   // TTS reactive state
   $: currentLanguage = direction === 'normal' ? sourceLanguage : targetLanguage;
   $: canUseTTS = ttsAvailable && currentQuestion && ttsLanguages.includes(currentLanguage);
-  
+
   // Reactive word lists for display
   $: level0Words = wordLists.level0?.map((w: any) => `${w.source} -> ${w.target}`) || [];
   $: level1Words = wordLists.level1?.map((w: any) => `${w.source} -> ${w.target}`) || [];
@@ -109,14 +109,14 @@
   $: level3Words = wordLists.level3?.map((w: any) => `${w.source} -> ${w.target}`) || [];
   $: level4Words = wordLists.level4?.map((w: any) => `${w.source} -> ${w.target}`) || [];
   $: level5Words = wordLists.level5?.map((w: any) => `${w.source} -> ${w.target}`) || [];
-  
+
   // Current level is now automatically managed by the quiz system
-  
+
   // Reactive focus management - focus input when it becomes available
   $: if (answerInput && currentQuestion) {
     answerInput.focus();
   }
-  
+
   function getLevelDescription(level: string): string {
     switch (level) {
       case 'LEVEL_1': return `New Words Practice (${sourceLanguage} ➔ ${targetLanguage})`;
@@ -126,7 +126,7 @@
       default: return '';
     }
   }
-    
+
   // TTS functions
   async function loadTTSLanguages(): Promise<void> {
     try {
@@ -142,14 +142,14 @@
 
   async function playTTS(text: string, language: string): Promise<void> {
     if (!canUseTTS || isPlayingTTS) return;
-    
+
     if (currentAudio) {
       currentAudio.pause();
       currentAudio = null;
     }
-    
+
     isPlayingTTS = true;
-    
+
     try {
       const ttsData = await api.synthesizeSpeech($authStore.token!, text, language);
       const audioBlob: Blob = new Blob(
@@ -157,7 +157,7 @@
         { type: 'audio/mpeg' }
       );
       const audioUrl: string = URL.createObjectURL(audioBlob);
-      
+
       currentAudio = new Audio(audioUrl);
       currentAudio.onended = (): void => {
         isPlayingTTS = false;
@@ -169,7 +169,7 @@
         URL.revokeObjectURL(audioUrl);
         currentAudio = null;
       };
-      
+
       await currentAudio.play();
     } catch (error: unknown) {
       console.error('TTS playback failed:', error);
@@ -180,15 +180,15 @@
   async function handleQuizSelect(e: Event): Promise<void> {
     const target = e.target as HTMLSelectElement;
     const quiz: string = target.value;
-    
+
     // Reset state
     quizStore.reset();
     feedback = null;
     usageExamples = null;
     userAnswer = '';
-    
+
     if (!quiz) return;
-    
+
     try {
       await quizStore.startQuiz($authStore.token!, quiz);
       const question: QuizQuestion | null = await quizStore.getNextQuestion();
@@ -204,7 +204,7 @@
       feedback = { message: errorMessage, isSuccess: false } as QuizFeedback;
     }
   }
-  
+
   async function submitAnswer(): Promise<void> {
     if (!currentQuestion || isSubmitting) return;
 
@@ -229,7 +229,7 @@
           usageExamples = null;
         }
         // This will now execute reliably
-        userAnswer = ''; 
+        userAnswer = '';
       }
     } catch (error: any) {
       console.error('Error submitting answer:', error);
@@ -240,37 +240,37 @@
       // The reactive statement will handle the focus automatically
     }
   }
-  
+
   function handleKeydown(e: KeyboardEvent): void {
     if (e.key === 'Enter') {
       e.preventDefault();
       submitAnswer();
     }
   }
-  
+
   // Direction is now handled automatically by level progression
-  
+
   async function logout(): Promise<void> {
     // Save progress before logout
     await quizStore.saveAndCleanup($authStore.token!);
     authStore.logout();
   }
-  
+
   async function handleDeleteAccount(): Promise<void> {
     // 1. First confirmation prompt
     if (!confirm('Are you absolutely sure you want to delete your account? This action is irreversible and all your progress will be lost.')) {
       return;
     }
-    
+
     // 2. Second, more explicit confirmation prompt
     const confirmationText = `delete my account ${$authStore.username}`;
     const userInput = prompt(`This will permanently delete your account. This cannot be undone. To confirm, please type exactly: "${confirmationText}"`);
-    
+
     if (userInput !== confirmationText) {
       alert('Account deletion cancelled. The entered text did not match.');
       return;
     }
-    
+
     // 3. Call API and handle the response
     try {
       await api.deleteAccount($authStore.token!);
@@ -281,7 +281,7 @@
       alert(`Failed to delete account: ${error.message}`);
     }
   }
-  
+
   // Initialize component
   onMount(async () => {
     await quizStore.loadWordSets($authStore.token!);
@@ -291,7 +291,7 @@
     // Use tick to ensure DOM is updated before focusing
     await tick();
     if (answerInput) answerInput.focus();
-    
+
     // Save progress before page unload
     const handleBeforeUnload = (_e: BeforeUnloadEvent) => {
       if ($quizStore.quizManager && $authStore.token) {
@@ -299,14 +299,14 @@
         quizStore.saveAndCleanup($authStore.token).catch(() => {});
       }
     };
-    
+
     window.addEventListener('beforeunload', handleBeforeUnload);
-    
+
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   });
-  
+
 </script>
 
 <main class="quiz-container">
@@ -318,8 +318,8 @@
             <label for="quiz-select" class="quiz-select-label">
               <i class="fas fa-book"></i> Choose your word list:
             </label>
-            <select 
-              id="quiz-select" 
+            <select
+              id="quiz-select"
               class="quiz-select"
               on:change={handleQuizSelect}
               disabled={loading}
@@ -335,7 +335,7 @@
           </div>
         </div>
       </h2>
-      
+
       <div class="quiz-content">
         {#if !selectedQuiz}
           <div class="welcome-message">
@@ -354,7 +354,7 @@
               {currentQuestion ? currentQuestion.questionText : 'No more questions available.'}
             </span>
             {#if canUseTTS && currentQuestion}
-              <button 
+              <button
                 class="tts-button {isPlayingTTS ? 'speaking' : ''}"
                 on:click={() => playTTS(currentQuestion.questionText, currentLanguage)}
                 disabled={isPlayingTTS}
@@ -366,19 +366,19 @@
             {/if}
           </div>
         {/if}
-        
+
         {#if currentQuestion}
           <div class="input-group">
-            <input 
-              type="text" 
+            <input
+              type="text"
               id="answer"
               bind:this={answerInput}
               bind:value={userAnswer}
               on:keydown={handleKeydown}
               placeholder="Your translation"
             />
-            <button 
-              id="submit" 
+            <button
+              id="submit"
               on:mousedown|preventDefault={() => submitAnswer()}
               disabled={isSubmitting}
               tabindex="-1"
@@ -388,7 +388,7 @@
           </div>
         {/if}
       </div>
-      
+
       {#if feedback}
         <div class="feedback-container">
           <div class="feedback-text {('isSuccess' in feedback ? feedback.isSuccess : feedback.isCorrect) ? 'success' : 'error'}">
@@ -411,7 +411,7 @@
   <div class="right-sidebar">
     <div id="user-status">
       <button id="login-logout-btn" on:click={logout}>
-        <i class="fas fa-sign-out-alt"></i> 
+        <i class="fas fa-sign-out-alt"></i>
         <span>Logout ({username})</span>
       </button>
       <button id="delete-account-btn" class="delete-button" on:click={handleDeleteAccount}>
@@ -419,17 +419,17 @@
         <span>Delete Account</span>
       </button>
     </div>
-    
+
     {#if selectedQuiz}
       <div class="current-level-display">
         <span class="level-label">Current Practice Level:</span>
         <span class="level-description">{getLevelDescription(currentLevel)}</span>
       </div>
     {/if}
-    
+
     <section class="sidebar-section learning-progress">
       <h2>Learning Progress</h2>
-      
+
       <div id="level-1" class="foldable-section">
         <h3 class="foldable-header" on:click={() => toggleFold('level1')}>
           <i class="fas fa-{foldedLists.level1 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
@@ -443,7 +443,7 @@
           </ol>
         {/if}
       </div>
-      
+
       <div id="level-2" class="foldable-section">
         <h3 class="foldable-header" on:click={() => toggleFold('level2')}>
           <i class="fas fa-{foldedLists.level2 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
@@ -457,7 +457,7 @@
           </ol>
         {/if}
       </div>
-      
+
       <div id="level-3" class="foldable-section">
         <h3 class="foldable-header" on:click={() => toggleFold('level3')}>
           <i class="fas fa-{foldedLists.level3 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
@@ -471,7 +471,7 @@
           </ol>
         {/if}
       </div>
-      
+
       <div id="level-4" class="foldable-section">
         <h3 class="foldable-header" on:click={() => toggleFold('level4')}>
           <i class="fas fa-{foldedLists.level4 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
@@ -485,7 +485,7 @@
           </ol>
         {/if}
       </div>
-      
+
       <div id="level-5" class="foldable-section">
         <h3 class="foldable-header" on:click={() => toggleFold('level5')}>
           <i class="fas fa-{foldedLists.level5 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
@@ -499,7 +499,7 @@
           </ol>
         {/if}
       </div>
-      
+
       <div id="level-0" class="foldable-section">
         <h3 class="foldable-header" on:click={() => toggleFold('level0')}>
           <i class="fas fa-{foldedLists.level0 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
@@ -521,22 +521,22 @@
   .delete-button {
     background-color: var(--error-color);
   }
-  
+
   .delete-button:hover {
     background-color: #c0392b; /* Darker red for light mode */
   }
-  
+
   [data-theme='dark'] .delete-button:hover {
     background-color: #d66a60; /* Lighter red for dark mode */
   }
-  
+
   #user-status {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-bottom: 16px;
   }
-  
+
   #user-status button {
     width: 100%;
     margin-bottom: 0;

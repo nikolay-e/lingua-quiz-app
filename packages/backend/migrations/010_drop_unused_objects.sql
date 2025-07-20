@@ -1,6 +1,6 @@
 -- Migration: Drop unused SQL objects and clean up database
 -- Date: 2025-01-23
--- Description: Remove unused SQL objects (functions, tables, sequences, indexes) that are no longer 
+-- Description: Remove unused SQL objects (functions, tables, sequences, indexes) that are no longer
 -- used after business logic was moved to frontend. This comprehensive cleanup transforms the database
 -- from 50+ functions down to ~10 essential functions and removes all quiz session infrastructure.
 
@@ -11,7 +11,7 @@ DROP FUNCTION IF EXISTS check_level_progression(INTEGER, INTEGER, INTEGER, BOOLE
 
 -- Note: 014_cross_domain_functions.sql was cleaned to keep only essential functions:
 -- - insert_word_pair_and_add_to_list (used in data migrations)
--- - remove_word_pair_and_list_entry (used in data migrations)  
+-- - remove_word_pair_and_list_entry (used in data migrations)
 -- - get_user_word_sets (used in API endpoints)
 
 -- Drop session history functions (from 013_session_history.sql)

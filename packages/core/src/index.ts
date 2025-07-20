@@ -1,12 +1,12 @@
 /**
  * @linguaquiz/core - Core business logic for Lingua Quiz
- * 
+ *
  * A portable, headless quiz engine that can be used across different platforms:
  * - Web applications (React, Vue, Svelte)
  * - Mobile apps (React Native, NativeScript)
  * - Desktop applications (Electron)
  * - Server-side implementations
- * 
+ *
  * This package contains NO UI dependencies and focuses purely on business logic.
  */
 
@@ -312,7 +312,7 @@ export type QuestionType = 'translation' | 'usage';
 
 /**
  * Core quiz engine that manages state, progress tracking, and question generation
- * 
+ *
  * This is a headless class with no UI dependencies, making it perfectly portable
  * across different platforms and frameworks.
  */
@@ -358,11 +358,11 @@ export class QuizManager {
       LEVEL_4: [],
       LEVEL_5: []
     };
-    
+
     // Initialize progress and populate queues
     const initialProgressMap = new Map(initialState?.progress?.map(p => [p.translationId, p]));
     this.progress = new Map();
-    
+
     translations.forEach(t => {
       const existing = initialProgressMap.get(t.id);
       const progress: ProgressEntry = existing || {
@@ -372,12 +372,12 @@ export class QuizManager {
         consecutiveCorrect: 0,
         recentHistory: []
       };
-      
+
       this.progress.set(t.id, progress);
       // Add to appropriate queue at the end
       this.queues[progress.status].push(t.id);
     });
-    
+
     this.currentLevel = initialState?.currentLevel ?? 'LEVEL_1';
     this.replenishFocusPool();
   }
@@ -393,18 +393,18 @@ export class QuizManager {
       const newLevel = this.getLowestAvailablePracticeLevel();
       const levelAdjusted = newLevel !== this.currentLevel;
       this.currentLevel = newLevel;
-      
+
       // If still no words available anywhere, return null
       if (!this.hasWordsForLevel(this.currentLevel)) {
         return { question: null };
       }
-      
+
       // Continue with the new level
       if (levelAdjusted) {
         return { question: this.generateQuestion(), levelAdjusted: true, newLevel };
       }
     }
-    
+
     return { question: this.generateQuestion() };
   }
 
@@ -414,7 +414,7 @@ export class QuizManager {
   private generateQuestion = (): QuizQuestion | null => {
     // Get words available for current level based on level-specific queues
     let candidateId: number | null = null;
-    
+
     switch (this.currentLevel) {
       case 'LEVEL_1':
         // LEVEL_1 practices words from LEVEL_0 and LEVEL_1 queues (prioritize LEVEL_1)
@@ -442,25 +442,25 @@ export class QuizManager {
         }
         break;
     }
-    
+
     if (candidateId === null) {
       return null;
     }
-    
+
     const t = this.translations.get(candidateId);
     const p = this.progress.get(candidateId);
     if (!t || !p) return null;
-    
+
     // Update last asked time
     p.lastAskedAt = new Date().toISOString();
-    
+
     // Determine direction and question type based on current level
     const direction = this.getLevelDirection(this.currentLevel);
     const questionType = this.getLevelQuestionType(this.currentLevel);
-    
+
     // Start timing for response time tracking
     this.submissionStartTime = Date.now();
-    
+
     return {
       translationId: t.id,
       questionText: direction === 'normal' ? t.sourceWord.text : t.targetWord.text,
@@ -469,12 +469,12 @@ export class QuizManager {
       sourceLanguage: t.sourceWord.language,
       targetLanguage: t.targetWord.language,
       questionType,
-      usageExample: questionType === 'usage' ? 
-        (direction === 'normal' ? t.sourceWord.usageExample : t.targetWord.usageExample) : 
+      usageExample: questionType === 'usage' ?
+        (direction === 'normal' ? t.sourceWord.usageExample : t.targetWord.usageExample) :
         undefined
     };
   }
-  
+
   /**
    * Sets the current practice level with validation
    * @param level - The desired practice level
@@ -486,32 +486,32 @@ export class QuizManager {
       this.currentLevel = level;
       return { success: true, actualLevel: level };
     }
-    
+
     // If requested level has no words, find the lowest available level
     const lowestAvailable = this.getLowestAvailablePracticeLevel();
     this.currentLevel = lowestAvailable;
-    
+
     return {
       success: false,
       actualLevel: lowestAvailable,
       message: `${level} has no available words. Switched to ${lowestAvailable}.`
     };
   }
-  
+
   /**
    * Determines the direction for a given level
    */
   private getLevelDirection = (level: PracticeLevel): QuestionDirection => {
     return level === 'LEVEL_1' || level === 'LEVEL_3' ? 'normal' : 'reverse';
   }
-  
+
   /**
    * Determines the question type for a given level
    */
   private getLevelQuestionType = (level: PracticeLevel): QuestionType => {
     return level === 'LEVEL_3' || level === 'LEVEL_4' ? 'usage' : 'translation';
   }
-  
+
 
   /**
    * Checks if a practice level has available words
@@ -545,7 +545,7 @@ export class QuizManager {
     if (this.hasWordsForLevel('LEVEL_2')) return 'LEVEL_2';
     if (this.hasWordsForLevel('LEVEL_3')) return 'LEVEL_3';
     if (this.hasWordsForLevel('LEVEL_4')) return 'LEVEL_4';
-    
+
     // Fallback to LEVEL_1 if nothing is available
     return 'LEVEL_1';
   }
@@ -560,7 +560,7 @@ export class QuizManager {
     const p = this.progress.get(translationId);
     const t = this.translations.get(translationId);
     if (!p || !t) throw new Error('Translation or progress not found');
-    
+
     // Determine correct answer based on current level's direction
     const direction = this.getLevelDirection(this.currentLevel);
     const correctAnswerText = direction === 'normal' ? t.targetWord.text : t.sourceWord.text;
@@ -568,28 +568,28 @@ export class QuizManager {
 
     // Update recent history
     p.recentHistory = [...p.recentHistory.slice(-this.opts.historySizeForDegradation + 1), isCorrect];
-    
+
     // Update consecutive correct counter
     p.consecutiveCorrect = isCorrect ? p.consecutiveCorrect + 1 : 0;
-    
+
     // Calculate response time
     const responseTimeMs = this.submissionStartTime ? Date.now() - this.submissionStartTime : undefined;
     this.submissionStartTime = null;
-    
+
     const oldStatus = p.status;
-    
+
     // Update queue position based on answer
     this.updateQueuePosition(translationId, isCorrect);
-    
+
     // Check for level progression
     this.checkLevelProgression(p);
-    
+
     this.replenishFocusPool();
 
     return {
-      isCorrect, 
-      correctAnswerText, 
-      submittedAnswerText: userAnswer, 
+      isCorrect,
+      correctAnswerText,
+      submittedAnswerText: userAnswer,
       translation: t,
       levelChange: oldStatus !== p.status ? { from: oldStatus, to: p.status } : undefined,
       responseTimeMs
@@ -602,14 +602,14 @@ export class QuizManager {
   private updateQueuePosition = (translationId: number, isCorrect: boolean): void => {
     const p = this.progress.get(translationId);
     if (!p) return;
-    
+
     // Remove from current queue
     const currentQueue = this.queues[p.status];
     const index = currentQueue.indexOf(translationId);
     if (index > -1) {
       currentQueue.splice(index, 1);
     }
-    
+
     // Calculate new position based on answer correctness
     let newPosition: number;
     if (!isCorrect) {
@@ -620,7 +620,7 @@ export class QuizManager {
       // Correct answer: position P × T (where T = consecutive correct)
       newPosition = this.opts.queuePositionIncrement * p.consecutiveCorrect;
     }
-    
+
     // Insert at calculated position (or end if position > queue length)
     const insertIndex = Math.min(newPosition, currentQueue.length);
     currentQueue.splice(insertIndex, 0, translationId);
@@ -639,7 +639,7 @@ export class QuizManager {
       }
       return;
     }
-    
+
     // Check degradation (3 mistakes in last 10 attempts)
     const recentMistakes = p.recentHistory.filter(h => !h).length;
     if (recentMistakes >= this.opts.mistakesToLevelDown && p.recentHistory.length >= MIN_HISTORY_FOR_DEGRADATION) {
@@ -650,7 +650,7 @@ export class QuizManager {
       }
     }
   }
-  
+
   /**
    * Gets the next level for progression
    */
@@ -665,7 +665,7 @@ export class QuizManager {
     };
     return levelMap[currentLevel] === currentLevel ? null : levelMap[currentLevel];
   }
-  
+
   /**
    * Gets the previous level for degradation
    */
@@ -680,26 +680,26 @@ export class QuizManager {
     };
     return levelMap[currentLevel] === currentLevel ? null : levelMap[currentLevel];
   }
-  
+
   /**
    * Moves a word from one level to another
    */
   private moveWordToLevel = (translationId: number, newLevel: LevelStatus): void => {
     const p = this.progress.get(translationId);
     if (!p) return;
-    
+
     // Remove from old queue
     const oldQueue = this.queues[p.status];
     const index = oldQueue.indexOf(translationId);
     if (index > -1) {
       oldQueue.splice(index, 1);
     }
-    
+
     // Update status and add to new queue at the end
     p.status = newLevel;
     this.queues[newLevel].push(translationId);
   }
-  
+
   /**
    * Gets the current state of the quiz manager
    * @returns Current quiz state
@@ -727,7 +727,7 @@ export class QuizManager {
   getTranslationForDisplay = (id: number): { source: string; target: string } | undefined => {
     const translation = this.translations.get(id);
     if (!translation) return undefined;
-    
+
     return {
       source: formatForDisplay(translation.sourceWord.text),
       target: formatForDisplay(translation.targetWord.text)
@@ -743,7 +743,7 @@ export class QuizManager {
     const level1Count = this.queues.LEVEL_1.length;
     let needed = this.opts.maxFocusWords - level1Count;
     if (needed <= 0) return [];
-    
+
     // Directly take from the front of the LEVEL_0 queue.
     const wordsToPromote = this.queues.LEVEL_0.slice(0, needed);
     for (const translationId of wordsToPromote) {
@@ -760,7 +760,7 @@ export class QuizManager {
   isQuizComplete = (): boolean => {
     const allProgress = Array.from(this.progress.values());
     if (allProgress.length === 0) return false;
-    
+
     if (this.opts.enableUsageExamples) {
       // With usage examples enabled, complete means all at LEVEL_5
       return allProgress.every(p => p.status === 'LEVEL_5');
@@ -769,7 +769,7 @@ export class QuizManager {
       return allProgress.every(p => p.status === 'LEVEL_3');
     }
   }
-  
+
   /**
    * Gets quiz completion percentage
    * @returns Completion percentage (0-100)
@@ -777,13 +777,13 @@ export class QuizManager {
   getCompletionPercentage = (): number => {
     const allProgress = Array.from(this.progress.values());
     if (allProgress.length === 0) return 0;
-    
+
     const targetLevel = this.opts.enableUsageExamples ? 'LEVEL_5' : 'LEVEL_3';
     const completed = allProgress.filter(p => p.status === targetLevel).length;
-    
+
     return Math.round((completed / allProgress.length) * 100);
   }
-  
+
   /**
    * Gets statistics for the current quiz session
    * @returns Quiz statistics
@@ -803,11 +803,11 @@ export class QuizManager {
       LEVEL_4: 0,
       LEVEL_5: 0
     };
-    
+
     allProgress.forEach(p => {
       levelCounts[p.status]++;
     });
-    
+
     return {
       totalWords: allProgress.length,
       levelCounts,
