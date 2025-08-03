@@ -34,7 +34,7 @@ WORKDIR /usr/share/nginx/html
 COPY --from=builder /app/packages/frontend/dist .
 
 # Custom nginx config to handle SPA routing and security headers
-RUN echo "server { \
+RUN printf "server { \
     listen 80; \
     \
     # Security headers \

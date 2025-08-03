@@ -17,15 +17,15 @@ jobs:
     strategy:
       matrix:
         target:
-          - name: "Frontend"
-            url: "https://lingua-quiz.nikolay-eremeev.com"
-          - name: "Backend-API"
-            url: "https://lingua-quiz.nikolay-eremeev.com/api"
-    
+          - name: 'Frontend'
+            url: 'https://lingua-quiz.nikolay-eremeev.com'
+          - name: 'Backend-API'
+            url: 'https://lingua-quiz.nikolay-eremeev.com/api'
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Run ZAP Full Scan - ${{ matrix.target.name }}
         uses: zaproxy/action-full-scan@v0.12.0
         with:
@@ -33,7 +33,7 @@ jobs:
           fail_action: false
           cmd_options: '-a -j -m 10 -T 120'
           artifact_name: 'zap-${{ matrix.target.name }}-report'
-          
+
       - name: Upload ZAP results
         if: always()
         uses: actions/upload-artifact@v4
@@ -43,13 +43,13 @@ jobs:
             report_html.html
             report_json.json
             report_md.md
-            
+
   dependency-scan:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Run OWASP Dependency Check
         uses: dependency-check/Dependency-Check_Action@main
         with:
@@ -59,7 +59,7 @@ jobs:
           args: >
             --enableRetired
             --enableExperimental
-            
+
       - name: Upload dependency check results
         if: always()
         uses: actions/upload-artifact@v4

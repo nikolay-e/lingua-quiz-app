@@ -1,0 +1,38 @@
+extends: default
+
+rules:
+  # Allow longer lines for docker-compose and CI configs
+  line-length:
+    max: 150
+    level: warning
+
+  # Disable document start for docker-compose and CI files
+  document-start: disable
+
+  # Allow truthy values common in docker-compose/CI
+  truthy:
+    allowed-values: ['true', 'false', 'on', 'off', 'yes', 'no']
+    check-keys: false
+
+  # Be flexible with indentation for complex configs
+  indentation:
+    spaces: 2
+    indent-sequences: true
+    check-multi-line-strings: false
+
+  # Allow empty values in configurations
+  empty-values: disable
+
+  # Allow octal values (common in file permissions)
+  octal-values: disable
+
+ignore: |
+  # Helm templates use Go templating syntax
+  helm/
+  # GitHub Actions can have long lines
+  .github/workflows/
+  # Node modules
+  node_modules/
+  # Build outputs
+  packages/*/dist/
+  packages/*/build/

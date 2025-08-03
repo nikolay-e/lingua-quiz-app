@@ -1,0 +1,20 @@
+[sqlfluff]
+dialect = postgres
+templater = jinja
+max_line_length = 150
+
+[sqlfluff:indentation]
+tab_space_size = 2
+
+[sqlfluff:rules:capitalisation.keywords]
+capitalisation_policy = consistent
+
+[sqlfluff:rules:convention.select_trailing_comma]
+select_trailing_comma = forbid
+
+[sqlfluff:rules:layout.long_lines]
+ignore_comment_lines = true
+
+[sqlfluff:rules:LT01]
+# Disable spacing rules around parentheses/brackets
+disabled = true

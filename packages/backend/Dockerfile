@@ -3,8 +3,8 @@ FROM python:3.13-alpine
 WORKDIR /app
 
 # Install PostgreSQL client libraries, curl for health checks, and netcat for db wait
-RUN apk add --no-cache postgresql-libs curl netcat-openbsd \
-  && apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev
+RUN apk add --no-cache postgresql-libs=16.4-r0 curl=8.10.1-r0 netcat-openbsd=1.226-r0 \
+  && apk add --no-cache --virtual .build-deps gcc=13.2.1_git20240309-r0 musl-dev=1.2.5-r0 postgresql-dev=16.4-r0
 
 # Copy and install dependencies
 COPY requirements.txt ./
@@ -19,29 +19,9 @@ COPY migrations/ ./migrations/
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
 
-# Create start script with db wait and proper worker calculation
-RUN printf '#!/bin/sh\n\
-# Wait for database to be ready\n\
-echo "Waiting for database at ${DB_HOST}:${DB_PORT}..."\n\
-while ! nc -z ${DB_HOST} ${DB_PORT}; do\n\
-  echo "Database not ready, waiting..."\n\
-  sleep 2\n\
-done\n\
-echo "Database is ready!"\n\
-sleep 2\n\
-\n\
-if [ "$MIGRATE" = "true" ]; then\n\
-  echo "Running migrations..."\n\
-  python migrate.py\n\
-fi\n\
-\n\
-# Calculate workers with a lower cap for database connections\n\
-# FastAPI with uvicorn handles async requests efficiently\n\
-WORKERS=$(python -c "import multiprocessing; print(min(multiprocessing.cpu_count() + 1, 4))")\n\
-echo "Starting uvicorn with $WORKERS workers..."\n\
-\n\
-exec uvicorn main:app --host 0.0.0.0 --port 9000 --workers $WORKERS --log-level info\n' > /app/start.sh && \
-    chmod +x /app/start.sh
+# Copy start script
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
 
 # Run as non-root
 RUN adduser -D appuser && \

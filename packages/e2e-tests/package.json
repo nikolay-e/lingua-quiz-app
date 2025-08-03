@@ -1,17 +1,17 @@
 {
-  "name": "@linguaquiz/e2e-tests",
-  "version": "1.0.0",
-  "description": "E2E tests for your monorepo",
-  "scripts": {
-    "test": "playwright test",
-    "typecheck": "tsc --noEmit"
-  },
   "dependencies": {
     "@linguaquiz/core": "file:../core"
   },
+  "description": "E2E tests for your monorepo",
   "devDependencies": {
     "@playwright/test": "^1.54.1",
     "@types/node": "^24.0.14",
     "typescript": "^5.3.3"
-  }
+  },
+  "name": "@linguaquiz/e2e-tests",
+  "scripts": {
+    "test": "playwright test",
+    "typecheck": "tsc --noEmit"
+  },
+  "version": "1.0.0"
 }

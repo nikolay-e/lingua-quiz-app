@@ -2,19 +2,20 @@
 
 ## Overview
 
-LinguaQuiz implements a **level-based mastery system** rather than a traditional time-based spaced repetition algorithm. The system focuses on immediate mastery through repeated practice, tracking word knowledge in both translation directions.
+LinguaQuiz implements a **level-based mastery system** rather than a traditional time-based spaced repetition algorithm.
+The system focuses on immediate mastery through repeated practice, tracking word knowledge in both translation directions.
 
 ## Algorithm Parameters
 
 This section defines the core parameters that control the learning dynamics. The default values are balanced for a typical learning scenario.
 
-| Parameter | Default Value | Description |
-| :--- | :--- | :--- |
-| `F` | 5 | **Focus Loop Size.** The queue position for an incorrect answer. Defines the number of difficult words actively circulating. |
-| `K` | 2 | **Promotion Coefficient.** The multiplier for `F` that determines the base spacing for a correct answer. |
-| `T_promo` | 3 | **Promotion Threshold.** The number of *consecutive correct answers* required to advance to the next level. |
-| `MistakeThreshold` | 3 | **Degradation Threshold.** The number of mistakes within the `MistakeWindow` that triggers a level degradation. |
-| `MistakeWindow` | 10 | **Degradation Window.** The number of recent attempts to consider when checking for the `MistakeThreshold`. |
+| Parameter          | Default Value | Description                                                                                                                  |
+| :----------------- | :------------ | :--------------------------------------------------------------------------------------------------------------------------- |
+| `F`                | 5             | **Focus Loop Size.** The queue position for an incorrect answer. Defines the number of difficult words actively circulating. |
+| `K`                | 2             | **Promotion Coefficient.** The multiplier for `F` that determines the base spacing for a correct answer.                     |
+| `T_promo`          | 3             | **Promotion Threshold.** The number of _consecutive correct answers_ required to advance to the next level.                  |
+| `MistakeThreshold` | 3             | **Degradation Threshold.** The number of mistakes within the `MistakeWindow` that triggers a level degradation.              |
+| `MistakeWindow`    | 10            | **Degradation Window.** The number of recent attempts to consider when checking for the `MistakeThreshold`.                  |
 
 ## Core Algorithm Components
 
@@ -124,13 +125,13 @@ Practice level selection is **fully automated** to provide a guided and efficien
 
 ## Differences from Traditional SRS
 
-| Feature | LinguaQuiz | Traditional SRS (e.g., Anki) |
-| :--- | :--- | :--- |
-| Scheduling | Performance-based | Time-based intervals |
-| Review Timing | Immediate | Scheduled (hours/days/months) |
-| Focus | Immediate Mastery | Long-term retention |
-| Word Selection | Automatic level & queue priority | Due date priority |
-| User Control | None (fully guided path) | High (deck options, scheduling tweaks) |
+| Feature        | LinguaQuiz                       | Traditional SRS (e.g., Anki)           |
+| :------------- | :------------------------------- | :------------------------------------- |
+| Scheduling     | Performance-based                | Time-based intervals                   |
+| Review Timing  | Immediate                        | Scheduled (hours/days/months)          |
+| Focus          | Immediate Mastery                | Long-term retention                    |
+| Word Selection | Automatic level & queue priority | Due date priority                      |
+| User Control   | None (fully guided path)         | High (deck options, scheduling tweaks) |
 
 ## Future Enhancement Possibilities
 

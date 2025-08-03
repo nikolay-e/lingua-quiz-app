@@ -33,18 +33,18 @@ const getServerAddress = (): string => {
     console.log('Using localhost fallback API');
     return `http://localhost:9000/api`;
   }
-  
+
   // Docker internal networking
   if (hostname === 'frontend') {
     return 'http://backend:9000/api';
   }
-  
+
   // Generic production fallback - assume API is on same domain with /api path
   if (protocol === 'https:') {
     console.log('Using HTTPS same-domain API');
     return `https://${hostname}/api`;
   }
-  
+
   console.log('Using fallback same-origin API');
   return '/api'; // fallback for same-origin deployment
 };
@@ -58,7 +58,7 @@ import type {
   ProgressData,
   SessionData,
   TTSResponse,
-  TTSLanguagesResponse
+  TTSLanguagesResponse,
 } from './types';
 
 const serverAddress = getServerAddress();
@@ -133,7 +133,11 @@ const api = {
     return response.json();
   },
 
-  async saveWordStatus(token: string, status: 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5', wordPairIds: number[]): Promise<void> {
+  async saveWordStatus(
+    token: string,
+    status: 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5',
+    wordPairIds: number[]
+  ): Promise<void> {
     const response = await fetch(`${serverAddress}/word-sets/user`, {
       method: 'POST',
       headers: {
@@ -146,18 +150,16 @@ const api = {
     if (!response.ok) throw new Error('Failed to save quiz state');
   },
 
-
-
   async synthesizeSpeech(token: string, text: string, language: string): Promise<TTSResponse> {
     const response = await fetch(`${serverAddress}/tts/synthesize`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ text, language })
+      body: JSON.stringify({ text, language }),
     });
-    
+
     const data = await response.json();
     if (!response.ok) throw new Error(data.message || 'Failed to synthesize speech');
     return data;
@@ -166,9 +168,9 @@ const api = {
   async getTTSLanguages(token: string): Promise<TTSLanguagesResponse> {
     const response = await fetch(`${serverAddress}/tts/languages`, {
       method: 'GET',
-      headers: { 'Authorization': `Bearer ${token}` }
+      headers: { Authorization: `Bearer ${token}` },
     });
-    
+
     const data = await response.json();
     if (!response.ok) throw new Error(data.message || 'Failed to get TTS languages');
     return data;

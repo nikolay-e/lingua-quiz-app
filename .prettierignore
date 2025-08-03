@@ -1,0 +1,2 @@
+# Helm templates contain Go templating syntax that breaks YAML parsing
+helm/

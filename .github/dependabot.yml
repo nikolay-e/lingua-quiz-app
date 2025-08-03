@@ -2,38 +2,38 @@ version: 2
 multi-ecosystem-groups:
   all-dependencies:
     schedule:
-      interval: "weekly"
+      interval: 'weekly'
     update-types:
-      - "minor"
-      - "patch"
-      - "major"
+      - 'minor'
+      - 'patch'
+      - 'major'
     labels:
-      - "dependencies"
+      - 'dependencies'
 
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     patterns:
-      - "*"
-    multi-ecosystem-group: "all-dependencies"
+      - '*'
+    multi-ecosystem-group: 'all-dependencies'
 
-  - package-ecosystem: "pip"
-    directory: "/packages/backend/"
+  - package-ecosystem: 'pip'
+    directory: '/packages/backend/'
     patterns:
-      - "*"
-    multi-ecosystem-group: "all-dependencies"
+      - '*'
+    multi-ecosystem-group: 'all-dependencies'
 
-  - package-ecosystem: "docker"
+  - package-ecosystem: 'docker'
     directories:
-      - "/packages/backend"
-      - "/packages/e2e-tests"
-      - "/packages/frontend"
+      - '/packages/backend'
+      - '/packages/e2e-tests'
+      - '/packages/frontend'
     patterns:
-      - "*"
-    multi-ecosystem-group: "all-dependencies"
+      - '*'
+    multi-ecosystem-group: 'all-dependencies'
 
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: 'github-actions'
+    directory: '/'
     patterns:
-      - "*"
-    multi-ecosystem-group: "all-dependencies"
+      - '*'
+    multi-ecosystem-group: 'all-dependencies'

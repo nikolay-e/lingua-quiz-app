@@ -20,20 +20,20 @@ DECLARE
     is_allowed BOOLEAN := FALSE;
 BEGIN
     text_clean := LOWER(TRIM(p_text));
-    
+
     -- Check if text exists in valid texts view
     SELECT EXISTS (
-        SELECT 1 FROM valid_tts_texts 
+        SELECT 1 FROM valid_tts_texts
         WHERE clean_text = text_clean
     ) INTO is_allowed;
-    
+
     IF is_allowed THEN
         RETURN QUERY
-        UPDATE tts_caches 
+        UPDATE tts_caches
         SET last_accessed_at = CURRENT_TIMESTAMP
         WHERE cache_key = p_cache_key
         RETURNING COALESCE(tts_caches.audio_data, NULL), TRUE;
-        
+
         IF NOT FOUND THEN
             RETURN QUERY SELECT NULL::BYTEA, TRUE;
         END IF;
@@ -49,9 +49,9 @@ CREATE INDEX IF NOT EXISTS idx_tts_caches_created_at ON tts_caches (created_at);
 CREATE INDEX IF NOT EXISTS idx_tts_caches_last_accessed ON tts_caches (last_accessed_at);
 
 -- Views
-CREATE OR REPLACE VIEW valid_tts_texts AS 
+CREATE OR REPLACE VIEW valid_tts_texts AS
 SELECT DISTINCT lower(trim(text)) as clean_text FROM (
-    SELECT w1.text FROM words w1 
+    SELECT w1.text FROM words w1
     UNION ALL SELECT w2.text FROM words w2
     UNION ALL SELECT w1.usage_example FROM words w1 WHERE w1.usage_example IS NOT NULL
     UNION ALL SELECT w2.usage_example FROM words w2 WHERE w2.usage_example IS NOT NULL
@@ -68,21 +68,21 @@ DECLARE
 BEGIN
     -- Clean the text for comparison
     text_clean := LOWER(TRIM(p_text));
-    
+
     -- Check if text exists in valid texts view
     SELECT EXISTS (
-        SELECT 1 FROM valid_tts_texts 
+        SELECT 1 FROM valid_tts_texts
         WHERE clean_text = text_clean
     ) INTO is_allowed;
-    
+
     -- Only return cache data if text is allowed
     IF is_allowed THEN
         RETURN QUERY
-        UPDATE tts_caches 
+        UPDATE tts_caches
         SET last_accessed_at = CURRENT_TIMESTAMP
         WHERE cache_key = p_cache_key
         RETURNING tts_caches.audio_data, TRUE;
-        
+
         -- If no cache hit, return null audio but valid text flag
         IF NOT FOUND THEN
             RETURN QUERY SELECT NULL::BYTEA, TRUE;
@@ -108,21 +108,21 @@ DECLARE
 BEGIN
     -- Clean the text for comparison
     text_clean := LOWER(TRIM(p_text_content));
-    
+
     -- Check if text exists in database words/phrases using correct schema
     SELECT EXISTS (
         SELECT 1 FROM words w1
         JOIN translations t ON w1.id = t.source_word_id
         JOIN words w2 ON t.target_word_id = w2.id
-        WHERE LOWER(w1.text) = text_clean 
+        WHERE LOWER(w1.text) = text_clean
            OR LOWER(w2.text) = text_clean
            OR LOWER(w1.usage_example) = text_clean
            OR LOWER(w2.usage_example) = text_clean
     ) INTO is_allowed;
-    
+
     -- Only save if text is allowed
     IF is_allowed THEN
-        INSERT INTO tts_caches 
+        INSERT INTO tts_caches
         (cache_key, text_content, language, audio_data, file_size)
         VALUES (p_cache_key, LEFT(p_text_content, 500), p_language, p_audio_data, p_file_size)
         ON CONFLICT (cache_key) DO UPDATE SET
@@ -140,7 +140,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Function to get TTS cache statistics
-CREATE OR REPLACE FUNCTION get_tts_cache_stats() 
+CREATE OR REPLACE FUNCTION get_tts_cache_stats()
 RETURNS TABLE(
     total_entries BIGINT,
     total_size_bytes BIGINT,
@@ -151,7 +151,7 @@ RETURNS TABLE(
 ) AS $$
 BEGIN
     RETURN QUERY
-    SELECT 
+    SELECT
         COUNT(*) as total_entries,
         COALESCE(SUM(file_size), 0) as total_size_bytes,
         COALESCE(AVG(file_size), 0) as avg_size_bytes,

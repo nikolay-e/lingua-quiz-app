@@ -7,6 +7,7 @@ A language learning web application that helps users master vocabulary through s
 1. **Prerequisites**: Install [Docker](https://www.docker.com/products/docker-desktop/) and Docker Compose
 
 2. **Clone and Run**:
+
    ```bash
    git clone https://github.com/nikolay-e/lingua-quiz.git
    cd lingua-quiz
@@ -14,10 +15,11 @@ A language learning web application that helps users master vocabulary through s
    ```
 
 3. **Access the App**:
-   - Frontend: http://localhost:8080
-   - Backend API: http://localhost:9000
+   - Frontend: <http://localhost:8080>
+   - Backend API: <http://localhost:9000>
 
 4. **Run Tests** (optional):
+
    ```bash
    docker compose up --build e2e-tests
    ```

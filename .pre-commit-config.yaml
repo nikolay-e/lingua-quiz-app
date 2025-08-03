@@ -1,0 +1,112 @@
+repos:
+  # Generic file formatting
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      # Basic file checks
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: end-of-file-fixer
+      - id: check-yaml
+        args: [--allow-multiple-documents]
+        exclude: ^helm/
+      - id: check-json
+      - id: check-added-large-files
+        args: [--maxkb=2000] # Increased for frontend assets
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+        args: [--fix=lf]
+
+  # YAML formatting (exclude Helm templates due to Go templating)
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.35.1
+    hooks:
+      - id: yamllint
+        args: [-c=.yamllint.yml]
+        exclude: ^(helm/|\.pre-commit-config\.yaml)
+
+  # JavaScript/TypeScript formatting using your existing setup
+  - repo: local
+    hooks:
+      - id: eslint
+        name: ESLint
+        entry: bash -c 'cd /Users/nikolay/Development/lingua-quiz && npm run lint'
+        language: system
+        files: \.(js|ts|jsx|tsx)$
+        pass_filenames: false
+        require_serial: true
+
+      - id: prettier
+        name: Prettier
+        entry: bash -c 'cd /Users/nikolay/Development/lingua-quiz && npm run format'
+        language: system
+        files: \.(js|ts|jsx|tsx|json|md|yml|yaml)$
+        exclude: ^helm/
+        pass_filenames: false
+        require_serial: true
+
+  # Python formatting for backend
+  - repo: https://github.com/psf/black
+    rev: 24.2.0
+    hooks:
+      - id: black
+        language_version: python3
+        files: ^packages/backend/
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: [--profile, black]
+        files: ^packages/backend/
+
+  # SQL formatting for migrations - disabled due to excessive strictness
+  # - repo: https://github.com/sqlfluff/sqlfluff
+  #   rev: 3.0.3
+  #   hooks:
+  #     - id: sqlfluff-lint
+  #       args: [--dialect, postgres]
+  #       files: \.sql$
+
+  # Shell script validation
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.9.0.6
+    hooks:
+      - id: shellcheck
+        files: \.(sh|bash)$
+
+  # Docker linting with project-specific ignores
+  - repo: https://github.com/hadolint/hadolint
+    rev: v2.12.0
+    hooks:
+      - id: hadolint-docker
+        args: [
+            --ignore,
+            DL3008, # Pin versions in apk add
+            --ignore,
+            DL3009, # Delete the apt-get lists
+            --ignore,
+            DL3015, # Avoid additional packages by specifying --no-install-recommends
+            --ignore,
+            DL3059, # Multiple consecutive RUN instructions
+            --ignore,
+            SC2016, # Expressions don't expand in single quotes
+            --ignore,
+            SC2028, # echo may not expand escape sequences
+          ]
+
+  # Project-specific security checks
+  - repo: local
+    hooks:
+      - id: check-secrets
+        name: Check for hardcoded secrets
+        entry: bash -c 'grep -r -i -E "(api[_-]?key|secret[_-]?key|private[_-]?key)\s*[:=]\s*[\"'\''][^\"'\'']{10,}" --include="*.js" --include="*.ts" --include="*.py" --exclude-dir=node_modules --exclude-dir=.git . && exit 1 || exit 0'
+        language: system
+        pass_filenames: false
+
+      - id: check-migrations
+        name: Check migration files
+        entry: bash -c 'if ls packages/backend/migrations/*.sql 1> /dev/null 2>&1; then echo "Migration files found, ensure they are reviewed"; fi'
+        language: system
+        pass_filenames: false

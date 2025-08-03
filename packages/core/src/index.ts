@@ -1,12 +1,12 @@
 /**
  * @linguaquiz/core - Core business logic for Lingua Quiz
- * 
+ *
  * A portable, headless quiz engine that can be used across different platforms:
  * - Web applications (React, Vue, Svelte)
  * - Mobile apps (React Native, NativeScript)
  * - Desktop applications (Electron)
  * - Server-side implementations
- * 
+ *
  * This package contains NO UI dependencies and focuses purely on business logic.
  */
 
@@ -19,27 +19,70 @@ import { F, K, T_PROMO, MISTAKE_THRESHOLD, MISTAKE_WINDOW, MAX_FOCUS_POOL_SIZE, 
 // Mapping of visually close Latin → Cyrillic characters when the string is
 // clearly meant to be Cyrillic (avoids accidental Latin input).
 const latinToCyrillic: Record<string, string> = {
-  c: 'с', C: 'С', p: 'р', P: 'Р', o: 'о', O: 'О', a: 'а', A: 'А',
-  e: 'е', E: 'Е', x: 'х', X: 'Х', y: 'у', Y: 'У', k: 'к', K: 'К',
-  h: 'н', H: 'Н', m: 'м', M: 'М', t: 'т', T: 'Т', b: 'в', B: 'В',
-  i: 'і', I: 'І', z: 'з', Z: 'З', d: 'д', D: 'Д', g: 'г', G: 'Г',
-  l: 'л', L: 'Л', n: 'н', N: 'Н', r: 'р', R: 'Р', s: 'с', S: 'С',
-  f: 'ф', F: 'Ф'
+  c: 'с',
+  C: 'С',
+  p: 'р',
+  P: 'Р',
+  o: 'о',
+  O: 'О',
+  a: 'а',
+  A: 'А',
+  e: 'е',
+  E: 'Е',
+  x: 'х',
+  X: 'Х',
+  y: 'у',
+  Y: 'У',
+  k: 'к',
+  K: 'К',
+  h: 'н',
+  H: 'Н',
+  m: 'м',
+  M: 'М',
+  t: 'т',
+  T: 'Т',
+  b: 'в',
+  B: 'В',
+  i: 'і',
+  I: 'І',
+  z: 'з',
+  Z: 'З',
+  d: 'д',
+  D: 'Д',
+  g: 'г',
+  G: 'Г',
+  l: 'л',
+  L: 'Л',
+  n: 'н',
+  N: 'Н',
+  r: 'р',
+  R: 'Р',
+  s: 'с',
+  S: 'С',
+  f: 'ф',
+  F: 'Ф',
 };
 
 /** Remove diacritics from the Latin script (NFD → strip marks). */
-const stripLatinDiacritics = (s: string): string =>
-  s.normalize('NFD').replace(/\p{M}/gu, '');
+const stripLatinDiacritics = (s: string): string => s.normalize('NFD').replace(/\p{M}/gu, '');
 
 /** Collapse German umlaut/ß variants to a single form for comparison. */
 const collapseGerman = (s: string): string => {
-  return s
-    // 1. Single‑character umlauts → plain vowel.
-    .replace(/ä/g, 'a').replace(/ö/g, 'o').replace(/ü/g, 'u')
-    .replace(/Ä/g, 'a').replace(/Ö/g, 'o').replace(/Ü/g, 'u')
-    .replace(/ß/g, 'ss')
-    // 2. Two‑character replacements (ae/oe/ue) → same plain vowel.
-    .replace(/ae/g, 'a').replace(/oe/g, 'o').replace(/ue/g, 'u');
+  return (
+    s
+      // 1. Single‑character umlauts → plain vowel.
+      .replace(/ä/g, 'a')
+      .replace(/ö/g, 'o')
+      .replace(/ü/g, 'u')
+      .replace(/Ä/g, 'a')
+      .replace(/Ö/g, 'o')
+      .replace(/Ü/g, 'u')
+      .replace(/ß/g, 'ss')
+      // 2. Two‑character replacements (ae/oe/ue) → same plain vowel.
+      .replace(/ae/g, 'a')
+      .replace(/oe/g, 'o')
+      .replace(/ue/g, 'u')
+  );
 };
 
 /** Full script‑/accent‑aware canonicalisation used for matching logic. */
@@ -58,7 +101,7 @@ export const normalizeForComparison = (text: string): string => {
   const containsCyr = /[а-я]/i.test(result);
   const looksLikeFakeCyr = /^[acopextmhsrpl]+$/i.test(result);
   if (containsCyr || looksLikeFakeCyr) {
-    result = result.replace(/[A-Za-z]/g, ch => latinToCyrillic[ch] || ch);
+    result = result.replace(/[A-Za-z]/g, (ch) => latinToCyrillic[ch] || ch);
   }
 
   // 4. German & Spanish (plus general Latin) accent handling.
@@ -90,7 +133,11 @@ export const formatForDisplay = (input: string): string => {
   // 1. Replace each ( ... ) group containing a pipe with its first alternative.
   text = text.replace(/\(([^)]+)\)/g, (match, inner) => {
     if (!inner.includes('|')) return match; // leave untouched.
-    const firstAlt = inner.split('|').map((s: string) => s.trim()).find((s: string) => s) || '';
+    const firstAlt =
+      inner
+        .split('|')
+        .map((s: string) => s.trim())
+        .find((s: string) => s) || '';
     return firstAlt; // drop surrounding parentheses.
   });
 
@@ -99,7 +146,7 @@ export const formatForDisplay = (input: string): string => {
 
   // 2. Temporarily mask pipes inside square brackets so we don't treat them as
   //    synonym separators.
-  text = text.replace(/\[[^\]]*\]/g, br => br.replace(/\|/g, PIPE_SENTINEL));
+  text = text.replace(/\[[^\]]*\]/g, (br) => br.replace(/\|/g, PIPE_SENTINEL));
 
   // 3. For any remaining standalone pipes, keep only the segment before the
   //    first one.
@@ -108,12 +155,13 @@ export const formatForDisplay = (input: string): string => {
   }
 
   // 4. Unmask bracket pipes and tidy up whitespace / commas.
-  text = text.replace(new RegExp(PIPE_SENTINEL, 'g'), '|')
-    .replace(/\s*,\s*/g, ', ')   // single space after comma.
-    .replace(/\s+/g, ' ')       // collapse runs of spaces.
+  text = text
+    .replace(new RegExp(PIPE_SENTINEL, 'g'), '|')
+    .replace(/\s*,\s*/g, ', ') // single space after comma.
+    .replace(/\s+/g, ' ') // collapse runs of spaces.
     .trim()
-    .replace(/^,\s*/, '')        // no leading commas
-    .replace(/\s*,\s*$/, '');    // no trailing commas.
+    .replace(/^,\s*/, '') // no leading commas
+    .replace(/\s*,\s*$/, ''); // no trailing commas.
 
   return text;
 };
@@ -172,9 +220,9 @@ const expandGroup = (group: string): string[] => {
 
   // Finally, split any pipes inside each base variant.
   const alts: string[] = [];
-  baseVariants.forEach(b => {
+  baseVariants.forEach((b) => {
     if (b.includes('|')) {
-      b.split('|').forEach(p => {
+      b.split('|').forEach((p) => {
         const t = p.trim();
         if (t) alts.push(t);
       });
@@ -189,7 +237,7 @@ const expandGroup = (group: string): string[] => {
 /** Build an array of acceptable alternative sets for every meaning group. */
 const buildGroups = (correct: string): AltSet[] => {
   const groups = splitTopLevelCommas(correct);
-  return groups.map(g => {
+  return groups.map((g) => {
     const set: AltSet = new Set(expandGroup(g).map((n: string) => normalize(n)));
     // Add the un-expanded normalized group as well for simple cases
     const normalizedGroup = normalize(g);
@@ -312,7 +360,7 @@ export type QuestionType = 'translation' | 'usage';
 
 /**
  * Core quiz engine that manages state, progress tracking, and question generation
- * 
+ *
  * This is a headless class with no UI dependencies, making it perfectly portable
  * across different platforms and frameworks.
  */
@@ -338,14 +386,14 @@ export class QuizManager {
    * @param options - Configuration options for the quiz behavior
    */
   constructor(translations: Translation[], initialState: InitialState = {}, options: QuizOptions = {}) {
-    this.translations = new Map(translations.map(t => [t.id, t]));
+    this.translations = new Map(translations.map((t) => [t.id, t]));
     this.opts = {
       maxFocusWords: options.maxFocusWords ?? MAX_FOCUS_POOL_SIZE,
       correctAnswersToLevelUp: options.correctAnswersToLevelUp ?? T_PROMO,
       mistakesToLevelDown: options.mistakesToLevelDown ?? MISTAKE_THRESHOLD,
       historySizeForDegradation: options.historySizeForDegradation ?? MISTAKE_WINDOW,
       recentlyAskedSize: options.recentlyAskedSize ?? RECENTLY_ASKED_SIZE,
-      queuePositionIncrement: options.queuePositionIncrement ?? (K * F),
+      queuePositionIncrement: options.queuePositionIncrement ?? K * F,
       enableUsageExamples: options.enableUsageExamples ?? true,
     };
 
@@ -356,28 +404,28 @@ export class QuizManager {
       LEVEL_2: [],
       LEVEL_3: [],
       LEVEL_4: [],
-      LEVEL_5: []
+      LEVEL_5: [],
     };
-    
+
     // Initialize progress and populate queues
-    const initialProgressMap = new Map(initialState?.progress?.map(p => [p.translationId, p]));
+    const initialProgressMap = new Map(initialState?.progress?.map((p) => [p.translationId, p]));
     this.progress = new Map();
-    
-    translations.forEach(t => {
+
+    translations.forEach((t) => {
       const existing = initialProgressMap.get(t.id);
       const progress: ProgressEntry = existing || {
         translationId: t.id,
         status: 'LEVEL_0',
         queuePosition: 0,
         consecutiveCorrect: 0,
-        recentHistory: []
+        recentHistory: [],
       };
-      
+
       this.progress.set(t.id, progress);
       // Add to appropriate queue at the end
       this.queues[progress.status].push(t.id);
     });
-    
+
     this.currentLevel = initialState?.currentLevel ?? 'LEVEL_1';
     this.replenishFocusPool();
   }
@@ -393,20 +441,20 @@ export class QuizManager {
       const newLevel = this.getLowestAvailablePracticeLevel();
       const levelAdjusted = newLevel !== this.currentLevel;
       this.currentLevel = newLevel;
-      
+
       // If still no words available anywhere, return null
       if (!this.hasWordsForLevel(this.currentLevel)) {
         return { question: null };
       }
-      
+
       // Continue with the new level
       if (levelAdjusted) {
         return { question: this.generateQuestion(), levelAdjusted: true, newLevel };
       }
     }
-    
+
     return { question: this.generateQuestion() };
-  }
+  };
 
   /**
    * Generates a question based on current level and available words
@@ -414,7 +462,7 @@ export class QuizManager {
   private generateQuestion = (): QuizQuestion | null => {
     // Get words available for current level based on level-specific queues
     let candidateId: number | null = null;
-    
+
     switch (this.currentLevel) {
       case 'LEVEL_1':
         // LEVEL_1 practices words from LEVEL_0 and LEVEL_1 queues (prioritize LEVEL_1)
@@ -442,25 +490,25 @@ export class QuizManager {
         }
         break;
     }
-    
+
     if (candidateId === null) {
       return null;
     }
-    
+
     const t = this.translations.get(candidateId);
     const p = this.progress.get(candidateId);
     if (!t || !p) return null;
-    
+
     // Update last asked time
     p.lastAskedAt = new Date().toISOString();
-    
+
     // Determine direction and question type based on current level
     const direction = this.getLevelDirection(this.currentLevel);
     const questionType = this.getLevelQuestionType(this.currentLevel);
-    
+
     // Start timing for response time tracking
     this.submissionStartTime = Date.now();
-    
+
     return {
       translationId: t.id,
       questionText: direction === 'normal' ? t.sourceWord.text : t.targetWord.text,
@@ -469,12 +517,10 @@ export class QuizManager {
       sourceLanguage: t.sourceWord.language,
       targetLanguage: t.targetWord.language,
       questionType,
-      usageExample: questionType === 'usage' ? 
-        (direction === 'normal' ? t.sourceWord.usageExample : t.targetWord.usageExample) : 
-        undefined
+      usageExample: questionType === 'usage' ? (direction === 'normal' ? t.sourceWord.usageExample : t.targetWord.usageExample) : undefined,
     };
-  }
-  
+  };
+
   /**
    * Sets the current practice level with validation
    * @param level - The desired practice level
@@ -486,32 +532,31 @@ export class QuizManager {
       this.currentLevel = level;
       return { success: true, actualLevel: level };
     }
-    
+
     // If requested level has no words, find the lowest available level
     const lowestAvailable = this.getLowestAvailablePracticeLevel();
     this.currentLevel = lowestAvailable;
-    
+
     return {
       success: false,
       actualLevel: lowestAvailable,
-      message: `${level} has no available words. Switched to ${lowestAvailable}.`
+      message: `${level} has no available words. Switched to ${lowestAvailable}.`,
     };
-  }
-  
+  };
+
   /**
    * Determines the direction for a given level
    */
   private getLevelDirection = (level: PracticeLevel): QuestionDirection => {
     return level === 'LEVEL_1' || level === 'LEVEL_3' ? 'normal' : 'reverse';
-  }
-  
+  };
+
   /**
    * Determines the question type for a given level
    */
   private getLevelQuestionType = (level: PracticeLevel): QuestionType => {
     return level === 'LEVEL_3' || level === 'LEVEL_4' ? 'usage' : 'translation';
-  }
-  
+  };
 
   /**
    * Checks if a practice level has available words
@@ -533,7 +578,7 @@ export class QuizManager {
       default:
         return false;
     }
-  }
+  };
 
   /**
    * Gets the lowest available practice level based on which word queues have content
@@ -545,10 +590,10 @@ export class QuizManager {
     if (this.hasWordsForLevel('LEVEL_2')) return 'LEVEL_2';
     if (this.hasWordsForLevel('LEVEL_3')) return 'LEVEL_3';
     if (this.hasWordsForLevel('LEVEL_4')) return 'LEVEL_4';
-    
+
     // Fallback to LEVEL_1 if nothing is available
     return 'LEVEL_1';
-  }
+  };
 
   /**
    * Submits an answer and updates progress
@@ -560,7 +605,7 @@ export class QuizManager {
     const p = this.progress.get(translationId);
     const t = this.translations.get(translationId);
     if (!p || !t) throw new Error('Translation or progress not found');
-    
+
     // Determine correct answer based on current level's direction
     const direction = this.getLevelDirection(this.currentLevel);
     const correctAnswerText = direction === 'normal' ? t.targetWord.text : t.sourceWord.text;
@@ -568,33 +613,33 @@ export class QuizManager {
 
     // Update recent history
     p.recentHistory = [...p.recentHistory.slice(-this.opts.historySizeForDegradation + 1), isCorrect];
-    
+
     // Update consecutive correct counter
     p.consecutiveCorrect = isCorrect ? p.consecutiveCorrect + 1 : 0;
-    
+
     // Calculate response time
     const responseTimeMs = this.submissionStartTime ? Date.now() - this.submissionStartTime : undefined;
     this.submissionStartTime = null;
-    
+
     const oldStatus = p.status;
-    
+
     // Update queue position based on answer
     this.updateQueuePosition(translationId, isCorrect);
-    
+
     // Check for level progression
     this.checkLevelProgression(p);
-    
+
     this.replenishFocusPool();
 
     return {
-      isCorrect, 
-      correctAnswerText, 
-      submittedAnswerText: userAnswer, 
+      isCorrect,
+      correctAnswerText,
+      submittedAnswerText: userAnswer,
       translation: t,
       levelChange: oldStatus !== p.status ? { from: oldStatus, to: p.status } : undefined,
-      responseTimeMs
+      responseTimeMs,
     };
-  }
+  };
 
   /**
    * Updates word's position in queue based on answer correctness
@@ -602,14 +647,14 @@ export class QuizManager {
   private updateQueuePosition = (translationId: number, isCorrect: boolean): void => {
     const p = this.progress.get(translationId);
     if (!p) return;
-    
+
     // Remove from current queue
     const currentQueue = this.queues[p.status];
     const index = currentQueue.indexOf(translationId);
     if (index > -1) {
       currentQueue.splice(index, 1);
     }
-    
+
     // Calculate new position based on answer correctness
     let newPosition: number;
     if (!isCorrect) {
@@ -620,11 +665,11 @@ export class QuizManager {
       // Correct answer: position P × T (where T = consecutive correct)
       newPosition = this.opts.queuePositionIncrement * p.consecutiveCorrect;
     }
-    
+
     // Insert at calculated position (or end if position > queue length)
     const insertIndex = Math.min(newPosition, currentQueue.length);
     currentQueue.splice(insertIndex, 0, translationId);
-  }
+  };
 
   /**
    * Checks and updates word level progression
@@ -639,9 +684,9 @@ export class QuizManager {
       }
       return;
     }
-    
+
     // Check degradation (3 mistakes in last 10 attempts)
-    const recentMistakes = p.recentHistory.filter(h => !h).length;
+    const recentMistakes = p.recentHistory.filter((h) => !h).length;
     if (recentMistakes >= this.opts.mistakesToLevelDown && p.recentHistory.length >= MIN_HISTORY_FOR_DEGRADATION) {
       const prevLevel = this.getPreviousLevel(p.status);
       if (prevLevel) {
@@ -649,57 +694,57 @@ export class QuizManager {
         p.recentHistory = [];
       }
     }
-  }
-  
+  };
+
   /**
    * Gets the next level for progression
    */
   private getNextLevel = (currentLevel: LevelStatus): LevelStatus | null => {
     const levelMap: Record<LevelStatus, LevelStatus> = {
-      'LEVEL_0': 'LEVEL_1',
-      'LEVEL_1': 'LEVEL_2',
-      'LEVEL_2': 'LEVEL_3',
-      'LEVEL_3': 'LEVEL_4',
-      'LEVEL_4': 'LEVEL_5',
-      'LEVEL_5': 'LEVEL_5' // Max level
+      LEVEL_0: 'LEVEL_1',
+      LEVEL_1: 'LEVEL_2',
+      LEVEL_2: 'LEVEL_3',
+      LEVEL_3: 'LEVEL_4',
+      LEVEL_4: 'LEVEL_5',
+      LEVEL_5: 'LEVEL_5', // Max level
     };
     return levelMap[currentLevel] === currentLevel ? null : levelMap[currentLevel];
-  }
-  
+  };
+
   /**
    * Gets the previous level for degradation
    */
   private getPreviousLevel = (currentLevel: LevelStatus): LevelStatus | null => {
     const levelMap: Record<LevelStatus, LevelStatus> = {
-      'LEVEL_5': 'LEVEL_4',
-      'LEVEL_4': 'LEVEL_3',
-      'LEVEL_3': 'LEVEL_2',
-      'LEVEL_2': 'LEVEL_1',
-      'LEVEL_1': 'LEVEL_0',
-      'LEVEL_0': 'LEVEL_0' // Min level
+      LEVEL_5: 'LEVEL_4',
+      LEVEL_4: 'LEVEL_3',
+      LEVEL_3: 'LEVEL_2',
+      LEVEL_2: 'LEVEL_1',
+      LEVEL_1: 'LEVEL_0',
+      LEVEL_0: 'LEVEL_0', // Min level
     };
     return levelMap[currentLevel] === currentLevel ? null : levelMap[currentLevel];
-  }
-  
+  };
+
   /**
    * Moves a word from one level to another
    */
   private moveWordToLevel = (translationId: number, newLevel: LevelStatus): void => {
     const p = this.progress.get(translationId);
     if (!p) return;
-    
+
     // Remove from old queue
     const oldQueue = this.queues[p.status];
     const index = oldQueue.indexOf(translationId);
     if (index > -1) {
       oldQueue.splice(index, 1);
     }
-    
+
     // Update status and add to new queue at the end
     p.status = newLevel;
     this.queues[newLevel].push(translationId);
-  }
-  
+  };
+
   /**
    * Gets the current state of the quiz manager
    * @returns Current quiz state
@@ -727,10 +772,10 @@ export class QuizManager {
   getTranslationForDisplay = (id: number): { source: string; target: string } | undefined => {
     const translation = this.translations.get(id);
     if (!translation) return undefined;
-    
+
     return {
       source: formatForDisplay(translation.sourceWord.text),
-      target: formatForDisplay(translation.targetWord.text)
+      target: formatForDisplay(translation.targetWord.text),
     };
   };
 
@@ -743,7 +788,7 @@ export class QuizManager {
     const level1Count = this.queues.LEVEL_1.length;
     let needed = this.opts.maxFocusWords - level1Count;
     if (needed <= 0) return [];
-    
+
     // Directly take from the front of the LEVEL_0 queue.
     const wordsToPromote = this.queues.LEVEL_0.slice(0, needed);
     for (const translationId of wordsToPromote) {
@@ -751,7 +796,7 @@ export class QuizManager {
       this.moveWordToLevel(translationId, 'LEVEL_1');
     }
     return wordsToPromote;
-  }
+  };
 
   /**
    * Checks if the quiz is complete (all words at target level)
@@ -760,16 +805,16 @@ export class QuizManager {
   isQuizComplete = (): boolean => {
     const allProgress = Array.from(this.progress.values());
     if (allProgress.length === 0) return false;
-    
+
     if (this.opts.enableUsageExamples) {
       // With usage examples enabled, complete means all at LEVEL_5
-      return allProgress.every(p => p.status === 'LEVEL_5');
+      return allProgress.every((p) => p.status === 'LEVEL_5');
     } else {
       // Without usage examples, complete means all at LEVEL_3
-      return allProgress.every(p => p.status === 'LEVEL_3');
+      return allProgress.every((p) => p.status === 'LEVEL_3');
     }
-  }
-  
+  };
+
   /**
    * Gets quiz completion percentage
    * @returns Completion percentage (0-100)
@@ -777,13 +822,13 @@ export class QuizManager {
   getCompletionPercentage = (): number => {
     const allProgress = Array.from(this.progress.values());
     if (allProgress.length === 0) return 0;
-    
+
     const targetLevel = this.opts.enableUsageExamples ? 'LEVEL_5' : 'LEVEL_3';
-    const completed = allProgress.filter(p => p.status === targetLevel).length;
-    
+    const completed = allProgress.filter((p) => p.status === targetLevel).length;
+
     return Math.round((completed / allProgress.length) * 100);
-  }
-  
+  };
+
   /**
    * Gets statistics for the current quiz session
    * @returns Quiz statistics
@@ -801,20 +846,20 @@ export class QuizManager {
       LEVEL_2: 0,
       LEVEL_3: 0,
       LEVEL_4: 0,
-      LEVEL_5: 0
+      LEVEL_5: 0,
     };
-    
-    allProgress.forEach(p => {
+
+    allProgress.forEach((p) => {
       levelCounts[p.status]++;
     });
-    
+
     return {
       totalWords: allProgress.length,
       levelCounts,
       completionPercentage: this.getCompletionPercentage(),
-      isComplete: this.isQuizComplete()
+      isComplete: this.isQuizComplete(),
     };
-  }
+  };
 
   /**
    * Gets current practice level
@@ -837,7 +882,7 @@ export class QuizManager {
       LEVEL_2: [...this.queues.LEVEL_2],
       LEVEL_3: [...this.queues.LEVEL_3],
       LEVEL_4: [...this.queues.LEVEL_4],
-      LEVEL_5: [...this.queues.LEVEL_5]
+      LEVEL_5: [...this.queues.LEVEL_5],
     };
   };
 }

@@ -3,20 +3,20 @@ import { QuizManager, Translation, F, K, T_PROMO, MAX_FOCUS_POOL_SIZE } from '..
 
 describe('Algorithm Parameter Validation', () => {
   const sampleTranslations: Translation[] = [
-    { 
-      id: 1, 
+    {
+      id: 1,
       sourceWord: { text: 'hello', language: 'en' },
-      targetWord: { text: 'привет', language: 'ru' }
+      targetWord: { text: 'привет', language: 'ru' },
     },
-    { 
-      id: 2, 
+    {
+      id: 2,
       sourceWord: { text: 'world', language: 'en' },
-      targetWord: { text: 'мир', language: 'ru' }
+      targetWord: { text: 'мир', language: 'ru' },
     },
-    { 
-      id: 3, 
+    {
+      id: 3,
       sourceWord: { text: 'good', language: 'en' },
-      targetWord: { text: 'хороший', language: 'ru' }
+      targetWord: { text: 'хороший', language: 'ru' },
     },
   ];
 
@@ -24,9 +24,9 @@ describe('Algorithm Parameter Validation', () => {
     it('should use algorithm constants correctly in calculations', () => {
       const quizManager = new QuizManager(sampleTranslations);
       const options = quizManager.getOptions();
-      
+
       // Verify that options use algorithm constants (without testing the constants themselves)
-      expect(options.queuePositionIncrement).toBe(K * F); 
+      expect(options.queuePositionIncrement).toBe(K * F);
       expect(options.maxFocusWords).toBe(MAX_FOCUS_POOL_SIZE);
       expect(options.correctAnswersToLevelUp).toBe(T_PROMO);
     });
@@ -42,7 +42,7 @@ describe('Algorithm Parameter Validation', () => {
         maxFocusWords: 50,
         correctAnswersToLevelUp: 5,
         queuePositionIncrement: 8,
-        enableUsageExamples: false
+        enableUsageExamples: false,
       };
 
       const quizManager = new QuizManager(sampleTranslations, {}, customOptions);
@@ -59,7 +59,7 @@ describe('Algorithm Parameter Validation', () => {
       const minOptions = {
         maxFocusWords: 1,
         correctAnswersToLevelUp: 1,
-        queuePositionIncrement: 1
+        queuePositionIncrement: 1,
       };
 
       const quizManager = new QuizManager(sampleTranslations, {}, minOptions);
@@ -72,7 +72,7 @@ describe('Algorithm Parameter Validation', () => {
 
     it('should handle zero values appropriately', () => {
       const zeroOptions = {
-        maxFocusWords: 0
+        maxFocusWords: 0,
       };
 
       const quizManager = new QuizManager(sampleTranslations, {}, zeroOptions);
@@ -85,7 +85,7 @@ describe('Algorithm Parameter Validation', () => {
       const largeOptions = {
         maxFocusWords: 1000,
         correctAnswersToLevelUp: 100,
-        queuePositionIncrement: 50
+        queuePositionIncrement: 50,
       };
 
       const quizManager = new QuizManager(sampleTranslations, {}, largeOptions);
@@ -111,7 +111,7 @@ describe('Algorithm Parameter Validation', () => {
     it('should partially override defaults with custom options', () => {
       const partialOptions = {
         maxFocusWords: 40,
-        correctAnswersToLevelUp: 4
+        correctAnswersToLevelUp: 4,
         // Other options should remain at defaults
       };
 
@@ -129,7 +129,7 @@ describe('Algorithm Parameter Validation', () => {
     it('should maintain option immutability', () => {
       const customOptions = {
         maxFocusWords: 25,
-        correctAnswersToLevelUp: 2
+        correctAnswersToLevelUp: 2,
       };
 
       const quizManager = new QuizManager(sampleTranslations, {}, customOptions);
@@ -150,10 +150,10 @@ describe('Algorithm Parameter Validation', () => {
   describe('Parameter Interdependencies', () => {
     it('should handle relationships between parameters correctly', () => {
       // Test case where queuePositionIncrement affects queue behavior
-      const translations = Array.from({length: 20}, (_, i) => ({
+      const translations = Array.from({ length: 20 }, (_, i) => ({
         id: i + 1,
         sourceWord: { text: `word${i}`, language: 'en' },
-        targetWord: { text: `слово${i}`, language: 'ru' }
+        targetWord: { text: `слово${i}`, language: 'ru' },
       }));
 
       const smallIncrement = new QuizManager(translations, {}, { queuePositionIncrement: 1 });
@@ -166,10 +166,10 @@ describe('Algorithm Parameter Validation', () => {
 
     it('should handle maxFocusWords relative to translation count', () => {
       const fewTranslations = sampleTranslations; // 3 translations
-      const manyTranslations = Array.from({length: 100}, (_, i) => ({
+      const manyTranslations = Array.from({ length: 100 }, (_, i) => ({
         id: i + 1,
         sourceWord: { text: `word${i}`, language: 'en' },
-        targetWord: { text: `слово${i}`, language: 'ru' }
+        targetWord: { text: `слово${i}`, language: 'ru' },
       }));
 
       // MaxFocusWords larger than available translations
@@ -184,10 +184,10 @@ describe('Algorithm Parameter Validation', () => {
 
   describe('Algorithm Math Validation', () => {
     it('should validate queue position calculations', () => {
-      const translations = Array.from({length: 10}, (_, i) => ({
+      const translations = Array.from({ length: 10 }, (_, i) => ({
         id: i + 1,
         sourceWord: { text: `word${i}`, language: 'en' },
-        targetWord: { text: `слово${i}`, language: 'ru' }
+        targetWord: { text: `слово${i}`, language: 'ru' },
       }));
 
       const quizManager = new QuizManager(translations);

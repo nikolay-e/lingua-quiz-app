@@ -23,7 +23,7 @@ function createThemeStore(): ThemeStore {
   };
 
   const { subscribe, set, update } = writable({
-    isDarkMode: getInitialTheme()
+    isDarkMode: getInitialTheme(),
   });
 
   const applyTheme = (isDark: boolean) => {
@@ -51,7 +51,7 @@ function createThemeStore(): ThemeStore {
   return {
     subscribe,
     toggleTheme: () => {
-      update(state => {
+      update((state) => {
         const newTheme = !state.isDarkMode;
         if (typeof localStorage !== 'undefined') {
           localStorage.setItem('theme', newTheme ? 'dark' : 'light');
@@ -67,7 +67,7 @@ function createThemeStore(): ThemeStore {
       const systemPreference = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       applyTheme(systemPreference);
       set({ isDarkMode: systemPreference });
-    }
+    },
   };
 }
 
@@ -97,7 +97,7 @@ function createAuthStore(): AuthStore {
   // Function to check token validity and update store
   function checkToken() {
     if (typeof localStorage === 'undefined') return;
-    
+
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('username');
 
@@ -120,13 +120,13 @@ function createAuthStore(): AuthStore {
       logoutUser(); // Token is malformed
     }
   }
-  
+
   // Function to set user data in localStorage and the store
   function setUser(data: { token: string; username: string }) {
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('token', data.token);
       localStorage.setItem('username', data.username);
-      
+
       // Calculate and store token expiration
       try {
         const payload = JSON.parse(atob(data.token.split('.')[1]));
@@ -148,7 +148,7 @@ function createAuthStore(): AuthStore {
     }
     set({ token: null, username: null, isAuthenticated: false });
   }
-  
+
   // Initial check when the store is created
   if (typeof window !== 'undefined') {
     checkToken();
@@ -172,7 +172,6 @@ function createAuthStore(): AuthStore {
   };
 }
 
-
 interface QuizState {
   wordSets: WordSet[];
   selectedQuiz: string | null;
@@ -190,7 +189,9 @@ interface QuizStore {
   startQuiz: (token: string, quizName: string) => Promise<void>;
   getNextQuestion: () => any | null;
   submitAnswer: (token: string, answer: string) => Promise<any>;
-  setLevel: (level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4') => Promise<{ success: boolean; actualLevel: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4'; message?: string }>;
+  setLevel: (
+    level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4'
+  ) => Promise<{ success: boolean; actualLevel: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4'; message?: string }>;
   reset: () => void;
   saveAndCleanup: (token: string) => Promise<void>;
 }
@@ -205,31 +206,30 @@ function createQuizStore(): QuizStore {
     sessionId: null,
     loading: false,
     error: null,
-    autoSaveTimer: null
+    autoSaveTimer: null,
   });
 
   const BULK_SAVE_DELAY = 5000; // 5 seconds
-  
+
   const bulkSaveProgress = async (token: string) => {
     const state = get(store);
     if (!state.quizManager) return;
-    
+
     console.log('Bulk saving quiz progress...');
-    
+
     try {
       const wordsByLevel = state.quizManager.getWordsByLevel();
       const persistencePromises: Promise<any>[] = [];
-      
+
       for (const [level, wordIds] of Object.entries(wordsByLevel)) {
         const wordArray = wordIds as number[];
         if (wordArray.length > 0) {
           persistencePromises.push(
-            api.saveWordStatus(token, level as any, wordArray)
-              .catch(err => console.error(`Bulk save failed for ${level}:`, err))
+            api.saveWordStatus(token, level as any, wordArray).catch((err) => console.error(`Bulk save failed for ${level}:`, err))
           );
         }
       }
-      
+
       if (persistencePromises.length > 0) {
         await Promise.all(persistencePromises);
         console.log('Bulk save completed successfully');
@@ -238,27 +238,27 @@ function createQuizStore(): QuizStore {
       console.error('Bulk save error:', error);
     }
   };
-  
+
   const scheduleBulkSave = (token: string) => {
     const state = get(store);
-    
+
     // Clear existing timer
     if (state.autoSaveTimer) {
       clearTimeout(state.autoSaveTimer);
     }
-    
+
     // Schedule new bulk save
     const timer = setTimeout(() => bulkSaveProgress(token), BULK_SAVE_DELAY);
-    
+
     // Update state with new timer
-    update(s => ({ ...s, autoSaveTimer: timer }));
+    update((s) => ({ ...s, autoSaveTimer: timer }));
   };
-  
+
   const store = {
     subscribe,
-    
+
     loadWordSets: async (token: string) => {
-      update(state => ({ ...state, loading: true, error: null }));
+      update((state) => ({ ...state, loading: true, error: null }));
       try {
         const wordSets = await api.fetchWordSets(token);
         // Use set/get pattern after await to avoid orphaned effects
@@ -270,37 +270,37 @@ function createQuizStore(): QuizStore {
         throw error;
       }
     },
-    
+
     startQuiz: async (token: string, quizName: string) => {
-      update(state => ({ ...state, loading: true, error: null, selectedQuiz: quizName }));
+      update((state) => ({ ...state, loading: true, error: null, selectedQuiz: quizName }));
       try {
         // Use the word-sets API to get translations and progress
         const userWordSets = await api.fetchUserWordSets(token, quizName);
         console.log(`Fetched ${userWordSets.length} words for quiz: ${quizName}`);
-        
+
         // Convert UserWordSet[] to the format expected by QuizManager
-        const translations = userWordSets.map(word => ({
+        const translations = userWordSets.map((word) => ({
           id: word.wordPairId,
           sourceWord: {
             text: word.sourceWord,
             language: word.sourceLanguage,
-            usageExample: word.sourceWordUsageExample || ''
+            usageExample: word.sourceWordUsageExample || '',
           },
           targetWord: {
             text: word.targetWord,
             language: word.targetLanguage,
-            usageExample: word.targetWordUsageExample || ''
-          }
+            usageExample: word.targetWordUsageExample || '',
+          },
         }));
-        
-        const progress = userWordSets.map(word => ({
+
+        const progress = userWordSets.map((word) => ({
           translationId: word.wordPairId,
           status: (word.status || 'LEVEL_0') as 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5',
           queuePosition: 0,
           consecutiveCorrect: 0,
-          recentHistory: [] as boolean[]
+          recentHistory: [] as boolean[],
         }));
-        
+
         // Get user's current level from backend
         let currentLevel: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' = 'LEVEL_1';
         try {
@@ -309,26 +309,26 @@ function createQuizStore(): QuizStore {
         } catch (error) {
           console.warn('Failed to load user level, using default LEVEL_1:', error);
         }
-        
-        const manager = new QuizManager(translations, { 
-          progress, 
-          currentLevel
+
+        const manager = new QuizManager(translations, {
+          progress,
+          currentLevel,
         });
         console.log('QuizManager initialized with state:', manager.getState());
-        
+
         // Bulk save all progress after initialization (handles promotions from LEVEL_0 to LEVEL_1)
         await bulkSaveProgress(token);
-        
+
         const questionResult = manager.getNextQuestion();
         const currentQuestion = questionResult.question;
         console.log('First question:', currentQuestion);
-        
+
         // Use set/get pattern after await to avoid orphaned effects
         set({
           ...get(store),
           loading: false,
           quizManager: manager,
-          currentQuestion
+          currentQuestion,
         });
       } catch (error: unknown) {
         const message = error instanceof Error ? error.message : 'Unknown error';
@@ -337,28 +337,28 @@ function createQuizStore(): QuizStore {
         throw error;
       }
     },
-    
+
     getNextQuestion: () => {
       const state = get(store);
       if (!state.quizManager) return null;
-      
+
       const questionResult = state.quizManager.getNextQuestion();
       const question = questionResult.question;
-      update(s => ({ ...s, currentQuestion: question }));
+      update((s) => ({ ...s, currentQuestion: question }));
       return question;
     },
-    
+
     submitAnswer: async (token: string, answer: string) => {
       const state = get(store);
       if (!state.quizManager || !state.currentQuestion) return null;
-      
+
       try {
         const oldLevel = state.quizManager.getCurrentLevel();
         const feedback = state.quizManager.submitAnswer(state.currentQuestion.translationId, answer);
         const questionResult = state.quizManager.getNextQuestion();
         const nextQuestion = questionResult.question;
         const newLevel = state.quizManager.getCurrentLevel();
-        
+
         // If level changed automatically, persist it
         if (questionResult.levelAdjusted && oldLevel !== newLevel) {
           try {
@@ -368,35 +368,34 @@ function createQuizStore(): QuizStore {
             console.error('Failed to persist level change:', error);
           }
         }
-        
+
         // Schedule bulk save after any answer (removed immediate level change saves)
         scheduleBulkSave(token);
-        
+
         // Use set/get pattern after await to avoid orphaned effects
         set({ ...get(store), currentQuestion: nextQuestion });
-        
-        
+
         return feedback;
       } catch (error) {
         console.error('Failed to submit answer:', error);
         throw error;
       }
     },
-    
+
     setLevel: async (level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4', token?: string) => {
       const state = get(store);
       if (!state.quizManager) {
         return { success: false, actualLevel: 'LEVEL_1', message: 'Quiz not initialized' };
       }
-      
+
       try {
         const result = state.quizManager.setLevel(level);
         const questionResult = state.quizManager.getNextQuestion();
         const nextQuestion = questionResult.question;
-        
+
         // Update UI immediately (this is synchronous, so update is fine)
-        update(s => ({ ...s, currentQuestion: nextQuestion }));
-        
+        update((s) => ({ ...s, currentQuestion: nextQuestion }));
+
         // Persist level change to backend if token provided
         if (token) {
           try {
@@ -407,14 +406,14 @@ function createQuizStore(): QuizStore {
             // Don't fail the level change if persistence fails
           }
         }
-        
+
         return result;
       } catch (error) {
         console.error('Failed to set level:', error);
         return { success: false, actualLevel: 'LEVEL_1', message: 'Failed to set level' };
       }
     },
-    
+
     reset: () => {
       const state = get(store);
       if (state.autoSaveTimer) {
@@ -428,10 +427,10 @@ function createQuizStore(): QuizStore {
         sessionId: null,
         loading: false,
         error: null,
-        autoSaveTimer: null
+        autoSaveTimer: null,
       });
     },
-    
+
     saveAndCleanup: async (token: string) => {
       const state = get(store);
       // Clear any pending save timer
@@ -442,9 +441,9 @@ function createQuizStore(): QuizStore {
       if (state.quizManager) {
         await bulkSaveProgress(token);
       }
-    }
+    },
   };
-  
+
   return store;
 }
 

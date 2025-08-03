@@ -1,28 +1,6 @@
 {
-  "name": "@linguaquiz/core",
-  "version": "1.0.0",
-  "description": "Core business logic for Lingua Quiz - portable across all platforms",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "test": "vitest run",
-    "test:run": "vitest run",
-    "test:ui": "vitest --ui",
-    "test:coverage": "vitest run --coverage",
-    "typecheck": "tsc --noEmit"
-  },
-  "keywords": [
-    "quiz",
-    "language-learning",
-    "core",
-    "headless",
-    "portable"
-  ],
   "author": "Nikolay Eremeev",
-  "license": "MIT",
+  "description": "Core business logic for Lingua Quiz - portable across all platforms",
   "devDependencies": {
     "@types/node": "^24.0.14",
     "@vitest/coverage-v8": "^3.2.4",
@@ -30,15 +8,37 @@
     "typescript": "^5.3.3",
     "vitest": "^3.2.4"
   },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "files": [
     "dist",
     "README.md"
   ],
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.js"
-    }
-  }
+  "keywords": [
+    "quiz",
+    "language-learning",
+    "core",
+    "headless",
+    "portable"
+  ],
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "name": "@linguaquiz/core",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:run": "vitest run",
+    "test:ui": "vitest --ui",
+    "typecheck": "tsc --noEmit"
+  },
+  "types": "./dist/index.d.ts",
+  "version": "1.0.0"
 }
