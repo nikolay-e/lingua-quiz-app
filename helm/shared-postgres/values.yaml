@@ -1,0 +1,72 @@
+postgres:
+  image:
+    repository: postgres
+    tag: "13"
+    pullPolicy: IfNotPresent
+  
+  # Resource allocation
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "100m"
+    limits:
+      memory: "1Gi"
+      cpu: "500m"
+  
+  # Persistence settings
+  persistence:
+    enabled: true
+    size: "10Gi"
+    storageClass: ""  # Use default storage class
+    accessMode: "ReadWriteOnce"
+  
+  # Network settings
+  service:
+    type: ClusterIP
+    port: 5432
+  
+  # Security settings
+  securityContext:
+    runAsUser: 999
+    runAsGroup: 999
+    fsGroup: 999
+
+# Database configuration
+databases:
+  # Define databases to create on startup
+  linguaquiz:
+    name: "linguaquiz"  # Keep existing production database name (DO NOT CHANGE)
+    user: "lingua-quiz-db-user"  # Keep existing production user name  
+    # Password will be provided via secrets
+  linguaquiz-staging:
+    name: "linguaquiz_staging"
+    user: "linguaquiz_staging"
+    # Password will be provided via secrets
+
+# Secrets configuration
+secrets:
+  # Admin PostgreSQL password (required)
+  adminPassword: ""  # Must be set at deployment time
+  
+  # Per-database passwords (required)
+  databases:
+    linguaquiz:
+      password: ""  # Must be set at deployment time (use existing prod password)
+    linguaquiz-staging:
+      password: ""  # Must be set at deployment time
+
+# Backup configuration
+backup:
+  enabled: false  # Enable/disable backup functionality
+  schedule: "0 2 * * *"  # Daily at 2 AM
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  spaces:
+    endpointUrl: "fra1.digitaloceanspaces.com"
+    bucketName: "lingua-quiz"
+    accessKeyId: ""  # Must be set at deployment
+    secretKey: ""     # Must be set at deployment
+
+# Namespace configuration
+namespace: "shared-database"
