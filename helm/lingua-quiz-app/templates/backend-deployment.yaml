@@ -64,10 +64,16 @@ spec:
           env:
             - name: PORT
               value: {{ .Values.backend.port | quote }}
+            # Database configuration - always use app's own postgres secret
+            {{- if .Values.postgres.enabled }}
             - name: DB_HOST
               value: {{ include "lingua-quiz-app.postgresql.fullname" . }}
+            {{- else }}
+            - name: DB_HOST
+              value: {{ .Values.postgres.external.host | quote }}
+            {{- end }}
             - name: DB_PORT
-              value: "5432"
+              value: {{ .Values.postgres.external.port | default "5432" | quote }}
             - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:

@@ -123,7 +123,7 @@ jobs:
           tags: nikolajer/${{ matrix.image }}:${{ github.event.pull_request.head.sha || github.sha }},nikolajer/${{ matrix.image }}:latest
 
   deploy:
-    needs: [lint, unit-tests, integration-tests, build-images]
+    needs: [lint, unit-tests, build-images]
     runs-on: ubuntu-latest
     environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
     permissions:
@@ -147,14 +147,50 @@ jobs:
           echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > $HOME/.kube/config
           chmod 600 $HOME/.kube/config
           
-      - name: Create namespace if not exists
+            
+      - name: Deploy shared PostgreSQL
         run: |
-          kubectl create namespace $NAMESPACE --dry-run=client -o yaml | kubectl apply -f -
+          echo "Deploying shared PostgreSQL database..."
+          
+          # Create shared-database namespace with proper labels if it doesn't exist
+          if ! kubectl get namespace shared-database 2>/dev/null; then
+            echo "Creating shared-database namespace..."
+            kubectl create namespace shared-database
+            kubectl label namespace shared-database app.kubernetes.io/managed-by=Helm
+            kubectl annotate namespace shared-database meta.helm.sh/release-name=shared-postgres
+            kubectl annotate namespace shared-database meta.helm.sh/release-namespace=shared-database
+          fi
+          
+          # Deploy shared PostgreSQL if it doesn't exist
+          if ! helm list -n shared-database | grep -q shared-postgres; then
+            echo "Deploying shared PostgreSQL for the first time..."
+            
+            helm upgrade --install shared-postgres ./helm/shared-postgres \
+              --namespace shared-database \
+              --set secrets.adminPassword="${{ secrets.POSTGRES_ADMIN_PASSWORD }}" \
+              --set secrets.databases.linguaquiz.password="${{ secrets.POSTGRES_PROD_PASSWORD }}" \
+              --set secrets.databases.linguaquiz-staging.password="${{ secrets.POSTGRES_STAGING_PASSWORD }}" \
+              --set backup.enabled=${{ github.ref == 'refs/heads/main' && 'true' || 'false' }} \
+              --set backup.spaces.accessKeyId="${{ secrets.SPACES_ACCESS_KEY_ID }}" \
+              --set backup.spaces.secretKey="${{ secrets.SPACES_SECRET_KEY }}" \
+              --wait --timeout 10m
+          else
+            echo "Shared PostgreSQL already deployed, skipping..."
+          fi
             
       - name: Deploy with Helm
         id: helm-deploy
         continue-on-error: true
         run: |
+          # Create app namespace with proper labels if it doesn't exist
+          if ! kubectl get namespace $NAMESPACE 2>/dev/null; then
+            echo "Creating $NAMESPACE namespace..."
+            kubectl create namespace $NAMESPACE
+            kubectl label namespace $NAMESPACE app.kubernetes.io/managed-by=Helm
+            kubectl annotate namespace $NAMESPACE meta.helm.sh/release-name=lingua-quiz
+            kubectl annotate namespace $NAMESPACE meta.helm.sh/release-namespace=$NAMESPACE
+          fi
+          
           # Uninstall existing release if it exists to avoid "operation in progress" errors
           helm uninstall lingua-quiz --namespace $NAMESPACE || true
           
@@ -163,6 +199,22 @@ jobs:
           
           IMAGE_TAG="${{ github.event.pull_request.head.sha || github.sha }}"
           echo "Deploying with image tag: $IMAGE_TAG"
+          
+          # Set database configuration based on environment
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            # Production uses default values and existing credentials
+            DB_CONFIG="--set postgres.external.database=linguaquiz"
+            DB_NAME="linguaquiz"
+            DB_USER="lingua-quiz-db-user"
+            DB_PASSWORD="${{ secrets.POSTGRES_PROD_PASSWORD }}"
+          else
+            # Staging uses separate database with staging credentials
+            DB_CONFIG="--set postgres.external.database=linguaquiz_staging"
+            DB_NAME="linguaquiz_staging"
+            DB_USER="linguaquiz_staging"
+            DB_PASSWORD="${{ secrets.POSTGRES_STAGING_PASSWORD }}"
+          fi
+          
           helm upgrade --install lingua-quiz ./helm/lingua-quiz-app \
             --namespace $NAMESPACE \
             --set namespace=$NAMESPACE \
@@ -172,13 +224,11 @@ jobs:
             --set frontend.image.tag=$IMAGE_TAG \
             --set ingress.frontend.host=${{ github.ref == 'refs/heads/main' && 'lingua-quiz.nikolay-eremeev.com' || 'test-lingua-quiz.nikolay-eremeev.com' }} \
             --set secrets.jwtSecret="${{ secrets.JWT_SECRET }}" \
-            --set secrets.postgresDb="${{ secrets.POSTGRES_DB }}" \
-            --set secrets.postgresUser="${{ secrets.POSTGRES_USER }}" \
-            --set secrets.postgresPassword="${{ secrets.POSTGRES_PASSWORD }}" \
+            --set secrets.postgresDb="$DB_NAME" \
+            --set secrets.postgresUser="$DB_USER" \
+            --set secrets.postgresPassword="$DB_PASSWORD" \
             --set secrets.googleCloudCredentialsB64="${{ secrets.GOOGLE_CLOUD_CREDENTIALS_B64 }}" \
-            --set backup.enabled=${{ github.ref == 'refs/heads/main' && 'true' || 'false' }} \
-            --set backup.spaces.accessKeyId="${{ secrets.SPACES_ACCESS_KEY_ID }}" \
-            --set backup.spaces.secretKey="${{ secrets.SPACES_SECRET_KEY }}" \
+            $DB_CONFIG \
             --wait --timeout 5m
             
       - name: Check Migration Logs

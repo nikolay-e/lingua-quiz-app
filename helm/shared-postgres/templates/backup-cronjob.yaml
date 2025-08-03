@@ -2,10 +2,10 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ include "lingua-quiz-app.fullname" . }}-backup
-  namespace: {{ include "lingua-quiz-app.namespace" . }}
+  name: {{ include "shared-postgres.fullname" . }}-backup
+  namespace: {{ include "shared-postgres.namespace" . }}
   labels:
-    {{- include "lingua-quiz-app.labels" . | nindent 4 }}
+    {{- include "shared-postgres.labels" . | nindent 4 }}
     app.kubernetes.io/component: backup
 spec:
   schedule: {{ .Values.backup.schedule | quote }}
@@ -31,38 +31,39 @@ spec:
                   mountPath: /tools
           containers:
             - name: postgres-backup
+              {{- if .Values.postgres.enabled }}
+              # Use same postgres image as internal deployment (should include pg_dump)
+              image: "{{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}"
+              imagePullPolicy: {{ .Values.postgres.image.pullPolicy }}
+              {{- else }}
+              # Use lightweight alpine image with pg_dump for external PostgreSQL
               image: postgres:13-alpine
               imagePullPolicy: IfNotPresent
+              {{- end }}
               env:
-                # Reference the PostgreSQL secret created by this chart
-                - name: POSTGRES_DB
-                  valueFrom:
-                    secretKeyRef:
-                      name: {{ include "lingua-quiz-app.fullname" . }}-postgres
-                      key: POSTGRES_DB
+                # Use shared PostgreSQL admin credentials for backup
                 - name: POSTGRES_USER
                   valueFrom:
                     secretKeyRef:
-                      name: {{ include "lingua-quiz-app.fullname" . }}-postgres
+                      name: {{ include "shared-postgres.fullname" . }}-admin
                       key: POSTGRES_USER
                 - name: PGPASSWORD # pg_dump uses this env var
                   valueFrom:
                     secretKeyRef:
-                      name: {{ include "lingua-quiz-app.fullname" . }}-postgres
+                      name: {{ include "shared-postgres.fullname" . }}-admin
                       key: POSTGRES_PASSWORD
-                # Use the postgres service from this chart
                 - name: POSTGRES_HOST
-                  value: {{ include "lingua-quiz-app.postgresql.fullname" . }}
+                  value: {{ include "shared-postgres.fullname" . }}.{{ include "shared-postgres.namespace" . }}.svc.cluster.local
                 # Reference the spaces credentials secret
                 - name: SPACES_ACCESS_KEY_ID
                   valueFrom:
                     secretKeyRef:
-                      name: {{ include "lingua-quiz-app.fullname" . }}-backup-spaces
+                      name: {{ include "shared-postgres.fullname" . }}-backup-spaces
                       key: SPACES_ACCESS_KEY_ID
                 - name: SPACES_SECRET_KEY
                   valueFrom:
                     secretKeyRef:
-                      name: {{ include "lingua-quiz-app.fullname" . }}-backup-spaces
+                      name: {{ include "shared-postgres.fullname" . }}-backup-spaces
                       key: SPACES_SECRET_KEY
                 # Spaces Configuration from values
                 - name: SPACES_ENDPOINT_URL
@@ -74,25 +75,33 @@ spec:
                 - |
                   set -e
                   echo "Starting PostgreSQL backup process..."
-                  BACKUP_FILE="/backup/backup-$(date +%Y-%m-%dT%H-%M-%S).dump"
-
-                  echo "Creating dump file: ${BACKUP_FILE}"
-                  # Use -Fc for custom-format archive, suitable for pg_restore
-                  pg_dump -U $POSTGRES_USER -h $POSTGRES_HOST -d $POSTGRES_DB -Fc -f $BACKUP_FILE
-                  echo "Dump created successfully."
+                  TIMESTAMP=$(date +%Y-%m-%dT%H-%M-%S)
+                  
+                  # Backup all application databases
+                  {{- range $dbName, $dbConfig := .Values.databases }}
+                  echo "Backing up database: {{ $dbConfig.name }}"
+                  BACKUP_FILE="/backup/{{ $dbConfig.name }}-backup-${TIMESTAMP}.dump"
+                  pg_dump -U $POSTGRES_USER -h $POSTGRES_HOST -d {{ $dbConfig.name }} -Fc -f $BACKUP_FILE
+                  echo "Dump for {{ $dbConfig.name }} created successfully."
+                  {{- end }}
 
                   echo "Configuring mc..."
                   /tools/mc alias set spaces https://${SPACES_ENDPOINT_URL} ${SPACES_ACCESS_KEY_ID} ${SPACES_SECRET_KEY}
                   echo "mc configured."
 
-                  TARGET_PATH="spaces/${SPACES_BUCKET_NAME}/backups/${BACKUP_FILE##*/}" # Path in bucket
+                  # Upload all backup files
+                  {{- range $dbName, $dbConfig := .Values.databases }}
+                  BACKUP_FILE="/backup/{{ $dbConfig.name }}-backup-${TIMESTAMP}.dump"
+                  TARGET_PATH="spaces/${SPACES_BUCKET_NAME}/backups/shared-postgres/{{ $dbConfig.name }}-backup-${TIMESTAMP}.dump"
                   echo "Uploading ${BACKUP_FILE} to ${TARGET_PATH}..."
                   /tools/mc cp ${BACKUP_FILE} ${TARGET_PATH}
-                  echo "Upload complete."
-
+                  echo "Upload for {{ $dbConfig.name }} complete."
+                  
                   echo "Cleaning up local file..."
                   rm ${BACKUP_FILE}
-                  echo "Backup process finished successfully."
+                  {{- end }}
+                  
+                  echo "All database backups completed successfully."
               volumeMounts:
                 - name: backup-volume
                   mountPath: /backup
