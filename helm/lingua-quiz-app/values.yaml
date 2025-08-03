@@ -139,7 +139,7 @@ migrations:
 
 # Database backup configuration
 backup:
-  enabled: false  # Enable/disable backup functionality
+  enabled: false  # Enable/disable backup functionality (enabled only for production via CI/CD)
   schedule: "0 2 * * *"  # Daily at 2 AM
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
