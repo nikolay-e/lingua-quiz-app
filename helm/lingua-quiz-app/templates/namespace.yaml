@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ include "lingua-quiz-app.namespace" . }}
+  labels:
+    {{- include "lingua-quiz-app.labels" . | nindent 4 }}
+    name: {{ include "lingua-quiz-app.namespace" . }}
