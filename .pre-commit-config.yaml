@@ -1,7 +1,7 @@
 repos:
   # Generic file formatting
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v5.0.0
     hooks:
       # Basic file checks
       - id: trailing-whitespace
@@ -18,9 +18,33 @@ repos:
       - id: mixed-line-ending
         args: [--fix=lf]
 
+      # Security and credential protection
+      - id: detect-private-key
+      - id: detect-aws-credentials
+        args: [--allow-missing-credentials]
+
+      # Python code quality (backend)
+      - id: check-ast
+        files: ^packages/backend/.*\.py$
+      - id: debug-statements
+        files: ^packages/backend/.*\.py$
+      - id: check-docstring-first
+        files: ^packages/backend/.*\.py$
+
+      # Git safety and project structure
+      - id: no-commit-to-branch
+        args: [--branch, main]
+      - id: requirements-txt-fixer
+        files: ^packages/backend/requirements.*\.txt$
+
+      # Cross-platform compatibility
+      - id: check-symlinks
+      - id: check-illegal-windows-names
+      - id: check-executables-have-shebangs
+
   # YAML formatting (exclude Helm templates due to Go templating)
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.35.1
+    rev: v1.37.1
     hooks:
       - id: yamllint
         args: [-c=.yamllint.yml]
@@ -31,7 +55,7 @@ repos:
     hooks:
       - id: eslint
         name: ESLint
-        entry: bash -c 'cd /Users/nikolay/Development/lingua-quiz && npm run lint'
+        entry: npm run lint
         language: system
         files: \.(js|ts|jsx|tsx)$
         pass_filenames: false
@@ -39,7 +63,7 @@ repos:
 
       - id: prettier
         name: Prettier
-        entry: bash -c 'cd /Users/nikolay/Development/lingua-quiz && npm run format'
+        entry: npm run format
         language: system
         files: \.(js|ts|jsx|tsx|json|md|yml|yaml)$
         exclude: ^helm/
@@ -48,14 +72,14 @@ repos:
 
   # Python formatting for backend
   - repo: https://github.com/psf/black
-    rev: 24.2.0
+    rev: 25.1.0
     hooks:
       - id: black
         language_version: python3
         files: ^packages/backend/
 
   - repo: https://github.com/pycqa/isort
-    rev: 5.13.2
+    rev: 6.0.1
     hooks:
       - id: isort
         args: [--profile, black]
@@ -71,14 +95,14 @@ repos:
 
   # Shell script validation
   - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: v0.9.0.6
+    rev: v0.10.0.1
     hooks:
       - id: shellcheck
         files: \.(sh|bash)$
 
   # Docker linting with project-specific ignores
   - repo: https://github.com/hadolint/hadolint
-    rev: v2.12.0
+    rev: v2.13.1-beta
     hooks:
       - id: hadolint-docker
         args: [
@@ -102,11 +126,5 @@ repos:
       - id: check-secrets
         name: Check for hardcoded secrets
         entry: bash -c 'grep -r -i -E "(api[_-]?key|secret[_-]?key|private[_-]?key)\s*[:=]\s*[\"'\''][^\"'\'']{10,}" --include="*.js" --include="*.ts" --include="*.py" --exclude-dir=node_modules --exclude-dir=.git . && exit 1 || exit 0'
-        language: system
-        pass_filenames: false
-
-      - id: check-migrations
-        name: Check migration files
-        entry: bash -c 'if ls packages/backend/migrations/*.sql 1> /dev/null 2>&1; then echo "Migration files found, ensure they are reviewed"; fi'
         language: system
         pass_filenames: false
