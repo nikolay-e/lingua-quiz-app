@@ -3,7 +3,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: {{ include "lingua-quiz-app.fullname" . }}-backup
-  namespace: {{ .Values.namespace }}
+  namespace: {{ include "lingua-quiz-app.namespace" . }}
   labels:
     {{- include "lingua-quiz-app.labels" . | nindent 4 }}
     app.kubernetes.io/component: backup
@@ -52,7 +52,7 @@ spec:
                       key: POSTGRES_PASSWORD
                 # Use the postgres service from this chart
                 - name: POSTGRES_HOST
-                  value: "{{ include "lingua-quiz-app.fullname" . }}-postgres"
+                  value: {{ include "lingua-quiz-app.postgresql.fullname" . }}
                 # Reference the spaces credentials secret
                 - name: SPACES_ACCESS_KEY_ID
                   valueFrom:
