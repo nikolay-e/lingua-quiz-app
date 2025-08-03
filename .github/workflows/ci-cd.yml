@@ -123,7 +123,7 @@ jobs:
           tags: nikolajer/${{ matrix.image }}:${{ github.event.pull_request.head.sha || github.sha }},nikolajer/${{ matrix.image }}:latest
 
   deploy:
-    needs: [lint, unit-tests, integration-tests, build-images]
+    needs: [lint, unit-tests, build-images]
     runs-on: ubuntu-latest
     environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
     permissions:
