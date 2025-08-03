@@ -3,8 +3,8 @@ FROM python:3.13-alpine
 WORKDIR /app
 
 # Install PostgreSQL client libraries, curl for health checks, and netcat for db wait
-RUN apk add --no-cache postgresql-libs=16.4-r0 curl=8.10.1-r0 netcat-openbsd=1.226-r0 \
-  && apk add --no-cache --virtual .build-deps gcc=13.2.1_git20240309-r0 musl-dev=1.2.5-r0 postgresql-dev=16.4-r0
+RUN apk add --no-cache postgresql-libs curl netcat-openbsd \
+  && apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev
 
 # Copy and install dependencies
 COPY requirements.txt ./
