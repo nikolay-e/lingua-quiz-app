@@ -176,7 +176,9 @@ jobs:
             --set secrets.postgresUser="${{ secrets.POSTGRES_USER }}" \
             --set secrets.postgresPassword="${{ secrets.POSTGRES_PASSWORD }}" \
             --set secrets.googleCloudCredentialsB64="${{ secrets.GOOGLE_CLOUD_CREDENTIALS_B64 }}" \
-            ${{ github.ref == 'refs/heads/main' && '--set backup.enabled=true --set backup.spaces.accessKeyId="${{ secrets.SPACES_ACCESS_KEY_ID }}" --set backup.spaces.secretKey="${{ secrets.SPACES_SECRET_KEY }}"' || '--set backup.enabled=false' }} \
+            --set backup.enabled=${{ github.ref == 'refs/heads/main' && 'true' || 'false' }} \
+            --set backup.spaces.accessKeyId="${{ secrets.SPACES_ACCESS_KEY_ID }}" \
+            --set backup.spaces.secretKey="${{ secrets.SPACES_SECRET_KEY }}" \
             --wait --timeout 5m
             
       - name: Check Migration Logs
