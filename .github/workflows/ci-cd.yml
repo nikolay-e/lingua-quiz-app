@@ -152,14 +152,23 @@ jobs:
         run: |
           echo "Deploying shared PostgreSQL database..."
           
+          # Create shared-database namespace with proper labels if it doesn't exist
+          if ! kubectl get namespace shared-database 2>/dev/null; then
+            echo "Creating shared-database namespace..."
+            kubectl create namespace shared-database
+            kubectl label namespace shared-database app.kubernetes.io/managed-by=Helm
+            kubectl annotate namespace shared-database meta.helm.sh/release-name=shared-postgres
+            kubectl annotate namespace shared-database meta.helm.sh/release-namespace=shared-database
+          fi
+          
           # Deploy shared PostgreSQL if it doesn't exist
           if ! helm list -n shared-database | grep -q shared-postgres; then
             echo "Deploying shared PostgreSQL for the first time..."
             helm upgrade --install shared-postgres ./helm/shared-postgres \
               --namespace shared-database \
-              --set secrets.adminPassword="${{ secrets.POSTGRES_ADMIN_PASSWORD }}" \
-              --set secrets.databases.linguaquiz.password="${{ secrets.POSTGRES_PROD_PASSWORD }}" \
-              --set secrets.databases.linguaquiz-staging.password="${{ secrets.POSTGRES_STAGING_PASSWORD }}" \
+              --set secrets.adminPassword="${{ secrets.POSTGRES_PASSWORD }}" \
+              --set secrets.databases.linguaquiz.password="${{ secrets.POSTGRES_PASSWORD }}" \
+              --set secrets.databases.linguaquiz-staging.password="${{ secrets.POSTGRES_PASSWORD }}" \
               --set backup.enabled=${{ github.ref == 'refs/heads/main' && 'true' || 'false' }} \
               --set backup.spaces.accessKeyId="${{ secrets.SPACES_ACCESS_KEY_ID }}" \
               --set backup.spaces.secretKey="${{ secrets.SPACES_SECRET_KEY }}" \
@@ -172,6 +181,15 @@ jobs:
         id: helm-deploy
         continue-on-error: true
         run: |
+          # Create app namespace with proper labels if it doesn't exist
+          if ! kubectl get namespace $NAMESPACE 2>/dev/null; then
+            echo "Creating $NAMESPACE namespace..."
+            kubectl create namespace $NAMESPACE
+            kubectl label namespace $NAMESPACE app.kubernetes.io/managed-by=Helm
+            kubectl annotate namespace $NAMESPACE meta.helm.sh/release-name=lingua-quiz
+            kubectl annotate namespace $NAMESPACE meta.helm.sh/release-namespace=$NAMESPACE
+          fi
+          
           # Uninstall existing release if it exists to avoid "operation in progress" errors
           helm uninstall lingua-quiz --namespace $NAMESPACE || true
           
