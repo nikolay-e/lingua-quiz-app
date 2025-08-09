@@ -1,0 +1,81 @@
+# Configuration for LinguaQuiz Vocabulary Analysis
+languages:
+  - "en"
+  - "de"
+  - "es"
+
+cefr_levels:
+  A1:
+    range: [1, 1000]
+    description: "Basic"
+  A2:
+    range: [1001, 2000]
+    description: "Elementary"
+  B1:
+    range: [2001, 4000]
+    description: "Intermediate"
+
+analysis_defaults:
+  min_word_length: 2
+  max_word_length: 20
+  frequency_threshold: 1.0e-7
+  top_words_count: 1000
+
+# NLP model preferences (in order of preference)
+nlp_models:
+  en: ["en_core_web_sm", "en_core_web_md", "en_core_web_lg"]
+  de: ["de_core_news_sm", "de_core_news_md", "de_core_news_lg"]  
+  es: ["es_core_news_sm", "es_core_news_md", "es_core_news_lg"]
+
+# Category mapping for word classification
+word_categories:
+  essential_nouns: ["NOUN"]
+  essential_verbs: ["VERB", "AUX"]
+  essential_adjectives: ["ADJ"]
+  function_words: ["DET", "PRON", "ADP", "CONJ", "SCONJ"]
+  other: ["ADV", "NUM", "PART", "INTJ", "X"]
+
+# Essential categories for vocabulary learning (ordered by priority)
+essential_vocabulary_categories:
+  - "essential_nouns"
+  - "essential_verbs"
+  - "essential_adjectives"
+  - "function_words"
+
+# Common skip words for analysis (too generic or not useful for learning)
+skip_words:
+  # English
+  - "a"
+  - "an"
+  - "the"
+  
+  # German articles and particles  
+  - "der"
+  - "die"
+  - "das"
+  - "den"
+  - "dem"
+  - "des"
+  - "ein"
+  - "eine"
+  - "einer"
+  - "einen"
+  - "einem"
+  - "eines"
+  
+  # Spanish articles and prepositions
+  - "el"
+  - "la"
+  - "los"
+  - "las"
+  - "un"
+  - "una"
+  - "unos"
+  - "unas"
+
+# Analysis thresholds for part-of-speech categorization
+pos_analysis_thresholds:
+  noun_freq_min: 1.0e-6
+  verb_freq_min: 1.0e-6
+  adj_freq_min: 1.0e-6
+  essential_freq_min: 1.0e-5
