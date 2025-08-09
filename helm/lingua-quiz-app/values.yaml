@@ -24,10 +24,10 @@ backend:
     port: 9000 # Default service port, will be overridden by CI
   resources:
     limits:
-      cpu: "500m"
+      cpu: "200m"
       memory: "512Mi"
     requests:
-      cpu: "250m"
+      cpu: "25m"
       memory: "256Mi"
   # Liveness, Readiness, Startup probes configuration
   probes:
@@ -63,10 +63,10 @@ frontend:
     port: 80
   resources:
     limits:
-      cpu: "200m"
+      cpu: "100m"
       memory: "256Mi"
     requests:
-      cpu: "100m"
+      cpu: "10m"
       memory: "128Mi"
 
 # PostgreSQL configuration
@@ -138,11 +138,11 @@ migrations:
   backoffLimit: 4
   resources:
     limits:
-      cpu: "200m"
-      memory: "256Mi"
-    requests:
-      cpu: "100m"
+      cpu: "50m"
       memory: "128Mi"
+    requests:
+      cpu: "25m"
+      memory: "64Mi"
   # Additional environment variables for migrations if needed
   env:
     - name: NODE_ENV
