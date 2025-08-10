@@ -67,7 +67,7 @@ frontend:
       memory: "256Mi"
     requests:
       cpu: "10m"
-      memory: "128Mi"
+      memory: "512Mi"
 
 # PostgreSQL configuration
 postgres:
@@ -138,8 +138,8 @@ migrations:
   backoffLimit: 4
   resources:
     limits:
-      cpu: "50m"
-      memory: "128Mi"
+      cpu: "200m"
+      memory: "512Mi"
     requests:
       cpu: "25m"
       memory: "64Mi"
