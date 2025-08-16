@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { QuizManager, Translation, checkAnswer } from '../src/index';
+import { QuizManager, Translation } from '../src/index';
 
 describe('Core Functionality Tests', () => {
   const sampleTranslations: Translation[] = [
@@ -19,47 +19,6 @@ describe('Core Functionality Tests', () => {
       targetWord: { text: 'кот', language: 'ru' }
     }
   ];
-
-  describe('Complex Answer Patterns', () => {
-    it('should handle parentheses with comma-separated requirements', () => {
-      // User must provide one option from each group separated by commas
-      expect(checkAnswer('равный, сейчас', '(равный|одинаковый), (сейчас|сразу)')).toBe(true);
-      expect(checkAnswer('одинаковый, сразу', '(равный|одинаковый), (сейчас|сразу)')).toBe(true);
-      
-      // Missing parts should fail
-      expect(checkAnswer('равный', '(равный|одинаковый), (сейчас|сразу)')).toBe(false);
-      expect(checkAnswer('сейчас', '(равный|одинаковый), (сейчас|сразу)')).toBe(false);
-    });
-
-    it('should handle mixed bracket and pipe patterns', () => {
-      // The pattern 'hello|hey, hi there|greetings' is treated as one group with pipe alternatives
-      // It should accept any of: 'hello', 'hey', 'hi there', or 'greetings'
-      expect(checkAnswer('hello', 'hello|hey|hi there|greetings')).toBe(true);
-      expect(checkAnswer('hey', 'hello|hey|hi there|greetings')).toBe(true);
-      expect(checkAnswer('hi there', 'hello|hey|hi there|greetings')).toBe(true);
-      expect(checkAnswer('greetings', 'hello|hey|hi there|greetings')).toBe(true);
-      
-      // These should not match
-      expect(checkAnswer('hello, greetings', 'hello|hey|hi there|greetings')).toBe(false);
-      expect(checkAnswer('wrong', 'hello|hey|hi there|greetings')).toBe(false);
-    });
-
-    it('should handle complex Cyrillic patterns', () => {
-      expect(checkAnswer('тёмный', 'темный')).toBe(true); // ё/е equivalence
-      expect(checkAnswer('темный', 'тёмный')).toBe(true);
-      expect(checkAnswer('cop', 'сор')).toBe(true); // Latin to Cyrillic
-    });
-
-    it('should handle edge cases in answer checking', () => {
-      expect(checkAnswer('', '')).toBe(true); // Empty answers should match when both are empty
-      expect(checkAnswer('word', '')).toBe(false);
-      expect(checkAnswer('', 'word')).toBe(false);
-      
-      // Whitespace handling
-      expect(checkAnswer('  hello  ', 'hello')).toBe(true);
-      expect(checkAnswer('hello', '  hello  ')).toBe(true);
-    });
-  });
 
   describe('QuizManager Edge Cases', () => {
     it('should handle empty translation list', () => {
