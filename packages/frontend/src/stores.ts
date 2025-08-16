@@ -344,6 +344,12 @@ function createQuizStore(): QuizStore {
       
       const questionResult = state.quizManager.getNextQuestion();
       const question = questionResult.question;
+      
+      // Handle automatic level changes
+      if (questionResult.levelAdjusted && questionResult.newLevel) {
+        console.log('Level auto-adjusted to:', questionResult.newLevel);
+      }
+      
       update(s => ({ ...s, currentQuestion: question }));
       return question;
     },
@@ -355,12 +361,10 @@ function createQuizStore(): QuizStore {
       try {
         const oldLevel = state.quizManager.getCurrentLevel();
         const feedback = state.quizManager.submitAnswer(state.currentQuestion.translationId, answer);
-        const questionResult = state.quizManager.getNextQuestion();
-        const nextQuestion = questionResult.question;
         const newLevel = state.quizManager.getCurrentLevel();
         
         // If level changed automatically, persist it
-        if (questionResult.levelAdjusted && oldLevel !== newLevel) {
+        if (oldLevel !== newLevel) {
           try {
             await api.updateCurrentLevel(token, newLevel);
             console.log('Auto level change persisted:', oldLevel, '->', newLevel);
@@ -372,9 +376,7 @@ function createQuizStore(): QuizStore {
         // Schedule bulk save after any answer (removed immediate level change saves)
         scheduleBulkSave(token);
         
-        // Use set/get pattern after await to avoid orphaned effects
-        set({ ...get(store), currentQuestion: nextQuestion });
-        
+        // DO NOT advance to next question here - let the UI handle it after showing feedback
         
         return feedback;
       } catch (error) {

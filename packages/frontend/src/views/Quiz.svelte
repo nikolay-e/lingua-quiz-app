@@ -14,6 +14,7 @@
   let feedback: SubmissionResult | QuizFeedback | null = null;
   let usageExamples: { source: string; target: string } | null = null;
   let isSubmitting: boolean = false;
+  let questionForFeedback: QuizQuestion | null = null;
 
   // TTS variables
   let ttsAvailable: boolean = false;
@@ -186,6 +187,7 @@
     feedback = null;
     usageExamples = null;
     userAnswer = '';
+    questionForFeedback = null;
     
     if (!quiz) return;
     
@@ -211,6 +213,9 @@
     isSubmitting = true;
     feedback = null;
     usageExamples = null;
+    
+    // Store the question being answered for feedback display
+    questionForFeedback = currentQuestion;
 
     try {
       const result = await quizStore.submitAnswer($authStore.token!, userAnswer);
@@ -228,17 +233,36 @@
         } else {
           usageExamples = null;
         }
-        // This will now execute reliably
-        userAnswer = ''; 
+        // Clear user input
+        userAnswer = '';
+        
+        // Advance to next question after a brief delay to show feedback
+        setTimeout(async () => {
+          await advanceToNextQuestion();
+        }, 1500);
       }
     } catch (error: any) {
       console.error('Error submitting answer:', error);
       const errorMessage = error instanceof Error ? error.message : 'Error submitting answer.';
       feedback = { message: errorMessage, isSuccess: false } as QuizFeedback;
+      // Don't auto-advance on errors
     } finally {
       isSubmitting = false;
-      // The reactive statement will handle the focus automatically
     }
+  }
+  
+  async function advanceToNextQuestion(): Promise<void> {
+    // Get the next question
+    await quizStore.getNextQuestion();
+    
+    // Clear feedback after advancing
+    feedback = null;
+    usageExamples = null;
+    questionForFeedback = null;
+    
+    // Focus the input for the new question
+    await tick();
+    if (answerInput) answerInput.focus();
   }
   
   function handleKeydown(e: KeyboardEvent): void {
@@ -283,14 +307,18 @@
   }
   
   // Initialize component
-  onMount(async () => {
-    await quizStore.loadWordSets($authStore.token!);
-    if ($authStore.token) {
-      await loadTTSLanguages();
-    }
-    // Use tick to ensure DOM is updated before focusing
-    await tick();
-    if (answerInput) answerInput.focus();
+  onMount(() => {
+    const initialize = async () => {
+      await quizStore.loadWordSets($authStore.token!);
+      if ($authStore.token) {
+        await loadTTSLanguages();
+      }
+      // Use tick to ensure DOM is updated before focusing
+      await tick();
+      if (answerInput) answerInput.focus();
+    };
+    
+    initialize();
     
     // Save progress before page unload
     const handleBeforeUnload = (_e: BeforeUnloadEvent) => {
@@ -393,7 +421,12 @@
         <div class="feedback-container">
           <div class="feedback-text {('isSuccess' in feedback ? feedback.isSuccess : feedback.isCorrect) ? 'success' : 'error'}">
             <span class="feedback-icon"></span>
-            <span class="feedback-message">{'message' in feedback ? feedback.message : `${formatForDisplay(feedback.translation.sourceWord.text)} ↔ ${formatForDisplay(feedback.translation.targetWord.text)}`}</span>
+            <span class="feedback-message">
+              {'message' in feedback ? feedback.message : 
+                feedback.isCorrect ? 
+                  `✓ Correct! ${questionForFeedback ? questionForFeedback.questionText : ''} = ${formatForDisplay(feedback.correctAnswerText)}` :
+                  `✗ Incorrect. ${questionForFeedback ? questionForFeedback.questionText : ''} = ${formatForDisplay(feedback.correctAnswerText)}`}
+            </span>
           </div>
           {#if usageExamples}
             <div class="usage-examples">

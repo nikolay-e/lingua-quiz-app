@@ -57,6 +57,22 @@ jobs:
           cd packages/core
           npm test
 
+  pr-review:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    permissions:
+      contents: read
+      id-token: write
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Claude Code Action Official
+        uses: anthropics/claude-code-action@beta
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+
   # Integration tests
   integration-tests:
     runs-on: ubuntu-latest
