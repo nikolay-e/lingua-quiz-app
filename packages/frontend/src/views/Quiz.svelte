@@ -425,8 +425,8 @@
             <span class="feedback-message">
               {'message' in feedback ? feedback.message : 
                 feedback.isCorrect ? 
-                  `✓ Correct! ${questionForFeedback ? questionForFeedback.questionText : ''} = ${formatForDisplay(feedback.correctAnswerText)}` :
-                  `✗ Incorrect. ${questionForFeedback ? questionForFeedback.questionText : ''} = ${formatForDisplay(feedback.correctAnswerText)}`}
+                  `${questionForFeedback ? questionForFeedback.questionText : ''} = ${formatForDisplay(feedback.correctAnswerText)}` :
+                  `${questionForFeedback ? questionForFeedback.questionText : ''} = ${formatForDisplay(feedback.correctAnswerText)}`}
             </span>
           </div>
           {#if usageExamples}
