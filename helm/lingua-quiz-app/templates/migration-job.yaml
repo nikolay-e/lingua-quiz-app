@@ -27,13 +27,22 @@ spec:
       # Add init container to wait for PostgreSQL to be ready before running migrations
       initContainers:
       - name: wait-for-db
+        {{- if .Values.postgres.enabled }}
         image: "{{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}"
         imagePullPolicy: {{ .Values.postgres.image.pullPolicy }}
+        {{- else }}
+        image: "postgres:13"
+        imagePullPolicy: IfNotPresent
+        {{- end }}
         command:
         - sh
         - -c
         - |
+          {{- if .Values.postgres.enabled }}
           until pg_isready -h {{ include "lingua-quiz-app.postgresql.fullname" . }} -p 5432; do
+          {{- else }}
+          until pg_isready -h {{ .Values.postgres.external.host }} -p {{ .Values.postgres.external.port }}; do
+          {{- end }}
             echo "Waiting for PostgreSQL to be ready..."
             sleep 2
           done
@@ -51,11 +60,11 @@ spec:
                 key: POSTGRES_PASSWORD
         resources:
           requests:
-            cpu: "50m"
-            memory: "64Mi"
+            cpu: "10m"
+            memory: "32Mi"
           limits:
-            cpu: "100m"
-            memory: "128Mi"
+            cpu: "25m"
+            memory: "64Mi"
       containers:
       - name: migration-runner
         image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag | default .Chart.AppVersion }}"
@@ -65,10 +74,16 @@ spec:
         - {{ . | quote }}
         {{- end }}
         env:
+          # Database configuration - always use app's own postgres secret
+          {{- if .Values.postgres.enabled }}
           - name: DB_HOST
             value: {{ include "lingua-quiz-app.postgresql.fullname" . }}
+          {{- else }}
+          - name: DB_HOST
+            value: {{ .Values.postgres.external.host | quote }}
+          {{- end }}
           - name: DB_PORT
-            value: "5432"
+            value: {{ .Values.postgres.external.port | default "5432" | quote }}
           - name: POSTGRES_DB
             valueFrom:
               secretKeyRef:

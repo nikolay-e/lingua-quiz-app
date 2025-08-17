@@ -24,10 +24,10 @@ backend:
     port: 9000 # Default service port, will be overridden by CI
   resources:
     limits:
-      cpu: "500m"
+      cpu: "200m"
       memory: "512Mi"
     requests:
-      cpu: "250m"
+      cpu: "25m"
       memory: "256Mi"
   # Liveness, Readiness, Startup probes configuration
   probes:
@@ -63,22 +63,33 @@ frontend:
     port: 80
   resources:
     limits:
-      cpu: "200m"
+      cpu: "100m"
       memory: "256Mi"
     requests:
-      cpu: "100m"
+      cpu: "10m"
       memory: "128Mi"
 
 # PostgreSQL configuration
 postgres:
-  enabled: true # Deploy PostgreSQL along with the backend
+  # Set to false to use external PostgreSQL database
+  enabled: false # Changed: Use external shared PostgreSQL
+  
+  # External PostgreSQL configuration (when enabled: false)
+  external:
+    host: "shared-postgres.shared-database.svc.cluster.local"
+    port: 5432
+    database: "linguaquiz"  # Production database name (overridden by CI for staging)
+    # Note: Database credentials are provided by CI/CD and stored in app's own postgres secret
+    # This configuration is only used for host/port information
+  
+  # Legacy internal PostgreSQL config (when enabled: true)
   image:
     repository: postgres
-    tag: "13" # Match your existing version
+    tag: "13"
     pullPolicy: IfNotPresent
   persistence:
-    size: 5Gi # Match your existing PVC size
-  resources: {} # Add resource requests/limits if needed
+    size: 5Gi
+  resources: {}
 
 # Ingress configuration for external access
 ingress:
@@ -127,28 +138,17 @@ migrations:
   backoffLimit: 4
   resources:
     limits:
-      cpu: "200m"
-      memory: "256Mi"
-    requests:
-      cpu: "100m"
+      cpu: "50m"
       memory: "128Mi"
+    requests:
+      cpu: "25m"
+      memory: "64Mi"
   # Additional environment variables for migrations if needed
   env:
     - name: NODE_ENV
       value: "production"
 
-# Database backup configuration
-backup:
-  enabled: false  # Enable/disable backup functionality
-  schedule: "0 2 * * *"  # Daily at 2 AM
-  concurrencyPolicy: Forbid
-  successfulJobsHistoryLimit: 3
-  failedJobsHistoryLimit: 1
-  spaces:
-    endpointUrl: "fra1.digitaloceanspaces.com"
-    bucketName: "lingua-quiz"
-    accessKeyId: ""  # Must be set at deployment
-    secretKey: ""     # Must be set at deployment
+# Note: Database backup is now handled by the shared-postgres chart
 # Optional configurations
 # imagePullSecrets: []
 # nameOverride: ""

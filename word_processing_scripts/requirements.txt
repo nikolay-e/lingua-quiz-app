@@ -1,6 +1,0 @@
-spacy>=3.4.0
-wordfreq>=3.0.0
-stanza>=1.4.0  # Stanford NLP (optional, for Spanish analyzer advanced features)
-transformers>=4.52.0  # Hugging Face transformers (optional, for Spanish BERT)
-torch>=1.10.0  # PyTorch (required if using transformers)
-protobuf>=4.25.8 # not directly required, pinned by Snyk to avoid a vulnerability
