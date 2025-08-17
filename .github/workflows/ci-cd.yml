@@ -1,5 +1,6 @@
 name: CI/CD
 
+# Updated workflow to fix Claude Code Action and dependency sync issues
 on:
   push:
     branches: [main]
