@@ -237,10 +237,8 @@
         // Clear user input
         userAnswer = '';
         
-        // Advance to next question after a brief delay to show feedback
-        setTimeout(async () => {
-          await advanceToNextQuestion();
-        }, 1500);
+        // Advance to next question immediately
+        await advanceToNextQuestion();
       }
     } catch (error: any) {
       console.error('Error submitting answer:', error);
@@ -253,8 +251,8 @@
   }
   
   async function advanceToNextQuestion(): Promise<void> {
-    // Get the next question
-    await quizStore.getNextQuestion();
+    // Get the next question (synchronous call)
+    quizStore.getNextQuestion();
     
     // Don't clear feedback - let it persist to the next question
     // feedback = null;
