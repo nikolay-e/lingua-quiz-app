@@ -211,8 +211,9 @@
     if (!currentQuestion || isSubmitting) return;
 
     isSubmitting = true;
-    feedback = null;
-    usageExamples = null;
+    // Don't clear feedback immediately - let it stay visible
+    // feedback = null;
+    // usageExamples = null;
     
     // Store the question being answered for feedback display
     questionForFeedback = currentQuestion;
@@ -255,10 +256,10 @@
     // Get the next question
     await quizStore.getNextQuestion();
     
-    // Clear feedback after advancing
-    feedback = null;
-    usageExamples = null;
-    questionForFeedback = null;
+    // Don't clear feedback - let it persist to the next question
+    // feedback = null;
+    // usageExamples = null;
+    // questionForFeedback = null;
     
     // Focus the input for the new question
     await tick();
