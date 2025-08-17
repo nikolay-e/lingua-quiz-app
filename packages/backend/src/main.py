@@ -238,7 +238,7 @@ class TTSLanguagesResponse(BaseModel):
     class Config:
         populate_by_name = True
 
-# Answer comparison models removed - logic moved to @linguaquiz/core
+# Answer comparison models removed - logic moved to @lingua-quiz/core
 
 class HealthResponse(BaseModel):
     status: str
@@ -801,7 +801,7 @@ async def get_tts_languages(current_user: dict = Depends(get_current_user)):
             detail="Failed to get TTS languages"
         )
 
-# Note: Answer comparison logic moved to @linguaquiz/core package on frontend
+# Note: Answer comparison logic moved to @lingua-quiz/core package on frontend
 
 # =================================================================
 # 8. Exception Handlers

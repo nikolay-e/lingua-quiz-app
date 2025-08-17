@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { register, login, getWordCountFromHeader, selectQuiz, waitForQuizReady, findCorrectAnswer } from './helpers';
-import { T_PROMO } from '@linguaquiz/core';
+import { T_PROMO } from '@lingua-quiz/core';
 
 interface StatusSummary {
   level0: number;
@@ -14,7 +14,7 @@ interface StatusSummary {
 /**
  * Gets the current level from the level display.
  */
-async function getCurrentLevelDisplay(page: any): Promise<string> {
+async function getCurrentLevelDisplay(page: import('@playwright/test').Page): Promise<string> {
   try {
     const levelDescription = await page.locator('.level-description').textContent();
     if (levelDescription?.includes('New Words Practice')) return 'LEVEL_1';
@@ -31,7 +31,7 @@ async function getCurrentLevelDisplay(page: any): Promise<string> {
 /**
  * Gets the status summary (word counts per level).
  */
-async function getStatusSummary(page: any): Promise<StatusSummary> {
+async function getStatusSummary(page: import('@playwright/test').Page): Promise<StatusSummary> {
   return {
     level0: await getWordCountFromHeader(page, 'level-0'),
     level1: await getWordCountFromHeader(page, 'level-1'),

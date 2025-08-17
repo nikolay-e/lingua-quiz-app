@@ -14,23 +14,17 @@ declare global {
 const getServerAddress = (): string => {
   const { hostname, port, protocol } = window.location;
 
-  // Debug logging
-  console.log(`Frontend API detection: hostname=${hostname}, port=${port}, protocol=${protocol}`);
-
   // Environment variable override (for Docker and other deployment scenarios)
   if (window.LINGUA_QUIZ_API_URL) {
-    console.log(`Using environment API URL: ${window.LINGUA_QUIZ_API_URL}`);
     return window.LINGUA_QUIZ_API_URL;
   }
 
   // Development scenarios
   if (hostname === 'localhost') {
     if (port === '8080') {
-      console.log('Using localhost development API');
       return 'http://localhost:9000/api';
     }
     // Handle other development ports
-    console.log('Using localhost fallback API');
     return `http://localhost:9000/api`;
   }
   
@@ -41,11 +35,8 @@ const getServerAddress = (): string => {
   
   // Generic production fallback - assume API is on same domain with /api path
   if (protocol === 'https:') {
-    console.log('Using HTTPS same-domain API');
     return `https://${hostname}/api`;
   }
-  
-  console.log('Using fallback same-origin API');
   return '/api'; // fallback for same-origin deployment
 };
 
@@ -53,13 +44,9 @@ import type {
   AuthResponse,
   WordSet,
   UserWordSet,
-  InitialQuizStateResponse,
-  SubmissionData,
-  ProgressData,
-  SessionData,
   TTSResponse,
   TTSLanguagesResponse
-} from './types';
+} from '@lingua-quiz/core';
 
 const serverAddress = getServerAddress();
 
@@ -78,7 +65,7 @@ const api = {
     if (!response.ok) {
       // Handle FastAPI validation errors
       if (data.detail && Array.isArray(data.detail)) {
-        const errors = data.detail.map((err: any) => err.msg || err.message).join(', ');
+        const errors = data.detail.map((err: { msg?: string; message?: string }) => err.msg || err.message).join(', ');
         throw new Error(errors || 'Login failed');
       }
       throw new Error(data.message || data.detail || 'Login failed');
@@ -97,7 +84,7 @@ const api = {
     if (!response.ok) {
       // Handle FastAPI validation errors
       if (data.detail && Array.isArray(data.detail)) {
-        const errors = data.detail.map((err: any) => err.msg || err.message).join(', ');
+        const errors = data.detail.map((err: { msg?: string; message?: string }) => err.msg || err.message).join(', ');
         throw new Error(errors || 'Registration failed');
       }
       throw new Error(data.message || data.detail || 'Registration failed');
@@ -217,7 +204,7 @@ const api = {
     }
   },
 
-  async fetchWordSet(token: string, wordSetId: number): Promise<WordSet & { words: any[] }> {
+  async fetchWordSet(token: string, wordSetId: number): Promise<WordSet & { words: unknown[] }> {
     const response = await fetch(`${serverAddress}/word-sets/${wordSetId}`, {
       method: 'GET',
       headers: { Authorization: `Bearer ${token}` },

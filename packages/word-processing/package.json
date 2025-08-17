@@ -14,8 +14,6 @@
     "migration-validation",
     "nlp"
   ],
-  "author": "Lingua Quiz Team",
-  "license": "MIT",
   "dependencies": {},
   "devDependencies": {},
   "engines": {

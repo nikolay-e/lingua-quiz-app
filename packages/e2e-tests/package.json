@@ -1,5 +1,5 @@
 {
-  "name": "@linguaquiz/e2e-tests",
+  "name": "@lingua-quiz/e2e-tests",
   "version": "1.0.0",
   "description": "E2E tests for your monorepo",
   "scripts": {
@@ -7,11 +7,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@linguaquiz/core": "file:../core"
+    "@lingua-quiz/core": "file:../core"
   },
   "devDependencies": {
     "@playwright/test": "^1.54.1",
     "@types/node": "^24.0.14",
     "typescript": "^5.3.3"
-  }
+  },
+  "keywords": ["testing", "e2e", "playwright", "language-learning"]
 }

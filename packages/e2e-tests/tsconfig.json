@@ -3,16 +3,17 @@
     "target": "ES2020",
     "module": "commonjs",
     "lib": ["ES2020", "DOM"],
+    "moduleResolution": "node",
+    "noEmit": true,
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "moduleResolution": "node",
-    "allowJs": true,
-    "noEmit": true,
-    "strictNullChecks": false,
-    "types": ["@playwright/test", "node"]
+    "types": ["@playwright/test", "node"],
+    "paths": {
+      "@lingua-quiz/core": ["../core/src"],
+      "@lingua-quiz/core/*": ["../core/src/*"]
+    }
   },
   "include": [
     "tests/**/*.ts",

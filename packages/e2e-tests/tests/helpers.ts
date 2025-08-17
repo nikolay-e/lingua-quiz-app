@@ -5,14 +5,6 @@ interface WordPair {
   targetWord: string;
 }
 
-interface StatusSummary {
-  level0: number;
-  level1: number;
-  level2: number;
-  level3: number;
-  level4: number;
-  level5: number;
-}
 
 async function withRetry<T>(fn: () => Promise<T>, retries = 3): Promise<T> {
   for (let i = 0; i < retries; i++) {
@@ -30,13 +22,9 @@ export async function register(page: Page, username: string, password: string, s
   // Use environment variable or fallback URL
   const baseURL = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
   
-  try {
-    await withRetry(async () => {
-      await page.goto(baseURL, { waitUntil: 'domcontentloaded', timeout: 30000 });
-    });
-  } catch (error) {
-    throw error;
-  }
+  await withRetry(async () => {
+    await page.goto(baseURL, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  });
   
   // First check if we're on login page and need to navigate to register
   try {
@@ -45,13 +33,9 @@ export async function register(page: Page, username: string, password: string, s
     await page.click('button:has-text("Register here")');
     // Wait for register page to load
     await page.waitForSelector('section:has-text("Create Account")', { state: 'visible', timeout: 2000 });
-  } catch (error) {
+  } catch {
     // Check if we're already on register page
-    try {
-      await page.waitForSelector('section:has-text("Create Account")', { state: 'visible', timeout: 2000 });
-    } catch (error2) {
-      throw error2;
-    }
+    await page.waitForSelector('section:has-text("Create Account")', { state: 'visible', timeout: 2000 });
   }
   
   // Find the username and password inputs within the register section
@@ -84,7 +68,7 @@ export async function register(page: Page, username: string, password: string, s
   // Click with retry for Firefox compatibility
   try {
     await submitButton.click({ timeout: 15000 });
-  } catch (error) {
+  } catch {
     // Retry with force click if normal click fails
     await submitButton.click({ force: true });
   }
@@ -119,13 +103,9 @@ export async function login(page: Page, username: string, password: string): Pro
   // Use environment variable or fallback URL
   const baseURL = process.env.LINGUA_QUIZ_URL || 'http://localhost:8080';
   
-  try {
-    await withRetry(async () => {
-      await page.goto(baseURL, { waitUntil: 'domcontentloaded', timeout: 30000 });
-    });
-  } catch (error) {
-    throw error;
-  }
+  await withRetry(async () => {
+    await page.goto(baseURL, { waitUntil: 'domcontentloaded', timeout: 30000 });
+  });
   
   // Check if we're already logged in (quiz selector is visible)
   try {
@@ -165,7 +145,7 @@ export async function login(page: Page, username: string, password: string): Pro
   
   try {
     await submitButton.click({ timeout: 15000 }); // Increased timeout for Firefox
-  } catch (error) {
+  } catch {
     // Retry with force click if normal click fails
     await submitButton.click({ force: true });
   }
@@ -218,8 +198,8 @@ export async function getWordCountFromHeader(page: Page, levelId: string): Promi
     const headerText = await page.locator(`#${levelId} h3`).innerText();
     const match = headerText.match(/\((\d+)\)/);
     return match ? parseInt(match[1], 10) : 0;
-  } catch (error) {
-    console.warn(`Could not get count from header ${levelId}: ${(error as Error).message}`);
+  } catch {
+    console.warn(`Could not get count from header ${levelId}`);
     return 0;
   }
 }
@@ -243,8 +223,8 @@ export async function getWordsFromList(page: Page, listId: string): Promise<Word
         return null;
       })
       .filter((item): item is WordPair => item !== null);
-  } catch (error) {
-    console.warn(`Could not access list ${listId}: ${(error as Error).message}`);
+  } catch {
+    console.warn(`Could not access list ${listId}`);
     return [];
   }
 }

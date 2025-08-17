@@ -74,6 +74,7 @@
             type="button" 
             class="toggle-password-btn"
             on:click={() => showLoginPassword = !showLoginPassword}
+            aria-label={showLoginPassword ? 'Hide password' : 'Show password'}
           >
             <i class="fas fa-eye{showLoginPassword ? '-slash' : ''}"></i>
           </button>
