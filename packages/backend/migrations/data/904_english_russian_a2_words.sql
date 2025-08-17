@@ -400,7 +400,7 @@ BEGIN
     (8010371, 8010743, 8010744, 'ill', 'больной', 'She is ill in bed.', 'Она больна и лежит в постели.'),
     (8010372, 8010745, 8010746, 'illness', 'болезнь', 'He died after a long illness.', 'Он умер после продолжительной болезни.'),
     (8010373, 8010747, 8010748, 'image', 'изображение|образ', 'The book has many beautiful images.', 'В книге много красивых изображений.'),
-    (8010374, 8010749, 8010750, 'immediately', 'немедленно|сразу', 'Please call me immediately.', 'Пожалуйста, позвони мне немедленно.'),
+    (8010374, 8010749, 8010750, 'immediately', 'немедленно|сразу|сразу же', 'Please call me immediately.', 'Пожалуйста, позвони мне немедленно.'),
     (8010375, 8010751, 8010752, 'impossible', 'невозможный', 'It''s impossible to finish this work in one day.', 'Невозможно закончить эту работу за один день.'),
     (8010376, 8010753, 8010754, 'included', 'включённый', 'Breakfast is included in the price.', 'Завтрак включен в стоимость.'),
     (8010377, 8010755, 8010756, 'including', 'включая', 'There were five people, including me.', 'Было пять человек, включая меня.'),
@@ -661,8 +661,8 @@ BEGIN
     (8010632, 8011265, 8011266, 'rest (sleep/relax)', 'отдых', 'I need to get some rest.', 'Мне нужно отдохнуть.'),
     (8010633, 8011267, 8011268, 'review', 'обзор|рецензия', 'I read a review of the new movie.', 'Я прочитал рецензию на новый фильм.'),
     (8010634, 8011269, 8011270, 'ride', 'поездка', 'Let''s go for a ride on our bikes.', 'Давай покатаемся на велосипедах.'),
-    (8010635, 8011271, 8011272, 'ring', 'кольцо', 'She has a beautiful diamond ring.', 'У нее красивое кольцо с бриллиантом.'),
-    (8010636, 8011273, 8011274, 'ring', 'звонить', 'The phone is ringing.', 'Телефон звонит.'),
+    (8010635, 8011271, 8011272, 'ring', 'кольцо, звонить', 'She has a beautiful diamond ring. The phone is ringing.', 'У нее красивое кольцо с бриллиантом. Телефон звонит.'),
+    -- REMOVED: (8010636, 8011273, 8011274, 'ring', 'звонить', 'The phone is ringing.', 'Телефон звонит.'), -- Merged with 8010635
     (8010637, 8011275, 8011276, 'rise', 'подниматься|восход', 'The sun will rise at 6 AM.', 'Солнце взойдет в 6 утра.'),
     (8010638, 8011277, 8011278, 'rock (stone)', 'камень|скала', 'He threw a rock into the river.', 'Он бросил камень в реку.'),
     (8010639, 8011279, 8011280, 'rock (music)', 'рок-музыка', 'I like listening to rock music.', 'Я люблю слушать рок-музыку.'),
@@ -950,7 +950,7 @@ BEGIN
     (8010921, 8011843, 8011844, 'exchange [v.]', 'обменивать(ся)', 'They agreed to exchange gifts during the holidays.', 'Они договорились обменяться подарками на праздники.'),
     (8010922, 8011845, 8011846, 'exit', 'выход', 'Please use the rear exit in case of a fire.', 'В случае пожара, пожалуйста, воспользуйтесь задним выходом.'),
     (8010923, 8011847, 8011848, 'explore [v.]', 'исследовать', 'The team of scientists will explore the deep sea trench.', 'Команда ученых будет исследовать глубоководный желоб.'),
-    (8010924, 8011849, 8011850, 'extremely', 'чрезвычайно|очень', 'The weather in the Arctic is extremely cold.', 'Погода в Арктике чрезвычайно холодная.'),
+    -- REMOVED: (8010924, 8011849, 8011850, 'extremely', 'чрезвычайно|очень', 'The weather in the Arctic is extremely cold.', 'Погода в Арктике чрезвычайно холодная.'), -- Duplicate of 8010271
     (8010925, 8011851, 8011852, 'face [v.]', 'сталкиваться|встречаться лицом к лицу', 'You must face the consequences of your actions.', 'Ты должен столкнуться с последствиями своих действий.'),
     (8010926, 8011853, 8011854, 'fairly', 'довольно|справедливо', 'The task was fairly difficult, but not impossible.', 'Задание было довольно сложным, но не невыполнимым.'),
     (8010927, 8011855, 8011856, 'familiar', 'знакомый', 'Her name sounded familiar, but I couldn''t remember where I had heard it.', 'Ее имя показалось знакомым, но я не мог вспомнить, где я его слышал.'),
@@ -992,7 +992,7 @@ BEGIN
     (8010963, 8011927, 8011928, 'horrible', 'ужасный', 'There was a horrible accident on the motorway.', 'На автомагистрали произошла ужасная авария.'),
     (8010964, 8011929, 8011930, 'hurry [v.]', 'торопиться|спешить', 'We need to hurry if we want to catch the train.', 'Нам нужно поторопиться, если мы хотим успеть на поезд.'),
     (8010965, 8011931, 8011932, 'ignore [v.]', 'игнорировать', 'She chose to ignore his rude comments.', 'Она предпочла проигнорировать его грубые комментарии.'),
-    (8010966, 8011933, 8011934, 'immediately', 'немедленно|сразу же', 'The ambulance arrived almost immediately.', 'Скорая помощь прибыла почти немедленно.'),
+    -- REMOVED: (8010966, 8011933, 8011934, 'immediately', 'немедленно|сразу же', 'The ambulance arrived almost immediately.', 'Скорая помощь прибыла почти немедленно.'), -- Merged with 8010374
     (8010967, 8011935, 8011936, 'improvement', 'улучшение', 'There has been a significant improvement in her work.', 'В ее работе наблюдается значительное улучшение.'),
     (8010968, 8011937, 8011938, 'incredibly', 'невероятно', 'The view from the mountain top was incredibly beautiful.', 'Вид с вершины горы был невероятно красив.'),
     (8010969, 8011939, 8011940, 'ingredient', 'ингредиент|компонент', 'The main ingredient in this dish is fresh fish.', 'Основной ингредиент этого блюда — свежая рыба.'),
@@ -1079,8 +1079,8 @@ BEGIN
     (8011050, 8012101, 8012102, 'string', 'верёвка|нить', 'The package was tied with a piece of string.', 'Пакет был перевязан куском веревки.'),
     (8011051, 8012103, 8012104, 'strongly', 'сильно|настоятельно', 'She feels strongly that this is the wrong decision.', 'Она твердо убеждена, что это неправильное решение.'),
     (8011052, 8012105, 8012106, 'stuff', 'вещи|материал', 'Just put your stuff over there in the corner.', 'Просто положи свои вещи вон там, в углу.'),
-    (8011053, 8012107, 8012108, 'successful (description of process)', 'успешный (описание процесса)', 'The project was successful beyond all expectations.', 'Проект был успешным сверх всяких ожиданий.'),
-    (8011054, 8012109, 8012110, 'suddenly', 'внезапно|вдруг', 'Suddenly, the room went completely dark.', 'Внезапно в комнате стало совершенно темно.'),
+    -- REMOVED: (8011053, 8012107, 8012108, 'successful (description of process)', 'успешный (описание процесса)', 'The project was successful beyond all expectations.', 'Проект был успешным сверх всяких ожиданий.'), -- Duplicate of 8010745
+    -- REMOVED: (8011054, 8012109, 8012110, 'suddenly', 'внезапно|вдруг', 'Suddenly, the room went completely dark.', 'Внезапно в комнате стало совершенно темно.'), -- Duplicate of 8010747
     (8011055, 8012111, 8012112, 'sudden', 'внезапный|неожиданный', 'His sudden departure surprised everyone.', 'Его внезапный отъезд всех удивил.'),
     (8011056, 8012113, 8012114, 'suffer [v.]', 'страдать', 'Many people in the world suffer from hunger.', 'Многие люди в мире страдают от голода.'),
     (8011057, 8012115, 8012116, 'surely', 'несомненно|конечно', 'Surely you don''t expect me to believe that?', 'Неужели ты ожидаешь, что я в это поверю?'),
@@ -1098,7 +1098,7 @@ BEGIN
     (8011069, 8012139, 8012140, 'tongue', 'язык', 'The doctor asked the patient to stick out his tongue.', 'Врач попросил пациента высунуть язык.'),
     (8011070, 8012141, 8012142, 'totally', 'полностью|совершенно', 'I totally forgot about our appointment.', 'Я совершенно забыл о нашей встрече.'),
     (8011071, 8012143, 8012144, 'touch [v.]', 'трогать|касаться', 'Please do not touch the exhibits in the museum.', 'Пожалуйста, не трогайте экспонаты в музее.'),
-    (8011072, 8012145, 8012146, 'tower', 'башня', 'The castle has a tall stone tower.', 'У замка есть высокая каменная башня.'),
+    -- REMOVED: (8011072, 8012145, 8012146, 'tower', 'башня', 'The castle has a tall stone tower.', 'У замка есть высокая каменная башня.'), -- Duplicate of 8010788
     (8011073, 8012147, 8012148, 'translate [v.]', 'переводить', 'She was hired to translate the document from French to English.', 'Ее наняли для перевода документа с французского на английский.'),
     (8011074, 8012149, 8012150, 'treat [v.]', 'обращаться|относиться', 'It is important to treat everyone with kindness and respect.', 'Важно относиться ко всем с добротой и уважением.'),
     (8011075, 8012151, 8012152, 'tube', 'тюбик|трубка', 'A tube of toothpaste lasts for about a month.', 'Тюбика зубной пасты хватает примерно на месяц.'),
@@ -1126,7 +1126,7 @@ BEGIN
     (8011097, 8012195, 8012196, 'iron [v.]', 'гладить', 'I need to iron this shirt.', 'Мне нужно погладить эту рубашку.'),
     (8011098, 8012197, 8012198, 'stay [v.]', 'оставаться', 'Please stay in your seat.', 'Пожалуйста, оставайтесь на своем месте.'),
     (8011099, 8012199, 8012200, 'tie [v.]', 'завязывать', 'Can you teach me how to tie my shoes?', 'Можешь научить меня завязывать шнурки?'),
-    (8011100, 8012201, 8012202, 'lie (tell an untruth) [v.]', 'лгать', 'He knew it was wrong to lie to his parents.', 'Он знал, что лгать родителям — это неправильно.')
+    -- REMOVED: (8011100, 8012201, 8012202, 'lie (tell an untruth) [v.]', 'лгать', 'He knew it was wrong to lie to his parents.', 'Он знал, что лгать родителям — это неправильно.') -- Duplicate of 8010979
     ) AS t(translation_id, source_word_id, target_word_id, source_word, target_word, source_example, target_example)
   ) LOOP
     PERFORM insert_word_pair_and_add_to_list(

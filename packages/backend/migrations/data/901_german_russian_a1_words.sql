@@ -1015,7 +1015,7 @@ BEGIN
     (3000985, 3001971, 3001972, 'viel', 'много', 'Ich habe viel zu tun.', 'У меня много дел.'),
     (3000986, 3001973, 3001974, 'vielleicht', 'может быть', 'Vielleicht komme ich später.', 'Может быть, я приду позже.'),
     (3000987, 3001975, 3001976, 'das Viertel [die Viertel]', 'квартал', 'Dieses Viertel ist sehr lebhaft.', 'Этот квартал очень оживленный.'),
-    (3000988, 3001977, 3001978, 'deutsch', 'немецкий', 'Ich lerne deutsch.', 'Я учу немецкий.'),
+    -- REMOVED: (3000988, 3001977, 3001978, 'deutsch', 'немецкий', 'Ich lerne deutsch.', 'Я учу немецкий.'), -- Duplicate of 3000173 (Deutsch)
     (3000989, 3001979, 3001980, 'voll', 'полный', 'Der Bus ist voll.', 'Автобус полный.'),
     (3000990, 3001981, 3001982, 'von', 'от, из', 'Das Geschenk ist von meiner Schwester.', 'Подарок от моей сестры.'),
     (3000991, 3001983, 3001984, 'vor', 'до, перед', 'Das Treffen ist vor dem Kino.', 'Встреча перед кинотеатром.'),
