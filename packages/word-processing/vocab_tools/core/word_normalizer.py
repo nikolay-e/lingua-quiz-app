@@ -41,6 +41,24 @@ class WordNormalizer(ABC):
         """
         pass
     
+    def normalize_for_validation(self, word: str) -> str:
+        """
+        Normalize a word for duplicate validation purposes.
+        
+        This is more conservative than normalize() to preserve semantic distinctions
+        that prevent false positive duplicates.
+        
+        Args:
+            word: Raw word to normalize
+            
+        Returns:
+            Normalized word preserving important distinctions
+        """
+        # Default implementation - remove only basic formatting
+        word = word.strip()
+        word = re.sub(r'\s+', ' ', word)
+        return word.lower()
+    
     def _remove_accents(self, text: str) -> str:
         """Remove accents and diacritical marks from text."""
         nfd = unicodedata.normalize('NFD', text)
@@ -186,6 +204,32 @@ class GermanNormalizer(WordNormalizer):
                     variants.add(normalized)
         
         return variants
+    
+    def normalize_for_validation(self, word: str) -> str:
+        """
+        German validation normalization that preserves case-sensitive pronouns.
+        
+        Preserves case distinctions for:
+        - Sie (formal you) vs sie (they/she)
+        - Ihr (formal your) vs ihr (their/her)
+        
+        Args:
+            word: German word to normalize
+            
+        Returns:
+            Normalized word preserving case-sensitive pronouns
+        """
+        word = self._clean_word(word)
+        
+        # Preserve case for pronouns that change meaning with capitalization
+        case_sensitive_pronouns = {'Sie', 'sie', 'Ihr', 'ihr'}
+        if word in case_sensitive_pronouns:
+            return word  # Keep original case
+        
+        # For other words, apply basic normalization
+        word = word.strip()
+        word = re.sub(r'\s+', ' ', word)
+        return word.lower()
 
 
 class SpanishNormalizer(WordNormalizer):

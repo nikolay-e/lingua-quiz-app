@@ -193,7 +193,7 @@ class VocabularyAnalyzer(ABC):
             True if entry is valid for analysis
         """
         # Skip obvious placeholder entries
-        if (entry.source_word == 'word' and entry.translation == 'translation'):
+        if (entry.source_word == 'word' and entry.target_word == 'translation'):
             return False
         
         # Skip empty entries
