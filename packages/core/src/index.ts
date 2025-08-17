@@ -630,3 +630,6 @@ export { F, K, T_PROMO, MISTAKE_THRESHOLD, MISTAKE_WINDOW, MAX_FOCUS_POOL_SIZE, 
 
 // Export answer comparison functions
 export { checkAnswer, formatForDisplay, normalizeForComparison, normalize } from './answer-comparison';
+
+// Export all types
+export * from './types';

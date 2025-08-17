@@ -12,7 +12,8 @@ RUN pip install --no-cache-dir -r requirements.txt && \
     apk --purge del .build-deps
 
 # Copy application and migrations
-COPY main.py migrate.py tts_service.py ./
+COPY src/main.py src/tts_service.py ./
+COPY migrate.py ./
 COPY migrations/ ./migrations/
 
 # Set Python optimizations for production

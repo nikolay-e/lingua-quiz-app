@@ -112,12 +112,46 @@ def get_connection(db_config: DatabaseConfig):
     )
 
 def get_migration_files(migration_config: MigrationConfig) -> List[MigrationFile]:
-    """Get validated list of migration files"""
+    """Get validated list of migration files from schema and data directories"""
     if not migration_config.migrations_dir.exists():
         print(f"{RED}Migration directory not found: {migration_config.migrations_dir}{RESET}")
         sys.exit(1)
     
     files = []
+    
+    # Load schema migrations first (001-010)
+    schema_dir = migration_config.migrations_dir / 'schema'
+    if schema_dir.exists():
+        for filepath in sorted(schema_dir.glob('*.sql')):
+            try:
+                content = filepath.read_text(encoding='utf-8')
+                migration_file = MigrationFile(
+                    filename=filepath.name,
+                    filepath=filepath,
+                    content=content
+                )
+                files.append(migration_file)
+            except Exception as e:
+                print(f"{RED}Error reading schema migration file {filepath}: {e}{RESET}")
+                sys.exit(1)
+    
+    # Load data migrations second (901+)
+    data_dir = migration_config.migrations_dir / 'data'
+    if data_dir.exists():
+        for filepath in sorted(data_dir.glob('*.sql')):
+            try:
+                content = filepath.read_text(encoding='utf-8')
+                migration_file = MigrationFile(
+                    filename=filepath.name,
+                    filepath=filepath,
+                    content=content
+                )
+                files.append(migration_file)
+            except Exception as e:
+                print(f"{RED}Error reading data migration file {filepath}: {e}{RESET}")
+                sys.exit(1)
+    
+    # Fallback: load any remaining files from root migrations directory
     for filepath in migration_config.migrations_dir.glob('*.sql'):
         # Skip the old schema migrations table file
         if filepath.name == '000_schema_migrations_table.sql':
@@ -135,8 +169,8 @@ def get_migration_files(migration_config: MigrationConfig) -> List[MigrationFile
             print(f"{RED}Error reading migration file {filepath}: {e}{RESET}")
             sys.exit(1)
     
-    # Sort by filename
-    return sorted(files, key=lambda x: x.filename)
+    # Sort by numeric prefix to ensure proper order
+    return sorted(files, key=lambda x: int(x.filename.split('_')[0]))
 
 def run_migration(conn, migration_file: MigrationFile) -> bool:
     """Run a single validated migration"""
