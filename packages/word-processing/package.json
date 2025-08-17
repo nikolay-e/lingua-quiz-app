@@ -1,0 +1,24 @@
+{
+  "name": "@lingua-quiz/word-processing",
+  "version": "1.0.0",
+  "description": "Word processing and migration validation tools for Lingua Quiz",
+  "main": "main.py",
+  "scripts": {
+    "validate-migrations": "python main.py validate-migrations",
+    "process-vocabulary": "python main.py process-vocabulary",
+    "install": "pip install -r requirements.txt"
+  },
+  "keywords": [
+    "vocabulary",
+    "language-learning",
+    "migration-validation",
+    "nlp"
+  ],
+  "author": "Lingua Quiz Team",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "python": ">=3.8"
+  }
+}

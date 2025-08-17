@@ -57,6 +57,35 @@ jobs:
           cd packages/core
           npm test
 
+  # Data migration validation
+  validate-data-migrations:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          
+      - name: Install word processing dependencies
+        run: |
+          cd packages/word-processing
+          pip install -r requirements.txt
+          
+      - name: Validate data migrations
+        run: |
+          cd packages/word-processing
+          python main.py validate-migrations
+          
+      - name: Check vocabulary gaps
+        run: |
+          cd packages/word-processing
+          python main.py process-vocabulary
+
   pr-review:
     runs-on: ubuntu-latest
     continue-on-error: true
@@ -139,7 +168,7 @@ jobs:
           tags: nikolajer/${{ matrix.image }}:${{ github.event.pull_request.head.sha || github.sha }},nikolajer/${{ matrix.image }}:latest
 
   deploy:
-    needs: [lint, unit-tests, build-images]
+    needs: [lint, unit-tests, validate-data-migrations, build-images]
     runs-on: ubuntu-latest
     environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
     permissions:
