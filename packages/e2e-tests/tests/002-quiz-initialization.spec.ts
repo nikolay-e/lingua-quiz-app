@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { register, login } from './helpers';
-import { MAX_FOCUS_POOL_SIZE } from '@linguaquiz/core';
+import { MAX_FOCUS_POOL_SIZE } from '@lingua-quiz/core';
 
 test.describe.serial('Quiz Initialization', () => {
   const testUser = `init_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;

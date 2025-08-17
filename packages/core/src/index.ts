@@ -1,5 +1,5 @@
 /**
- * @linguaquiz/core - Core business logic for Lingua Quiz
+ * @lingua-quiz/core - Core business logic for Lingua Quiz
  * 
  * A portable, headless quiz engine that can be used across different platforms:
  * - Web applications (React, Vue, Svelte)

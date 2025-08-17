@@ -6,15 +6,15 @@
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
-
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
     "noEmit": true,
     "allowJs": true,
     "checkJs": true,
-
     "strict": false,
     "noImplicitAny": true,
     "strictNullChecks": false,
@@ -22,6 +22,10 @@
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte"],
+  "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte", "src/app.d.ts"],
+  "exclude": [
+    "node_modules",
+    "**/.svelte2tsx-language-server-files"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

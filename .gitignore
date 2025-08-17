@@ -88,3 +88,22 @@ directory_tree.*
 Generated -- *
 test-results
 playwright-report
+
+# TypeScript build info
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# Vitest
+vitest.config.js
+
+# Vite
+vite.config.js
+
+# Generated JavaScript files from TypeScript
+packages/frontend/src/*.js
+packages/frontend/src/**/*.js
+!packages/frontend/public/**/*.js
+packages/core/tests/*.js
+
+# Frontend app types
+packages/frontend/src/app.d.ts

@@ -1,49 +1,62 @@
-import fs from 'node:fs';
 import globals from 'globals';
 import js from '@eslint/js';
-
-// Helper function to trim whitespace from keys in the globals object
-function cleanGlobals(globalsObject) {
-  return Object.fromEntries(
-    Object.entries(globalsObject).map(([key, value]) => [key.trim(), value])
-  );
-}
-
-// Read .gitignore and parse its patterns
-const gitignoreContent = fs.readFileSync('.gitignore', 'utf8');
-const gitignorePatterns = gitignoreContent.split('\n').filter(line => line && !line.startsWith('#'));
+import tseslint from '@typescript-eslint/eslint-plugin';
+import tsparser from '@typescript-eslint/parser';
 
 export default [
-  // 1. Global ignores
   {
     ignores: [
       "node_modules/",
-      ...gitignorePatterns
+      "**/dist/",
+      "**/build/",
+      "**/.svelte-kit/"
     ]
   },
-
-  // 2. Main configuration
+  // JavaScript files
   {
     files: ["**/*.js"],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node
+      },
+      ecmaVersion: 'latest',
+      sourceType: 'module'
+    },
     rules: {
       ...js.configs.recommended.rules,
       'no-console': ['error', { allow: ['warn', 'error'] }],
       'no-unused-vars': ['error', { argsIgnorePattern: '^_' }]
-    },
-    languageOptions: {
-      // Use the helper function to clean the globals
-      globals: {
-        ...cleanGlobals(globals.browser),
-        ...cleanGlobals(globals.node)
-      },
-      ecmaVersion: 'latest',
-      sourceType: 'module'
     }
   },
-
-  // 3. Overrides for test files
+  // TypeScript files
   {
-    files: ['**/tests/**/*.js', '**/*.spec.js', '**/*.test.js'],
+    files: ["**/*.ts"],
+    languageOptions: {
+      parser: tsparser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module'
+      },
+      globals: {
+        ...globals.browser,
+        ...globals.node
+      }
+    },
+    plugins: {
+      '@typescript-eslint': tseslint
+    },
+    rules: {
+      ...js.configs.recommended.rules,
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-explicit-any': 'warn',
+      'no-console': ['error', { allow: ['warn', 'error'] }],
+      'no-unused-vars': 'off' // Turn off base rule as it conflicts with TS version
+    }
+  },
+  // Test files - allow console
+  {
+    files: ['**/tests/**/*.js', '**/tests/**/*.ts', '**/*.spec.js', '**/*.spec.ts', '**/*.test.js', '**/*.test.ts'],
     rules: {
       'no-console': 'off'
     }
