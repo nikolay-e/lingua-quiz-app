@@ -1,5 +1,5 @@
 apiVersion: v2
-name: lingua-quiz
+name: lingua-quiz-app
 description: A Helm chart for Lingua Quiz Application (Frontend and Backend)
 type: application
 # Chart version, increment this for chart changes

@@ -196,11 +196,25 @@ jobs:
             kubectl annotate namespace $NAMESPACE meta.helm.sh/release-namespace=$NAMESPACE
           fi
           
-          # Uninstall existing release if it exists to avoid "operation in progress" errors
-          helm uninstall lingua-quiz --namespace $NAMESPACE || true
+          # Check if there's an existing release and its status
+          RELEASE_STATUS=$(helm status lingua-quiz --namespace $NAMESPACE 2>/dev/null | grep STATUS: | awk '{print $2}' || echo "not-found")
           
-          # Wait a moment for cleanup
-          sleep 10
+          if [ "$RELEASE_STATUS" = "pending-install" ] || [ "$RELEASE_STATUS" = "pending-upgrade" ] || [ "$RELEASE_STATUS" = "pending-rollback" ]; then
+            echo "Found release in pending state ($RELEASE_STATUS). Cleaning up..."
+            helm delete lingua-quiz --namespace $NAMESPACE --wait || true
+            sleep 20
+          elif [ "$RELEASE_STATUS" = "failed" ]; then
+            echo "Found failed release. Uninstalling..."
+            helm uninstall lingua-quiz --namespace $NAMESPACE --wait || true
+            sleep 15
+          fi
+          
+          # Clean up any leftover migration jobs
+          kubectl delete job lingua-quiz-migrations -n $NAMESPACE --ignore-not-found=true
+          
+          # Wait for any terminating pods to finish
+          echo "Waiting for any terminating pods to finish..."
+          kubectl wait --for=delete pod -l app.kubernetes.io/instance=lingua-quiz -n $NAMESPACE --timeout=60s 2>/dev/null || true
           
           IMAGE_TAG="${{ github.event.pull_request.head.sha || github.sha }}"
           echo "Deploying with image tag: $IMAGE_TAG"
@@ -220,7 +234,17 @@ jobs:
             DB_PASSWORD="${{ secrets.POSTGRES_STAGING_PASSWORD }}"
           fi
           
-          helm upgrade --install lingua-quiz ./helm/lingua-quiz-app \
+          # Debug: Show current releases
+          echo "Current Helm releases in namespace $NAMESPACE:"
+          helm list --namespace $NAMESPACE || true
+          
+          # Debug: Validate chart before installation
+          echo "Validating Helm chart..."
+          helm lint ./helm/lingua-quiz-app || true
+          
+          # Deploy with better error handling
+          echo "Starting Helm deployment..."
+          if ! helm upgrade --install lingua-quiz ./helm/lingua-quiz-app \
             --namespace $NAMESPACE \
             --set namespace=$NAMESPACE \
             --set backend.image.repository=nikolajer/lingua-quiz-backend \
@@ -234,14 +258,37 @@ jobs:
             --set secrets.postgresPassword="$DB_PASSWORD" \
             --set secrets.googleCloudCredentialsB64="${{ secrets.GOOGLE_CLOUD_CREDENTIALS_B64 }}" \
             $DB_CONFIG \
-            --wait --timeout 5m
+            --wait --timeout 5m \
+            --debug; then
+            
+            echo "Helm deployment failed. Getting debug information..."
+            echo ""
+            echo "=== Helm Release Status ==="
+            helm status lingua-quiz --namespace $NAMESPACE --show-desc || true
+            
+            echo ""
+            echo "=== Recent Events in Namespace ==="
+            kubectl get events --namespace $NAMESPACE --sort-by='.lastTimestamp' | tail -20 || true
+            
+            echo ""
+            echo "=== Pod Status ==="
+            kubectl get pods --namespace $NAMESPACE -l app.kubernetes.io/instance=lingua-quiz || true
+            
+            echo ""
+            echo "=== Failed Pod Logs ==="
+            kubectl logs --namespace $NAMESPACE -l app.kubernetes.io/instance=lingua-quiz --tail=50 --all-containers=true || true
+            
+            exit 1
+          fi
+          
+          echo "Helm deployment completed successfully!"
             
       - name: Check Migration Logs
-        if: always()
+        if: always() && steps.helm-deploy.outcome == 'success'
         run: |
           echo "Checking for migration job..."
           # Give it a moment for the job to be created
-          sleep 5
+          sleep 10
           
           # Check if migration job exists
           if kubectl get job lingua-quiz-migrations -n $NAMESPACE 2>/dev/null; then
