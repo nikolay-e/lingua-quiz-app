@@ -1,0 +1,83 @@
+# Local Development Values for Lingua Quiz Application
+# Usage: helm install lingua-quiz ./helm/lingua-quiz-app -f ./helm/lingua-quiz-app/values.local.yaml --namespace default
+
+namespace: default
+
+# Backend configuration for local development
+backend:
+  image:
+    repository: lingua-quiz-backend
+    pullPolicy: Never  # Use locally built image
+    tag: "local"
+  port: 9000
+  corsAllowedOrigins: "http://localhost:8080,http://localhost:5173,http://localhost:30080"
+  service:
+    type: NodePort
+    port: 9000
+    nodePort: 30900  # Fixed NodePort for consistent backend access
+  resources:
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
+    requests:
+      cpu: "100m"
+      memory: "256Mi"
+
+# Frontend configuration for local development
+frontend:
+  image:
+    repository: lingua-quiz-frontend
+    pullPolicy: Never  # Use locally built image
+    tag: "local"
+  port: 80
+  service:
+    type: NodePort
+    port: 80
+    nodePort: 30080  # Fixed NodePort for consistent frontend access
+  resources:
+    limits:
+      cpu: "200m"
+      memory: "256Mi"
+    requests:
+      cpu: "50m"
+      memory: "128Mi"
+
+# PostgreSQL configuration - use shared instance
+postgres:
+  enabled: false  # Don't deploy PostgreSQL with the app
+  external:
+    host: "shared-postgres.shared-database.svc.cluster.local"
+    port: 5432
+    database: "linguaquiz_dev"
+
+# Ingress disabled for local development (using NodePort instead)
+ingress:
+  enabled: false
+
+# Local development secrets
+secrets:
+  jwtSecret: "local-development-jwt-secret-change-in-production"
+  postgresDb: "linguaquiz_dev"
+  postgresUser: "linguaquiz_dev"
+  postgresPassword: "linguaquiz-dev-password"
+  googleCloudCredentialsB64: ""  # Optional for local dev
+
+# Migration configuration
+migrations:
+  enabled: true
+  command: ["python", "migrate.py"]
+  ttlSecondsAfterFinished: 60
+  restartPolicy: OnFailure
+  backoffLimit: 3
+  resources:
+    limits:
+      cpu: "200m"
+      memory: "256Mi"
+    requests:
+      cpu: "50m"
+      memory: "128Mi"
+  env:
+    - name: NODE_ENV
+      value: "development"
+    - name: DOCKER_ENVIRONMENT
+      value: "true"

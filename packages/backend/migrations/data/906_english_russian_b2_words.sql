@@ -2144,7 +2144,7 @@ BEGIN
     (9007125, 9009051, 9009052, 'yell [v.]', 'кричать', 'Don''t yell at me.', 'Не кричи на меня.'),
     (9007126, 9009053, 9009054, 'yield [n.]', 'урожай|доходность', 'A high yield.', 'Высокая урожайность.'),
     (9007127, 9009055, 9009056, 'yield [v.]', 'уступать|приносить (урожай, доход)', 'The tree yields good fruit.', 'Дерево приносит хорошие плоды.')
-    ) AS t(translation_id, source_word_id, target_word_id, source_word, target_word, source_example, target_example)
+    AS t(translation_id, source_word_id, target_word_id, source_word, target_word, source_example, target_example)
   ) LOOP
     PERFORM insert_word_pair_and_add_to_list(
       r_word_pair.translation_id,
