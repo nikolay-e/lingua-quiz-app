@@ -193,14 +193,14 @@ class MigrationValidator:
             result.issues.extend(entry_issues)
             
             # Track for duplicate detection
-            normalized_word = normalizer.normalize(entry.source_word)
+            normalized_word = normalizer.normalize_for_validation(entry.source_word)
             if normalized_word:
-                seen_words[normalized_word].append(entry.word_pair_id)
+                seen_words[normalized_word].append(entry.translation_id)
             
             # Track IDs
-            seen_ids['word_pair'].add(entry.word_pair_id)
-            seen_ids['source_word'].add(entry.source_word_id)
             seen_ids['translation'].add(entry.translation_id)
+            seen_ids['source_word'].add(entry.source_word_id)
+            seen_ids['target_word'].add(entry.target_word_id)
         
         # Check for duplicates
         duplicates = {word: ids for word, ids in seen_words.items() if len(ids) > 1}
@@ -217,7 +217,7 @@ class MigrationValidator:
         id_issues = self._validate_id_sequences(language, filename, seen_ids)
         result.issues.extend(id_issues)
         result.id_gaps = [(filename, gap[0], gap[1]) for gap in 
-                         self._find_id_gaps(seen_ids['word_pair'])]
+                         self._find_id_gaps(seen_ids['translation'])]
         
         return result
     
@@ -247,36 +247,36 @@ class MigrationValidator:
                 category='data_integrity',
                 message="Empty source word",
                 file_name=filename,
-                entry_id=entry.word_pair_id
+                entry_id=entry.translation_id
             ))
         
-        if not entry.translation.strip():
+        if not entry.target_word.strip():
             issues.append(ValidationIssue(
                 severity='error', 
                 category='data_integrity',
                 message="Empty translation",
                 file_name=filename,
-                entry_id=entry.word_pair_id
+                entry_id=entry.translation_id
             ))
         
         # Check for suspicious patterns
-        if entry.source_word == entry.translation:
+        if entry.source_word == entry.target_word:
             issues.append(ValidationIssue(
                 severity='warning',
                 category='data_quality',
                 message=f"Source word and translation are identical: '{entry.source_word}'",
                 file_name=filename,
-                entry_id=entry.word_pair_id
+                entry_id=entry.translation_id
             ))
         
         # Check for placeholder entries
-        if entry.source_word == 'word' and entry.translation == 'translation':
+        if entry.source_word == 'word' and entry.target_word == 'translation':
             issues.append(ValidationIssue(
                 severity='warning',
                 category='data_quality',
                 message="Placeholder entry detected",
                 file_name=filename,
-                entry_id=entry.word_pair_id
+                entry_id=entry.translation_id
             ))
         
         # Check word length
@@ -286,19 +286,19 @@ class MigrationValidator:
                 category='data_quality',
                 message=f"Unusually long word: '{entry.source_word[:50]}...'",
                 file_name=filename,
-                entry_id=entry.word_pair_id
+                entry_id=entry.translation_id
             ))
         
         # Check for SQL injection patterns (basic)
         suspicious_patterns = ["'", '"', ";", "--", "/*", "*/"]
         for pattern in suspicious_patterns:
-            if pattern in entry.source_word or pattern in entry.translation:
+            if pattern in entry.source_word or pattern in entry.target_word:
                 issues.append(ValidationIssue(
                     severity='warning',
                     category='security',
                     message=f"Suspicious character pattern detected: '{pattern}'",
                     file_name=filename,
-                    entry_id=entry.word_pair_id
+                    entry_id=entry.translation_id
                 ))
                 break
         

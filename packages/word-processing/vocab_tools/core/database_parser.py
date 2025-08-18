@@ -15,21 +15,21 @@ from dataclasses import dataclass
 @dataclass
 class VocabularyEntry:
     """Represents a single vocabulary entry from the database."""
-    word_pair_id: int
-    source_word_id: int
     translation_id: int
+    source_word_id: int
+    target_word_id: int
     source_word: str
-    translation: str
-    example: str
-    example_translation: str
+    target_word: str
+    source_example: str
+    target_example: str
 
     def __post_init__(self):
         """Clean up the entry data after initialization."""
         # Unescape SQL quotes
         self.source_word = self.source_word.replace("''", "'")
-        self.translation = self.translation.replace("''", "'") 
-        self.example = self.example.replace("''", "'")
-        self.example_translation = self.example_translation.replace("''", "'")
+        self.target_word = self.target_word.replace("''", "'") 
+        self.source_example = self.source_example.replace("''", "'")
+        self.target_example = self.target_example.replace("''", "'")
 
 
 class DatabaseParser:
@@ -52,28 +52,24 @@ class DatabaseParser:
     
     def _find_migrations_directory(self) -> Path:
         """
-        Auto-detect migrations directory location.
-        
+        Get the hardcoded migrations directory location.
+
         Returns:
             Path to migrations directory
-            
+
         Raises:
             FileNotFoundError: If migrations directory cannot be found
         """
-        # Try common paths relative to current directory
-        current_dir = Path.cwd()
-        possible_paths = [
-            current_dir / "packages" / "backend" / "migrations",
-            current_dir.parent / "packages" / "backend" / "migrations", 
-            current_dir / ".." / "packages" / "backend" / "migrations",
-        ]
+        # Hardcoded path relative to this file
+        current_dir = Path(__file__).parent
+        migrations_path = current_dir / ".." / ".." / ".." / "backend" / "migrations"
+        migrations_path = migrations_path.resolve()
         
-        for path in possible_paths:
-            if path.exists() and path.is_dir():
-                return path.resolve()
+        if migrations_path.exists() and migrations_path.is_dir():
+            return migrations_path
         
         raise FileNotFoundError(
-            f"Could not find migrations directory. Tried: {[str(p) for p in possible_paths]}"
+            f"Hardcoded migrations directory not found: {migrations_path}"
         )
     
     def parse_migration_file(self, filename: str) -> List[VocabularyEntry]:
@@ -90,7 +86,10 @@ class DatabaseParser:
             FileNotFoundError: If the migration file doesn't exist
             ValueError: If the file format is invalid
         """
-        file_path = self.migrations_dir / filename
+        # Look for file in data subdirectory first, then main migrations dir
+        file_path = self.migrations_dir / "data" / filename
+        if not file_path.exists():
+            file_path = self.migrations_dir / filename
         
         if not file_path.exists():
             raise FileNotFoundError(f"Migration file not found: {file_path}")
@@ -116,6 +115,16 @@ class DatabaseParser:
         """
         entries = []
         
+        # Filter out commented lines to avoid processing commented-out entries
+        lines = content.split('\n')
+        active_lines = []
+        for line in lines:
+            stripped = line.strip()
+            if not stripped.startswith('--'):
+                active_lines.append(line)
+        
+        filtered_content = '\n'.join(active_lines)
+        
         # Pattern to match INSERT statements with vocabulary data
         # Handles escaped quotes ('') properly
         insert_pattern = re.compile(
@@ -128,18 +137,18 @@ class DatabaseParser:
             re.MULTILINE
         )
         
-        matches = insert_pattern.findall(content)
+        matches = insert_pattern.findall(filtered_content)
         
         for match in matches:
             try:
                 entry = VocabularyEntry(
-                    word_pair_id=int(match[0]),
+                    translation_id=int(match[0]),
                     source_word_id=int(match[1]),
-                    translation_id=int(match[2]),
+                    target_word_id=int(match[2]),
                     source_word=match[3],
-                    translation=match[4],
-                    example=match[5],
-                    example_translation=match[6]
+                    target_word=match[4],
+                    source_example=match[5],
+                    target_example=match[6]
                 )
                 entries.append(entry)
             except (ValueError, IndexError) as e:
@@ -159,8 +168,12 @@ class DatabaseParser:
         """
         discovered_files = {}
         
-        # Search pattern for vocabulary migration files
-        pattern = os.path.join(self.migrations_dir, "9*_*_*_*_words.sql")
+        # Search pattern for vocabulary migration files in data subdirectory
+        data_dir = self.migrations_dir / "data"
+        if not data_dir.exists():
+            return discovered_files
+            
+        pattern = os.path.join(data_dir, "9*_*_*_*_words.sql")
         migration_files = glob.glob(pattern)
         
         for file_path in migration_files:
