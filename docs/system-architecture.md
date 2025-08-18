@@ -76,15 +76,15 @@ LinguaQuiz implements a learning system driven by a **decoupled, portable logic 
 ### **Word Progression Path**
 
 ```
-LEVEL_0 (New) 
+LEVEL_0 (New)
     ↓ [Auto-promotion to focus pool]
-LEVEL_1 (Learning: source → target) 
+LEVEL_1 (Learning: source → target)
     ↓ [T_promo consecutive correct]
-LEVEL_2 (Learning: target → source) 
+LEVEL_2 (Learning: target → source)
     ↓ [T_promo consecutive correct]
-LEVEL_3 (Examples: source → target) 
+LEVEL_3 (Examples: source → target)
     ↓ [T_promo consecutive correct]
-LEVEL_4 (Examples: target → source) 
+LEVEL_4 (Examples: target → source)
     ↓ [T_promo consecutive correct]
 LEVEL_5 (Mastered)
 ```

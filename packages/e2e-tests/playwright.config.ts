@@ -27,8 +27,8 @@ export default defineConfig({
     // Desktop configurations
     {
       name: 'Desktop Chromium',
-      use: { 
-        browserName: 'chromium', 
+      use: {
+        browserName: 'chromium',
         viewport: { width: 1280, height: 720 },
       },
     },

@@ -6,7 +6,7 @@ postgres:
     repository: postgres
     tag: "13"
     pullPolicy: IfNotPresent
-  
+
   resources:
     requests:
       memory: "256Mi"
@@ -14,17 +14,17 @@ postgres:
     limits:
       memory: "512Mi"
       cpu: "250m"
-  
+
   persistence:
     enabled: true
     size: "5Gi"
     storageClass: "local-path"  # Rancher Desktop default storage class
     accessMode: "ReadWriteOnce"
-  
+
   service:
     type: ClusterIP
     port: 5432
-  
+
   securityContext:
     runAsUser: 999
     runAsGroup: 999

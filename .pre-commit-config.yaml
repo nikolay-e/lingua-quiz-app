@@ -18,19 +18,30 @@ repos:
       - id: yamllint
         args: [-d, relaxed]
         files: \.(yaml|yml)$
+        exclude: ^helm/.*\.yaml$
 
-  # General code quality
+  # General code quality and formatting
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
-      - id: check-added-large-files
+        exclude: ^helm/.*\.yaml$
       - id: check-merge-conflict
       - id: mixed-line-ending
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: debug-statements
 
-  # Python linting for migration scripts
+  # Python auto-formatting and import sorting
+  - repo: https://github.com/pycqa/autoflake
+    rev: v2.3.1
+    hooks:
+      - id: autoflake
+        args: [--remove-all-unused-imports, --remove-unused-variables, --in-place]
+        files: \.py$
+
   - repo: https://github.com/psf/black
     rev: 24.8.0
     hooks:

@@ -3,18 +3,18 @@ import { QuizManager, Translation, F, K, T_PROMO, MAX_FOCUS_POOL_SIZE } from '..
 
 describe('Algorithm Parameter Validation', () => {
   const sampleTranslations: Translation[] = [
-    { 
-      id: 1, 
+    {
+      id: 1,
       sourceWord: { text: 'hello', language: 'en' },
       targetWord: { text: 'привет', language: 'ru' }
     },
-    { 
-      id: 2, 
+    {
+      id: 2,
       sourceWord: { text: 'world', language: 'en' },
       targetWord: { text: 'мир', language: 'ru' }
     },
-    { 
-      id: 3, 
+    {
+      id: 3,
       sourceWord: { text: 'good', language: 'en' },
       targetWord: { text: 'хороший', language: 'ru' }
     },
@@ -24,9 +24,9 @@ describe('Algorithm Parameter Validation', () => {
     it('should use algorithm constants correctly in calculations', () => {
       const quizManager = new QuizManager(sampleTranslations);
       const options = quizManager.getOptions();
-      
+
       // Verify that options use algorithm constants (without testing the constants themselves)
-      expect(options.queuePositionIncrement).toBe(K * F); 
+      expect(options.queuePositionIncrement).toBe(K * F);
       expect(options.maxFocusWords).toBe(MAX_FOCUS_POOL_SIZE);
       expect(options.correctAnswersToLevelUp).toBe(T_PROMO);
     });

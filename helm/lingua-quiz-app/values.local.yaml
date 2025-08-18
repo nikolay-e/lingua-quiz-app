@@ -66,9 +66,9 @@ secrets:
 migrations:
   enabled: true
   command: ["python", "migrate.py"]
-  ttlSecondsAfterFinished: 60
+  ttlSecondsAfterFinished: 300
   restartPolicy: OnFailure
-  backoffLimit: 3
+  backoffLimit: 1
   resources:
     limits:
       cpu: "200m"
@@ -77,7 +77,5 @@ migrations:
       cpu: "50m"
       memory: "128Mi"
   env:
-    - name: NODE_ENV
-      value: "development"
     - name: DOCKER_ENVIRONMENT
       value: "true"

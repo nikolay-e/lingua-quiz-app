@@ -2,17 +2,17 @@
 -- Cleaned to keep only data migration functions
 
 -- Word pair management functions (used in data migrations 901, 902)
-CREATE OR REPLACE FUNCTION insert_word_pair_and_add_to_list (
-  p_translation_id INTEGER,
-  p_source_word_id INTEGER,
-  p_target_word_id INTEGER,
-  p_source_word VARCHAR(255),
-  p_target_word VARCHAR(255),
-  p_source_language_name VARCHAR(50),
-  p_target_language_name VARCHAR(50),
-  p_word_list_name VARCHAR(255),
-  p_source_word_usage_example TEXT DEFAULT NULL,
-  p_target_word_usage_example TEXT DEFAULT NULL
+CREATE OR REPLACE FUNCTION insert_word_pair_and_add_to_list(
+    p_translation_id INTEGER,
+    p_source_word_id INTEGER,
+    p_target_word_id INTEGER,
+    p_source_word VARCHAR(255),
+    p_target_word VARCHAR(255),
+    p_source_language_name VARCHAR(50),
+    p_target_language_name VARCHAR(50),
+    p_word_list_name VARCHAR(255),
+    p_source_word_usage_example TEXT DEFAULT NULL,
+    p_target_word_usage_example TEXT DEFAULT NULL
 ) RETURNS VOID AS $$
 DECLARE
   v_word_list_id INTEGER;
@@ -70,7 +70,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION remove_word_pair_and_list_entry (p_translation_id INTEGER) RETURNS VOID AS $$
+CREATE OR REPLACE FUNCTION remove_word_pair_and_list_entry(
+    p_translation_id INTEGER
+) RETURNS VOID AS $$
 DECLARE
   v_source_word_id INTEGER;
   v_target_word_id INTEGER;
@@ -93,6 +95,10 @@ BEGIN
   FROM word_list_entries
   WHERE translation_id = p_translation_id;
 
+  -- Delete user translation progress first (no foreign key dependencies)
+  DELETE FROM user_translation_progress
+  WHERE word_pair_id = p_translation_id;
+
   -- Delete the word list entry
   DELETE FROM word_list_entries
   WHERE translation_id = p_translation_id;
@@ -101,13 +107,14 @@ BEGIN
   DELETE FROM translations
   WHERE id = p_translation_id;
 
-  -- Delete the source and target words
+  -- Delete the source and target words only if they're not referenced elsewhere
   DELETE FROM words
-  WHERE id IN (v_source_word_id, v_target_word_id);
+  WHERE id = v_source_word_id
+    AND NOT EXISTS (SELECT 1 FROM translations WHERE source_word_id = v_source_word_id OR target_word_id = v_source_word_id);
 
-  -- Delete user translation progress
-  DELETE FROM user_translation_progress
-  WHERE word_pair_id = p_translation_id;
+  DELETE FROM words
+  WHERE id = v_target_word_id
+    AND NOT EXISTS (SELECT 1 FROM translations WHERE source_word_id = v_target_word_id OR target_word_id = v_target_word_id);
 
   -- Remove languages if no words exist for them
   DELETE FROM languages
@@ -123,20 +130,22 @@ $$ LANGUAGE plpgsql;
 
 DROP FUNCTION IF EXISTS get_user_word_sets(INTEGER, VARCHAR);
 
-CREATE OR REPLACE FUNCTION get_user_word_sets (p_user_id INTEGER, p_word_list_name VARCHAR) RETURNS TABLE (
-  word_pair_id INTEGER,
-  status VARCHAR,
-  source_word VARCHAR(255),
-  target_word VARCHAR(255),
-  source_language VARCHAR(50),
-  target_language VARCHAR(50),
-  source_word_usage_example TEXT,
-  target_word_usage_example TEXT
+CREATE OR REPLACE FUNCTION get_user_word_sets(
+    p_user_id INTEGER, p_word_list_name VARCHAR
+) RETURNS TABLE (
+    word_pair_id INTEGER,
+    status VARCHAR,
+    source_word VARCHAR(255),
+    target_word VARCHAR(255),
+    source_language VARCHAR(50),
+    target_language VARCHAR(50),
+    source_word_usage_example TEXT,
+    target_word_usage_example TEXT
 ) AS $$
 BEGIN
   RETURN QUERY
   WITH user_words AS (
-    SELECT 
+    SELECT
       t.id AS word_pair_id,
       COALESCE(utp.status::VARCHAR, 'LEVEL_0') AS status,
       sw.text AS source_word,
@@ -146,26 +155,26 @@ BEGIN
       sw.usage_example AS source_word_usage_example,
       tw.usage_example AS target_word_usage_example,
       COALESCE(utp.queue_position, 0) AS queue_position
-    FROM 
+    FROM
       word_list_entries wle
-    JOIN 
+    JOIN
       translations t ON wle.translation_id = t.id
-    JOIN 
+    JOIN
       words sw ON t.source_word_id = sw.id
-    JOIN 
+    JOIN
       words tw ON t.target_word_id = tw.id
-    JOIN 
+    JOIN
       languages sl ON sw.language_id = sl.id
-    JOIN 
+    JOIN
       languages tl ON tw.language_id = tl.id
-    JOIN 
+    JOIN
       word_lists wl ON wle.word_list_id = wl.id
-    LEFT JOIN 
+    LEFT JOIN
       user_translation_progress utp ON utp.word_pair_id = t.id AND utp.user_id = p_user_id
-    WHERE 
+    WHERE
       wl.name = p_word_list_name
   )
-  SELECT 
+  SELECT
     user_words.word_pair_id,
     user_words.status,
     user_words.source_word,
@@ -175,8 +184,8 @@ BEGIN
     user_words.source_word_usage_example,
     user_words.target_word_usage_example
   FROM user_words
-  ORDER BY 
-    CASE 
+  ORDER BY
+    CASE
       WHEN user_words.status = 'LEVEL_1' THEN 1   -- Learning
       WHEN user_words.status = 'LEVEL_0' THEN 2   -- New
       WHEN user_words.status = 'LEVEL_2' THEN 3   -- Translation (One Way)

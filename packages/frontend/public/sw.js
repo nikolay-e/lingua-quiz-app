@@ -60,7 +60,7 @@ self.addEventListener('fetch', event => {
         .then(response => {
           // Clone the response before using it
           const responseToCache = response.clone();
-          
+
           // Don't cache non-successful responses
           if (!response || response.status !== 200) {
             return response;

@@ -9,7 +9,7 @@ test.describe.serial('User Authentication', () => {
     // Keep username under 50 characters (backend limit)
     return `test_${timestamp}_${random}`;
   };
-  
+
   const testUser = generateUniqueEmail();
   const testPassword = 'testPassword123!';
 
@@ -64,7 +64,7 @@ test.describe.serial('User Authentication', () => {
     } catch {
       // Not logged in, that's fine
     }
-    
+
     await login(page, actualTestUser, testPassword);
     // In a SPA, we check for the quiz select element instead of URL
     await expect(page.locator('#quiz-select')).toBeVisible();
@@ -83,7 +83,7 @@ test.describe.serial('User Authentication', () => {
     } catch {
       // Not logged in, that's fine
     }
-    
+
     await login(page, actualTestUser, 'wrongPassword');
     // Check for error message in the login message element
     const loginMessage = page.locator('#login-message');
@@ -183,28 +183,28 @@ test.describe.serial('User Authentication', () => {
         body: JSON.stringify({ message: 'Internal Server Error' }),
       });
     });
-    
+
     // Wait for login section to be visible
     const loginSection = page.locator('section:has-text("Sign In")');
     await expect(loginSection).toBeVisible();
-    
+
     // Fill form fields with explicit waits
     const usernameInput = loginSection.locator('input[placeholder="Username"]');
     await expect(usernameInput).toBeVisible();
     await usernameInput.fill(actualTestUser);
-    
+
     const passwordInput = loginSection.locator('input[id="password"]');
     await expect(passwordInput).toBeVisible();
     await passwordInput.fill(testPassword);
-    
+
     // Use a more specific button selector and wait for it to be actionable
     const submitButton = loginSection.locator('button[type="submit"]');
     await expect(submitButton).toBeVisible();
     await expect(submitButton).toBeEnabled();
-    
+
     // Firefox-friendly click with force option
     await submitButton.click({ force: true });
-    
+
     await expect(page.locator('text=Internal Server Error')).toBeVisible({ timeout: 2000 });
   });
 
@@ -286,20 +286,20 @@ test.describe.serial('User Authentication', () => {
       test.skip();
       return;
     }
-    
+
     // Login to the test account
     await login(page, actualTestUser, testPassword);
     await expect(page.locator('#quiz-select')).toBeVisible({ timeout: 5000 });
-    
+
     // Delete the account via API call
     const token = await page.evaluate(() => localStorage.getItem('token'));
     const apiUrl = process.env.API_URL || 'http://localhost:9000/api';
-    
+
     interface DeleteResponse {
       status: number;
       ok: boolean;
     }
-    
+
     const response = await page.evaluate(async ({ token, apiUrl }): Promise<DeleteResponse> => {
       const response = await fetch(`${apiUrl}/auth/delete-account`, {
         method: 'DELETE',
@@ -310,7 +310,7 @@ test.describe.serial('User Authentication', () => {
       });
       return { status: response.status, ok: response.ok };
     }, { token, apiUrl });
-    
+
     expect(response.ok).toBeTruthy();
   });
 });

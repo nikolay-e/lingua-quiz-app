@@ -24,16 +24,16 @@ describe('Answer Comparison and Text Processing', () => {
       // Case and Whitespace
       { input: '  HeLlO  wOrLd  ', expected: 'helloworld' },
       { input: '\t  Test  \n', expected: 'test' },
-      
+
       // Cyrillic ё/е equivalence
       { input: 'Ещё один тёмный день', expected: 'ещеодинтемныйдень' },
       { input: 'тёмный', expected: 'темный' },
       { input: 'ТЁМНЫЙ', expected: 'темный' },
-      
+
       // Latin-to-Cyrillic homoglyphs (in Cyrillic context)
       { input: 'cop', expected: 'сор' },
       { input: 'COP', expected: 'сор' },
-      
+
       // German Umlauts and ß
       { input: 'Müller', expected: 'muller' },
       { input: 'Mueller', expected: 'muller' },
@@ -44,7 +44,7 @@ describe('Answer Comparison and Text Processing', () => {
       { input: 'Straße', expected: 'strasse' },
       { input: 'über', expected: 'uber' },
       { input: 'ueber', expected: 'uber' },
-      
+
       // Spanish and other Latin diacritics
       { input: 'José', expected: 'jose' },
       { input: 'niño', expected: 'nino' },
@@ -52,10 +52,10 @@ describe('Answer Comparison and Text Processing', () => {
       { input: 'façade', expected: 'facade' },
       { input: 'corazón', expected: 'corazon' },
       { input: 'español', expected: 'espanol' },
-      
+
       // Mixed content
       { input: 'Müller café', expected: 'mullercafe' },
-      
+
       // Edge cases
       { input: '', expected: '' },
       { input: '   ', expected: '' },
@@ -73,12 +73,12 @@ describe('Answer Comparison and Text Processing', () => {
       // Basic pipe alternatives - show first
       { input: 'hello|hi|hey', expected: 'hello' },
       { input: 'привет|здравствуй', expected: 'привет' },
-      
+
       // Preserve brackets, commas, and regular parentheses
       { input: 'word[s]', expected: 'word[s]' },
       { input: 'red, blue', expected: 'red, blue' },
       { input: 'word (context)', expected: 'word (context)' },
-      
+
       // Parentheses with pipes - key feature from the review
       { input: '(a|b), (c|d)', expected: 'a, c' },
       { input: '(трудный|сложный), (твёрдый|жёсткий)', expected: 'трудный, твёрдый' },
@@ -88,17 +88,17 @@ describe('Answer Comparison and Text Processing', () => {
       { input: '(двигать|перемещать), переезжать, движение', expected: 'двигать, переезжать, движение' },
       { input: '(записка|заметка), нота [музыка], замечать', expected: 'записка, нота [музыка], замечать' },
       { input: '(a|b)', expected: 'a' },
-      
+
       // Mixed content
       { input: '(a|b), word, [clarification], (x|y)', expected: 'a, word, [clarification], x' },
-      
+
       // Parentheses without pipes should be preserved
       { input: 'word (context), another', expected: 'word (context), another' },
       { input: '(a|b), (context), (x|y|z)', expected: 'a, (context), x' },
-      
+
       // Multiple parentheses groups in succession
       { input: '(a|b)(c|d)(e|f)', expected: 'ace' },
-      
+
       // Whitespace handling
       { input: '  ( a | b ) ,  (c|d)  ', expected: 'a, c' },
       { input: '(option1 | option2 | option3)', expected: 'option1' },
@@ -106,29 +106,29 @@ describe('Answer Comparison and Text Processing', () => {
       { input: 'hello | hi | hey', expected: 'hello' },
       { input: 'hello\t|\thi', expected: 'hello' },
       { input: '(a  |  b), (c|d)', expected: 'a, c' },
-      
+
       // Comma cleanup
       { input: ' , word, ', expected: 'word' },
       { input: ', , word, ,', expected: 'word' },
-      
+
       // Edge cases
       { input: '()', expected: '' },
       { input: 'word, ()', expected: 'word' },
       { input: '(|a)', expected: 'a' },
       { input: '(a|)', expected: 'a' },
       { input: '((()))', expected: '' },
-      
+
       // Pipes inside brackets are preserved
       { input: 'pipes[inside|brackets]', expected: 'pipes[inside|brackets]' },
       { input: 'prefix[opt1|opt2]suffix', expected: 'prefix[opt1|opt2]suffix' },
-      
+
       // Documentation examples
       { input: 'банк, скамейка', expected: 'банк, скамейка' },
       { input: 'bonito|hermoso|lindo', expected: 'bonito' },
       { input: 'мир [гармония]', expected: 'мир [гармония]' },
       { input: 'этаж (здания)', expected: 'этаж (здания)' },
       { input: 'машина|автомобиль', expected: 'машина' },
-      
+
       // Malformed input gracefully handled
       { input: 'word[incomplete', expected: 'word[incomplete' },
       { input: 'incomplete]word', expected: 'incomplete]word' },
@@ -138,7 +138,7 @@ describe('Answer Comparison and Text Processing', () => {
       { input: '||word', expected: '' },
       { input: 'word||', expected: 'word' },
       { input: '|||', expected: '' },
-      
+
       // Unicode and special characters
       { input: 'café|naïve', expected: 'café' },
       { input: '😀|😃', expected: '😀' },
@@ -450,7 +450,7 @@ describe('Answer Comparison and Text Processing', () => {
         correct: 'слышать|услышать',
         expected: true
       },
-      
+
       // Complex phrase handling (simplified cases)
       {
         description: 'Simple phrase with alternatives',
@@ -464,7 +464,7 @@ describe('Answer Comparison and Text Processing', () => {
         correct: 'выполнять [обещание или долг]',
         expected: true
       },
-      
+
       // Age-related expressions with complex patterns
       {
         description: 'Age expression with complex pattern',
@@ -484,7 +484,7 @@ describe('Answer Comparison and Text Processing', () => {
         correct: '(выполнять|исполнять), исполняться [о возрасте]',
         expected: true
       },
-      
+
       // Verb forms and conjugations
       {
         description: 'Infinitive vs past tense forms',
@@ -498,7 +498,7 @@ describe('Answer Comparison and Text Processing', () => {
         correct: 'делать|сделать|сделал',
         expected: true
       },
-      
+
       // Preposition and directional issues
       {
         description: 'Preposition "above" vs verb "did"',
@@ -512,7 +512,7 @@ describe('Answer Comparison and Text Processing', () => {
         correct: 'наверху|выше|сверху',
         expected: true
       },
-      
+
       // Excitement and emotion verbs
       {
         description: 'Excitement verb alternatives',
@@ -526,7 +526,7 @@ describe('Answer Comparison and Text Processing', () => {
         correct: 'возбуждать|взволновать',
         expected: true
       },
-      
+
       // Together/joint expressions
       {
         description: 'Together expression',
@@ -540,7 +540,7 @@ describe('Answer Comparison and Text Processing', () => {
         correct: 'вместе|совместно',
         expected: true
       },
-      
+
       // Complex reflexive verbs
       {
         description: 'Return reflexive verb',
@@ -554,7 +554,7 @@ describe('Answer Comparison and Text Processing', () => {
         correct: 'возвращаться|вернуться',
         expected: true
       },
-      
+
       // Case sensitivity in proper names and verbs
       {
         description: 'Capitalization in verb forms',

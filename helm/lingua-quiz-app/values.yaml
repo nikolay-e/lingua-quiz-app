@@ -75,7 +75,7 @@ frontend:
 postgres:
   # Set to false to use external PostgreSQL database
   enabled: false # Changed: Use external shared PostgreSQL
-  
+
   # External PostgreSQL configuration (when enabled: false)
   external:
     host: "shared-postgres.shared-database.svc.cluster.local"
@@ -83,7 +83,7 @@ postgres:
     database: "linguaquiz"  # Production database name (overridden by CI for staging)
     # Note: Database credentials are provided by CI/CD and stored in app's own postgres secret
     # This configuration is only used for host/port information
-  
+
   # Legacy internal PostgreSQL config (when enabled: true)
   image:
     repository: postgres

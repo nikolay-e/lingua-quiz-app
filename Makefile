@@ -1,5 +1,5 @@
 # Makefile for Lingua Quiz - Local K8s Development with Rancher Desktop
-.PHONY: help build-local deploy-local-db deploy-local-app deploy-local clean-local logs-backend logs-frontend port-forward
+.PHONY: help build-local build-local-clean deploy-local-db deploy-local-app deploy-local clean-local logs-backend logs-frontend port-forward
 
 help:
 	@echo "Lingua Quiz - Local K8s Development Commands"
@@ -27,10 +27,12 @@ help:
 	@echo "  Database: localhost:30543 (if port-forwarded)"
 
 build-local:
-	@echo "Building backend image..."
-	docker build -t lingua-quiz-backend:local ./packages/backend
-	@echo "Building frontend image..."
-	docker build -t lingua-quiz-frontend:local -f ./packages/frontend/Dockerfile .
+	@echo "Force removing existing images..."
+	-docker rmi -f lingua-quiz-backend:local lingua-quiz-frontend:local 2>/dev/null || true
+	@echo "Building backend image (no cache)..."
+	docker build --no-cache -t lingua-quiz-backend:local ./packages/backend
+	@echo "Building frontend image (no cache)..."
+	docker build --no-cache -t lingua-quiz-frontend:local -f ./packages/frontend/Dockerfile .
 	@echo "Images built successfully!"
 
 deploy-local-db:

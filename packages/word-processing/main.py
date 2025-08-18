@@ -9,6 +9,7 @@ Example: python main.py all
 
 from vocab_tools.cli.main import VocabularyToolsCLI
 
+
 def main():
     """
     Main entry point for the vocab-tools CLI.
@@ -16,6 +17,7 @@ def main():
     """
     cli = VocabularyToolsCLI()
     cli.run()
+
 
 if __name__ == "__main__":
     main()
