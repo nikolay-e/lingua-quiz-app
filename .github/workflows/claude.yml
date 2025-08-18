@@ -16,8 +16,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha || github.event.issue.pull_request.head.sha || github.ref }}
-          fetch-depth: 20
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
           
       - uses: anthropics/claude-code-action@beta
         with:
