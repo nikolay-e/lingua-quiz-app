@@ -1,35 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "lingua-quiz-app.frontend.fullname" . }}
-  namespace: {{ include "lingua-quiz-app.namespace" . }}
+  name: {{include "lingua-quiz-app.frontend.fullname" .}}
+  namespace: {{include "lingua-quiz-app.namespace" .}}
   labels:
-    {{- include "lingua-quiz-app.frontend.labels" . | nindent 4 }}
+    {{- include "lingua-quiz-app.frontend.labels" . | nindent 4}}
 spec:
-  replicas: {{ .Values.frontend.replicaCount | default .Values.replicaCount }}
+  replicas: {{.Values.frontend.replicaCount | default .Values.replicaCount}}
   selector:
     matchLabels:
-      {{- include "lingua-quiz-app.frontend.selectorLabels" . | nindent 6 }}
+      {{- include "lingua-quiz-app.frontend.selectorLabels" . | nindent 6}}
   template:
     metadata:
       labels:
-        {{- include "lingua-quiz-app.frontend.selectorLabels" . | nindent 8 }}
+        {{- include "lingua-quiz-app.frontend.selectorLabels" . | nindent 8}}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- with .Values.imagePullSecrets}}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- toYaml . | nindent 8}}
+      {{- end}}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | default "{}" | nindent 8 }}
+        {{- toYaml .Values.podSecurityContext | default "{}" | nindent 8}}
       containers:
         - name: frontend
           securityContext:
-            {{- toYaml .Values.securityContext | default "{}" | nindent 12 }}
-          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
+            {{- toYaml .Values.securityContext | default "{}" | nindent 12}}
+          image: "{{.Values.frontend.image.repository}}:{{.Values.frontend.image.tag | default .Chart.AppVersion}}"
+          imagePullPolicy: {{.Values.frontend.image.pullPolicy}}
           ports:
             - name: http
-              containerPort: {{ .Values.frontend.port }}
+              containerPort: {{.Values.frontend.port}}
               protocol: TCP
           livenessProbe:
             httpGet:
@@ -49,16 +49,16 @@ spec:
             successThreshold: 1
             failureThreshold: 3
           resources:
-            {{- toYaml .Values.frontend.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
+            {{- toYaml .Values.frontend.resources | nindent 12}}
+      {{- with .Values.nodeSelector}}
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
+        {{- toYaml . | nindent 8}}
+      {{- end}}
+      {{- with .Values.affinity}}
       affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
+        {{- toYaml . | nindent 8}}
+      {{- end}}
+      {{- with .Values.tolerations}}
       tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- toYaml . | nindent 8}}
+      {{- end}}

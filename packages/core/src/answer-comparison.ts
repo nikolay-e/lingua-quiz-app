@@ -1,6 +1,6 @@
 /**
  * Answer comparison and text processing logic for LinguaQuiz
- * 
+ *
  * This module handles all text normalization, answer validation, and display formatting
  * according to the rules defined in docs/answer-comparison-logic.md
  */
@@ -9,11 +9,11 @@
  * Normalisation helpers
  * -------------------------------------------------- */
 
-// Mapping of visually identical Latin → Cyrillic characters 
+// Mapping of visually identical Latin → Cyrillic characters
 // Only letters that look EXACTLY the same
 const latinToCyrillic: Record<string, string> = {
   a: 'а', A: 'А',  // a/A look identical to а/А
-  c: 'с', C: 'С',  // c/C look identical to с/С  
+  c: 'с', C: 'С',  // c/C look identical to с/С
   e: 'е', E: 'Е',  // e/E look identical to е/Е
   o: 'о', O: 'О',  // o/O look identical to о/О
   p: 'р', P: 'Р',  // p/P look identical to р/Р
@@ -53,12 +53,12 @@ export const normalizeForComparison = (text: string): string => {
 
   // 3. Apply Cyrillic conversion only in specific cases
   const containsCyr = /[а-яё]/i.test(result);
-  
+
   // Convert if there's already Cyrillic present and we have visually identical Latin chars
   if (containsCyr) {
     result = result.replace(/[aAcCeEoOpPxXyY]/g, ch => latinToCyrillic[ch] || ch);
   }
-  
+
   // Special case: strings that are clearly meant to be Cyrillic (like "cop")
   const isKnownFakeCyr = /^cop$/i.test(result);
   if (isKnownFakeCyr) {
@@ -156,7 +156,7 @@ const splitTopLevelCommas = (s: string): string[] => {
 
 /** Expand one meaning‑group string (which may hold pipes + brackets) into all
  *  acceptable raw alternatives (still UNnormalized).
- * 
+ *
  * LIMITATION: Only handles the first occurrence of square brackets in a group.
  * A string like `word[opt1]suffix[opt2]` will not be expanded correctly.
  * This is documented as a known edge case limitation.

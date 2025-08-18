@@ -18,19 +18,19 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: 'npm'
-          
+
       - name: Install dependencies
         run: npm ci
-        
+
       - name: Run linting
         run: npm run lint
-        
+
       - name: Check dependencies
         run: npm run depcheck
 
@@ -42,16 +42,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: 'npm'
-          
+
       - name: Install dependencies
         run: npm ci
-        
+
       - name: Run core package tests
         run: |
           cd packages/core
@@ -65,27 +65,27 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-          
+
       - name: Install word processing dependencies
         run: |
           cd packages/word-processing
           pip install -r requirements.txt
-          
+
       - name: Validate data migrations
         run: |
           cd packages/word-processing
           python main.py validate
-          
+
       - name: Run complete vocabulary analysis
         run: |
           cd packages/word-processing
           python main.py full-analysis
-          
+
       - name: Upload analysis results
         uses: actions/upload-artifact@v4
         if: always()
@@ -93,7 +93,7 @@ jobs:
           name: vocabulary-analysis-results
           path: packages/word-processing/analysis_history.json
           retention-days: 30
-          
+
   integration-tests:
     runs-on: ubuntu-latest
     permissions:
@@ -104,29 +104,29 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: 'npm'
-          
+
       - name: Install dependencies
         run: npm ci
-        
+
       - name: Start test environment
         run: docker compose up --build -d db backend frontend
-        
+
       - name: Wait for services to be ready
         run: timeout 60 bash -c 'until curl -f http://localhost:8080 > /dev/null 2>&1; do sleep 1; done'
-        
+
       - name: Run backend integration tests
         if: matrix.test-type == 'backend'
         run: |
           cd packages/backend
           pip install -r requirements.txt
           SKIP_TTS_TESTS=true API_URL=http://localhost:9000/api python test_integration.py
-                    
+
       - name: Run E2E tests
         if: matrix.test-type == 'e2e'
         run: docker compose run --build --rm e2e-tests
@@ -169,20 +169,20 @@ jobs:
       ENVIRONMENT: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup kubectl and Helm
         run: |
           curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
           chmod +x kubectl
           sudo mv kubectl /usr/local/bin/
           curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-          
+
       - name: Configure kubeconfig
         run: |
           mkdir -p $HOME/.kube
           echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > $HOME/.kube/config
           chmod 600 $HOME/.kube/config
-            
+
       - name: Deploy with Helm
         id: helm-deploy
         continue-on-error: true
@@ -195,16 +195,30 @@ jobs:
             kubectl annotate namespace $NAMESPACE meta.helm.sh/release-name=lingua-quiz
             kubectl annotate namespace $NAMESPACE meta.helm.sh/release-namespace=$NAMESPACE
           fi
-          
-          # Uninstall existing release if it exists to avoid "operation in progress" errors
-          helm uninstall lingua-quiz --namespace $NAMESPACE || true
-          
-          # Wait a moment for cleanup
-          sleep 10
-          
+
+          # Check if there's an existing release and its status
+          RELEASE_STATUS=$(helm status lingua-quiz --namespace $NAMESPACE 2>/dev/null | grep STATUS: | awk '{print $2}' || echo "not-found")
+
+          if [ "$RELEASE_STATUS" = "pending-install" ] || [ "$RELEASE_STATUS" = "pending-upgrade" ] || [ "$RELEASE_STATUS" = "pending-rollback" ]; then
+            echo "Found release in pending state ($RELEASE_STATUS). Cleaning up..."
+            helm delete lingua-quiz --namespace $NAMESPACE --wait || true
+            sleep 20
+          elif [ "$RELEASE_STATUS" = "failed" ]; then
+            echo "Found failed release. Uninstalling..."
+            helm uninstall lingua-quiz --namespace $NAMESPACE --wait || true
+            sleep 15
+          fi
+
+          # Clean up any leftover migration jobs
+          kubectl delete job lingua-quiz-migrations -n $NAMESPACE --ignore-not-found=true
+
+          # Wait for any terminating pods to finish
+          echo "Waiting for any terminating pods to finish..."
+          kubectl wait --for=delete pod -l app.kubernetes.io/instance=lingua-quiz -n $NAMESPACE --timeout=60s 2>/dev/null || true
+
           IMAGE_TAG="${{ github.event.pull_request.head.sha || github.sha }}"
           echo "Deploying with image tag: $IMAGE_TAG"
-          
+
           # Set database configuration based on environment
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
             # Production uses default values and existing credentials
@@ -219,8 +233,18 @@ jobs:
             DB_USER="linguaquiz_staging"
             DB_PASSWORD="${{ secrets.POSTGRES_STAGING_PASSWORD }}"
           fi
-          
-          helm upgrade --install lingua-quiz ./helm/lingua-quiz-app \
+
+          # Debug: Show current releases
+          echo "Current Helm releases in namespace $NAMESPACE:"
+          helm list --namespace $NAMESPACE || true
+
+          # Debug: Validate chart before installation
+          echo "Validating Helm chart..."
+          helm lint ./helm/lingua-quiz-app || true
+
+          # Deploy with better error handling
+          echo "Starting Helm deployment..."
+          if ! helm upgrade --install lingua-quiz ./helm/lingua-quiz-app \
             --namespace $NAMESPACE \
             --set namespace=$NAMESPACE \
             --set backend.image.repository=nikolajer/lingua-quiz-backend \
@@ -234,76 +258,99 @@ jobs:
             --set secrets.postgresPassword="$DB_PASSWORD" \
             --set secrets.googleCloudCredentialsB64="${{ secrets.GOOGLE_CLOUD_CREDENTIALS_B64 }}" \
             $DB_CONFIG \
-            --wait --timeout 5m
-            
+            --wait --timeout 5m \
+            --debug; then
+
+            echo "Helm deployment failed. Getting debug information..."
+            echo ""
+            echo "=== Helm Release Status ==="
+            helm status lingua-quiz --namespace $NAMESPACE --show-desc || true
+
+            echo ""
+            echo "=== Recent Events in Namespace ==="
+            kubectl get events --namespace $NAMESPACE --sort-by='.lastTimestamp' | tail -20 || true
+
+            echo ""
+            echo "=== Pod Status ==="
+            kubectl get pods --namespace $NAMESPACE -l app.kubernetes.io/instance=lingua-quiz || true
+
+            echo ""
+            echo "=== Failed Pod Logs ==="
+            kubectl logs --namespace $NAMESPACE -l app.kubernetes.io/instance=lingua-quiz --tail=50 --all-containers=true || true
+
+            exit 1
+          fi
+
+          echo "Helm deployment completed successfully!"
+
       - name: Check Migration Logs
-        if: always()
+        if: always() && steps.helm-deploy.outcome == 'success'
         run: |
           echo "Checking for migration job..."
           # Give it a moment for the job to be created
-          sleep 5
-          
+          sleep 10
+
           # Check if migration job exists
           if kubectl get job lingua-quiz-migrations -n $NAMESPACE 2>/dev/null; then
             echo "Migration job found. Monitoring for completion or failure..."
-            
+
             # Monitor job status in a loop to catch failure immediately
             for i in $(seq 1 60); do
               sleep 5
-              
+
               # Check job status
               JOB_STATUS=$(kubectl get job lingua-quiz-migrations -n $NAMESPACE -o jsonpath='{.status}' 2>/dev/null || echo '{}')
               COMPLETED=$(echo "$JOB_STATUS" | jq -r '.succeeded // 0')
               FAILED=$(echo "$JOB_STATUS" | jq -r '.failed // 0')
-              
+
               echo "Attempt $i/60: Completed: $COMPLETED, Failed: $FAILED"
-              
+
               # If completed successfully
               if [ "$COMPLETED" -gt "0" ]; then
                 echo "Migration job completed successfully!"
                 break
               fi
-              
+
               # If failed, immediately capture logs before cleanup
               if [ "$FAILED" -gt "0" ]; then
                 echo "Migration job failed! Capturing logs immediately..."
-                
+
                 echo ""
                 echo "=== Migration Job Status ==="
                 kubectl describe job/lingua-quiz-migrations -n $NAMESPACE || true
-                
+
                 echo ""
                 echo "=== Migration Pod Logs ==="
                 kubectl logs job/lingua-quiz-migrations -n $NAMESPACE --all-containers=true || true
-                
+
                 # Also try to get logs from pods directly
                 echo ""
                 echo "=== Migration Pod Status ==="
                 kubectl get pods -l job-name=lingua-quiz-migrations -n $NAMESPACE || true
-                
+
                 echo ""
                 echo "=== Direct Pod Logs ==="
                 kubectl logs -l job-name=lingua-quiz-migrations -n $NAMESPACE --all-containers=true || true
-                
+
                 echo "Migration job failed!"
                 exit 1
               fi
             done
-            
+
             # If we exit the loop without completion, something's wrong
             echo "Migration job monitoring timed out after 5 minutes"
-            
+
             echo ""
             echo "=== Final Migration Job Status ==="
             kubectl describe job/lingua-quiz-migrations -n $NAMESPACE || true
-            
+
             echo ""
             echo "=== Final Migration Logs ==="
             kubectl logs job/lingua-quiz-migrations -n $NAMESPACE --all-containers=true || true
           else
             echo "Migration job not found. Helm deployment may have failed."
           fi
-          
+
       - name: Check Deployment Status
         if: steps.helm-deploy.outcome == 'failure'
         run: |

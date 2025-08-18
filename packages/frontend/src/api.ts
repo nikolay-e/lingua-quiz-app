@@ -27,12 +27,12 @@ const getServerAddress = (): string => {
     // Handle other development ports
     return `http://localhost:9000/api`;
   }
-  
+
   // Docker internal networking
   if (hostname === 'frontend') {
     return 'http://backend:9000/api';
   }
-  
+
   // Generic production fallback - assume API is on same domain with /api path
   if (protocol === 'https:') {
     return `https://${hostname}/api`;
@@ -144,7 +144,7 @@ const api = {
       },
       body: JSON.stringify({ text, language })
     });
-    
+
     const data = await response.json();
     if (!response.ok) throw new Error(data.message || 'Failed to synthesize speech');
     return data;
@@ -155,7 +155,7 @@ const api = {
       method: 'GET',
       headers: { 'Authorization': `Bearer ${token}` }
     });
-    
+
     const data = await response.json();
     if (!response.ok) throw new Error(data.message || 'Failed to get TTS languages');
     return data;

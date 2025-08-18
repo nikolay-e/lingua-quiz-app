@@ -1,117 +1,117 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "lingua-quiz-app.backend.fullname" . }}
-  namespace: {{ include "lingua-quiz-app.namespace" . }}
+  name: {{include "lingua-quiz-app.backend.fullname" .}}
+  namespace: {{include "lingua-quiz-app.namespace" .}}
   labels:
-    {{- include "lingua-quiz-app.backend.labels" . | nindent 4 }}
+    {{- include "lingua-quiz-app.backend.labels" . | nindent 4}}
 spec:
-  replicas: {{ .Values.backend.replicaCount | default .Values.replicaCount }}
+  replicas: {{.Values.backend.replicaCount | default .Values.replicaCount}}
   selector:
     matchLabels:
-      {{- include "lingua-quiz-app.backend.selectorLabels" . | nindent 6 }}
+      {{- include "lingua-quiz-app.backend.selectorLabels" . | nindent 6}}
   template:
     metadata:
       labels:
-        {{- include "lingua-quiz-app.backend.selectorLabels" . | nindent 8 }}
+        {{- include "lingua-quiz-app.backend.selectorLabels" . | nindent 8}}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- with .Values.imagePullSecrets}}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "lingua-quiz-app.serviceAccountName" . }}
+        {{- toYaml . | nindent 8}}
+      {{- end}}
+      serviceAccountName: {{include "lingua-quiz-app.serviceAccountName" .}}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | default "{}" | nindent 8 }}
+        {{- toYaml .Values.podSecurityContext | default "{}" | nindent 8}}
       containers:
         - name: backend
           securityContext:
-            {{- toYaml .Values.securityContext | default "{}" | nindent 12 }}
-          image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.backend.image.pullPolicy }}
+            {{- toYaml .Values.securityContext | default "{}" | nindent 12}}
+          image: "{{.Values.backend.image.repository}}:{{.Values.backend.image.tag | default .Chart.AppVersion}}"
+          imagePullPolicy: {{.Values.backend.image.pullPolicy}}
           ports:
             - name: http
-              containerPort: {{ .Values.backend.port }}
+              containerPort: {{.Values.backend.port}}
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: {{ .Values.backend.probes.liveness.path }}
+              path: {{.Values.backend.probes.liveness.path}}
               port: http
               scheme: HTTP
-            initialDelaySeconds: {{ .Values.backend.probes.liveness.initialDelaySeconds }}
-            periodSeconds: {{ .Values.backend.probes.liveness.periodSeconds }}
-            timeoutSeconds: {{ .Values.backend.probes.liveness.timeoutSeconds }}
-            failureThreshold: {{ .Values.backend.probes.liveness.failureThreshold }}
+            initialDelaySeconds: {{.Values.backend.probes.liveness.initialDelaySeconds}}
+            periodSeconds: {{.Values.backend.probes.liveness.periodSeconds}}
+            timeoutSeconds: {{.Values.backend.probes.liveness.timeoutSeconds}}
+            failureThreshold: {{.Values.backend.probes.liveness.failureThreshold}}
           readinessProbe:
             httpGet:
-              path: {{ .Values.backend.probes.readiness.path }}
+              path: {{.Values.backend.probes.readiness.path}}
               port: http
               scheme: HTTP
-            initialDelaySeconds: {{ .Values.backend.probes.readiness.initialDelaySeconds }}
-            periodSeconds: {{ .Values.backend.probes.readiness.periodSeconds }}
-            timeoutSeconds: {{ .Values.backend.probes.readiness.timeoutSeconds }}
-            successThreshold: {{ .Values.backend.probes.readiness.successThreshold }}
-            failureThreshold: {{ .Values.backend.probes.readiness.failureThreshold }}
+            initialDelaySeconds: {{.Values.backend.probes.readiness.initialDelaySeconds}}
+            periodSeconds: {{.Values.backend.probes.readiness.periodSeconds}}
+            timeoutSeconds: {{.Values.backend.probes.readiness.timeoutSeconds}}
+            successThreshold: {{.Values.backend.probes.readiness.successThreshold}}
+            failureThreshold: {{.Values.backend.probes.readiness.failureThreshold}}
           startupProbe:
             httpGet:
-              path: {{ .Values.backend.probes.startup.path }}
+              path: {{.Values.backend.probes.startup.path}}
               port: http
               scheme: HTTP
-            failureThreshold: {{ .Values.backend.probes.startup.failureThreshold }}
-            periodSeconds: {{ .Values.backend.probes.startup.periodSeconds }}
-            timeoutSeconds: {{ .Values.backend.probes.startup.timeoutSeconds }}
+            failureThreshold: {{.Values.backend.probes.startup.failureThreshold}}
+            periodSeconds: {{.Values.backend.probes.startup.periodSeconds}}
+            timeoutSeconds: {{.Values.backend.probes.startup.timeoutSeconds}}
           resources:
-            {{- toYaml .Values.backend.resources | nindent 12 }}
+            {{- toYaml .Values.backend.resources | nindent 12}}
           env:
             - name: PORT
-              value: {{ .Values.backend.port | quote }}
+              value: {{.Values.backend.port | quote}}
             # Database configuration - always use app's own postgres secret
-            {{- if .Values.postgres.enabled }}
+            {{- if .Values.postgres.enabled}}
             - name: DB_HOST
-              value: {{ include "lingua-quiz-app.postgresql.fullname" . }}
-            {{- else }}
+              value: {{include "lingua-quiz-app.postgresql.fullname" .}}
+            {{- else}}
             - name: DB_HOST
-              value: {{ .Values.postgres.external.host | quote }}
-            {{- end }}
+              value: {{.Values.postgres.external.host | quote}}
+            {{- end}}
             - name: DB_PORT
-              value: {{ .Values.postgres.external.port | default "5432" | quote }}
+              value: {{.Values.postgres.external.port | default "5432" | quote}}
             - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "lingua-quiz-app.fullname" . }}-postgres
+                  name: {{include "lingua-quiz-app.fullname" .}}-postgres
                   key: POSTGRES_DB
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "lingua-quiz-app.fullname" . }}-postgres
+                  name: {{include "lingua-quiz-app.fullname" .}}-postgres
                   key: POSTGRES_USER
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "lingua-quiz-app.fullname" . }}-postgres
+                  name: {{include "lingua-quiz-app.fullname" .}}-postgres
                   key: POSTGRES_PASSWORD
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "lingua-quiz-app.fullname" . }}-jwt
+                  name: {{include "lingua-quiz-app.fullname" .}}-jwt
                   key: JWT_SECRET
             - name: CORS_ALLOWED_ORIGINS
-              value: {{ .Values.backend.corsAllowedOrigins | quote }}
-            {{- if .Values.secrets.googleCloudCredentialsB64 }}
+              value: {{.Values.backend.corsAllowedOrigins | quote}}
+            {{- if .Values.secrets.googleCloudCredentialsB64}}
             - name: GOOGLE_CLOUD_CREDENTIALS_B64
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "lingua-quiz-app.fullname" . }}-tts
+                  name: {{include "lingua-quiz-app.fullname" .}}-tts
                   key: GOOGLE_CLOUD_CREDENTIALS_B64
-            {{- end }}
-      {{- with .Values.nodeSelector }}
+            {{- end}}
+      {{- with .Values.nodeSelector}}
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
+        {{- toYaml . | nindent 8}}
+      {{- end}}
+      {{- with .Values.affinity}}
       affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
+        {{- toYaml . | nindent 8}}
+      {{- end}}
+      {{- with .Values.tolerations}}
       tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- toYaml . | nindent 8}}
+      {{- end}}

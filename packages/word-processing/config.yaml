@@ -24,7 +24,7 @@ analysis_defaults:
 # NLP model preferences (in order of preference)
 nlp_models:
   en: ["en_core_web_sm", "en_core_web_md", "en_core_web_lg"]
-  de: ["de_core_news_sm", "de_core_news_md", "de_core_news_lg"]  
+  de: ["de_core_news_sm", "de_core_news_md", "de_core_news_lg"]
   es: ["es_core_news_sm", "es_core_news_md", "es_core_news_lg"]
 
 # Category mapping for word classification
@@ -48,8 +48,8 @@ skip_words:
   - "a"
   - "an"
   - "the"
-  
-  # German articles and particles  
+
+  # German articles and particles
   - "der"
   - "die"
   - "das"
@@ -62,7 +62,7 @@ skip_words:
   - "einen"
   - "einem"
   - "eines"
-  
+
   # Spanish articles and prepositions
   - "el"
   - "la"

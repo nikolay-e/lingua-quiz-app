@@ -1,20 +1,20 @@
 <script lang="ts">
   import { authStore } from '../stores';
   import { createEventDispatcher } from 'svelte';
-  
+
   const dispatch = createEventDispatcher<{ navigate: { page: 'register' } }>();
-  
+
   let loginUsername = '';
   let loginPassword = '';
   let loginMessage = '';
   let showLoginPassword = false;
   let isLoading = false;
-  
+
   async function handleLogin(e: Event) {
     e.preventDefault();
     isLoading = true;
     loginMessage = '';
-    
+
     try {
       await authStore.login(loginUsername, loginPassword);
       loginMessage = 'Login successful!';
@@ -24,7 +24,7 @@
       isLoading = false;
     }
   }
-  
+
   function navigateToRegister() {
     dispatch('navigate', { page: 'register' });
   }
@@ -36,42 +36,42 @@
       <h1><i class="fas fa-language"></i> LinguaQuiz</h1>
     </header>
   </div>
-  
+
   <div class="main-content login-content">
     <section class="sidebar-section">
       <h2>Sign In</h2>
       <form on:submit={handleLogin}>
         <div class="input-group">
-          <input 
-            type="text" 
-            bind:value={loginUsername} 
-            placeholder="Username" 
-            required 
+          <input
+            type="text"
+            bind:value={loginUsername}
+            placeholder="Username"
+            required
             disabled={isLoading}
           />
         </div>
         <div class="input-group">
           {#if showLoginPassword}
-            <input 
-              type="text" 
-              bind:value={loginPassword} 
-              placeholder="Password" 
-              required 
+            <input
+              type="text"
+              bind:value={loginPassword}
+              placeholder="Password"
+              required
               disabled={isLoading}
               id="password"
             />
           {:else}
-            <input 
-              type="password" 
-              bind:value={loginPassword} 
-              placeholder="Password" 
-              required 
+            <input
+              type="password"
+              bind:value={loginPassword}
+              placeholder="Password"
+              required
               disabled={isLoading}
               id="password"
             />
           {/if}
-          <button 
-            type="button" 
+          <button
+            type="button"
             class="toggle-password-btn"
             on:click={() => showLoginPassword = !showLoginPassword}
             aria-label={showLoginPassword ? 'Hide password' : 'Show password'}
@@ -88,13 +88,13 @@
           {loginMessage}
         </p>
       {/if}
-      
+
       <div class="auth-link">
         <p>Need an account? <button on:click={navigateToRegister} class="link-button">Register here</button></p>
       </div>
     </section>
   </div>
-  
+
   <div class="right-sidebar"></div>
 </main>
 
@@ -104,7 +104,7 @@
     text-align: center;
     color: var(--text-color);
   }
-  
+
   .link-button {
     background: none;
     border: none;
@@ -116,7 +116,7 @@
     font-size: inherit;
     width: auto;
   }
-  
+
   .link-button:hover {
     color: var(--secondary-color);
     background: none;

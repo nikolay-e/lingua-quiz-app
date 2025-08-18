@@ -3,7 +3,7 @@ postgres:
     repository: postgres
     tag: "13"
     pullPolicy: IfNotPresent
-  
+
   # Resource allocation
   resources:
     requests:
@@ -12,19 +12,19 @@ postgres:
     limits:
       memory: "1Gi"
       cpu: "500m"
-  
+
   # Persistence settings
   persistence:
     enabled: true
     size: "10Gi"
     storageClass: ""  # Use default storage class
     accessMode: "ReadWriteOnce"
-  
+
   # Network settings
   service:
     type: ClusterIP
     port: 5432
-  
+
   # Security settings
   securityContext:
     runAsUser: 999
@@ -36,7 +36,7 @@ databases:
   # Define databases to create on startup
   linguaquiz:
     name: "linguaquiz"  # Keep existing production database name (DO NOT CHANGE)
-    user: "lingua-quiz-db-user"  # Keep existing production user name  
+    user: "lingua-quiz-db-user"  # Keep existing production user name
     # Password will be provided via secrets
   linguaquiz-staging:
     name: "linguaquiz_staging"
@@ -47,7 +47,7 @@ databases:
 secrets:
   # Admin PostgreSQL password (required)
   adminPassword: ""  # Must be set at deployment time
-  
+
   # Per-database passwords (required)
   databases:
     linguaquiz:

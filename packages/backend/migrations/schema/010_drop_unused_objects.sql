@@ -1,17 +1,21 @@
 -- Migration: Drop unused SQL objects and clean up database
 -- Date: 2025-01-23
--- Description: Remove unused SQL objects (functions, tables, sequences, indexes) that are no longer 
+-- Description: Remove unused SQL objects (functions, tables, sequences, indexes) that are no longer
 -- used after business logic was moved to frontend. This comprehensive cleanup transforms the database
 -- from 50+ functions down to ~10 essential functions and removes all quiz session infrastructure.
 
 -- Drop quiz orchestration functions (from 015_quiz_orchestration.sql)
 DROP FUNCTION IF EXISTS get_next_quiz_question(INTEGER, VARCHAR);
-DROP FUNCTION IF EXISTS process_quiz_answer(INTEGER, INTEGER, INTEGER, TEXT, TEXT);
-DROP FUNCTION IF EXISTS check_level_progression(INTEGER, INTEGER, INTEGER, BOOLEAN);
+DROP FUNCTION IF EXISTS process_quiz_answer(
+    INTEGER, INTEGER, INTEGER, TEXT, TEXT
+);
+DROP FUNCTION IF EXISTS check_level_progression(
+    INTEGER, INTEGER, INTEGER, BOOLEAN
+);
 
 -- Note: 014_cross_domain_functions.sql was cleaned to keep only essential functions:
 -- - insert_word_pair_and_add_to_list (used in data migrations)
--- - remove_word_pair_and_list_entry (used in data migrations)  
+-- - remove_word_pair_and_list_entry (used in data migrations)
 -- - get_user_word_sets (used in API endpoints)
 
 -- Drop session history functions (from 013_session_history.sql)
@@ -21,12 +25,16 @@ DROP FUNCTION IF EXISTS is_word_recently_asked(INTEGER, INTEGER, INTEGER);
 DROP FUNCTION IF EXISTS create_or_get_quiz_session(INTEGER, VARCHAR);
 
 -- Drop quiz submission log functions (from 012_quiz_submission_log.sql) - ALL UNUSED
-DROP FUNCTION IF EXISTS get_error_counts_for_words(INTEGER, INTEGER[]);
-DROP FUNCTION IF EXISTS get_word_submission_stats(INTEGER, INTEGER, BOOLEAN, INTEGER);
-DROP FUNCTION IF EXISTS log_quiz_submission(INTEGER, INTEGER, INTEGER, BOOLEAN, TEXT, TEXT, BOOLEAN, INTEGER);
+DROP FUNCTION IF EXISTS get_error_counts_for_words(INTEGER, INTEGER []);
+DROP FUNCTION IF EXISTS get_word_submission_stats(
+    INTEGER, INTEGER, BOOLEAN, INTEGER
+);
+DROP FUNCTION IF EXISTS log_quiz_submission(
+    INTEGER, INTEGER, INTEGER, BOOLEAN, TEXT, TEXT, BOOLEAN, INTEGER
+);
 DROP FUNCTION IF EXISTS util_remove_brackets(TEXT);
-DROP FUNCTION IF EXISTS util_count_consecutive_correct(BOOLEAN[]);
-DROP FUNCTION IF EXISTS util_count_mistakes_in_array(BOOLEAN[]);
+DROP FUNCTION IF EXISTS util_count_consecutive_correct(BOOLEAN []);
+DROP FUNCTION IF EXISTS util_count_mistakes_in_array(BOOLEAN []);
 DROP FUNCTION IF EXISTS util_check_answer_correctness(TEXT, TEXT);
 DROP FUNCTION IF EXISTS util_create_bracket_alternatives(TEXT);
 DROP FUNCTION IF EXISTS util_expand_parentheses_groups(TEXT);
@@ -36,11 +44,15 @@ DROP FUNCTION IF EXISTS get_tts_cache_entry_validated_fixed(VARCHAR, TEXT);
 
 -- Drop quiz session functions (from 009_quiz_session.sql)
 DROP FUNCTION IF EXISTS validate_session_ownership(INTEGER, INTEGER);
-DROP FUNCTION IF EXISTS batch_promote_words_to_level1(INTEGER, INTEGER[]);
+DROP FUNCTION IF EXISTS batch_promote_words_to_level1(INTEGER, INTEGER []);
 DROP FUNCTION IF EXISTS get_candidate_words(INTEGER, INTEGER, VARCHAR);
 DROP FUNCTION IF EXISTS populate_focus_words(INTEGER, INTEGER, INTEGER);
-DROP FUNCTION IF EXISTS update_quiz_session_current_word(INTEGER, INTEGER, INTEGER);
-DROP FUNCTION IF EXISTS check_and_switch_direction_if_l2_empty(INTEGER, INTEGER);
+DROP FUNCTION IF EXISTS update_quiz_session_current_word(
+    INTEGER, INTEGER, INTEGER
+);
+DROP FUNCTION IF EXISTS check_and_switch_direction_if_l2_empty(
+    INTEGER, INTEGER
+);
 DROP FUNCTION IF EXISTS get_quiz_completion_status(INTEGER, INTEGER);
 DROP FUNCTION IF EXISTS force_switch_to_normal_direction(INTEGER);
 DROP FUNCTION IF EXISTS count_words_by_level(INTEGER, INTEGER, VARCHAR);
@@ -68,15 +80,35 @@ DROP FUNCTION IF EXISTS release_migration_lock();
 
 -- Drop leftover quiz functions that exist in staging but not in cleaned local migrations
 DROP FUNCTION IF EXISTS count_user_words_by_level(INTEGER, INTEGER);
-DROP FUNCTION IF EXISTS get_available_words(INTEGER, INTEGER, VARCHAR, INTEGER[]);
+DROP FUNCTION IF EXISTS get_available_words(
+    INTEGER, INTEGER, VARCHAR, INTEGER []
+);
 DROP FUNCTION IF EXISTS get_word_display_info(INTEGER);
 DROP FUNCTION IF EXISTS get_word_statistics(INTEGER, INTEGER, BOOLEAN, INTEGER);
 DROP FUNCTION IF EXISTS get_words_by_level(INTEGER, INTEGER, VARCHAR, INTEGER);
-DROP FUNCTION IF EXISTS log_quiz_submission(INTEGER, INTEGER, BOOLEAN, TEXT, TEXT, BOOLEAN, VARCHAR, TEXT, INTEGER, INTEGER, INTEGER, INTEGER);
-DROP FUNCTION IF EXISTS record_quiz_answer(INTEGER, INTEGER, BOOLEAN, TEXT, TEXT, BOOLEAN, INTEGER);
+DROP FUNCTION IF EXISTS log_quiz_submission(
+    INTEGER,
+    INTEGER,
+    BOOLEAN,
+    TEXT,
+    TEXT,
+    BOOLEAN,
+    VARCHAR,
+    TEXT,
+    INTEGER,
+    INTEGER,
+    INTEGER,
+    INTEGER
+);
+DROP FUNCTION IF EXISTS record_quiz_answer(
+    INTEGER, INTEGER, BOOLEAN, TEXT, TEXT, BOOLEAN, INTEGER
+);
 
--- Drop wrong version of TTS function (staging has _fixed version, we want the clean version)
-DROP FUNCTION IF EXISTS get_tts_cache_entry_validated_fixed(VARCHAR, TEXT);
+-- Drop wrong version of TTS function (staging has _fixed version, we want
+-- the clean version)
+DROP FUNCTION IF EXISTS get_tts_cache_entry_validated_fixed(
+    VARCHAR, TEXT
+);
 
 -- Drop quiz session tables and related infrastructure (completely unused)
 -- Note: CASCADE will automatically drop related indexes, sequences, and constraints

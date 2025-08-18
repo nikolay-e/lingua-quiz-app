@@ -1,11 +1,11 @@
-{{- if .Values.migrations.enabled }}
+{{- if .Values.migrations.enabled}}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "lingua-quiz-app.fullname" . }}-migrations
-  namespace: {{ include "lingua-quiz-app.namespace" . }}
+  name: {{include "lingua-quiz-app.fullname" .}}-migrations
+  namespace: {{include "lingua-quiz-app.namespace" .}}
   labels:
-    {{- include "lingua-quiz-app.labels" . | nindent 4 }}
+    {{- include "lingua-quiz-app.labels" . | nindent 4}}
     app.kubernetes.io/component: migrations
   annotations:
     # This is important - it ensures the job is re-run on Helm upgrades
@@ -13,36 +13,36 @@ metadata:
     "helm.sh/hook-weight": "10"
     "helm.sh/hook-delete-policy": before-hook-creation
 spec:
-  ttlSecondsAfterFinished: {{ .Values.migrations.ttlSecondsAfterFinished }}
+  ttlSecondsAfterFinished: {{.Values.migrations.ttlSecondsAfterFinished}}
   template:
     metadata:
       labels:
-        {{- include "lingua-quiz-app.labels" . | nindent 8 }}
+        {{- include "lingua-quiz-app.labels" . | nindent 8}}
         app.kubernetes.io/component: migrations
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- with .Values.imagePullSecrets}}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- toYaml . | nindent 8}}
+      {{- end}}
       # Add init container to wait for PostgreSQL to be ready before running migrations
       initContainers:
       - name: wait-for-db
-        {{- if .Values.postgres.enabled }}
-        image: "{{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}"
-        imagePullPolicy: {{ .Values.postgres.image.pullPolicy }}
-        {{- else }}
+        {{- if .Values.postgres.enabled}}
+        image: "{{.Values.postgres.image.repository}}:{{.Values.postgres.image.tag}}"
+        imagePullPolicy: {{.Values.postgres.image.pullPolicy}}
+        {{- else}}
         image: "postgres:13"
         imagePullPolicy: IfNotPresent
-        {{- end }}
+        {{- end}}
         command:
         - sh
         - -c
         - |
-          {{- if .Values.postgres.enabled }}
-          until pg_isready -h {{ include "lingua-quiz-app.postgresql.fullname" . }} -p 5432; do
-          {{- else }}
-          until pg_isready -h {{ .Values.postgres.external.host }} -p {{ .Values.postgres.external.port }}; do
-          {{- end }}
+          {{- if .Values.postgres.enabled}}
+          until pg_isready -h {{include "lingua-quiz-app.postgresql.fullname" .}} -p 5432; do
+          {{- else}}
+          until pg_isready -h {{.Values.postgres.external.host}} -p {{.Values.postgres.external.port}}; do
+          {{- end}}
             echo "Waiting for PostgreSQL to be ready..."
             sleep 2
           done
@@ -51,12 +51,12 @@ spec:
           - name: PGUSER
             valueFrom:
               secretKeyRef:
-                name: {{ include "lingua-quiz-app.fullname" . }}-postgres
+                name: {{include "lingua-quiz-app.fullname" .}}-postgres
                 key: POSTGRES_USER
           - name: PGPASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ include "lingua-quiz-app.fullname" . }}-postgres
+                name: {{include "lingua-quiz-app.fullname" .}}-postgres
                 key: POSTGRES_PASSWORD
         resources:
           requests:
@@ -67,62 +67,62 @@ spec:
             memory: "64Mi"
       containers:
       - name: migration-runner
-        image: "{{ .Values.backend.image.repository }}:{{ .Values.backend.image.tag | default .Chart.AppVersion }}"
-        imagePullPolicy: {{ .Values.backend.image.pullPolicy }}
+        image: "{{.Values.backend.image.repository}}:{{.Values.backend.image.tag | default .Chart.AppVersion}}"
+        imagePullPolicy: {{.Values.backend.image.pullPolicy}}
         command:
-        {{- range .Values.migrations.command }}
-        - {{ . | quote }}
-        {{- end }}
+        {{- range .Values.migrations.command}}
+        - {{. | quote}}
+        {{- end}}
         env:
           # Database configuration - always use app's own postgres secret
-          {{- if .Values.postgres.enabled }}
+          {{- if .Values.postgres.enabled}}
           - name: DB_HOST
-            value: {{ include "lingua-quiz-app.postgresql.fullname" . }}
-          {{- else }}
+            value: {{include "lingua-quiz-app.postgresql.fullname" .}}
+          {{- else}}
           - name: DB_HOST
-            value: {{ .Values.postgres.external.host | quote }}
-          {{- end }}
+            value: {{.Values.postgres.external.host | quote}}
+          {{- end}}
           - name: DB_PORT
-            value: {{ .Values.postgres.external.port | default "5432" | quote }}
+            value: {{.Values.postgres.external.port | default "5432" | quote}}
           - name: POSTGRES_DB
             valueFrom:
               secretKeyRef:
-                name: {{ include "lingua-quiz-app.fullname" . }}-postgres
+                name: {{include "lingua-quiz-app.fullname" .}}-postgres
                 key: POSTGRES_DB
           - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
-                name: {{ include "lingua-quiz-app.fullname" . }}-postgres
+                name: {{include "lingua-quiz-app.fullname" .}}-postgres
                 key: POSTGRES_USER
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ include "lingua-quiz-app.fullname" . }}-postgres
+                name: {{include "lingua-quiz-app.fullname" .}}-postgres
                 key: POSTGRES_PASSWORD
           - name: JWT_SECRET
             valueFrom:
               secretKeyRef:
-                name: {{ include "lingua-quiz-app.fullname" . }}-jwt
+                name: {{include "lingua-quiz-app.fullname" .}}-jwt
                 key: JWT_SECRET
           - name: NODE_ENV
             value: "production"
-          {{- if .Values.migrations.env }}
-          {{- toYaml .Values.migrations.env | nindent 10 }}
-          {{- end }}
+          {{- if .Values.migrations.env}}
+          {{- toYaml .Values.migrations.env | nindent 10}}
+          {{- end}}
         resources:
-          {{- toYaml .Values.migrations.resources | nindent 10 }}
-      restartPolicy: {{ .Values.migrations.restartPolicy }}
-      {{- with .Values.nodeSelector }}
+          {{- toYaml .Values.migrations.resources | nindent 10}}
+      restartPolicy: {{.Values.migrations.restartPolicy}}
+      {{- with .Values.nodeSelector}}
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
+        {{- toYaml . | nindent 8}}
+      {{- end}}
+      {{- with .Values.affinity}}
       affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
+        {{- toYaml . | nindent 8}}
+      {{- end}}
+      {{- with .Values.tolerations}}
       tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-  backoffLimit: {{ .Values.migrations.backoffLimit }}
-{{- end }}
+        {{- toYaml . | nindent 8}}
+      {{- end}}
+  backoffLimit: {{.Values.migrations.backoffLimit}}
+{{- end}}

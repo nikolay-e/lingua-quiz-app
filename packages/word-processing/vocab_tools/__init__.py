@@ -14,12 +14,12 @@ Key Components:
 __version__ = "2.0.0"
 __author__ = "Nikolay Eremeev"
 
-from .core.vocabulary_analyzer import VocabularyAnalyzer
 from .core.database_parser import DatabaseParser
+from .core.vocabulary_analyzer import VocabularyAnalyzer
 from .validation.migration_validator import MigrationValidator
 
 __all__ = [
     "VocabularyAnalyzer",
-    "DatabaseParser", 
+    "DatabaseParser",
     "MigrationValidator",
 ]
