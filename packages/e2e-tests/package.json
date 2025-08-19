@@ -10,9 +10,9 @@
     "@lingua-quiz/core": "file:../core"
   },
   "devDependencies": {
-    "@playwright/test": "^1.54.1",
-    "@types/node": "^24.0.14",
-    "typescript": "^5.3.3"
+    "@playwright/test": "^1.54.2",
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2"
   },
   "keywords": ["testing", "e2e", "playwright", "language-learning"]
 }
