@@ -926,7 +926,7 @@
       "source_id": 3000205,
       "target_id": 3000206,
       "source_word": "bestimmt",
-      "target_word": "определенно",
+      "target_word": "определенно|точно|наверняка",
       "source_example": "Das wird bestimmt gut.",
       "target_example": "Это определенно будет хорошо."
     },
@@ -1025,7 +1025,7 @@
       "source_id": 3000227,
       "target_id": 3000228,
       "source_word": "das Bild [die Bilder]",
-      "target_word": "картина",
+      "target_word": "картина, фотография, изображение",
       "source_example": "Das Bild an der Wand ist schön.",
       "target_example": "Картина на стене красивая."
     },
@@ -1052,7 +1052,7 @@
       "source_id": 3000233,
       "target_id": 3000234,
       "source_word": "die Birne [die Birnen]",
-      "target_word": "груша",
+      "target_word": "груша, лампочка",
       "source_example": "Ich esse gerne Birnen.",
       "target_example": "Я с удовольствием ем груши."
     },
@@ -1106,7 +1106,7 @@
       "source_id": 3000245,
       "target_id": 3000246,
       "source_word": "blau",
-      "target_word": "синий",
+      "target_word": "синий|голубой",
       "source_example": "Sie trägt ein blaues Kleid.",
       "target_example": "Она носит синее платье."
     },
@@ -1304,7 +1304,7 @@
       "source_id": 3000289,
       "target_id": 3000290,
       "source_word": "das Büro [die Büros]",
-      "target_word": "офис",
+      "target_word": "офис|бюро|кабинет|контора",
       "source_example": "Mein Büro ist im dritten Stock.",
       "target_example": "Мой офис находится на третьем этаже."
     },
@@ -1367,7 +1367,7 @@
       "source_id": 3000303,
       "target_id": 3000304,
       "source_word": "circa",
-      "target_word": "примерно, около",
+      "target_word": "примерно|около|приблизительно",
       "source_example": "Die Reise dauert circa zwei Stunden.",
       "target_example": "Поездка длится примерно два часа."
     },
@@ -1430,7 +1430,7 @@
       "source_id": 3000317,
       "target_id": 3000318,
       "source_word": "da",
-      "target_word": "тут, там, здесь",
+      "target_word": "(тут|здесь), там, так как",
       "source_example": "Da drüben ist ein schönes Restaurant.",
       "target_example": "Там напротив находится хороший ресторан."
     },
@@ -1655,7 +1655,7 @@
       "source_id": 3000369,
       "target_id": 3000370,
       "source_word": "doch",
-      "target_word": "всё же",
+      "target_word": "всё-таки|однако|всё-же|же",
       "source_example": "Ich komme doch zur Party.",
       "target_example": "Я всё же приду на вечеринку."
     },
@@ -1691,7 +1691,7 @@
       "source_id": 3000377,
       "target_id": 3000378,
       "source_word": "draußen",
-      "target_word": "снаружи",
+      "target_word": "снаружи|на улице",
       "source_example": "Es ist kalt draußen.",
       "target_example": "На улице холодно."
     },
@@ -1799,7 +1799,7 @@
       "source_id": 3000401,
       "target_id": 3000402,
       "source_word": "einfach",
-      "target_word": "простой",
+      "target_word": "простой, просто",
       "source_example": "Die Aufgabe ist einfach.",
       "target_example": "Задача проста."
     },
@@ -1826,7 +1826,7 @@
       "source_id": 3000407,
       "target_id": 3000408,
       "source_word": "einkaufen",
-      "target_word": "закупаться",
+      "target_word": "делать покупки|закупаться",
       "source_example": "Wir gehen am Samstag einkaufen.",
       "target_example": "Мы идем за покупками в субботу."
     },
@@ -1898,7 +1898,7 @@
       "source_id": 3000423,
       "target_id": 3000424,
       "source_word": "das Eis [die Eis]",
-      "target_word": "мороженое",
+      "target_word": "мороженое, лёд",
       "source_example": "Im Sommer esse ich gerne Eis.",
       "target_example": "Летом я с удовольствием ем мороженое."
     },
@@ -2006,7 +2006,7 @@
       "source_id": 3000447,
       "target_id": 3000448,
       "source_word": "die Erdbeere [die Erdbeeren]",
-      "target_word": "клубника",
+      "target_word": "клубника|земляника",
       "source_example": "Erdbeeren sind im Sommer frisch.",
       "target_example": "Клубника свежая летом."
     },
@@ -2105,7 +2105,7 @@
       "source_id": 3000469,
       "target_id": 3000470,
       "source_word": "essen",
-      "target_word": "есть",
+      "target_word": "кушать|есть",
       "source_example": "Ich esse gerne Pizza.",
       "target_example": "Я люблю есть пиццу."
     },
@@ -2131,8 +2131,8 @@
       "translation_id": 3000237,
       "source_id": 3000475,
       "target_id": 3000476,
-      "source_word": "euer, eure",
-      "target_word": "ваш, ваша",
+      "source_word": "euer",
+      "target_word": "ваш [на ты к группе]",
       "source_example": "Ist das euer Auto?",
       "target_example": "Это ваша машина?"
     },
@@ -2267,7 +2267,7 @@
       "source_id": 3000505,
       "target_id": 3000506,
       "source_word": "die Farbe [die Farben]",
-      "target_word": "цвет",
+      "target_word": "цвет, краска",
       "source_example": "Welche Farbe hat dein Auto?",
       "target_example": "Какого цвета твоя машина?"
     },
@@ -2384,7 +2384,7 @@
       "source_id": 3000531,
       "target_id": 3000532,
       "source_word": "das Fieber [die Fieber]",
-      "target_word": "лихорадка",
+      "target_word": "жар|температура|лихорадка",
       "source_example": "Sie hat Fieber und muss ruhen.",
       "target_example": "У нее лихорадка, и ей нужно отдыхать."
     },
@@ -2402,7 +2402,7 @@
       "source_id": 3000535,
       "target_id": 3000536,
       "source_word": "finden",
-      "target_word": "находить",
+      "target_word": "находить|считать [иметь мнение]",
       "source_example": "Kannst du meine Schlüssel finden?",
       "target_example": "Ты можешь найти мои ключи?"
     },
@@ -2420,7 +2420,7 @@
       "source_id": 3000539,
       "target_id": 3000540,
       "source_word": "die Firma [die Firmen]",
-      "target_word": "компания",
+      "target_word": "фирма|компания",
       "source_example": "Meine Firma wächst schnell.",
       "target_example": "Моя компания быстро растет."
     },
@@ -2484,15 +2484,15 @@
       "target_id": 3000554,
       "source_word": "die Form [die Formen]",
       "target_word": "форма",
-      "source_example": "Bitte fülle die Form aus.",
-      "target_example": "Пожалуйста, заполните форму."
+      "source_example": "Der Kuchen hat die Form eines Herzens.",
+      "target_example": "Этот торт в форме сердца."
     },
     {
       "translation_id": 3000277,
       "source_id": 3000555,
       "target_id": 3000556,
       "source_word": "das Formular [die Formulare]",
-      "target_word": "формляр",
+      "target_word": "бланк|анкета|формуляр",
       "source_example": "Ich muss das Formular unterschreiben.",
       "target_example": "Мне нужно подписать форму."
     },
@@ -2537,7 +2537,7 @@
       "source_id": 3000565,
       "target_id": 3000566,
       "source_word": "die Frau [die Frauen]",
-      "target_word": "женщина",
+      "target_word": "женщина, жена, госпожа",
       "source_example": "Die Frau ist sehr freundlich.",
       "target_example": "Женщина очень дружелюбная."
     },
@@ -2618,7 +2618,7 @@
       "source_id": 3000583,
       "target_id": 3000584,
       "source_word": "früher",
-      "target_word": "ранее",
+      "target_word": "раньше|прежде|ранее",
       "source_example": "Früher war alles besser.",
       "target_example": "Ранее всё было лучше."
     },
@@ -2708,7 +2708,7 @@
       "source_id": 3000603,
       "target_id": 3000604,
       "source_word": "ganz",
-      "target_word": "весь",
+      "target_word": "весь|",
       "source_example": "Ich habe den ganzen Tag gearbeitet.",
       "target_example": "Я работал весь день."
     },
@@ -2951,7 +2951,7 @@
       "source_id": 3000657,
       "target_id": 3000658,
       "source_word": "gern",
-      "target_word": "охотно",
+      "target_word": "охотно|с удовольствием",
       "source_example": "Ich esse gern Obst.",
       "target_example": "Я с удовольствием ем фрукты."
     },
@@ -3032,9 +3032,9 @@
       "source_id": 3000675,
       "target_id": 3000676,
       "source_word": "die Gesundheitskarte [die Gesundheitskarten]",
-      "target_word": "карта здоровья",
+      "target_word": "медицинская страховая карта|полис ОМС",
       "source_example": "Vergiss nicht deine Gesundheitskarte.",
-      "target_example": "Не забудь свою карту здоровья."
+      "target_example": "Не забудь свою медицинскую страховую карту."
     },
     {
       "translation_id": 3000338,
@@ -3059,7 +3059,7 @@
       "source_id": 3000681,
       "target_id": 3000682,
       "source_word": "das Glas [die Gläser]",
-      "target_word": "стакан",
+      "target_word": "стакан, банка [стеклянная], стекло",
       "source_example": "Kannst du mir ein Glas Wasser geben?",
       "target_example": "Можешь дать мне стакан воды?"
     },
@@ -3068,7 +3068,7 @@
       "source_id": 3000683,
       "target_id": 3000684,
       "source_word": "glauben",
-      "target_word": "верить",
+      "target_word": "верить, думать [полагать]",
       "source_example": "Ich glaube an dich.",
       "target_example": "Я верю в тебя."
     },
@@ -3086,9 +3086,9 @@
       "source_id": 3000687,
       "target_id": 3000688,
       "source_word": "das Gleis [die Gleise]",
-      "target_word": "платформа",
+      "target_word": "путь [железнодорожный]",
       "source_example": "Das Gleis ist geschlossen.",
-      "target_example": "Платформа закрыта."
+      "target_example": "Железнодорожный путь закрыт."
     },
     {
       "translation_id": 3000344,
@@ -3167,7 +3167,7 @@
       "source_id": 3000705,
       "target_id": 3000706,
       "source_word": "groß",
-      "target_word": "большой",
+      "target_word": "большой, высокий [о росте]",
       "source_example": "Das Haus ist sehr groß.",
       "target_example": "Дом очень большой."
     },
@@ -3230,7 +3230,7 @@
       "source_id": 3000719,
       "target_id": 3000720,
       "source_word": "günstig",
-      "target_word": "выгодный",
+      "target_word": "выгодный|недорогой|дешевый",
       "source_example": "Dieses Angebot ist sehr günstig.",
       "target_example": "Это предложение очень выгодное."
     },
@@ -3239,7 +3239,7 @@
       "source_id": 3000721,
       "target_id": 3000722,
       "source_word": "gut",
-      "target_word": "хорошо",
+      "target_word": "хорошо, хороший",
       "source_example": "Mir geht es gut.",
       "target_example": "У меня все хорошо."
     },
@@ -3302,7 +3302,7 @@
       "source_id": 3000735,
       "target_id": 3000736,
       "source_word": "der Hals [die Hälse]",
-      "target_word": "шея",
+      "target_word": "шея [спереди], горло",
       "source_example": "Mein Hals tut weh.",
       "target_example": "Моя шея болит."
     },
@@ -3320,9 +3320,9 @@
       "source_id": 3000739,
       "target_id": 3000740,
       "source_word": "das Halsweh",
-      "target_word": "боль в шее",
-      "source_example": "Sie hat Halsweh nach dem Training.",
-      "target_example": "У нее болит шея после тренировки."
+      "target_word": "боль в горле",
+      "source_example": "Sie hat Halsweh nach dem Rauchen.",
+      "target_example": "У нее болит голо после курения."
     },
     {
       "translation_id": 3000370,
@@ -3347,7 +3347,7 @@
       "source_id": 3000745,
       "target_id": 3000746,
       "source_word": "die Hand [die Hände]",
-      "target_word": "кисть руки",
+      "target_word": "рука [кисть]",
       "source_example": "Meine Hand ist kalt.",
       "target_example": "Моя рука холодная."
     },
@@ -3410,9 +3410,9 @@
       "source_id": 3000759,
       "target_id": 3000760,
       "source_word": "die Hauptsache [die Hauptsachen]",
-      "target_word": "главное дело",
+      "target_word": "самое важное|гдавное",
       "source_example": "Die Hauptsache ist, dass wir gesund sind.",
-      "target_example": "Главное дело, что мы здоровы."
+      "target_example": "Самое важное, что мы здоровы."
     },
     {
       "translation_id": 3000380,
@@ -3509,7 +3509,7 @@
       "source_id": 3000781,
       "target_id": 3000782,
       "source_word": "heiß",
-      "target_word": "горячий",
+      "target_word": "горячий|жаркий",
       "source_example": "Der Kaffee ist heiß.",
       "target_example": "Кофе горячий."
     },
@@ -3545,7 +3545,7 @@
       "source_id": 3000789,
       "target_id": 3000790,
       "source_word": "hell",
-      "target_word": "светлый",
+      "target_word": "светлый|яркий",
       "source_example": "Das Zimmer ist sehr hell.",
       "target_example": "Комната очень светлая."
     },
