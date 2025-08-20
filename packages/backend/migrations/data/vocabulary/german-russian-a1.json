@@ -107,7 +107,7 @@
       "source_id": 3000023,
       "target_id": 3000024,
       "source_word": "der Alltag [die Alltage]",
-      "target_word": "будни",
+      "target_word": "повседневность|будни",
       "source_example": "Der Alltag kann manchmal stressig sein.",
       "target_example": "Будни иногда могут быть стрессовыми."
     },
@@ -116,7 +116,7 @@
       "source_id": 3000025,
       "target_id": 3000026,
       "source_word": "als",
-      "target_word": "когда [в прошлом]",
+      "target_word": "когда [в прошлом], чем [что-то]",
       "source_example": "Als ich klein war, spielte ich viel draußen.",
       "target_example": "Когда я был маленьким, я много играл на улице."
     },
@@ -449,7 +449,7 @@
       "source_id": 3000099,
       "target_id": 3000100,
       "source_word": "die Aufgabe [die Aufgaben]",
-      "target_word": "задача",
+      "target_word": "задача|задание",
       "source_example": "Die Aufgabe ist sehr schwierig.",
       "target_example": "Задача очень сложная."
     },
@@ -458,7 +458,7 @@
       "source_id": 3000101,
       "target_id": 3000102,
       "source_word": "sich aufregen",
-      "target_word": "возмущаться",
+      "target_word": "волноваться, возмущаться",
       "source_example": "Er regt sich über die Situation auf.",
       "target_example": "Он возмущается ситуацией."
     },
@@ -575,7 +575,7 @@
       "source_id": 3000127,
       "target_id": 3000128,
       "source_word": "das Auto [die Autos]",
-      "target_word": "автомобиль",
+      "target_word": "автомобиль|машина",
       "source_example": "Mein Auto ist rot.",
       "target_example": "Моя машина красного цвета."
     },
@@ -845,7 +845,7 @@
       "source_id": 3000187,
       "target_id": 3000188,
       "source_word": "benutzen",
-      "target_word": "пользоваться",
+      "target_word": "пользоваться|использовать",
       "source_example": "Du kannst meinen Stift benutzen.",
       "target_example": "Ты можешь пользоваться моей ручкой."
     },
@@ -890,9 +890,9 @@
       "source_id": 3000197,
       "target_id": 3000198,
       "source_word": "die Butter",
-      "target_word": "масло",
+      "target_word": "масло [сливочное]",
       "source_example": "Ich kaufe Butter im Supermarkt.",
-      "target_example": "Я покупаю масло в супермаркете."
+      "target_example": "Я покупаю сливочное масло в супермаркете."
     },
     {
       "translation_id": 3000099,
