@@ -1,9 +1,4 @@
-/* ============================================
-CSS ПЕРЕМЕННЫЕ И ТЕМЫ
-============================================ */
-
 :root {
-/* Основные цвета */
 –primary-color: #4a90e2;
 –secondary-color: #f39c12;
 –background-color: #f4f7f9;
@@ -13,48 +8,10 @@ CSS ПЕРЕМЕННЫЕ И ТЕМЫ
 –input-border-color: #ddd;
 –success-color: #27ae60;
 –error-color: #e74c3c;
-
-/* Состояния и эффекты */
-–primary-hover: #3a7bc8;
-–primary-focus-shadow: rgba(74, 144, 226, 0.2);
-–disabled-bg: #f9fafb;
-–disabled-text: #6b7280;
-
-/* Дополнительные цвета для компонентов */
-–example-bg: #f8f9fa;
-–feature-gradient-start: #f8f9ff;
-–feature-gradient-end: #e8f0ff;
-
-/* Переходы и анимации */
 –transition-speed: 0.3s;
-–transition-speed-fast: 0.2s;
-
-/* Система отступов */
-–spacing-xs: 4px;
-–spacing-sm: 8px;
-–spacing-md: 16px;
-–spacing-lg: 20px;
-–spacing-xl: 24px;
-–spacing-2xl: 40px;
-
-/* Размеры шрифтов */
-–font-size-xs: 0.75rem;
-–font-size-sm: 0.875rem;
-–font-size-base: 1rem;
-–font-size-lg: 1.125rem;
-–font-size-xl: 1.25rem;
-–font-size-2xl: 1.5rem;
-–font-size-3xl: 2rem;
-
-/* Радиусы скругления */
-–radius-sm: 4px;
-–radius-md: 6px;
-–radius-lg: 8px;
-–radius-xl: 12px;
 }
 
 [data-theme=“dark”] {
-/* Основные цвета для темной темы */
 –primary-color: #5ba3f5;
 –secondary-color: #f5b041;
 –background-color: #1a1a1a;
@@ -64,22 +21,7 @@ CSS ПЕРЕМЕННЫЕ И ТЕМЫ
 –input-border-color: #444;
 –success-color: #2ecc71;
 –error-color: #e67e73;
-
-/* Состояния и эффекты для темной темы */
-–primary-hover: #4a8fe7;
-–primary-focus-shadow: rgba(91, 163, 245, 0.2);
-–disabled-bg: #1f1f1f;
-–disabled-text: #555;
-
-/* Дополнительные цвета для компонентов */
-–example-bg: #333;
-–feature-gradient-start: #1a2332;
-–feature-gradient-end: #2a3342;
 }
-
-/* ============================================
-БАЗОВЫЕ СТИЛИ И СБРОС
-============================================ */
 
 - {
   box-sizing: border-box;
@@ -97,36 +39,33 @@ font-family: “Roboto”, Arial, sans-serif;
 background-color: var(–background-color);
 color: var(–text-color);
 line-height: 1.6;
-font-size: var(–font-size-base);
 }
-
-/* ============================================
-ТИПОГРАФИКА
-============================================ */
 
 h1, h2, h3 {
 color: var(–primary-color);
-margin-bottom: var(–spacing-md);
+margin-bottom: 16px;
 }
 
 h1 {
-font-size: var(–font-size-3xl);
+font-size: 2em;
 text-align: center;
 }
 
 h2 {
-font-size: clamp(var(–font-size-base), 2vw, 1.6rem);
+font-size: clamp(1rem, 2vw, 1.6em);
 border-bottom: 2px solid var(–primary-color);
 padding-bottom: 10px;
 }
 
-h3 {
-font-size: var(–font-size-xl);
+/* Special case for quiz section h2 */
+.quiz-section h2 {
+padding-bottom: 4px;
+margin-bottom: 8px;
 }
 
-/* ============================================
-ЭЛЕМЕНТЫ ФОРМ
-============================================ */
+h3 {
+font-size: 1.2em;
+}
 
 input[type=“text”],
 input[type=“password”],
@@ -135,12 +74,11 @@ select,
 button {
 width: 100%;
 padding: 12px;
-margin-bottom: var(–spacing-md);
-border-radius: var(–radius-md);
+margin-bottom: 16px;
+border-radius: 6px;
 border: 1px solid var(–input-border-color);
-font-size: var(–font-size-base);
-transition: border-color var(–transition-speed) ease,
-box-shadow var(–transition-speed) ease;
+font-size: 16px;
+transition: all var(–transition-speed) ease;
 background-color: var(–container-bg);
 color: var(–text-color);
 }
@@ -151,7 +89,7 @@ input[type=“email”]:focus,
 select:focus {
 outline: none;
 border-color: var(–primary-color);
-box-shadow: 0 0 0 2px var(–primary-focus-shadow);
+box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
 }
 
 select {
@@ -167,11 +105,15 @@ cursor: pointer;
 background-image: url(“data:image/svg+xml,%3csvg xmlns=‘http://www.w3.org/2000/svg’ fill=‘none’ viewBox=‘0 0 20 20’%3e%3cpath stroke=’%23e0e0e0’ stroke-linecap=‘round’ stroke-linejoin=‘round’ stroke-width=‘1.5’ d=‘m6 8 4 4 4-4’/%3e%3c/svg%3e”);
 }
 
-select:disabled,
-input:disabled {
-background-color: var(–disabled-bg);
-color: var(–disabled-text);
+select:disabled {
+background-color: #f9fafb;
+color: #6b7280;
 cursor: not-allowed;
+}
+
+[data-theme=“dark”] select:disabled {
+background-color: #1f1f1f;
+color: #555;
 }
 
 button {
@@ -184,7 +126,11 @@ transition: background-color var(–transition-speed) ease;
 }
 
 button:hover {
-background-color: var(–primary-hover);
+background-color: #3a7bc8;
+}
+
+[data-theme=“dark”] button:hover {
+background-color: #4a8fe7;
 }
 
 button:disabled {
@@ -192,21 +138,18 @@ cursor: not-allowed;
 background-color: var(–input-border-color);
 }
 
-/* ============================================
-СТРУКТУРА МАКЕТА
-============================================ */
-
 .container,
 .quiz-container {
 display: flex;
-min-height: 100vh;
+height: 100vh;
 margin: 0 auto;
 max-width: 1400px;
+overflow: hidden;
 }
 
 .left-sidebar {
 width: 300px;
-padding: var(–spacing-lg);
+padding: 20px;
 z-index: 1;
 display: flex;
 flex-direction: column;
@@ -214,50 +157,25 @@ flex-direction: column;
 
 .main-content {
 flex: 1;
-padding: var(–spacing-lg);
+padding: 20px;
 overflow-y: auto;
 }
 
 .right-sidebar {
 width: 500px;
-padding: var(–spacing-lg);
+padding: 20px;
 display: flex;
 flex-direction: column;
 height: 100vh;
 }
 
-/* ============================================
-КОМПОНЕНТЫ
-============================================ */
-
 .sidebar-section,
 .quiz-section {
 background-color: var(–container-bg);
-border-radius: var(–radius-xl);
-padding: var(–spacing-lg);
-margin-bottom: var(–spacing-md);
+border-radius: 12px;
+padding: 20px;
+margin-bottom: 16px;
 box-shadow: 0 4px 6px var(–shadow-color);
-}
-
-/* Quiz специфичные стили */
-.quiz-section h2 {
-padding-bottom: var(–spacing-xs);
-margin-bottom: var(–spacing-sm);
-}
-
-.quiz-header {
-margin-top: calc(var(–spacing-md) * -0.75);
-}
-
-.quiz-select-container {
-margin-top: var(–spacing-md);
-}
-
-.quiz-select-label {
-display: block;
-margin-bottom: var(–spacing-sm);
-font-weight: 600;
-color: var(–primary-color);
 }
 
 .quiz-content {
@@ -265,26 +183,17 @@ margin-bottom: 0;
 }
 
 .question {
-font-size: var(–font-size-3xl);
+font-size: 2em;
 font-weight: bold;
 color: var(–secondary-color);
 text-align: center;
-margin: var(–spacing-md) 0;
-display: flex;
-align-items: center;
-justify-content: center;
-flex-wrap: wrap;
-gap: var(–spacing-sm);
+margin: 16px 0;
 }
 
-/* ============================================
-FEEDBACK КОНТЕЙНЕР
-============================================ */
-
 .feedback-container {
-margin-top: var(–spacing-md);
+margin-top: 16px;
 background-color: var(–container-bg);
-border-radius: var(–radius-lg);
+border-radius: 8px;
 box-shadow: 0 2px 4px var(–shadow-color);
 overflow: hidden;
 }
@@ -293,10 +202,10 @@ overflow: hidden;
 display: flex;
 align-items: center;
 justify-content: center;
-padding: var(–spacing-sm) 12px;
+padding: 8px 12px;
 font-weight: bold;
 text-align: center;
-transition: all var(–transition-speed) ease;
+transition: all 0.3s ease;
 }
 
 .feedback-text.success {
@@ -308,48 +217,49 @@ color: var(–error-color);
 }
 
 .feedback-icon {
-font-size: 1.25rem;
-margin-right: var(–spacing-sm);
+font-size: 20px;
+margin-right: 8px;
 }
 
 .feedback-text.success .feedback-icon::before {
 content: “✓”;
-color: var(–success-color);
+color: #4caf50;
 }
 
 .feedback-text.error .feedback-icon::before {
 content: “✗”;
-color: var(–error-color);
+color: #f44336;
 }
 
 .feedback-message {
-font-size: var(–font-size-base);
+font-size: 16px;
 }
-
-/* ============================================
-USAGE EXAMPLES
-============================================ */
 
 .usage-examples {
 padding: 6px 10px;
 }
 
 .usage-examples h3 {
-margin-bottom: var(–spacing-sm);
+margin-bottom: 8px;
 color: var(–primary-color);
 }
 
 .example-container {
 display: flex;
 flex-direction: column;
-gap: var(–spacing-sm);
+gap: 8px;
 }
 
 .example-container p {
-background-color: var(–example-bg);
+background-color: #f8f9fa;
 padding: 5px;
-border-radius: var(–radius-md);
+border-radius: 6px;
 margin: 0;
+}
+
+[data-theme=“dark”] .example-container p {
+background-color: #333;
+color: var(–text-color);
 }
 
 .example-container strong {
@@ -357,12 +267,8 @@ color: var(–primary-color);
 margin-right: 5px;
 }
 
-/* ============================================
-LEARNING PROGRESS
-============================================ */
-
 .learning-progress {
-padding: var(–spacing-lg);
+padding: 20px;
 overflow-y: auto;
 min-height: 70vh;
 }
@@ -378,13 +284,9 @@ border-bottom: 1px solid var(–input-border-color);
 margin: 5px 0;
 }
 
-/* ============================================
-PASSWORD TOGGLE
-============================================ */
-
 .input-group {
 position: relative;
-margin-bottom: var(–spacing-md);
+margin-bottom: 16px;
 }
 
 #password,
@@ -407,17 +309,12 @@ cursor: pointer;
 color: var(–text-color);
 z-index: 2;
 transform: none;
-transition: color var(–transition-speed-fast) ease;
 }
 
 .toggle-password-btn:hover {
 color: var(–primary-color);
 background: none;
 }
-
-/* ============================================
-LOGIN КОНТЕЙНЕР
-============================================ */
 
 .login-container {
 display: flex;
@@ -435,7 +332,7 @@ flex: 1;
 display: flex;
 flex-direction: column;
 justify-content: flex-start;
-padding: var(–spacing-2xl) var(–spacing-lg) var(–spacing-lg) var(–spacing-lg);
+padding: 40px 20px 20px 20px;
 }
 
 .login-content {
@@ -454,13 +351,9 @@ text-align: center;
 font-weight: bold;
 }
 
-/* ============================================
-PASSWORD REQUIREMENTS
-============================================ */
-
 .password-requirements {
 background-color: var(–container-bg);
-border-radius: var(–radius-md);
+border-radius: 6px;
 padding: 10px;
 margin-top: 10px;
 margin-bottom: 15px;
@@ -474,7 +367,7 @@ font-weight: bold;
 
 .requirement {
 opacity: 0.8;
-transition: opacity var(–transition-speed) ease;
+transition: all 0.3s ease;
 display: flex;
 align-items: center;
 gap: 5px;
@@ -486,10 +379,9 @@ opacity: 1;
 }
 
 .requirement-icon {
-transition: transform var(–transition-speed-fast) ease-in-out,
-color var(–transition-speed-fast) ease-in-out;
+transition: all 0.2s ease-in-out;
 color: var(–input-border-color);
-font-size: var(–font-size-xs);
+font-size: 12px;
 }
 
 .requirement.valid {
@@ -501,175 +393,65 @@ color: var(–success-color);
 transform: scale(1.1);
 }
 
-/* ============================================
-ДОПОЛНИТЕЛЬНЫЕ КОМПОНЕНТЫ
-============================================ */
-
 .direction-toggle-btn {
-margin-bottom: var(–spacing-md);
+margin-bottom: 16px;
 }
 
 #user-status {
-margin-bottom: var(–spacing-md);
+margin-bottom: 16px;
 }
 
-/* ============================================
-WELCOME MESSAGE
-============================================ */
-
+/* New styles for welcome message */
 .welcome-message {
 text-align: center;
-padding: var(–spacing-2xl) var(–spacing-lg);
+padding: 40px 20px;
 max-width: 500px;
 margin: 0 auto;
 }
 
 .welcome-icon {
-font-size: 4rem;
-margin-bottom: var(–spacing-lg);
+font-size: 4em;
+margin-bottom: 20px;
 animation: bounce 2s infinite;
 }
 
 .welcome-message h3 {
 color: var(–primary-color);
-margin-bottom: var(–spacing-md);
-font-size: 1.8rem;
+margin-bottom: 16px;
+font-size: 1.8em;
 }
 
 .welcome-message p {
 color: var(–text-color);
-font-size: var(–font-size-lg);
-margin-bottom: var(–spacing-xl);
+font-size: 1.1em;
+margin-bottom: 24px;
 opacity: 0.8;
 }
 
 .feature-list {
 display: flex;
 flex-direction: column;
-gap: var(–spacing-sm);
-margin-top: var(–spacing-xl);
+gap: 8px;
+margin-top: 24px;
 }
 
 .feature {
-background: linear-gradient(135deg, var(–feature-gradient-start) 0%, var(–feature-gradient-end) 100%);
-padding: 15px var(–spacing-lg);
-border-radius: var(–radius-lg);
+background: linear-gradient(135deg, #f8f9ff 0%, #e8f0ff 100%);
+padding: 15px 20px;
+border-radius: 8px;
 color: var(–primary-color);
 font-weight: 500;
 border-left: 4px solid var(–primary-color);
-transition: transform var(–transition-speed-fast) ease;
+transition: transform 0.2s ease;
+}
+
+[data-theme=“dark”] .feature {
+background: linear-gradient(135deg, #1a2332 0%, #2a3342 100%);
 }
 
 .feature:hover {
 transform: translateX(5px);
 }
-
-/* ============================================
-FOLDABLE SECTIONS
-============================================ */
-
-.foldable-section {
-margin-bottom: var(–spacing-md);
-}
-
-.foldable-header {
-cursor: pointer;
-user-select: none;
-display: flex;
-align-items: center;
-transition: background-color var(–transition-speed-fast) ease;
-padding: 5px;
-margin: -5px;
-border-radius: var(–radius-sm);
-}
-
-.foldable-header:hover {
-background-color: var(–primary-focus-shadow);
-}
-
-.fold-icon {
-font-size: 0.8rem;
-margin-right: var(–spacing-sm);
-transition: transform var(–transition-speed-fast) ease;
-color: var(–text-color);
-opacity: 0.6;
-}
-
-.foldable-content {
-animation: fadeIn var(–transition-speed) ease;
-margin-top: 10px;
-}
-
-/* ============================================
-TTS BUTTON
-============================================ */
-
-.tts-button {
-background: none;
-border: none;
-color: var(–primary-color);
-cursor: pointer;
-font-size: 1rem;
-margin-left: var(–spacing-sm);
-padding: var(–spacing-xs);
-transition: opacity var(–transition-speed-fast) ease;
-vertical-align: middle;
-}
-
-.tts-button:hover {
-opacity: 0.7;
-background: none;
-}
-
-.tts-button:focus {
-outline: none;
-}
-
-.tts-button:disabled {
-opacity: 0.4;
-cursor: not-allowed;
-}
-
-.tts-button.speaking {
-color: var(–secondary-color);
-}
-
-/* ============================================
-CURRENT LEVEL DISPLAY
-============================================ */
-
-.current-level-display {
-background: var(–container-bg);
-border: 1px solid var(–input-border-color);
-border-radius: var(–radius-lg);
-padding: 12px var(–spacing-md);
-margin: var(–spacing-md) 0;
-display: flex;
-align-items: center;
-gap: var(–spacing-sm);
-box-shadow: 0 2px 4px var(–shadow-color);
-transition: box-shadow var(–transition-speed) ease;
-}
-
-.current-level-display:hover {
-box-shadow: 0 4px 8px var(–shadow-color);
-}
-
-.level-label {
-font-weight: 500;
-color: var(–text-color);
-font-size: var(–font-size-sm);
-}
-
-.level-description {
-font-weight: 600;
-color: var(–primary-color);
-font-size: 0.95rem;
-}
-
-/* ============================================
-АНИМАЦИИ
-============================================ */
 
 @keyframes bounce {
 0%, 20%, 50%, 80%, 100% {
@@ -682,21 +464,6 @@ transform: translateY(-10px);
 transform: translateY(-5px);
 }
 }
-
-@keyframes fadeIn {
-from {
-opacity: 0;
-transform: translateY(-10px);
-}
-to {
-opacity: 1;
-transform: translateY(0);
-}
-}
-
-/* ============================================
-МЕДИА ЗАПРОСЫ
-============================================ */
 
 @media (max-width: 1024px) {
 .container,
@@ -719,32 +486,43 @@ max-height: none;
 }
 
 @media (max-width: 768px) {
-/* Дополнительные стили для мобильных устройств */
+.container,
+.quiz-container,
 .login-container {
 flex-direction: column;
 }
 
+.left-sidebar,
+.main-content,
+.right-sidebar,
 .login-container .left-sidebar,
+.login-container .main-content,
 .login-container .right-sidebar {
 width: 100%;
+}
+
+.left-sidebar,
+.right-sidebar {
+height: auto;
+max-height: none;
 }
 }
 
 @media (max-width: 480px) {
-:root {
-–font-size-base: 0.875rem;
+body {
+font-size: 14px;
 }
 
 h1 {
-font-size: 1.8rem;
+font-size: 1.8em;
 }
 
 h2 {
-font-size: 1.4rem;
+font-size: 1.4em;
 }
 
 h3 {
-font-size: 1.1rem;
+font-size: 1.1em;
 }
 
 .quiz-section,
@@ -752,7 +530,139 @@ font-size: 1.1rem;
 padding: 15px;
 }
 
-.question {
-font-size: 1.5rem;
+.right-sidebar {
+max-height: none;
 }
+}
+/* Quiz header adjustments */
+.quiz-header {
+margin-top: -12px; /* Reduce space after h2 border */
+}
+
+.quiz-select-container {
+margin-top: 16px; /* Add space between border and label */
+}
+
+.quiz-select-label {
+display: block;
+margin-bottom: 8px; /* Space between label and dropdown */
+font-weight: 600;
+color: var(–primary-color);
+}
+
+/* Foldable lists styles */
+.foldable-section {
+margin-bottom: 16px;
+}
+
+.foldable-header {
+cursor: pointer;
+user-select: none;
+display: flex;
+align-items: center;
+transition: background-color 0.2s ease;
+padding: 5px;
+margin: -5px;
+border-radius: 4px;
+}
+
+.foldable-header:hover {
+background-color: rgba(74, 144, 226, 0.1);
+}
+
+[data-theme=“dark”] .foldable-header:hover {
+background-color: rgba(91, 163, 245, 0.1);
+}
+
+.fold-icon {
+font-size: 0.8em;
+margin-right: 8px;
+transition: transform 0.2s ease;
+color: var(–text-color);
+opacity: 0.6;
+}
+
+.foldable-content {
+animation: fadeIn 0.3s ease;
+margin-top: 10px;
+}
+
+@keyframes fadeIn {
+from {
+opacity: 0;
+transform: translateY(-10px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+/* TTS Button Styles */
+.tts-button {
+background: none;
+border: none;
+color: var(–primary-color);
+cursor: pointer;
+font-size: 1em;
+margin-left: 8px;
+padding: 4px;
+transition: opacity 0.2s ease;
+vertical-align: middle;
+}
+
+.tts-button:hover {
+opacity: 0.7;
+}
+
+.tts-button:focus {
+outline: none;
+}
+
+.tts-button:disabled {
+opacity: 0.4;
+cursor: not-allowed;
+}
+
+.tts-button.speaking {
+color: var(–secondary-color);
+}
+
+/* Question container adjustments for TTS button */
+.question {
+display: flex;
+align-items: center;
+justify-content: center;
+flex-wrap: wrap;
+gap: 8px;
+}
+
+/* Current level display (replaces manual level selector) */
+.current-level-display {
+background: var(–container-bg);
+border: 1px solid var(–input-border-color);
+border-radius: 8px;
+padding: 12px 16px;
+margin: 16px 0;
+display: flex;
+align-items: center;
+gap: 8px;
+box-shadow: 0 2px 4px var(–shadow-color);
+transition: all var(–transition-speed);
+}
+
+.current-level-display:hover {
+box-shadow: 0 4px 8px var(–shadow-color);
+}
+
+.level-label {
+font-weight: 500;
+color: var(–text-color);
+font-size: 0.9em;
+}
+
+.level-description {
+font-weight: 600;
+color: var(–primary-color);
+font-size: 0.95em;
 }
