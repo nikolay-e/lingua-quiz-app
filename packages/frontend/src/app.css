@@ -393,7 +393,7 @@ button:disabled {
 
 .toggle-password-btn {
   position: absolute;
-  right: var(--spacing-xs);
+  right: var(--spacing-xxs);
   top: 50%;
   transform: translateY(-50%);
   background: none;
