@@ -435,7 +435,7 @@ button:disabled {
 
 #login-message,
 #register-message {
-  margin-top: var(--spacing-md);
+  margin-top: var(--spacing-sm);
   text-align: center;
   font-weight: bold;
 }
