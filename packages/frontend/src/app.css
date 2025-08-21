@@ -402,6 +402,7 @@ button:disabled {
   cursor: pointer;
   color: var(--text-color);
   transition: color var(--transition-speed-fast) ease;
+  width: auto
 }
 
 .toggle-password-btn:hover {
