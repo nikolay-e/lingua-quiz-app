@@ -4553,7 +4553,7 @@
       "source_id": 3001013,
       "target_id": 3001014,
       "source_word": "korrigieren",
-      "target_word": "исправлять",
+      "target_word": "исправлять|поправлять",
       "source_example": "Kannst du meinen Aufsatz korrigieren?",
       "target_example": "Можешь исправить мое сочинение?"
     },
@@ -4616,7 +4616,7 @@
       "source_id": 3001027,
       "target_id": 3001028,
       "source_word": "die Krankheit [die Krankheiten]",
-      "target_word": "болезнь",
+      "target_word": "болезнь|заболевание",
       "source_example": "Eine Krankheit kann das Leben verändern.",
       "target_example": "Болезнь может изменить жизнь."
     },
@@ -4625,7 +4625,7 @@
       "source_id": 3001029,
       "target_id": 3001030,
       "source_word": "die Krankmeldung [die Krankmeldungen]",
-      "target_word": "уведомление о болезни",
+      "target_word": "больничный лист",
       "source_example": "Er hat eine Krankmeldung vorgelegt.",
       "target_example": "Он предоставил уведомление о болезни."
     },
@@ -4634,7 +4634,7 @@
       "source_id": 3001031,
       "target_id": 3001032,
       "source_word": "kreativ",
-      "target_word": "креативный",
+      "target_word": "творческий|креативный",
       "source_example": "Sie ist sehr kreativ und liebt Kunst.",
       "target_example": "Она очень креативная и любит искусство."
     },
@@ -4670,7 +4670,7 @@
       "source_id": 3001039,
       "target_id": 3001040,
       "source_word": "der Kugelschreiber [die Kugelschreiber]",
-      "target_word": "шариковая ручка",
+      "target_word": "ручка [шариковая]",
       "source_example": "Ich schreibe mit einem Kugelschreiber.",
       "target_example": "Я пишу ручкой."
     },
@@ -4751,7 +4751,7 @@
       "source_id": 3001057,
       "target_id": 3001058,
       "source_word": "das Lammfleisch",
-      "target_word": "ягнятина",
+      "target_word": "ягнятина|баранина",
       "source_example": "Ich esse gern Lammfleisch zum Mittagessen.",
       "target_example": "Я люблю есть ягнятину на обед."
     },
@@ -4769,7 +4769,7 @@
       "source_id": 3001061,
       "target_id": 3001062,
       "source_word": "das Land [die Länder]",
-      "target_word": "страна",
+      "target_word": "страна, сельская местность, земля [федеральная]",
       "source_example": "Deutschland ist ein schönes Land.",
       "target_example": "Германия — красивая страна."
     },
@@ -4814,7 +4814,7 @@
       "source_id": 3001071,
       "target_id": 3001072,
       "source_word": "lassen",
-      "target_word": "позволять",
+      "target_word": "позволять, оставлять",
       "source_example": "Lass uns ins Kino gehen.",
       "target_example": "Позволь нам пойти в кино."
     },
@@ -4841,7 +4841,7 @@
       "source_id": 3001077,
       "target_id": 3001078,
       "source_word": "die Lebensmittel",
-      "target_word": "продукты питания",
+      "target_word": "продукты питания|продукты",
       "source_example": "Ich kaufe Lebensmittel im Supermarkt.",
       "target_example": "Я покупаю продукты питания в супермаркете."
     },
@@ -4859,7 +4859,7 @@
       "source_id": 3001081,
       "target_id": 3001082,
       "source_word": "ledig",
-      "target_word": "холост",
+      "target_word": "холостой, незамужняя",
       "source_example": "Sie ist noch ledig.",
       "target_example": "Она еще незамужняя."
     },
@@ -4886,7 +4886,7 @@
       "source_id": 3001087,
       "target_id": 3001088,
       "source_word": "lernen",
-      "target_word": "учиться",
+      "target_word": "учиться|учить",
       "source_example": "Ich lerne Deutsch.",
       "target_example": "Я учу немецкий."
     },
@@ -4922,7 +4922,7 @@
       "source_id": 3001095,
       "target_id": 3001096,
       "source_word": "lieber",
-      "target_word": "охотнее",
+      "target_word": "охотнее|предпочтительнее|лучше",
       "source_example": "Ich trinke lieber Tee.",
       "target_example": "Я предпочитаю пить чай."
     },
@@ -5354,7 +5354,7 @@
       "source_id": 3001191,
       "target_id": 3001192,
       "source_word": "mitbringen",
-      "target_word": "принести с собой",
+      "target_word": "приносить [с собой]|привозить [с собой]",
       "source_example": "Bitte bringe ein Geschenk mit.",
       "target_example": "Пожалуйста, принеси подарок с собой."
     },
@@ -5381,7 +5381,7 @@
       "source_id": 3001197,
       "target_id": 3001198,
       "source_word": "mittags",
-      "target_word": "в полдень",
+      "target_word": "в полдень|днём",
       "source_example": "Ich esse mittags in der Kantine.",
       "target_example": "Я обедаю в столовой в полдень."
     },
