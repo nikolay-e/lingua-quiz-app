@@ -126,7 +126,7 @@ h1 {
 h2 {
   font-size: clamp(1.25rem, 2vw, 1.6rem);
   border-bottom: 2px solid var(--primary-color);
-  padding-bottom: var(--spacing-xs);
+  padding-bottom: var(--spacing-md);
 }
 
 h3 {
@@ -167,7 +167,7 @@ select:focus {
 select {
   /* Цвет стрелки жёстко задан в SVG для совместимости */
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-  background-position: right var(--spacing-xs) center;
+  background-position: right var(--spacing-md) center;
   background-repeat: no-repeat;
   background-size: var(--spacing-md);
   appearance: none;
@@ -259,8 +259,8 @@ button:disabled {
 
 /* --- Стили для квиза --- */
 .quiz-section h2 {
-  padding-bottom: var(--spacing-xs);
-  margin-bottom: var(--spacing-xs);
+  padding-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
 }
 
 .quiz-header {
@@ -274,7 +274,7 @@ button:disabled {
 
 .quiz-select-label {
   display: block;
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: var(--spacing-md);
   font-weight: 600;
   color: var(--primary-color);
 }
@@ -289,7 +289,7 @@ button:disabled {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-md);
 }
 
 /* --- Контейнер обратной связи --- */
@@ -305,7 +305,7 @@ button:disabled {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-xs) var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-sm);
   font-weight: bold;
   text-align: center;
   transition: color var(--transition-speed) ease;
@@ -323,7 +323,7 @@ button:disabled {
 
 .feedback-icon {
   font-size: var(--font-size-xl);
-  margin-right: var(--spacing-xs);
+  margin-right: var(--spacing-md);
 }
 
 .feedback-text.success .feedback-icon::before { content: "✓"; }
@@ -335,30 +335,30 @@ button:disabled {
 
 /* --- Примеры использования --- */
 .usage-examples {
-  padding: var(--spacing-xs) var(--spacing-xs);
+  padding: var(--spacing-md) var(--spacing-md);
 }
 
 .usage-examples h3 {
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: var(--spacing-md);
   color: var(--primary-color);
 }
 
 .example-container {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-md);
 }
 
 .example-container p {
   background-color: var(--example-bg);
-  padding: var(--spacing-xs);
+  padding: var(--spacing-md);
   border-radius: var(--radius-md);
   margin: 0;
 }
 
 .example-container strong {
   color: var(--primary-color);
-  margin-right: var(--spacing-xs);
+  margin-right: var(--spacing-md);
 }
 
 /* --- Прогресс обучения --- */
@@ -370,13 +370,13 @@ button:disabled {
 
 .learning-progress ol {
   padding-left: var(--spacing-2xl);
-  margin-top: var(--spacing-xs);
+  margin-top: var(--spacing-md);
 }
 
 .learning-progress ol li {
-  padding: var(--spacing-xs) 0;
+  padding: var(--spacing-md) 0;
   border-bottom: 1px solid var(--input-border-color);
-  margin: var(--spacing-xs) 0;
+  margin: var(--spacing-md) 0;
 }
 
 /* --- Переключатель пароля --- */
@@ -387,7 +387,7 @@ button:disabled {
 
 #password,
 #register-password {
-  padding-right: var(--spacing-3xl);
+  padding-right: var(--spacing-2xl);
   margin-bottom: 0;
 }
 
@@ -398,7 +398,7 @@ button:disabled {
   transform: translateY(-50%);
   background: none;
   border: none;
-  padding: var(--spacing-xs);
+  padding: var(--spacing-md);
   cursor: pointer;
   color: var(--text-color);
   transition: color var(--transition-speed-fast) ease;
@@ -420,7 +420,7 @@ button:disabled {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: var(--spacing-3xl) var(--spacing-lg) var(--spacing-lg);
+  padding: var(--spacing-2xl) var(--spacing-lg) var(--spacing-lg);
 }
 
 .login-content {
@@ -434,7 +434,7 @@ button:disabled {
 
 #login-message,
 #register-message {
-  margin-top: var(--spacing-xs);
+  margin-top: var(--spacing-md);
   text-align: center;
   font-weight: bold;
 }
@@ -443,14 +443,14 @@ button:disabled {
 .password-requirements {
   background-color: var(--container-bg);
   border-radius: var(--radius-md);
-  padding: var(--spacing-xs);
-  margin-top: var(--spacing-xs);
+  padding: var(--spacing-md);
+  margin-top: var(--spacing-md);
   margin-bottom: var(--spacing-md);
   box-shadow: 0 2px 4px var(--shadow-color);
 }
 
 .password-requirements-title {
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: var(--spacing-md);
   font-weight: bold;
 }
 
@@ -459,8 +459,8 @@ button:disabled {
   transition: opacity var(--transition-speed) ease;
   display: flex;
   align-items: center;
-  gap: var(--spacing-xs);
-  margin: var(--spacing-xs) 0;
+  gap: var(--spacing-md);
+  margin: var(--spacing-md) 0;
 }
 
 .requirement:hover { opacity: 1; }
@@ -480,7 +480,7 @@ button:disabled {
 /* --- Приветственное сообщение --- */
 .welcome-message {
   text-align: center;
-  padding: var(--spacing-3xl) var(--spacing-lg);
+  padding: var(--spacing-2xl) var(--spacing-lg);
   max-width: 500px;
   margin: 0 auto;
 }
@@ -505,7 +505,7 @@ button:disabled {
 .feature-list {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-md);
   margin-top: var(--spacing-xl);
 }
 
@@ -528,8 +528,8 @@ button:disabled {
   display: flex;
   align-items: center;
   transition: background-color var(--transition-speed-fast) ease;
-  padding: var(--spacing-xs);
-  margin: calc(-1 * var(--spacing-xs));
+  padding: var(--spacing-md);
+  margin: calc(-1 * var(--spacing-md));
   border-radius: var(--radius-sm);
 }
 
@@ -539,14 +539,14 @@ button:disabled {
 
 .fold-icon {
   font-size: 0.8rem;
-  margin-right: var(--spacing-xs);
+  margin-right: var(--spacing-md);
   transition: transform var(--transition-speed-fast) ease;
   opacity: 0.6;
 }
 
 .foldable-content {
   animation: fadeIn var(--transition-speed) ease;
-  margin-top: var(--spacing-xs);
+  margin-top: var(--spacing-md);
 }
 
 /* --- Кнопка TTS --- */
@@ -556,8 +556,8 @@ button:disabled {
   color: var(--primary-color);
   cursor: pointer;
   font-size: 1rem;
-  margin-left: var(--spacing-xs);
-  padding: var(--spacing-xs);
+  margin-left: var(--spacing-md);
+  padding: var(--spacing-md);
   transition: opacity var(--transition-speed-fast) ease;
   vertical-align: middle;
 }
@@ -575,7 +575,7 @@ button:disabled {
   padding: var(--spacing-sm) var(--spacing-md);
   display: flex;
   align-items: center;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-md);
   box-shadow: 0 2px 4px var(--shadow-color);
   transition: box-shadow var(--transition-speed) ease;
 }
