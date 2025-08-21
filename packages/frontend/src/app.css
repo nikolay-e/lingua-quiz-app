@@ -368,15 +368,25 @@ button:disabled {
   min-height: 70vh;
 }
 
+/* --- Стили для контейнера списка --- */
 .learning-progress ol {
-  padding-left: var(--spacing-xl);
   margin-top: var(--spacing-md);
+  padding-left: 0;         /* Убираем отступ */
+  list-style: none;        /* Скрываем маркеры списка */
+  
+  /* Включаем Flexbox для центрирования */
+  display: flex;
+  flex-direction: column;  /* Располагаем элементы вертикально */
+  align-items: center;     /* Центрируем по горизонтали */
 }
 
+/* --- Стили для элементов списка --- */
 .learning-progress ol li {
   padding: var(--spacing-md) 0;
   border-bottom: 1px solid var(--input-border-color);
   margin: var(--spacing-md) 0;
+  width: 90%;              /* Задаём ширину для центрирования */
+  text-align: center;      /* Центрируем текст внутри элемента */
 }
 
 /* --- Переключатель пароля --- */
