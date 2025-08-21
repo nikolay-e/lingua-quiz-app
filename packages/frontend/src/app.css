@@ -335,7 +335,7 @@ button:disabled {
 
 /* --- Примеры использования --- */
 .usage-examples {
-  padding: var(--spacing-xxs) var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-xs);
 }
 
 .usage-examples h3 {
@@ -351,14 +351,14 @@ button:disabled {
 
 .example-container p {
   background-color: var(--example-bg);
-  padding: var(--spacing-xxs);
+  padding: var(--spacing-xs);
   border-radius: var(--radius-md);
   margin: 0;
 }
 
 .example-container strong {
   color: var(--primary-color);
-  margin-right: var(--spacing-xxs);
+  margin-right: var(--spacing-xs);
 }
 
 /* --- Прогресс обучения --- */
@@ -374,9 +374,9 @@ button:disabled {
 }
 
 .learning-progress ol li {
-  padding: var(--spacing-xxs) 0;
+  padding: var(--spacing-xs) 0;
   border-bottom: 1px solid var(--input-border-color);
-  margin: var(--spacing-xxs) 0;
+  margin: var(--spacing-xs) 0;
 }
 
 /* --- Переключатель пароля --- */
@@ -398,7 +398,7 @@ button:disabled {
   transform: translateY(-50%);
   background: none;
   border: none;
-  padding: var(--spacing-xxs);
+  padding: var(--spacing-xs);
   cursor: pointer;
   color: var(--text-color);
   transition: color var(--transition-speed-fast) ease;
@@ -450,7 +450,7 @@ button:disabled {
 }
 
 .password-requirements-title {
-  margin-bottom: var(--spacing-xxs);
+  margin-bottom: var(--spacing-xs);
   font-weight: bold;
 }
 
@@ -459,8 +459,8 @@ button:disabled {
   transition: opacity var(--transition-speed) ease;
   display: flex;
   align-items: center;
-  gap: var(--spacing-xxs);
-  margin: var(--spacing-xxs) 0;
+  gap: var(--spacing-xs);
+  margin: var(--spacing-xs) 0;
 }
 
 .requirement:hover { opacity: 1; }
@@ -528,8 +528,8 @@ button:disabled {
   display: flex;
   align-items: center;
   transition: background-color var(--transition-speed-fast) ease;
-  padding: var(--spacing-xxs);
-  margin: calc(-1 * var(--spacing-xxs));
+  padding: var(--spacing-xs);
+  margin: calc(-1 * var(--spacing-xs));
   border-radius: var(--radius-sm);
 }
 
@@ -557,7 +557,7 @@ button:disabled {
   cursor: pointer;
   font-size: 1rem;
   margin-left: var(--spacing-xs);
-  padding: var(--spacing-xxs);
+  padding: var(--spacing-xs);
   transition: opacity var(--transition-speed-fast) ease;
   vertical-align: middle;
 }
