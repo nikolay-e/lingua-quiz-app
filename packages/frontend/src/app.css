@@ -1,668 +1,758 @@
 /* ============================================
-   1. CSS ПЕРЕМЕННЫЕ И ТЕМЫ
-   ============================================ */
+CSS ПЕРЕМЕННЫЕ И ТЕМЫ
+============================================ */
 
 :root {
-  /* Система отступов (1rem = 16px) */
-  --spacing-xxs: 0.25rem;  /* 4px */
-  --spacing-xs: 0.5rem;   /* 8px */
-  --spacing-sm: 0.75rem;  /* 12px */
-  --spacing-md: 1rem;     /* 16px */
-  --spacing-lg: 1.25rem;  /* 20px */
-  --spacing-xl: 1.5rem;   /* 24px */
-  --spacing-2xl: 1.875rem; /* 30px */
-  --spacing-3xl: 2.5rem;   /* 40px */
+/* Основные цвета */
+–primary-color: #4a90e2;
+–secondary-color: #f39c12;
+–background-color: #f4f7f9;
+–text-color: #333;
+–container-bg: #fff;
+–shadow-color: rgba(0, 0, 0, 0.1);
+–input-border-color: #ddd;
+–success-color: #27ae60;
+–error-color: #e74c3c;
 
-  /* Размеры шрифтов */
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 2rem;
+/* Состояния и эффекты */
+–primary-hover: #3a7bc8;
+–primary-focus-shadow: rgba(74, 144, 226, 0.2);
+–disabled-bg: #f9fafb;
+–disabled-text: #6b7280;
 
-  /* Радиусы скругления */
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
-  
-  /* Переходы и анимации */
-  --transition-speed: 0.3s;
-  --transition-speed-fast: 0.2s;
-  
-  /* --- СВЕТЛАЯ ТЕМА --- */
-  
-  /* Основные цвета */
-  --primary-color: #4a90e2;
-  --secondary-color: #f39c12;
-  --background-color: #f4f7f9;
-  --text-color: #333;
-  --text-color-light: #fff;
-  --container-bg: #fff;
-  --shadow-color: rgba(0, 0, 0, 0.1);
-  --input-border-color: #ddd;
-  --success-color: #27ae60;
-  --error-color: #e74c3c;
+/* Дополнительные цвета для компонентов */
+–example-bg: #f8f9fa;
+–feature-gradient-start: #f8f9ff;
+–feature-gradient-end: #e8f0ff;
 
-  /* Состояния и эффекты */
-  --primary-color-hover: #3a7bc8;
-  --primary-focus-shadow: rgba(74, 144, 226, 0.2);
-  --subtle-hover-bg: rgba(74, 144, 226, 0.1);
-  --disabled-bg: #f9fafb;
-  --disabled-text: #6b7280;
+/* Переходы и анимации */
+–transition-speed: 0.3s;
+–transition-speed-fast: 0.2s;
 
-  /* Дополнительные цвета для компонентов */
-  --example-bg: #f8f9fa;
-  --feature-gradient: linear-gradient(135deg, #f8f9ff 0%, #e8f0ff 100%);
+/* Система отступов */
+–spacing-xs: 4px;
+–spacing-sm: 8px;
+–spacing-md: 16px;
+–spacing-lg: 20px;
+–spacing-xl: 24px;
+–spacing-2xl: 40px;
+
+/* Размеры шрифтов */
+–font-size-xs: 0.75rem;
+–font-size-sm: 0.875rem;
+–font-size-base: 1rem;
+–font-size-lg: 1.125rem;
+–font-size-xl: 1.25rem;
+–font-size-2xl: 1.5rem;
+–font-size-3xl: 2rem;
+
+/* Радиусы скругления */
+–radius-sm: 4px;
+–radius-md: 6px;
+–radius-lg: 8px;
+–radius-xl: 12px;
 }
 
-[data-theme="dark"] {
-  /* --- ТЕМНАЯ ТЕМА --- */
-  
-  /* Основные цвета */
-  --primary-color: #5ba3f5;
-  --secondary-color: #f5b041;
-  --background-color: #1a1a1a;
-  --text-color: #e0e0e0;
-  --container-bg: #2a2a2a;
-  --shadow-color: rgba(0, 0, 0, 0.5);
-  --input-border-color: #444;
-  --success-color: #2ecc71;
-  --error-color: #e67e73;
+[data-theme=“dark”] {
+/* Основные цвета для темной темы */
+–primary-color: #5ba3f5;
+–secondary-color: #f5b041;
+–background-color: #1a1a1a;
+–text-color: #e0e0e0;
+–container-bg: #2a2a2a;
+–shadow-color: rgba(0, 0, 0, 0.5);
+–input-border-color: #444;
+–success-color: #2ecc71;
+–error-color: #e67e73;
 
-  /* Состояния и эффекты */
-  --primary-color-hover: #4a8fe7;
-  --primary-focus-shadow: rgba(91, 163, 245, 0.2);
-  --subtle-hover-bg: rgba(91, 163, 245, 0.1);
-  --disabled-bg: #1f1f1f;
-  --disabled-text: #555;
+/* Состояния и эффекты для темной темы */
+–primary-hover: #4a8fe7;
+–primary-focus-shadow: rgba(91, 163, 245, 0.2);
+–disabled-bg: #1f1f1f;
+–disabled-text: #555;
 
-  /* Дополнительные цвета */
-  --example-bg: #333;
-  --feature-gradient: linear-gradient(135deg, #1a2332 0%, #2a3342 100%);
+/* Дополнительные цвета для компонентов */
+–example-bg: #333;
+–feature-gradient-start: #1a2332;
+–feature-gradient-end: #2a3342;
 }
-
 
 /* ============================================
-   2. БАЗОВЫЕ СТИЛИ И СБРОС
-   ============================================ */
+БАЗОВЫЕ СТИЛИ И СБРОС
+============================================ */
 
-* {
+- {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
+  }
 
-html {
-  font-size: 16px; /* База для 1rem */
+body, html {
+height: 100%;
+overflow: auto;
 }
 
 body {
-  font-family: "Roboto", Arial, sans-serif;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  line-height: 1.6;
-  font-size: var(--font-size-base);
-  overflow-x: hidden;
+font-family: “Roboto”, Arial, sans-serif;
+background-color: var(–background-color);
+color: var(–text-color);
+line-height: 1.6;
+font-size: var(–font-size-base);
 }
 
-
 /* ============================================
-   3. ТИПОГРАФИКА
-   ============================================ */
+ТИПОГРАФИКА
+============================================ */
 
 h1, h2, h3 {
-  color: var(--primary-color);
-  margin-bottom: var(--spacing-md);
+color: var(–primary-color);
+margin-bottom: var(–spacing-md);
 }
 
 h1 {
-  font-size: var(--font-size-3xl);
-  text-align: center;
+font-size: var(–font-size-3xl);
+text-align: center;
 }
 
 h2 {
-  font-size: clamp(1.25rem, 2vw, 1.6rem);
-  border-bottom: 2px solid var(--primary-color);
-  padding-bottom: var(--spacing-md);
+font-size: clamp(var(–font-size-base), 2vw, 1.6rem);
+border-bottom: 2px solid var(–primary-color);
+padding-bottom: 10px;
 }
 
 h3 {
-  font-size: var(--font-size-xl);
+font-size: var(–font-size-xl);
 }
-
 
 /* ============================================
-   4. ЭЛЕМЕНТЫ ФОРМ
-   ============================================ */
+ЭЛЕМЕНТЫ ФОРМ
+============================================ */
 
-input[type="text"],
-input[type="password"],
-input[type="email"],
+input[type=“text”],
+input[type=“password”],
+input[type=“email”],
 select,
 button {
-  width: 100%;
-  padding: var(--spacing-sm);
-  margin-bottom: var(--spacing-md);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--input-border-color);
-  font-size: var(--font-size-base);
-  transition: border-color var(--transition-speed) ease,
-              box-shadow var(--transition-speed) ease;
-  background-color: var(--container-bg);
-  color: var(--text-color);
+width: 100%;
+padding: 12px;
+margin-bottom: var(–spacing-md);
+border-radius: var(–radius-md);
+border: 1px solid var(–input-border-color);
+font-size: var(–font-size-base);
+transition: border-color var(–transition-speed) ease,
+box-shadow var(–transition-speed) ease;
+background-color: var(–container-bg);
+color: var(–text-color);
 }
 
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="email"]:focus,
+input[type=“text”]:focus,
+input[type=“password”]:focus,
+input[type=“email”]:focus,
 select:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px var(--primary-focus-shadow);
+outline: none;
+border-color: var(–primary-color);
+box-shadow: 0 0 0 2px var(–primary-focus-shadow);
 }
 
 select {
-  /* Цвет стрелки жёстко задан в SVG для совместимости */
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-  background-position: right var(--spacing-md) center;
-  background-repeat: no-repeat;
-  background-size: var(--spacing-md);
-  appearance: none;
-  cursor: pointer;
+background-image: url(“data:image/svg+xml,%3csvg xmlns=‘http://www.w3.org/2000/svg’ fill=‘none’ viewBox=‘0 0 20 20’%3e%3cpath stroke=’%236b7280’ stroke-linecap=‘round’ stroke-linejoin=‘round’ stroke-width=‘1.5’ d=‘m6 8 4 4 4-4’/%3e%3c/svg%3e”);
+background-position: right 8px center;
+background-repeat: no-repeat;
+background-size: 16px;
+appearance: none;
+cursor: pointer;
 }
 
-[data-theme="dark"] select {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23e0e0e0' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+[data-theme=“dark”] select {
+background-image: url(“data:image/svg+xml,%3csvg xmlns=‘http://www.w3.org/2000/svg’ fill=‘none’ viewBox=‘0 0 20 20’%3e%3cpath stroke=’%23e0e0e0’ stroke-linecap=‘round’ stroke-linejoin=‘round’ stroke-width=‘1.5’ d=‘m6 8 4 4 4-4’/%3e%3c/svg%3e”);
 }
 
 select:disabled,
 input:disabled {
-  background-color: var(--disabled-bg);
-  color: var(--disabled-text);
-  cursor: not-allowed;
+background-color: var(–disabled-bg);
+color: var(–disabled-text);
+cursor: not-allowed;
 }
 
 button {
-  background-color: var(--primary-color);
-  color: var(--text-color-light);
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color var(--transition-speed) ease;
+background-color: var(–primary-color);
+color: white;
+border: none;
+cursor: pointer;
+font-weight: bold;
+transition: background-color var(–transition-speed) ease;
 }
 
 button:hover {
-  background-color: var(--primary-color-hover);
+background-color: var(–primary-hover);
 }
 
 button:disabled {
-  cursor: not-allowed;
-  background-color: var(--disabled-bg);
-  color: var(--disabled-text);
+cursor: not-allowed;
+background-color: var(–input-border-color);
 }
-
 
 /* ============================================
-   5. СТРУКТУРА МАКЕТА
-   ============================================ */
+СТРУКТУРА МАКЕТА
+============================================ */
 
 .container,
-.quiz-container,
-.login-container {
-  display: flex;
-  min-height: 100vh;
-  margin: 0 auto;
-}
-
-.container, .quiz-container {
-  max-width: 1400px;
+.quiz-container {
+display: flex;
+min-height: 100vh;
+margin: 0 auto;
+max-width: 1400px;
 }
 
 .left-sidebar {
-  width: 300px;
-  padding: var(--spacing-lg);
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
+width: 300px;
+padding: var(–spacing-lg);
+z-index: 1;
+display: flex;
+flex-direction: column;
 }
 
 .main-content {
-  flex: 1;
-  padding: var(--spacing-lg);
-  overflow-y: auto;
+flex: 1;
+padding: var(–spacing-lg);
+overflow-y: auto;
 }
 
 .right-sidebar {
-  width: 500px;
-  padding: var(--spacing-lg);
-  display: flex;
-  flex-direction: column;
+width: 500px;
+padding: var(–spacing-lg);
+display: flex;
+flex-direction: column;
+height: 100vh;
 }
-
 
 /* ============================================
-   6. КОМПОНЕНТЫ
-   ============================================ */
+КОМПОНЕНТЫ
+============================================ */
 
-/* --- Секции и карточки --- */
 .sidebar-section,
 .quiz-section {
-  background-color: var(--container-bg);
-  border-radius: var(--radius-xl);
-  padding: var(--spacing-lg);
-  margin-bottom: var(--spacing-md);
-  box-shadow: 0 4px 6px var(--shadow-color);
+background-color: var(–container-bg);
+border-radius: var(–radius-xl);
+padding: var(–spacing-lg);
+margin-bottom: var(–spacing-md);
+box-shadow: 0 4px 6px var(–shadow-color);
 }
 
-/* --- Стили для квиза --- */
+/* Quiz специфичные стили */
 .quiz-section h2 {
-  padding-bottom: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
+padding-bottom: var(–spacing-xs);
+margin-bottom: var(–spacing-sm);
 }
 
 .quiz-header {
-  margin-top: calc(-1 * var(--spacing-sm)); /* -12px */
+margin-top: calc(var(–spacing-md) * -0.75);
 }
 
-.quiz-select-container,
-.current-level-display {
-  margin-top: var(--spacing-md);
+.quiz-select-container {
+margin-top: var(–spacing-md);
 }
 
 .quiz-select-label {
-  display: block;
-  margin-bottom: var(--spacing-md);
-  font-weight: 600;
-  color: var(--primary-color);
+display: block;
+margin-bottom: var(–spacing-sm);
+font-weight: 600;
+color: var(–primary-color);
+}
+
+.quiz-content {
+margin-bottom: 0;
 }
 
 .question {
-  font-size: var(--font-size-3xl);
-  font-weight: bold;
-  color: var(--secondary-color);
-  text-align: center;
-  margin: var(--spacing-md) 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: var(--spacing-md);
+font-size: var(–font-size-3xl);
+font-weight: bold;
+color: var(–secondary-color);
+text-align: center;
+margin: var(–spacing-md) 0;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-wrap: wrap;
+gap: var(–spacing-sm);
 }
 
-/* --- Контейнер обратной связи --- */
+/* ============================================
+FEEDBACK КОНТЕЙНЕР
+============================================ */
+
 .feedback-container {
-  margin-top: var(--spacing-md);
-  background-color: var(--container-bg);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 2px 4px var(--shadow-color);
-  overflow: hidden;
+margin-top: var(–spacing-md);
+background-color: var(–container-bg);
+border-radius: var(–radius-lg);
+box-shadow: 0 2px 4px var(–shadow-color);
+overflow: hidden;
 }
 
 .feedback-text {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing-md) var(--spacing-sm);
-  font-weight: bold;
-  text-align: center;
-  transition: color var(--transition-speed) ease;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: var(–spacing-sm) 12px;
+font-weight: bold;
+text-align: center;
+transition: all var(–transition-speed) ease;
 }
 
-.feedback-text.success,
-.feedback-text.success .feedback-icon::before {
-  color: var(--success-color);
+.feedback-text.success {
+color: var(–success-color);
 }
 
-.feedback-text.error,
-.feedback-text.error .feedback-icon::before {
-  color: var(--error-color);
+.feedback-text.error {
+color: var(–error-color);
 }
 
 .feedback-icon {
-  font-size: var(--font-size-xl);
-  margin-right: var(--spacing-md);
+font-size: 1.25rem;
+margin-right: var(–spacing-sm);
 }
 
-.feedback-text.success .feedback-icon::before { content: "✓"; }
-.feedback-text.error .feedback-icon::before { content: "✗"; }
+.feedback-text.success .feedback-icon::before {
+content: “✓”;
+color: var(–success-color);
+}
+
+.feedback-text.error .feedback-icon::before {
+content: “✗”;
+color: var(–error-color);
+}
 
 .feedback-message {
-  font-size: var(--font-size-base);
+font-size: var(–font-size-base);
 }
 
-/* --- Примеры использования --- */
+/* ============================================
+USAGE EXAMPLES
+============================================ */
+
 .usage-examples {
-  padding: var(--spacing-md) var(--spacing-md);
+padding: 6px 10px;
 }
 
 .usage-examples h3 {
-  margin-bottom: var(--spacing-md);
-  color: var(--primary-color);
+margin-bottom: var(–spacing-sm);
+color: var(–primary-color);
 }
 
 .example-container {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
+display: flex;
+flex-direction: column;
+gap: var(–spacing-sm);
 }
 
 .example-container p {
-  background-color: var(--example-bg);
-  padding: var(--spacing-md);
-  border-radius: var(--radius-md);
-  margin: 0;
+background-color: var(–example-bg);
+padding: 5px;
+border-radius: var(–radius-md);
+margin: 0;
 }
 
 .example-container strong {
-  color: var(--primary-color);
-  margin-right: var(--spacing-md);
+color: var(–primary-color);
+margin-right: 5px;
 }
 
-/* --- Прогресс обучения --- */
+/* ============================================
+LEARNING PROGRESS
+============================================ */
+
 .learning-progress {
-  padding: var(--spacing-lg);
-  overflow-y: auto;
-  min-height: 70vh;
+padding: var(–spacing-lg);
+overflow-y: auto;
+min-height: 70vh;
 }
 
-/* --- Стили для контейнера списка --- */
 .learning-progress ol {
-  margin-top: var(--spacing-md);
-  padding-left: 0;         /* Убираем отступ */
-  list-style: none;        /* Скрываем маркеры списка */
-  
-  /* Включаем Flexbox для центрирования */
-  display: flex;
-  flex-direction: column;  /* Располагаем элементы вертикально */
-  align-items: center;     /* Центрируем по горизонтали */
+padding-left: 30px;
+margin-top: 10px;
 }
 
-/* --- Стили для элементов списка --- */
 .learning-progress ol li {
-  padding: var(--spacing-md) 0;
-  border-bottom: 1px solid var(--input-border-color);
-  margin: var(--spacing-md) 0;
-  width: 90%;              /* Задаём ширину для центрирования */
-  text-align: center;      /* Центрируем текст внутри элемента */
+padding: 5px 0;
+border-bottom: 1px solid var(–input-border-color);
+margin: 5px 0;
 }
 
-/* --- Переключатель пароля --- */
+/* ============================================
+PASSWORD TOGGLE
+============================================ */
+
 .input-group {
-  position: relative;
-  margin-bottom: var(--spacing-md);
+position: relative;
+margin-bottom: var(–spacing-md);
 }
 
 #password,
 #register-password {
-  padding-right: var(--spacing-xl);
-  margin-bottom: 0;
+padding-right: 40px;
+margin-bottom: 0;
 }
 
 .toggle-password-btn {
-  position: absolute;
-  right: var(--spacing-xxs);
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  padding: var(--spacing-md);
-  cursor: pointer;
-  color: var(--text-color);
-  transition: color var(--transition-speed-fast) ease;
-  width: auto
+position: absolute;
+right: 12px;
+top: 12px;
+background: none;
+border: none;
+padding: 0;
+width: auto;
+height: auto;
+margin: 0;
+cursor: pointer;
+color: var(–text-color);
+z-index: 2;
+transform: none;
+transition: color var(–transition-speed-fast) ease;
 }
 
 .toggle-password-btn:hover {
-  color: var(--primary-color);
-  background: none;
+color: var(–primary-color);
+background: none;
 }
 
-/* --- Страница входа --- */
+/* ============================================
+LOGIN КОНТЕЙНЕР
+============================================ */
+
+.login-container {
+display: flex;
+min-height: 100vh;
+margin: 0 auto;
+}
+
 .login-container .left-sidebar,
 .login-container .right-sidebar {
-  width: 25%;
+width: 25%;
 }
 
 .login-container .main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-lg);
+flex: 1;
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+padding: var(–spacing-2xl) var(–spacing-lg) var(–spacing-lg) var(–spacing-lg);
 }
 
 .login-content {
-  max-width: 400px;
-  margin: 0 auto;
+max-width: 400px;
+margin: 0 auto;
 }
 
 .login-content .sidebar-section {
-  margin-bottom: var(--spacing-xl);
+margin-bottom: 30px;
 }
 
 #login-message,
 #register-message {
-  margin-top: var(--spacing-sm);
-  text-align: center;
-  font-weight: bold;
+margin-top: 10px;
+text-align: center;
+font-weight: bold;
 }
 
-/* --- Требования к паролю --- */
+/* ============================================
+PASSWORD REQUIREMENTS
+============================================ */
+
 .password-requirements {
-  background-color: var(--container-bg);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-md);
-  margin-top: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
-  box-shadow: 0 2px 4px var(--shadow-color);
+background-color: var(–container-bg);
+border-radius: var(–radius-md);
+padding: 10px;
+margin-top: 10px;
+margin-bottom: 15px;
+box-shadow: 0 2px 4px var(–shadow-color);
 }
 
 .password-requirements-title {
-  margin-bottom: var(--spacing-md);
-  font-weight: bold;
+margin-bottom: 5px;
+font-weight: bold;
 }
 
 .requirement {
-  opacity: 0.8;
-  transition: opacity var(--transition-speed) ease;
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
-  margin: var(--spacing-md) 0;
+opacity: 0.8;
+transition: opacity var(–transition-speed) ease;
+display: flex;
+align-items: center;
+gap: 5px;
+margin: 3px 0;
 }
 
-.requirement:hover { opacity: 1; }
-.requirement.valid { color: var(--success-color); }
+.requirement:hover {
+opacity: 1;
+}
 
 .requirement-icon {
-  transition: all var(--transition-speed-fast) ease-in-out;
-  color: var(--input-border-color);
-  font-size: var(--font-size-xs);
+transition: transform var(–transition-speed-fast) ease-in-out,
+color var(–transition-speed-fast) ease-in-out;
+color: var(–input-border-color);
+font-size: var(–font-size-xs);
+}
+
+.requirement.valid {
+color: var(–success-color);
 }
 
 .requirement-icon.valid {
-  color: var(--success-color);
-  transform: scale(1.1);
+color: var(–success-color);
+transform: scale(1.1);
 }
 
-/* --- Приветственное сообщение --- */
+/* ============================================
+ДОПОЛНИТЕЛЬНЫЕ КОМПОНЕНТЫ
+============================================ */
+
+.direction-toggle-btn {
+margin-bottom: var(–spacing-md);
+}
+
+#user-status {
+margin-bottom: var(–spacing-md);
+}
+
+/* ============================================
+WELCOME MESSAGE
+============================================ */
+
 .welcome-message {
-  text-align: center;
-  padding: var(--spacing-xl) var(--spacing-lg);
-  max-width: 500px;
-  margin: 0 auto;
+text-align: center;
+padding: var(–spacing-2xl) var(–spacing-lg);
+max-width: 500px;
+margin: 0 auto;
 }
 
 .welcome-icon {
-  font-size: 4rem;
-  margin-bottom: var(--spacing-lg);
-  animation: bounce 2s infinite;
+font-size: 4rem;
+margin-bottom: var(–spacing-lg);
+animation: bounce 2s infinite;
 }
 
 .welcome-message h3 {
-  font-size: 1.8rem;
-  margin-bottom: var(--spacing-md);
+color: var(–primary-color);
+margin-bottom: var(–spacing-md);
+font-size: 1.8rem;
 }
 
 .welcome-message p {
-  font-size: var(--font-size-lg);
-  margin-bottom: var(--spacing-xl);
-  opacity: 0.8;
+color: var(–text-color);
+font-size: var(–font-size-lg);
+margin-bottom: var(–spacing-xl);
+opacity: 0.8;
 }
 
 .feature-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-  margin-top: var(--spacing-xl);
+display: flex;
+flex-direction: column;
+gap: var(–spacing-sm);
+margin-top: var(–spacing-xl);
 }
 
 .feature {
-  background: var(--feature-gradient);
-  padding: var(--spacing-sm) var(--spacing-lg);
-  border-radius: var(--radius-lg);
-  color: var(--primary-color);
-  font-weight: 500;
-  border-left: 4px solid var(--primary-color);
-  transition: transform var(--transition-speed-fast) ease;
+background: linear-gradient(135deg, var(–feature-gradient-start) 0%, var(–feature-gradient-end) 100%);
+padding: 15px var(–spacing-lg);
+border-radius: var(–radius-lg);
+color: var(–primary-color);
+font-weight: 500;
+border-left: 4px solid var(–primary-color);
+transition: transform var(–transition-speed-fast) ease;
 }
 
-.feature:hover { transform: translateX(5px); }
+.feature:hover {
+transform: translateX(5px);
+}
 
-/* --- Сворачиваемые секции --- */
+/* ============================================
+FOLDABLE SECTIONS
+============================================ */
+
+.foldable-section {
+margin-bottom: var(–spacing-md);
+}
+
 .foldable-header {
-  cursor: pointer;
-  user-select: none;
-  display: flex;
-  align-items: center;
-  transition: background-color var(--transition-speed-fast) ease;
-  padding: var(--spacing-md);
-  margin: calc(-1 * var(--spacing-md));
-  border-radius: var(--radius-sm);
+cursor: pointer;
+user-select: none;
+display: flex;
+align-items: center;
+transition: background-color var(–transition-speed-fast) ease;
+padding: 5px;
+margin: -5px;
+border-radius: var(–radius-sm);
 }
 
 .foldable-header:hover {
-  background-color: var(--subtle-hover-bg);
+background-color: var(–primary-focus-shadow);
 }
 
 .fold-icon {
-  font-size: 0.8rem;
-  margin-right: var(--spacing-md);
-  transition: transform var(--transition-speed-fast) ease;
-  opacity: 0.6;
+font-size: 0.8rem;
+margin-right: var(–spacing-sm);
+transition: transform var(–transition-speed-fast) ease;
+color: var(–text-color);
+opacity: 0.6;
 }
 
 .foldable-content {
-  animation: fadeIn var(--transition-speed) ease;
-  margin-top: var(--spacing-md);
+animation: fadeIn var(–transition-speed) ease;
+margin-top: 10px;
 }
 
-/* --- Кнопка TTS --- */
+/* ============================================
+TTS BUTTON
+============================================ */
+
 .tts-button {
-  background: none;
-  border: none;
-  color: var(--primary-color);
-  cursor: pointer;
-  font-size: 1rem;
-  margin-left: var(--spacing-md);
-  padding: var(--spacing-md);
-  transition: opacity var(--transition-speed-fast) ease;
-  vertical-align: middle;
+background: none;
+border: none;
+color: var(–primary-color);
+cursor: pointer;
+font-size: 1rem;
+margin-left: var(–spacing-sm);
+padding: var(–spacing-xs);
+transition: opacity var(–transition-speed-fast) ease;
+vertical-align: middle;
 }
 
-.tts-button:hover { opacity: 0.7; background: none; }
-.tts-button:focus { outline: none; }
-.tts-button:disabled { opacity: 0.4; cursor: not-allowed; }
-.tts-button.speaking { color: var(--secondary-color); }
+.tts-button:hover {
+opacity: 0.7;
+background: none;
+}
 
-/* --- Отображение уровня --- */
+.tts-button:focus {
+outline: none;
+}
+
+.tts-button:disabled {
+opacity: 0.4;
+cursor: not-allowed;
+}
+
+.tts-button.speaking {
+color: var(–secondary-color);
+}
+
+/* ============================================
+CURRENT LEVEL DISPLAY
+============================================ */
+
 .current-level-display {
-  background: var(--container-bg);
-  border: 1px solid var(--input-border-color);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-sm) var(--spacing-md);
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
-  box-shadow: 0 2px 4px var(--shadow-color);
-  transition: box-shadow var(--transition-speed) ease;
+background: var(–container-bg);
+border: 1px solid var(–input-border-color);
+border-radius: var(–radius-lg);
+padding: 12px var(–spacing-md);
+margin: var(–spacing-md) 0;
+display: flex;
+align-items: center;
+gap: var(–spacing-sm);
+box-shadow: 0 2px 4px var(–shadow-color);
+transition: box-shadow var(–transition-speed) ease;
 }
 
-.current-level-display:hover { box-shadow: 0 4px 8px var(--shadow-color); }
+.current-level-display:hover {
+box-shadow: 0 4px 8px var(–shadow-color);
+}
 
 .level-label {
-  font-weight: 500;
-  font-size: var(--font-size-sm);
+font-weight: 500;
+color: var(–text-color);
+font-size: var(–font-size-sm);
 }
 
 .level-description {
-  font-weight: 600;
-  color: var(--primary-color);
-  font-size: 0.95rem;
+font-weight: 600;
+color: var(–primary-color);
+font-size: 0.95rem;
 }
 
-
 /* ============================================
-   7. АНИМАЦИИ
-   ============================================ */
+АНИМАЦИИ
+============================================ */
 
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-  40% { transform: translateY(-10px); }
-  60% { transform: translateY(-5px); }
+0%, 20%, 50%, 80%, 100% {
+transform: translateY(0);
+}
+40% {
+transform: translateY(-10px);
+}
+60% {
+transform: translateY(-5px);
+}
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+from {
+opacity: 0;
+transform: translateY(-10px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
 }
 
-
 /* ============================================
-   8. МЕДИА ЗАПРОСЫ
-   ============================================ */
+МЕДИА ЗАПРОСЫ
+============================================ */
 
 @media (max-width: 1024px) {
-  .container,
-  .quiz-container {
-    flex-direction: column;
-    min-height: auto;
-  }
+.container,
+.quiz-container {
+flex-direction: column;
+height: auto;
+overflow-y: auto;
+}
 
-  .left-sidebar,
-  .main-content,
-  .right-sidebar {
-    width: 100%;
-    height: auto;
-  }
+.left-sidebar,
+.main-content,
+.right-sidebar {
+width: 100%;
+}
+
+.right-sidebar {
+height: auto;
+max-height: none;
+}
 }
 
 @media (max-width: 768px) {
-  .login-container {
-    flex-direction: column;
-  }
-  
-  .login-container .left-sidebar,
-  .login-container .right-sidebar {
-    width: 100%;
-  }
+/* Дополнительные стили для мобильных устройств */
+.login-container {
+flex-direction: column;
+}
+
+.login-container .left-sidebar,
+.login-container .right-sidebar {
+width: 100%;
+}
 }
 
 @media (max-width: 480px) {
-  :root {
-    --font-size-base: 0.9375rem; /* 15px */
-  }
+:root {
+–font-size-base: 0.875rem;
+}
 
-  h1 { font-size: 1.8rem; }
-  h2 { font-size: 1.4rem; }
-  h3 { font-size: 1.2rem; }
-  .question { font-size: 1.8rem; }
+h1 {
+font-size: 1.8rem;
+}
 
-  .quiz-section,
-  .sidebar-section {
-    padding: var(--spacing-md);
-  }
+h2 {
+font-size: 1.4rem;
+}
+
+h3 {
+font-size: 1.1rem;
+}
+
+.quiz-section,
+.sidebar-section {
+padding: 15px;
+}
+
+.question {
+font-size: 1.5rem;
+}
 }
