@@ -143,9 +143,9 @@
       "source_id": 3000031,
       "target_id": 3000032,
       "source_word": "der Altbau [Altbauten]",
-      "target_word": "старое здание",
-      "source_example": "Der Altbau hat viel Charme.",
-      "target_example": "Старое здание обладает большим шармом."
+      "target_word": "старинное здание",
+      "source_example": "Der Altbau hat Charme.",
+      "target_example": "У старинного здания есть шарм."
     },
     {
       "translation_id": 3000016,
@@ -171,8 +171,8 @@
       "target_id": 3000038,
       "source_word": "an",
       "target_word": "у, при, на",
-      "source_example": "Das Buch liegt an dem Tisch.",
-      "target_example": "Книга лежит у стола."
+      "source_example": "Das Bild hängt an der Wand.",
+      "target_example": "Картина висит на стене."
     },
     {
       "translation_id": 3000019,
@@ -325,7 +325,7 @@
       "source_word": "der Anzug [Anzüge]",
       "target_word": "костюм",
       "source_example": "Er trägt heute einen neuen Anzug.",
-      "target_example": "Сегодня он носит новый костюм."
+      "target_example": "Сегодня он в новом костюме."
     },
     {
       "translation_id": 3000036,
@@ -604,7 +604,7 @@
       "source_word": "backen",
       "target_word": "печь",
       "source_example": "Wir backen heute einen Kuchen.",
-      "target_example": "Сегодня мы пекем торт."
+      "target_example": "Сегодня мы печём торт."
     },
     {
       "translation_id": 3000067,
@@ -693,8 +693,8 @@
       "target_id": 3000154,
       "source_word": "der Ball [Bälle]",
       "target_word": "мяч",
-      "source_example": "Wir spielen heute Abend Fußball.",
-      "target_example": "Сегодня вечером мы играем в футбол."
+      "source_example": "Der Junge spielt mit dem Ball.",
+      "target_example": "Мальчик играет с мячом."
     },
     {
       "translation_id": 3000077,
@@ -748,7 +748,7 @@
       "source_word": "der Bauernhof [Bauernhöfe]",
       "target_word": "ферма",
       "source_example": "Der Bauernhof hat viele Tiere.",
-      "target_example": "Ферма имеет много животных."
+      "target_example": "На ферме много животных."
     },
     {
       "translation_id": 3000083,
@@ -775,7 +775,7 @@
       "source_word": "der Becher [Becher]",
       "target_word": "стакан, кружка [без ручки]",
       "source_example": "Ich trinke einen Kaffee aus einem Becher.",
-      "target_example": "Я пью кофе из чашки."
+      "target_example": "Я пью кофе из стаканчика."
     },
     {
       "translation_id": 3000086,
@@ -964,7 +964,7 @@
       "source_word": "das Bett [Betten]",
       "target_word": "кровать",
       "source_example": "Ich gehe jetzt ins Bett.",
-      "target_example": "Я сейчас иду в кровать."
+      "target_example": "Я сейчас иду спать."
     },
     {
       "translation_id": 3000107,
@@ -1521,8 +1521,8 @@
       "target_id": 3000338,
       "source_word": "dazu",
       "target_word": "к тому же",
-      "source_example": "Ich habe Zeit, dazu komme ich noch.",
-      "target_example": "У меня есть время, к тому же я еще приду."
+      "source_example": "Ich nehme einen Kaffee und dazu einen Kuchen.",
+      "target_example": "Я возьму кофе и к нему пирожное."
     },
     {
       "translation_id": 3000169,
@@ -2368,7 +2368,7 @@
       "source_word": "fertig",
       "target_word": "готовый, законченный",
       "source_example": "Ich bin jetzt fertig mit der Arbeit.",
-      "target_example": "Я теперь готов с работой."
+      "target_example": "Я закончил работу."
     },
     {
       "translation_id": 3000264,
@@ -2566,7 +2566,7 @@
       "source_word": "sich freuen",
       "target_word": "радоваться",
       "source_example": "Ich freue mich auf das Wochenende.",
-      "target_example": "Я радуюсь выходным."
+      "target_example": "Я с нетерпением жду выходных."
     },
     {
       "translation_id": 3000286,
