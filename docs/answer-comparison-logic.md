@@ -43,8 +43,8 @@ Clarifications or suffixes. Can include or omit.
 |Scenario                     |Use          |Example                         |
 |-----------------------------|-------------|--------------------------------|
 |Multiple unrelated meanings  |`,`          |`bank, bench`                   |
-|Same meaning, different words|`|`          |`car|automobile`                |
-|Both meanings AND synonyms   |`()` with `,`|`(big|large), (fast|quick)`     |
+|Same meaning, different words|`\|`          |`car\|automobile`                |
+|Both meanings AND synonyms   |`()` with `,`|`(big\|large), (fast\|quick)`     |
 |Optional clarification/suffix|`[]`         |`peace [harmony]` or `cook[ing]`|
 
 ## Text Normalization
