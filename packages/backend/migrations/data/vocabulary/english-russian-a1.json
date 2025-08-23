@@ -6506,7 +6506,7 @@
       "source_id": 8001447,
       "target_id": 8001448,
       "source_word": "start",
-      "target_word": "начинать|начинаться, начало",
+      "target_word": "(начинать|начинаться), начало",
       "source_example": "Let's start the lesson.",
       "target_example": "Давайте начнем урок."
     },
@@ -6605,7 +6605,7 @@
       "source_id": 8001469,
       "target_id": 8001470,
       "source_word": "study",
-      "target_word": "учиться|изучать, учёба|изучение",
+      "target_word": "(учиться|изучать), (учёба|изучение)",
       "source_example": "I need to study for my exam.",
       "target_example": "Мне нужно готовиться к экзамену."
     },
@@ -8081,7 +8081,7 @@
       "source_id": 8001797,
       "target_id": 8001798,
       "source_word": "set",
-      "target_word": "устанавливать|назначать, набор",
+      "target_word": "(устанавливать|назначать), набор",
       "source_example": "Please set the table.",
       "target_example": "Пожалуйста, накрой на стол."
     },
@@ -8297,7 +8297,7 @@
       "source_id": 8001845,
       "target_id": 8001846,
       "source_word": "mind",
-      "target_word": "разум|ум, возражать",
+      "target_word": "(разум|ум), возражать",
       "source_example": "What's on your mind?",
       "target_example": "О чем ты думаешь?"
     },
@@ -8378,7 +8378,7 @@
       "source_id": 8001863,
       "target_id": 8001864,
       "source_word": "matter",
-      "target_word": "дело|вопрос, иметь значение",
+      "target_word": "(дело|вопрос), иметь значение",
       "source_example": "It doesn't matter.",
       "target_example": "Это не имеет значения."
     },
