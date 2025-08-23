@@ -7568,7 +7568,7 @@
       "source_id": 8001683,
       "target_id": 8001684,
       "source_word": "walk",
-      "target_word": "гулять|идти пешком, прогулка",
+      "target_word": "(гулять|идти пешком), прогулка",
       "source_example": "Let's go for a walk.",
       "target_example": "Пойдем на прогулку."
     },
