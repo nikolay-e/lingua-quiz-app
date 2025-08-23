@@ -350,7 +350,7 @@
       "source_id": 4000077,
       "target_id": 4000078,
       "source_word": "coger",
-      "target_word": "хватать",
+      "target_word": "брать, сесть на транспорт",
       "source_example": "Voy a coger el autobús.",
       "target_example": "Я собираюсь сесть на автобус."
     },
@@ -359,7 +359,7 @@
       "source_id": 4000079,
       "target_id": 4000080,
       "source_word": "tomar",
-      "target_word": "брать [взять]",
+      "target_word": "брать [взять], пить",
       "source_example": "Tomo café cada mañana.",
       "target_example": "Я пью кофе каждое утро."
     },
@@ -647,7 +647,7 @@
       "source_id": 4000143,
       "target_id": 4000144,
       "source_word": "vista",
-      "target_word": "вид [взгляд]",
+      "target_word": "вид [пейзаж], зрение",
       "source_example": "Hay una hermosa vista desde aquí.",
       "target_example": "Отсюда открывается прекрасный вид."
     },
@@ -800,7 +800,7 @@
       "source_id": 4000177,
       "target_id": 4000178,
       "source_word": "regresar",
-      "target_word": "вернуться",
+      "target_word": "возвращаться [формально]",
       "source_example": "Regreso a casa tarde.",
       "target_example": "Я возвращаюсь домой поздно."
     },
@@ -899,7 +899,7 @@
       "source_id": 4000199,
       "target_id": 4000200,
       "source_word": "imaginar",
-      "target_word": "воображать",
+      "target_word": "представлять",
       "source_example": "No puedo imaginar mi vida sin música.",
       "target_example": "Я не могу представить свою жизнь без музыки."
     },
@@ -953,9 +953,9 @@
       "source_id": 4000211,
       "target_id": 4000212,
       "source_word": "delante",
-      "target_word": "впереди",
+      "target_word": "перед",
       "source_example": "El coche está delante de la casa.",
-      "target_example": "Машина стоит впереди дома."
+      "target_example": "Машина стоит перед домом."
     },
     {
       "translation_id": 4000106,
@@ -971,7 +971,7 @@
       "source_id": 4000215,
       "target_id": 4000216,
       "source_word": "doctor",
-      "target_word": "доктор",
+      "target_word": "врач",
       "source_example": "El doctor me atendió bien.",
       "target_example": "Врач хорошо меня принял."
     },
@@ -1070,7 +1070,7 @@
       "source_id": 4000237,
       "target_id": 4000238,
       "source_word": "destacar",
-      "target_word": "подчеркивать, выделять [ся]",
+      "target_word": "выделять [ся]",
       "source_example": "Su trabajo destaca entre todos.",
       "target_example": "Его работа выделяется среди всех."
     },
@@ -1601,7 +1601,7 @@
       "source_id": 4000355,
       "target_id": 4000356,
       "source_word": "madera",
-      "target_word": "древесина",
+      "target_word": "древесина|дерево",
       "source_example": "La mesa es de madera.",
       "target_example": "Стол сделан из дерева."
     },
