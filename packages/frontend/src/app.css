@@ -1,723 +1,741 @@
 /* ============================================
-   CSS ПЕРЕМЕННЫЕ И ТЕМЫ (DESIGN SYSTEM)
-   ============================================ */
+CSS ПЕРЕМЕННЫЕ И ТЕМЫ (DESIGN SYSTEM)
+============================================ */
 
 :root {
-  /* Основные цвета */
-  --primary-color: #4a90e2;
-  --secondary-color: #f39c12;
-  --background-color: #f4f7f9;
-  --text-color: #333;
-  --container-bg: #fff;
-  --shadow-color: rgba(0, 0, 0, 0.1);
-  --input-border-color: #ddd;
-  --success-color: #27ae60;
-  --error-color: #e74c3c;
+/* Основные цвета */
+–primary-color: #4a90e2;
+–secondary-color: #f39c12;
+–background-color: #f4f7f9;
+–text-color: #333;
+–container-bg: #fff;
+–shadow-color: rgba(0, 0, 0, 0.1);
+–input-border-color: #ddd;
+–success-color: #27ae60;
+–error-color: #e74c3c;
 
-  /* Состояния и эффекты */
-  --primary-hover: #3a7bc8;
-  --primary-focus-shadow: rgba(74, 144, 226, 0.2);
-  --disabled-bg: #f0f0f0;
-  --disabled-text: #aaa;
-  --disabled-border-color: #e0e0e0;
+/* Состояния и эффекты */
+–primary-hover: #3a7bc8;
+–primary-focus-shadow: rgba(74, 144, 226, 0.2);
+–disabled-bg: #f0f0f0;
+–disabled-text: #aaa;
+–disabled-border-color: #e0e0e0;
 
-  /* Дополнительные цвета для компонентов */
-  --example-bg: #f8f9fa;
-  --feature-gradient-start: #f8f9ff;
-  --feature-gradient-end: #e8f0ff;
-  --hover-bg-light: rgba(74, 144, 226, 0.1);
+/* Дополнительные цвета для компонентов */
+–example-bg: #f8f9fa;
+–feature-gradient-start: #f8f9ff;
+–feature-gradient-end: #e8f0ff;
+–hover-bg-light: rgba(74, 144, 226, 0.1);
 
-  /* Переходы и анимации */
-  --transition-speed: 0.3s;
-  --transition-speed-fast: 0.2s;
+/* Переходы и анимации */
+–transition-speed: 0.3s;
+–transition-speed-fast: 0.2s;
 
-  /* Система отступов (Spacing System) */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 20px;
-  --spacing-xl: 24px;
-  --spacing-2xl: 40px;
+/* Система отступов (Spacing System) */
+–spacing-xs: 4px;
+–spacing-sm: 8px;
+–spacing-md: 16px;
+–spacing-lg: 20px;
+–spacing-xl: 24px;
+–spacing-2xl: 40px;
 
-  /* Размеры шрифтов */
-  --font-size-sm: 0.875rem; /* 14px */
-  --font-size-base: 1rem;    /* 16px */
-  --font-size-md: 1.125rem; /* 18px */
-  --font-size-lg: 1.25rem;  /* 20px */
-  --font-size-xl: 1.5rem;   /* 24px */
-  --font-size-2xl: 2rem;    /* 32px */
+/* Размеры шрифтов */
+–font-size-sm: 0.875rem; /* 14px */
+–font-size-base: 1rem;    /* 16px */
+–font-size-md: 1.125rem; /* 18px */
+–font-size-lg: 1.25rem;  /* 20px */
+–font-size-xl: 1.5rem;   /* 24px */
+–font-size-2xl: 2rem;    /* 32px */
 
-  /* Радиусы скругления */
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
+/* Радиусы скругления */
+–radius-sm: 4px;
+–radius-md: 6px;
+–radius-lg: 8px;
+–radius-xl: 12px;
 }
 
-[data-theme="dark"] {
-  /* Основные цвета для темной темы */
-  --primary-color: #5ba3f5;
-  --secondary-color: #f5b041;
-  --background-color: #1a1a1a;
-  --text-color: #e0e0e0;
-  --container-bg: #2a2a2a;
-  --shadow-color: rgba(0, 0, 0, 0.5);
-  --input-border-color: #444;
-  --success-color: #2ecc71;
-  --error-color: #e67e73;
+[data-theme=“dark”] {
+/* Основные цвета для темной темы */
+–primary-color: #5ba3f5;
+–secondary-color: #f5b041;
+–background-color: #1a1a1a;
+–text-color: #e0e0e0;
+–container-bg: #2a2a2a;
+–shadow-color: rgba(0, 0, 0, 0.5);
+–input-border-color: #444;
+–success-color: #2ecc71;
+–error-color: #e67e73;
 
-  /* Состояния и эффекты для темной темы */
-  --primary-hover: #4a8fe7;
-  --primary-focus-shadow: rgba(91, 163, 245, 0.2);
-  --disabled-bg: #222;
-  --disabled-text: #555;
-  --disabled-border-color: #333;
+/* Состояния и эффекты для темной темы */
+–primary-hover: #4a8fe7;
+–primary-focus-shadow: rgba(91, 163, 245, 0.2);
+–disabled-bg: #222;
+–disabled-text: #555;
+–disabled-border-color: #333;
 
-  /* Дополнительные цвета для компонентов */
-  --example-bg: #333;
-  --feature-gradient-start: #1a2332;
-  --feature-gradient-end: #2a3342;
-  --hover-bg-light: rgba(91, 163, 245, 0.1);
+/* Дополнительные цвета для компонентов */
+–example-bg: #333;
+–feature-gradient-start: #1a2332;
+–feature-gradient-end: #2a3342;
+–hover-bg-light: rgba(91, 163, 245, 0.1);
 }
 
 /* ============================================
-   БАЗОВЫЕ СТИЛИ И СБРОС
-   ============================================ */
+БАЗОВЫЕ СТИЛИ И СБРОС
+============================================ */
 
-* {
+- {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
+  }
 
 body, html {
-  height: 100%;
+height: 100%;
 }
 
 body {
-  font-family: "Roboto", Arial, sans-serif;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  line-height: 1.6;
-  font-size: var(--font-size-base);
-  overflow-y: auto;
+font-family: “Roboto”, Arial, sans-serif;
+background-color: var(–background-color);
+color: var(–text-color);
+line-height: 1.6;
+font-size: var(–font-size-base);
+overflow-y: auto;
 }
 
 /* ============================================
-   ТИПОГРАФИКА
-   ============================================ */
+ТИПОГРАФИКА
+============================================ */
 
 h1, h2, h3 {
-  color: var(--primary-color);
-  margin-bottom: var(--spacing-md);
+color: var(–primary-color);
+margin-bottom: var(–spacing-md);
 }
 
 h1 {
-  font-size: var(--font-size-2xl);
-  text-align: center;
+font-size: var(–font-size-2xl);
+text-align: center;
 }
 
 h2 {
-  font-size: clamp(1.25rem, 2vw, var(--font-size-xl));
-  border-bottom: 2px solid var(--primary-color);
-  padding-bottom: 10px;
+font-size: clamp(1.25rem, 2vw, var(–font-size-xl));
+border-bottom: 2px solid var(–primary-color);
+padding-bottom: 10px;
 }
 
 h3 {
-  font-size: var(--font-size-md);
+font-size: var(–font-size-md);
 }
 
 /* ============================================
-   ЭЛЕМЕНТЫ ФОРМ
-   ============================================ */
+ЭЛЕМЕНТЫ ФОРМ
+============================================ */
 
-input[type="text"],
-input[type="password"],
-input[type="email"],
+input[type=“text”],
+input[type=“password”],
+input[type=“email”],
 select,
 button {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: var(--spacing-md);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--input-border-color);
-  font-size: var(--font-size-base);
-  background-color: var(--container-bg);
-  color: var(--text-color);
+width: 100%;
+padding: 12px;
+margin-bottom: var(–spacing-md);
+border-radius: var(–radius-md);
+border: 1px solid var(–input-border-color);
+font-size: var(–font-size-base);
+background-color: var(–container-bg);
+color: var(–text-color);
 }
 
 input, select {
-    transition: border-color var(--transition-speed) ease,
-                box-shadow var(--transition-speed) ease;
+transition: border-color var(–transition-speed) ease,
+box-shadow var(–transition-speed) ease;
 }
 
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="email"]:focus,
+input[type=“text”]:focus,
+input[type=“password”]:focus,
+input[type=“email”]:focus,
 select:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px var(--primary-focus-shadow);
+outline: none;
+border-color: var(–primary-color);
+box-shadow: 0 0 0 3px var(–primary-focus-shadow);
 }
 
 select {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-  background-position: right 8px center;
-  background-repeat: no-repeat;
-  background-size: 16px;
-  appearance: none;
-  cursor: pointer;
+background-image: url(“data:image/svg+xml,%3csvg xmlns=‘http://www.w3.org/2000/svg’ fill=‘none’ viewBox=‘0 0 20 20’%3e%3cpath stroke=’%236b7280’ stroke-linecap=‘round’ stroke-linejoin=‘round’ stroke-width=‘1.5’ d=‘m6 8 4 4 4-4’/%3e%3c/svg%3e”);
+background-position: right 8px center;
+background-repeat: no-repeat;
+background-size: 16px;
+appearance: none;
+cursor: pointer;
 }
 
-[data-theme="dark"] select {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23e0e0e0' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+[data-theme=“dark”] select {
+background-image: url(“data:image/svg+xml,%3csvg xmlns=‘http://www.w3.org/2000/svg’ fill=‘none’ viewBox=‘0 0 20 20’%3e%3cpath stroke=’%23e0e0e0’ stroke-linecap=‘round’ stroke-linejoin=‘round’ stroke-width=‘1.5’ d=‘m6 8 4 4 4-4’/%3e%3c/svg%3e”);
 }
 
 select:disabled,
 input:disabled {
-  background-color: var(--disabled-bg);
-  color: var(--disabled-text);
-  border-color: var(--disabled-border-color);
-  cursor: not-allowed;
+background-color: var(–disabled-bg);
+color: var(–disabled-text);
+border-color: var(–disabled-border-color);
+cursor: not-allowed;
 }
 
 button {
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color var(--transition-speed) ease;
+background-color: var(–primary-color);
+color: white;
+border: none;
+cursor: pointer;
+font-weight: bold;
+transition: background-color var(–transition-speed) ease;
 }
 
 button:hover {
-  background-color: var(--primary-hover);
+background-color: var(–primary-hover);
 }
 
 button:disabled {
-  background-color: var(--disabled-bg);
-  color: var(--disabled-text);
-  border: 1px solid var(--disabled-border-color);
-  cursor: not-allowed;
+background-color: var(–disabled-bg);
+color: var(–disabled-text);
+border: 1px solid var(–disabled-border-color);
+cursor: not-allowed;
 }
 
 /* ============================================
-   СТРУКТУРА МАКЕТА
-   ============================================ */
+СТРУКТУРА МАКЕТА
+============================================ */
 
 .container,
 .quiz-container,
 .login-container {
-  display: flex;
-  min-height: 100vh; /* min-height instead of height */
-  margin: 0 auto;
-  max-width: 1400px;
+display: flex;
+min-height: 100vh; /* min-height instead of height */
+margin: 0 auto;
+max-width: 1400px;
 }
 
 .left-sidebar {
-  width: 300px;
-  padding: var(--spacing-lg);
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
+width: 300px;
+padding: var(–spacing-lg);
+z-index: 1;
+display: flex;
+flex-direction: column;
 }
 
 .main-content {
-  flex: 1;
-  padding: var(--spacing-lg);
-  overflow-y: auto;
+flex: 1;
+padding: var(–spacing-lg);
+overflow-y: auto;
 }
 
 .right-sidebar {
-  width: 500px;
-  padding: var(--spacing-lg);
-  display: flex;
-  flex-direction: column;
+width: 500px;
+padding: var(–spacing-lg);
+display: flex;
+flex-direction: column;
+gap: var(–spacing-md); /* Унифицированные отступы между дочерними элементами */
 }
 
 /* ============================================
-   КОМПОНЕНТЫ
-   ============================================ */
+КОМПОНЕНТЫ
+============================================ */
 
 .sidebar-section,
 .quiz-section {
-  background-color: var(--container-bg);
-  border-radius: var(--radius-xl);
-  padding: var(--spacing-lg);
-  margin-bottom: var(--spacing-md);
-  box-shadow: 0 4px 6px var(--shadow-color);
+background-color: var(–container-bg);
+border-radius: var(–radius-xl);
+padding: var(–spacing-lg);
+box-shadow: 0 4px 6px var(–shadow-color);
+}
+
+/* Убираем margin-bottom для sidebar-section в right-sidebar (gap справляется с отступами) */
+.right-sidebar .sidebar-section {
+margin-bottom: 0;
+}
+
+/* Оставляем margin-bottom для quiz-section и sidebar-section в других контекстах */
+.main-content .sidebar-section,
+.main-content .quiz-section,
+.login-content .sidebar-section {
+margin-bottom: var(–spacing-md);
 }
 
 /* Quiz специфичные стили */
 .quiz-section h2 {
-  padding-bottom: var(--spacing-sm);
-  margin-bottom: var(--spacing-sm);
+padding-bottom: var(–spacing-sm);
+margin-bottom: var(–spacing-sm);
 }
 
 .quiz-header {
-  margin-top: calc(var(--spacing-md) * -0.5);
+margin-top: calc(var(–spacing-md) * -0.5);
 }
 
 .quiz-select-container {
-  margin-top: var(--spacing-md);
+margin-top: var(–spacing-md);
 }
 
 .quiz-select-label {
-  display: block;
-  margin-bottom: var(--spacing-sm);
-  font-weight: 600;
-  color: var(--primary-color);
+display: block;
+margin-bottom: var(–spacing-sm);
+font-weight: 600;
+color: var(–primary-color);
 }
 
 .quiz-content {
-  margin-bottom: 0;
+margin-bottom: 0;
 }
 
 .question {
-  font-size: var(--font-size-2xl);
-  font-weight: bold;
-  color: var(--secondary-color);
-  text-align: center;
-  margin: var(--spacing-md) 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: var(--spacing-sm);
+font-size: var(–font-size-2xl);
+font-weight: bold;
+color: var(–secondary-color);
+text-align: center;
+margin: var(–spacing-md) 0;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-wrap: wrap;
+gap: var(–spacing-sm);
 }
 
 /* ============================================
-   FEEDBACK КОНТЕЙНЕР
-   ============================================ */
+FEEDBACK КОНТЕЙНЕР
+============================================ */
 
 .feedback-container {
-  margin-top: var(--spacing-md);
-  background-color: var(--container-bg);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 2px 4px var(--shadow-color);
-  overflow: hidden;
+margin-top: var(–spacing-md);
+background-color: var(–container-bg);
+border-radius: var(–radius-lg);
+box-shadow: 0 2px 4px var(–shadow-color);
+overflow: hidden;
 }
 
 .feedback-text {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing-sm) 12px;
-  font-weight: bold;
-  text-align: center;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: var(–spacing-sm) 12px;
+font-weight: bold;
+text-align: center;
 }
 
-.feedback-text.success { color: var(--success-color); }
-.feedback-text.error { color: var(--error-color); }
+.feedback-text.success { color: var(–success-color); }
+.feedback-text.error { color: var(–error-color); }
 
 .feedback-icon {
-  font-size: var(--font-size-lg);
-  margin-right: var(--spacing-sm);
+font-size: var(–font-size-lg);
+margin-right: var(–spacing-sm);
 }
 
 .feedback-text .feedback-icon::before {
-  color: inherit; /* Наследует цвет от родителя */
+color: inherit; /* Наследует цвет от родителя */
 }
-.feedback-text.success .feedback-icon::before { content: "✓"; }
-.feedback-text.error .feedback-icon::before { content: "✗"; }
+.feedback-text.success .feedback-icon::before { content: “✓”; }
+.feedback-text.error .feedback-icon::before { content: “✗”; }
 
 .feedback-message {
-  font-size: var(--font-size-base);
+font-size: var(–font-size-base);
 }
 
 /* ============================================
-   USAGE EXAMPLES
-   ============================================ */
+USAGE EXAMPLES
+============================================ */
 
 .usage-examples {
-  padding: 6px 10px;
+padding: 6px 10px;
 }
 
 .usage-examples h3 {
-  margin-bottom: var(--spacing-sm);
-  color: var(--primary-color);
+margin-bottom: var(–spacing-sm);
+color: var(–primary-color);
 }
 
 .example-container {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
+display: flex;
+flex-direction: column;
+gap: var(–spacing-sm);
 }
 
 .example-container p {
-  background-color: var(--example-bg);
-  padding: 5px;
-  border-radius: var(--radius-md);
-  margin: 0;
+background-color: var(–example-bg);
+padding: 5px;
+border-radius: var(–radius-md);
+margin: 0;
 }
 
 .example-container strong {
-  color: var(--primary-color);
-  margin-right: 5px;
+color: var(–primary-color);
+margin-right: 5px;
 }
 
 /* ============================================
-   LEARNING PROGRESS
-   ============================================ */
+LEARNING PROGRESS
+============================================ */
 
 .learning-progress {
-  padding: var(--spacing-lg);
-  overflow-y: auto;
-  min-height: 70vh;
+flex: 1; /* Занимает всё доступное пространство */
+padding: var(–spacing-lg);
+overflow-y: auto;
+min-height: 0; /* Изменено с 70vh для правильной работы flex */
 }
 
 .learning-progress ol {
-  padding-left: 30px;
-  margin-top: 10px;
+padding-left: 30px;
+margin-top: 10px;
 }
 
 .learning-progress ol li {
-  padding: 5px 0;
-  border-bottom: 1px solid var(--input-border-color);
-  margin: 5px 0;
+padding: 5px 0;
+border-bottom: 1px solid var(–input-border-color);
+margin: 5px 0;
 }
 
 /* ============================================
-   PASSWORD TOGGLE
-   ============================================ */
+PASSWORD TOGGLE
+============================================ */
 
 .input-group {
-  position: relative;
-  margin-bottom: var(--spacing-md);
+position: relative;
+margin-bottom: var(–spacing-md);
 }
 
 #password,
 #register-password {
-  padding-right: 40px;
-  margin-bottom: 0;
+padding-right: 40px;
+margin-bottom: 0;
 }
 
 .toggle-password-btn {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  padding: 0;
-  width: auto;
-  height: auto;
-  margin: 0;
-  cursor: pointer;
-  color: var(--text-color);
-  z-index: 2;
-  transition: color var(--transition-speed-fast) ease;
+position: absolute;
+right: 12px;
+top: 50%;
+transform: translateY(-50%);
+background: none;
+border: none;
+padding: 0;
+width: auto;
+height: auto;
+margin: 0;
+cursor: pointer;
+color: var(–text-color);
+z-index: 2;
+transition: color var(–transition-speed-fast) ease;
 }
 
 .toggle-password-btn:hover {
-  color: var(--primary-color);
+color: var(–primary-color);
 }
 
 /* ============================================
-   LOGIN КОНТЕЙНЕР
-   ============================================ */
+LOGIN КОНТЕЙНЕР
+============================================ */
 
 .login-container .left-sidebar,
 .login-container .right-sidebar {
-  width: 25%;
+width: 25%;
 }
 
 .login-container .main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: var(--spacing-2xl) var(--spacing-lg) var(--spacing-lg);
+flex: 1;
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+padding: var(–spacing-2xl) var(–spacing-lg) var(–spacing-lg);
 }
 
 .login-content {
-  max-width: 400px;
-  margin: 0 auto;
+max-width: 400px;
+margin: 0 auto;
 }
 
 .login-content .sidebar-section {
-  margin-bottom: 30px;
+margin-bottom: 30px;
 }
 
 #login-message,
 #register-message {
-  margin-top: 10px;
-  text-align: center;
-  font-weight: bold;
+margin-top: 10px;
+text-align: center;
+font-weight: bold;
 }
 
 /* ============================================
-   PASSWORD REQUIREMENTS
-   ============================================ */
+PASSWORD REQUIREMENTS
+============================================ */
 
 .password-requirements {
-  background-color: var(--container-bg);
-  border-radius: var(--radius-md);
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 4px var(--shadow-color);
+background-color: var(–container-bg);
+border-radius: var(–radius-md);
+padding: 10px;
+margin-top: 10px;
+margin-bottom: 15px;
+box-shadow: 0 2px 4px var(–shadow-color);
 }
 
 .password-requirements-title {
-  margin-bottom: 5px;
-  font-weight: bold;
+margin-bottom: 5px;
+font-weight: bold;
 }
 
 .requirement {
-  opacity: 0.8;
-  transition: opacity var(--transition-speed) ease;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin: 3px 0;
+opacity: 0.8;
+transition: opacity var(–transition-speed) ease;
+display: flex;
+align-items: center;
+gap: 5px;
+margin: 3px 0;
 }
 
 .requirement:hover {
-  opacity: 1;
+opacity: 1;
 }
 
 .requirement-icon {
-  transition: transform var(--transition-speed-fast) ease, color var(--transition-speed-fast) ease;
-  color: var(--input-border-color);
-  font-size: 12px;
+transition: transform var(–transition-speed-fast) ease, color var(–transition-speed-fast) ease;
+color: var(–input-border-color);
+font-size: 12px;
 }
 
 .requirement.valid {
-  color: var(--success-color);
-  opacity: 1;
+color: var(–success-color);
+opacity: 1;
 }
 
 .requirement-icon.valid {
-  color: var(--success-color);
-  transform: scale(1.1);
+color: var(–success-color);
+transform: scale(1.1);
 }
 
 /* ============================================
-   ДОПОЛНИТЕЛЬНЫЕ КОМПОНЕНТЫ
-   ============================================ */
+ДОПОЛНИТЕЛЬНЫЕ КОМПОНЕНТЫ
+============================================ */
 
-.direction-toggle-btn,
+.direction-toggle-btn {
+margin-bottom: var(–spacing-md);
+}
+
+/* #user-status больше не нужен margin-bottom, так как gap в .right-sidebar управляет отступами */
 #user-status {
-  margin-bottom: var(--spacing-md);
+/* margin-bottom убран */
 }
 
 /* ============================================
-   WELCOME MESSAGE
-   ============================================ */
+WELCOME MESSAGE
+============================================ */
 
 .welcome-message {
-  text-align: center;
-  padding: var(--spacing-2xl) var(--spacing-lg);
-  max-width: 500px;
-  margin: 0 auto;
+text-align: center;
+padding: var(–spacing-2xl) var(–spacing-lg);
+max-width: 500px;
+margin: 0 auto;
 }
 
 .welcome-icon {
-  font-size: 4rem;
-  margin-bottom: var(--spacing-lg);
-  animation: bounce 2s infinite;
+font-size: 4rem;
+margin-bottom: var(–spacing-lg);
+animation: bounce 2s infinite;
 }
 
 .welcome-message h3 {
-  font-size: 1.8rem;
+font-size: 1.8rem;
 }
 
 .welcome-message p {
-  font-size: var(--font-size-md);
-  margin-bottom: var(--spacing-xl);
-  opacity: 0.8;
+font-size: var(–font-size-md);
+margin-bottom: var(–spacing-xl);
+opacity: 0.8;
 }
 
 .feature-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-  margin-top: var(--spacing-xl);
+display: flex;
+flex-direction: column;
+gap: var(–spacing-sm);
+margin-top: var(–spacing-xl);
 }
 
 .feature {
-  background: linear-gradient(135deg, var(--feature-gradient-start) 0%, var(--feature-gradient-end) 100%);
-  padding: 15px var(--spacing-lg);
-  border-radius: var(--radius-lg);
-  color: var(--primary-color);
-  font-weight: 500;
-  border-left: 4px solid var(--primary-color);
-  transition: transform var(--transition-speed-fast) ease;
+background: linear-gradient(135deg, var(–feature-gradient-start) 0%, var(–feature-gradient-end) 100%);
+padding: 15px var(–spacing-lg);
+border-radius: var(–radius-lg);
+color: var(–primary-color);
+font-weight: 500;
+border-left: 4px solid var(–primary-color);
+transition: transform var(–transition-speed-fast) ease;
 }
 
 .feature:hover {
-  transform: translateX(5px);
+transform: translateX(5px);
 }
 
 /* ============================================
-   FOLDABLE SECTIONS
-   ============================================ */
+FOLDABLE SECTIONS
+============================================ */
 
+/* Убираем margin-bottom, так как gap в родительском контейнере управляет отступами */
 .foldable-section {
-  margin-bottom: var(--spacing-md);
+/* margin-bottom убран */
 }
 
 .foldable-header {
-  cursor: pointer;
-  user-select: none;
-  display: flex;
-  align-items: center;
-  transition: background-color var(--transition-speed-fast) ease;
-  padding: 5px;
-  margin: -5px;
-  border-radius: var(--radius-sm);
+cursor: pointer;
+user-select: none;
+display: flex;
+align-items: center;
+transition: background-color var(–transition-speed-fast) ease;
+padding: 5px;
+margin: -5px;
+border-radius: var(–radius-sm);
 }
 
 .foldable-header:hover {
-  background-color: var(--hover-bg-light);
+background-color: var(–hover-bg-light);
 }
 
 .fold-icon {
-  font-size: 0.8rem;
-  margin-right: var(--spacing-sm);
-  transition: transform var(--transition-speed-fast) ease;
-  color: var(--text-color);
-  opacity: 0.6;
+font-size: 0.8rem;
+margin-right: var(–spacing-sm);
+transition: transform var(–transition-speed-fast) ease;
+color: var(–text-color);
+opacity: 0.6;
 }
 
 .foldable-content {
-  animation: fadeIn var(--transition-speed) ease;
-  margin-top: 10px;
+animation: fadeIn var(–transition-speed) ease;
+margin-top: 10px;
 }
 
 /* ============================================
-   TTS BUTTON
-   ============================================ */
+TTS BUTTON
+============================================ */
 
 .tts-button {
-  background: none;
-  border: none;
-  color: var(--primary-color);
-  cursor: pointer;
-  font-size: 1em;
-  margin-left: var(--spacing-sm);
-  padding: var(--spacing-xs);
-  transition: opacity var(--transition-speed-fast) ease, color var(--transition-speed-fast) ease;
-  vertical-align: middle;
+background: none;
+border: none;
+color: var(–primary-color);
+cursor: pointer;
+font-size: 1em;
+margin-left: var(–spacing-sm);
+padding: var(–spacing-xs);
+transition: opacity var(–transition-speed-fast) ease, color var(–transition-speed-fast) ease;
+vertical-align: middle;
 }
 
 .tts-button:hover {
-  opacity: 0.7;
+opacity: 0.7;
 }
 
 .tts-button:focus {
-  outline: none;
+outline: none;
 }
 
 .tts-button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
+opacity: 0.4;
+cursor: not-allowed;
 }
 
 .tts-button.speaking {
-  color: var(--secondary-color);
+color: var(–secondary-color);
 }
 
 /* ============================================
-   CURRENT LEVEL DISPLAY
-   ============================================ */
+CURRENT LEVEL DISPLAY
+============================================ */
 
 .current-level-display {
-  background: var(--container-bg);
-  border: 1px solid var(--input-border-color);
-  border-radius: var(--radius-lg);
-  padding: 12px var(--spacing-md);
-  margin: var(--spacing-md) 0;
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  box-shadow: 0 2px 4px var(--shadow-color);
-  transition: box-shadow var(--transition-speed) ease;
+background: var(–container-bg);
+border: 1px solid var(–input-border-color);
+border-radius: var(–radius-lg);
+padding: 12px var(–spacing-md);
+/* margin убран - gap в .right-sidebar управляет отступами */
+display: flex;
+align-items: center;
+gap: var(–spacing-sm);
+box-shadow: 0 2px 4px var(–shadow-color);
+transition: box-shadow var(–transition-speed) ease;
 }
 
 .current-level-display:hover {
-  box-shadow: 0 4px 8px var(--shadow-color);
+box-shadow: 0 4px 8px var(–shadow-color);
 }
 
 .level-label {
-  font-weight: 500;
-  color: var(--text-color);
-  font-size: var(--font-size-sm);
+font-weight: 500;
+color: var(–text-color);
+font-size: var(–font-size-sm);
 }
 
 .level-description {
-  font-weight: 600;
-  color: var(--primary-color);
-  font-size: 0.95rem;
+font-weight: 600;
+color: var(–primary-color);
+font-size: 0.95rem;
 }
 
 /* ============================================
-   АНИМАЦИИ
-   ============================================ */
+АНИМАЦИИ
+============================================ */
 
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-10px);
-  }
-  60% {
-    transform: translateY(-5px);
-  }
+0%, 20%, 50%, 80%, 100% {
+transform: translateY(0);
+}
+40% {
+transform: translateY(-10px);
+}
+60% {
+transform: translateY(-5px);
+}
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+from {
+opacity: 0;
+transform: translateY(-10px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
 }
 
 /* ============================================
-   МЕДИА-ЗАПРОСЫ (АДАПТИВНОСТЬ)
-   ============================================ */
+МЕДИА-ЗАПРОСЫ (АДАПТИВНОСТЬ)
+============================================ */
 
 @media (max-width: 1024px) {
-  .container,
-  .quiz-container,
-  .login-container {
-    flex-direction: column;
-    height: auto;
-  }
+.container,
+.quiz-container,
+.login-container {
+flex-direction: column;
+height: auto;
+}
 
-  .left-sidebar,
-  .main-content,
-  .right-sidebar,
-  .login-container .left-sidebar,
-  .login-container .main-content,
-  .login-container .right-sidebar {
-    width: 100%;
-    height: auto;
-    max-height: none;
-  }
+.left-sidebar,
+.main-content,
+.right-sidebar,
+.login-container .left-sidebar,
+.login-container .main-content,
+.login-container .right-sidebar {
+width: 100%;
+height: auto;
+max-height: none;
+}
 }
 
 /* No 768px breakpoint needed for layout, as 1024px covers it.
-   It can be used for more specific adjustments if necessary. */
+It can be used for more specific adjustments if necessary. */
 
 @media (max-width: 480px) {
-  body {
-    font-size: var(--font-size-sm);
-  }
+body {
+font-size: var(–font-size-sm);
+}
 
-  h1 { font-size: 1.8rem; }
-  h2 { font-size: 1.4rem; }
-  h3 { font-size: 1.1rem; }
-  .question { font-size: 1.5rem; }
+h1 { font-size: 1.8rem; }
+h2 { font-size: 1.4rem; }
+h3 { font-size: 1.1rem; }
+.question { font-size: 1.5rem; }
 
-  .sidebar-section,
-  .quiz-section {
-    padding: 15px;
-  }
+.sidebar-section,
+.quiz-section {
+padding: 15px;
+}
 }
