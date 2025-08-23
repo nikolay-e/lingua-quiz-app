@@ -233,7 +233,7 @@ button:disabled {
   padding: var(--spacing-lg);
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md); /* Унифицированные отступы между дочерними элементами */
+  gap: var(--spacing-lg); /* Унифицированные отступы между дочерними элементами */
 }
 
 /* ============================================
