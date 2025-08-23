@@ -1457,7 +1457,7 @@
       "source_id": 8000323,
       "target_id": 8000324,
       "source_word": "complete",
-      "target_word": "завершать|заканчивать, полный",
+      "target_word": "(завершать|заканчивать), полный",
       "source_example": "Please complete the form.",
       "target_example": "Пожалуйста, заполните форму."
     },
@@ -1520,7 +1520,7 @@
       "source_id": 8000337,
       "target_id": 8000338,
       "source_word": "correct",
-      "target_word": "правильный|верный, исправлять",
+      "target_word": "(правильный|верный), исправлять",
       "source_example": "This is the correct answer.",
       "target_example": "Это правильный ответ."
     },
@@ -2996,7 +2996,7 @@
       "source_id": 8000667,
       "target_id": 8000668,
       "source_word": "guess",
-      "target_word": "угадывать|догадываться, догадка",
+      "target_word": "(угадывать|догадываться), догадка",
       "source_example": "Can you guess the answer?",
       "target_example": "Можешь угадать ответ?"
     },
@@ -3770,7 +3770,7 @@
       "source_id": 8000839,
       "target_id": 8000840,
       "source_word": "leave",
-      "target_word": "уходить|уезжать, оставлять",
+      "target_word": "(уходить|уезжать), оставлять",
       "source_example": "I have to leave now.",
       "target_example": "Мне нужно идти."
     },
@@ -4733,7 +4733,7 @@
       "source_id": 8001053,
       "target_id": 8001054,
       "source_word": "object",
-      "target_word": "объект|предмет, возражать",
+      "target_word": "(объект|предмет), возражать",
       "source_example": "What is this object?",
       "target_example": "Что это за объект?"
     },
@@ -7370,7 +7370,7 @@
       "source_id": 8001639,
       "target_id": 8001640,
       "source_word": "type",
-      "target_word": "тип|вид, печатать",
+      "target_word": "(тип|вид), печатать",
       "source_example": "What type of music do you like?",
       "target_example": "Какую музыку ты любишь?"
     },
@@ -8648,7 +8648,7 @@
       "source_id": 8001923,
       "target_id": 8001924,
       "source_word": "clear",
-      "target_word": "ясный|понятный, очищать",
+      "target_word": "(ясный|понятный), очищать",
       "source_example": "The water is clear.",
       "target_example": "Вода прозрачная."
     },
@@ -8693,7 +8693,7 @@
       "source_id": 8001933,
       "target_id": 8001934,
       "source_word": "fight",
-      "target_word": "драка|бой, драться|бороться",
+      "target_word": "(драка|бой), (драться|бороться)",
       "source_example": "They had a fight.",
       "target_example": "У них была драка."
     },
@@ -8702,7 +8702,7 @@
       "source_id": 8001935,
       "target_id": 8001936,
       "source_word": "issue",
-      "target_word": "проблема|вопрос, выпускать",
+      "target_word": "(проблема|вопрос), выпускать",
       "source_example": "This is a serious issue.",
       "target_example": "Это серьезная проблема."
     },
@@ -8810,7 +8810,7 @@
       "source_id": 8001959,
       "target_id": 8001960,
       "source_word": "total",
-      "target_word": "общий|итоговый, итог",
+      "target_word": "(общий|итоговый), итог",
       "source_example": "What is the total price?",
       "target_example": "Какова общая цена?"
     },
@@ -8864,7 +8864,7 @@
       "source_id": 8001971,
       "target_id": 8001972,
       "source_word": "lead",
-      "target_word": "вести|возглавлять, свинец",
+      "target_word": "(вести|возглавлять), свинец",
       "source_example": "He will lead the team.",
       "target_example": "Он возглавит команду."
     },
@@ -8909,7 +8909,7 @@
       "source_id": 8001981,
       "target_id": 8001982,
       "source_word": "view",
-      "target_word": "вид|мнение, смотреть",
+      "target_word": "(вид|мнение), смотреть",
       "source_example": "The view from here is amazing.",
       "target_example": "Вид отсюда потрясающий."
     },
@@ -9278,7 +9278,7 @@
       "source_id": 8002063,
       "target_id": 8002064,
       "source_word": "rate",
-      "target_word": "ставка|уровень, оценивать",
+      "target_word": "(ставка|уровень), оценивать",
       "source_example": "What is the interest rate?",
       "target_example": "Какова процентная ставка?"
     },
@@ -9800,7 +9800,7 @@
       "source_id": 8002179,
       "target_id": 8002180,
       "source_word": "figure",
-      "target_word": "цифра|фигура, понимать",
+      "target_word": "(цифра|фигура), понимать",
       "source_example": "I can't figure it out.",
       "target_example": "Я не могу этого понять."
     },
@@ -9935,7 +9935,7 @@
       "source_id": 8002209,
       "target_id": 8002210,
       "source_word": "pass",
-      "target_word": "проходить|передавать, пропуск",
+      "target_word": "(проходить|пропуск), передавать",
       "source_example": "Please let me pass.",
       "target_example": "Пожалуйста, пропустите меня."
     },
