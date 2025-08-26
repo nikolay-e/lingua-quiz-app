@@ -1709,7 +1709,7 @@
       "source_id": 4000379,
       "target_id": 4000380,
       "source_word": "diario",
-      "target_word": "дневник",
+      "target_word": "дневник, газета",
       "source_example": "Escribo en mi diario cada día.",
       "target_example": "Я пишу в своём дневнике каждый день."
     },
@@ -1970,7 +1970,7 @@
       "source_id": 4000437,
       "target_id": 4000438,
       "source_word": "unidad",
-      "target_word": "единица",
+      "target_word": "единица, единство",
       "source_example": "Es la unidad básica.",
       "target_example": "Это базовая единица."
     },
@@ -2024,7 +2024,7 @@
       "source_id": 4000449,
       "target_id": 4000450,
       "source_word": "esperar",
-      "target_word": "ждать",
+      "target_word": "ждать, надеяться",
       "source_example": "No me gusta esperar.",
       "target_example": "Я не люблю ждать."
     },
@@ -3545,7 +3545,7 @@
       "source_id": 4000787,
       "target_id": 4000788,
       "source_word": "mejor",
-      "target_word": "лучший",
+      "target_word": "лучше",
       "source_example": "Es el mejor estudiante.",
       "target_example": "Он лучший ученик."
     },
@@ -3680,7 +3680,7 @@
       "source_id": 4000817,
       "target_id": 4000818,
       "source_word": "escala",
-      "target_word": "масштаб",
+      "target_word": "масштаб, лестница",
       "source_example": "A gran escala.",
       "target_example": "В большом масштабе."
     },
@@ -4157,7 +4157,7 @@
       "source_id": 4000923,
       "target_id": 4000924,
       "source_word": "sobre",
-      "target_word": "над",
+      "target_word": "над, о",
       "source_example": "El pájaro vuela sobre la casa.",
       "target_example": "Птица летит над домом."
     },
@@ -4382,7 +4382,7 @@
       "source_id": 4000973,
       "target_id": 4000974,
       "source_word": "llevar",
-      "target_word": "нести",
+      "target_word": "носить",
       "source_example": "Llevo una bolsa pesada.",
       "target_example": "Я несу тяжёлую сумку."
     },
@@ -5012,7 +5012,7 @@
       "source_id": 4001113,
       "target_id": 4001114,
       "source_word": "departamento",
-      "target_word": "отдел",
+      "target_word": "отдел, квартира",
       "source_example": "Trabajo en este departamento.",
       "target_example": "Я работаю в этом отделе."
     },
@@ -5102,7 +5102,7 @@
       "source_id": 4001133,
       "target_id": 4001134,
       "source_word": "partir",
-      "target_word": "отправляться",
+      "target_word": "отправляться, делить",
       "source_example": "El tren parte a las cinco.",
       "target_example": "Поезд отправляется в пять."
     },
@@ -5372,7 +5372,7 @@
       "source_id": 4001193,
       "target_id": 4001194,
       "source_word": "alimento",
-      "target_word": "питание",
+      "target_word": "пища|еда",
       "source_example": "Necesitamos alimentos.",
       "target_example": "Нам нужно питание."
     },
@@ -5498,7 +5498,7 @@
       "source_id": 4001221,
       "target_id": 4001222,
       "source_word": "vuelta",
-      "target_word": "поворот",
+      "target_word": "поворот, сдача",
       "source_example": "Da la vuelta aquí.",
       "target_example": "Поверни здесь."
     },
@@ -5606,7 +5606,7 @@
       "source_id": 4001245,
       "target_id": 4001246,
       "source_word": "tarde",
-      "target_word": "поздно",
+      "target_word": "поздно, вечер",
       "source_example": "Es muy tarde.",
       "target_example": "Уже поздно."
     },
@@ -5903,7 +5903,7 @@
       "source_id": 4001311,
       "target_id": 4001312,
       "source_word": "techo",
-      "target_word": "потолок",
+      "target_word": "потолок, крыша",
       "source_example": "El techo es blanco.",
       "target_example": "Потолок белый."
     },
