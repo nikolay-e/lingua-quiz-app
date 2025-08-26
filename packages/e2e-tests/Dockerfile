@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright:v1.54.1-jammy
+FROM mcr.microsoft.com/playwright:v1.55.0-jammy
 
 # Install additional dependencies for WebKit and Firefox
 RUN apt-get update && apt-get install -y \
