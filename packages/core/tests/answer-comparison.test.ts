@@ -8,7 +8,7 @@ function getPermutations<T>(array: T[]): T[][] {
   const rest = array.slice(1);
   const permsWithoutFirst = getPermutations(rest);
   const allPermutations: T[][] = [];
-  permsWithoutFirst.forEach(perm => {
+  permsWithoutFirst.forEach((perm) => {
     for (let i = 0; i <= perm.length; i++) {
       const permWithFirst = [...perm.slice(0, i), firstEl, ...perm.slice(i)];
       allPermutations.push(permWithFirst);
@@ -18,7 +18,6 @@ function getPermutations<T>(array: T[]): T[][] {
 }
 
 describe('Answer Comparison and Text Processing', () => {
-
   describe('1. Normalization (`normalizeForComparison`)', () => {
     const testCases = [
       // Case and Whitespace
@@ -155,39 +154,38 @@ describe('Answer Comparison and Text Processing', () => {
   });
 
   describe('3. Answer Checking (`checkAnswer`)', () => {
-
     // Define components to dynamically build complex test cases
     const components = {
       c1: {
         def: 'run|jog',
         valid: ['run', 'jog'],
-        invalid: ['walk', 'sprint']
+        invalid: ['walk', 'sprint'],
       },
       c2: {
         def: 'fast|quick',
         valid: ['fast', 'quick'],
-        invalid: ['slow', 'rapid']
+        invalid: ['slow', 'rapid'],
       },
       c3: {
         def: 'car[s]',
         valid: ['car', 'cars', 'car s'],
-        invalid: ['s', 'vehicle']
+        invalid: ['s', 'vehicle'],
       },
       c4: {
         def: 'парковать[ся]',
         valid: ['парковать', 'парковаться', 'парковать ся'],
-        invalid: ['ся', 'стоять']
+        invalid: ['ся', 'стоять'],
       },
       c5: {
         def: 'мир [вселенная]',
         valid: ['мир', 'мир вселенная', 'мирвселенная'],
-        invalid: ['вселенная', 'космос']
+        invalid: ['вселенная', 'космос'],
       },
       c6: {
         def: 'test[ing]',
         valid: ['test', 'testing', 'test ing'],
-        invalid: ['ing', 'exam']
-      }
+        invalid: ['ing', 'exam'],
+      },
     };
 
     describe('3.1 Single Group Validation', () => {
@@ -195,12 +193,12 @@ describe('Answer Comparison and Text Processing', () => {
       for (const key in components) {
         const { def, valid, invalid } = components[key as keyof typeof components];
         describe(`Component "${def}"`, () => {
-          valid.forEach(answer => {
+          valid.forEach((answer) => {
             it(`should accept "${answer}"`, () => {
               expect(checkAnswer(answer, def)).toBe(true);
             });
           });
-          invalid.forEach(answer => {
+          invalid.forEach((answer) => {
             it(`should reject "${answer}"`, () => {
               expect(checkAnswer(answer, def)).toBe(false);
             });
@@ -245,8 +243,8 @@ describe('Answer Comparison and Text Processing', () => {
       }
 
       // Test a sample of permutations (not all to keep test time reasonable)
-      validAnswers.slice(0, 3).forEach(answerTuple => {
-        getPermutations(answerTuple).forEach(perm => {
+      validAnswers.slice(0, 3).forEach((answerTuple) => {
+        getPermutations(answerTuple).forEach((perm) => {
           const userAnswer = perm.join(', ');
           it(`should accept correct combination: "${userAnswer}"`, () => {
             expect(checkAnswer(userAnswer, correctAnswer)).toBe(true);
@@ -436,19 +434,19 @@ describe('Answer Comparison and Text Processing', () => {
         description: 'Simple Spanish-Russian translation (broma → шутка)',
         user: 'шутка',
         correct: 'шутка',
-        expected: true
+        expected: true,
       },
       {
         description: 'Simple hearing verb (oír → слышать)',
         user: 'слышать',
         correct: 'слышать',
-        expected: true
+        expected: true,
       },
       {
         description: 'Hearing verb with alternatives',
         user: 'слышать',
         correct: 'слышать|услышать',
-        expected: true
+        expected: true,
       },
 
       // Complex phrase handling (simplified cases)
@@ -456,13 +454,13 @@ describe('Answer Comparison and Text Processing', () => {
         description: 'Simple phrase with alternatives',
         user: 'выполнять',
         correct: '(выполнять|исполнять)',
-        expected: true
+        expected: true,
       },
       {
         description: 'Complex phrase without optional part',
         user: 'выполнять',
         correct: 'выполнять [обещание или долг]',
-        expected: true
+        expected: true,
       },
 
       // Age-related expressions with complex patterns
@@ -470,19 +468,19 @@ describe('Answer Comparison and Text Processing', () => {
         description: 'Age expression with complex pattern',
         user: 'исполняться',
         correct: '(выполнять|исполнять), исполняться [о возрасте]',
-        expected: false // Should require both parts
+        expected: false, // Should require both parts
       },
       {
         description: 'Complete age expression',
         user: 'выполнять, исполняться',
         correct: '(выполнять|исполнять), исполняться [о возрасте]',
-        expected: true
+        expected: true,
       },
       {
         description: 'Age expression with alternative',
         user: 'исполнять, исполняться',
         correct: '(выполнять|исполнять), исполняться [о возрасте]',
-        expected: true
+        expected: true,
       },
 
       // Verb forms and conjugations
@@ -490,13 +488,13 @@ describe('Answer Comparison and Text Processing', () => {
         description: 'Infinitive vs past tense forms',
         user: 'сделал',
         correct: 'делать',
-        expected: false // Different verb forms should not match
+        expected: false, // Different verb forms should not match
       },
       {
         description: 'Verb with multiple forms',
         user: 'сделал',
         correct: 'делать|сделать|сделал',
-        expected: true
+        expected: true,
       },
 
       // Preposition and directional issues
@@ -504,13 +502,13 @@ describe('Answer Comparison and Text Processing', () => {
         description: 'Preposition "above" vs verb "did"',
         user: 'наверху',
         correct: 'encima',
-        expected: false // Wrong translation
+        expected: false, // Wrong translation
       },
       {
         description: 'Above/over translation',
         user: 'наверху',
         correct: 'наверху|выше|сверху',
-        expected: true
+        expected: true,
       },
 
       // Excitement and emotion verbs
@@ -518,13 +516,13 @@ describe('Answer Comparison and Text Processing', () => {
         description: 'Excitement verb alternatives',
         user: 'возбуждать',
         correct: 'excitar',
-        expected: false // Needs proper translation
+        expected: false, // Needs proper translation
       },
       {
         description: 'Proper excitement translation',
         user: 'возбуждать',
         correct: 'возбуждать|взволновать',
-        expected: true
+        expected: true,
       },
 
       // Together/joint expressions
@@ -532,13 +530,13 @@ describe('Answer Comparison and Text Processing', () => {
         description: 'Together expression',
         user: 'вместе',
         correct: 'junto',
-        expected: false // Wrong translation
+        expected: false, // Wrong translation
       },
       {
         description: 'Proper together translation',
         user: 'вместе',
         correct: 'вместе|совместно',
-        expected: true
+        expected: true,
       },
 
       // Complex reflexive verbs
@@ -546,13 +544,13 @@ describe('Answer Comparison and Text Processing', () => {
         description: 'Return reflexive verb',
         user: 'возвращаться',
         correct: 'вернуться',
-        expected: false // Different aspects
+        expected: false, // Different aspects
       },
       {
         description: 'Return verb with aspects',
         user: 'возвращаться',
         correct: 'возвращаться|вернуться',
-        expected: true
+        expected: true,
       },
 
       // Case sensitivity in proper names and verbs
@@ -560,8 +558,8 @@ describe('Answer Comparison and Text Processing', () => {
         description: 'Capitalization in verb forms',
         user: 'regresar',
         correct: 'Regresar',
-        expected: true // Should be case insensitive
-      }
+        expected: true, // Should be case insensitive
+      },
     ];
 
     bugFixTests.forEach(({ description, user, correct, expected }) => {
@@ -577,23 +575,23 @@ describe('Answer Comparison and Text Processing', () => {
       {
         description: 'Complex age pattern should be simplified',
         input: '(выполнять|исполнять), исполняться [о возрасте]',
-        expected: 'выполнять, исполняться [о возрасте]'
+        expected: 'выполнять, исполняться [о возрасте]',
       },
       {
         description: 'Multiple parentheses groups with brackets',
         input: '(делать|совершать), (действие|поступок) [в отношении чего-то]',
-        expected: 'делать, действие [в отношении чего-то]'
+        expected: 'делать, действие [в отношении чего-то]',
       },
       {
         description: 'Complex verb pattern with context',
         input: '(слышать|услышать), воспринимать [звук]',
-        expected: 'слышать, воспринимать [звук]'
+        expected: 'слышать, воспринимать [звук]',
       },
       {
         description: 'Nested alternatives with clarification',
         input: '(выполнять|исполнять) (обещание|долг|обязательство)',
-        expected: 'выполнять обещание'
-      }
+        expected: 'выполнять обещание',
+      },
     ];
 
     displayBugTests.forEach(({ description, input, expected }) => {
@@ -609,44 +607,44 @@ describe('Answer Comparison and Text Processing', () => {
         description: 'German verb with multiple meanings',
         user: 'machen, tun',
         correct: '(machen|tun), (erstellen|schaffen)',
-        expected: false // Missing second group
+        expected: false, // Missing second group
       },
       {
         description: 'German verb with complete answer',
         user: 'machen, erstellen',
         correct: '(machen|tun), (erstellen|schaffen)',
-        expected: true
+        expected: true,
       },
       {
         description: 'Spanish with accents and multiple meanings',
         user: 'corazón, alma',
         correct: 'corazon, alma',
-        expected: true
+        expected: true,
       },
       {
         description: 'Russian with ё/е and brackets',
         user: 'тёмный человек',
         correct: 'темный [человек]',
-        expected: true
+        expected: true,
       },
       {
         description: 'Complex mixed language pattern',
         user: 'café, мир, schön',
         correct: 'cafe, мир [вселенная], schoen',
-        expected: true
+        expected: true,
       },
       {
         description: 'Verb with reflexive suffix',
         user: 'парковаться',
         correct: 'парковать[ся]',
-        expected: true
+        expected: true,
       },
       {
         description: 'Multiple alternatives with normalization',
         user: 'mude',
         correct: 'müde|tired|erschöpft',
-        expected: true
-      }
+        expected: true,
+      },
     ];
 
     realWorldTests.forEach(({ description, user, correct, expected }) => {

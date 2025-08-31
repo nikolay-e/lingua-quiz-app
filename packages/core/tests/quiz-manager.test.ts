@@ -6,28 +6,28 @@ describe('QuizManager Tests', () => {
     {
       id: 1,
       sourceWord: { text: 'hello', language: 'en', usageExample: 'Hello world!' },
-      targetWord: { text: 'привет', language: 'ru', usageExample: 'Привет мир!' }
+      targetWord: { text: 'привет', language: 'ru', usageExample: 'Привет мир!' },
     },
     {
       id: 2,
       sourceWord: { text: 'world', language: 'en', usageExample: 'Hello world!' },
-      targetWord: { text: 'мир', language: 'ru', usageExample: 'Привет мир!' }
+      targetWord: { text: 'мир', language: 'ru', usageExample: 'Привет мир!' },
     },
     {
       id: 3,
       sourceWord: { text: 'cat', language: 'en' },
-      targetWord: { text: 'кот', language: 'ru' }
+      targetWord: { text: 'кот', language: 'ru' },
     },
     {
       id: 4,
       sourceWord: { text: 'dog', language: 'en' },
-      targetWord: { text: 'собака', language: 'ru' }
+      targetWord: { text: 'собака', language: 'ru' },
     },
     {
       id: 5,
       sourceWord: { text: 'book', language: 'en' },
-      targetWord: { text: 'книга', language: 'ru' }
-    }
+      targetWord: { text: 'книга', language: 'ru' },
+    },
   ];
 
   describe('QuizManager Basic Functionality', () => {
@@ -43,7 +43,6 @@ describe('QuizManager Tests', () => {
       expect(state.queues.LEVEL_1.length).toBe(expectedFocusWords);
       expect(state.queues.LEVEL_0.length).toBe(sampleTranslations.length - expectedFocusWords);
     });
-
 
     it('should provide next question from LEVEL_1', () => {
       const result = quizManager.getNextQuestion();
@@ -121,7 +120,7 @@ describe('QuizManager Tests', () => {
       const translationId = result.question!.translationId;
 
       // Wait a bit before submitting
-      await new Promise(resolve => setTimeout(resolve, 10));
+      await new Promise((resolve) => setTimeout(resolve, 10));
 
       const submission = quizManager.submitAnswer(translationId, 'any answer');
       expect(submission.responseTimeMs).toBeGreaterThan(0);
@@ -139,9 +138,7 @@ describe('QuizManager Tests', () => {
     it('should get words by level for persistence', () => {
       const wordsByLevel = quizManager.getWordsByLevel();
 
-      expect(Object.keys(wordsByLevel)).toEqual([
-        'LEVEL_0', 'LEVEL_1', 'LEVEL_2', 'LEVEL_3', 'LEVEL_4', 'LEVEL_5'
-      ]);
+      expect(Object.keys(wordsByLevel)).toEqual(['LEVEL_0', 'LEVEL_1', 'LEVEL_2', 'LEVEL_3', 'LEVEL_4', 'LEVEL_5']);
 
       // Total words across all levels should match input
       const totalWords = Object.values(wordsByLevel).reduce((sum, level) => sum + level.length, 0);
@@ -192,13 +189,13 @@ describe('QuizManager Tests', () => {
         {
           id: 1,
           sourceWord: { text: 'test', language: 'en' },
-          targetWord: { text: 'тест|испытание', language: 'ru' }
+          targetWord: { text: 'тест|испытание', language: 'ru' },
         },
         {
           id: 2,
           sourceWord: { text: 'example', language: 'en' },
-          targetWord: { text: '(пример|образец), случай', language: 'ru' }
-        }
+          targetWord: { text: '(пример|образец), случай', language: 'ru' },
+        },
       ];
       quizManager = new QuizManager(complexTranslations);
     });
@@ -224,7 +221,7 @@ describe('QuizManager Tests', () => {
       const customOptions = {
         maxFocusWords: 10,
         correctAnswersToLevelUp: 5,
-        queuePositionIncrement: 8
+        queuePositionIncrement: 8,
       };
 
       const quizManager = new QuizManager(sampleTranslations, {}, customOptions);
@@ -252,8 +249,8 @@ describe('QuizManager Tests', () => {
           status: 'LEVEL_2' as const,
           queuePosition: 0,
           consecutiveCorrect: 1,
-          recentHistory: [true, false, true]
-        }
+          recentHistory: [true, false, true],
+        },
       ];
 
       const quizManager = new QuizManager(sampleTranslations, { progress: initialProgress });

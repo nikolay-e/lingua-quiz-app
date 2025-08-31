@@ -2,24 +2,30 @@
   import { authStore } from '../stores';
   import { createEventDispatcher } from 'svelte';
 
+  // Import shared components
+  import AuthLayout from '../components/AuthLayout.svelte';
+  import PasswordInput from '../components/PasswordInput.svelte';
+  import AuthMessage from '../components/AuthMessage.svelte';
+  import AuthNavLink from '../components/AuthNavLink.svelte';
+
   const dispatch = createEventDispatcher<{ navigate: { page: 'register' } }>();
 
-  let loginUsername = '';
-  let loginPassword = '';
-  let loginMessage = '';
-  let showLoginPassword = false;
+  // State variables
+  let username = '';
+  let password = '';
+  let message = '';
   let isLoading = false;
 
-  async function handleLogin(e: Event) {
+  async function handleSubmit(e: Event) {
     e.preventDefault();
     isLoading = true;
-    loginMessage = '';
+    message = '';
 
     try {
-      await authStore.login(loginUsername, loginPassword);
-      loginMessage = 'Login successful!';
+      await authStore.login(username, password);
+      message = 'Login successful!';
     } catch (error: any) {
-      loginMessage = error.message;
+      message = error.message;
     } finally {
       isLoading = false;
     }
@@ -30,95 +36,35 @@
   }
 </script>
 
-<main class="container login-container">
-  <div class="left-sidebar">
-    <header>
-      <h1><i class="fas fa-language"></i> LinguaQuiz</h1>
-    </header>
-  </div>
+<AuthLayout>
+  <h2>Sign In</h2>
+  <form on:submit={handleSubmit}>
+    <div class="input-group">
+      <input
+        type="text"
+        bind:value={username}
+        placeholder="Username"
+        required
+        disabled={isLoading}
+      />
+    </div>
 
-  <div class="main-content login-content">
-    <section class="sidebar-section">
-      <h2>Sign In</h2>
-      <form on:submit={handleLogin}>
-        <div class="input-group">
-          <input
-            type="text"
-            bind:value={loginUsername}
-            placeholder="Username"
-            required
-            disabled={isLoading}
-          />
-        </div>
-        <div class="input-group">
-          {#if showLoginPassword}
-            <input
-              type="text"
-              bind:value={loginPassword}
-              placeholder="Password"
-              required
-              disabled={isLoading}
-              id="password"
-            />
-          {:else}
-            <input
-              type="password"
-              bind:value={loginPassword}
-              placeholder="Password"
-              required
-              disabled={isLoading}
-              id="password"
-            />
-          {/if}
-          <button
-            type="button"
-            class="toggle-password-btn"
-            on:click={() => showLoginPassword = !showLoginPassword}
-            aria-label={showLoginPassword ? 'Hide password' : 'Show password'}
-          >
-            <i class="fas fa-eye{showLoginPassword ? '-slash' : ''}"></i>
-          </button>
-        </div>
-        <button type="submit" disabled={isLoading}>
-          <i class="fas fa-sign-in-alt"></i> Sign In
-        </button>
-      </form>
-      {#if loginMessage}
-        <p id="login-message" style:color={loginMessage.includes('successful') ? 'var(--success-color)' : 'var(--error-color)'}>
-          {loginMessage}
-        </p>
-      {/if}
+    <PasswordInput
+      bind:value={password}
+      disabled={isLoading}
+      id="password"
+    />
 
-      <div class="auth-link">
-        <p>Need an account? <button on:click={navigateToRegister} class="link-button">Register here</button></p>
-      </div>
-    </section>
-  </div>
+    <button type="submit" disabled={isLoading}>
+      <i class="fas fa-sign-in-alt"></i> Sign In
+    </button>
+  </form>
 
-  <div class="right-sidebar"></div>
-</main>
+  <AuthMessage {message} id="login-message" />
 
-<style>
-  .auth-link {
-    margin-top: 20px;
-    text-align: center;
-    color: var(--text-color);
-  }
-
-  .link-button {
-    background: none;
-    border: none;
-    color: var(--primary-color);
-    text-decoration: underline;
-    cursor: pointer;
-    padding: 0;
-    margin: 0;
-    font-size: inherit;
-    width: auto;
-  }
-
-  .link-button:hover {
-    color: var(--secondary-color);
-    background: none;
-  }
-</style>
+  <AuthNavLink
+    text="Need an account?"
+    linkText="Register here"
+    onClick={navigateToRegister}
+  />
+</AuthLayout>

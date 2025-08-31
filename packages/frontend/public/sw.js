@@ -5,18 +5,19 @@ const urlsToCache = [
   '/favicon/favicon-32x32.png',
   '/favicon/apple-touch-icon.png',
   '/favicon/android-chrome-192x192.png',
-  '/favicon/android-chrome-512x512.png'
+  '/favicon/android-chrome-512x512.png',
 ];
 
 // Install event: cache the application shell
-self.addEventListener('install', event => {
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
+    caches
+      .open(CACHE_NAME)
+      .then((cache) => {
         // Cache opened successfully
         return cache.addAll(urlsToCache);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Failed to cache:', error);
       })
   );
@@ -25,12 +26,12 @@ self.addEventListener('install', event => {
 });
 
 // Activate event: clean up old caches
-self.addEventListener('activate', event => {
+self.addEventListener('activate', (event) => {
   const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
-    caches.keys().then(cacheNames => {
+    caches.keys().then((cacheNames) => {
       return Promise.all(
-        cacheNames.map(cacheName => {
+        cacheNames.map((cacheName) => {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
             // Delete old cache version
             return caches.delete(cacheName);
@@ -44,7 +45,7 @@ self.addEventListener('activate', event => {
 });
 
 // Fetch event: serve assets from cache, falling back to network
-self.addEventListener('fetch', event => {
+self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
@@ -57,7 +58,7 @@ self.addEventListener('fetch', event => {
   if (request.url.includes('/api/')) {
     event.respondWith(
       fetch(request)
-        .then(response => {
+        .then((response) => {
           // Clone the response before using it
           const responseToCache = response.clone();
 
@@ -67,7 +68,7 @@ self.addEventListener('fetch', event => {
           }
 
           // Cache successful API responses for offline use
-          caches.open(CACHE_NAME).then(cache => {
+          caches.open(CACHE_NAME).then((cache) => {
             cache.put(request, responseToCache);
           });
 
@@ -83,15 +84,16 @@ self.addEventListener('fetch', event => {
 
   // For static assets, use cache-first strategy
   event.respondWith(
-    caches.match(request)
-      .then(response => {
+    caches
+      .match(request)
+      .then((response) => {
         if (response) {
           // Cache hit - return response from cache
           return response;
         }
 
         // Cache miss - fetch from network
-        return fetch(request).then(response => {
+        return fetch(request).then((response) => {
           // Don't cache non-successful responses
           if (!response || response.status !== 200 || response.type !== 'basic') {
             return response;
@@ -100,14 +102,14 @@ self.addEventListener('fetch', event => {
           // Clone the response
           const responseToCache = response.clone();
 
-          caches.open(CACHE_NAME).then(cache => {
+          caches.open(CACHE_NAME).then((cache) => {
             cache.put(request, responseToCache);
           });
 
           return response;
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Fetch failed:', error);
         // You could return a custom offline page here
       })
@@ -115,7 +117,7 @@ self.addEventListener('fetch', event => {
 });
 
 // Listen for messages from the client
-self.addEventListener('message', event => {
+self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }

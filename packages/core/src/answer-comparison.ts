@@ -12,32 +12,47 @@
 // Mapping of visually identical Latin → Cyrillic characters
 // Only letters that look EXACTLY the same
 const latinToCyrillic: Record<string, string> = {
-  a: 'а', A: 'А',  // a/A look identical to а/А
-  c: 'с', C: 'С',  // c/C look identical to с/С
-  e: 'е', E: 'Е',  // e/E look identical to е/Е
-  o: 'о', O: 'О',  // o/O look identical to о/О
-  p: 'р', P: 'Р',  // p/P look identical to р/Р
-  x: 'х', X: 'Х',  // x/X look identical to х/Х
-  y: 'у', Y: 'У'   // y/Y look identical to у/У
+  a: 'а',
+  A: 'А', // a/A look identical to а/А
+  c: 'с',
+  C: 'С', // c/C look identical to с/С
+  e: 'е',
+  E: 'Е', // e/E look identical to е/Е
+  o: 'о',
+  O: 'О', // o/O look identical to о/О
+  p: 'р',
+  P: 'Р', // p/P look identical to р/Р
+  x: 'х',
+  X: 'Х', // x/X look identical to х/Х
+  y: 'у',
+  Y: 'У', // y/Y look identical to у/У
 };
 
 /** Remove diacritics from the Latin script (NFD → strip marks). */
 const stripLatinDiacritics = (s: string): string => {
   // Only strip diacritics from Latin characters, not from Cyrillic
-  return s.replace(/[àáâãäåæçèéêëìíîïñòóôõöøùúûüýÿ]/g, char => {
+  return s.replace(/[àáâãäåæçèéêëìíîïñòóôõöøùúûüýÿ]/g, (char) => {
     return char.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   });
 };
 
 /** Collapse German umlaut/ß variants to a single form for comparison. */
 const collapseGerman = (s: string): string => {
-  return s
-    // 1. Single‑character umlauts → plain vowel.
-    .replace(/ä/g, 'a').replace(/ö/g, 'o').replace(/ü/g, 'u')
-    .replace(/Ä/g, 'a').replace(/Ö/g, 'o').replace(/Ü/g, 'u')
-    .replace(/ß/g, 'ss')
-    // 2. Two‑character replacements (ae/oe/ue) → same plain vowel.
-    .replace(/ae/g, 'a').replace(/oe/g, 'o').replace(/ue/g, 'u');
+  return (
+    s
+      // 1. Single‑character umlauts → plain vowel.
+      .replace(/ä/g, 'a')
+      .replace(/ö/g, 'o')
+      .replace(/ü/g, 'u')
+      .replace(/Ä/g, 'a')
+      .replace(/Ö/g, 'o')
+      .replace(/Ü/g, 'u')
+      .replace(/ß/g, 'ss')
+      // 2. Two‑character replacements (ae/oe/ue) → same plain vowel.
+      .replace(/ae/g, 'a')
+      .replace(/oe/g, 'o')
+      .replace(/ue/g, 'u')
+  );
 };
 
 /** Full script‑/accent‑aware canonicalisation used for matching logic. */
@@ -56,13 +71,13 @@ export const normalizeForComparison = (text: string): string => {
 
   // Convert if there's already Cyrillic present and we have visually identical Latin chars
   if (containsCyr) {
-    result = result.replace(/[aAcCeEoOpPxXyY]/g, ch => latinToCyrillic[ch] || ch);
+    result = result.replace(/[aAcCeEoOpPxXyY]/g, (ch) => latinToCyrillic[ch] || ch);
   }
 
   // Special case: strings that are clearly meant to be Cyrillic (like "cop")
   const isKnownFakeCyr = /^cop$/i.test(result);
   if (isKnownFakeCyr) {
-    result = result.replace(/[aAcCeEoOpPxXyY]/g, ch => latinToCyrillic[ch] || ch);
+    result = result.replace(/[aAcCeEoOpPxXyY]/g, (ch) => latinToCyrillic[ch] || ch);
   }
 
   // 5. Always apply ё→е mapping for any Cyrillic characters
@@ -94,7 +109,11 @@ export const formatForDisplay = (input: string): string => {
   // 1. Replace each ( ... ) group containing a pipe with its first alternative.
   text = text.replace(/\(([^)]+)\)/g, (match, inner) => {
     if (!inner.includes('|')) return match; // leave untouched.
-    const firstAlt = inner.split('|').map((s: string) => s.trim()).find((s: string) => s) || '';
+    const firstAlt =
+      inner
+        .split('|')
+        .map((s: string) => s.trim())
+        .find((s: string) => s) || '';
     return firstAlt; // drop surrounding parentheses.
   });
 
@@ -103,7 +122,7 @@ export const formatForDisplay = (input: string): string => {
 
   // 2. Temporarily mask pipes inside square brackets so we don't treat them as
   //    synonym separators.
-  text = text.replace(/\[[^\]]*\]/g, br => br.replace(/\|/g, PIPE_SENTINEL));
+  text = text.replace(/\[[^\]]*\]/g, (br) => br.replace(/\|/g, PIPE_SENTINEL));
 
   // 3. For any remaining standalone pipes, keep only the segment before the
   //    first one.
@@ -112,13 +131,14 @@ export const formatForDisplay = (input: string): string => {
   }
 
   // 4. Unmask bracket pipes and tidy up whitespace / commas.
-  text = text.replace(new RegExp(PIPE_SENTINEL, 'g'), '|')
-    .replace(/\s*,\s*/g, ', ')   // single space after comma.
-    .replace(/\s+/g, ' ')       // collapse runs of spaces.
+  text = text
+    .replace(new RegExp(PIPE_SENTINEL, 'g'), '|')
+    .replace(/\s*,\s*/g, ', ') // single space after comma.
+    .replace(/\s+/g, ' ') // collapse runs of spaces.
     .trim()
-    .replace(/^,+\s*/, '')       // no leading commas (multiple)
-    .replace(/\s*,+$/, '')       // no trailing commas (multiple)
-    .replace(/,+\s*,+/g, ', ')   // collapse multiple consecutive commas
+    .replace(/^,+\s*/, '') // no leading commas (multiple)
+    .replace(/\s*,+$/, '') // no trailing commas (multiple)
+    .replace(/,+\s*,+/g, ', ') // collapse multiple consecutive commas
     .replace(/^,\s*|,\s*$/g, '') // final cleanup of leading/trailing commas
     .trim();
 
@@ -185,9 +205,9 @@ const expandGroup = (group: string): string[] => {
 
   // 3. Split any pipes inside each base variant to generate all alternatives.
   const alts: string[] = [];
-  baseVariants.forEach(b => {
+  baseVariants.forEach((b) => {
     if (b.includes('|')) {
-      b.split('|').forEach(p => {
+      b.split('|').forEach((p) => {
         const t = p.trim();
         if (t) alts.push(t);
       });
@@ -202,7 +222,7 @@ const expandGroup = (group: string): string[] => {
 /** Build an array of acceptable alternative sets for every meaning group. */
 const buildGroups = (correct: string): AltSet[] => {
   const groups = splitTopLevelCommas(correct);
-  return groups.map(g => {
+  return groups.map((g) => {
     const set: AltSet = new Set(expandGroup(g).map((n: string) => normalize(n)));
     return set;
   });

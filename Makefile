@@ -1,134 +1,168 @@
-# Makefile for Lingua Quiz - Local K8s Development with Rancher Desktop
-.PHONY: help build-local build-local-clean deploy-local-db deploy-local-app deploy-local clean-local logs-backend logs-frontend port-forward
+# ===================================================================================
+# Lingua Quiz :: Unified Makefile
+# ===================================================================================
+.DEFAULT_GOAL := help
+.PHONY: help local staging prod full-deploy build push deploy clean clean-db \
+        clean-local clean-staging clean-prod
 
-help:
-	@echo "Lingua Quiz - Local K8s Development Commands"
-	@echo "============================================"
-	@echo "Setup & Deployment:"
-	@echo "  make build-local       - Build Docker images for local K8s"
-	@echo "  make deploy-local      - Deploy everything to local K8s (DB + App)"
-	@echo "  make deploy-local-db   - Deploy only PostgreSQL to local K8s"
-	@echo "  make deploy-local-app  - Deploy only application to local K8s"
+# ===================================================================================
+# Core Configuration
+# ===================================================================================
+# The target environment ('local', 'staging', 'prod'). Can be set on the command line.
+ENV ?= local
+
+# Docker registry for remote images. Default to GHCR for better caching
+REGISTRY ?= ghcr.io/nikolay-e/lingua-quiz
+# Git commit hash is the default image tag. Override with `make ... IMAGE_TAG=...`
+IMAGE_TAG ?= $(shell git rev-parse --short HEAD)
+
+# List of services to build and push. Add new services here.
+SERVICES := backend frontend integration-e2e-tests
+
+# ===================================================================================
+# Application & Helm Configuration
+# ===================================================================================
+APP_RELEASE_NAME := lingua-quiz
+DB_RELEASE_NAME  := shared-postgres
+HELM_INSTALL_FLAGS := --wait --timeout 10m
+
+# --- Paths ---
+HELM_APP_DIR      := ./helm/lingua-quiz-app
+HELM_DB_DIR       := ./helm/shared-postgres
+SOPS_AGE_KEY_FILE ?= .age-key.txt
+
+# ===================================================================================
+# Environment-Specific Configuration
+# ===================================================================================
+# This block dynamically configures variables based on the active ENV.
+ifeq ($(ENV),local)
+    APP_NAMESPACE := lingua-quiz-local
+    DB_NAMESPACE  := shared-database
+    VALUES_FILE   := $(HELM_APP_DIR)/values.local.yaml
+else ifeq ($(ENV),staging)
+    APP_NAMESPACE := lingua-quiz-staging
+    DB_NAMESPACE  := shared-database
+    VALUES_FILE   := $(HELM_APP_DIR)/values.staging.yaml
+    INGRESS_HOST  := test-lingua-quiz.nikolay-eremeev.com
+else ifeq ($(ENV),prod)
+    APP_NAMESPACE := lingua-quiz-production
+    DB_NAMESPACE  := shared-database
+    VALUES_FILE   := $(HELM_APP_DIR)/values.prod.yaml
+    INGRESS_HOST  := lingua-quiz.nikolay-eremeev.com
+else
+    $(error Invalid ENV specified: '$(ENV)'. Use 'local', 'staging', or 'prod'.)
+endif
+
+# --- Dynamic Helm Flags ---
+# Add extra Helm '--set' flags for non-local environments.
+HELM_SET_FLAGS :=
+ifneq ($(ENV),local)
+    ifeq ($(IMAGE_TAG),)
+        $(error IMAGE_TAG must be set for staging or prod environments)
+    endif
+    HELM_SET_FLAGS = \
+        $(foreach service,$(filter-out integration-e2e-tests,$(SERVICES)), \
+            --set $(service).image.repository=$(REGISTRY)/lingua-quiz-$(service) \
+            --set $(service).image.tag=$(IMAGE_TAG) \
+        ) \
+        --set tests.image.repository=$(REGISTRY)/lingua-quiz-integration-e2e-tests \
+        --set tests.image.tag=$(IMAGE_TAG) \
+        --set ingress.frontend.host=$(INGRESS_HOST)
+endif
+
+# ===================================================================================
+# HELP
+# ===================================================================================
+help: ## ✨ Show this help message
+	@echo "Lingua Quiz - Unified Workflow Makefile"
+	@echo "----------------------------------------"
+	@echo "Usage:"
+	@echo "  make <command> [ENV=...] [IMAGE_TAG=...]"
 	@echo ""
-	@echo "Access & Monitoring:"
-	@echo "  make port-forward      - Forward ports for local access"
-	@echo "  make logs-backend      - Show backend logs"
-	@echo "  make logs-frontend     - Show frontend logs"
-	@echo "  make logs-db          - Show database logs"
+	@echo "Primary Environment Commands:"
+	@echo "  make local                  Builds and deploys the LOCAL stack."
+	@echo "  make staging                Builds, pushes, and deploys the STAGING stack."
+	@echo "  make prod                   Builds, pushes, and deploys the PRODUCTION stack."
 	@echo ""
-	@echo "Cleanup:"
-	@echo "  make clean-local       - Remove all local K8s deployments"
-	@echo "  make clean-local-db    - Remove PostgreSQL deployment"
-	@echo "  make clean-local-app   - Remove application deployment"
+	@echo "Cleanup Commands:"
+	@echo "  make clean-local            Removes the LOCAL app and its database."
+	@echo "  make clean-staging          Removes the STAGING application (leaves database untouched)."
+	@echo "  make clean-prod             Removes the PRODUCTION application (leaves database untouched)."
 	@echo ""
-	@echo "URLs after deployment:"
-	@echo "  Frontend: http://localhost:30080"
-	@echo "  Backend:  http://localhost:30900"
-	@echo "  Database: localhost:30543 (if port-forwarded)"
+	@echo "Core Tasks:"
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z0-9._-]+:.*?## / {printf "  \033[36m%-25s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-build-local:
-	@echo "Force removing existing images..."
-	-docker rmi -f lingua-quiz-backend:local lingua-quiz-frontend:local 2>/dev/null || true
-	@echo "Building backend image (no cache)..."
-	docker build --no-cache -t lingua-quiz-backend:local ./packages/backend
-	@echo "Building frontend image (no cache)..."
-	docker build --no-cache -t lingua-quiz-frontend:local -f ./packages/frontend/Dockerfile .
-	@echo "Images built successfully!"
+# ===================================================================================
+# PRIMARY WORKFLOWS
+# ===================================================================================
+local: ## ▶️  Build and Deploy for the LOCAL environment.
+	@$(MAKE) build ENV=local
+	@$(MAKE) deploy ENV=local
 
-deploy-local-db:
-	@echo "Creating shared-database namespace..."
-	kubectl create namespace shared-database --dry-run=client -o yaml | kubectl apply -f -
-	@echo "Deploying shared PostgreSQL..."
-	helm upgrade --install shared-postgres ./helm/shared-postgres \
-		-f ./helm/shared-postgres/values.local.yaml \
-		--namespace shared-database \
-		--wait --timeout 5m
-	@echo "PostgreSQL deployed successfully!"
+staging: ## ▶️  Build, Push, and Deploy for the STAGING environment.
+	@$(MAKE) full-deploy ENV=staging
 
-# Deploy application
-deploy-local-app:
-	@echo "Deploying Lingua Quiz application..."
-	helm upgrade --install lingua-quiz ./helm/lingua-quiz-app \
-		-f ./helm/lingua-quiz-app/values.local.yaml \
-		--namespace default \
-		--wait --timeout 5m
-	@echo "Application deployed successfully!"
-	@echo ""
-	@echo "Access the application at:"
-	@echo "  Frontend: http://localhost:30080"
-	@echo "  Backend API: http://localhost:30900/api"
+prod: ## ▶️  Build, Push, and Deploy for the PRODUCTION environment.
+	@$(MAKE) full-deploy ENV=prod
 
-deploy-local: build-local deploy-local-db deploy-local-app
-	@echo "Full deployment completed!"
+# --- Meta Workflows ---
+full-deploy: build push deploy ## 🚀 Run the full build, push, and deploy sequence.
 
-port-forward:
-	@echo "Setting up port forwarding for PostgreSQL..."
-	@echo "Database will be available at: localhost:5432"
-	@echo "Press Ctrl+C to stop port forwarding"
-	kubectl port-forward -n shared-database svc/shared-postgres 5432:5432
+# ===================================================================================
+# CLEANUP WORKFLOWS
+# ===================================================================================
+clean-local: ## 🧹 Remove the LOCAL stack (app and database).
+	@$(MAKE) clean ENV=local
+	@$(MAKE) clean-db ENV=local
 
-logs-backend:
-	kubectl logs -n default -l app.kubernetes.io/name=lingua-quiz-app,app.kubernetes.io/component=backend
+clean-staging: ## 🧹 Remove the STAGING stack (app ONLY).
+	@$(MAKE) clean ENV=staging
 
-logs-frontend:
-	kubectl logs -n default -l app.kubernetes.io/name=lingua-quiz-app,app.kubernetes.io/component=frontend
+clean-prod: ## 🧹 Remove the PRODUCTION stack (app ONLY).
+	@$(MAKE) clean ENV=prod
 
-logs-db:
-	kubectl logs -n shared-database -l app.kubernetes.io/name=shared-postgres
+# ===================================================================================
+# CORE TASKS (Called by workflows)
+# ===================================================================================
+build: ## 📦 Build all Docker images for the LOCAL environment only.
+ifeq ($(ENV),local)
+	@echo "--> Building local images..."
+	$(foreach service,$(SERVICES), \
+		echo "--> Building lingua-quiz-$(service):local"; \
+		docker build --target $(service) -t lingua-quiz-$(service):local . ; \
+	)
+else
+	@echo "--> Skipping build for [$(ENV)]: Handled by CI/CD workflow with GHCR caching."
+endif
 
-# Clean up deployments
-clean-local-app:
-	@echo "Removing Lingua Quiz application..."
-	helm uninstall lingua-quiz --namespace default || true
-	@echo "Application removed!"
+push: ## ⬆️ (CI ONLY) Push all Docker images to the registry.
+	@echo "--> Skipping push: Handled by CI/CD workflow with build-push-action and GHCR caching."
 
-clean-local-db:
-	@echo "Removing shared PostgreSQL..."
-	helm uninstall shared-postgres --namespace shared-database || true
-	@echo "Removing PVCs..."
-	kubectl delete pvc -n shared-database -l app.kubernetes.io/name=shared-postgres || true
-	@echo "PostgreSQL removed!"
+# Reusable macro for idempotent Helm deployments
+define HELM_DEPLOY
+    @echo "--> Deploying release '$(1)' to namespace [$(3)]..."
+    SOPS_AGE_KEY_FILE="$(PWD)/$(SOPS_AGE_KEY_FILE)" sops -d $(2)/values.sops.yaml | \
+    helm upgrade --install $(1) $(2) \
+        --namespace $(3) \
+        --create-namespace \
+        --reset-values \
+        -f - \
+        $(if $(4),-f $(4)) \
+        $(5) \
+        $(HELM_INSTALL_FLAGS)
+endef
 
-clean-local: clean-local-app clean-local-db
-	@echo "Cleanup completed!"
-	@echo "Removing namespace..."
-	kubectl delete namespace shared-database --ignore-not-found=true
+deploy: ## 🚀 Deploy application and database via Helm.
+	@echo "--> Deploying database to namespace [$(DB_NAMESPACE)]..."
+	$(call HELM_DEPLOY,$(DB_RELEASE_NAME),$(HELM_DB_DIR),$(DB_NAMESPACE))
+	@echo "--> Deploying application to namespace [$(APP_NAMESPACE)]..."
+	$(call HELM_DEPLOY,$(APP_RELEASE_NAME),$(HELM_APP_DIR),$(APP_NAMESPACE),$(VALUES_FILE),$(HELM_SET_FLAGS))
+	@echo "\n✅ Deployment to [$(ENV)] complete!"
 
-restart-backend:
-	kubectl rollout restart deployment -n default lingua-quiz-backend
+clean: ## 🗑️  Uninstall the application Helm release.
+	@echo "--> Removing application '$(APP_RELEASE_NAME)' from namespace [$(APP_NAMESPACE)]..."
+	@helm uninstall $(APP_RELEASE_NAME) --namespace $(APP_NAMESPACE) --wait || true
 
-restart-frontend:
-	kubectl rollout restart deployment -n default lingua-quiz-frontend
-
-status:
-	@echo "=== Namespaces ==="
-	@kubectl get namespace | grep -E "(default|shared-database)" || true
-	@echo ""
-	@echo "=== Database Status (shared-database namespace) ==="
-	@kubectl get all -n shared-database 2>/dev/null || echo "Database not deployed"
-	@echo ""
-	@echo "=== Application Status (default namespace) ==="
-	@kubectl get all -n default -l app.kubernetes.io/name=lingua-quiz-app 2>/dev/null || echo "Application not deployed"
-	@echo ""
-	@echo "=== Persistent Volumes ==="
-	@kubectl get pvc -A | grep -E "(shared-database|lingua-quiz)" || true
-
-# Quick development cycle
-dev: build-local
-	@echo "Updating application with new images..."
-	kubectl rollout restart deployment -n default lingua-quiz-backend || true
-	kubectl rollout restart deployment -n default lingua-quiz-frontend || true
-	@echo "Waiting for rollout to complete..."
-	kubectl rollout status deployment -n default lingua-quiz-backend --timeout=2m || true
-	kubectl rollout status deployment -n default lingua-quiz-frontend --timeout=2m || true
-	@echo "Development update completed!"
-
-# Database operations
-db-shell:
-	@echo "Connecting to PostgreSQL shell..."
-	kubectl exec -it -n shared-database statefulset/shared-postgres -- psql -U postgres
-
-db-backup:
-	@echo "Creating database backup..."
-	kubectl exec -n shared-database statefulset/shared-postgres -- pg_dump -U postgres linguaquiz_dev > backup-$(shell date +%Y%m%d-%H%M%S).sql
-	@echo "Backup saved to backup-*.sql"
+clean-db: ## ⚠️  Uninstall the database Helm release.
+	@echo "--> Removing database '$(DB_RELEASE_NAME)' from namespace [$(DB_NAMESPACE)]..."
+	@helm uninstall $(DB_RELEASE_NAME) --namespace $(DB_NAMESPACE) --wait || true

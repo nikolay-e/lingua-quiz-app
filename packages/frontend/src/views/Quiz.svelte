@@ -1,14 +1,58 @@
 <script lang="ts">
-  import { onMount, onDestroy, tick } from 'svelte';
+  import { onMount, tick } from 'svelte';
   import { authStore, quizStore } from '../stores';
   import api from '../api';
   import type { SubmissionResult, QuizQuestion } from '@lingua-quiz/core';
   import { formatForDisplay } from '@lingua-quiz/core';
   import type { QuizFeedback } from '@lingua-quiz/core';
 
-  // Component-specific state
+  // 1. REFACTOR: Data-driven level configuration (Single Source of Truth)
+  const LEVEL_CONFIG = [
+    {
+      id: 'level0',
+      key: 'LEVEL_0',
+      label: 'New',
+      icon: 'fas fa-list',
+      description: (sourceLanguage: string, targetLanguage: string) => `New Words Practice (${sourceLanguage} ➔ ${targetLanguage})`
+    },
+    {
+      id: 'level1',
+      key: 'LEVEL_1',
+      label: 'Learning',
+      icon: 'fas fa-tasks',
+      description: (sourceLanguage: string, targetLanguage: string) => `New Words Practice (${sourceLanguage} ➔ ${targetLanguage})`
+    },
+    {
+      id: 'level2',
+      key: 'LEVEL_2',
+      label: 'Translation Mastered One Way',
+      icon: 'fas fa-check-circle',
+      description: (sourceLanguage: string, targetLanguage: string) => `Reverse Practice (${targetLanguage} ➔ ${sourceLanguage})`
+    },
+    {
+      id: 'level3',
+      key: 'LEVEL_3',
+      label: 'Translation Mastered Both Ways',
+      icon: 'fas fa-check-circle',
+      description: (sourceLanguage: string, targetLanguage: string) => `Context Practice (${sourceLanguage} ➔ ${targetLanguage})`
+    },
+    {
+      id: 'level4',
+      key: 'LEVEL_4',
+      label: 'Examples Mastered One Way',
+      icon: 'fas fa-star',
+      description: (sourceLanguage: string, targetLanguage: string) => `Reverse Context (${targetLanguage} ➔ ${sourceLanguage})`
+    },
+    {
+      id: 'level5',
+      key: 'LEVEL_5',
+      label: 'Fully Mastered',
+      icon: 'fas fa-trophy',
+      description: () => ''
+    }
+  ];
 
-  // Basic component state
+  // Component-specific state
   let userAnswer: string = '';
   let answerInput: HTMLInputElement;
   let feedback: SubmissionResult | QuizFeedback | null = null;
@@ -22,31 +66,35 @@
   let isPlayingTTS: boolean = false;
   let currentAudio: HTMLAudioElement | null = null;
 
-  // Foldable lists state
-  let foldedLists: Record<string, boolean> = {
-    level0: false,
-    level1: false,
-    level2: false,
-    level3: false,
-    level4: false,
-    level5: false
-  };
+  // 2. REFACTOR: Initialize foldedLists from LEVEL_CONFIG instead of hardcoding
+  let foldedLists: Record<string, boolean> = {};
+
+  // Initialize foldedLists dynamically
+  LEVEL_CONFIG.forEach(level => {
+    foldedLists[level.id] = false;
+  });
 
   // Load saved fold states from localStorage
   if (typeof window !== 'undefined') {
     const savedFoldStates = localStorage.getItem('foldedLists');
     if (savedFoldStates) {
       try {
-        foldedLists = JSON.parse(savedFoldStates);
-      } catch (e) {
+        const saved = JSON.parse(savedFoldStates);
+        // Only update existing keys to prevent issues with config changes
+        Object.keys(foldedLists).forEach(key => {
+          if (key in saved) {
+            foldedLists[key] = saved[key];
+          }
+        });
+      } catch {
         // Use defaults if parsing fails
       }
     }
   }
 
-  function toggleFold(level: string) {
-    foldedLists[level] = !foldedLists[level];
-    // Save to localStorage
+  // 3. REFACTOR: Single dynamic toggle function (eliminates repetition)
+  function toggleFold(levelId: string) {
+    foldedLists[levelId] = !foldedLists[levelId];
     localStorage.setItem('foldedLists', JSON.stringify(foldedLists));
   }
 
@@ -65,67 +113,42 @@
   // Get current level from quiz manager for display purposes only
   $: currentLevel = $quizStore.quizManager?.getState().currentLevel || 'LEVEL_1';
 
-  // Get word lists from quiz manager state
-  $: wordLists = $quizStore.quizManager ? (() => {
+  // 4. REFACTOR: Generate word lists dynamically using LEVEL_CONFIG
+  $: levelWordLists = $quizStore.quizManager ? (() => {
     const state = $quizStore.quizManager.getState();
     const manager = $quizStore.quizManager;
 
-    return {
-      level0: state.queues.LEVEL_0.map(id => {
-        return manager.getTranslationForDisplay(id);
-      }).filter(Boolean),
-      level1: state.queues.LEVEL_1.map(id => {
-        return manager.getTranslationForDisplay(id);
-      }).filter(Boolean),
-      level2: state.queues.LEVEL_2.map(id => {
-        return manager.getTranslationForDisplay(id);
-      }).filter(Boolean),
-      level3: state.queues.LEVEL_3.map(id => {
-        return manager.getTranslationForDisplay(id);
-      }).filter(Boolean),
-      level4: state.queues.LEVEL_4.map(id => {
-        return manager.getTranslationForDisplay(id);
-      }).filter(Boolean),
-      level5: state.queues.LEVEL_5.map(id => {
-        return manager.getTranslationForDisplay(id);
-      }).filter(Boolean)
-    };
-  })() : {
-    level0: [] as any[],
-    level1: [] as any[],
-    level2: [] as any[],
-    level3: [] as any[],
-    level4: [] as any[],
-    level5: [] as any[]
-  };
+    return LEVEL_CONFIG.reduce((acc, level) => {
+      const words = state.queues[level.key as keyof typeof state.queues]
+        ?.map(id => manager.getTranslationForDisplay(id))
+        .filter(Boolean)
+        .map((w: any) => `${w.source} -> ${w.target}`) || [];
+
+      acc[level.id] = {
+        ...level,
+        words,
+        count: state.queues[level.key as keyof typeof state.queues]?.length || 0
+      };
+      return acc;
+    }, {} as Record<string, any>);
+  })() : LEVEL_CONFIG.reduce((acc, level) => {
+    acc[level.id] = { ...level, words: [], count: 0 };
+    return acc;
+  }, {} as Record<string, any>);
 
   // TTS reactive state
   $: currentLanguage = direction === 'normal' ? sourceLanguage : targetLanguage;
   $: canUseTTS = ttsAvailable && currentQuestion && ttsLanguages.includes(currentLanguage);
-
-  // Reactive word lists for display
-  $: level0Words = wordLists.level0?.map((w: any) => `${w.source} -> ${w.target}`) || [];
-  $: level1Words = wordLists.level1?.map((w: any) => `${w.source} -> ${w.target}`) || [];
-  $: level2Words = wordLists.level2?.map((w: any) => `${w.source} -> ${w.target}`) || [];
-  $: level3Words = wordLists.level3?.map((w: any) => `${w.source} -> ${w.target}`) || [];
-  $: level4Words = wordLists.level4?.map((w: any) => `${w.source} -> ${w.target}`) || [];
-  $: level5Words = wordLists.level5?.map((w: any) => `${w.source} -> ${w.target}`) || [];
-
-  // Current level is now automatically managed by the quiz system
 
   // Reactive focus management - focus input when it becomes available
   $: if (answerInput && currentQuestion) {
     answerInput.focus();
   }
 
+  // 5. REFACTOR: Simplified level description function using LEVEL_CONFIG
   function getLevelDescription(level: string): string {
-    switch (level) {
-      case 'LEVEL_1': return `New Words Practice (${sourceLanguage} ➔ ${targetLanguage})`;
-      case 'LEVEL_2': return `Reverse Practice (${targetLanguage} ➔ ${sourceLanguage})`;
-      case 'LEVEL_3': return `Context Practice (${sourceLanguage} ➔ ${targetLanguage})`;
-      case 'LEVEL_4': return `Reverse Context (${targetLanguage} ➔ ${sourceLanguage})`;
-      default: return '';
-    }
+    const levelConfig = LEVEL_CONFIG.find(config => config.key === level);
+    return levelConfig?.description(sourceLanguage, targetLanguage) || '';
   }
 
   // TTS functions
@@ -211,11 +234,6 @@
     if (!currentQuestion || isSubmitting) return;
 
     isSubmitting = true;
-    // Don't clear feedback immediately - let it stay visible
-    // feedback = null;
-    // usageExamples = null;
-
-    // Store the question being answered for feedback display
     questionForFeedback = currentQuestion;
 
     try {
@@ -234,32 +252,20 @@
         } else {
           usageExamples = null;
         }
-        // Clear user input
         userAnswer = '';
-
-        // Advance to next question immediately
         await advanceToNextQuestion();
       }
     } catch (error: any) {
       console.error('Error submitting answer:', error);
       const errorMessage = error instanceof Error ? error.message : 'Error submitting answer.';
       feedback = { message: errorMessage, isSuccess: false } as QuizFeedback;
-      // Don't auto-advance on errors
     } finally {
       isSubmitting = false;
     }
   }
 
   async function advanceToNextQuestion(): Promise<void> {
-    // Get the next question (synchronous call)
     quizStore.getNextQuestion();
-
-    // Don't clear feedback - let it persist to the next question
-    // feedback = null;
-    // usageExamples = null;
-    // questionForFeedback = null;
-
-    // Focus the input for the new question
     await tick();
     if (answerInput) answerInput.focus();
   }
@@ -271,21 +277,16 @@
     }
   }
 
-  // Direction is now handled automatically by level progression
-
   async function logout(): Promise<void> {
-    // Save progress before logout
     await quizStore.saveAndCleanup($authStore.token!);
     authStore.logout();
   }
 
   async function handleDeleteAccount(): Promise<void> {
-    // 1. First confirmation prompt
     if (!confirm('Are you absolutely sure you want to delete your account? This action is irreversible and all your progress will be lost.')) {
       return;
     }
 
-    // 2. Second, more explicit confirmation prompt
     const confirmationText = `delete my account ${$authStore.username}`;
     const userInput = prompt(`This will permanently delete your account. This cannot be undone. To confirm, please type exactly: "${confirmationText}"`);
 
@@ -294,11 +295,10 @@
       return;
     }
 
-    // 3. Call API and handle the response
     try {
       await api.deleteAccount($authStore.token!);
       alert('Your account has been successfully deleted.');
-      authStore.logout(); // This will clear local storage and redirect
+      authStore.logout();
     } catch (error: any) {
       console.error('Failed to delete account:', error);
       alert(`Failed to delete account: ${error.message}`);
@@ -312,17 +312,14 @@
       if ($authStore.token) {
         await loadTTSLanguages();
       }
-      // Use tick to ensure DOM is updated before focusing
       await tick();
       if (answerInput) answerInput.focus();
     };
 
     initialize();
 
-    // Save progress before page unload
     const handleBeforeUnload = (_e: BeforeUnloadEvent) => {
       if ($quizStore.quizManager && $authStore.token) {
-        // Try to save synchronously (modern browsers may not wait for async)
         quizStore.saveAndCleanup($authStore.token).catch(() => {});
       }
     };
@@ -355,7 +352,7 @@
               <option value="">
                 {loading ? 'Loading quizzes...' : '🎯 Select a quiz to start learning'}
               </option>
-              {#each wordSets as set}
+              {#each wordSets as set (set.name)}
                 <option value={set.name}>{set.name}</option>
               {/each}
             </select>
@@ -462,89 +459,26 @@
     <section class="sidebar-section learning-progress">
       <h2>Learning Progress</h2>
 
-      <div id="level-1" class="foldable-section">
-        <button class="foldable-header" on:click={() => toggleFold('level1')} aria-expanded={!foldedLists.level1}>
-          <i class="fas fa-{foldedLists.level1 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-          <i class="fas fa-tasks"></i> Learning ({$quizStore.quizManager?.getState().queues.LEVEL_1.length || 0})
-        </button>
-        {#if !foldedLists.level1}
-          <ol id="level-1-list" class="foldable-content">
-            {#each level1Words as word}
-              <li class="word-item">{word}</li>
-            {/each}
-          </ol>
-        {/if}
-      </div>
-
-      <div id="level-2" class="foldable-section">
-        <button class="foldable-header" on:click={() => toggleFold('level2')} aria-expanded={!foldedLists.level2}>
-          <i class="fas fa-{foldedLists.level2 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-          <i class="fas fa-check-circle"></i> Translation Mastered One Way ({$quizStore.quizManager?.getState().queues.LEVEL_2.length || 0})
-        </button>
-        {#if !foldedLists.level2}
-          <ol id="level-2-list" class="foldable-content">
-            {#each level2Words as word}
-              <li class="word-item">{word}</li>
-            {/each}
-          </ol>
-        {/if}
-      </div>
-
-      <div id="level-3" class="foldable-section">
-        <button class="foldable-header" on:click={() => toggleFold('level3')} aria-expanded={!foldedLists.level3}>
-          <i class="fas fa-{foldedLists.level3 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-          <i class="fas fa-check-circle"></i> Translation Mastered Both Ways ({$quizStore.quizManager?.getState().queues.LEVEL_3.length || 0})
-        </button>
-        {#if !foldedLists.level3}
-          <ol id="level-3-list" class="foldable-content">
-            {#each level3Words as word}
-              <li class="word-item">{word}</li>
-            {/each}
-          </ol>
-        {/if}
-      </div>
-
-      <div id="level-4" class="foldable-section">
-        <button class="foldable-header" on:click={() => toggleFold('level4')} aria-expanded={!foldedLists.level4}>
-          <i class="fas fa-{foldedLists.level4 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-          <i class="fas fa-star"></i> Examples Mastered One Way ({$quizStore.quizManager?.getState().queues.LEVEL_4.length || 0})
-        </button>
-        {#if !foldedLists.level4}
-          <ol id="level-4-list" class="foldable-content">
-            {#each level4Words as word}
-              <li class="word-item">{word}</li>
-            {/each}
-          </ol>
-        {/if}
-      </div>
-
-      <div id="level-5" class="foldable-section">
-        <button class="foldable-header" on:click={() => toggleFold('level5')} aria-expanded={!foldedLists.level5}>
-          <i class="fas fa-{foldedLists.level5 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-          <i class="fas fa-trophy"></i> Fully Mastered ({$quizStore.quizManager?.getState().queues.LEVEL_5.length || 0})
-        </button>
-        {#if !foldedLists.level5}
-          <ol id="level-5-list" class="foldable-content">
-            {#each level5Words as word}
-              <li class="word-item">{word}</li>
-            {/each}
-          </ol>
-        {/if}
-      </div>
-
-      <div id="level-0" class="foldable-section">
-        <button class="foldable-header" on:click={() => toggleFold('level0')} aria-expanded={!foldedLists.level0}>
-          <i class="fas fa-{foldedLists.level0 ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
-          <i class="fas fa-list"></i> New ({$quizStore.quizManager?.getState().queues.LEVEL_0.length || 0})
-        </button>
-        {#if !foldedLists.level0}
-          <ol id="level-0-list" class="foldable-content">
-            {#each level0Words as word}
-              <li class="word-item">{word}</li>
-            {/each}
-          </ol>
-        {/if}
-      </div>
+      <!-- 6. REFACTOR: Generate foldable sections dynamically from LEVEL_CONFIG -->
+      {#each Object.values(levelWordLists) as levelData (levelData.id)}
+        <div id="{levelData.id}" class="foldable-section">
+          <button
+            class="foldable-header"
+            on:click={() => toggleFold(levelData.id)}
+            aria-expanded={!foldedLists[levelData.id]}
+          >
+            <i class="fas fa-{foldedLists[levelData.id] ? 'chevron-right' : 'chevron-down'} fold-icon"></i>
+            <i class="{levelData.icon}"></i> {levelData.label} ({levelData.count})
+          </button>
+          {#if !foldedLists[levelData.id]}
+            <ol id="{levelData.id}-list" class="foldable-content">
+              {#each levelData.words as word (word)}
+                <li class="word-item">{word}</li>
+              {/each}
+            </ol>
+          {/if}
+        </div>
+      {/each}
     </section>
   </div>
 </main>
@@ -555,9 +489,8 @@
   }
 
   .delete-button:hover {
-    background-color: #c0392b; /* Darker red for light mode */
+    background-color: #c0392b;
   }
-
 
   #user-status {
     display: flex;

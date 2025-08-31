@@ -1,0 +1,40 @@
+# Version control
+.git/
+.gitignore
+
+# Secrets and environment
+.env
+.env.*
+*.key
+*.pem
+secrets/
+
+.age-key.txt
+
+# Documentation
+*.md
+docs/
+
+# IDE and editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+
+# Temporary files
+*.tmp
+*.bak
+tmp/

@@ -10,13 +10,11 @@ Expand the name of the chart.
 Get the namespace name
 */}}
 {{- define "lingua-quiz-app.namespace" -}}
-{{- default "lingua-quiz-production" .Values.namespace -}}
+{{- .Release.Namespace -}}
 {{- end -}}
 
 {{/*
 Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-Always use the release name directly to avoid appending chart name.
 */}}
 {{- define "lingua-quiz-app.fullname" -}}
 {{- if .Values.fullnameOverride -}}
@@ -45,71 +43,203 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end -}}
 
 {{/*
-Backend specific labels
+================================================================================
+REFACTOR: Generic component helpers (Corrected Version)
+================================================================================
 */}}
-{{- define "lingua-quiz-app.backend.labels" -}}
-{{ include "lingua-quiz-app.labels" . }}
-app.kubernetes.io/name: {{ include "lingua-quiz-app.name" . }}-backend
-app.kubernetes.io/instance: {{ .Release.Name }}
-app.kubernetes.io/component: backend
+
+{{/*
+Generic component fullname (e.g., "lingua-quiz-backend")
+*/}}
+{{- define "lingua-quiz-app.component.fullname" -}}
+{{- printf "%s-%s" (include "lingua-quiz-app.fullname" .root) .component.name -}}
 {{- end -}}
 
 {{/*
-Backend selector labels
+Generic component selector labels
+CORRECTED: Simplified to use the full component name for the 'name' label.
+This prevents templating issues and creates cleaner, more standard labels.
 */}}
-{{- define "lingua-quiz-app.backend.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "lingua-quiz-app.name" . }}-backend
-app.kubernetes.io/instance: {{ .Release.Name }}
-app.kubernetes.io/component: backend
+{{- define "lingua-quiz-app.component.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "lingua-quiz-app.component.fullname" . }}
+app.kubernetes.io/instance: {{ .root.Release.Name }}
+app.kubernetes.io/component: {{ .component.name }}
 {{- end -}}
 
 {{/*
-Frontend specific labels
+Generic component labels
 */}}
-{{- define "lingua-quiz-app.frontend.labels" -}}
-{{ include "lingua-quiz-app.labels" . }}
-app.kubernetes.io/name: {{ include "lingua-quiz-app.name" . }}-frontend
-app.kubernetes.io/instance: {{ .Release.Name }}
-app.kubernetes.io/component: frontend
+{{- define "lingua-quiz-app.component.labels" -}}
+{{ include "lingua-quiz-app.labels" .root }}
+{{ include "lingua-quiz-app.component.selectorLabels" . }}
 {{- end -}}
 
 {{/*
-Frontend selector labels
+Generic component template for Deployment and Service
 */}}
-{{- define "lingua-quiz-app.frontend.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "lingua-quiz-app.name" . }}-frontend
-app.kubernetes.io/instance: {{ .Release.Name }}
-app.kubernetes.io/component: frontend
-{{- end -}}
-
-{{/*
-Backend fullname
-*/}}
-{{- define "lingua-quiz-app.backend.fullname" -}}
-{{- printf "%s-backend" (include "lingua-quiz-app.fullname" .) -}}
-{{- end -}}
-
-{{/*
-Frontend fullname
-*/}}
-{{- define "lingua-quiz-app.frontend.fullname" -}}
-{{- printf "%s-frontend" (include "lingua-quiz-app.fullname" .) -}}
-{{- end -}}
-
-{{/*
-PostgreSQL Fullname (used for service and statefulset name)
-*/}}
-{{- define "lingua-quiz-app.postgresql.fullname" -}}
-{{- printf "%s-postgres" .Release.Name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-{{/*
-PostgreSQL Selector labels
-*/}}
-{{- define "lingua-quiz-app.postgresql.selectorLabels" -}}
-app.kubernetes.io/name: postgres
-app.kubernetes.io/instance: {{ .Release.Name }}
-app.kubernetes.io/component: database
+{{- define "lingua-quiz-app.component.tpl" -}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "lingua-quiz-app.component.fullname" . }}
+  namespace: {{ include "lingua-quiz-app.namespace" .root }}
+  labels:
+    {{- include "lingua-quiz-app.component.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .component.values.replicaCount | default .root.Values.replicaCount }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  progressDeadlineSeconds: 600
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      {{- include "lingua-quiz-app.component.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "lingua-quiz-app.component.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .root.Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .root.Values.serviceAccount.create }}
+      serviceAccountName: {{ include "lingua-quiz-app.serviceAccountName" .root }}
+      {{- end }}
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        {{- toYaml .root.Values.podSecurityContext | default "{}" | nindent 8 }}
+      containers:
+        - name: {{ .component.name }}
+          securityContext:
+            {{- toYaml .root.Values.securityContext | default "{}" | nindent 12 }}
+          image: "{{ .component.values.image.repository }}:{{ .component.values.image.tag | default .root.Chart.AppVersion }}"
+          imagePullPolicy: {{ .component.values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .component.values.port }}
+              protocol: TCP
+          {{- if .component.values.probes }}
+          livenessProbe:
+            httpGet:
+              path: {{ .component.values.probes.liveness.path }}
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: {{ .component.values.probes.liveness.initialDelaySeconds }}
+            periodSeconds: {{ .component.values.probes.liveness.periodSeconds }}
+            timeoutSeconds: {{ .component.values.probes.liveness.timeoutSeconds }}
+            failureThreshold: {{ .component.values.probes.liveness.failureThreshold }}
+          readinessProbe:
+            httpGet:
+              path: {{ .component.values.probes.readiness.path }}
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: {{ .component.values.probes.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .component.values.probes.readiness.periodSeconds }}
+            timeoutSeconds: {{ .component.values.probes.readiness.timeoutSeconds }}
+            successThreshold: {{ .component.values.probes.readiness.successThreshold }}
+            failureThreshold: {{ .component.values.probes.readiness.failureThreshold }}
+          {{- if .component.values.probes.startup }}
+          startupProbe:
+            httpGet:
+              path: {{ .component.values.probes.startup.path }}
+              port: http
+              scheme: HTTP
+            failureThreshold: {{ .component.values.probes.startup.failureThreshold }}
+            periodSeconds: {{ .component.values.probes.startup.periodSeconds }}
+            timeoutSeconds: {{ .component.values.probes.startup.timeoutSeconds }}
+          {{- end }}
+          {{- end }}
+          resources:
+            {{- toYaml .component.values.resources | nindent 12 }}
+          {{- if eq .component.name "backend" }}
+          env:
+            - name: PORT
+              value: {{ .component.values.port | quote }}
+            - name: DB_HOST
+              value: {{ .root.Values.postgres.external.host | quote }}
+            - name: DB_PORT
+              value: {{ .root.Values.postgres.external.port | default "5432" | quote }}
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "lingua-quiz-app.fullname" .root }}-postgres
+                  key: POSTGRES_DB
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "lingua-quiz-app.fullname" .root }}-postgres
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "lingua-quiz-app.fullname" .root }}-postgres
+                  key: POSTGRES_PASSWORD
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "lingua-quiz-app.fullname" .root }}-jwt
+                  key: JWT_SECRET
+            - name: CORS_ALLOWED_ORIGINS
+              value: {{ .component.values.corsAllowedOrigins | quote }}
+            {{- if .root.Values.secrets.googleCloudCredentialsB64 }}
+            - name: GOOGLE_CLOUD_CREDENTIALS_B64
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "lingua-quiz-app.fullname" .root }}-tts
+                  key: GOOGLE_CLOUD_CREDENTIALS_B64
+            {{- end }}
+          {{- end }}
+          {{- if eq .component.name "frontend" }}
+          volumeMounts:
+            - name: cache-volume
+              mountPath: /var/cache/nginx
+            - name: run-volume
+              mountPath: /var/run
+          {{- end }}
+      volumes:
+        {{- if eq .component.name "frontend" }}
+        - name: cache-volume
+          emptyDir: {}
+        - name: run-volume
+          emptyDir: {}
+        {{- end }}
+      {{- with .root.Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .root.Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .root.Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "lingua-quiz-app.component.fullname" . }}
+  namespace: {{ include "lingua-quiz-app.namespace" .root }}
+  labels:
+    {{- include "lingua-quiz-app.component.labels" . | nindent 4 }}
+spec:
+  type: {{ .component.values.service.type }}
+  ports:
+    - port: {{ .component.values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+      {{- if and (eq .component.values.service.type "NodePort") .component.values.service.nodePort }}
+      nodePort: {{ .component.values.service.nodePort }}
+      {{- end }}
+  selector:
+    {{- include "lingua-quiz-app.component.selectorLabels" . | nindent 4 }}
 {{- end -}}
 
 {{/*
@@ -121,4 +251,11 @@ Create the name of the service account to use
 {{- else -}}
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
+{{- end -}}
+
+{{/*
+PostgreSQL Fullname (used for service and statefulset name)
+*/}}
+{{- define "lingua-quiz-app.postgresql.fullname" -}}
+{{- printf "%s-postgres" .Release.Name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}

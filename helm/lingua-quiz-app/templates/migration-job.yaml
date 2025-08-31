@@ -11,7 +11,7 @@ metadata:
     # This is important - it ensures the job is re-run on Helm upgrades
     "helm.sh/hook": post-install,post-upgrade
     "helm.sh/hook-weight": "10"
-    "helm.sh/hook-delete-policy": before-hook-creation
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
 spec:
   ttlSecondsAfterFinished: {{.Values.migrations.ttlSecondsAfterFinished}}
   template:
@@ -51,12 +51,12 @@ spec:
           - name: PGUSER
             valueFrom:
               secretKeyRef:
-                name: {{include "lingua-quiz-app.fullname" .}}-postgres
+                name: {{ .Values.postgres.external.existingSecret | default (printf "%s-postgres" (include "lingua-quiz-app.fullname" .)) }}
                 key: POSTGRES_USER
           - name: PGPASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{include "lingua-quiz-app.fullname" .}}-postgres
+                name: {{ .Values.postgres.external.existingSecret | default (printf "%s-postgres" (include "lingua-quiz-app.fullname" .)) }}
                 key: POSTGRES_PASSWORD
         resources:
           requests:
@@ -74,30 +74,32 @@ spec:
         - {{. | quote}}
         {{- end}}
         env:
-          # Database configuration - always use app's own postgres secret
+          # Database configuration
           {{- if .Values.postgres.enabled}}
           - name: DB_HOST
             value: {{include "lingua-quiz-app.postgresql.fullname" .}}
+          - name: DB_PORT
+            value: "5432"
           {{- else}}
           - name: DB_HOST
             value: {{.Values.postgres.external.host | quote}}
-          {{- end}}
           - name: DB_PORT
             value: {{.Values.postgres.external.port | default "5432" | quote}}
+          {{- end}}
           - name: POSTGRES_DB
             valueFrom:
               secretKeyRef:
-                name: {{include "lingua-quiz-app.fullname" .}}-postgres
+                name: {{ .Values.postgres.external.existingSecret | default (printf "%s-postgres" (include "lingua-quiz-app.fullname" .)) }}
                 key: POSTGRES_DB
           - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
-                name: {{include "lingua-quiz-app.fullname" .}}-postgres
+                name: {{ .Values.postgres.external.existingSecret | default (printf "%s-postgres" (include "lingua-quiz-app.fullname" .)) }}
                 key: POSTGRES_USER
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{include "lingua-quiz-app.fullname" .}}-postgres
+                name: {{ .Values.postgres.external.existingSecret | default (printf "%s-postgres" (include "lingua-quiz-app.fullname" .)) }}
                 key: POSTGRES_PASSWORD
           - name: JWT_SECRET
             valueFrom:

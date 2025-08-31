@@ -4,384 +4,170 @@ on:
   push:
     branches: [main]
   pull_request:
+    branches: [main]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
-  # Static analysis jobs run in parallel
-  lint:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run linting
-        run: npm run lint
-
-      - name: Check dependencies
-        run: npm run depcheck
-
-  # Unit tests run in parallel
-  unit-tests:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run core package tests
-        run: |
-          cd packages/core
-          npm test
-
-  # Data migration validation
-  validate-data-migrations:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
-
-      - name: Install word processing dependencies
-        run: |
-          cd packages/word-processing
-          pip install -r requirements.txt
-
-      - name: Validate data migrations
-        run: |
-          cd packages/word-processing
-          python main.py validate
-
-      - name: Run complete vocabulary analysis
-        run: |
-          cd packages/word-processing
-          python main.py full-analysis
-
-      - name: Upload analysis results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: vocabulary-analysis-results
-          path: packages/word-processing/analysis_history.json
-          retention-days: 30
-
-  integration-tests:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    strategy:
-      matrix:
-        test-type: [backend, e2e]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Start test environment
-        run: docker compose up --build -d db backend frontend
-
-      - name: Wait for services to be ready
-        run: timeout 60 bash -c 'until curl -f http://localhost:8080 > /dev/null 2>&1; do sleep 1; done'
-
-      - name: Run backend integration tests
-        if: matrix.test-type == 'backend'
-        run: |
-          cd packages/backend
-          pip install -r requirements.txt
-          SKIP_TTS_TESTS=true API_URL=http://localhost:9000/api python test_integration.py
-
-      - name: Run E2E tests
-        if: matrix.test-type == 'e2e'
-        run: docker compose run --build --rm e2e-tests
-
-  build-images:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    strategy:
-      matrix:
-        include:
-          - context: ./packages/backend
-            dockerfile: Dockerfile
-            image: lingua-quiz-backend
-          - context: .
-            dockerfile: ./packages/frontend/Dockerfile
-            image: lingua-quiz-frontend
-    steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/login-action@v3
-        with:
-          username: nikolajer
-          password: ${{ secrets.DOCKER_REGISTRY_TOKEN }}
-      - uses: docker/build-push-action@v6
-        with:
-          context: ${{ matrix.context }}
-          file: ${{ matrix.context }}/${{ matrix.dockerfile }}
-          push: true
-          tags: nikolajer/${{ matrix.image }}:${{ github.event.pull_request.head.sha || github.sha }},nikolajer/${{ matrix.image }}:latest
-
   deploy:
-    needs: [build-images]
     runs-on: ubuntu-latest
-    environment: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
+    environment: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'production' || 'staging' }}
+    # Add permissions to write to GHCR
     permissions:
       contents: read
-    env:
-      NAMESPACE: ${{ github.ref == 'refs/heads/main' && 'lingua-quiz-production' || 'lingua-quiz-staging' }}
-      ENVIRONMENT: ${{ github.ref == 'refs/heads/main' && 'production' || 'staging' }}
+      packages: write # Grant permission to push to GitHub Packages (GHCR)
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Setup kubectl and Helm
-        run: |
-          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-          chmod +x kubectl
-          sudo mv kubectl /usr/local/bin/
-          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+      # Setup Docker Buildx
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
+      # Login to GitHub Container Registry (GHCR)
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }} # Use GITHUB_TOKEN for secure auth
+
+      # Extract metadata (tags, labels) for Docker
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}/lingua-quiz
+          # Generates tags: type=sha, type=ref (e.g., branch name)
+          tags: |
+            type=sha,prefix=
+            type=ref,event=branch
+            type=ref,event=pr
+
+      # Build and push backend image with cache
+      - name: Build and push backend image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: backend
+          push: true
+          tags: ghcr.io/${{ github.repository }}/lingua-quiz-backend:${{ github.event.pull_request.head.sha || github.sha }}
+          labels: ${{ steps.meta.outputs.labels }}
+          # This is the key for caching
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-backend:cache
+          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-backend:cache,mode=max
+
+      # Build and push frontend image with cache
+      - name: Build and push frontend image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: frontend
+          push: true
+          tags: ghcr.io/${{ github.repository }}/lingua-quiz-frontend:${{ github.event.pull_request.head.sha || github.sha }}
+          labels: ${{ steps.meta.outputs.labels }}
+          # This is the key for caching
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-frontend:cache
+          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-frontend:cache,mode=max
+
+      # Build and push integration tests image with cache
+      - name: Build and push integration tests image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: integration-e2e-tests
+          push: true
+          tags: ghcr.io/${{ github.repository }}/lingua-quiz-integration-e2e-tests:${{ github.event.pull_request.head.sha || github.sha }}
+          labels: ${{ steps.meta.outputs.labels }}
+          # This is the key for caching
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-integration-e2e-tests:cache
+          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-integration-e2e-tests:cache,mode=max
+
+      # Setup Helm
+      - name: Setup Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: 'v3.15.4' # Pin to specific version
+
+      # Setup kubectl
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.30.0' # Pin to specific version
+
+      # Setup SOPS
+      - name: Setup SOPS
+        uses: mdgreenwald/mozilla-sops-action@v1.6.0
+        with:
+          version: '3.10.2' # Pin to specific version
+
+      # Configure kubeconfig
       - name: Configure kubeconfig
         run: |
           mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > $HOME/.kube/config
+          cat << 'EOF' > $HOME/.kube/config
+          ${{ secrets.KUBE_CONFIG }}
+          EOF
           chmod 600 $HOME/.kube/config
 
-      - name: Deploy with Helm
+      # Setup SOPS with age key
+      - name: Setup SOPS with age key
+        run: |
+          echo "${{ secrets.AGE_PRIVATE_KEY }}" > .age-key.txt
+          chmod 600 .age-key.txt
+
+      # Create GHCR secret in target namespace
+      - name: Create GHCR secret
+        run: |
+          # Determine target namespace based on environment
+          if [ "${{ github.event_name }}" == "push" ] && [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            NAMESPACE="lingua-quiz-production"
+          else
+            NAMESPACE="lingua-quiz-staging"
+          fi
+
+          echo "Creating GHCR secret in namespace: $NAMESPACE"
+
+          # Create namespace if it doesn't exist
+          kubectl create namespace "$NAMESPACE" --dry-run=client -o yaml | kubectl apply -f -
+
+          # Delete existing secret if it exists (to update credentials)
+          kubectl delete secret ghcr-secret -n "$NAMESPACE" || true
+
+          # Create new GHCR secret
+          kubectl create secret docker-registry ghcr-secret \
+            --docker-server=ghcr.io \
+            --docker-username=${{ github.repository_owner }} \
+            --docker-password=${{ secrets.GITHUB_TOKEN }} \
+            --docker-email=noreply@github.com \
+            -n "$NAMESPACE"
+
+      # Deploy with Makefile, now using GHCR images
+      - name: Deploy with Makefile
         id: helm-deploy
         continue-on-error: true
         run: |
-          # Create app namespace with proper labels if it doesn't exist
-          if ! kubectl get namespace $NAMESPACE 2>/dev/null; then
-            echo "Creating $NAMESPACE namespace..."
-            kubectl create namespace $NAMESPACE
-            kubectl label namespace $NAMESPACE app.kubernetes.io/managed-by=Helm
-            kubectl annotate namespace $NAMESPACE meta.helm.sh/release-name=lingua-quiz
-            kubectl annotate namespace $NAMESPACE meta.helm.sh/release-namespace=$NAMESPACE
-          fi
-
-          # Check if there's an existing release and its status
-          RELEASE_STATUS=$(helm status lingua-quiz --namespace $NAMESPACE 2>/dev/null | grep STATUS: | awk '{print $2}' || echo "not-found")
-
-          if [ "$RELEASE_STATUS" = "pending-install" ] || [ "$RELEASE_STATUS" = "pending-upgrade" ] || [ "$RELEASE_STATUS" = "pending-rollback" ]; then
-            echo "Found release in pending state ($RELEASE_STATUS). Cleaning up..."
-            helm delete lingua-quiz --namespace $NAMESPACE --wait || true
-            sleep 20
-          elif [ "$RELEASE_STATUS" = "failed" ]; then
-            echo "Found failed release. Uninstalling..."
-            helm uninstall lingua-quiz --namespace $NAMESPACE --wait || true
-            sleep 15
-          fi
-
-          # Clean up any leftover migration jobs
-          kubectl delete job lingua-quiz-migrations -n $NAMESPACE --ignore-not-found=true
-
-          # Wait for any terminating pods to finish
-          echo "Waiting for any terminating pods to finish..."
-          kubectl wait --for=delete pod -l app.kubernetes.io/instance=lingua-quiz -n $NAMESPACE --timeout=60s 2>/dev/null || true
-
           IMAGE_TAG="${{ github.event.pull_request.head.sha || github.sha }}"
           echo "Deploying with image tag: $IMAGE_TAG"
 
-          # Set database configuration based on environment
-          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            # Production uses default values and existing credentials
-            DB_CONFIG="--set postgres.external.database=linguaquiz"
-            DB_NAME="linguaquiz"
-            DB_USER="lingua-quiz-db-user"
-            DB_PASSWORD="${{ secrets.POSTGRES_PROD_PASSWORD }}"
-          else
-            # Staging uses separate database with staging credentials
-            DB_CONFIG="--set postgres.external.database=linguaquiz_staging"
-            DB_NAME="linguaquiz_staging"
-            DB_USER="linguaquiz_staging"
-            DB_PASSWORD="${{ secrets.POSTGRES_STAGING_PASSWORD }}"
-          fi
-
           # Debug: Show current releases
-          echo "Current Helm releases in namespace $NAMESPACE:"
-          helm list --namespace $NAMESPACE || true
+          echo "Listing all Helm releases:"
+          helm list -A || true
 
           # Debug: Validate chart before installation
           echo "Validating Helm chart..."
           helm lint ./helm/lingua-quiz-app || true
 
-          # Deploy with better error handling
-          echo "Starting Helm deployment..."
-          if ! helm upgrade --install lingua-quiz ./helm/lingua-quiz-app \
-            --namespace $NAMESPACE \
-            --set namespace=$NAMESPACE \
-            --set backend.image.repository=nikolajer/lingua-quiz-backend \
-            --set backend.image.tag=$IMAGE_TAG \
-            --set frontend.image.repository=nikolajer/lingua-quiz-frontend \
-            --set frontend.image.tag=$IMAGE_TAG \
-            --set ingress.frontend.host=${{ github.ref == 'refs/heads/main' && 'lingua-quiz.nikolay-eremeev.com' || 'test-lingua-quiz.nikolay-eremeev.com' }} \
-            --set secrets.jwtSecret="${{ secrets.JWT_SECRET }}" \
-            --set secrets.postgresDb="$DB_NAME" \
-            --set secrets.postgresUser="$DB_USER" \
-            --set secrets.postgresPassword="$DB_PASSWORD" \
-            --set secrets.googleCloudCredentialsB64="${{ secrets.GOOGLE_CLOUD_CREDENTIALS_B64 }}" \
-            $DB_CONFIG \
-            --wait --timeout 5m \
-            --debug; then
-
-            echo "Helm deployment failed. Getting debug information..."
-            echo ""
-            echo "=== Helm Release Status ==="
-            helm status lingua-quiz --namespace $NAMESPACE --show-desc || true
-
-            echo ""
-            echo "=== Recent Events in Namespace ==="
-            kubectl get events --namespace $NAMESPACE --sort-by='.lastTimestamp' | tail -20 || true
-
-            echo ""
-            echo "=== Pod Status ==="
-            kubectl get pods --namespace $NAMESPACE -l app.kubernetes.io/instance=lingua-quiz || true
-
-            echo ""
-            echo "=== Failed Pod Logs ==="
-            kubectl logs --namespace $NAMESPACE -l app.kubernetes.io/instance=lingua-quiz --tail=50 --all-containers=true || true
-
-            exit 1
-          fi
-
-          echo "Helm deployment completed successfully!"
-
-      - name: Check Migration Logs
-        if: always() && steps.helm-deploy.outcome == 'success'
-        run: |
-          echo "Checking for migration job..."
-          # Give it a moment for the job to be created
-          sleep 10
-
-          # Check if migration job exists
-          if kubectl get job lingua-quiz-migrations -n $NAMESPACE 2>/dev/null; then
-            echo "Migration job found. Monitoring for completion or failure..."
-
-            # Monitor job status in a loop to catch failure immediately
-            for i in $(seq 1 60); do
-              sleep 5
-
-              # Check job status
-              JOB_STATUS=$(kubectl get job lingua-quiz-migrations -n $NAMESPACE -o jsonpath='{.status}' 2>/dev/null || echo '{}')
-              COMPLETED=$(echo "$JOB_STATUS" | jq -r '.succeeded // 0')
-              FAILED=$(echo "$JOB_STATUS" | jq -r '.failed // 0')
-
-              echo "Attempt $i/60: Completed: $COMPLETED, Failed: $FAILED"
-
-              # If completed successfully
-              if [ "$COMPLETED" -gt "0" ]; then
-                echo "Migration job completed successfully!"
-                break
-              fi
-
-              # If failed, immediately capture logs before cleanup
-              if [ "$FAILED" -gt "0" ]; then
-                echo "Migration job failed! Capturing logs immediately..."
-
-                echo ""
-                echo "=== Migration Job Status ==="
-                kubectl describe job/lingua-quiz-migrations -n $NAMESPACE || true
-
-                echo ""
-                echo "=== Migration Pod Logs ==="
-                kubectl logs job/lingua-quiz-migrations -n $NAMESPACE --all-containers=true || true
-
-                # Also try to get logs from pods directly
-                echo ""
-                echo "=== Migration Pod Status ==="
-                kubectl get pods -l job-name=lingua-quiz-migrations -n $NAMESPACE || true
-
-                echo ""
-                echo "=== Direct Pod Logs ==="
-                kubectl logs -l job-name=lingua-quiz-migrations -n $NAMESPACE --all-containers=true || true
-
-                echo "Migration job failed!"
-                exit 1
-              fi
-            done
-
-            # If we exit the loop without completion, something's wrong
-            echo "Migration job monitoring timed out after 5 minutes"
-
-            echo ""
-            echo "=== Final Migration Job Status ==="
-            kubectl describe job/lingua-quiz-migrations -n $NAMESPACE || true
-
-            echo ""
-            echo "=== Final Migration Logs ==="
-            kubectl logs job/lingua-quiz-migrations -n $NAMESPACE --all-containers=true || true
+          # Clean and deploy using Makefile with GHCR registry
+          if [ "${{ github.event_name }}" == "push" ] && [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            echo "Cleaning and deploying to production..."
+            make clean-prod
+            make prod IMAGE_TAG="$IMAGE_TAG" REGISTRY="ghcr.io/${{ github.repository }}"
           else
-            echo "Migration job not found. Helm deployment may have failed."
+            echo "Cleaning and deploying to staging..."
+            make clean-staging
+            make staging IMAGE_TAG="$IMAGE_TAG" REGISTRY="ghcr.io/${{ github.repository }}"
           fi
-
-      - name: Check Deployment Status
-        if: steps.helm-deploy.outcome == 'failure'
-        run: |
-          echo "Helm deployment failed. Checking status..."
-          kubectl get all -n $NAMESPACE
-          exit 1
-
-  test-api:
-    needs: deploy
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    env:
-      API_URL: ${{ github.ref == 'refs/heads/main' && 'https://lingua-quiz.nikolay-eremeev.com/api' || 'https://test-lingua-quiz.nikolay-eremeev.com/api' }}
-    steps:
-      - uses: actions/checkout@v4
-      - name: Test deployed API
-        run: |
-          cd packages/backend
-          pip install -r requirements.txt
-          python test_integration.py
-
-  test-e2e-deployed:
-    needs: deploy
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    env:
-      LINGUA_QUIZ_URL: ${{ github.ref == 'refs/heads/main' && 'https://lingua-quiz.nikolay-eremeev.com' || 'https://test-lingua-quiz.nikolay-eremeev.com' }}
-      API_URL: ${{ github.ref == 'refs/heads/main' && 'https://lingua-quiz.nikolay-eremeev.com/api' || 'https://test-lingua-quiz.nikolay-eremeev.com/api' }}
-    steps:
-      - uses: actions/checkout@v4
-      - run: docker build -t e2e-tests -f ./packages/e2e-tests/Dockerfile .
-      - run: docker run --rm -e LINGUA_QUIZ_URL -e API_URL e2e-tests playwright test

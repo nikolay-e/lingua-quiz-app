@@ -1,39 +1,59 @@
 version: 2
-multi-ecosystem-groups:
-  all-dependencies:
-    schedule:
-      interval: "weekly"
-    update-types:
-      - "minor"
-      - "patch"
-      - "major"
-    labels:
-      - "dependencies"
+
+registries:
+  docker-hub:
+    type: docker-registry
+    url: 'https://registry.hub.docker.com'
+    username: 'nikolajer'
+    password: '${{secrets.DOCKER_REGISTRY_TOKEN}}'
 
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
-    patterns:
-      - "*"
-    multi-ecosystem-group: "all-dependencies"
+  # NPM dependencies
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    labels:
+      - 'dependencies'
+    groups:
+      npm-dependencies:
+        patterns:
+          - '*'
 
-  - package-ecosystem: "pip"
-    directory: "/packages/backend/"
-    patterns:
-      - "*"
-    multi-ecosystem-group: "all-dependencies"
+  # Pip dependencies
+  - package-ecosystem: 'pip'
+    directory: '/packages/backend/'
+    schedule:
+      interval: 'weekly'
+    labels:
+      - 'dependencies'
+    groups:
+      pip-dependencies:
+        patterns:
+          - '*'
 
-  - package-ecosystem: "docker"
-    directories:
-      - "/packages/backend"
-      - "/packages/e2e-tests"
-      - "/packages/frontend"
-    patterns:
-      - "*"
-    multi-ecosystem-group: "all-dependencies"
+  # Docker dependencies (single root Dockerfile)
+  - package-ecosystem: 'docker'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    labels:
+      - 'dependencies'
+    registries:
+      - 'docker-hub'
+    groups:
+      docker-dependencies:
+        patterns:
+          - '*'
 
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    patterns:
-      - "*"
-    multi-ecosystem-group: "all-dependencies"
+  # GitHub Actions dependencies
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    labels:
+      - 'dependencies'
+    groups:
+      actions-dependencies:
+        patterns:
+          - '*'

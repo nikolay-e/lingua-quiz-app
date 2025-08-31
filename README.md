@@ -2,39 +2,43 @@
 
 A language learning web application that helps users master vocabulary through spaced repetition. Live demo: [lingua-quiz.nikolay-eremeev.com](https://lingua-quiz.nikolay-eremeev.com/)
 
-## Quick Start with Docker Compose 🐳
+## Quick Start with Local Kubernetes 🚀
 
-1. **Prerequisites**: Install [Docker](https://www.docker.com/products/docker-desktop/) and Docker Compose
+1. **Prerequisites**:
+   - [Docker Desktop](https://www.docker.com/products/docker-desktop/) with Kubernetes enabled
+   - [kubectl](https://kubernetes.io/docs/tasks/tools/)
+   - [Helm](https://helm.sh/docs/intro/install/)
 
-2. **Clone and Run**:
+2. **Clone and Deploy**:
+
    ```bash
    git clone https://github.com/nikolay-e/lingua-quiz.git
    cd lingua-quiz
-   docker compose up --build -d db backend frontend
+   make local
    ```
 
 3. **Access the App**:
-   - Frontend: http://localhost:8080
-   - Backend API: http://localhost:9000
+   - Frontend: http://localhost:30080
+   - Backend API: http://localhost:30900
 
-4. **Run Tests** (optional):
+4. **Clean Up**:
    ```bash
-   docker compose up --build e2e-tests
+   make clean-local
    ```
 
 ## Documentation 📚
 
-- [Development Guidelines](docs/development-rules.md) - LLM-centric development approach
-- [System Architecture](docs/system-architecture.md) - Technical design and components
-- [Learning Algorithm](docs/spaced-repetition-algorithm.md) - How the spaced repetition works
-- [Answer Validation](docs/answer-comparison-logic.md) - Translation answer matching rules
+- [Development Guidelines](docs/tech.md#development--testing) - LLM-centric development approach
+- [System Architecture](docs/tech.md#system-architecture) - Technical design and components
+- [Learning Algorithm](docs/tech.md#learning-algorithm-quiz-core) - How the spaced repetition works
+- [Answer Validation](docs/tech.md#answer-validation-logic-quiz-core) - Translation answer matching rules
 
 ## Tech Stack
 
-**Frontend**: Svelte 4.0, Vite
-**Backend**: Python 3.11, Flask, PostgreSQL
+**Frontend**: Svelte 5.36, Vite
+**Backend**: Python 3.13, FastAPI, PostgreSQL
 **Infrastructure**: Docker, Kubernetes, Helm
-**Testing**: Playwright E2E tests
+**Testing**: Playwright E2E tests, Python integration tests
 
 ## Contributing 🤝
 

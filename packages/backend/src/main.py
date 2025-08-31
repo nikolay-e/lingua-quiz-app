@@ -88,20 +88,7 @@ async def add_security_headers(request: Request, call_next):
     """Add security headers to all responses"""
     response = await call_next(request)
 
-    # Content Security Policy (CSP) - prevents XSS and code injection
-    csp_policy = (
-        "default-src 'self'; "
-        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com; "
-        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
-        "font-src 'self' https://fonts.gstatic.com; "
-        "img-src 'self' data: blob:; "
-        "connect-src 'self' https://lingua-quiz.nikolay-eremeev.com https://test-lingua-quiz.nikolay-eremeev.com; "
-        "object-src 'none'; "
-        "base-uri 'self'; "
-        "form-action 'self'; "
-        "frame-ancestors 'none';"
-    )
-    response.headers["Content-Security-Policy"] = csp_policy
+    # API backend should not set CSP headers - this is handled by the frontend/proxy layer
 
     # X-Frame-Options - prevents clickjacking
     response.headers["X-Frame-Options"] = "DENY"
@@ -267,6 +254,10 @@ class HealthResponse(BaseModel):
     status: str
     database: str
     timestamp: str
+
+
+class VersionResponse(BaseModel):
+    version: str
 
 
 class ErrorResponse(BaseModel):
@@ -484,6 +475,12 @@ async def health_check():
         )
 
 
+@app.get("/api/version", response_model=VersionResponse, tags=["Health"])
+async def get_version():
+    """Get API version"""
+    return VersionResponse(version="2.0.0")
+
+
 # Authentication routes
 @app.post(
     "/api/auth/register",
@@ -682,6 +679,21 @@ async def update_current_level(
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to update current level",
+        )
+
+
+@app.get("/api/user/profile", response_model=UserResponse, tags=["User"])
+async def get_user_profile(current_user: dict = Depends(get_current_user)):
+    """Get the current user's profile"""
+    try:
+        return UserResponse(
+            id=current_user["user_id"], username=current_user["username"]
+        )
+    except Exception as e:
+        logger.error(f"Error fetching user profile: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to fetch user profile",
         )
 
 

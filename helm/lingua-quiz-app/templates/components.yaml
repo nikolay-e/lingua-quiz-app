@@ -1,0 +1,14 @@
+{{/*
+================================================================================
+REFACTOR: This single file replaces 4 separate yaml files.
+It calls the generic component helper for the backend and frontend services.
+================================================================================
+*/}}
+
+{{/* Render the backend component */}}
+{{- include "lingua-quiz-app.component.tpl" (dict "root" . "component" (dict "name" "backend" "values" .Values.backend)) }}
+
+---
+
+{{/* Render the frontend component */}}
+{{- include "lingua-quiz-app.component.tpl" (dict "root" . "component" (dict "name" "frontend" "values" .Values.frontend)) }}

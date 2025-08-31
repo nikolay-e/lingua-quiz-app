@@ -1,0 +1,105 @@
+# Staging Values for Lingua Quiz Application
+# Usage: helm install lingua-quiz ./helm/lingua-quiz-app -f ./helm/lingua-quiz-app/values.staging.yaml --namespace lingua-quiz-staging
+
+namespace: lingua-quiz-staging
+
+# Backend configuration for staging
+backend:
+  image:
+    repository: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-backend # Will be overridden by CI
+    pullPolicy: Always
+    tag: 'latest' # Will be overridden by CI with specific tag
+  port: 9000
+  corsAllowedOrigins: 'https://test-lingua-quiz.nikolay-eremeev.com'
+  service:
+    type: ClusterIP
+    port: 9000
+  resources:
+    limits:
+      cpu: '500m'
+      memory: '1Gi'
+    requests:
+      cpu: '100m'
+      memory: '512Mi'
+
+# Frontend configuration for staging
+frontend:
+  image:
+    repository: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-frontend # Will be overridden by CI
+    pullPolicy: Always
+    tag: 'latest' # Will be overridden by CI with specific tag
+  port: 80
+  service:
+    type: ClusterIP
+    port: 80
+  resources:
+    limits:
+      cpu: '100m'
+      memory: '512Mi'
+    requests:
+      cpu: '25m'
+      memory: '256Mi'
+
+# PostgreSQL configuration - use shared instance
+postgres:
+  enabled: false # Don't deploy PostgreSQL with the app
+  external:
+    host: 'shared-postgres.shared-database.svc.cluster.local'
+    port: 5432
+    database: 'linguaquiz_staging' # Staging database
+
+# Ingress configuration for staging
+ingress:
+  enabled: true
+  className: 'traefik'
+  annotations:
+    cert-manager.io/cluster-issuer: 'letsencrypt-prod'
+    traefik.ingress.kubernetes.io/router.entrypoints: 'web,websecure'
+    traefik.ingress.kubernetes.io/router.tls: 'true'
+  frontend:
+    host: test-lingua-quiz.nikolay-eremeev.com
+  backend:
+    host: # Same host as frontend - API will be served from /api path
+  tls:
+    enabled: true
+    secretName: lingua-quiz-staging-tls
+
+# Secrets will be provided by SOPS values.sops.yaml with staging overrides
+# Note: Do not override secrets here - they come from the encrypted SOPS file
+
+# Migration configuration for staging
+migrations:
+  enabled: true
+  command: ['python', 'migrate.py']
+  ttlSecondsAfterFinished: 1800 # Keep for 30 minutes
+  restartPolicy: OnFailure
+  backoffLimit: 2
+  resources:
+    limits:
+      cpu: '200m'
+      memory: '512Mi'
+    requests:
+      cpu: '50m'
+      memory: '128Mi'
+  env:
+    - name: NODE_ENV
+      value: 'staging'
+
+# Test configuration for staging
+tests:
+  enabled: true
+  image:
+    repository: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-integration-e2e-tests # Will be overridden by CI
+    pullPolicy: Always
+    tag: 'latest' # Will be overridden by CI with specific tag
+  ttlSecondsAfterFinished: 600 # Keep job for 10 minutes after completion
+  restartPolicy: Never
+  backoffLimit: 2 # Retry tests up to 2 times
+  skipTtsTests: 'true' # Skip TTS tests in staging
+  resources:
+    limits:
+      cpu: '500m'
+      memory: '512Mi'
+    requests:
+      cpu: '100m'
+      memory: '256Mi'
