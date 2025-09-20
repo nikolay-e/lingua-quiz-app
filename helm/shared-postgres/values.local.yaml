@@ -4,22 +4,22 @@
 postgres:
   image:
     repository: postgres
-    tag: "13"
+    tag: '13'
     pullPolicy: IfNotPresent
 
   resources:
     requests:
-      memory: "256Mi"
-      cpu: "100m"
+      memory: '256Mi'
+      cpu: '100m'
     limits:
-      memory: "512Mi"
-      cpu: "250m"
+      memory: '512Mi'
+      cpu: '250m'
 
   persistence:
     enabled: true
-    size: "5Gi"
-    storageClass: "local-path"  # Rancher Desktop default storage class
-    accessMode: "ReadWriteOnce"
+    size: '5Gi'
+    storageClass: 'local-path' # Rancher Desktop default storage class
+    accessMode: 'ReadWriteOnce'
 
   service:
     type: ClusterIP
@@ -34,22 +34,22 @@ postgres:
 # This overrides all databases from values.yaml
 databases:
   linguaquiz:
-    name: "linguaquiz_dev"
-    user: "linguaquiz_dev"
+    name: 'linguaquiz_dev'
+    user: 'linguaquiz_dev'
     # Remove staging database for local development
 
 # Local development secrets
 secrets:
-  adminPassword: "postgres-admin-local"
+  adminPassword: 'postgres-admin-local'
   databases:
     linguaquiz:
-      password: "linguaquiz-dev-password"
+      password: 'linguaquiz-dev-password'
     # Need to provide password for staging even though we won't use it
     linguaquiz-staging:
-      password: "unused-staging-password"
+      password: 'unused-staging-password'
 
 # Disable backup for local development
 backup:
   enabled: false
 
-namespace: "shared-database"
+namespace: 'shared-database'

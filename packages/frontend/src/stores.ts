@@ -23,7 +23,7 @@ function createThemeStore(): ThemeStore {
   };
 
   const { subscribe, set, update } = writable({
-    isDarkMode: getInitialTheme()
+    isDarkMode: getInitialTheme(),
   });
 
   const applyTheme = (isDark: boolean) => {
@@ -51,7 +51,7 @@ function createThemeStore(): ThemeStore {
   return {
     subscribe,
     toggleTheme: () => {
-      update(state => {
+      update((state) => {
         const newTheme = !state.isDarkMode;
         if (typeof localStorage !== 'undefined') {
           localStorage.setItem('theme', newTheme ? 'dark' : 'light');
@@ -67,7 +67,7 @@ function createThemeStore(): ThemeStore {
       const systemPreference = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       applyTheme(systemPreference);
       set({ isDarkMode: systemPreference });
-    }
+    },
   };
 }
 
@@ -172,7 +172,6 @@ function createAuthStore(): AuthStore {
   };
 }
 
-
 interface QuizState {
   wordSets: WordSet[];
   selectedQuiz: string | null;
@@ -190,7 +189,9 @@ interface QuizStore {
   startQuiz: (token: string, quizName: string) => Promise<void>;
   getNextQuestion: () => QuizQuestion | null;
   submitAnswer: (token: string, answer: string) => Promise<{ isCorrect: boolean; correctAnswer?: string } | null>;
-  setLevel: (level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4') => Promise<{ success: boolean; actualLevel: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4'; message?: string }>;
+  setLevel: (
+    level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4'
+  ) => Promise<{ success: boolean; actualLevel: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4'; message?: string }>;
   reset: () => void;
   saveAndCleanup: (token: string) => Promise<void>;
 }
@@ -205,7 +206,7 @@ function createQuizStore(): QuizStore {
     sessionId: null,
     loading: false,
     error: null,
-    autoSaveTimer: null
+    autoSaveTimer: null,
   });
 
   const BULK_SAVE_DELAY = 5000; // 5 seconds
@@ -224,8 +225,9 @@ function createQuizStore(): QuizStore {
         const wordArray = wordIds as number[];
         if (wordArray.length > 0) {
           persistencePromises.push(
-            api.saveWordStatus(token, level as 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5', wordArray)
-              .catch(err => console.error(`Bulk save failed for ${level}:`, err))
+            api
+              .saveWordStatus(token, level as 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5', wordArray)
+              .catch((err) => console.error(`Bulk save failed for ${level}:`, err))
           );
         }
       }
@@ -251,14 +253,14 @@ function createQuizStore(): QuizStore {
     const timer = setTimeout(() => bulkSaveProgress(token), BULK_SAVE_DELAY);
 
     // Update state with new timer
-    update(s => ({ ...s, autoSaveTimer: timer }));
+    update((s) => ({ ...s, autoSaveTimer: timer }));
   };
 
   const store = {
     subscribe,
 
     loadWordSets: async (token: string) => {
-      update(state => ({ ...state, loading: true, error: null }));
+      update((state) => ({ ...state, loading: true, error: null }));
       try {
         const wordSets = await api.fetchWordSets(token);
         // Use set/get pattern after await to avoid orphaned effects
@@ -272,33 +274,33 @@ function createQuizStore(): QuizStore {
     },
 
     startQuiz: async (token: string, quizName: string) => {
-      update(state => ({ ...state, loading: true, error: null, selectedQuiz: quizName }));
+      update((state) => ({ ...state, loading: true, error: null, selectedQuiz: quizName }));
       try {
         // Use the word-sets API to get translations and progress
         const userWordSets = await api.fetchUserWordSets(token, quizName);
         // Fetched words for quiz
 
         // Convert UserWordSet[] to the format expected by QuizManager
-        const translations = userWordSets.map(word => ({
+        const translations = userWordSets.map((word) => ({
           id: word.wordPairId,
           sourceWord: {
             text: word.sourceWord,
             language: word.sourceLanguage,
-            usageExample: word.sourceWordUsageExample || ''
+            usageExample: word.sourceWordUsageExample || '',
           },
           targetWord: {
             text: word.targetWord,
             language: word.targetLanguage,
-            usageExample: word.targetWordUsageExample || ''
-          }
+            usageExample: word.targetWordUsageExample || '',
+          },
         }));
 
-        const progress = userWordSets.map(word => ({
+        const progress = userWordSets.map((word) => ({
           translationId: word.wordPairId,
           status: (word.status || 'LEVEL_0') as 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5',
           queuePosition: 0,
           consecutiveCorrect: 0,
-          recentHistory: [] as boolean[]
+          recentHistory: [] as boolean[],
         }));
 
         // Get user's current level from backend
@@ -312,7 +314,7 @@ function createQuizStore(): QuizStore {
 
         const manager = new QuizManager(translations, {
           progress,
-          currentLevel
+          currentLevel,
         });
         // QuizManager initialized
 
@@ -328,7 +330,7 @@ function createQuizStore(): QuizStore {
           ...get(store),
           loading: false,
           quizManager: manager,
-          currentQuestion
+          currentQuestion,
         });
       } catch (error: unknown) {
         const message = error instanceof Error ? error.message : 'Unknown error';
@@ -350,7 +352,7 @@ function createQuizStore(): QuizStore {
         // Level was auto-adjusted
       }
 
-      update(s => ({ ...s, currentQuestion: question }));
+      update((s) => ({ ...s, currentQuestion: question }));
       return question;
     },
 
@@ -397,7 +399,7 @@ function createQuizStore(): QuizStore {
         const nextQuestion = questionResult.question;
 
         // Update UI immediately (this is synchronous, so update is fine)
-        update(s => ({ ...s, currentQuestion: nextQuestion }));
+        update((s) => ({ ...s, currentQuestion: nextQuestion }));
 
         // Persist level change to backend if token provided
         if (token) {
@@ -430,7 +432,7 @@ function createQuizStore(): QuizStore {
         sessionId: null,
         loading: false,
         error: null,
-        autoSaveTimer: null
+        autoSaveTimer: null,
       });
     },
 
@@ -444,7 +446,7 @@ function createQuizStore(): QuizStore {
       if (state.quizManager) {
         await bulkSaveProgress(token);
       }
-    }
+    },
   };
 
   return store;

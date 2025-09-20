@@ -14,4 +14,4 @@ spec:
       name: postgresql
   selector:
     {{- include "shared-postgres.selectorLabels" . | nindent 4}}
-  clusterIP: None  # Headless service for StatefulSet
+  clusterIP: None # Headless service for StatefulSet

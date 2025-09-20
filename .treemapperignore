@@ -1,11 +1,97 @@
+# Version control and ignore files
 .git
-*.csv
+.gitignore
+.dockerignore
+.npmignore
+.eslintignore
+.prettierignore
+.gcloudignore
+.cfignore
+.slugignore
+.vercelignore
+.helmignore
+.terraformignore
+.gitattributes
+.sqlfluff
+
+# Dependencies and lock files
+node_modules
 package-lock.json
+*.lock
+yarn.lock
+
+# Build and distribution
+dist
+build
+out
+coverage
+
+# Test files and reports
+test*
+e2e-tests
 test-results
 playwright-report
-word_processing_scripts
-coverage
-favicon
+*.test.*
+*.spec.*
+
+# Configuration and formatting files
+.prettierrc*
+.eslintrc*
+.eslintcache
+.yamllint*
+.pre-commit-config.yaml
+.pre-commit-hooks.yaml
+.flake8*
+.editorconfig
+.isort.cfg
+.mypy.ini
+.black
+.ruff.toml
+setup.cfg
+pyproject.toml
+*.config.js
+*.config.ts
+tsconfig*.json
+vitest.config.*
+vite.config.*
+
+# IDE and editor
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and temporary
+*.log
+logs/
+*.tmp
+*.bak
+
+# Data and processing
+*.csv
 *.png
 *_words.sql
+*_data.sql
+data
+word_processing_scripts
+word-processing
+favicon
+integration-tests
+
+# Claude and tooling
 .claude
+.treemapperignore
+directory_tree.*
+
+# Secrets and keys
+*.key
+*.pem
+*.secret
+.age-key.txt
+
+# Generated files
+Generated*

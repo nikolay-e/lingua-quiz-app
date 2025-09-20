@@ -3,9 +3,11 @@ import { defineConfig } from 'vite';
 import { sveltePreprocess } from 'svelte-preprocess';
 
 export default defineConfig({
-  plugins: [svelte({
-    preprocess: sveltePreprocess()
-  })],
+  plugins: [
+    svelte({
+      preprocess: sveltePreprocess(),
+    }),
+  ],
   server: {
     port: 8080,
   },
@@ -26,8 +28,8 @@ export default defineConfig({
         footer: '',
         intro: '',
         outro: '',
-      }
-    }
+      },
+    },
   },
   esbuild: {
     target: 'es2020',

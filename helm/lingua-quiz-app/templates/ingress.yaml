@@ -15,30 +15,51 @@ spec:
   {{- if .Values.ingress.className}}
   ingressClassName: {{.Values.ingress.className}}
   {{- end}}
+  {{- if and .Values.ingress.tls .Values.ingress.tls.enabled}}
+  tls:
+    - hosts:
+        - {{.Values.ingress.frontend.host | quote}}
+        {{- if .Values.ingress.backend.host }}
+        - {{.Values.ingress.backend.host | quote}}
+        {{- end }}
+      secretName: {{.Values.ingress.tls.secretName}}
+  {{- end}}
   rules:
     - host: {{.Values.ingress.frontend.host | quote}}
       http:
         paths:
-          # API routes go to backend
+          {{- if not .Values.ingress.backend.host }}
+          # API routes go to backend (same host)
           - path: /api
             pathType: Prefix
             backend:
               service:
-                name: {{include "lingua-quiz-app.backend.fullname" .}}
+                # CORRECTED: Use the new generic helper for the backend service name
+                name: {{ include "lingua-quiz-app.component.fullname" (dict "root" . "component" (dict "name" "backend")) }}
                 port:
                   number: {{.Values.backend.service.port}}
+          {{- end }}
           # All other routes go to frontend
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: {{include "lingua-quiz-app.frontend.fullname" .}}
+                # CORRECTED: Use the new generic helper for the frontend service name
+                name: {{ include "lingua-quiz-app.component.fullname" (dict "root" . "component" (dict "name" "frontend")) }}
                 port:
                   number: {{.Values.frontend.service.port}}
-  {{- if and .Values.ingress.tls .Values.ingress.tls.enabled}}
-  tls:
-    - hosts:
-        - {{.Values.ingress.frontend.host | quote}}
-      secretName: {{.Values.ingress.tls.secretName}}
-  {{- end}}
+    {{- if .Values.ingress.backend.host }}
+    # Separate backend host
+    - host: {{.Values.ingress.backend.host | quote}}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                # CORRECTED: Use the new generic helper for the backend service name
+                name: {{ include "lingua-quiz-app.component.fullname" (dict "root" . "component" (dict "name" "backend")) }}
+                port:
+                  number: {{.Values.backend.service.port}}
+    {{- end }}
 {{- end}}

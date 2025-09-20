@@ -1,0 +1,105 @@
+ # Usage: helm install lingua-quiz ./helm/lingua-quiz-app -f ./helm/lingua-quiz-app/values.prod.yaml --namespace lingua-quiz-production
+
+namespace: lingua-quiz-production
+
+# Backend configuration for production
+backend:
+  image:
+    repository: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-backend # Will be overridden by CI
+    pullPolicy: Always
+    tag: 'latest' # Will be overridden by CI with specific tag
+  port: 9000
+  corsAllowedOrigins: 'https://lingua-quiz.nikolay-eremeev.com'
+  service:
+    type: ClusterIP
+    port: 9000
+  resources:
+    limits:
+      cpu: '500m'
+      memory: '1Gi'
+    requests:
+      cpu: '50m'
+      memory: '512Mi'
+
+# Frontend configuration for production
+frontend:
+  image:
+    repository: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-frontend # Will be overridden by CI
+    pullPolicy: Always
+    tag: 'latest' # Will be overridden by CI with specific tag
+  port: 80
+  service:
+    type: ClusterIP
+    port: 80
+  resources:
+    limits:
+      cpu: '100m'
+      memory: '512Mi'
+    requests:
+      cpu: '10m'
+      memory: '256Mi'
+
+# PostgreSQL configuration - use shared instance
+postgres:
+  enabled: false # Don't deploy PostgreSQL with the app
+  external:
+    host: 'shared-postgres.shared-database.svc.cluster.local'
+    port: 5432
+    database: 'linguaquiz' # Production database
+    existingSecret: 'shared-postgres-linguaquiz'
+
+# Ingress configuration for production
+ingress:
+  enabled: true
+  className: 'traefik'
+  annotations:
+    cert-manager.io/cluster-issuer: 'letsencrypt-prod'
+    traefik.ingress.kubernetes.io/router.entrypoints: 'web,websecure'
+    traefik.ingress.kubernetes.io/router.tls: 'true'
+  frontend:
+    host: lingua-quiz.nikolay-eremeev.com
+  backend:
+    host: # Same host as frontend - API will be served from /api path
+  tls:
+    enabled: true
+    secretName: lingua-quiz-tls
+
+# Secrets will be provided by SOPS values.sops.yaml
+# Note: Do not override secrets here - they come from the encrypted SOPS file
+
+# Migration configuration for production
+migrations:
+  enabled: true
+  command: ['python', 'migrate.py']
+  ttlSecondsAfterFinished: 3600 # Keep for 1 hour for debugging
+  restartPolicy: OnFailure
+  backoffLimit: 4
+  resources:
+    limits:
+      cpu: '200m'
+      memory: '512Mi'
+    requests:
+      cpu: '25m'
+      memory: '64Mi'
+  env:
+    - name: NODE_ENV
+      value: 'production'
+
+# Test configuration for production (disabled by default, can be enabled for releases)
+tests:
+  enabled: false # Enable manually for production testing if needed
+  image:
+    repository: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-integration-e2e-tests # Will be overridden by CI
+    pullPolicy: Always
+    tag: 'latest' # Will be overridden by CI with specific tag
+  ttlSecondsAfterFinished: 600 # Keep job for 10 minutes after completion in prod
+  restartPolicy: Never
+  backoffLimit: 1 # Only one retry in production
+  skipTtsTests: 'false' # Run all tests in production
+  resources:
+    limits:
+      cpu: '500m'
+      memory: '512Mi'
+    requests:
+      cpu: '100m'
+      memory: '256Mi'

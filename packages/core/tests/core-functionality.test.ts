@@ -6,18 +6,18 @@ describe('Core Functionality Tests', () => {
     {
       id: 1,
       sourceWord: { text: 'hello', language: 'en', usageExample: 'Hello world!' },
-      targetWord: { text: 'привет', language: 'ru', usageExample: 'Привет мир!' }
+      targetWord: { text: 'привет', language: 'ru', usageExample: 'Привет мир!' },
     },
     {
       id: 2,
       sourceWord: { text: 'world', language: 'en', usageExample: 'Hello world!' },
-      targetWord: { text: 'мир', language: 'ru', usageExample: 'Привет мир!' }
+      targetWord: { text: 'мир', language: 'ru', usageExample: 'Привет мир!' },
     },
     {
       id: 3,
       sourceWord: { text: 'cat', language: 'en' },
-      targetWord: { text: 'кот', language: 'ru' }
-    }
+      targetWord: { text: 'кот', language: 'ru' },
+    },
   ];
 
   describe('QuizManager Edge Cases', () => {
@@ -72,7 +72,7 @@ describe('Core Functionality Tests', () => {
       const state = zeroFocusQuiz.getState();
 
       // With zero focus words, all should remain at LEVEL_0
-      const level1Count = state.progress.filter(p => p.status === 'LEVEL_1').length;
+      const level1Count = state.progress.filter((p) => p.status === 'LEVEL_1').length;
       expect(level1Count).toBe(0);
     });
 
@@ -88,7 +88,7 @@ describe('Core Functionality Tests', () => {
         const submissionResult = customQuiz.submitAnswer(translationId, correctAnswer);
 
         const state = customQuiz.getState();
-        const progress = state.progress.find(p => p.translationId === translationId);
+        const progress = state.progress.find((p) => p.translationId === translationId);
 
         // With correctAnswersToLevelUp = 1, the word should have advanced to next level
         expect(submissionResult.isCorrect).toBe(true);
@@ -101,10 +101,10 @@ describe('Core Functionality Tests', () => {
     });
 
     it('should handle large numbers of translations efficiently', () => {
-      const manyTranslations: Translation[] = Array.from({length: 100}, (_, i) => ({
+      const manyTranslations: Translation[] = Array.from({ length: 100 }, (_, i) => ({
         id: i + 1,
         sourceWord: { text: `word${i}`, language: 'en' },
-        targetWord: { text: `слово${i}`, language: 'ru' }
+        targetWord: { text: `слово${i}`, language: 'ru' },
       }));
 
       const startTime = Date.now();
@@ -168,7 +168,7 @@ describe('Core Functionality Tests', () => {
         }
 
         const state = quizManager.getState();
-        const progress = state.progress.find(p => p.translationId === translationId);
+        const progress = state.progress.find((p) => p.translationId === translationId);
 
         // After 3 correct answers, word should have advanced to next level
         expect(submissionResult?.isCorrect).toBe(true);
@@ -199,7 +199,7 @@ describe('Core Functionality Tests', () => {
 
       // Should maintain valid state
       expect(state.progress.length).toBe(3);
-      state.progress.forEach(p => {
+      state.progress.forEach((p) => {
         expect(['LEVEL_0', 'LEVEL_1', 'LEVEL_2', 'LEVEL_3', 'LEVEL_4', 'LEVEL_5']).toContain(p.status);
         expect(p.queuePosition).toBeGreaterThanOrEqual(0);
         expect(p.consecutiveCorrect).toBeGreaterThanOrEqual(0);

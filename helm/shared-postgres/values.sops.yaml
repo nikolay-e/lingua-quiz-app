@@ -1,0 +1,22 @@
+secrets:
+  adminPassword: ENC[AES256_GCM,data:4JEHU4vFZYnPEOzg+pPxCLl9+AsyxOGhz/7TTg==,iv:xgA2kjHQz3u/1DChgKx807kwZB2M4lrYSWeU9tocwrM=,tag:CwIajX3hpbUfeYZumfBOlQ==,type:str]
+  databases:
+    linguaquiz:
+      password: ENC[AES256_GCM,data:BmkS4QaT2hxku+e6siAHjhNfiDptfr5E7gNKFQ==,iv:JSJsGVR1ahjFI2xNtl0ssYXwcdAQ47J+eAVcDUdWd6Y=,tag:puBWDuC7tZW1Sx2KhM/LPA==,type:str]
+    linguaquiz-staging:
+      password: ENC[AES256_GCM,data:AEE0v04B4IKQH+l+s5wuRFjFCmE=,iv:W+2Tig2oDk960tdX8KUi7DPdhDmKCimF/jbmdgJeTjA=,tag:dJQzyy1gKBFWzwGfjg3hPg==,type:str]
+sops:
+  age:
+    - recipient: age15n3fvp4rrp7r2ugkalzrad9u3h6y68c03kr8s7k74a8za48dfqcsaprfuw
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBiODd1ZzMra0d3MHFZVDhn
+        S24rZkIrOWlaWW1raDA5VWJYdkJIeUZqR0VFCitLZ25mZGtvdFRhUHFpREdvQjdm
+        dktyVXpSWWpFWWU1NG9RZXRzbWdzVVkKLS0tIEg4OVEzMWE1bE02SUVENmE3RWMr
+        Rml0bmhDZTNzQTFvSXNrbFJIa0tWRk0KZ0Ix0UJfBYzZMcpryAyKDu7B5nuh/iCG
+        77/5KbKwmLjkqXQHIx9OpPVvMXs842EGGK+Lc5a2We+IjygMWlG+qw==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: '2025-08-31T18:52:12Z'
+  mac: ENC[AES256_GCM,data:89fyD6hgaIk5xYIQ3PIx+7LVuMwSHQHgV6rD0+XsUNcqQu4YOrzdIjL1y5W5h5MtNOj65708nd/Gee5i2ZREs6EKSP0278NctD5xmCDftO3SooGSWJhNFr072P3450dQ27IbZOTU6jJSfUGRio2XcEeUhKuAz6V3fy5YM7Ceixg=,iv:LF+k97SyLlVC44XW6n2tB2TBu8u80QUs0CgDuRqhSco=,tag:bPuaWDn+aQMlxcOApI3BPQ==,type:str]
+  encrypted_regex: ^(data|stringData|secrets)$
+  version: 3.10.2
