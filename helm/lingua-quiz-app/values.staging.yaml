@@ -1,9 +1,5 @@
-# Staging Values for Lingua Quiz Application
-# Usage: helm install lingua-quiz ./helm/lingua-quiz-app -f ./helm/lingua-quiz-app/values.staging.yaml --namespace lingua-quiz-staging
-
 namespace: lingua-quiz-staging
 
-# Backend configuration for staging
 backend:
   image:
     repository: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-backend # Will be overridden by CI
@@ -22,7 +18,6 @@ backend:
       cpu: '100m'
       memory: '512Mi'
 
-# Frontend configuration for staging
 frontend:
   image:
     repository: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-frontend # Will be overridden by CI
@@ -46,9 +41,8 @@ postgres:
   external:
     host: 'shared-postgres.shared-database.svc.cluster.local'
     port: 5432
-    database: 'linguaquiz_staging' # Staging database
+    database: 'linguaquiz_staging'
 
-# Ingress configuration for staging
 ingress:
   enabled: true
   className: 'traefik'
@@ -64,16 +58,12 @@ ingress:
     enabled: true
     secretName: lingua-quiz-staging-tls
 
-# Secrets will be provided by SOPS values.sops.yaml with staging overrides
-# Note: Do not override secrets here - they come from the encrypted SOPS file
-
-# Migration configuration for staging
 migrations:
   enabled: true
   command: ['python', 'migrate.py']
-  ttlSecondsAfterFinished: 1800 # Keep for 30 minutes
+  ttlSecondsAfterFinished: 600
   restartPolicy: OnFailure
-  backoffLimit: 2
+  backoffLimit: 5
   resources:
     limits:
       cpu: '200m'
@@ -81,21 +71,17 @@ migrations:
     requests:
       cpu: '50m'
       memory: '128Mi'
-  env:
-    - name: NODE_ENV
-      value: 'staging'
 
-# Test configuration for staging
 tests:
   enabled: true
   image:
     repository: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-integration-e2e-tests # Will be overridden by CI
     pullPolicy: Always
     tag: 'latest' # Will be overridden by CI with specific tag
-  ttlSecondsAfterFinished: 600 # Keep job for 10 minutes after completion
+  ttlSecondsAfterFinished: 600
   restartPolicy: Never
-  backoffLimit: 2 # Retry tests up to 2 times
-  skipTtsTests: 'true' # Skip TTS tests in staging
+  backoffLimit: 5
+  skipTtsTests: 'false'
   resources:
     limits:
       cpu: '500m'
