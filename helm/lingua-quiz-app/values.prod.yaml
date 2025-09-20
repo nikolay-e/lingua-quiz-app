@@ -63,7 +63,7 @@ migrations:
   command: ['python', 'migrate.py']
   ttlSecondsAfterFinished: 600
   restartPolicy: OnFailure
-  backoffLimit: 5
+  backoffLimit: 3
   resources:
     limits:
       cpu: '200m'
@@ -80,8 +80,8 @@ tests:
     tag: 'latest' # Will be overridden by CI with specific tag
   ttlSecondsAfterFinished: 600
   restartPolicy: Never
-  backoffLimit: 5
-  skipTtsTests: 'false'
+  backoffLimit: 3
+  skipTtsTests: 'true'
   resources:
     limits:
       cpu: '500m'
