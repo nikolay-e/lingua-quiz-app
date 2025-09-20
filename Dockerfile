@@ -109,7 +109,7 @@ RUN cd packages/frontend && npm run build
 # ======================================================================================
 # FRONTEND PRODUCTION STAGE
 # ======================================================================================
-FROM nginx:1.27-alpine AS frontend
+FROM nginx:1.29-alpine AS frontend
 
 # Configure nginx for SPA routing (simplified like working sites)
 RUN printf 'server {\n\
