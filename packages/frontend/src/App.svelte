@@ -1,12 +1,13 @@
 <script lang="ts">
   import { onDestroy } from 'svelte';
-  import { authStore, quizStore } from './stores';
+  import { authStore, quizStore, themeStore } from './stores';
   import Login from './views/Login.svelte';
   import Register from './views/Register.svelte';
   import Quiz from './views/Quiz.svelte';
+  import { PAGES, type PageType } from './lib/constants';
 
   let isAuthenticated = false;
-  let currentPage: 'login' | 'register' = 'login';
+  let currentPage: PageType = PAGES.LOGIN;
 
   const unsubscribe = authStore.subscribe(state => {
     isAuthenticated = state.isAuthenticated;
@@ -15,21 +16,32 @@
     }
   });
 
-  onDestroy(() => {
-    unsubscribe();
+  // Initialize theme store to enable system dark mode detection
+  const unsubscribeTheme = themeStore.subscribe(() => {
+    // Theme store handles DOM updates automatically in the store
+    // This subscription ensures the store is active
   });
 
-  function handleNavigation(event: CustomEvent<{ page: 'login' | 'register' }>) {
+  onDestroy(() => {
+    unsubscribe();
+    unsubscribeTheme();
+  });
+
+  function handleNavigation(event: CustomEvent<{ page: PageType }>) {
     currentPage = event.detail.page;
   }
 </script>
 
-{#if isAuthenticated}
-  <Quiz />
-{:else}
-  {#if currentPage === 'login'}
-    <Login on:navigate={handleNavigation} />
-  {:else if currentPage === 'register'}
-    <Register on:navigate={handleNavigation} />
+{#key isAuthenticated}
+  {#if isAuthenticated}
+    <Quiz />
+  {:else}
+    {#key currentPage}
+      {#if currentPage === PAGES.LOGIN}
+        <Login on:navigate={handleNavigation} />
+      {:else if currentPage === PAGES.REGISTER}
+        <Register on:navigate={handleNavigation} />
+      {/if}
+    {/key}
   {/if}
-{/if}
+{/key}

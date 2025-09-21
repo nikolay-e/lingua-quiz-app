@@ -11,15 +11,15 @@ replicaCount: 1
 # Backend configuration
 backend:
   image:
-    repository: '' # Will be set by environment-specific values
+    repository: '' # Set via CI/CD --set flags during deployment
     pullPolicy: Always
     tag: 'latest'
   replicaCount: 1
   port: 9000
-  corsAllowedOrigins: '' # Will be set by environment-specific values
+  corsAllowedOrigins: '' # Set by environment-specific values files
   service:
     type: ClusterIP
-    port: 9000 # Default service port, will be overridden by CI
+    port: 9000
     # nodePort: 30900 # Optional: specify for NodePort type (used in local dev)
   resources:
     limits:
@@ -52,7 +52,7 @@ backend:
 # Frontend configuration
 frontend:
   image:
-    repository: '' # Will be set by environment-specific values
+    repository: '' # Set via CI/CD --set flags during deployment
     pullPolicy: Always
     tag: 'latest'
   replicaCount: 1
@@ -93,17 +93,9 @@ postgres:
   external:
     host: 'shared-postgres.shared-database.svc.cluster.local'
     port: 5432
-    database: '' # Will be set by environment-specific values
+    database: '' # Set by environment-specific values files
     existingSecret: '' # Name of existing secret with database credentials
 
-  # Legacy internal PostgreSQL config (when enabled: true)
-  image:
-    repository: postgres
-    tag: '13'
-    pullPolicy: IfNotPresent
-  persistence:
-    size: 5Gi
-  resources: {}
 
 # Ingress configuration for external access
 ingress:
@@ -114,7 +106,7 @@ ingress:
     traefik.ingress.kubernetes.io/router.entrypoints: 'web,websecure'
     traefik.ingress.kubernetes.io/router.tls: 'true'
   frontend:
-    host: lingua-quiz.nikolay-eremeev.com # To be set by CI/env
+    host: lingua-quiz.nikolay-eremeev.com # Set via CI/CD --set flags during deployment
   backend:
     host: # Empty for same-host deployment (API served from /api path)
   tls:
@@ -122,7 +114,6 @@ ingress:
     secretName: lingua-quiz-tls # Name of the K8s secret holding the cert/key
 
 # Secrets - These MUST be provided during deployment (e.g., via --set or a secrets file)
-# NOTE: The dockerRegistryToken in values.sops.yaml is unused and can be removed during the next SOPS update
 secrets:
   jwtSecret: ''
   googleCloudCredentialsB64: ''
@@ -160,7 +151,7 @@ migrations:
 tests:
   enabled: false # Disabled by default, enabled in environments that need it
   image:
-    repository: '' # Will be set by environment-specific values
+    repository: '' # Set via CI/CD --set flags during deployment
     pullPolicy: Always
     tag: 'latest'
   ttlSecondsAfterFinished: 300 # Keep job for 5 minutes after completion

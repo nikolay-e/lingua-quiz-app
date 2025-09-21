@@ -38,11 +38,6 @@ export const MISTAKE_WINDOW = 10;
 export const MAX_FOCUS_POOL_SIZE = K * F * T_PROMO;
 
 /**
- * Recently asked buffer size (currently unused but kept for compatibility)
- */
-export const RECENTLY_ASKED_SIZE = 5;
-
-/**
  * Minimum history size required before checking for degradation
  * This ensures we have enough data points before making degradation decisions
  */

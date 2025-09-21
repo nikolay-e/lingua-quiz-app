@@ -1,12 +1,5 @@
 version: 2
 
-registries:
-  docker-hub:
-    type: docker-registry
-    url: 'https://registry.hub.docker.com'
-    username: 'nikolajer'
-    password: '${{secrets.DOCKER_REGISTRY_TOKEN}}'
-
 updates:
   # NPM dependencies
   - package-ecosystem: 'npm'
@@ -39,8 +32,6 @@ updates:
       interval: 'weekly'
     labels:
       - 'dependencies'
-    registries:
-      - 'docker-hub'
     groups:
       docker-dependencies:
         patterns:

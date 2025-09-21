@@ -24,8 +24,8 @@
     try {
       await authStore.login(username, password);
       message = 'Login successful!';
-    } catch (error: any) {
-      message = error.message;
+    } catch (error: unknown) {
+      message = error instanceof Error ? error.message : 'Login failed. Please try again.';
     } finally {
       isLoading = false;
     }
@@ -38,14 +38,16 @@
 
 <AuthLayout>
   <h2>Sign In</h2>
-  <form on:submit={handleSubmit}>
+  <form on:submit={handleSubmit} aria-busy={isLoading} class="form-compact">
     <div class="input-group">
       <input
         type="text"
+        id="username"
         bind:value={username}
         placeholder="Username"
         required
         disabled={isLoading}
+        autocomplete="username"
       />
     </div>
 
@@ -53,6 +55,7 @@
       bind:value={password}
       disabled={isLoading}
       id="password"
+      autocomplete="current-password"
     />
 
     <button type="submit" disabled={isLoading}>
@@ -60,7 +63,7 @@
     </button>
   </form>
 
-  <AuthMessage {message} id="login-message" />
+  <AuthMessage {message} variant={message.includes('successful') ? 'success' : 'error'} id="login-message" />
 
   <AuthNavLink
     text="Need an account?"
@@ -68,3 +71,5 @@
     onClick={navigateToRegister}
   />
 </AuthLayout>
+
+<!-- Styles now handled by global .form-compact utility class -->

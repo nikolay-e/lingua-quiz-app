@@ -5,15 +5,15 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+    types: [opened, synchronize, reopened]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    environment: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'production' || 'staging' }}
     # Add permissions to write to GHCR
     permissions:
       contents: read
@@ -35,18 +35,6 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }} # Use GITHUB_TOKEN for secure auth
 
-      # Extract metadata (tags, labels) for Docker
-      - name: Extract Docker metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ghcr.io/${{ github.repository }}/lingua-quiz
-          # Generates tags: type=sha, type=ref (e.g., branch name)
-          tags: |
-            type=sha,prefix=
-            type=ref,event=branch
-            type=ref,event=pr
-
       # Build and push backend image with cache
       - name: Build and push backend image
         uses: docker/build-push-action@v6
@@ -55,10 +43,9 @@ jobs:
           target: backend
           push: true
           tags: ghcr.io/${{ github.repository }}/lingua-quiz-backend:${{ github.event.pull_request.head.sha || github.sha }}
-          labels: ${{ steps.meta.outputs.labels }}
-          # This is the key for caching
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-backend:cache
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-backend:cache,mode=max
+          # This is the key for caching - use sanitized ref name to avoid invalid characters
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-backend:${{ github.event.pull_request.number || github.ref_name }}-cache
+          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-backend:${{ github.event.pull_request.number || github.ref_name }}-cache,mode=max
 
       # Build and push frontend image with cache
       - name: Build and push frontend image
@@ -68,10 +55,9 @@ jobs:
           target: frontend
           push: true
           tags: ghcr.io/${{ github.repository }}/lingua-quiz-frontend:${{ github.event.pull_request.head.sha || github.sha }}
-          labels: ${{ steps.meta.outputs.labels }}
-          # This is the key for caching
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-frontend:cache
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-frontend:cache,mode=max
+          # This is the key for caching - use sanitized ref name to avoid invalid characters
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-frontend:${{ github.event.pull_request.number || github.ref_name }}-cache
+          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-frontend:${{ github.event.pull_request.number || github.ref_name }}-cache,mode=max
 
       # Build and push integration tests image with cache
       - name: Build and push integration tests image
@@ -81,10 +67,23 @@ jobs:
           target: integration-e2e-tests
           push: true
           tags: ghcr.io/${{ github.repository }}/lingua-quiz-integration-e2e-tests:${{ github.event.pull_request.head.sha || github.sha }}
-          labels: ${{ steps.meta.outputs.labels }}
-          # This is the key for caching
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-integration-e2e-tests:cache
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-integration-e2e-tests:cache,mode=max
+          # This is the key for caching - use sanitized ref name to avoid invalid characters
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-integration-e2e-tests:${{ github.event.pull_request.number || github.ref_name }}-cache
+          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-integration-e2e-tests:${{ github.event.pull_request.number || github.ref_name }}-cache,mode=max
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'pull_request'
+    environment: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'production' || 'staging' }}
+    permissions:
+      contents: read
+    env:
+      CI: true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       # Setup Helm
       - name: Setup Helm
@@ -104,6 +103,18 @@ jobs:
         with:
           version: '3.10.2' # Pin to specific version
 
+      # Set environment name for deployment (production for main, staging for PRs)
+      - name: Set deployment environment
+        id: env
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "env_name=staging" >> $GITHUB_OUTPUT
+            echo "namespace=lingua-quiz-staging" >> $GITHUB_OUTPUT
+          else
+            echo "env_name=prod" >> $GITHUB_OUTPUT
+            echo "namespace=lingua-quiz-production" >> $GITHUB_OUTPUT
+          fi
+
       # Configure kubeconfig
       - name: Configure kubeconfig
         run: |
@@ -122,13 +133,7 @@ jobs:
       # Create GHCR secret in target namespace
       - name: Create GHCR secret
         run: |
-          # Determine target namespace based on environment
-          if [ "${{ github.event_name }}" == "push" ] && [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            NAMESPACE="lingua-quiz-production"
-          else
-            NAMESPACE="lingua-quiz-staging"
-          fi
-
+          NAMESPACE="${{ steps.env.outputs.namespace }}"
           echo "Creating GHCR secret in namespace: $NAMESPACE"
 
           # Create namespace if it doesn't exist
@@ -148,26 +153,54 @@ jobs:
       # Deploy with Makefile, now using GHCR images
       - name: Deploy with Makefile
         id: helm-deploy
-        continue-on-error: true
         run: |
           IMAGE_TAG="${{ github.event.pull_request.head.sha || github.sha }}"
-          echo "Deploying with image tag: $IMAGE_TAG"
+          ENV_NAME="${{ steps.env.outputs.env_name }}"
+
+          echo "Deploying to $ENV_NAME environment with image tag: $IMAGE_TAG"
 
           # Debug: Show current releases
           echo "Listing all Helm releases:"
           helm list -A || true
 
-          # Debug: Validate chart before installation
+          # Validate chart before installation
           echo "Validating Helm chart..."
-          helm lint ./helm/lingua-quiz-app || true
+          helm lint ./helm/lingua-quiz-app
 
-          # Clean and deploy using Makefile with GHCR registry
-          if [ "${{ github.event_name }}" == "push" ] && [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            echo "Cleaning and deploying to production..."
-            make clean-prod
-            make prod IMAGE_TAG="$IMAGE_TAG" REGISTRY="ghcr.io/${{ github.repository }}"
+          # Deploy using Makefile with GHCR registry (no clean to avoid downtime)
+          echo "Deploying to $ENV_NAME..."
+          make deploy ENV=$ENV_NAME IMAGE_TAG="$IMAGE_TAG" REGISTRY="ghcr.io/${{ github.repository }}"
+
+      # Wait for test jobs to complete and check their status
+      - name: Wait for and validate test jobs
+        if: steps.env.outputs.env_name == 'staging'
+        run: |
+          NAMESPACE="${{ steps.env.outputs.namespace }}"
+          echo "Waiting for test jobs to complete in namespace: $NAMESPACE"
+
+          # Wait for test job to appear
+          echo "Waiting for test job to be created..."
+          timeout 300 bash -c 'while ! kubectl get job lingua-quiz-tests -n '"$NAMESPACE"' 2>/dev/null; do sleep 5; done' || {
+            echo "Test job was not created within 5 minutes"
+            exit 1
+          }
+
+          # Wait for test job to complete (success or failure)
+          echo "Waiting for test job to complete..."
+          timeout 600 bash -c 'while [[ $(kubectl get job lingua-quiz-tests -n '"$NAMESPACE"' -o jsonpath="{.status.conditions[?(@.type==\"Complete\")].status}" 2>/dev/null) != "True" ]] && [[ $(kubectl get job lingua-quiz-tests -n '"$NAMESPACE"' -o jsonpath="{.status.conditions[?(@.type==\"Failed\")].status}" 2>/dev/null) != "True" ]]; do sleep 10; done' || {
+            echo "Test job did not complete within 10 minutes"
+            kubectl describe job lingua-quiz-tests -n "$NAMESPACE"
+            kubectl logs job/lingua-quiz-tests -n "$NAMESPACE" --tail=100 || true
+            exit 1
+          }
+
+          # Check if test job succeeded
+          if [[ $(kubectl get job lingua-quiz-tests -n "$NAMESPACE" -o jsonpath="{.status.conditions[?(@.type==\"Complete\")].status}" 2>/dev/null) == "True" ]]; then
+            echo "✅ Test job completed successfully"
+            kubectl logs job/lingua-quiz-tests -n "$NAMESPACE" --tail=50
           else
-            echo "Cleaning and deploying to staging..."
-            make clean-staging
-            make staging IMAGE_TAG="$IMAGE_TAG" REGISTRY="ghcr.io/${{ github.repository }}"
+            echo "❌ Test job failed"
+            kubectl describe job lingua-quiz-tests -n "$NAMESPACE"
+            kubectl logs job/lingua-quiz-tests -n "$NAMESPACE" --tail=100 || true
+            exit 1
           fi

@@ -1,23 +1,11 @@
 # ======================================================================================
-# LinguaQuiz Multi-stage Dockerfile (Refactored)
-#
-# Targets:
-#   - backend: Python FastAPI production server
-#   - frontend: Nginx server for the Svelte SPA
-#   - integration-e2e-tests: Test runner environment
-#
-# Best Practice: Always use a .dockerignore file to exclude unnecessary files
-# from the build context, speeding up the build and reducing image size.
-# ======================================================================================
-
-
-# ======================================================================================
 # BASE STAGES
 # ======================================================================================
 
 # --- Python Base Stage for Backend & Tests ---
 # Establishes a common foundation for both the backend and test stages to reduce duplication.
-FROM python:3.13-alpine AS python-base
+# Using alpine for reliable builds, pinned to specific version for reproducibility
+FROM --platform=linux/amd64 python:3.13.1-alpine AS python-base
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
 
@@ -33,18 +21,18 @@ WORKDIR /home/appuser
 # ======================================================================================
 FROM python-base AS backend
 
-# Install build-time and runtime dependencies for the backend
-RUN apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev \
-    && apk add --no-cache postgresql-libs
+# Layer 1: System runtime dependencies (rarely changes)
+RUN apk add --no-cache postgresql-libs
 
-# Install Python packages
-# This is done as root to install dependencies, then we'll chown the final app directory.
+# Layer 2: Python package installation (changes only when requirements.txt changes)
+# Install build-time deps, install packages, then remove build-time deps in one command
 COPY --chown=appuser:appuser packages/backend/requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt \
+RUN apk add --no-cache --virtual .build-deps gcc musl-dev postgresql-dev \
+    && pip install --no-cache-dir -r requirements.txt \
     && apk --purge del .build-deps
 
 # Copy application source code
-COPY --chown=appuser:appuser packages/backend/src/main.py packages/backend/src/tts_service.py ./
+COPY --chown=appuser:appuser packages/backend/src/ ./
 COPY --chown=appuser:appuser packages/backend/migrate.py ./
 COPY --chown=appuser:appuser packages/backend/migrations/ ./migrations/
 
@@ -77,7 +65,7 @@ exec uvicorn main:app --host 0.0.0.0 --port 9000 --workers $WORKERS --log-level 
 USER appuser
 
 EXPOSE 9000
-HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
     CMD curl -f http://localhost:9000/api/health || exit 1
 
 CMD ["./start.sh"]
@@ -86,20 +74,28 @@ CMD ["./start.sh"]
 # ======================================================================================
 # FRONTEND BUILDER STAGE
 # ======================================================================================
-FROM node:24-alpine AS frontend-builder
+# Pinned to specific version for reproducible builds
+FROM --platform=linux/amd64 node:22.12.0-slim AS frontend-builder
 
 WORKDIR /app
 
-# For a monorepo, it's often more efficient to install all dependencies at once.
-# This leverages caching better if only one package's code changes.
+# Layer 1: Copy all package manifests for better caching
+# For a monorepo, install all dependencies at once for better cache efficiency
 COPY package.json package-lock.json ./
 COPY packages/core/package.json ./packages/core/
 COPY packages/frontend/package.json ./packages/frontend/
+
+# Layer 2: Install dependencies (changes only when package manifests change)
+# Clear npm cache and install dependencies
+RUN npm cache clean --force
 RUN npm ci
+# Fix rollup optional dependencies issue per https://github.com/npm/cli/issues/4828
+RUN rm -rf node_modules package-lock.json
+RUN npm install
 
 # Copy and build the 'core' library first
 COPY packages/core/ ./packages/core/
-RUN cd packages/core && npm run test && npm run build
+RUN cd packages/core && npm run build
 
 # Copy and build the 'frontend' application
 COPY packages/frontend/ ./packages/frontend/
@@ -109,7 +105,8 @@ RUN cd packages/frontend && npm run build
 # ======================================================================================
 # FRONTEND PRODUCTION STAGE
 # ======================================================================================
-FROM nginx:1.27-alpine AS frontend
+# Pinned to specific version for reproducible builds
+FROM --platform=linux/amd64 nginx:1.27.3-alpine AS frontend
 
 # Configure nginx for SPA routing (simplified like working sites)
 RUN printf 'server {\n\

@@ -4,7 +4,7 @@ backend:
   image:
     repository: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-backend # Will be overridden by CI
     pullPolicy: Always
-    tag: 'latest' # Will be overridden by CI with specific tag
+    tag: 'latest'
   port: 9000
   corsAllowedOrigins: 'https://lingua-quiz.nikolay-eremeev.com'
   service:
@@ -22,7 +22,7 @@ frontend:
   image:
     repository: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-frontend # Will be overridden by CI
     pullPolicy: Always
-    tag: 'latest' # Will be overridden by CI with specific tag
+    tag: 'latest'
   port: 80
   service:
     type: ClusterIP
@@ -77,7 +77,7 @@ tests:
   image:
     repository: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-integration-e2e-tests # Will be overridden by CI
     pullPolicy: Always
-    tag: 'latest' # Will be overridden by CI with specific tag
+    tag: 'latest'
   ttlSecondsAfterFinished: 600
   restartPolicy: Never
   backoffLimit: 3

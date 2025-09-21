@@ -20,41 +20,9 @@ The system is built on a decoupled architecture that separates business logic fr
 
 ---
 
-## **Learning Algorithm (`quiz-core`)**
+## **Learning Algorithm**
 
-The system uses a level-based mastery and queueing system, not a traditional time-based Spaced Repetition System (SRS).
-
-### **Algorithm Parameters**
-
-| Param              | Value | Description                                                                                            |
-| :----------------- | :---- | :----------------------------------------------------------------------------------------------------- |
-| `F`                | 5     | **Focus Loop Size:** The queue position an incorrectly answered word moves to.                         |
-| `K`                | 2     | **Promotion Coefficient:** A multiplier for `F` to determine spacing for correct answers.              |
-| `T_promo`          | 3     | **Promotion Threshold:** Consecutive correct answers needed to advance to the next level.              |
-| `MistakeThreshold` | 3     | **Degradation Threshold:** Number of mistakes within the `MistakeWindow` to trigger level degradation. |
-| `MistakeWindow`    | 10    | **Degradation Window:** The number of recent attempts checked for degradation.                         |
-
-### **Mastery Levels**
-
-| Level | Name     | Purpose                                                              |
-| :---- | :------- | :------------------------------------------------------------------- |
-| **0** | New      | Unseen words.                                                        |
-| **1** | Learning | Mastering the primary translation direction (e.g., source → target). |
-| **2** | Learning | Mastering the reverse translation direction (e.g., target → source). |
-| **3** | Examples | Mastering usage examples in the primary direction.                   |
-| **4** | Examples | Mastering usage examples in the reverse direction.                   |
-| **5** | Mastered | Word is considered fully learned.                                    |
-
-### **Progression & Queue Logic**
-
-- **Correct Answer:**
-  - The consecutive correct answer count (`T`) for the word increases.
-  - The word is moved to queue position `(K × F) × T`.
-  - If `T` reaches `T_promo` (3), the word advances to the next level.
-- **Incorrect Answer:**
-  - The consecutive correct count `T` resets to 0.
-  - The word moves to queue position `F` (5).
-  - The system checks if the mistake count within the last `MistakeWindow` (10 attempts) has reached the `MistakeThreshold` (3). If so, the word is degraded one level.
+For detailed information about LinguaQuiz's adaptive learning algorithm, see [LearningAlgorithm.md](LearningAlgorithm.md).
 
 ---
 
@@ -93,25 +61,6 @@ This project prioritizes development velocity via LLM assistance, overseen by hu
 - **Separation of Tasks:** Work is strictly divided into two types: **Feature Tasks** and **Architectural Tasks**.
 - **Minimal Change Principle (for Feature Tasks):** Only commit changes without which the new feature will not work. Revert all other changes (e.g., reformatting, unrelated refactoring).
 - **Human-led Architecture:** All architectural changes, refactoring, and dependency upgrades are initiated by a human in a dedicated **Architectural Task**.
-
-### **Mandatory Docker Testing Workflow**
-
-All changes **must** be verified via Docker Compose to ensure they work in a production-like environment. E2E tests run automatically.
-
-1.  **Stop running containers:**
-    ```bash
-    docker compose down
-    ```
-2.  **Rebuild and start all services:**
-    ```bash
-    docker compose up --build -d
-    ```
-3.  **Monitor E2E test logs:**
-    ```bash
-    docker compose logs e2e-tests -f
-    ```
-
-A task is complete only when all E2E tests pass within the Docker environment.
 
 ### **Git & PR Guidelines**
 

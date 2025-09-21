@@ -34,7 +34,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                # CORRECTED: Use the new generic helper for the backend service name
                 name: {{ include "lingua-quiz-app.component.fullname" (dict "root" . "component" (dict "name" "backend")) }}
                 port:
                   number: {{.Values.backend.service.port}}
@@ -44,7 +43,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                # CORRECTED: Use the new generic helper for the frontend service name
                 name: {{ include "lingua-quiz-app.component.fullname" (dict "root" . "component" (dict "name" "frontend")) }}
                 port:
                   number: {{.Values.frontend.service.port}}
@@ -57,7 +55,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                # CORRECTED: Use the new generic helper for the backend service name
                 name: {{ include "lingua-quiz-app.component.fullname" (dict "root" . "component" (dict "name" "backend")) }}
                 port:
                   number: {{.Values.backend.service.port}}
