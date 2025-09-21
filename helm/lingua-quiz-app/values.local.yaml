@@ -1,9 +1,5 @@
-# Local Development Values for Lingua Quiz Application
-# Usage: helm install lingua-quiz ./helm/lingua-quiz-app -f ./helm/lingua-quiz-app/values.local.yaml --namespace default
-
 namespace: lingua-quiz-local
 
-# Backend configuration for local development
 backend:
   image:
     repository: lingua-quiz-backend
@@ -14,16 +10,15 @@ backend:
   service:
     type: NodePort
     port: 9000
-    nodePort: 30900 # Fixed NodePort for consistent backend access
+    nodePort: 30900
   resources:
     limits:
       cpu: '500m'
-      memory: '512Mi'
+      memory: '1Gi'
     requests:
       cpu: '100m'
-      memory: '256Mi'
+      memory: '512Mi'
 
-# Frontend configuration for local development
 frontend:
   image:
     repository: lingua-quiz-frontend
@@ -33,11 +28,11 @@ frontend:
   service:
     type: NodePort
     port: 80
-    nodePort: 30080 # Fixed NodePort for consistent frontend access
+    nodePort: 30080
   resources:
     limits:
-      cpu: '200m'
-      memory: '256Mi'
+      cpu: '100m'
+      memory: '512Mi'
     requests:
       cpu: '50m'
       memory: '128Mi'
@@ -88,7 +83,7 @@ tests:
   ttlSecondsAfterFinished: 300 # Keep job for 5 minutes after completion
   restartPolicy: Never
   backoffLimit: 2 # Retry tests up to 2 times
-  skipTtsTests: 'true' # Skip TTS tests in local development
+  skipTtsTests: 'true'
   resources:
     limits:
       cpu: '500m'
