@@ -383,7 +383,7 @@ def cleanup_inconsistent_vocabulary_data(
                     cleanup_count += 1
 
                 conn.commit()
-                print("  Removed {cleanup_count} inconsistent vocabulary entries")
+                print(f"  Removed {cleanup_count} inconsistent vocabulary entries")
             else:
                 print("  All translation entries are consistent with vocabulary files")
 
@@ -441,29 +441,19 @@ def main():
             print(f"Running {migration_file.filename}...", end=" ", flush=True)
 
             if run_migration(conn, migration_file):
-                print("{GREEN}✓{RESET}")
+                print(f"{GREEN}✓{RESET}")
                 success_count += 1
             else:
-                print(f"{RED}✗{RESET}")
-                # Continue with other migrations even if one fails
+                print(f"{RED}✗ MIGRATION FAILED. ABORTING.{RESET}")
+                sys.exit(1)
 
         print(
             f"\n{GREEN}✓ Completed: {success_count}/{len(migration_files)} migrations successful{RESET}"
         )
 
-        if success_count < len(migration_files):
-            print(f"{YELLOW}⚠ Some migrations failed. Check the errors above.{RESET}")
-            sys.exit(1)
-
-        # Run post-migration cleanup
-        print(f"\n{YELLOW}Running post-migration cleanup...{RESET}")
-        cleanup_count = cleanup_inconsistent_vocabulary_data(conn, migration_config)
-        if cleanup_count > 0:
-            print(
-                f"{GREEN}✓ Cleaned up {cleanup_count} inconsistent vocabulary entries{RESET}"
-            )
-        else:
-            print(f"{GREEN}✓ No cleanup needed - all data is consistent{RESET}")
+        # Note: Vocabulary data cleanup is available via cleanup_inconsistent_vocabulary_data()
+        # but is not run automatically to prevent accidental data loss.
+        # Run it manually with --cleanup flag if needed.
 
     finally:
         conn.close()

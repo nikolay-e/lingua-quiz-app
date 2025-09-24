@@ -57,7 +57,6 @@ Generic component fullname (e.g., "lingua-quiz-backend")
 
 {{/*
 Generic component selector labels
-CORRECTED: Simplified to use the full component name for the 'name' label.
 This prevents templating issues and creates cleaner, more standard labels.
 */}}
 {{- define "lingua-quiz-app.component.selectorLabels" -}}

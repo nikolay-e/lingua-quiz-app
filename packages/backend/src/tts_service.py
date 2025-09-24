@@ -23,6 +23,7 @@ class TTSService:
         self.client = None
         self.db_pool = db_pool
         self.voice_configs = {
+            "English": {"language_code": "en-US", "name": "en-US-Standard-A"},
             "German": {"language_code": "de-DE", "name": "de-DE-Standard-A"},
             "Russian": {"language_code": "ru-RU", "name": "ru-RU-Standard-A"},
             "Spanish": {"language_code": "es-ES", "name": "es-ES-Standard-A"},

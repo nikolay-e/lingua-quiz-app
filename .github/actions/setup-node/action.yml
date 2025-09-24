@@ -1,5 +1,5 @@
 name: 'Setup Node.js Environment'
-description: 'Checks out code, sets up Node.js 24, and installs npm dependencies'
+description: 'Checks out code, sets up Node.js 22, and installs npm dependencies'
 runs:
   using: 'composite'
   steps:
@@ -9,7 +9,7 @@ runs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '24'
+        node-version-file: '.nvmrc'
         cache: 'npm'
 
     - name: Install dependencies

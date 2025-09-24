@@ -1,0 +1,127 @@
+<script lang="ts">
+  import { createEventDispatcher } from 'svelte';
+  import type { WordSet } from '../../api-types';
+
+  const dispatch = createEventDispatcher<{ select: { quiz: string }; backToMenu: void }>();
+
+  export let wordSets: WordSet[] = [];
+  export let selectedQuiz: string | null = null;
+  export let loading: boolean = false;
+
+  let selected = '';
+
+  function handleQuizSelect(): void {
+    if (!selected) return;  // guard placeholder
+    dispatch('select', { quiz: selected });
+  }
+
+  function handleBackToMenu(): void {
+    dispatch('backToMenu');
+  }
+</script>
+
+<div class="quiz-header">
+  {#if !selectedQuiz}
+    <div class="quiz-select-container">
+      <select
+        id="quiz-select"
+        class="quiz-select"
+        bind:value={selected}
+        on:change={handleQuizSelect}
+        disabled={loading}
+      >
+        <option value="" disabled>
+          {loading ? 'Loading quizzes...' : '🎯 Select a quiz to start learning'}
+        </option>
+        {#each wordSets as set (set.name)}
+          <option value={set.name}>{set.name}</option>
+        {/each}
+      </select>
+    </div>
+  {:else}
+    <div class="selected-quiz-header flex-between">
+      <div class="quiz-info flex-align-center gap-sm">
+        <i class="fas fa-book"></i>
+        <span class="quiz-name">{selectedQuiz}</span>
+      </div>
+      <button class="back-to-menu-btn" on:click={handleBackToMenu}>
+        <i class="fas fa-arrow-left"></i>
+        <span>Back to Menu</span>
+      </button>
+    </div>
+  {/if}
+</div>
+
+<style>
+  .quiz-header {
+    margin-top: calc(var(--spacing-md) * -0.5);
+  }
+
+  .quiz-select-container {
+    margin-top: var(--spacing-md);
+  }
+
+  .quiz-select {
+    background-color: var(--container-bg);
+    color: var(--text-color);
+    border: 2px solid var(--input-border-color);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm);
+    font-size: var(--font-size-base);
+    transition: border-color var(--transition-speed) ease;
+  }
+
+  .quiz-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-focus-shadow);
+  }
+
+  .quiz-select:disabled {
+    background-color: var(--disabled-bg);
+    color: var(--disabled-text);
+    border-color: var(--disabled-border-color);
+    cursor: not-allowed;
+  }
+
+  .selected-quiz-header {
+    /* Using utility class equivalent: flex-between */
+    margin-top: var(--spacing-md);
+  }
+
+  .quiz-info {
+    /* Using utility class equivalent: flex-align-center gap-sm */
+  }
+
+  .quiz-info i {
+    color: var(--primary-color);
+  }
+
+  .quiz-name {
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: var(--font-size-lg);
+  }
+
+
+  .back-to-menu-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    background: none;
+    border: 1px solid var(--input-border-color);
+    color: var(--text-color);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    font-size: var(--font-size-sm);
+    margin: 0;
+    width: auto;
+  }
+
+  .back-to-menu-btn:hover {
+    background-color: var(--hover-bg-light);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+  }
+</style>

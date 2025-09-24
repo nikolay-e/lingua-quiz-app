@@ -4,6 +4,8 @@
   export let placeholder: string = 'Password';
   export let disabled: boolean = false;
   export let id: string = 'password';
+  export let label: string = '';
+  export let autocomplete: 'current-password' | 'new-password' = 'current-password';
 
   let showPassword = false;
 
@@ -13,6 +15,9 @@
 </script>
 
 <div class="input-group">
+  {#if label}
+    <label for={id}>{label}</label>
+  {/if}
   <input
     type={showPassword ? 'text' : 'password'}
     bind:value
@@ -20,6 +25,7 @@
     required
     {disabled}
     {id}
+    {autocomplete}
   />
   <button
     type="button"

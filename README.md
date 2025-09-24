@@ -8,6 +8,10 @@ A language learning web application that helps users master vocabulary through s
    - [Docker Desktop](https://www.docker.com/products/docker-desktop/) with Kubernetes enabled
    - [kubectl](https://kubernetes.io/docs/tasks/tools/)
    - [Helm](https://helm.sh/docs/intro/install/)
+   - NGINX Ingress Controller:
+     ```bash
+     kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.0/deploy/static/provider/cloud/deploy.yaml
+     ```
 
 2. **Clone and Deploy**:
 
@@ -18,8 +22,8 @@ A language learning web application that helps users master vocabulary through s
    ```
 
 3. **Access the App**:
-   - Frontend: http://localhost:30080
-   - Backend API: http://localhost:30900
+   - Frontend: http://localhost
+   - Backend API: http://localhost/api
 
 4. **Clean Up**:
    ```bash
@@ -35,7 +39,7 @@ A language learning web application that helps users master vocabulary through s
 
 ## Tech Stack
 
-**Frontend**: Svelte 5.36, Vite
+**Frontend**: Svelte 5, Vite 7
 **Backend**: Python 3.13, FastAPI, PostgreSQL
 **Infrastructure**: Docker, Kubernetes, Helm
 **Testing**: Playwright E2E tests, Python integration tests

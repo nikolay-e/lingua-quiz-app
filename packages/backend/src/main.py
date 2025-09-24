@@ -226,7 +226,7 @@ class UserWordSetStatusUpdate(BaseModel):
 
 class TTSRequest(BaseModel):
     text: str = Field(..., min_length=1, max_length=500)
-    language: str = Field(..., pattern="^(German|Russian|Spanish)$")
+    language: str = Field(..., pattern="^(English|German|Russian|Spanish)$")
 
 
 class TTSResponse(BaseModel):
@@ -324,6 +324,34 @@ def put_db(conn):
 
 
 def query_db(query, args=(), one=False):
+    """
+    Execute a READ-ONLY database query and return results.
+
+    WARNING: This function does NOT commit transactions. It should only be used for:
+    - SELECT statements that don't modify data
+    - Functions that only read data
+
+    For any operations that modify data (including PostgreSQL functions that
+    update/insert/delete via SELECT), use execute_write_transaction() instead.
+    """
+    # Guardrail: Check for write operations that would fail silently
+    query_upper = query.strip().upper()
+    write_keywords = [
+        "INSERT",
+        "UPDATE",
+        "DELETE",
+        "CREATE",
+        "DROP",
+        "ALTER",
+        "TRUNCATE",
+    ]
+    for keyword in write_keywords:
+        if query_upper.startswith(keyword):
+            raise ValueError(
+                f"query_db() detected a write operation starting with '{keyword}'. "
+                f"Use execute_write_transaction() instead to ensure data is committed."
+            )
+
     conn = None
     try:
         conn = get_db()
@@ -331,18 +359,8 @@ def query_db(query, args=(), one=False):
             raise Exception("Failed to get database connection")
         with conn.cursor(cursor_factory=RealDictCursor) as cur:
             cur.execute(query, args)
-            # Always fetch results first (even for write operations with RETURNING)
             rv = cur.fetchall()
-
-            # Determine if this is a write operation and commit if needed
-            is_write_operation = (
-                query.strip().upper().startswith(("INSERT", "UPDATE", "DELETE"))
-            )
-            if is_write_operation:
-                logger.info(f"Committing transaction for query: {query[:50]}...")
-                conn.commit()
-                logger.info("Transaction committed successfully")
-
+            # No commit - this is for read-only queries only
             return (rv[0] if rv else None) if one else rv
     except psycopg2.pool.PoolError as e:
         logger.error(f"Connection pool error: {e}")
@@ -372,7 +390,25 @@ def query_db(query, args=(), one=False):
                     pass
 
 
-def execute_db(query, args=()):
+def execute_write_transaction(query, args=(), fetch_results=False, one=False):
+    """
+    Execute a database operation that modifies data and commit the transaction.
+
+    Use this function for:
+    - INSERT, UPDATE, DELETE statements
+    - PostgreSQL functions that modify data (even when called via SELECT)
+    - Any operation that needs to be committed to persist changes
+
+    Args:
+        query: SQL query to execute
+        args: Query parameters
+        fetch_results: If True, return query results (useful for RETURNING clauses)
+        one: If True, return only the first result
+
+    Returns:
+        - If fetch_results=True: query results
+        - If fetch_results=False: number of affected rows
+    """
     conn = None
     try:
         conn = get_db()
@@ -380,8 +416,15 @@ def execute_db(query, args=()):
             raise Exception("Failed to get database connection")
         with conn.cursor(cursor_factory=RealDictCursor) as cur:
             cur.execute(query, args)
-            conn.commit()
-            return cur.rowcount
+
+            if fetch_results:
+                rv = cur.fetchall()
+                conn.commit()
+                return (rv[0] if rv else None) if one else rv
+            else:
+                row_count = cur.rowcount
+                conn.commit()
+                return row_count
     except psycopg2.pool.PoolError as e:
         logger.error(f"Connection pool error: {e}")
         raise
@@ -505,9 +548,10 @@ async def register_user(request: Request, user_data: UserRegistration):
 
         # Hash password and create user
         hashed_password = hash_password(user_data.password)
-        result = query_db(
+        result = execute_write_transaction(
             "INSERT INTO users (username, password) VALUES (%s, %s) RETURNING id",
             (user_data.username, hashed_password),
+            fetch_results=True,
             one=True,
         )
 
@@ -585,7 +629,7 @@ async def delete_account(current_user: dict = Depends(get_current_user)):
     """Delete the current user's account"""
     logger.info(f"Account deletion request for user: {current_user['username']}")
     try:
-        result = execute_db(
+        result = execute_write_transaction(
             "DELETE FROM users WHERE id = %s", (current_user["user_id"],)
         )
 
@@ -657,7 +701,7 @@ async def update_current_level(
             )
 
         # Update user level
-        result = execute_db(
+        result = execute_write_transaction(
             "UPDATE users SET current_level = %s::translation_status WHERE id = %s",
             (level_data.currentLevel, current_user["user_id"]),
         )
@@ -811,7 +855,7 @@ async def update_user_word_sets(
             )
 
         # Update word sets
-        execute_db(
+        execute_write_transaction(
             "SELECT update_user_word_set_status(%s, %s, %s)",
             (current_user["user_id"], update_data.word_pair_ids, update_data.status),
         )

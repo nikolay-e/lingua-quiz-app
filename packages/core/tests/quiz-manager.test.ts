@@ -247,7 +247,6 @@ describe('QuizManager Tests', () => {
         {
           translationId: 1,
           status: 'LEVEL_2' as const,
-          queuePosition: 0,
           consecutiveCorrect: 1,
           recentHistory: [true, false, true],
         },

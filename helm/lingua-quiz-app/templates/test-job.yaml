@@ -8,11 +8,10 @@ metadata:
     {{- include "lingua-quiz-app.labels" . | nindent 4}}
     app.kubernetes.io/component: tests
   annotations:
-    # Run tests after deployment - non-blocking
+    # Run tests after deployment - will fail deployment if tests fail
     "helm.sh/hook": post-install,post-upgrade
     "helm.sh/hook-weight": "15"
-    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded,hook-failed
-    "helm.sh/hook-failure-policy": ignore
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
 spec:
   ttlSecondsAfterFinished: {{.Values.tests.ttlSecondsAfterFinished}}
   template:

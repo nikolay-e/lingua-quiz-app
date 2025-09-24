@@ -3,7 +3,7 @@
 # ===================================================================================
 .DEFAULT_GOAL := help
 .PHONY: help local staging prod full-deploy build push deploy clean clean-db \
-        clean-local clean-staging clean-prod
+        clean-local clean-staging clean-prod check-context
 
 # ===================================================================================
 # Core Configuration
@@ -95,7 +95,7 @@ help: ## ✨ Show this help message
 # ===================================================================================
 # PRIMARY WORKFLOWS
 # ===================================================================================
-local: ## ▶️  Build and Deploy for the LOCAL environment.
+local: check-context ## ▶️  Build and Deploy for the LOCAL environment.
 	@$(MAKE) build ENV=local
 	@$(MAKE) deploy ENV=local
 
@@ -128,8 +128,8 @@ build: ## 📦 Build all Docker images for the LOCAL environment only.
 ifeq ($(ENV),local)
 	@echo "--> Building local images..."
 	$(foreach service,$(SERVICES), \
-		echo "--> Building lingua-quiz-$(service):local"; \
-		docker build --target $(service) -t lingua-quiz-$(service):local . ; \
+		echo "--> Building lingua-quiz-$(service):latest"; \
+		docker build --target $(service) -t lingua-quiz-$(service):latest . ; \
 	)
 else
 	@echo "--> Skipping build for [$(ENV)]: Handled by CI/CD workflow with GHCR caching."
@@ -137,6 +137,41 @@ endif
 
 push: ## ⬆️ (CI ONLY) Push all Docker images to the registry.
 	@echo "--> Skipping push: Handled by CI/CD workflow with build-push-action and GHCR caching."
+
+# ===================================================================================
+# SAFETY CHECKS
+# ===================================================================================
+# Check if the current kubectl context is safe for local development
+check-context: ## 🔒 Verify kubectl context is safe for deployment
+	@echo "--> Checking kubectl context safety..."
+	@CURRENT_CONTEXT=$$(kubectl config current-context 2>/dev/null || echo "unknown"); \
+	SAFE_CONTEXTS="docker-desktop rancher-desktop colima k3d kind minikube microk8s"; \
+	CONTEXT_SAFE=false; \
+	for safe_context in $$SAFE_CONTEXTS; do \
+		if echo "$$CURRENT_CONTEXT" | grep -q "$$safe_context"; then \
+			CONTEXT_SAFE=true; \
+			break; \
+		fi; \
+	done; \
+	if [ "$$CONTEXT_SAFE" = "false" ]; then \
+		echo ""; \
+		echo "⚠️  WARNING: Current kubectl context '$$CURRENT_CONTEXT' does not appear to be a local development cluster!"; \
+		echo ""; \
+		echo "🛡️  Safe local contexts include:"; \
+		for safe_context in $$SAFE_CONTEXTS; do \
+			echo "   - $$safe_context"; \
+		done; \
+		echo ""; \
+		echo "🚫 Deployment blocked to prevent accidental deployment to production clusters."; \
+		echo ""; \
+		echo "💡 If this is intentional, you can:"; \
+		echo "   - Switch to a local context: kubectl config use-context <local-context>"; \
+		echo "   - Or deploy directly via Helm if you're certain about the target cluster"; \
+		echo ""; \
+		exit 1; \
+	else \
+		echo "✅ Context '$$CURRENT_CONTEXT' is safe for local deployment."; \
+	fi
 
 # Reusable macro for idempotent Helm deployments
 define HELM_DEPLOY
@@ -153,11 +188,32 @@ define HELM_DEPLOY
 endef
 
 deploy: ## 🚀 Deploy application and database via Helm.
+	@# Safety check: Only skip context validation in CI environments
+	@if [ -z "$$CI" ] && [ -z "$$KUBERNETES_SERVICE_HOST" ]; then \
+		$(MAKE) check-context; \
+	else \
+		echo "--> Skipping context check in CI/K8s environment"; \
+	fi
 	@echo "--> Deploying database to namespace [$(DB_NAMESPACE)]..."
 	$(call HELM_DEPLOY,$(DB_RELEASE_NAME),$(HELM_DB_DIR),$(DB_NAMESPACE))
 	@echo "--> Deploying application to namespace [$(APP_NAMESPACE)]..."
 	$(call HELM_DEPLOY,$(APP_RELEASE_NAME),$(HELM_APP_DIR),$(APP_NAMESPACE),$(VALUES_FILE),$(HELM_SET_FLAGS))
 	@echo "\n✅ Deployment to [$(ENV)] complete!"
+	@echo ""
+	@echo "🌐 Access URLs:"
+ifeq ($(ENV),local)
+	@echo "  Frontend: http://localhost"
+	@echo "  Backend:  http://localhost/api"
+	@echo ""
+	@echo "💡 Tip: Run 'make status' to see running pods and services."
+else ifeq ($(ENV),staging)
+	@echo "  Frontend: https://$(INGRESS_HOST)"
+	@echo "  Backend:  https://$(INGRESS_HOST)/api"
+else ifeq ($(ENV),prod)
+	@echo "  Frontend: https://$(INGRESS_HOST)"
+	@echo "  Backend:  https://$(INGRESS_HOST)/api"
+endif
+	@echo ""
 
 clean: ## 🗑️  Uninstall the application Helm release.
 	@echo "--> Removing application '$(APP_RELEASE_NAME)' from namespace [$(APP_NAMESPACE)]..."
@@ -166,3 +222,29 @@ clean: ## 🗑️  Uninstall the application Helm release.
 clean-db: ## ⚠️  Uninstall the database Helm release.
 	@echo "--> Removing database '$(DB_RELEASE_NAME)' from namespace [$(DB_NAMESPACE)]..."
 	@helm uninstall $(DB_RELEASE_NAME) --namespace $(DB_NAMESPACE) --wait || true
+
+status: ## 📊 Show status of running services and access URLs.
+	@echo "📊 Status for [$(ENV)] environment:"
+	@echo ""
+	@echo "🏃 Running Pods:"
+	@kubectl get pods -n $(APP_NAMESPACE) -o wide || echo "  No pods found in namespace $(APP_NAMESPACE)"
+	@echo ""
+	@echo "🔗 Services:"
+	@kubectl get services -n $(APP_NAMESPACE) || echo "  No services found in namespace $(APP_NAMESPACE)"
+	@echo ""
+	@echo "🌐 Access URLs:"
+ifeq ($(ENV),local)
+	@echo "  Frontend: http://localhost"
+	@echo "  Backend:  http://localhost/api"
+	@echo ""
+	@echo "🔍 Testing Connectivity:"
+	@curl -s -o /dev/null -w "  Frontend: %{http_code} %{url_effective}\n" http://localhost || echo "  Frontend: ❌ Not accessible"
+	@curl -s -o /dev/null -w "  Backend:  %{http_code} %{url_effective}\n" http://localhost/api/health || echo "  Backend:  ❌ Not accessible"
+else ifeq ($(ENV),staging)
+	@echo "  Frontend: https://$(INGRESS_HOST)"
+	@echo "  Backend:  https://$(INGRESS_HOST)/api"
+else ifeq ($(ENV),prod)
+	@echo "  Frontend: https://$(INGRESS_HOST)"
+	@echo "  Backend:  https://$(INGRESS_HOST)/api"
+endif
+	@echo ""

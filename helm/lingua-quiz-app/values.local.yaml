@@ -4,13 +4,12 @@ backend:
   image:
     repository: lingua-quiz-backend
     pullPolicy: Never # Use locally built image
-    tag: 'local'
+    tag: 'latest'
   port: 9000
-  corsAllowedOrigins: 'http://localhost:8080,http://localhost:5173,http://localhost:30080'
+  corsAllowedOrigins: 'http://localhost'
   service:
-    type: NodePort
+    type: ClusterIP
     port: 9000
-    nodePort: 30900
   resources:
     limits:
       cpu: '500m'
@@ -23,19 +22,18 @@ frontend:
   image:
     repository: lingua-quiz-frontend
     pullPolicy: Never # Use locally built image
-    tag: 'local'
+    tag: 'latest'
   port: 80
   service:
-    type: NodePort
+    type: ClusterIP
     port: 80
-    nodePort: 30080
   resources:
     limits:
       cpu: '100m'
       memory: '512Mi'
     requests:
-      cpu: '50m'
-      memory: '128Mi'
+      cpu: '25m'
+      memory: '256Mi'
 
 # PostgreSQL configuration - use shared instance
 postgres:
@@ -44,28 +42,27 @@ postgres:
     host: 'shared-postgres.shared-database.svc.cluster.local'
     port: 5432
     database: 'linguaquiz_dev'
-    existingSecret: 'shared-postgres-linguaquiz'
 
-# Ingress disabled for local development (using NodePort instead)
 ingress:
-  enabled: false
+  enabled: true
+  className: 'nginx'
+  frontend:
+    host: localhost
+  backend:
+    host: # Same host as frontend - API will be served from /api path
+  tls:
+    enabled: false # No TLS for local development
 
-# Local development secrets
-secrets:
-  jwtSecret: 'local-development-jwt-secret-change-in-production'
-  googleCloudCredentialsB64: '' # Optional for local dev
-
-# Migration configuration
 migrations:
   enabled: true
   command: ['python', 'migrate.py']
-  ttlSecondsAfterFinished: 300
+  ttlSecondsAfterFinished: 600
   restartPolicy: OnFailure
-  backoffLimit: 1
+  backoffLimit: 3
   resources:
     limits:
       cpu: '200m'
-      memory: '256Mi'
+      memory: '512Mi'
     requests:
       cpu: '50m'
       memory: '128Mi'
@@ -73,21 +70,20 @@ migrations:
     - name: DOCKER_ENVIRONMENT
       value: 'true'
 
-# Test configuration for local development
 tests:
   enabled: true
   image:
-    repository: lingua-quiz-tests # Test runner image
+    repository: lingua-quiz-integration-e2e-tests # Test runner image
     pullPolicy: Never
-    tag: 'local'
-  ttlSecondsAfterFinished: 300 # Keep job for 5 minutes after completion
+    tag: 'latest'
+  ttlSecondsAfterFinished: 600
   restartPolicy: Never
-  backoffLimit: 2 # Retry tests up to 2 times
+  backoffLimit: 3
   skipTtsTests: 'true'
   resources:
     limits:
       cpu: '500m'
-      memory: '256Mi'
+      memory: '512Mi'
     requests:
       cpu: '100m'
-      memory: '128Mi'
+      memory: '256Mi'

@@ -66,7 +66,7 @@ export const normalizeForComparison = (text: string): string => {
   // 2. Always apply German & Spanish normalization first (safe for all text)
   result = collapseGerman(stripLatinDiacritics(result));
 
-  // 3. Apply Cyrillic conversion only in specific cases
+  // 3. Apply Cyrillic conversion only when appropriate
   const containsCyr = /[а-яё]/i.test(result);
 
   // Convert if there's already Cyrillic present and we have visually identical Latin chars
@@ -74,10 +74,17 @@ export const normalizeForComparison = (text: string): string => {
     result = result.replace(/[aAcCeEoOpPxXyY]/g, (ch) => latinToCyrillic[ch] || ch);
   }
 
-  // Special case: strings that are clearly meant to be Cyrillic (like "cop")
-  const isKnownFakeCyr = /^cop$/i.test(result);
-  if (isKnownFakeCyr) {
-    result = result.replace(/[aAcCeEoOpPxXyY]/g, (ch) => latinToCyrillic[ch] || ch);
+  // Conservative lookalike conversion for very specific cases
+  // LIMITATION: This heuristic may still incorrectly convert some English words
+  // like "cop", "cap", "pay" to Cyrillic. This is a known trade-off.
+  // Only convert if the word strongly suggests Russian input error
+  const onlyLookalikes = /^[aAcCeEoOpPxXyY]+$/i.test(result);
+  if (onlyLookalikes && result.length <= 3) {
+    // Very restrictive: only 3 chars or less, and contains patterns common in Russian
+    const strongRussianPattern = result.includes('py') || result.includes('op') || result.includes('po');
+    if (strongRussianPattern) {
+      result = result.replace(/[aAcCeEoOpPxXyY]/g, (ch) => latinToCyrillic[ch] || ch);
+    }
   }
 
   // 5. Always apply ё→е mapping for any Cyrillic characters

@@ -60,11 +60,11 @@ spec:
                 key: POSTGRES_PASSWORD
         resources:
           requests:
-            cpu: "10m"
-            memory: "32Mi"
+            cpu: 25m
+            memory: 64Mi
           limits:
-            cpu: "25m"
-            memory: "64Mi"
+            cpu: 50m
+            memory: 128Mi
       containers:
       - name: migration-runner
         image: "{{.Values.backend.image.repository}}:{{.Values.backend.image.tag | default .Chart.AppVersion}}"

@@ -8,114 +8,124 @@ declare global {
 }
 
 /**
- * Determines the server address based on environment and current location
+ * Determines the server address based on build-time environment variables
  * @returns The API server address
  */
 const getServerAddress = (): string => {
-  const { hostname, port, protocol } = window.location;
+  // Build-time environment variable (preferred method)
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL as string;
+  }
 
-  // Environment variable override (for Docker and other deployment scenarios)
+  // Runtime environment variable override (for Docker and other deployment scenarios)
   if (window.LINGUA_QUIZ_API_URL) {
     return window.LINGUA_QUIZ_API_URL;
   }
 
-  // Development scenarios
-  if (hostname === 'localhost') {
-    if (port === '8080') {
-      return 'http://localhost:9000/api';
-    }
-    if (port === '30080') {
-      // Kubernetes NodePort - backend is on 30900
-      return 'http://localhost:30900/api';
-    }
-    // Handle other development ports
-    return `http://localhost:9000/api`;
-  }
-
-  // Docker internal networking
-  if (hostname === 'frontend') {
-    return 'http://backend:9000/api';
-  }
-
-  // Generic production fallback - assume API is on same domain with /api path
-  if (protocol === 'https:') {
-    return `https://${hostname}/api`;
-  }
-  return '/api'; // fallback for same-origin deployment
+  // Simple fallback for same-origin deployment
+  return '/api';
 };
 
-import type { AuthResponse, WordSet, UserWordSet, TTSResponse, TTSLanguagesResponse } from '@lingua-quiz/core';
+import type { AuthResponse, WordSet, UserWordSet, TTSResponse, TTSLanguagesResponse, WordSetWithWords } from './api-types';
 
 const serverAddress = getServerAddress();
+
+/**
+ * Centralized fetch wrapper that handles common API tasks:
+ * - Authorization headers
+ * - Response status checking
+ * - Error parsing and handling
+ * - JSON response parsing
+ */
+async function fetchWrapper<T = unknown>(url: string, options: RequestInit = {}): Promise<T> {
+  const response = await fetch(url, options);
+
+  if (!response.ok) {
+    let errorData;
+    try {
+      errorData = await response.json();
+    } catch {
+      // If JSON parsing fails, create a generic error
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    // Handle specific HTTP status codes
+    if (response.status === 401) {
+      throw new Error('Unauthorized');
+    }
+    if (response.status === 404) {
+      throw new Error('Resource not found');
+    }
+
+    // Handle FastAPI validation errors (arrays of error objects)
+    if (errorData.detail && Array.isArray(errorData.detail)) {
+      const errors = errorData.detail
+        .map((err: { msg?: string; message?: string }) => err.msg || err.message)
+        .filter(Boolean)
+        .join(', ');
+      throw new Error(errors || `Request failed with status ${response.status}`);
+    }
+
+    // Handle other error formats
+    const errorMessage = errorData.message || errorData.detail || `Request failed with status ${response.status}`;
+    throw new Error(errorMessage);
+  }
+
+  // Safely handle empty bodies
+  const cl = response.headers.get('content-length');
+  if (response.status === 204 || cl === '0' || cl === null) {
+    // Try text first; some servers send empty string without content-length
+    const text = await response.text();
+    return (text ? JSON.parse(text) : undefined) as unknown as T;
+  }
+
+  // Some servers omit content-length; try/catch JSON parse
+  try {
+    return await response.json();
+  } catch {
+    return undefined as unknown as T;
+  }
+}
+
+/**
+ * Creates request options with Authorization header
+ */
+function withAuth(token: string, options: RequestInit = {}): RequestInit {
+  return {
+    ...options,
+    headers: {
+      ...options.headers,
+      Authorization: `Bearer ${token}`,
+    },
+  };
+}
 
 /**
  * API client for communicating with the LinguaQuiz backend
  */
 const api = {
   async login(username: string, password: string): Promise<AuthResponse> {
-    const response = await fetch(`${serverAddress}/auth/login`, {
+    return fetchWrapper(`${serverAddress}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
     });
-
-    const data = await response.json();
-    if (!response.ok) {
-      // Handle FastAPI validation errors
-      if (data.detail && Array.isArray(data.detail)) {
-        const errors = data.detail.map((err: { msg?: string; message?: string }) => err.msg || err.message).join(', ');
-        throw new Error(errors || 'Login failed');
-      }
-      throw new Error(data.message || data.detail || 'Login failed');
-    }
-    return data;
   },
 
   async register(username: string, password: string): Promise<AuthResponse> {
-    const response = await fetch(`${serverAddress}/auth/register`, {
+    return fetchWrapper(`${serverAddress}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
     });
-
-    const data = await response.json();
-    if (!response.ok) {
-      // Handle FastAPI validation errors
-      if (data.detail && Array.isArray(data.detail)) {
-        const errors = data.detail.map((err: { msg?: string; message?: string }) => err.msg || err.message).join(', ');
-        throw new Error(errors || 'Registration failed');
-      }
-      throw new Error(data.message || data.detail || 'Registration failed');
-    }
-    return data;
   },
 
   async fetchWordSets(token: string): Promise<WordSet[]> {
-    const response = await fetch(`${serverAddress}/word-sets`, {
-      method: 'GET',
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    if (!response.ok) {
-      if (response.status === 401) throw new Error('Unauthorized');
-      throw new Error('Failed to fetch word sets');
-    }
-
-    return response.json();
+    return fetchWrapper(`${serverAddress}/word-sets`, withAuth(token, { method: 'GET' }));
   },
 
   async fetchUserWordSets(token: string, wordListName: string): Promise<UserWordSet[]> {
-    const response = await fetch(`${serverAddress}/word-sets/user?word_list_name=${encodeURIComponent(wordListName)}`, {
-      method: 'GET',
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    if (!response.ok) {
-      if (response.status === 401) throw new Error('Unauthorized');
-      throw new Error('Failed to fetch user word sets');
-    }
-
-    return response.json();
+    return fetchWrapper(`${serverAddress}/word-sets/user?word_list_name=${encodeURIComponent(wordListName)}`, withAuth(token, { method: 'GET' }));
   },
 
   async saveWordStatus(
@@ -123,100 +133,52 @@ const api = {
     status: 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5',
     wordPairIds: number[]
   ): Promise<void> {
-    const response = await fetch(`${serverAddress}/word-sets/user`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ status, wordPairIds }),
-    });
-
-    if (!response.ok) throw new Error('Failed to save quiz state');
+    await fetchWrapper(
+      `${serverAddress}/word-sets/user`,
+      withAuth(token, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status, wordPairIds }),
+      })
+    );
   },
 
   async synthesizeSpeech(token: string, text: string, language: string): Promise<TTSResponse> {
-    const response = await fetch(`${serverAddress}/tts/synthesize`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ text, language }),
-    });
-
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.message || 'Failed to synthesize speech');
-    return data;
+    return fetchWrapper(
+      `${serverAddress}/tts/synthesize`,
+      withAuth(token, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text, language }),
+      })
+    );
   },
 
   async getTTSLanguages(token: string): Promise<TTSLanguagesResponse> {
-    const response = await fetch(`${serverAddress}/tts/languages`, {
-      method: 'GET',
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.message || 'Failed to get TTS languages');
-    return data;
+    return fetchWrapper(`${serverAddress}/tts/languages`, withAuth(token, { method: 'GET' }));
   },
 
   async deleteAccount(token: string): Promise<void> {
-    const response = await fetch(`${serverAddress}/auth/delete-account`, {
-      method: 'DELETE',
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    if (!response.ok) {
-      const data = await response.json();
-      throw new Error(data.message || data.detail || 'Failed to delete account');
-    }
+    await fetchWrapper(`${serverAddress}/auth/delete-account`, withAuth(token, { method: 'DELETE' }));
   },
 
   async getCurrentLevel(token: string): Promise<{ currentLevel: string }> {
-    const response = await fetch(`${serverAddress}/user/current-level`, {
-      method: 'GET',
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    if (!response.ok) {
-      if (response.status === 401) throw new Error('Unauthorized');
-      const data = await response.json();
-      throw new Error(data.message || 'Failed to get current level');
-    }
-
-    return response.json();
+    return fetchWrapper(`${serverAddress}/user/current-level`, withAuth(token, { method: 'GET' }));
   },
 
   async updateCurrentLevel(token: string, currentLevel: string): Promise<void> {
-    const response = await fetch(`${serverAddress}/user/current-level`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ currentLevel }),
-    });
-
-    if (!response.ok) {
-      const data = await response.json();
-      throw new Error(data.message || 'Failed to update current level');
-    }
+    await fetchWrapper(
+      `${serverAddress}/user/current-level`,
+      withAuth(token, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ currentLevel }),
+      })
+    );
   },
 
-  async fetchWordSet(token: string, wordSetId: number): Promise<WordSet & { words: unknown[] }> {
-    const response = await fetch(`${serverAddress}/word-sets/${wordSetId}`, {
-      method: 'GET',
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    if (!response.ok) {
-      if (response.status === 401) throw new Error('Unauthorized');
-      if (response.status === 404) throw new Error('Word set not found');
-      throw new Error('Failed to fetch word set');
-    }
-
-    return response.json();
+  async fetchWordSet(token: string, wordSetId: number): Promise<WordSetWithWords> {
+    return fetchWrapper(`${serverAddress}/word-sets/${wordSetId}`, withAuth(token, { method: 'GET' }));
   },
 };
 

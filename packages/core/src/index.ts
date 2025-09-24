@@ -10,7 +10,7 @@
  * This package contains NO UI dependencies and focuses purely on business logic.
  */
 
-import { F, K, T_PROMO, MISTAKE_THRESHOLD, MISTAKE_WINDOW, MAX_FOCUS_POOL_SIZE, RECENTLY_ASKED_SIZE, MIN_HISTORY_FOR_DEGRADATION } from './constants';
+import { F, K, T_PROMO, MISTAKE_THRESHOLD, MISTAKE_WINDOW, MAX_FOCUS_POOL_SIZE, MIN_HISTORY_FOR_DEGRADATION } from './constants';
 import { checkAnswer, formatForDisplay } from './answer-comparison';
 import { Translation, ProgressEntry } from './types';
 
@@ -55,7 +55,6 @@ export interface QuizOptions {
   correctAnswersToLevelUp?: number;
   mistakesToLevelDown?: number;
   historySizeForDegradation?: number;
-  recentlyAskedSize?: number;
   queuePositionIncrement?: number;
   enableUsageExamples?: boolean;
 }
@@ -104,7 +103,6 @@ export class QuizManager {
       correctAnswersToLevelUp: options.correctAnswersToLevelUp ?? T_PROMO,
       mistakesToLevelDown: options.mistakesToLevelDown ?? MISTAKE_THRESHOLD,
       historySizeForDegradation: options.historySizeForDegradation ?? MISTAKE_WINDOW,
-      recentlyAskedSize: options.recentlyAskedSize ?? RECENTLY_ASKED_SIZE,
       queuePositionIncrement: options.queuePositionIncrement ?? K * F,
       enableUsageExamples: options.enableUsageExamples ?? true,
     };
@@ -128,7 +126,6 @@ export class QuizManager {
       const progress: ProgressEntry = existing || {
         translationId: t.id,
         status: 'LEVEL_0',
-        queuePosition: 0,
         consecutiveCorrect: 0,
         recentHistory: [],
       };
@@ -519,10 +516,11 @@ export class QuizManager {
     if (allProgress.length === 0) return false;
 
     if (this.opts.enableUsageExamples) {
-      // With usage examples enabled, complete means all at LEVEL_5
+      // With usage examples enabled, complete means all at LEVEL_5 (Fully Mastered)
       return allProgress.every((p) => p.status === 'LEVEL_5');
     } else {
-      // Without usage examples, complete means all at LEVEL_3
+      // Without usage examples, complete means all at LEVEL_3 (Translation Mastered Both Ways)
+      // LEVEL_3 completes basic translation mastery; LEVEL_4+ are for usage examples
       return allProgress.every((p) => p.status === 'LEVEL_3');
     }
   };
@@ -599,11 +597,8 @@ export class QuizManager {
   };
 }
 
-// Export algorithm constants
-export { F, K, T_PROMO, MISTAKE_THRESHOLD, MISTAKE_WINDOW, MAX_FOCUS_POOL_SIZE, RECENTLY_ASKED_SIZE, MIN_HISTORY_FOR_DEGRADATION } from './constants';
-
-// Export answer comparison functions
-export { checkAnswer, formatForDisplay, normalizeForComparison, normalize } from './answer-comparison';
-
-// Export all types
+// Export all modules
+export * from './constants';
+export * from './answer-comparison';
 export * from './types';
+// levelConfig moved to frontend package as it contains UI-specific data

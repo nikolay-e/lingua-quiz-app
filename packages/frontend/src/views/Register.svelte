@@ -58,8 +58,8 @@
       message = 'Registration successful! Redirecting...';
       username = '';
       password = '';
-    } catch (error: any) {
-      message = error.message;
+    } catch (error: unknown) {
+      message = error instanceof Error ? error.message : 'Registration failed. Please try again.';
     } finally {
       isLoading = false;
     }
@@ -72,14 +72,16 @@
 
 <AuthLayout>
   <h2>Create Account</h2>
-  <form on:submit={handleSubmit}>
+  <form on:submit={handleSubmit} aria-busy={isLoading} class="form-compact">
     <div class="input-group">
       <input
         type="text"
+        id="register-username"
         bind:value={username}
         placeholder="Username"
         required
         disabled={isLoading}
+        autocomplete="username"
       />
     </div>
 
@@ -87,6 +89,7 @@
       bind:value={password}
       disabled={isLoading}
       id="register-password"
+      autocomplete="new-password"
     />
 
     {#if password}
@@ -110,7 +113,7 @@
     </button>
   </form>
 
-  <AuthMessage {message} id="register-message" />
+  <AuthMessage {message} variant={message.includes('successful') ? 'success' : 'error'} id="register-message" />
 
   <AuthNavLink
     text="Already have an account?"
@@ -118,3 +121,53 @@
     onClick={navigateToLogin}
   />
 </AuthLayout>
+
+<style>
+  /* Form styles now handled by global .form-compact utility class */
+
+  /* Password Requirements Styles */
+  .password-requirements {
+    background-color: var(--container-bg);
+    border-radius: var(--radius-md);
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px var(--shadow-color);
+  }
+
+  .password-requirements-title {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  .requirement {
+    opacity: 0.8;
+    transition: opacity var(--transition-speed) ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 3px 0;
+  }
+
+  .requirement:hover {
+    opacity: 1;
+  }
+
+  .requirement-icon {
+    transition:
+      transform var(--transition-speed-fast) ease,
+      color var(--transition-speed-fast) ease;
+    color: var(--input-border-color);
+    font-size: 12px;
+  }
+
+  .requirement.valid {
+    color: var(--success-color);
+    opacity: 1;
+  }
+
+  .requirement-icon.valid {
+    color: var(--success-color);
+    transform: scale(1.1);
+  }
+</style>
