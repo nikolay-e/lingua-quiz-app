@@ -18,7 +18,7 @@ postgres:
   persistence:
     enabled: true
     size: '5Gi'
-    storageClass: 'local-path' # Rancher Desktop default storage class
+    storageClass: 'local-path' # Rancher Desktop default. For Docker Desktop, use 'hostpath' or remove this line to use default
     accessMode: 'ReadWriteOnce'
 
   service:
@@ -44,9 +44,6 @@ secrets:
   databases:
     linguaquiz:
       password: 'linguaquiz-dev-password'
-    # Need to provide password for staging even though we won't use it
-    linguaquiz-staging:
-      password: 'unused-staging-password'
 
 # Disable backup for local development
 backup:

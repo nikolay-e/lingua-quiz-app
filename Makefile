@@ -12,7 +12,7 @@
 ENV ?= local
 
 # Docker registry for remote images. Default to GHCR for better caching
-REGISTRY ?= ghcr.io/nikolay-e/lingua-quiz
+REGISTRY ?= ghcr.io/$(shell echo "${GITHUB_REPOSITORY:-nikolay-e/lingua-quiz}")
 # Git commit hash is the default image tag. Override with `make ... IMAGE_TAG=...`
 IMAGE_TAG ?= $(shell git rev-parse --short HEAD)
 
@@ -231,6 +231,12 @@ status: ## 📊 Show status of running services and access URLs.
 	@echo ""
 	@echo "🔗 Services:"
 	@kubectl get services -n $(APP_NAMESPACE) || echo "  No services found in namespace $(APP_NAMESPACE)"
+	@echo ""
+	@echo "📡 Ingresses:"
+	@kubectl get ingress -n $(APP_NAMESPACE) || echo "  No ingresses found in namespace $(APP_NAMESPACE)"
+	@echo ""
+	@echo "⚙️ Jobs:"
+	@kubectl get jobs -n $(APP_NAMESPACE) || echo "  No jobs found in namespace $(APP_NAMESPACE)"
 	@echo ""
 	@echo "🌐 Access URLs:"
 ifeq ($(ENV),local)

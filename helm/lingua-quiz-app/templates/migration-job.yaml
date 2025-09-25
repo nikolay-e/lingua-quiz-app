@@ -106,7 +106,7 @@ spec:
               secretKeyRef:
                 name: {{include "lingua-quiz-app.fullname" .}}-jwt
                 key: JWT_SECRET
-          - name: NODE_ENV
+          - name: ENVIRONMENT
             value: "production"
           {{- if .Values.migrations.env}}
           {{- toYaml .Values.migrations.env | nindent 10}}

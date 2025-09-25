@@ -4,8 +4,8 @@
 
 <main class="feed">
   <FeedCard dense>
-    <header style="display:flex;align-items:center;gap:10px;">
-      <h1 style="margin:0;"><i class="fas fa-language"></i> LinguaQuiz</h1>
+    <header>
+      <h1><i class="fas fa-language"></i> LinguaQuiz</h1>
     </header>
   </FeedCard>
 
@@ -13,3 +13,14 @@
     <slot />
   </FeedCard>
 </main>
+
+<style>
+  header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  h1 {
+    margin: 0;
+  }
+</style>

@@ -47,8 +47,8 @@ if not JWT_SECRET:
     raise RuntimeError(
         "JWT_SECRET environment variable must be set - never use default secrets in production!"
     )
-JWT_EXPIRES_IN = os.getenv("JWT_EXPIRES_IN", "24h")
 JWT_EXPIRES_HOURS = int(os.getenv("JWT_EXPIRES_HOURS", "24"))
+JWT_EXPIRES_IN = f"{JWT_EXPIRES_HOURS}h"
 PORT = int(os.getenv("PORT", 9000))
 CORS_ALLOWED_ORIGINS = os.getenv(
     "CORS_ALLOWED_ORIGINS",
