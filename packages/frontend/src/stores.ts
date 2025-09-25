@@ -6,6 +6,34 @@ import type { WordSet, LevelWordLists, TranslationDisplay, AuthResponse } from '
 import { STORAGE_KEYS, THEMES } from './lib/constants';
 import { LEVEL_CONFIG } from './lib/config/levelConfig';
 
+// Safe localStorage wrapper for SSR compatibility
+const safeStorage = {
+  getItem: (key: string): string | null => {
+    if (typeof localStorage === 'undefined') return null;
+    try {
+      return localStorage.getItem(key);
+    } catch {
+      return null;
+    }
+  },
+  setItem: (key: string, value: string): void => {
+    if (typeof localStorage === 'undefined') return;
+    try {
+      localStorage.setItem(key, value);
+    } catch {
+      console.warn(`Failed to save to localStorage: ${key}`);
+    }
+  },
+  removeItem: (key: string): void => {
+    if (typeof localStorage === 'undefined') return;
+    try {
+      localStorage.removeItem(key);
+    } catch {
+      console.warn(`Failed to remove from localStorage: ${key}`);
+    }
+  },
+};
+
 interface ThemeState {
   isDarkMode: boolean;
 }
@@ -20,7 +48,7 @@ interface ThemeStore {
 function createThemeStore(): ThemeStore {
   const getInitialTheme = () => {
     if (typeof window === 'undefined') return false;
-    const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME);
+    const savedTheme = safeStorage.getItem(STORAGE_KEYS.THEME);
     if (savedTheme) return savedTheme === THEMES.DARK;
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   };
@@ -44,7 +72,7 @@ function createThemeStore(): ThemeStore {
   if (typeof window !== 'undefined' && window.matchMedia) {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     mediaQuery.addEventListener('change', (e) => {
-      if (!localStorage.getItem(STORAGE_KEYS.THEME)) {
+      if (!safeStorage.getItem(STORAGE_KEYS.THEME)) {
         const isDark = e.matches;
         applyTheme(isDark);
         set({ isDarkMode: isDark });
@@ -57,17 +85,13 @@ function createThemeStore(): ThemeStore {
     toggleTheme: () => {
       update((state) => {
         const newTheme = !state.isDarkMode;
-        if (typeof localStorage !== 'undefined') {
-          localStorage.setItem(STORAGE_KEYS.THEME, newTheme ? 'dark' : 'light');
-        }
+        safeStorage.setItem(STORAGE_KEYS.THEME, newTheme ? 'dark' : 'light');
         applyTheme(newTheme);
         return { isDarkMode: newTheme };
       });
     },
     clearPreference: () => {
-      if (typeof localStorage !== 'undefined') {
-        localStorage.removeItem(STORAGE_KEYS.THEME);
-      }
+      safeStorage.removeItem(STORAGE_KEYS.THEME);
       const systemPreference = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       applyTheme(systemPreference);
       set({ isDarkMode: systemPreference });
@@ -102,9 +126,7 @@ function createAuthStore(): AuthStore {
 
   // Function to check token validity and update store
   function checkToken() {
-    if (typeof localStorage === 'undefined') return;
-
-    const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
+    const token = safeStorage.getItem(STORAGE_KEYS.TOKEN);
 
     if (!token) {
       set({ token: null, username: null, isAuthenticated: false });
@@ -130,17 +152,15 @@ function createAuthStore(): AuthStore {
 
   // Function to set user data in localStorage and the store
   function setUser(data: { token: string; username: string }) {
-    if (typeof localStorage !== 'undefined') {
-      localStorage.setItem(STORAGE_KEYS.TOKEN, data.token);
+    safeStorage.setItem(STORAGE_KEYS.TOKEN, data.token);
 
-      // Calculate and store token expiration
-      try {
-        const payload = jwtDecode<{ exp: number }>(data.token);
-        const expirationMs = payload.exp * 1000;
-        localStorage.setItem(STORAGE_KEYS.TOKEN_EXPIRATION, expirationMs.toString());
-      } catch (e) {
-        console.error('Failed to parse token expiration:', e);
-      }
+    // Calculate and store token expiration
+    try {
+      const payload = jwtDecode<{ exp: number }>(data.token);
+      const expirationMs = payload.exp * 1000;
+      safeStorage.setItem(STORAGE_KEYS.TOKEN_EXPIRATION, expirationMs.toString());
+    } catch (e) {
+      console.error('Failed to parse token expiration:', e);
     }
     // Username is passed from the API response, but we could also extract it from token
     set({ token: data.token, username: data.username, isAuthenticated: true });
@@ -148,11 +168,9 @@ function createAuthStore(): AuthStore {
 
   // Function to clear user data
   function logoutUser() {
-    if (typeof localStorage !== 'undefined') {
-      localStorage.removeItem(STORAGE_KEYS.TOKEN);
-      localStorage.removeItem(STORAGE_KEYS.TOKEN_EXPIRATION);
-      // Note: No longer storing username separately as it's derived from token
-    }
+    safeStorage.removeItem(STORAGE_KEYS.TOKEN);
+    safeStorage.removeItem(STORAGE_KEYS.TOKEN_EXPIRATION);
+    // Note: No longer storing username separately as it's derived from token
     set({ token: null, username: null, isAuthenticated: false });
   }
 
@@ -164,7 +182,7 @@ function createAuthStore(): AuthStore {
   return {
     subscribe,
     login: async (username: string, password: string) => {
-      const data = await api.login(username, password);
+      const data = await api.login({ username, password });
       setUser({ token: data.token, username: data.user.username });
       return data;
     },
@@ -183,7 +201,7 @@ function createAuthStore(): AuthStore {
     },
     logoutUser,
     register: async (username: string, password: string) => {
-      const data = await api.register(username, password);
+      const data = await api.register({ username, password });
       setUser({ token: data.token, username: data.user.username });
       return data;
     },
@@ -255,7 +273,7 @@ function createQuizStore(): QuizStore {
         const wordArray = wordIds as number[];
         if (wordArray.length > 0) {
           persistencePromises.push(
-            api.saveWordStatus(token, level as 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5', wordArray).catch((err) => {
+            api.saveWordStatus(token, { status: level, wordPairIds: wordArray }).catch((err) => {
               console.error(`Bulk save failed for ${level}:`, err);
               // Don't fail the entire operation if one level fails
               return Promise.resolve();
@@ -302,95 +320,103 @@ function createQuizStore(): QuizStore {
     return { isUnauthorized: false, message: error instanceof Error ? error.message : 'Unknown error' };
   };
 
+  // Higher-order function to handle 401 errors uniformly
+  async function withAuth401Handling<T>(operation: () => Promise<T>, onError?: (error: unknown) => void): Promise<T | null> {
+    try {
+      return await operation();
+    } catch (error) {
+      const errorInfo = handleQuiz401Error(error);
+      if (onError) {
+        onError(errorInfo.message);
+      }
+      if (!errorInfo.isUnauthorized) {
+        throw error;
+      }
+      return null;
+    }
+  }
+
   const store = {
     subscribe,
 
     loadWordSets: async (token: string) => {
       update((state) => ({ ...state, loading: true, error: null }));
-      try {
-        const wordSets = await api.fetchWordSets(token);
-        // Use atomic update to avoid race conditions
-        update((state) => ({ ...state, wordSets, loading: false }));
-      } catch (error: unknown) {
-        const errorInfo = handleQuiz401Error(error);
-        // Use atomic update to avoid race conditions
-        update((state) => ({ ...state, error: errorInfo.message, loading: false }));
+      const result = await withAuth401Handling(
+        () => api.fetchWordSets(token),
+        (error) => update((state) => ({ ...state, error: error as string, loading: false }))
+      );
 
-        // If it's a 401 error, don't re-throw since user is now logged out
-        if (!errorInfo.isUnauthorized) {
-          throw error;
-        }
+      if (result) {
+        update((state) => ({ ...state, wordSets: result, loading: false }));
       }
     },
 
     startQuiz: async (token: string, quizName: string) => {
       update((state) => ({ ...state, loading: true, error: null, selectedQuiz: quizName }));
-      try {
-        // Use the word-sets API to get translations and progress
-        const userWordSets = await api.fetchUserWordSets(token, quizName);
-        // Fetched words for quiz
 
-        // Convert UserWordSet[] to the format expected by QuizManager
-        const translations = userWordSets.map((word) => ({
-          id: word.wordPairId,
-          sourceWord: {
-            text: word.sourceWord,
-            language: word.sourceLanguage,
-            usageExample: word.sourceWordUsageExample || '',
-          },
-          targetWord: {
-            text: word.targetWord,
-            language: word.targetLanguage,
-            usageExample: word.targetWordUsageExample || '',
-          },
-        }));
+      const result = await withAuth401Handling(
+        async () => {
+          // Use the word-sets API to get translations and progress
+          const userWordSets = await api.fetchUserWordSets(token, quizName);
+          // Fetched words for quiz
 
-        const progress = userWordSets.map((word) => ({
-          translationId: word.wordPairId,
-          status: (word.status || 'LEVEL_0') as 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5',
-          queuePosition: 0,
-          consecutiveCorrect: 0,
-          recentHistory: [] as boolean[],
-        }));
+          // Convert UserWordSet[] to the format expected by QuizManager
+          const translations = userWordSets.map((word) => ({
+            id: word.wordPairId,
+            sourceWord: {
+              text: word.sourceWord,
+              language: word.sourceLanguage,
+              usageExample: word.sourceWordUsageExample || '',
+            },
+            targetWord: {
+              text: word.targetWord,
+              language: word.targetLanguage,
+              usageExample: word.targetWordUsageExample || '',
+            },
+          }));
 
-        // Get user's current level from backend
-        let currentLevel: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' = 'LEVEL_1';
-        try {
-          const userLevelData = await api.getCurrentLevel(token);
-          currentLevel = userLevelData.currentLevel as 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4';
-        } catch {
-          console.warn('Failed to load user level, using default LEVEL_1');
-        }
+          const progress = userWordSets.map((word) => ({
+            translationId: word.wordPairId,
+            status: (word.status || 'LEVEL_0') as 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5',
+            queuePosition: 0,
+            consecutiveCorrect: 0,
+            recentHistory: [] as boolean[],
+          }));
 
-        const manager = new QuizManager(translations, {
-          progress,
-          currentLevel,
-        });
-        // QuizManager initialized
+          // Get user's current level from backend
+          let currentLevel: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' = 'LEVEL_1';
+          try {
+            const userLevelData = await api.getCurrentLevel(token);
+            currentLevel = userLevelData.currentLevel as 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4';
+          } catch {
+            console.warn('Failed to load user level, using default LEVEL_1');
+          }
 
-        // Bulk save all progress after initialization (handles promotions from LEVEL_0 to LEVEL_1)
-        await bulkSaveProgress(token);
+          const manager = new QuizManager(translations, {
+            progress,
+            currentLevel,
+          });
+          // QuizManager initialized
 
-        const questionResult = manager.getNextQuestion();
-        const currentQuestion = questionResult.question;
-        // First question loaded
+          // Bulk save all progress after initialization (handles promotions from LEVEL_0 to LEVEL_1)
+          await bulkSaveProgress(token);
 
-        // Use atomic update to avoid race conditions
+          const questionResult = manager.getNextQuestion();
+          const currentQuestion = questionResult.question;
+          // First question loaded
+
+          return { manager, currentQuestion };
+        },
+        (error) => update((state) => ({ ...state, error: error as string, loading: false }))
+      );
+
+      if (result) {
         update((state) => ({
           ...state,
           loading: false,
-          quizManager: manager,
-          currentQuestion,
+          quizManager: result.manager,
+          currentQuestion: result.currentQuestion,
         }));
-      } catch (error: unknown) {
-        const errorInfo = handleQuiz401Error(error);
-        // Use atomic update to avoid race conditions
-        update((state) => ({ ...state, error: errorInfo.message, loading: false }));
-
-        // If it's a 401 error, don't re-throw since user is now logged out
-        if (!errorInfo.isUnauthorized) {
-          throw error;
-        }
       }
     },
 
@@ -421,7 +447,7 @@ function createQuizStore(): QuizStore {
 
         // If level changed automatically, persist it (non-blocking)
         if (oldLevel !== newLevel) {
-          api.updateCurrentLevel(token, newLevel).catch((error) => {
+          api.updateCurrentLevel(token, { currentLevel: newLevel }).catch((error) => {
             console.error('Failed to persist level change:', error);
             // Level change will be retried on next save
           });
@@ -466,7 +492,7 @@ function createQuizStore(): QuizStore {
         // Persist level change to backend if token provided
         if (token) {
           try {
-            await api.updateCurrentLevel(token, result.actualLevel);
+            await api.updateCurrentLevel(token, { currentLevel: result.actualLevel });
             // Level persisted to backend
           } catch (error) {
             console.error('Failed to persist level to backend:', error);
@@ -519,6 +545,9 @@ function createQuizStore(): QuizStore {
 
 export const authStore = createAuthStore();
 export const quizStore = createQuizStore();
+
+// Export safe storage wrapper for use in components
+export { safeStorage };
 
 // Derived store for level word lists - efficiently calculates and caches level data
 export const levelWordLists = derived(

@@ -36,31 +36,9 @@ COPY --chown=appuser:appuser packages/backend/src/ ./
 COPY --chown=appuser:appuser packages/backend/migrate.py ./
 COPY --chown=appuser:appuser packages/backend/migrations/ ./migrations/
 
-# Create startup script inline since we don't have external docker/ directory
-RUN printf '#!/bin/sh\n\
-echo "Waiting for database at ${DB_HOST}:${DB_PORT}..."\n\
-while ! nc -z ${DB_HOST} ${DB_PORT}; do\n\
-  echo "Database not ready, waiting..."\n\
-  sleep 2\n\
-done\n\
-echo "Database is ready!"\n\
-sleep 2\n\
-\n\
-if [ "$MIGRATE" = "true" ]; then\n\
-  echo "Running migrations..."\n\
-  python migrate.py\n\
-fi\n\
-\n\
-if [ -n "$UVICORN_WORKERS" ]; then\n\
-  WORKERS=$UVICORN_WORKERS\n\
-else\n\
-  WORKERS=1\n\
-fi\n\
-echo "Starting uvicorn with $WORKERS workers..."\n\
-\n\
-exec uvicorn main:app --host 0.0.0.0 --port 9000 --workers $WORKERS --log-level info\n' > ./start.sh \
-    && chmod +x ./start.sh \
-    && chown appuser:appuser ./start.sh
+# Copy startup script
+COPY --chown=appuser:appuser packages/backend/start.sh ./
+RUN chmod +x ./start.sh
 
 USER appuser
 
@@ -86,12 +64,7 @@ COPY packages/core/package.json ./packages/core/
 COPY packages/frontend/package.json ./packages/frontend/
 
 # Layer 2: Install dependencies (changes only when package manifests change)
-# Clear npm cache and install dependencies
-RUN npm cache clean --force
 RUN npm ci
-# Fix rollup optional dependencies issue per https://github.com/npm/cli/issues/4828
-RUN rm -rf node_modules package-lock.json
-RUN npm install
 
 # Copy and build the 'core' library first
 COPY packages/core/ ./packages/core/
@@ -99,6 +72,8 @@ RUN cd packages/core && npm run build
 
 # Copy and build the 'frontend' application
 COPY packages/frontend/ ./packages/frontend/
+# Fix npm optional dependencies bug by cleaning and reinstalling
+RUN rm -rf node_modules package-lock.json && npm install
 RUN cd packages/frontend && npm run build
 
 
@@ -108,28 +83,8 @@ RUN cd packages/frontend && npm run build
 # Pinned to specific version for reproducible builds
 FROM --platform=linux/amd64 nginx:1.27.3-alpine AS frontend
 
-# Configure nginx for SPA routing (simplified like working sites)
-RUN printf 'server {\n\
-    listen 80;\n\
-    root /usr/share/nginx/html;\n\
-    index index.html;\n\
-    \n\
-    # Basic security\n\
-    server_tokens off;\n\
-    add_header X-Frame-Options "DENY" always;\n\
-    add_header X-Content-Type-Options "nosniff" always;\n\
-    \n\
-    # SPA routing - serve index.html for all routes\n\
-    location / {\n\
-        try_files $uri $uri/ /index.html;\n\
-    }\n\
-    \n\
-    # Static assets caching\n\
-    location ~* \\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2)$ {\n\
-        expires 1y;\n\
-        add_header Cache-Control "public, immutable";\n\
-    }\n\
-}' > /etc/nginx/conf.d/default.conf
+# Copy nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy the built Svelte application from the builder stage
 COPY --from=frontend-builder /app/packages/frontend/dist /usr/share/nginx/html

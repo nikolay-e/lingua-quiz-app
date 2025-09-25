@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, tick, onDestroy } from 'svelte';
-  import { authStore, quizStore, levelWordLists } from '../stores';
+  import { authStore, quizStore, levelWordLists, safeStorage } from '../stores';
   import type { SubmissionResult, QuizQuestion } from '@lingua-quiz/core';
   import type { QuizFeedback } from '../api-types';
   import { LEVEL_CONFIG } from '../lib/config/levelConfig';
@@ -36,20 +36,18 @@
   });
 
   // Load saved fold states from localStorage
-  if (typeof window !== 'undefined') {
-    const savedFoldStates = localStorage.getItem(STORAGE_KEYS.FOLDED_LISTS);
-    if (savedFoldStates) {
-      try {
-        const saved = JSON.parse(savedFoldStates);
-        // Only update existing keys to prevent issues with config changes
-        Object.keys(foldedLists).forEach(key => {
-          if (key in saved) {
-            foldedLists[key] = saved[key];
-          }
-        });
-      } catch {
-        // Use defaults if parsing fails
-      }
+  const savedFoldStates = safeStorage.getItem(STORAGE_KEYS.FOLDED_LISTS);
+  if (savedFoldStates) {
+    try {
+      const saved = JSON.parse(savedFoldStates);
+      // Only update existing keys to prevent issues with config changes
+      Object.keys(foldedLists).forEach(key => {
+        if (key in saved) {
+          foldedLists[key] = saved[key];
+        }
+      });
+    } catch {
+      // Use defaults if parsing fails
     }
   }
 
@@ -57,7 +55,7 @@
   function toggleFold(event: CustomEvent<{ levelId: string }>) {
     const levelId = event.detail.levelId;
     foldedLists[levelId] = !foldedLists[levelId];
-    localStorage.setItem(STORAGE_KEYS.FOLDED_LISTS, JSON.stringify(foldedLists));
+    safeStorage.setItem(STORAGE_KEYS.FOLDED_LISTS, JSON.stringify(foldedLists));
   }
 
   // Reactive state from stores

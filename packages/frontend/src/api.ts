@@ -101,80 +101,62 @@ function withAuth(token: string, options: RequestInit = {}): RequestInit {
 }
 
 /**
+ * Factory function for creating API methods
+ */
+const createApiMethod = <TResponse, TParams = void>(endpoint: string, method: string = 'GET', requiresAuth: boolean = true) => {
+  if (requiresAuth) {
+    return async (token: string, params?: TParams): Promise<TResponse> => {
+      const url = `${serverAddress}${endpoint}`;
+      const options = withAuth(token, { method });
+
+      if (params && method !== 'GET' && method !== 'DELETE') {
+        options.headers = {
+          ...options.headers,
+          'Content-Type': 'application/json',
+        };
+        options.body = JSON.stringify(params);
+      }
+
+      return fetchWrapper<TResponse>(url, options);
+    };
+  } else {
+    return async (params: TParams): Promise<TResponse> => {
+      const options: RequestInit = { method };
+
+      if (params && method !== 'GET' && method !== 'DELETE') {
+        options.headers = { 'Content-Type': 'application/json' };
+        options.body = JSON.stringify(params);
+      }
+
+      return fetchWrapper<TResponse>(`${serverAddress}${endpoint}`, options);
+    };
+  }
+};
+
+/**
  * API client for communicating with the LinguaQuiz backend
  */
 const api = {
-  async login(username: string, password: string): Promise<AuthResponse> {
-    return fetchWrapper(`${serverAddress}/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
-    });
-  },
+  // Authentication methods (no auth required)
+  login: createApiMethod<AuthResponse, { username: string; password: string }>('/auth/login', 'POST', false),
+  register: createApiMethod<AuthResponse, { username: string; password: string }>('/auth/register', 'POST', false),
 
-  async register(username: string, password: string): Promise<AuthResponse> {
-    return fetchWrapper(`${serverAddress}/auth/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
-    });
-  },
+  // Word sets methods
+  fetchWordSets: createApiMethod<WordSet[]>('/word-sets'),
+  saveWordStatus: createApiMethod<void, { status: string; wordPairIds: number[] }>('/word-sets/user', 'POST'),
 
-  async fetchWordSets(token: string): Promise<WordSet[]> {
-    return fetchWrapper(`${serverAddress}/word-sets`, withAuth(token, { method: 'GET' }));
-  },
+  // TTS methods
+  synthesizeSpeech: createApiMethod<TTSResponse, { text: string; language: string }>('/tts/synthesize', 'POST'),
+  getTTSLanguages: createApiMethod<TTSLanguagesResponse>('/tts/languages'),
 
+  // User methods
+  deleteAccount: createApiMethod<void>('/auth/delete-account', 'DELETE'),
+  getCurrentLevel: createApiMethod<{ currentLevel: string }>('/user/current-level'),
+  updateCurrentLevel: createApiMethod<void, { currentLevel: string }>('/user/current-level', 'POST'),
+
+  // Custom methods that need special handling
   async fetchUserWordSets(token: string, wordListName: string): Promise<UserWordSet[]> {
     return fetchWrapper(`${serverAddress}/word-sets/user?word_list_name=${encodeURIComponent(wordListName)}`, withAuth(token, { method: 'GET' }));
-  },
-
-  async saveWordStatus(
-    token: string,
-    status: 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5',
-    wordPairIds: number[]
-  ): Promise<void> {
-    await fetchWrapper(
-      `${serverAddress}/word-sets/user`,
-      withAuth(token, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status, wordPairIds }),
-      })
-    );
-  },
-
-  async synthesizeSpeech(token: string, text: string, language: string): Promise<TTSResponse> {
-    return fetchWrapper(
-      `${serverAddress}/tts/synthesize`,
-      withAuth(token, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text, language }),
-      })
-    );
-  },
-
-  async getTTSLanguages(token: string): Promise<TTSLanguagesResponse> {
-    return fetchWrapper(`${serverAddress}/tts/languages`, withAuth(token, { method: 'GET' }));
-  },
-
-  async deleteAccount(token: string): Promise<void> {
-    await fetchWrapper(`${serverAddress}/auth/delete-account`, withAuth(token, { method: 'DELETE' }));
-  },
-
-  async getCurrentLevel(token: string): Promise<{ currentLevel: string }> {
-    return fetchWrapper(`${serverAddress}/user/current-level`, withAuth(token, { method: 'GET' }));
-  },
-
-  async updateCurrentLevel(token: string, currentLevel: string): Promise<void> {
-    await fetchWrapper(
-      `${serverAddress}/user/current-level`,
-      withAuth(token, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ currentLevel }),
-      })
-    );
   },
 
   async fetchWordSet(token: string, wordSetId: number): Promise<WordSetWithWords> {

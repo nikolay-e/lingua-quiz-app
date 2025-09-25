@@ -19,62 +19,43 @@ jobs:
       contents: read
       packages: write # Grant permission to push to GitHub Packages (GHCR)
 
+    strategy:
+      matrix:
+        service: [backend, frontend, integration-e2e-tests]
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       # Setup Docker Buildx
       - name: Setup Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v3.7.1
 
       # Login to GitHub Container Registry (GHCR)
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3.3.0
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }} # Use GITHUB_TOKEN for secure auth
 
-      # Build and push backend image with cache
-      - name: Build and push backend image
-        uses: docker/build-push-action@v6
+      # Build and push image with cache
+      - name: Build and push ${{ matrix.service }} image
+        uses: docker/build-push-action@v6.9.0
         with:
           context: .
-          target: backend
+          target: ${{ matrix.service }}
           push: true
-          tags: ghcr.io/${{ github.repository }}/lingua-quiz-backend:${{ github.event.pull_request.head.sha || github.sha }}
-          # This is the key for caching - use sanitized ref name to avoid invalid characters
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-backend:${{ github.event.pull_request.number || github.ref_name }}-cache
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-backend:${{ github.event.pull_request.number || github.ref_name }}-cache,mode=max
-
-      # Build and push frontend image with cache
-      - name: Build and push frontend image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          target: frontend
-          push: true
-          tags: ghcr.io/${{ github.repository }}/lingua-quiz-frontend:${{ github.event.pull_request.head.sha || github.sha }}
-          # This is the key for caching - use sanitized ref name to avoid invalid characters
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-frontend:${{ github.event.pull_request.number || github.ref_name }}-cache
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-frontend:${{ github.event.pull_request.number || github.ref_name }}-cache,mode=max
-
-      # Build and push integration tests image with cache
-      - name: Build and push integration tests image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          target: integration-e2e-tests
-          push: true
-          tags: ghcr.io/${{ github.repository }}/lingua-quiz-integration-e2e-tests:${{ github.event.pull_request.head.sha || github.sha }}
-          # This is the key for caching - use sanitized ref name to avoid invalid characters
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-integration-e2e-tests:${{ github.event.pull_request.number || github.ref_name }}-cache
-          cache-to: type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-integration-e2e-tests:${{ github.event.pull_request.number || github.ref_name }}-cache,mode=max
+          tags: ghcr.io/${{ github.repository }}/lingua-quiz-${{ matrix.service }}:${{ github.event.pull_request.head.sha || github.sha }}
+          # Cache strategy: Use main branch cache as primary source for consistent builds
+          cache-from: |
+            type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-${{ matrix.service }}:cache-main
+          cache-to: |
+            type=registry,ref=ghcr.io/${{ github.repository }}/lingua-quiz-${{ matrix.service }}:cache-${{ github.ref_name == 'refs/heads/main' && 'main' || 'pr' }},mode=max
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    if: (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'pull_request'
     environment: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'production' || 'staging' }}
     permissions:
       contents: read
@@ -83,17 +64,17 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       # Setup Helm
       - name: Setup Helm
-        uses: azure/setup-helm@v4
+        uses: azure/setup-helm@v4.2.0
         with:
           version: 'v3.15.4' # Pin to specific version
 
       # Setup kubectl
       - name: Setup kubectl
-        uses: azure/setup-kubectl@v3
+        uses: azure/setup-kubectl@v4.0.0
         with:
           version: 'v1.30.0' # Pin to specific version
 
@@ -178,29 +159,59 @@ jobs:
           NAMESPACE="${{ steps.env.outputs.namespace }}"
           echo "Waiting for test jobs to complete in namespace: $NAMESPACE"
 
-          # Wait for test job to appear
-          echo "Waiting for test job to be created..."
-          timeout 300 bash -c 'while ! kubectl get job lingua-quiz-tests -n '"$NAMESPACE"' 2>/dev/null; do sleep 5; done' || {
-            echo "Test job was not created within 5 minutes"
-            exit 1
-          }
-
-          # Wait for test job to complete (success or failure)
+          # Wait for test job to complete using kubectl wait
           echo "Waiting for test job to complete..."
-          timeout 600 bash -c 'while [[ $(kubectl get job lingua-quiz-tests -n '"$NAMESPACE"' -o jsonpath="{.status.conditions[?(@.type==\"Complete\")].status}" 2>/dev/null) != "True" ]] && [[ $(kubectl get job lingua-quiz-tests -n '"$NAMESPACE"' -o jsonpath="{.status.conditions[?(@.type==\"Failed\")].status}" 2>/dev/null) != "True" ]]; do sleep 10; done' || {
-            echo "Test job did not complete within 10 minutes"
+          kubectl wait --for=condition=complete job/lingua-quiz-tests -n "$NAMESPACE" --timeout=15m || {
+            echo "❌ Test job failed or timed out"
             kubectl describe job lingua-quiz-tests -n "$NAMESPACE"
-            kubectl logs job/lingua-quiz-tests -n "$NAMESPACE" --tail=100 || true
+            kubectl logs job/lingua-quiz-tests -n "$NAMESPACE" --all-containers --tail=100 || true
             exit 1
           }
 
-          # Check if test job succeeded
-          if [[ $(kubectl get job lingua-quiz-tests -n "$NAMESPACE" -o jsonpath="{.status.conditions[?(@.type==\"Complete\")].status}" 2>/dev/null) == "True" ]]; then
-            echo "✅ Test job completed successfully"
-            kubectl logs job/lingua-quiz-tests -n "$NAMESPACE" --tail=50
-          else
-            echo "❌ Test job failed"
-            kubectl describe job lingua-quiz-tests -n "$NAMESPACE"
-            kubectl logs job/lingua-quiz-tests -n "$NAMESPACE" --tail=100 || true
-            exit 1
-          fi
+          echo "✅ Test job completed successfully"
+          kubectl logs job/lingua-quiz-tests -n "$NAMESPACE" --all-containers --tail=50
+
+      # Post-deployment verification for production
+      - name: Production deployment verification
+        if: steps.env.outputs.env_name == 'prod'
+        run: |
+          echo "🔍 Performing post-deployment verification for production..."
+
+          # Wait a moment for services to be ready
+          sleep 30
+
+          # Health check for backend API
+          BACKEND_URL="https://lingua-quiz.nikolay-eremeev.com/api/health"
+          echo "Checking backend health at: $BACKEND_URL"
+          for i in {1..5}; do
+            if curl -f -s --max-time 10 "$BACKEND_URL" > /dev/null; then
+              echo "✅ Backend health check passed"
+              break
+            else
+              echo "⚠️ Backend health check failed (attempt $i/5)"
+              if [ $i -eq 5 ]; then
+                echo "❌ Backend health check failed after 5 attempts"
+                exit 1
+              fi
+              sleep 10
+            fi
+          done
+
+          # Health check for frontend
+          FRONTEND_URL="https://lingua-quiz.nikolay-eremeev.com"
+          echo "Checking frontend at: $FRONTEND_URL"
+          for i in {1..5}; do
+            if curl -f -s --max-time 10 "$FRONTEND_URL" > /dev/null; then
+              echo "✅ Frontend health check passed"
+              break
+            else
+              echo "⚠️ Frontend health check failed (attempt $i/5)"
+              if [ $i -eq 5 ]; then
+                echo "❌ Frontend health check failed after 5 attempts"
+                exit 1
+              fi
+              sleep 10
+            fi
+          done
+
+          echo "✅ Production deployment verification completed successfully"
