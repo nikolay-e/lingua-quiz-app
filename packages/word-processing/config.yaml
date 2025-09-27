@@ -4,17 +4,6 @@ languages:
   - 'de'
   - 'es'
 
-cefr_levels:
-  A1:
-    range: [1, 1000]
-    description: 'Basic'
-  A2:
-    range: [1001, 2000]
-    description: 'Elementary'
-  B1:
-    range: [2001, 4000]
-    description: 'Intermediate'
-
 analysis_defaults:
   min_word_length: 2
   max_word_length: 20
@@ -72,10 +61,3 @@ skip_words:
   - 'una'
   - 'unos'
   - 'unas'
-
-# Analysis thresholds for part-of-speech categorization
-pos_analysis_thresholds:
-  noun_freq_min: 1.0e-6
-  verb_freq_min: 1.0e-6
-  adj_freq_min: 1.0e-6
-  essential_freq_min: 1.0e-5

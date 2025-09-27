@@ -58,6 +58,13 @@ Examples:
 
   # Get analysis results in JSON format
   vocab-tools analyze --output json --languages en
+
+Requirements:
+  This tool requires spaCy core models for proper linguistic analysis.
+  Install the required models with:
+    python -m spacy download en_core_web_sm    # English
+    python -m spacy download de_core_news_sm   # German
+    python -m spacy download es_core_news_sm   # Spanish
             """,
         )
 
@@ -95,8 +102,25 @@ Examples:
 
         return parser
 
-    def _setup_analyze_parser(self, parser: argparse.ArgumentParser):
-        """Set up the analyze command parser."""
+    def _add_common_arguments(
+        self, parser: argparse.ArgumentParser, include_output: bool = True
+    ):
+        """Add common arguments to a subparser."""
+        parser.add_argument(
+            "--migrations-dir",
+            type=str,
+            help="Path to migrations directory (default: auto-detect)",
+        )
+        if include_output:
+            parser.add_argument(
+                "--output",
+                choices=["text", "json"],
+                default="text",
+                help="Output format (default: text)",
+            )
+
+    def _add_analysis_arguments(self, parser: argparse.ArgumentParser):
+        """Add analysis-specific arguments to a subparser."""
         parser.add_argument(
             "--languages",
             nargs="+",
@@ -110,6 +134,11 @@ Examples:
             default=1000,
             help="Number of top frequency words to analyze (default: 1000)",
         )
+
+    def _setup_analyze_parser(self, parser: argparse.ArgumentParser):
+        """Set up the analyze command parser."""
+        self._add_common_arguments(parser)
+        self._add_analysis_arguments(parser)
         parser.add_argument(
             "--start-rank",
             type=int,
@@ -122,17 +151,6 @@ Examples:
             help="Limit analysis to first N words per language",
         )
         parser.add_argument(
-            "--migrations-dir",
-            type=str,
-            help="Path to migrations directory (default: auto-detect)",
-        )
-        parser.add_argument(
-            "--output",
-            choices=["text", "json"],
-            default="text",
-            help="Output format (default: text)",
-        )
-        parser.add_argument(
             "--hide-details",
             action="store_true",
             help="Hide detailed category breakdown",
@@ -143,57 +161,22 @@ Examples:
 
     def _setup_validate_parser(self, parser: argparse.ArgumentParser):
         """Set up the validate command parser."""
-        parser.add_argument(
-            "--migrations-dir",
-            type=str,
-            help="Path to migrations directory (default: auto-detect)",
-        )
-        parser.add_argument(
-            "--strict", action="store_true", help="Enable strict validation mode"
-        )
+        self._add_common_arguments(parser)
         parser.add_argument(
             "--brief", action="store_true", help="Show brief report (less detailed)"
         )
         parser.add_argument(
             "--errors-only", action="store_true", help="Only show errors, not warnings"
         )
-        parser.add_argument(
-            "--output",
-            choices=["text", "json"],
-            default="text",
-            help="Output format (default: text)",
-        )
 
     def _setup_full_analysis_parser(self, parser: argparse.ArgumentParser):
         """Set up the full analysis command parser."""
-        parser.add_argument(
-            "--languages",
-            nargs="+",
-            choices=["en", "de", "es"],
-            default=["en", "de", "es"],
-            help="Languages to analyze (default: all)",
-        )
-        parser.add_argument(
-            "--top-n",
-            type=int,
-            default=1000,
-            help="Number of top frequency words to analyze (default: 1000)",
-        )
-        parser.add_argument(
-            "--migrations-dir",
-            type=str,
-            help="Path to migrations directory (default: auto-detect)",
-        )
+        self._add_common_arguments(parser)
+        self._add_analysis_arguments(parser)
         parser.add_argument(
             "--skip-validation",
             action="store_true",
             help="Skip migration validation step",
-        )
-        parser.add_argument(
-            "--output",
-            choices=["text", "json"],
-            default="text",
-            help="Output format (default: text)",
         )
 
     def _setup_history_parser(self, parser: argparse.ArgumentParser):
@@ -205,7 +188,7 @@ Examples:
             help="Number of recent runs to show (default: 10)",
         )
         parser.add_argument(
-            "--type",
+            "--run-type",
             choices=["analysis", "validation", "full-analysis"],
             help="Filter by run type",
         )
@@ -220,21 +203,11 @@ Examples:
             default=30,
             help="Number of days for trend analysis (default: 30)",
         )
-        parser.add_argument(
-            "--output",
-            choices=["text", "json"],
-            default="text",
-            help="Output format (default: text)",
-        )
+        self._add_common_arguments(parser, include_output=True)
 
     def _setup_summary_parser(self, parser: argparse.ArgumentParser):
         """Set up the summary command parser."""
-        parser.add_argument(
-            "--output",
-            choices=["text", "json"],
-            default="text",
-            help="Output format (default: text)",
-        )
+        self._add_common_arguments(parser, include_output=True)
 
     def run_analyze(self, args: argparse.Namespace) -> Dict[str, Any]:
         """
@@ -246,8 +219,9 @@ Examples:
         Returns:
             Dictionary containing analysis results
         """
-        print("🚀 STARTING VOCABULARY ANALYSIS")
-        print("=" * 80)
+        if args.output == "text":
+            print("🚀 STARTING VOCABULARY ANALYSIS")
+            print("=" * 80)
 
         migrations_dir = Path(args.migrations_dir) if args.migrations_dir else None
         results = {}
@@ -255,7 +229,8 @@ Examples:
 
         for language in args.languages:
             try:
-                print(f"\\n📊 Analyzing {language.upper()} vocabulary...")
+                if args.output == "text":
+                    print(f"\n📊 Analyzing {language.upper()} vocabulary...")
 
                 # Create analyzer
                 analyzer_class = self.analyzers[language]
@@ -282,7 +257,8 @@ Examples:
                     )
 
             except Exception as e:
-                print(f"\\n❌ Error analyzing {language}: {e}")
+                if args.output == "text":
+                    print(f"\n❌ Error analyzing {language}: {e}")
                 results[language] = {"error": str(e)}
 
         # Store analysis results to history
@@ -312,13 +288,12 @@ Examples:
         Returns:
             Dictionary containing validation results
         """
-        print("🔍 STARTING MIGRATION VALIDATION")
-        print("=" * 80)
+        if args.output == "text":
+            print("🔍 STARTING MIGRATION VALIDATION")
+            print("=" * 80)
 
         migrations_dir = Path(args.migrations_dir) if args.migrations_dir else None
-        validator = MigrationValidator(
-            migrations_directory=migrations_dir, strict_mode=args.strict
-        )
+        validator = MigrationValidator(migrations_directory=migrations_dir)
 
         # Run validation
         result = validator.validate_all_migrations()
@@ -334,7 +309,6 @@ Examples:
         # Store validation results to history
         config = {
             "migrations_dir": str(migrations_dir) if migrations_dir else None,
-            "strict": args.strict,
             "errors_only": args.errors_only,
         }
 
@@ -345,98 +319,103 @@ Examples:
         return result.to_dict()
 
     def run_full_analysis(self, args: argparse.Namespace) -> Dict[str, Any]:
-        """
-        Run full analysis (validation + vocabulary analysis).
-
-        Args:
-            args: Parsed command line arguments
-
-        Returns:
-            Dictionary containing complete analysis results
-        """
-        print("🚀 STARTING FULL VOCABULARY ANALYSIS")
-        print("=" * 80)
+        if args.output == "text":
+            print("🚀 STARTING FULL VOCABULARY ANALYSIS")
+            print("=" * 80)
 
         results = {"validation": None, "analysis": {}}
+        migrations_dir = Path(args.migrations_dir) if args.migrations_dir else None
 
         # Step 1: Run validation (if not skipped)
         if not args.skip_validation:
-            print("\\n🔍 Phase 1: Migration Validation")
-            print("-" * 40)
+            if args.output == "text":
+                print("\n🔍 Phase 1: Migration Validation")
+                print("-" * 40)
 
-            validation_args = argparse.Namespace(
-                migrations_dir=args.migrations_dir,
-                strict=True,
-                brief=True,
-                errors_only=False,
-                output="text",
-            )
+            validator = MigrationValidator(migrations_directory=migrations_dir)
+            validation_result = validator.validate_all_migrations()
 
-            validation_result = self.run_validate(validation_args)
-            results["validation"] = validation_result
+            if args.output == "text":
+                validator.print_validation_report(validation_result, detailed=False)
 
-            if not validation_result["is_valid"]:
+            results["validation"] = validation_result.to_dict()
+
+            if not validation_result.is_valid and args.output == "text":
                 print(
-                    "\\n⚠️  Migration validation found errors, but continuing with analysis..."
+                    "\n⚠️  Migration validation found errors, but continuing with analysis..."
                 )
 
+            # Store validation results
+            config = {
+                "migrations_dir": str(migrations_dir) if migrations_dir else None,
+                "strict": True,
+                "errors_only": False,
+            }
+            self.results_tracker.store_analysis_run(
+                run_type="validation",
+                config=config,
+                validation_result=validation_result,
+            )
+
         # Step 2: Run vocabulary analysis
-        print("\\n📊 Phase 2: Vocabulary Analysis")
-        print("-" * 40)
+        if args.output == "text":
+            print("\n📊 Phase 2: Vocabulary Analysis")
+            print("-" * 40)
 
-        analysis_args = argparse.Namespace(
-            languages=args.languages,
-            top_n=args.top_n,
-            limit_analysis=None,
-            migrations_dir=args.migrations_dir,
-            output="text",
-            hide_details=False,
-            save_results=None,
-        )
+        vocabulary_results = {}
+        analysis_results = {}
 
-        analysis_results = self.run_analyze(analysis_args)
+        for language in args.languages:
+            try:
+                if args.output == "text":
+                    print(f"\n📊 Analyzing {language.upper()} vocabulary...")
+
+                analyzer_class = self.analyzers[language]
+                analyzer = analyzer_class(migrations_dir)
+
+                result = analyzer.analyze_vocabulary_gaps(
+                    top_n=args.top_n,
+                    start_rank=1,
+                    limit_analysis=None,
+                    show_progress=True,
+                )
+
+                analysis_results[language] = result.to_dict()
+                vocabulary_results[language] = result
+
+                if args.output == "text":
+                    analyzer.print_analysis_results(result, show_details=True)
+
+            except Exception as e:
+                if args.output == "text":
+                    print(f"\n❌ Error analyzing {language}: {e}")
+                analysis_results[language] = {"error": str(e)}
+
         results["analysis"] = analysis_results
 
+        # Store analysis results
+        if vocabulary_results:
+            config = {
+                "top_n": args.top_n,
+                "limit_analysis": None,
+                "languages": args.languages,
+                "migrations_dir": str(migrations_dir) if migrations_dir else None,
+            }
+            self.results_tracker.store_analysis_run(
+                run_type="analysis",
+                config=config,
+                vocabulary_results=vocabulary_results,
+            )
+
         # Print summary
-        self._print_full_analysis_summary(results)
-
-        # Store full analysis results to history
-        # Note: Individual analysis and validation runs are already stored
-        # This creates an additional entry for the combined run
-        config = {
-            "languages": args.languages,
-            "top_n": args.top_n,
-            "migrations_dir": args.migrations_dir,
-            "skip_validation": args.skip_validation,
-        }
-
-        # Extract validation and vocabulary results from the combined results
-        validation_result = None
-
-        # Get validation result object if available
-        if results["validation"] and not args.skip_validation:
-            # Need to reconstruct validation result from stored data
-            # For now, just track that validation was run
-            pass
-
-        # Get vocabulary analysis results if available
-        if results["analysis"]:
-            # These were already stored in run_analyze, so we don't duplicate
-            pass
-
-        # Store summary entry for the full analysis run
-        self.results_tracker.store_analysis_run(
-            run_type="full-analysis",
-            config=config,
-            validation_result=None,  # Already stored separately
-            vocabulary_results=None,  # Already stored separately
-        )
+        if args.output == "text":
+            self._print_full_analysis_summary(results)
 
         return results
 
     def _print_full_analysis_summary(self, results: Dict[str, Any]):
         """Print summary of full analysis results."""
-        print("\\n🎯 FULL ANALYSIS SUMMARY")
+        print("\n🎯 FULL ANALYSIS SUMMARY")
         print("=" * 80)
 
         # Validation summary
@@ -455,7 +434,7 @@ Examples:
         total_analyzed_words = 0
         total_recommendations = 0
 
-        print("\\n📚 Vocabulary Database Size:")
+        print("\n📚 Vocabulary Database Size:")
         for lang, result in analysis.items():
             if "error" not in result:
                 existing = result["total_existing_words"]
@@ -469,7 +448,7 @@ Examples:
             else:
                 print(f"   • {lang.upper()}: ERROR - {result['error']}")
 
-        print("\\n🔍 Gap Analysis Results:")
+        print("\n🔍 Gap Analysis Results:")
         for lang, result in analysis.items():
             if "error" not in result:
                 analyzed = result["total_analyzed_words"]
@@ -478,7 +457,7 @@ Examples:
                     f"   • {lang.upper()}: {analyzed:,} missing words analyzed → {recs:,} recommendations"
                 )
 
-        print("\\n📊 TOTALS:")
+        print("\n📊 TOTALS:")
         print(f"   • Total existing vocabulary: {total_existing_words:,} words")
         print(f"   • Total missing words analyzed: {total_analyzed_words:,} words")
         print(
@@ -496,8 +475,9 @@ Examples:
         Returns:
             Dictionary containing history results
         """
-        print("📚 ANALYSIS HISTORY")
-        print("=" * 80)
+        if args.output == "text":
+            print("📚 ANALYSIS HISTORY")
+            print("=" * 80)
 
         if args.language:
             # Show language-specific trends
@@ -505,7 +485,7 @@ Examples:
 
             if args.output == "text":
                 print(
-                    f"\\n📊 {args.language.upper()} Language Trends ({args.days} days)"
+                    f"\n📊 {args.language.upper()} Language Trends ({args.days} days)"
                 )
                 print("-" * 50)
                 if trends["runs_found"] > 0:
@@ -520,14 +500,14 @@ Examples:
 
             return trends
 
-        elif args.type:
+        elif args.run_type:
             # Show runs of specific type
-            runs = self.results_tracker.get_runs_by_type(args.type)
+            runs = self.results_tracker.get_runs_by_type(args.run_type)
             recent_runs = runs[-args.limit :] if runs else []
 
             if args.output == "text":
                 print(
-                    f"\\n📋 Recent {args.type.title()} Runs (showing last {len(recent_runs)})"
+                    f"\n📋 Recent {args.run_type.title()} Runs (showing last {len(recent_runs)})"
                 )
                 print("-" * 60)
                 for run in reversed(recent_runs):
@@ -538,14 +518,14 @@ Examples:
                     lang_str = ", ".join(languages) if languages else "N/A"
                     print(f"• {timestamp} | {total_recs:4,} recs | langs: {lang_str}")
 
-            return {"type": args.type, "runs": recent_runs}
+            return {"run_type": args.run_type, "runs": recent_runs}
 
         else:
             # Show general recent history
             recent_runs = self.results_tracker.get_recent_runs(args.limit)
 
             if args.output == "text":
-                print(f"\\n📋 Recent Analysis Runs (showing last {len(recent_runs)})")
+                print(f"\n📋 Recent Analysis Runs (showing last {len(recent_runs)})")
                 print("-" * 60)
                 for run in reversed(recent_runs):
                     timestamp = run["timestamp"][:19].replace("T", " ")
@@ -568,37 +548,38 @@ Examples:
         Returns:
             Dictionary containing summary report
         """
-        print("📈 ANALYSIS SUMMARY REPORT")
-        print("=" * 80)
+        if args.output == "text":
+            print("📈 ANALYSIS SUMMARY REPORT")
+            print("=" * 80)
 
         summary = self.results_tracker.generate_summary_report()
 
         if args.output == "text":
             if "message" in summary:
-                print(f"\\n{summary['message']}")
+                print(f"\n{summary['message']}")
                 return summary
 
-            print("\\n📊 Overall Statistics:")
+            print("\n📊 Overall Statistics:")
             print(f"• Total analysis runs: {summary['total_analysis_runs']}")
             print(f"• Validation success rate: {summary['validation_success_rate']}")
             print(f"• Languages analyzed: {', '.join(summary['languages_analyzed'])}")
 
-            print("\\n📋 Run Types:")
+            print("\n📋 Run Types:")
             for run_type, count in summary["run_types"].items():
                 print(f"• {run_type}: {count} runs")
 
-            print("\\n🎯 Latest Recommendations by Language:")
+            print("\n🎯 Latest Recommendations by Language:")
             for lang, recs in summary["latest_recommendations_by_language"].items():
                 print(f"• {lang.upper()}: {recs:,} recommendations")
 
-            print("\\n📚 Recent Activity:")
+            print("\n📚 Recent Activity:")
             for run in summary["recent_runs"][-5:]:  # Show last 5
                 timestamp = run["timestamp"][:19].replace("T", " ")
-                run_type = run["type"].ljust(10)
+                run_type = run["run_type"].ljust(10)
                 total_recs = run["total_recommendations"]
                 print(f"• {timestamp} | {run_type} | {total_recs:4,} recommendations")
 
-            print(f"\\n📁 Results stored in: {summary['results_file']}")
+            print(f"\n📁 Results stored in: {summary['results_file']}")
 
         return summary
 
@@ -607,9 +588,9 @@ Examples:
         try:
             with open(filepath, "w", encoding="utf-8") as f:
                 json.dump(results, f, indent=2, ensure_ascii=False)
-            print(f"\\n💾 Results saved to: {filepath}")
+            print(f"\n💾 Results saved to: {filepath}")
         except Exception as e:
-            print(f"\\n❌ Error saving results: {e}")
+            print(f"\n❌ Error saving results: {e}")
 
     def run(self):
         """Main entry point for the CLI."""
@@ -667,10 +648,10 @@ Examples:
                 parser.print_help()
 
         except KeyboardInterrupt:
-            print("\\n\\n⚠️  Analysis interrupted by user.")
+            print("\n\n⚠️  Analysis interrupted by user.")
             sys.exit(1)
         except Exception as e:
-            print(f"\\n❌ Unexpected error: {e}")
+            print(f"\n❌ Unexpected error: {e}")
             sys.exit(1)
 
 

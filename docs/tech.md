@@ -73,13 +73,24 @@ The system uses special characters in the correct answer string to handle variou
 
 ### **Text Normalization**
 
-Before comparison, all input (user answer and correct answer) is normalized:
+The normalization strategy differs between the user-facing answer validation and the backend analysis tools to balance user convenience with linguistic accuracy.
+
+#### **Answer Validation (`quiz-core`)**
+
+For real-time answer checking, normalization is aggressive to forgive minor user typos. Before comparison, all input (user answer and correct answer) is normalized as follows:
 
 - **Case-insensitive** (`Word` → `word`)
 - **Whitespace removed** (`my answer` → `myanswer`)
 - **Diacritics stripped** (`José` → `jose`)
 - **German characters converted** (`ä` → `a`, `ö` → `o`, `ü` → `u`, `ß` → `ss`)
 - **Cyrillic characters normalized** (`ё` → `е`, and Latin lookalikes converted `p` → `р`)
+
+#### **Vocabulary Analysis (`word-processing`)**
+
+For accurate linguistic analysis (e.g., duplicate detection, lemmatization), the Python scripts are more conservative:
+
+- **Diacritics Preserved:** German umlauts and Spanish accents are kept because they are linguistically significant (e.g., `schon` vs. `schön`).
+- **Language-Specific Rules:** Each language uses a tailored normalization strategy. For example, only English text has accents stripped by default.
 
 ---
 

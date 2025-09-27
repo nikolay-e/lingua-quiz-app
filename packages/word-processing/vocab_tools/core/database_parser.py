@@ -24,60 +24,35 @@ class VocabularyEntry:
 
     def __post_init__(self):
         """Clean up the entry data after initialization."""
-        # Unescape SQL quotes
-        self.source_word = self.source_word.replace("''", "'")
-        self.target_word = self.target_word.replace("''", "'")
-        self.source_example = self.source_example.replace("''", "'")
-        self.target_example = self.target_example.replace("''", "'")
+        # No special processing needed for JSON data - strings are already properly formatted
 
 
-class DatabaseParser:
-    """
-    Parses SQL migration files to extract vocabulary data.
-
-    Handles the extraction of vocabulary entries from SQL INSERT statements
-    in migration files following the LinguaQuiz database schema.
-    """
+class VocabularyFileParser:
+    """Parses JSON vocabulary files to extract vocabulary data."""
 
     def __init__(self, migrations_directory: Optional[Path] = None):
-        """
-        Initialize the database parser.
-
-        Args:
-            migrations_directory: Path to migrations directory. If None,
-                                auto-detects based on current location.
-        """
         self.migrations_dir = migrations_directory or self._find_migrations_directory()
 
     def _find_migrations_directory(self) -> Path:
         """
-        Get the hardcoded migrations directory location.
-
-        Returns:
-            Path to migrations directory
-
-        Raises:
-            FileNotFoundError: If migrations directory cannot be found
+        Try to auto-detect the project root that contains data/vocabulary.
+        Searches upwards from this file for a .git directory.
         """
-        # Hardcoded path relative to this file
-        current_dir = Path(__file__).parent
-        migrations_path = current_dir / ".." / ".." / ".." / "backend" / "migrations"
-        migrations_path = migrations_path.resolve()
-
-        if migrations_path.exists() and migrations_path.is_dir():
-            return migrations_path
-
+        current_path = Path.cwd()
+        while (
+            not (current_path / ".git").exists() and current_path != current_path.parent
+        ):
+            current_path = current_path.parent
+        if (current_path / ".git").exists():
+            migrations_path = current_path / "packages" / "backend" / "migrations"
+            if migrations_path.is_dir():
+                return migrations_path
         raise FileNotFoundError(
-            f"Hardcoded migrations directory not found: {migrations_path}"
+            "Could not auto-detect migrations directory. "
+            "Please specify the path to the migrations directory using --migrations-dir."
         )
 
     def discover_migration_files(self) -> Dict[str, List[str]]:
-        """
-        Discover JSON vocabulary files in the migrations directory.
-
-        Returns:
-            Dictionary mapping language codes to lists of filenames
-        """
         vocabulary_dir = self.migrations_dir / "data" / "vocabulary"
         if not vocabulary_dir.exists():
             return {}
@@ -100,23 +75,8 @@ class DatabaseParser:
         return discovered
 
     def parse_migration_file(self, filename: str) -> List[VocabularyEntry]:
-        """
-        Parse a single JSON vocabulary file and extract vocabulary entries.
-
-        Args:
-            filename: Name of the JSON file to parse
-
-        Returns:
-            List of vocabulary entries found in the file
-
-        Raises:
-            FileNotFoundError: If the migration file doesn't exist
-            ValueError: If the file format is invalid
-        """
-        # Look for JSON file in vocabulary subdirectory
+        # Use standardized vocabulary directory location
         file_path = self.migrations_dir / "data" / "vocabulary" / filename
-        if not file_path.exists():
-            file_path = self.migrations_dir / "data" / filename
 
         if not file_path.exists():
             raise FileNotFoundError(f"JSON vocabulary file not found: {file_path}")
@@ -132,16 +92,6 @@ class DatabaseParser:
     def _extract_entries_from_json(
         self, data: dict, filename: str
     ) -> List[VocabularyEntry]:
-        """
-        Extract vocabulary entries from JSON vocabulary data.
-
-        Args:
-            data: JSON vocabulary data
-            filename: Source filename (for error reporting)
-
-        Returns:
-            List of vocabulary entries
-        """
         entries = []
 
         if "word_pairs" not in data:

@@ -1,6 +1,6 @@
 {
   "permissions": {
-    "allow": ["Bash(docker build:*)", "Bash(helm upgrade:*)"],
+    "allow": ["Bash(docker build:*)", "Bash(helm upgrade:*)", "Bash(rm:*)", "Bash(kubectl get:*)", "Bash(kubectl describe:*)"],
     "deny": [],
     "ask": []
   }
