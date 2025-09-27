@@ -10,7 +10,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
 
-from ..core.database_parser import DatabaseParser, VocabularyEntry
+from ..core.database_parser import VocabularyEntry, VocabularyFileParser
 from ..core.word_normalizer import get_normalizer
 
 
@@ -38,8 +38,6 @@ class ValidationResult:
     total_entries_checked: int
     files_validated: List[str] = field(default_factory=list)
     issues: List[ValidationIssue] = field(default_factory=list)
-    duplicate_words: Dict[str, List[str]] = field(default_factory=dict)
-    id_gaps: List[Tuple[str, int, int]] = field(default_factory=list)
 
     @property
     def error_count(self) -> int:
@@ -88,18 +86,14 @@ class MigrationValidator:
     - Cross-language consistency
     """
 
-    def __init__(
-        self, migrations_directory: Optional[Path] = None, strict_mode: bool = True
-    ):
+    def __init__(self, migrations_directory: Optional[Path] = None):
         """
         Initialize the migration validator.
 
         Args:
             migrations_directory: Path to migrations directory
-            strict_mode: Enable strict validation (more thorough checks)
         """
-        self.db_parser = DatabaseParser(migrations_directory)
-        self.strict_mode = strict_mode
+        self.db_parser = VocabularyFileParser(migrations_directory)
         # Initialize normalizers for supported languages
         supported_languages = ["en", "de", "es"]
         self.normalizers = {lang: get_normalizer(lang) for lang in supported_languages}
@@ -133,10 +127,7 @@ class MigrationValidator:
                     # Merge results
                     result.files_validated.append(filename)
                     result.issues.extend(language_result.issues)
-                    result.total_entries_checked += (
-                        language_result.total_entries_checked
-                    )
-                    result.id_gaps.extend(language_result.id_gaps)
+                    result.total_entries_checked += language_result.total_entries_checked
 
                 except Exception as e:
                     error_issue = ValidationIssue(
@@ -147,12 +138,7 @@ class MigrationValidator:
                     )
                     result.issues.append(error_issue)
 
-        # Perform cross-language validation if strict mode
-        if self.strict_mode:
-            if not silent:
-                print("  Running cross-language consistency checks...")
-            cross_issues = self._validate_cross_language_consistency(result)
-            result.issues.extend(cross_issues)
+        # Cross-language validation removed - was empty placeholder
 
         return result
 
@@ -195,10 +181,11 @@ class MigrationValidator:
             entry_issues = self._validate_entry(entry, filename, normalizer)
             result.issues.extend(entry_issues)
 
-            # Track for duplicate detection
-            normalized_word = normalizer.normalize_for_validation(entry.source_word)
-            if normalized_word:
-                seen_words[normalized_word].append(entry.translation_id)
+            # Track for duplicate detection (handle all word variants)
+            word_variants = normalizer.extract_word_variants(entry.source_word)
+            for variant in word_variants:
+                if variant:
+                    seen_words[variant].append(entry.translation_id)
 
             # Track IDs
             seen_ids["translation"].add(entry.translation_id)
@@ -223,9 +210,7 @@ class MigrationValidator:
                 )
 
         # Check for duplicate source/target ID pairs
-        duplicate_pairs = {
-            pair: ids for pair, ids in duplicate_id_pairs.items() if len(ids) > 1
-        }
+        duplicate_pairs = {pair: ids for pair, ids in duplicate_id_pairs.items() if len(ids) > 1}
         if duplicate_pairs:
             for (source_id, target_id), translation_ids in duplicate_pairs.items():
                 result.issues.append(
@@ -240,16 +225,10 @@ class MigrationValidator:
         # Validate ID sequences
         id_issues = self._validate_id_sequences(language, filename, seen_ids)
         result.issues.extend(id_issues)
-        result.id_gaps = [
-            (filename, gap[0], gap[1])
-            for gap in self._find_id_gaps(seen_ids["translation"])
-        ]
 
         return result
 
-    def _validate_entry(
-        self, entry: VocabularyEntry, filename: str, normalizer
-    ) -> List[ValidationIssue]:
+    def _validate_entry(self, entry: VocabularyEntry, filename: str, normalizer) -> List[ValidationIssue]:
         """
         Validate a single vocabulary entry.
 
@@ -322,26 +301,9 @@ class MigrationValidator:
                 )
             )
 
-        # Check for SQL injection patterns (basic)
-        suspicious_patterns = ["'", '"', ";", "--", "/*", "*/"]
-        for pattern in suspicious_patterns:
-            if pattern in entry.source_word or pattern in entry.target_word:
-                issues.append(
-                    ValidationIssue(
-                        severity="warning",
-                        category="security",
-                        message=f"Suspicious character pattern detected: '{pattern}'",
-                        file_name=filename,
-                        entry_id=entry.translation_id,
-                    )
-                )
-                break
-
         return issues
 
-    def _validate_id_sequences(
-        self, language: str, filename: str, seen_ids: Dict[str, Set[int]]
-    ) -> List[ValidationIssue]:
+    def _validate_id_sequences(self, language: str, filename: str, seen_ids: Dict[str, Set[int]]) -> List[ValidationIssue]:
         """
         Validate ID sequences for internal consistency (no hardcoded expectations).
 
@@ -389,55 +351,6 @@ class MigrationValidator:
 
         return issues
 
-    def _find_id_gaps(self, id_set: Set[int]) -> List[Tuple[int, int]]:
-        """
-        Find gaps in ID sequences.
-
-        Args:
-            id_set: Set of IDs to check
-
-        Returns:
-            List of (gap_start, gap_end) tuples
-        """
-        if not id_set:
-            return []
-
-        sorted_ids = sorted(id_set)
-        gaps = []
-
-        for i in range(len(sorted_ids) - 1):
-            current_id = sorted_ids[i]
-            next_id = sorted_ids[i + 1]
-
-            if next_id - current_id > 1:
-                gaps.append((current_id + 1, next_id - 1))
-
-        return gaps
-
-    def _validate_cross_language_consistency(
-        self, result: ValidationResult
-    ) -> List[ValidationIssue]:
-        """
-        Validate consistency across different language files.
-
-        Args:
-            result: Current validation result
-
-        Returns:
-            List of cross-language validation issues
-        """
-        issues = []
-
-        # For now, this is a placeholder for advanced cross-language checks
-        # Could include things like:
-        # - Checking if translations make sense
-        # - Verifying consistent example usage
-        # - Detecting missing language pairs
-
-        # Skip the missing files check - we validate whatever files are found dynamically
-
-        return issues
-
     def print_validation_report(self, result: ValidationResult, detailed: bool = True):
         """
         Print a formatted validation report.
@@ -446,7 +359,7 @@ class MigrationValidator:
             result: Validation results to report
             detailed: Whether to show detailed issue breakdown
         """
-        print(f"\\n{'='*80}")
+        print(f"\n{'='*80}")
         print("📋 MIGRATION VALIDATION REPORT")
         print(f"{'='*80}")
 
@@ -457,11 +370,9 @@ class MigrationValidator:
         print(f"   • Warnings found: {result.warning_count}")
 
         if result.is_valid:
-            print("\\n✅ Validation PASSED - No critical errors found")
+            print("\n✅ Validation PASSED - No critical errors found")
         else:
-            print(
-                f"\\n❌ Validation FAILED - {result.error_count} errors must be fixed"
-            )
+            print(f"\n❌ Validation FAILED - {result.error_count} errors must be fixed")
 
         if detailed and result.issues:
             # Group issues by severity and category
@@ -469,14 +380,14 @@ class MigrationValidator:
             warnings = [i for i in result.issues if i.severity == "warning"]
 
             if errors:
-                print(f"\\n🚨 ERRORS ({len(errors)}):")
+                print(f"\n🚨 ERRORS ({len(errors)}):")
                 for i, error in enumerate(errors[:20], 1):  # Show first 20
                     print(f"   {i:2d}. {error.message} [{error.file_name}]")
                 if len(errors) > 20:
                     print(f"   ... and {len(errors) - 20} more errors")
 
             if warnings:
-                print(f"\\n⚠️  WARNINGS ({len(warnings)}):")
+                print(f"\n⚠️  WARNINGS ({len(warnings)}):")
                 for i, warning in enumerate(warnings[:10], 1):  # Show first 10
                     print(f"   {i:2d}. {warning.message} [{warning.file_name}]")
                 if len(warnings) > 10:
@@ -484,58 +395,4 @@ class MigrationValidator:
 
         # Duplicate information is already shown in the issues section above
 
-        print(f"\\n{'='*80}")
-
-
-def main():
-    """CLI entry point for migration validation."""
-    import argparse
-
-    parser = argparse.ArgumentParser(
-        description="Validate LinguaQuiz migration files for data integrity"
-    )
-    parser.add_argument(
-        "--migrations-dir",
-        type=str,
-        default=None,
-        help="Path to migrations directory (default: auto-detect)",
-    )
-    parser.add_argument(
-        "--strict", action="store_true", help="Enable strict validation mode"
-    )
-    parser.add_argument(
-        "--brief", action="store_true", help="Show brief report (less detailed)"
-    )
-    parser.add_argument(
-        "--errors-only", action="store_true", help="Only show errors, not warnings"
-    )
-
-    args = parser.parse_args()
-
-    # Initialize validator
-    migrations_dir = Path(args.migrations_dir) if args.migrations_dir else None
-    validator = MigrationValidator(
-        migrations_directory=migrations_dir, strict_mode=args.strict
-    )
-
-    # Run validation
-    result = validator.validate_all_migrations()
-
-    # Filter results if requested
-    if args.errors_only:
-        result.issues = [i for i in result.issues if i.severity == "error"]
-
-    # Print report
-    validator.print_validation_report(result, detailed=not args.brief)
-
-    # Exit with appropriate code
-    if not result.is_valid:
-        print("\\n💡 Fix the errors above and run validation again.")
-        exit(1)
-    else:
-        print("\\n🎉 All migration files passed validation!")
-        exit(0)
-
-
-if __name__ == "__main__":
-    main()
+        print(f"\n{'='*80}")

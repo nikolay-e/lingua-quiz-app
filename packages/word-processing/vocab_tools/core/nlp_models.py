@@ -27,9 +27,7 @@ class NLPModelManager:
 
     def __init__(self):
         self._model_cache: Dict[str, Any] = {}
-        self._download_attempted: set = (
-            set()
-        )  # Track which models we've tried to download
+        self._download_attempted: set = set()  # Track which models we've tried to download
 
     def load_model(
         self,
@@ -64,32 +62,30 @@ class NLPModelManager:
                 if not silent:
                     print(f"  Attempting to load {model_name}...")
                 model = spacy.load(model_name)
+                self._validate_model_components(model, language_code)
                 self._model_cache[language_code] = model
                 if not silent:
                     print(f"  ✅ Successfully loaded {model_name}")
                 return model
-            except OSError:
+            except (OSError, RuntimeError) as e:
                 if not silent:
-                    print(f"  ⚠️  {model_name} not available")
+                    print(f"  ⚠️  {model_name} not available or invalid: {e}")
 
                 # Try to download the model automatically
                 if self._download_model(model_name, silent=silent):
                     # Try loading again after download
                     try:
                         if not silent:
-                            print(
-                                f"  Attempting to load {model_name} after download..."
-                            )
+                            print(f"  Attempting to load {model_name} after download...")
                         model = spacy.load(model_name)
+                        self._validate_model_components(model, language_code)
                         self._model_cache[language_code] = model
                         if not silent:
-                            print(
-                                f"  ✅ Successfully loaded {model_name} after download"
-                            )
+                            print(f"  ✅ Successfully loaded {model_name} after download")
                         return model
-                    except OSError:
+                    except (OSError, RuntimeError) as e:
                         if not silent:
-                            print(f"  ❌ Still can't load {model_name} after download")
+                            print(f"  ❌ Still can't load or validate {model_name} after download: {e}")
                         continue
 
                 continue
@@ -100,6 +96,7 @@ class NLPModelManager:
         try:
             fallback_model = self._load_basic_model(language_code)
             if fallback_model:
+                self._validate_model_components(fallback_model, language_code)
                 self._model_cache[language_code] = fallback_model
                 if not silent:
                     print(f"  ✅ Loaded basic {language_code} model")
@@ -113,6 +110,40 @@ class NLPModelManager:
             f"Tried: {model_preferences}. Please install a spaCy model with: "
             f"python -m spacy download {model_preferences[0] if model_preferences else 'en_core_web_sm'}"
         )
+
+    def _validate_model_components(self, model: Any, language_code: str) -> None:
+        """
+        Validate that the model has required components for vocabulary analysis.
+
+        Args:
+            model: Loaded spaCy model
+            language_code: ISO language code
+
+        Raises:
+            RuntimeError: If model lacks essential components
+        """
+        # Skip validation for basic language models (they're blank fallbacks)
+        if type(model).__name__ in ["English", "German", "Spanish"]:
+            # Basic models are acceptable fallbacks even without full components
+            return
+
+        required_components = {"lemmatizer", "tagger"}
+        available_components = set(model.pipe_names) if hasattr(model, "pipe_names") else set()
+
+        if not required_components.issubset(available_components):
+            # Get a suggestion for a proper core model
+            model_suggestions = {
+                "en": "en_core_web_sm",
+                "de": "de_core_news_sm",
+                "es": "es_core_news_sm",
+            }
+            suggested_model = model_suggestions.get(language_code, f"{language_code}_core_web_sm")
+
+            raise RuntimeError(
+                f"{language_code.upper()}: spaCy model lacks required components (lemmatizer, tagger). "
+                f"Current model has: {list(available_components)}. "
+                f"Install a core model with: python -m spacy download {suggested_model}"
+            )
 
     def _load_basic_model(self, language_code: str) -> Optional[Any]:
         """
@@ -170,9 +201,7 @@ class NLPModelManager:
                 return True
             else:
                 if not silent:
-                    print(
-                        f"  ❌ Failed to download {model_name}: {result.stderr.strip()}"
-                    )
+                    print(f"  ❌ Failed to download {model_name}: {result.stderr.strip()}")
                 return False
 
         except subprocess.TimeoutExpired:
@@ -218,14 +247,8 @@ class NLPModelManager:
             "language": language_code,
             "model_name": getattr(model.meta, "name", "unknown"),
             "model_version": getattr(model.meta, "version", "unknown"),
-            "has_vectors": (
-                model.vocab.vectors.size > 0
-                if hasattr(model.vocab, "vectors")
-                else False
-            ),
-            "pipeline_components": (
-                list(model.pipe_names) if hasattr(model, "pipe_names") else []
-            ),
+            "has_vectors": (model.vocab.vectors.size > 0 if hasattr(model.vocab, "vectors") else False),
+            "pipeline_components": (list(model.pipe_names) if hasattr(model, "pipe_names") else []),
         }
 
     def clear_cache(self):

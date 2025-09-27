@@ -6,10 +6,9 @@ German linguistic features like articles, compound words, and inflections.
 """
 
 from pathlib import Path
-from typing import Any, Set, Tuple
+from typing import Set, Tuple
 
-from ..config.constants import NLP_MODEL_PREFERENCES, WORD_CATEGORY_MAPPING
-from ..core.nlp_models import get_nlp_model
+from ..config.constants import WORD_CATEGORY_MAPPING
 from ..core.vocabulary_analyzer import VocabularyAnalyzer
 
 
@@ -43,43 +42,9 @@ class GermanVocabularyAnalyzer(VocabularyAnalyzer):
             "eines",
         }
 
-        # Common German verb inflection mappings
-        self.verb_inflection_map = {
-            # sein (to be)
-            "bin": "sein",
-            "bist": "sein",
-            "ist": "sein",
-            "sind": "sein",
-            "war": "sein",
-            "warst": "sein",
-            "waren": "sein",
-            "gewesen": "sein",
-            # haben (to have)
-            "habe": "haben",
-            "hast": "haben",
-            "hat": "haben",
-            "hatte": "haben",
-            "hattest": "haben",
-            "hatten": "haben",
-            "gehabt": "haben",
-            # werden (to become)
-            "werde": "werden",
-            "wirst": "werden",
-            "wird": "werden",
-            "wurde": "werden",
-            "wurdest": "werden",
-            "wurden": "werden",
-            "geworden": "werden",
-        }
+        # Note: Manual verb mapping removed - spaCy's lemmatization handles this better
 
-    def load_nlp_model(self, silent: bool = False) -> Any:
-        """Load the best available German NLP model."""
-        model_preferences = NLP_MODEL_PREFERENCES.get("de", [])
-        return get_nlp_model("de", model_preferences, silent=silent)
-
-    def analyze_word_linguistics(
-        self, word: str, existing_words: Set[str], rank: int = None
-    ) -> Tuple[str, str, str]:
+    def analyze_word_linguistics(self, word: str, existing_words: Set[str], rank: int = None) -> Tuple[str, str, str]:
         """
         Analyze German word with specialized German linguistic processing.
 
@@ -93,15 +58,9 @@ class GermanVocabularyAnalyzer(VocabularyAnalyzer):
         # Normalize word for German-specific processing
         normalized_word = word.lower()
 
-        # Check for known verb inflections first
-        if normalized_word in self.verb_inflection_map:
-            base_verb = self.verb_inflection_map[normalized_word]
-            if base_verb in existing_words:
-                return "inflected_forms", "VERB", f"Conjugated form of '{base_verb}'"
-
-        # Process with NLP model
+        # Process with NLP model (handles verb inflections automatically)
         doc = self.nlp_model(word)
-        if not doc:
+        if not doc or len(doc) == 0:
             return "other", "UNKNOWN", "NLP processing failed"
 
         token = doc[0]
@@ -120,15 +79,11 @@ class GermanVocabularyAnalyzer(VocabularyAnalyzer):
         # Check for lemma in existing words (after German normalization)
         normalized_lemma = self.normalizer.normalize(lemma)
         if normalized_lemma != normalized_word and normalized_lemma in existing_words:
-            reason = self._get_german_inflection_reason(
-                word, lemma, morphology, pos_tag
-            )
+            reason = self._get_german_inflection_reason(word, lemma, morphology, pos_tag)
             return "inflected_forms", pos_tag, reason
 
-        # Check for compound word components
-        compound_reason = self._check_compound_word(word, existing_words)
-        if compound_reason:
-            return "compound_forms", "NOUN", compound_reason
+        # Note: Compound word detection is handled by spaCy lemmatization
+        # Custom compound detection is complex and unnecessary
 
         # Categorize based on POS and German-specific rules
         category = self._categorize_german_word(pos_tag, word, morphology)
@@ -136,9 +91,7 @@ class GermanVocabularyAnalyzer(VocabularyAnalyzer):
 
         return category, pos_tag, reason
 
-    def _get_german_inflection_reason(
-        self, word: str, lemma: str, morphology: str, pos_tag: str
-    ) -> str:
+    def _get_german_inflection_reason(self, word: str, lemma: str, morphology: str, pos_tag: str) -> str:
         """
         Generate specific reason for German inflected forms.
 
@@ -187,32 +140,6 @@ class GermanVocabularyAnalyzer(VocabularyAnalyzer):
 
         else:
             return f"Inflected form of '{lemma}'"
-
-    def _check_compound_word(self, word: str, existing_words: Set[str]) -> str:
-        """
-        Check if word might be a German compound word with known components.
-
-        Args:
-            word: Word to check for compound structure
-            existing_words: Set of existing words
-
-        Returns:
-            Reason string if compound found, empty string otherwise
-        """
-        if len(word) < 6:  # Too short to be a meaningful compound
-            return ""
-
-        # Simple compound detection - check if word ends with known words
-        normalized_word = self.normalizer.normalize(word)
-
-        for existing_word in existing_words:
-            if len(existing_word) >= 3 and normalized_word.endswith(existing_word):
-                # Check if the remaining part might also be a word
-                prefix = normalized_word[: -len(existing_word)]
-                if len(prefix) >= 3 and prefix in existing_words:
-                    return f"Compound word: {prefix} + {existing_word}"
-
-        return ""
 
     def _categorize_german_word(self, pos_tag: str, word: str, morphology: str) -> str:
         """
@@ -275,57 +202,3 @@ class GermanVocabularyAnalyzer(VocabularyAnalyzer):
                 description += " (neuter)"
 
         return f"{description} - high frequency German vocabulary"
-
-
-def main():
-    """CLI entry point for German vocabulary analysis."""
-    analyzer = GermanVocabularyAnalyzer()
-
-    # Set up CLI parser
-    parser = analyzer.setup_cli_parser(
-        "Analyze German vocabulary gaps in LinguaQuiz database"
-    )
-    args = parser.parse_args()
-
-    # Override migrations directory if provided
-    if args.migrations_dir:
-        analyzer.db_parser = analyzer.db_parser.__class__(Path(args.migrations_dir))
-
-    # Run analysis
-    result = analyzer.analyze_vocabulary_gaps(
-        top_n=args.top_n, limit_analysis=args.limit_analysis, show_progress=True
-    )
-
-    # Display results
-    if args.output_format == "json":
-        import json
-
-        print(
-            json.dumps(
-                {
-                    "language": result.language_code,
-                    "recommendations": [
-                        {
-                            "word": a.word,
-                            "frequency": a.frequency,
-                            "category": a.category,
-                            "pos_tag": a.pos_tag,
-                            "reason": a.reason,
-                        }
-                        for a in result.recommendations
-                    ],
-                },
-                indent=2,
-            )
-        )
-    else:
-        analyzer.print_analysis_results(result, show_details=not args.hide_details)
-
-    if result.recommendations:
-        print(
-            f"\n🎉 Found {len(result.recommendations)} German words to consider adding!"
-        )
-
-
-if __name__ == "__main__":
-    main()

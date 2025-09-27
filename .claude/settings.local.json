@@ -1,6 +1,15 @@
 {
   "permissions": {
-    "allow": ["Bash(docker build:*)", "Bash(helm upgrade:*)"],
+    "allow": [
+      "Bash(docker compose:*)",
+      "Bash(docker build:*)",
+      "Bash(chmod:*)",
+      "Bash(kubectl get:*)",
+      "Bash(cat:*)",
+      "Bash(bash .github/scripts/preview-env.sh:*)",
+      "Bash(pre-commit run:*)",
+      "Bash(find:*)"
+    ],
     "deny": [],
     "ask": []
   }

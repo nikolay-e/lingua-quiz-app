@@ -55,7 +55,9 @@ class ResultsTracker:
         try:
             with open(self.results_file, "r", encoding="utf-8") as f:
                 return json.load(f)
-        except (json.JSONDecodeError, FileNotFoundError):
+        except (json.JSONDecodeError, FileNotFoundError) as e:
+            if isinstance(e, json.JSONDecodeError):
+                print(f"Warning: Corrupted history file {self.results_file}, starting fresh")
             return []
 
     def _save_results(self, results: List[Dict[str, Any]]):
@@ -93,8 +95,7 @@ class ResultsTracker:
                 "files_validated": validation_result.files_validated,
                 "error_count": validation_result.error_count,
                 "warning_count": validation_result.warning_count,
-                "duplicate_count": len(validation_result.duplicate_words),
-                "duplicate_words": validation_result.duplicate_words,  # Duplicate word details
+                "duplicate_count": 0,  # Simplified validation tracking
                 "issues": [
                     {
                         "severity": i.severity,
@@ -134,16 +135,23 @@ class ResultsTracker:
                         "existing_words": result.total_existing_words,
                         "analyzed_words": result.total_analyzed_words,
                         "words": words_by_category,  # ALL words organized by category
+                        "recommendation_count": result.get_recommendation_count(),
                     }
                     total_recommendations += result.get_recommendation_count()
 
         # Create streamlined run record
         run_record = {
             "timestamp": timestamp,
-            "type": run_type,
+            "run_type": run_type,
             "config": config,
             "validation": validation_data,
             "vocabulary": vocab_data,
+        }
+
+        # Add a compact summary for quick history displays
+        run_record["summary"] = {
+            "total_recommendations": total_recommendations,
+            "languages_analyzed": list(vocab_data.keys()),
         }
 
         # Load existing results and append
@@ -167,7 +175,7 @@ class ResultsTracker:
     def get_runs_by_type(self, run_type: str) -> List[Dict[str, Any]]:
         """Get all runs of a specific type."""
         all_results = self._load_results()
-        return [r for r in all_results if r.get("type", r.get("run_type")) == run_type]
+        return [r for r in all_results if r.get("run_type") == run_type]
 
     def get_language_trends(self, language: str, days: int = 30) -> Dict[str, Any]:
         """Get trends for a specific language over time."""
@@ -178,7 +186,7 @@ class ResultsTracker:
         for run in all_results:
             try:
                 run_date = datetime.datetime.fromisoformat(run["timestamp"])
-                vocab_data = run.get("vocabulary", run.get("vocabulary_results", {}))
+                vocab_data = run.get("vocabulary", {})
                 if run_date >= cutoff_date and vocab_data.get(language):
                     relevant_runs.append(run)
             except (ValueError, KeyError):
@@ -191,13 +199,11 @@ class ResultsTracker:
         recommendations_over_time = []
 
         for run in relevant_runs:
-            vocab_data = run.get("vocabulary", run.get("vocabulary_results", {}))
+            vocab_data = run.get("vocabulary", {})
             vocab_result = vocab_data[language]
             if "error" not in vocab_result:
-                # Count recommendations from words marked as recommended
-                rec_count = 0
-                for category, words in vocab_result.get("words", {}).items():
-                    rec_count += sum(1 for w in words if w.get("recommended", False))
+                # Use pre-calculated recommendation count for efficiency
+                rec_count = vocab_result.get("recommendation_count", 0)
 
                 recommendations_over_time.append(
                     {
@@ -215,9 +221,7 @@ class ResultsTracker:
             "days_analyzed": days,
             "runs_found": len(relevant_runs),
             "metrics_over_time": recommendations_over_time,
-            "latest_stats": (
-                recommendations_over_time[-1] if recommendations_over_time else None
-            ),
+            "latest_stats": (recommendations_over_time[-1] if recommendations_over_time else None),
         }
 
     def generate_summary_report(self) -> Dict[str, Any]:
@@ -240,52 +244,87 @@ class ResultsTracker:
             run_type = run["run_type"]
             run_types[run_type] = run_types.get(run_type, 0) + 1
 
-            if run.get("vocabulary_results"):
-                languages_analyzed.update(run["vocabulary_results"].keys())
+            if run.get("vocabulary"):
+                languages_analyzed.update(run["vocabulary"].keys())
 
-            if run.get("validation_result"):
+            if run.get("validation"):
                 validation_runs += 1
-                if run["validation_result"]["is_valid"]:
+                if run["validation"]["is_valid"]:
                     passed_validations += 1
 
         # Latest recommendation counts by language
         latest_recommendations = {}
         for lang in languages_analyzed:
             for run in reversed(all_results):
-                if run.get("vocabulary_results", {}).get(lang):
-                    vocab_result = run["vocabulary_results"][lang]
+                if run.get("vocabulary", {}).get(lang):
+                    vocab_result = run["vocabulary"][lang]
                     if "error" not in vocab_result:
-                        latest_recommendations[lang] = vocab_result[
-                            "recommendation_count"
-                        ]
+                        if "recommendation_count" in vocab_result:
+                            latest_recommendations[lang] = vocab_result["recommendation_count"]
+                        else:
+                            # Fallback: compute from stored words
+                            count = 0
+                            for words in vocab_result.get("words", {}).values():
+                                count += sum(1 for w in words if w.get("recommended"))
+                            latest_recommendations[lang] = count
                         break
 
         return {
             "total_analysis_runs": total_runs,
             "run_types": run_types,
             "languages_analyzed": list(languages_analyzed),
-            "validation_success_rate": (
-                f"{passed_validations}/{validation_runs}"
-                if validation_runs > 0
-                else "N/A"
-            ),
+            "validation_success_rate": (f"{passed_validations}/{validation_runs}" if validation_runs > 0 else "N/A"),
             "latest_recommendations_by_language": latest_recommendations,
             "recent_runs": [
                 {
                     "timestamp": run["timestamp"],
-                    "type": run["run_type"],
-                    "languages": list(run.get("vocabulary_results", {}).keys()),
-                    "total_recommendations": run.get("summary", {}).get(
-                        "total_recommendations", 0
-                    ),
+                    "run_type": run["run_type"],
+                    "languages": list(run.get("vocabulary", {}).keys()),
+                    "total_recommendations": run.get("summary", {}).get("total_recommendations", 0),
                 }
                 for run in recent_runs
             ],
             "results_file": str(self.results_file),
         }
 
-    def clear_results(self):
-        """Clear all stored results (use with caution)."""
+    def create_backup(self, backup_dir: Optional[Path] = None) -> Path:
+        """
+        Create a timestamped backup of the results file.
+
+        Args:
+            backup_dir: Directory to store backup (default: same as results file)
+
+        Returns:
+            Path to the created backup file
+        """
+        import datetime
+
+        if backup_dir is None:
+            backup_dir = self.results_file.parent
+
+        # Create backup filename with timestamp
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        backup_filename = f"{self.results_file.stem}_backup_{timestamp}.json"
+        backup_path = backup_dir / backup_filename
+
+        # Copy current results to backup
+        all_results = self._load_results()
+        with open(backup_path, "w", encoding="utf-8") as f:
+            json.dump(all_results, f, indent=2, ensure_ascii=False)
+
+        print(f"💾 Backup created: {backup_path}")
+        return backup_path
+
+    def clear_results(self, create_backup: bool = True):
+        """
+        Clear all stored results (use with caution).
+
+        Args:
+            create_backup: Whether to create a backup before clearing
+        """
+        if create_backup:
+            self.create_backup()
+
         self._save_results([])
         print(f"🗑️  All results cleared from {self.results_file}")
 

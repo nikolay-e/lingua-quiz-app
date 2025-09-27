@@ -50,9 +50,7 @@ class TestAuthenticationFlow:
         # Check for app description that indicates auth functionality
         description_meta = soup.find("meta", {"name": "description"})
         assert description_meta is not None, "No description meta tag found"
-        assert (
-            "language learning" in description_meta.get("content", "").lower()
-        ), "App description doesn't indicate language learning functionality"
+        assert "language learning" in description_meta.get("content", "").lower(), "App description doesn't indicate language learning functionality"
 
     def test_navigation_between_auth_forms(self, web_session):
         """Test that SPA has proper setup for client-side navigation."""
@@ -79,17 +77,13 @@ class TestQuizInterface:
 
         # Check app title and description for quiz functionality
         title = soup.find("title")
-        assert (
-            title is not None and "lingua" in title.text.lower()
-        ), "App title doesn't indicate quiz functionality"
+        assert title is not None and "lingua" in title.text.lower(), "App title doesn't indicate quiz functionality"
 
         # Verify meta keywords include quiz-related terms
         keywords_meta = soup.find("meta", {"name": "keywords"})
         assert keywords_meta is not None, "No keywords meta tag found"
         keywords_content = keywords_meta.get("content", "").lower()
-        assert any(
-            keyword in keywords_content for keyword in ["quiz", "language", "learning"]
-        ), "Keywords don't include quiz-related terms"
+        assert any(keyword in keywords_content for keyword in ["quiz", "language", "learning"]), "Keywords don't include quiz-related terms"
 
     def test_level_selection_interface(self, web_session):
         """Test that the SPA has infrastructure for level selection."""
@@ -102,12 +96,8 @@ class TestQuizInterface:
 
         # Check that meta description mentions learning levels/progression
         description_meta = soup.find("meta", {"name": "description"})
-        description_content = (
-            description_meta.get("content", "").lower() if description_meta else ""
-        )
-        assert (
-            "learning" in description_content
-        ), "App doesn't indicate learning progression capability"
+        description_content = description_meta.get("content", "").lower() if description_meta else ""
+        assert "learning" in description_content, "App doesn't indicate learning progression capability"
 
 
 @pytest.mark.e2e
@@ -123,9 +113,7 @@ class TestResponsiveDesign:
         assert viewport_meta is not None, "Viewport meta tag not found"
 
         content = viewport_meta.get("content", "")
-        assert (
-            "width=device-width" in content
-        ), "Viewport not configured for responsive design"
+        assert "width=device-width" in content, "Viewport not configured for responsive design"
 
     def test_css_framework_loaded(self, web_session):
         """Test that CSS framework/styles are loaded."""
@@ -178,18 +166,12 @@ class TestAccessibility:
         inputs = soup.find_all("input")
 
         for input_elem in inputs:
-            has_label = (
-                bool(soup.find("label", {"for": input_elem.get("id")}))
-                if input_elem.get("id")
-                else False
-            )
+            has_label = bool(soup.find("label", {"for": input_elem.get("id")})) if input_elem.get("id") else False
             has_placeholder = bool(input_elem.get("placeholder"))
             has_aria_label = bool(input_elem.get("aria-label"))
 
             # Each input should have some form of labeling
-            assert (
-                has_label or has_placeholder or has_aria_label
-            ), f"Input {input_elem} lacks proper labeling"
+            assert has_label or has_placeholder or has_aria_label, f"Input {input_elem} lacks proper labeling"
 
 
 @pytest.mark.e2e
@@ -203,9 +185,7 @@ class TestPerformance:
         load_time = time.time() - start_time
 
         assert response.status_code == 200
-        assert (
-            load_time < 5.0
-        ), f"Page took {load_time:.2f}s to load, should be under 5s"
+        assert load_time < 5.0, f"Page took {load_time:.2f}s to load, should be under 5s"
 
     def test_no_js_errors_in_console(self, web_session):
         """Test that there are no obvious JS errors (basic check)."""
@@ -263,9 +243,7 @@ class TestSecurity:
         suspicious_patterns = ["password=", "pwd=", "pass=", "secret=", "key="]
 
         for pattern in suspicious_patterns:
-            assert (
-                pattern not in html_content
-            ), f"Suspicious pattern '{pattern}' found in HTML source"
+            assert pattern not in html_content, f"Suspicious pattern '{pattern}' found in HTML source"
 
     def test_https_ready_headers(self, web_session):
         """Test that security headers are present or HTTPS-ready."""
@@ -276,11 +254,7 @@ class TestSecurity:
         headers = {k.lower(): v.lower() for k, v in response.headers.items()}
 
         # Should not expose server technology details
-        assert (
-            "server" not in headers
-            or "nginx" in headers["server"]
-            or "apache" not in headers["server"]
-        )
+        assert "server" not in headers or "nginx" in headers["server"] or "apache" not in headers["server"]
 
         # Basic security check passed if we reach here
         assert True

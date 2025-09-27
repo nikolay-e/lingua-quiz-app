@@ -6,10 +6,9 @@ to identify missing essential words and classify them appropriately.
 """
 
 from pathlib import Path
-from typing import Any, Set, Tuple
+from typing import Set, Tuple
 
-from ..config.constants import NLP_MODEL_PREFERENCES, WORD_CATEGORY_MAPPING
-from ..core.nlp_models import get_nlp_model
+from ..config.constants import WORD_CATEGORY_MAPPING
 from ..core.vocabulary_analyzer import VocabularyAnalyzer
 
 
@@ -23,18 +22,11 @@ class EnglishVocabularyAnalyzer(VocabularyAnalyzer):
 
     def __init__(self, migrations_directory: Path = None, silent: bool = False):
         """Initialize the English vocabulary analyzer."""
-        super().__init__("en", migrations_directory)
+        super().__init__("en", migrations_directory, silent=silent)
         if not silent:
             print("🏴󠁧󠁢󠁥󠁮󠁧󠁿 Initializing English vocabulary analyzer...")
 
-    def load_nlp_model(self, silent: bool = False) -> Any:
-        """Load the best available English NLP model."""
-        model_preferences = NLP_MODEL_PREFERENCES.get("en", [])
-        return get_nlp_model("en", model_preferences, silent=silent)
-
-    def analyze_word_linguistics(
-        self, word: str, existing_words: Set[str], rank: int = None
-    ) -> Tuple[str, str, str]:
+    def analyze_word_linguistics(self, word: str, existing_words: Set[str], rank: int = None) -> Tuple[str, str, str]:
         """
         Analyze English word using spaCy NLP for comprehensive classification.
 
@@ -47,7 +39,7 @@ class EnglishVocabularyAnalyzer(VocabularyAnalyzer):
         """
         # Process word with NLP model
         doc = self.nlp_model(word)
-        if not doc:
+        if not doc or len(doc) == 0:
             return "other", "UNKNOWN", "NLP processing failed"
 
         token = doc[0]
@@ -117,9 +109,7 @@ class EnglishVocabularyAnalyzer(VocabularyAnalyzer):
 
         return "other"
 
-    def _generate_analysis_reason(
-        self, word: str, pos_tag: str, morphology: str, rank: int = None
-    ) -> str:
+    def _generate_analysis_reason(self, word: str, pos_tag: str, morphology: str, rank: int = None) -> str:
         """
         Generate human-readable analysis reason with frequency rank.
 
@@ -167,57 +157,3 @@ class EnglishVocabularyAnalyzer(VocabularyAnalyzer):
             return f"Top {rank:,} word; classified as {description.lower()}"
         else:
             return f"High frequency {description.lower()}"
-
-
-def main():
-    """CLI entry point for English vocabulary analysis."""
-    analyzer = EnglishVocabularyAnalyzer()
-
-    # Set up CLI parser
-    parser = analyzer.setup_cli_parser(
-        "Analyze English vocabulary gaps in LinguaQuiz database"
-    )
-    args = parser.parse_args()
-
-    # Override migrations directory if provided
-    if args.migrations_dir:
-        analyzer.db_parser = analyzer.db_parser.__class__(Path(args.migrations_dir))
-
-    # Run analysis
-    result = analyzer.analyze_vocabulary_gaps(
-        top_n=args.top_n, limit_analysis=args.limit_analysis, show_progress=True
-    )
-
-    # Display results
-    if args.output_format == "json":
-        import json
-
-        print(
-            json.dumps(
-                {
-                    "language": result.language_code,
-                    "recommendations": [
-                        {
-                            "word": a.word,
-                            "frequency": a.frequency,
-                            "category": a.category,
-                            "pos_tag": a.pos_tag,
-                            "reason": a.reason,
-                        }
-                        for a in result.recommendations
-                    ],
-                },
-                indent=2,
-            )
-        )
-    else:
-        analyzer.print_analysis_results(result, show_details=not args.hide_details)
-
-    if result.recommendations:
-        print(
-            f"\n🎉 Found {len(result.recommendations)} English words to consider adding!"
-        )
-
-
-if __name__ == "__main__":
-    main()

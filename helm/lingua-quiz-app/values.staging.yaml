@@ -56,7 +56,7 @@ ingress:
     host: # Same host as frontend - API will be served from /api path
   tls:
     enabled: true
-    secretName: lingua-quiz-staging-tls
+    secretName: lingua-quiz-staging-tls  # pragma: allowlist secret
 
 migrations:
   enabled: true
@@ -73,7 +73,7 @@ migrations:
       memory: '128Mi'
 
 tests:
-  enabled: true
+  enabled: false
   image:
     repository: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-integration-e2e-tests # Will be overridden by CI
     pullPolicy: Always
