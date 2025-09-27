@@ -5,7 +5,6 @@ Provides the foundation for analyzing vocabulary gaps and recommending
 new words based on frequency analysis and NLP classification.
 """
 
-import argparse
 from abc import ABC, abstractmethod
 from collections import defaultdict
 from dataclasses import dataclass
@@ -18,8 +17,9 @@ from ..config.constants import (
     ANALYSIS_SKIP_WORDS,
     DEFAULT_ANALYSIS_CONFIG,
     ESSENTIAL_VOCABULARY_CATEGORIES,
+    SUPPORTED_LANGUAGES,
 )
-from .database_parser import DatabaseParser, VocabularyEntry
+from .database_parser import VocabularyEntry, VocabularyFileParser
 from .word_normalizer import get_normalizer
 
 
@@ -102,13 +102,12 @@ class VocabularyAnalyzer(ABC):
         self.silent = silent
 
         # Initialize components
-        self.db_parser = DatabaseParser(migrations_directory)
+        self.db_parser = VocabularyFileParser(migrations_directory)
         self.normalizer = get_normalizer(language_code)
         self._nlp_model: Optional[Any] = None
 
         # Supported languages
-        supported_languages = ["en", "de", "es"]
-        if language_code not in supported_languages:
+        if language_code not in SUPPORTED_LANGUAGES:
             raise ValueError(f"Unsupported language: {language_code}")
 
     @property
@@ -118,7 +117,6 @@ class VocabularyAnalyzer(ABC):
             self._nlp_model = self.load_nlp_model(silent=self.silent)
         return self._nlp_model
 
-    @abstractmethod
     def load_nlp_model(self, silent: bool = False) -> Any:
         """
         Load the appropriate NLP model for this language.
@@ -129,11 +127,14 @@ class VocabularyAnalyzer(ABC):
         Returns:
             Loaded spaCy NLP model
         """
+        from ..config.constants import NLP_MODEL_PREFERENCES
+        from .nlp_models import get_nlp_model
+
+        model_preferences = NLP_MODEL_PREFERENCES.get(self.language_code, [])
+        return get_nlp_model(self.language_code, model_preferences, silent=silent)
 
     @abstractmethod
-    def analyze_word_linguistics(
-        self, word: str, existing_words: Set[str], rank: int = None
-    ) -> Tuple[str, str, str]:
+    def analyze_word_linguistics(self, word: str, existing_words: Set[str], rank: int = None) -> Tuple[str, str, str]:
         """
         Perform language-specific linguistic analysis of a word.
 
@@ -146,40 +147,25 @@ class VocabularyAnalyzer(ABC):
             Tuple of (category, pos_tag, analysis_reason)
         """
 
-    def get_migration_filename(self) -> str:
-        """Get the migration filename for this language."""
-        # Dynamic discovery
-        discovered_files = self.db_parser.discover_migration_files()
-        if self.language_code in discovered_files:
-            # Return the first file for this language (they're sorted)
-            return discovered_files[self.language_code][0]
-
-        raise FileNotFoundError(
-            f"No migration file found for language '{self.language_code}'"
-        )
-
     def extract_existing_vocabulary(self) -> Set[str]:
-        """
-        Extract existing vocabulary from the migration file.
+        discovered_files = self.db_parser.discover_migration_files()
+        language_files = discovered_files.get(self.language_code, [])
 
-        Returns:
-            Set of normalized existing words
-        """
-        migration_file = self.get_migration_filename()
-
-        try:
-            entries = self.db_parser.parse_migration_file(migration_file)
-        except FileNotFoundError:
-            print(f"⚠️  Migration file not found: {migration_file}")
+        if not language_files:
+            print(f"⚠️ No migration file found for language '{self.language_code}'")
             return set()
 
         existing_words = set()
-
-        for entry in entries:
-            if self._is_valid_vocabulary_entry(entry):
-                # Extract word variants using language-specific normalizer
-                word_variants = self.normalizer.extract_word_variants(entry.source_word)
-                existing_words.update(word_variants)
+        for migration_file in language_files:
+            try:
+                entries = self.db_parser.parse_migration_file(migration_file)
+                for entry in entries:
+                    if self._is_valid_vocabulary_entry(entry):
+                        word_variants = self.normalizer.extract_word_variants(entry.source_word)
+                        existing_words.update(word_variants)
+            except FileNotFoundError:
+                print(f"⚠️ Migration file not found: {migration_file}")
+                continue
 
         return existing_words
 
@@ -204,19 +190,24 @@ class VocabularyAnalyzer(ABC):
         return True
 
     def get_frequent_missing_words(
-        self, top_n: int = 1000, start_rank: int = 1
-    ) -> List[str]:
+        self,
+        top_n: int = 1000,
+        start_rank: int = 1,
+        existing_words: Optional[Set[str]] = None,
+    ) -> List[Tuple[str, int]]:
         """
         Get most frequent words that are missing from vocabulary within a frequency range.
 
         Args:
             top_n: Number of top frequent words to consider (end of range)
             start_rank: Starting rank for frequency range (1-based, default: 1)
+            existing_words: Pre-loaded existing words set (if None, will extract)
 
         Returns:
-            List of missing words sorted by frequency within the specified range
+            List of (word, original_rank) tuples sorted by frequency within the specified range
         """
-        existing_words = self.extract_existing_vocabulary()
+        if existing_words is None:
+            existing_words = self.extract_existing_vocabulary()
 
         # Get top frequent words for this language
         all_frequent_words = top_n_list(self.language_code, top_n)
@@ -226,14 +217,12 @@ class VocabularyAnalyzer(ABC):
         start_idx = start_rank - 1
         frequent_words = all_frequent_words[start_idx:]
 
-        # Filter to valid words not in existing vocabulary
+        # Filter to valid words not in existing vocabulary, preserving original ranks
         missing_words = []
-        for word in frequent_words:
-            if (
-                self._is_word_valid_for_analysis(word)
-                and self.normalizer.normalize(word) not in existing_words
-            ):
-                missing_words.append(word)
+        for i, word in enumerate(frequent_words):
+            if self._is_word_valid_for_analysis(word) and self.normalizer.normalize(word) not in existing_words:
+                original_rank = start_rank + i  # Calculate original rank
+                missing_words.append((word, original_rank))
 
         return missing_words
 
@@ -296,7 +285,7 @@ class VocabularyAnalyzer(ABC):
             print(f"📊 Found {len(existing_words)} existing words")
 
         # Get missing words to analyze within the specified frequency range
-        missing_words = self.get_frequent_missing_words(top_n, start_rank)
+        missing_words = self.get_frequent_missing_words(top_n, start_rank, existing_words)
         if limit_analysis and limit_analysis < len(missing_words):
             missing_words = missing_words[:limit_analysis]
             if show_progress:
@@ -310,11 +299,11 @@ class VocabularyAnalyzer(ABC):
         all_analyses = []
         analyzed_lemmas = set()  # Track lemmas we've already processed
 
-        for rank, word in enumerate(missing_words, start=start_rank):
+        for word, original_rank in missing_words:
             try:
                 # Get lemma for this word
                 doc = self.nlp_model(word)
-                if not doc:
+                if not doc or len(doc) == 0:
                     continue
 
                 token = doc[0]
@@ -333,9 +322,7 @@ class VocabularyAnalyzer(ABC):
                 if not self._is_word_valid_for_analysis(lemma):
                     continue
 
-                category, pos_tag, reason = self.analyze_word_linguistics(
-                    lemma, existing_words, rank=rank
-                )
+                category, pos_tag, reason = self.analyze_word_linguistics(lemma, existing_words, rank=original_rank)
                 frequency = word_frequency(lemma, self.language_code)
 
                 analysis = WordAnalysis(
@@ -376,9 +363,7 @@ class VocabularyAnalyzer(ABC):
             categories=dict(categories),
         )
 
-    def print_analysis_results(
-        self, result: VocabularyAnalysisResult, show_details: bool = True
-    ):
+    def print_analysis_results(self, result: VocabularyAnalysisResult, show_details: bool = True):
         """
         Print formatted analysis results.
 
@@ -404,52 +389,6 @@ class VocabularyAnalyzer(ABC):
         if result.recommendations:
             print("\n🎯 Top Recommendations (by frequency):")
             for i, analysis in enumerate(result.recommendations[:20], 1):
-                print(
-                    f"   {i:2d}. {analysis.word:<15} ({analysis.frequency:.2e}) - {analysis.reason}"
-                )
+                print(f"   {i:2d}. {analysis.word:<15} ({analysis.frequency:.2e}) - {analysis.reason}")
 
         print(f"\n{'='*80}")
-
-    def setup_cli_parser(self, description: str) -> argparse.ArgumentParser:
-        """
-        Set up command-line argument parser.
-
-        Args:
-            description: Description for the CLI tool
-
-        Returns:
-            Configured argument parser
-        """
-        parser = argparse.ArgumentParser(description=description)
-
-        parser.add_argument(
-            "--top-n",
-            type=int,
-            default=1000,
-            help="Number of top frequency words to analyze (default: 1000)",
-        )
-        parser.add_argument(
-            "--limit-analysis",
-            type=int,
-            default=None,
-            help="Limit analysis to first N words (default: analyze all)",
-        )
-        parser.add_argument(
-            "--hide-details",
-            action="store_true",
-            help="Hide detailed category breakdown",
-        )
-        parser.add_argument(
-            "--migrations-dir",
-            type=str,
-            default=None,
-            help="Path to migrations directory (default: auto-detect)",
-        )
-        parser.add_argument(
-            "--output-format",
-            choices=["text", "json"],
-            default="text",
-            help="Output format (default: text)",
-        )
-
-        return parser

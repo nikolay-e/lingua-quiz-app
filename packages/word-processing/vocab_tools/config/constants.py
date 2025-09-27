@@ -25,9 +25,6 @@ def _load_config() -> Dict:
 # Load configuration once at module import
 _CONFIG = _load_config()
 
-# Analysis thresholds for part-of-speech categorization
-POS_ANALYSIS_THRESHOLDS = _CONFIG["pos_analysis_thresholds"]
-
 # Category mapping for word classification
 WORD_CATEGORY_MAPPING = _CONFIG["word_categories"]
 
@@ -43,6 +40,22 @@ NLP_MODEL_PREFERENCES = _CONFIG["nlp_models"]
 # Default analysis parameters
 DEFAULT_ANALYSIS_CONFIG = _CONFIG["analysis_defaults"]
 
-# Languages and CEFR levels from config
+# Supported languages from config
 SUPPORTED_LANGUAGES = _CONFIG["languages"]
-CEFR_LEVELS = _CONFIG["cefr_levels"]
+
+# Base POS descriptions (language-neutral)
+BASE_POS_DESCRIPTIONS = {
+    "NOUN": "noun",
+    "PROPN": "proper noun",
+    "VERB": "verb",
+    "ADJ": "adjective",
+    "ADV": "adverb",
+    "DET": "determiner/article",
+    "PRON": "pronoun",
+    "ADP": "preposition",
+    "CONJ": "conjunction",
+    "SCONJ": "subordinating conjunction",
+    "NUM": "number",
+    "PART": "particle",
+    "AUX": "auxiliary verb",
+}

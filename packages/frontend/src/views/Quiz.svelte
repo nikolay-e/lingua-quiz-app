@@ -13,6 +13,7 @@
   import FeedbackDisplay from '../components/quiz/FeedbackDisplay.svelte';
   import LearningProgress from '../components/quiz/LearningProgress.svelte';
   import FeedCard from '../components/FeedCard.svelte';
+  import LevelChangeAnimation from '../components/quiz/LevelChangeAnimation.svelte';
 
   // Level configuration imported from @lingua-quiz/core
 
@@ -23,6 +24,10 @@
   let usageExamples: { source: string; target: string } | null = null;
   let isSubmitting: boolean = false;
   let questionForFeedback: QuizQuestion | null = null;
+
+  // Level change animation state
+  let showLevelAnimation = false;
+  let isLevelUp = true;
 
   // TTS state (managed by service)
   let ttsState: import('../lib/services/ttsService').TTSState = { isAvailable: false, supportedLanguages: [], isPlaying: false };
@@ -159,6 +164,14 @@
           };
         } else {
           usageExamples = null;
+        }
+
+        // Check for level change and trigger animation
+        if ('levelChange' in result && result.levelChange) {
+          const fromLevel = parseInt(result.levelChange.from.replace('LEVEL_', ''));
+          const toLevel = parseInt(result.levelChange.to.replace('LEVEL_', ''));
+          isLevelUp = toLevel > fromLevel;
+          showLevelAnimation = true;
         }
 
         userAnswer = '';
@@ -364,6 +377,13 @@
   </FeedCard>
 </main>
 {/key}
+
+<!-- Level change animation overlay -->
+<LevelChangeAnimation
+  bind:isVisible={showLevelAnimation}
+  {isLevelUp}
+  on:complete={() => showLevelAnimation = false}
+/>
 
 <style>
   /* Trim the old quiz-container/blocky layout—feed + cards do the layout now */

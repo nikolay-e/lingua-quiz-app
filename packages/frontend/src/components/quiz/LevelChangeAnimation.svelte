@@ -1,0 +1,122 @@
+<script lang="ts">
+  import { createEventDispatcher } from 'svelte';
+
+  export let isVisible = false;
+  export let isLevelUp = true;
+
+  const dispatch = createEventDispatcher();
+
+  let animationElement: HTMLDivElement;
+
+  $: if (isVisible && animationElement) {
+    // Reset animation
+    animationElement.style.animation = 'none';
+    animationElement.offsetHeight; // Trigger reflow
+    animationElement.style.animation = null;
+
+    // Auto-hide after animation
+    setTimeout(() => {
+      dispatch('complete');
+    }, 1500);
+  }
+</script>
+
+{#if isVisible}
+  <div
+    bind:this={animationElement}
+    class="level-change-animation {isLevelUp ? 'level-up' : 'level-down'}"
+    role="alert"
+    aria-live="polite"
+  >
+    <div class="animation-content">
+      <div class="icon">{isLevelUp ? '⬆️' : '⬇️'}</div>
+      <div class="text">{isLevelUp ? 'Level Up!' : 'Level Down'}</div>
+    </div>
+  </div>
+{/if}
+
+<style>
+  .level-change-animation {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    pointer-events: none;
+  }
+
+  .level-up {
+    animation: levelUpAnimation 1.5s ease-out forwards;
+  }
+
+  .level-down {
+    animation: levelDownAnimation 1.5s ease-out forwards;
+  }
+
+  .animation-content {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 16px 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border: 2px solid;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+  }
+
+  .level-up .animation-content {
+    border-color: #4ade80;
+    color: #059669;
+  }
+
+  .level-down .animation-content {
+    border-color: #f87171;
+    color: #dc2626;
+  }
+
+  .icon {
+    font-size: 24px;
+  }
+
+  .text {
+    font-size: 18px;
+  }
+
+  @keyframes levelUpAnimation {
+    0% {
+      transform: translate(-50%, -50%) scale(0.5);
+      opacity: 0;
+    }
+    20% {
+      transform: translate(-50%, -50%) scale(1.2);
+      opacity: 1;
+    }
+    40% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+      transform: translate(-50%, -60%) scale(1);
+      opacity: 0;
+    }
+  }
+
+  @keyframes levelDownAnimation {
+    0% {
+      transform: translate(-50%, -50%) scale(0.5);
+      opacity: 0;
+    }
+    20% {
+      transform: translate(-50%, -50%) scale(1.2);
+      opacity: 1;
+    }
+    40% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+      transform: translate(-50%, -40%) scale(1);
+      opacity: 0;
+    }
+  }
+</style>

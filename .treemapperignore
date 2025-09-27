@@ -13,6 +13,10 @@
 .terraformignore
 .gitattributes
 .sqlfluff
+.nvmrc
+.secrets.baseline
+flux
+helm
 
 # Dependencies and lock files
 node_modules
@@ -77,8 +81,6 @@ logs/
 *_words.sql
 *_data.sql
 data
-word_processing_scripts
-word-processing
 favicon
 integration-tests
 

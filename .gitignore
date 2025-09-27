@@ -9,6 +9,8 @@ node_modules/
 .env
 .env.local
 
+*.tmp
+
 # Python cache
 __pycache__/
 *.py[cod]

@@ -493,7 +493,7 @@
       "translation_id": 8010054,
       "source_id": 8010109,
       "target_id": 8010110,
-      "source_word": "average [adj.|n.]",
+      "source_word": "average",
       "target_word": "средний|среднее значение",
       "source_example": "The average temperature in summer is 25 degrees.",
       "target_example": "Средняя температура летом - 25 градусов."
@@ -506,15 +506,6 @@
       "target_word": "избегать",
       "source_example": "You should avoid eating junk food.",
       "target_example": "Вам следует избегать нездоровой пищи."
-    },
-    {
-      "translation_id": 8010056,
-      "source_id": 8010113,
-      "target_id": 8010114,
-      "source_word": "award [n.]",
-      "target_word": "награда",
-      "source_example": "She won an award for her acting.",
-      "target_example": "Она получила награду за свою актерскую игру."
     },
     {
       "translation_id": 8010057,
@@ -1195,7 +1186,7 @@
       "translation_id": 8010132,
       "source_id": 8010265,
       "target_id": 8010266,
-      "source_word": "close [adj.]",
+      "source_word": "close",
       "target_word": "близкий",
       "source_example": "They are very close friends.",
       "target_example": "Они очень близкие друзья."
@@ -1636,7 +1627,7 @@
       "translation_id": 8010181,
       "source_id": 8010363,
       "target_id": 8010364,
-      "source_word": "daily [adj.]",
+      "source_word": "daily",
       "target_word": "ежедневный",
       "source_example": "I read the daily newspaper.",
       "target_example": "Я читаю ежедневную газету."
@@ -2038,15 +2029,6 @@
       "target_example": "Вождение в городе - это сложно."
     },
     {
-      "translation_id": 8010226,
-      "source_id": 8010453,
-      "target_id": 8010454,
-      "source_word": "drop",
-      "target_word": "ронять|падать",
-      "source_example": "Be careful not to drop the glass.",
-      "target_example": "Осторожно, не урони стакан."
-    },
-    {
       "translation_id": 8010227,
       "source_id": 8010455,
       "target_id": 8010456,
@@ -2194,8 +2176,8 @@
       "translation_id": 8010243,
       "source_id": 8010487,
       "target_id": 8010488,
-      "source_word": "empty [adj.]",
-      "target_word": "пустой",
+      "source_word": "empty",
+      "target_word": "пустой, опустошать",
       "source_example": "The bottle is empty.",
       "target_example": "Бутылка пуста."
     },
@@ -3181,15 +3163,6 @@
       "target_example": "Она все сделала сама."
     },
     {
-      "translation_id": 8010354,
-      "source_id": 8010709,
-      "target_id": 8010710,
-      "source_word": "hide",
-      "target_word": "прятать(ся)",
-      "source_example": "Let's hide behind the tree.",
-      "target_example": "Давай спрячемся за деревом."
-    },
-    {
       "translation_id": 8010355,
       "source_id": 8010711,
       "target_id": 8010712,
@@ -3712,15 +3685,6 @@
       "target_example": "Будьте осторожны с этим ножом."
     },
     {
-      "translation_id": 8010413,
-      "source_id": 8010827,
-      "target_id": 8010828,
-      "source_word": "knock",
-      "target_word": "стучать",
-      "source_example": "Someone is knocking at the door.",
-      "target_example": "Кто-то стучит в дверь."
-    },
-    {
       "translation_id": 8010414,
       "source_id": 8010829,
       "target_id": 8010830,
@@ -3787,19 +3751,10 @@
       "translation_id": 8010421,
       "source_id": 8010843,
       "target_id": 8010844,
-      "source_word": "last (final)",
-      "target_word": "последний",
+      "source_word": "last",
+      "target_word": "последний, длиться",
       "source_example": "This is the last page of the book.",
       "target_example": "Это последняя страница книги."
-    },
-    {
-      "translation_id": 8010422,
-      "source_id": 8010845,
-      "target_id": 8010846,
-      "source_word": "last (taking time)",
-      "target_word": "длиться",
-      "source_example": "The movie lasts for two hours.",
-      "target_example": "Фильм длится два часа."
     },
     {
       "translation_id": 8010423,
@@ -3949,19 +3904,10 @@
       "translation_id": 8010439,
       "source_id": 8010879,
       "target_id": 8010880,
-      "source_word": "light (from the sun/a lamp)",
-      "target_word": "зажигать",
+      "source_word": "light",
+      "target_word": "свет, лёгкий, зажигать",
       "source_example": "Please light the candle.",
       "target_example": "Пожалуйста, зажги свечу."
-    },
-    {
-      "translation_id": 8010440,
-      "source_id": 8010881,
-      "target_id": 8010882,
-      "source_word": "light (not heavy)",
-      "target_word": "лёгкий",
-      "source_example": "This bag is very light.",
-      "target_example": "Эта сумка очень легкая."
     },
     {
       "translation_id": 8010441,
@@ -4277,15 +4223,6 @@
       "target_word": "мог бы (вероятность)",
       "source_example": "It might rain later.",
       "target_example": "Возможно, позже пойдет дождь."
-    },
-    {
-      "translation_id": 8010476,
-      "source_id": 8010953,
-      "target_id": 8010954,
-      "source_word": "mind",
-      "target_word": "возражать",
-      "source_example": "Do you mind if I open the window?",
-      "target_example": "Вы не возражаете, если я открою окно?"
     },
     {
       "translation_id": 8010477,
@@ -5264,7 +5201,7 @@
       "source_id": 8011171,
       "target_id": 8011172,
       "source_word": "publish",
-      "target_word": "публиковать|издавать",
+      "target_word": "издавать|публиковать",
       "source_example": "The book was published last year.",
       "target_example": "Книга была опубликована в прошлом году."
     },
@@ -5272,7 +5209,7 @@
       "translation_id": 8010586,
       "source_id": 8011173,
       "target_id": 8011174,
-      "source_word": "pull [v.]",
+      "source_word": "pull",
       "target_word": "тянуть|тащить",
       "source_example": "He pulled the heavy door open.",
       "target_example": "Он с усилием открыл тяжелую дверь."
@@ -5285,15 +5222,6 @@
       "target_word": "цель",
       "source_example": "What is the purpose of your visit?",
       "target_example": "Какова цель вашего визита?"
-    },
-    {
-      "translation_id": 8010588,
-      "source_id": 8011177,
-      "target_id": 8011178,
-      "source_word": "push [v.]",
-      "target_word": "толкать",
-      "source_example": "Don't push me.",
-      "target_example": "Не толкай меня."
     },
     {
       "translation_id": 8010589,
@@ -5575,15 +5503,6 @@
       "target_example": "Пожалуйста, снимите обувь перед входом."
     },
     {
-      "translation_id": 8010620,
-      "source_id": 8011241,
-      "target_id": 8011242,
-      "source_word": "repair",
-      "target_word": "ремонтировать|чинить",
-      "source_example": "I need to repair my car.",
-      "target_example": "Мне нужно отремонтировать машину."
-    },
-    {
       "translation_id": 8010621,
       "source_id": 8011243,
       "target_id": 8011244,
@@ -5668,19 +5587,10 @@
       "translation_id": 8010630,
       "source_id": 8011261,
       "target_id": 8011262,
-      "source_word": "rest (remaining part)",
-      "target_word": "остаток",
+      "source_word": "rest",
+      "target_word": "остаток, отдых",
       "source_example": "You can have the rest of the cake.",
       "target_example": "Ты можешь съесть остаток торта."
-    },
-    {
-      "translation_id": 8010631,
-      "source_id": 8011263,
-      "target_id": 8011264,
-      "source_word": "rest (sleep/relax)",
-      "target_word": "отдых",
-      "source_example": "I need to get some rest.",
-      "target_example": "Мне нужно отдохнуть."
     },
     {
       "translation_id": 8010632,
@@ -5719,22 +5629,13 @@
       "target_example": "Солнце взойдет в 6 утра."
     },
     {
-      "translation_id": 8010637,
-      "source_id": 8011275,
-      "target_id": 8011276,
-      "source_word": "rock (stone)",
-      "target_word": "камень|скала",
-      "source_example": "He threw a rock into the river.",
-      "target_example": "Он бросил камень в реку."
-    },
-    {
       "translation_id": 8010638,
       "source_id": 8011277,
       "target_id": 8011278,
-      "source_word": "rock (music)",
-      "target_word": "рок-музыка",
-      "source_example": "I like listening to rock music.",
-      "target_example": "Я люблю слушать рок-музыку."
+      "source_word": "rock",
+      "target_word": "рок-музыка, камень|скала",
+      "source_example": "He threw a rock into the river.",
+      "target_example": "Он бросил камень в реку."
     },
     {
       "translation_id": 8010639,
@@ -6068,15 +5969,6 @@
       "target_word": "несколько",
       "source_example": "I have several books on this topic.",
       "target_example": "У меня есть несколько книг на эту тему."
-    },
-    {
-      "translation_id": 8010676,
-      "source_id": 8011353,
-      "target_id": 8011354,
-      "source_word": "shake",
-      "target_word": "трясти",
-      "source_example": "Shake the bottle before use.",
-      "target_example": "Встряхните бутылку перед использованием."
     },
     {
       "translation_id": 8010677,
@@ -6556,15 +6448,6 @@
       "target_example": "Страна в чрезвычайном положении."
     },
     {
-      "translation_id": 8010730,
-      "source_id": 8011461,
-      "target_id": 8011462,
-      "source_word": "stay [n.]",
-      "target_word": "пребывание",
-      "source_example": "I enjoyed my stay at the hotel.",
-      "target_example": "Мне понравилось мое пребывание в отеле."
-    },
-    {
       "translation_id": 8010731,
       "source_id": 8011463,
       "target_id": 8011464,
@@ -6979,20 +6862,11 @@
       "target_example": "У меня была странная мысль."
     },
     {
-      "translation_id": 8010778,
-      "source_id": 8011557,
-      "target_id": 8011558,
-      "source_word": "throw",
-      "target_word": "бросать",
-      "source_example": "Don't throw stones.",
-      "target_example": "Не бросайте камни."
-    },
-    {
       "translation_id": 8010779,
       "source_id": 8011559,
       "target_id": 8011560,
-      "source_word": "tie [n.]",
-      "target_word": "галстук",
+      "source_word": "tie",
+      "target_word": "галстук, завязывать",
       "source_example": "He is wearing a tie.",
       "target_example": "На нем галстук."
     },
@@ -7022,15 +6896,6 @@
       "target_word": "верх|вершина",
       "source_example": "He is at the top of his class.",
       "target_example": "Он лучший в своем классе."
-    },
-    {
-      "translation_id": 8010783,
-      "source_id": 8011567,
-      "target_id": 8011568,
-      "source_word": "touch",
-      "target_word": "трогать|касаться",
-      "source_example": "Don't touch the painting.",
-      "target_example": "Не трогайте картину."
     },
     {
       "translation_id": 8010784,
@@ -7393,15 +7258,6 @@
       "target_example": "Белье в стиральной машине."
     },
     {
-      "translation_id": 8010824,
-      "source_id": 8011649,
-      "target_id": 8011650,
-      "source_word": "wave [n.]",
-      "target_word": "волна",
-      "source_example": "The waves are big today.",
-      "target_example": "Сегодня большие волны."
-    },
-    {
       "translation_id": 8010825,
       "source_id": 8011651,
       "target_id": 8011652,
@@ -7693,7 +7549,7 @@
       "translation_id": 8010857,
       "source_id": 8011715,
       "target_id": 8011716,
-      "source_word": "apologize [v.]",
+      "source_word": "apologize",
       "target_word": "извиняться",
       "source_example": "You should apologize for your rude behavior.",
       "target_example": "Тебе следует извиниться за свое грубое поведение."
@@ -7708,20 +7564,11 @@
       "target_example": "Поездка займет приблизительно три часа."
     },
     {
-      "translation_id": 8010859,
-      "source_id": 8011719,
-      "target_id": 8011720,
-      "source_word": "average [v.]",
-      "target_word": "составлять в среднем",
-      "source_example": "He averages 801 dollars a week.",
-      "target_example": "Он зарабатывает в среднем 801 долларов в неделю."
-    },
-    {
       "translation_id": 8010860,
       "source_id": 8011721,
       "target_id": 8011722,
-      "source_word": "award [v.]",
-      "target_word": "награждать",
+      "source_word": "award",
+      "target_word": "награждать, награда",
       "source_example": "The committee will award the prize to the best student.",
       "target_example": "Комитет наградит призом лучшего студента."
     },
@@ -7738,7 +7585,7 @@
       "translation_id": 8010862,
       "source_id": 8011725,
       "target_id": 8011726,
-      "source_word": "bake [v.]",
+      "source_word": "bake",
       "target_word": "печь|запекать",
       "source_example": "I love the smell of freshly baked bread.",
       "target_example": "Я обожаю запах свежеиспеченного хлеба."
@@ -7792,7 +7639,7 @@
       "translation_id": 8010868,
       "source_id": 8011737,
       "target_id": 8011738,
-      "source_word": "bite [v.]",
+      "source_word": "bite",
       "target_word": "кусать",
       "source_example": "Be careful, that dog might bite you.",
       "target_example": "Осторожно, эта собака может тебя укусить."
@@ -7810,7 +7657,7 @@
       "translation_id": 8010870,
       "source_id": 8011741,
       "target_id": 8011742,
-      "source_word": "bother [v.]",
+      "source_word": "bother",
       "target_word": "беспокоить|надоедать",
       "source_example": "I'm sorry to bother you, but could you help me?",
       "target_example": "Извините, что беспокою, не могли бы вы мне помочь?"
@@ -7846,7 +7693,7 @@
       "translation_id": 8010874,
       "source_id": 8011749,
       "target_id": 8011750,
-      "source_word": "breathe [v.]",
+      "source_word": "breathe",
       "target_word": "дышать",
       "source_example": "It's wonderful to breathe the fresh mountain air.",
       "target_example": "Замечательно дышать свежим горным воздухом."
@@ -7954,7 +7801,7 @@
       "translation_id": 8010886,
       "source_id": 8011773,
       "target_id": 8011774,
-      "source_word": "click [v.]",
+      "source_word": "click",
       "target_word": "щёлкать|нажимать",
       "source_example": "To open the file, just click on the icon.",
       "target_example": "Чтобы открыть файл, просто щелкните по иконке."
@@ -7963,7 +7810,7 @@
       "translation_id": 8010887,
       "source_id": 8011775,
       "target_id": 8011776,
-      "source_word": "climb [v.]",
+      "source_word": "climb",
       "target_word": "взбираться|подниматься",
       "source_example": "They plan to climb the mountain next summer.",
       "target_example": "Они планируют взобраться на гору следующим летом."
@@ -8008,7 +7855,7 @@
       "translation_id": 8010892,
       "source_id": 8011785,
       "target_id": 8011786,
-      "source_word": "combine [v.]",
+      "source_word": "combine",
       "target_word": "сочетать|объединять",
       "source_example": "The chef combines fresh ingredients to create unique dishes.",
       "target_example": "Шеф-повар сочетает свежие ингредиенты для создания уникальных блюд."
@@ -8035,7 +7882,7 @@
       "translation_id": 8010895,
       "source_id": 8011791,
       "target_id": 8011792,
-      "source_word": "cool [v.]",
+      "source_word": "cool",
       "target_word": "остужать",
       "source_example": "Let your soup cool before you eat it.",
       "target_example": "Дай супу остыть, прежде чем есть."
@@ -8077,20 +7924,11 @@
       "target_example": "Она открыла шторы, чтобы впустить утренний свет."
     },
     {
-      "translation_id": 8010900,
-      "source_id": 8011801,
-      "target_id": 8011802,
-      "source_word": "daily [adv.]",
-      "target_word": "ежедневно",
-      "source_example": "The museum is open daily from 10 to 6.",
-      "target_example": "Музей открыт ежедневно с 10 до 6."
-    },
-    {
       "translation_id": 8010901,
       "source_id": 8011803,
       "target_id": 8011804,
-      "source_word": "damage [n.]",
-      "target_word": "ущерб|повреждение",
+      "source_word": "damage",
+      "target_word": "ущерб|повреждение, повреждать",
       "source_example": "The earthquake caused serious damage to the city.",
       "target_example": "Землетрясение нанесло серьезный ущерб городу."
     },
@@ -8125,7 +7963,7 @@
       "translation_id": 8010905,
       "source_id": 8011811,
       "target_id": 8011812,
-      "source_word": "divide [v.]",
+      "source_word": "divide",
       "target_word": "делить|разделять",
       "source_example": "The teacher divided the class into four groups.",
       "target_example": "Учитель разделил класс на четыре группы."
@@ -8134,7 +7972,7 @@
       "translation_id": 8010906,
       "source_id": 8011813,
       "target_id": 8011814,
-      "source_word": "doubt [n.]",
+      "source_word": "doubt",
       "target_word": "сомнение",
       "source_example": "There is some doubt about the accuracy of the report.",
       "target_example": "Есть некоторые сомнения в точности отчета."
@@ -8143,8 +7981,8 @@
       "translation_id": 8010907,
       "source_id": 8011815,
       "target_id": 8011816,
-      "source_word": "drop [v.]",
-      "target_word": "ронять|упускать",
+      "source_word": "drop",
+      "target_word": "ронять",
       "source_example": "She accidentally dropped her phone on the floor.",
       "target_example": "Она случайно уронила телефон на пол."
     },
@@ -8203,19 +8041,10 @@
       "target_example": "В случае чрезвычайной ситуации, пожалуйста, позвоните по этому номеру."
     },
     {
-      "translation_id": 8010914,
-      "source_id": 8011829,
-      "target_id": 8011830,
-      "source_word": "empty [v.]",
-      "target_word": "опустошать",
-      "source_example": "He emptied the box.",
-      "target_example": "Он опустошил коробку."
-    },
-    {
       "translation_id": 8010915,
       "source_id": 8011831,
       "target_id": 8011832,
-      "source_word": "encourage [v.]",
+      "source_word": "encourage",
       "target_word": "поощрять|воодушевлять",
       "source_example": "His parents always encourage him to pursue his dreams.",
       "target_example": "Его родители всегда поощряют его следовать за своей мечтой."
@@ -8233,7 +8062,7 @@
       "translation_id": 8010917,
       "source_id": 8011835,
       "target_id": 8011836,
-      "source_word": "escape [v.]",
+      "source_word": "escape",
       "target_word": "сбегать|избегать",
       "source_example": "The prisoners managed to escape from the high-security facility.",
       "target_example": "Заключенным удалось сбежать из учреждения строгого режима."
@@ -8251,7 +8080,7 @@
       "translation_id": 8010919,
       "source_id": 8011839,
       "target_id": 8011840,
-      "source_word": "examine [v.]",
+      "source_word": "examine",
       "target_word": "осматривать|изучать",
       "source_example": "The doctor will examine the patient to determine the cause of the illness.",
       "target_example": "Врач осмотрит пациента, чтобы определить причину заболевания."
@@ -8260,7 +8089,7 @@
       "translation_id": 8010920,
       "source_id": 8011841,
       "target_id": 8011842,
-      "source_word": "exchange [v.]",
+      "source_word": "exchange",
       "target_word": "обменивать(ся)",
       "source_example": "They agreed to exchange gifts during the holidays.",
       "target_example": "Они договорились обменяться подарками на праздники."
@@ -8278,7 +8107,7 @@
       "translation_id": 8010922,
       "source_id": 8011845,
       "target_id": 8011846,
-      "source_word": "explore [v.]",
+      "source_word": "explore",
       "target_word": "исследовать",
       "source_example": "The team of scientists will explore the deep sea trench.",
       "target_example": "Команда ученых будет исследовать глубоководный желоб."
@@ -8296,7 +8125,7 @@
       "translation_id": 8010924,
       "source_id": 8011849,
       "target_id": 8011850,
-      "source_word": "face [v.]",
+      "source_word": "face",
       "target_word": "сталкиваться|встречаться лицом к лицу",
       "source_example": "You must face the consequences of your actions.",
       "target_example": "Ты должен столкнуться с последствиями своих действий."
@@ -8323,7 +8152,7 @@
       "translation_id": 8010927,
       "source_id": 8011855,
       "target_id": 8011856,
-      "source_word": "fasten [v.]",
+      "source_word": "fasten",
       "target_word": "застёгивать|пристёгивать",
       "source_example": "Please fasten your seatbelts before takeoff.",
       "target_example": "Пожалуйста, пристегните ремни безопасности перед взлетом."
@@ -8359,7 +8188,7 @@
       "translation_id": 8010931,
       "source_id": 8011863,
       "target_id": 8011864,
-      "source_word": "fold [v.]",
+      "source_word": "fold",
       "target_word": "складывать|сгибать",
       "source_example": "He folded the letter and put it in his pocket.",
       "target_example": "Он сложил письмо и положил его в карман."
@@ -8386,7 +8215,7 @@
       "translation_id": 8010934,
       "source_id": 8011869,
       "target_id": 8011870,
-      "source_word": "freeze [v.]",
+      "source_word": "freeze",
       "target_word": "замерзать|замораживать",
       "source_example": "You can freeze the leftover soup for later.",
       "target_example": "Остатки супа можно заморозить на потом."
@@ -8413,7 +8242,7 @@
       "translation_id": 8010937,
       "source_id": 8011875,
       "target_id": 8011876,
-      "source_word": "frighten [v.]",
+      "source_word": "frighten",
       "target_word": "пугать",
       "source_example": "The sudden noise was enough to frighten the birds away.",
       "target_example": "Внезапного шума было достаточно, чтобы отпугнуть птиц."
@@ -8449,7 +8278,7 @@
       "translation_id": 8010941,
       "source_id": 8011883,
       "target_id": 8011884,
-      "source_word": "fry [v.]",
+      "source_word": "fry",
       "target_word": "жарить",
       "source_example": "It's healthier to grill food than to fry it.",
       "target_example": "Полезнее готовить еду на гриле, чем жарить ее."
@@ -8476,7 +8305,7 @@
       "translation_id": 8010944,
       "source_id": 8011889,
       "target_id": 8011890,
-      "source_word": "gather [v.]",
+      "source_word": "gather",
       "target_word": "собирать(ся)",
       "source_example": "A crowd began to gather to see what had happened.",
       "target_example": "Толпа начала собираться, чтобы посмотреть, что произошло."
@@ -8557,7 +8386,7 @@
       "translation_id": 8010953,
       "source_id": 8011907,
       "target_id": 8011908,
-      "source_word": "hang [v.]",
+      "source_word": "hang",
       "target_word": "вешать|висеть",
       "source_example": "Could you hang this picture on the wall for me?",
       "target_example": "Не мог бы ты повесить эту картину на стену для меня?"
@@ -8584,7 +8413,7 @@
       "translation_id": 8010956,
       "source_id": 8011913,
       "target_id": 8011914,
-      "source_word": "hate [v.]",
+      "source_word": "hate",
       "target_word": "ненавидеть",
       "source_example": "She began to hate the loud music from next door.",
       "target_example": "Она начала ненавидеть громкую музыку из соседней квартиры."
@@ -8602,8 +8431,8 @@
       "translation_id": 8010958,
       "source_id": 8011917,
       "target_id": 8011918,
-      "source_word": "hide [v.]",
-      "target_word": "прятать(ся)",
+      "source_word": "hide",
+      "target_word": "прятать [ся]",
       "source_example": "The cat likes to hide under the bed.",
       "target_example": "Кошка любит прятаться под кроватью."
     },
@@ -8647,7 +8476,7 @@
       "translation_id": 8010963,
       "source_id": 8011927,
       "target_id": 8011928,
-      "source_word": "hurry [v.]",
+      "source_word": "hurry",
       "target_word": "торопиться|спешить",
       "source_example": "We need to hurry if we want to catch the train.",
       "target_example": "Нам нужно поторопиться, если мы хотим успеть на поезд."
@@ -8656,7 +8485,7 @@
       "translation_id": 8010964,
       "source_id": 8011929,
       "target_id": 8011930,
-      "source_word": "ignore [v.]",
+      "source_word": "ignore",
       "target_word": "игнорировать",
       "source_example": "She chose to ignore his rude comments.",
       "target_example": "Она предпочла проигнорировать его грубые комментарии."
@@ -8692,7 +8521,7 @@
       "translation_id": 8010969,
       "source_id": 8011939,
       "target_id": 8011940,
-      "source_word": "iron [n.]",
+      "source_word": "iron",
       "target_word": "железо|утюг",
       "source_example": "She used an iron to press her clothes.",
       "target_example": "Она использовала утюг, чтобы погладить свою одежду."
@@ -8719,7 +8548,7 @@
       "translation_id": 8010972,
       "source_id": 8011945,
       "target_id": 8011946,
-      "source_word": "kick [v.]",
+      "source_word": "kick",
       "target_word": "пинать|ударять ногой",
       "source_example": "He kicked the ball into the back of the net.",
       "target_example": "Он ударил мяч в сетку ворот."
@@ -8728,7 +8557,7 @@
       "translation_id": 8010973,
       "source_id": 8011947,
       "target_id": 8011948,
-      "source_word": "kiss [v.]",
+      "source_word": "kiss",
       "target_word": "целовать",
       "source_example": "She leaned over to kiss the baby's forehead.",
       "target_example": "Она наклонилась, чтобы поцеловать ребенка в лоб."
@@ -8737,7 +8566,7 @@
       "translation_id": 8010974,
       "source_id": 8011949,
       "target_id": 8011950,
-      "source_word": "knock [v.]",
+      "source_word": "knock",
       "target_word": "стучать",
       "source_example": "Please knock before you enter the room.",
       "target_example": "Пожалуйста, постучите, прежде чем войти в комнату."
@@ -8773,7 +8602,7 @@
       "translation_id": 8010978,
       "source_id": 8011957,
       "target_id": 8011958,
-      "source_word": "lie [v.]",
+      "source_word": "lie",
       "target_word": "лежать",
       "source_example": "I just want to lie on the sofa and watch TV.",
       "target_example": "Я просто хочу лежать на диване и смотреть телевизор."
@@ -8836,7 +8665,7 @@
       "translation_id": 8010985,
       "source_id": 8011971,
       "target_id": 8011972,
-      "source_word": "mix [v.]",
+      "source_word": "mix",
       "target_word": "смешивать",
       "source_example": "First, mix the dry ingredients together in a large bowl.",
       "target_example": "Сначала смешайте сухие ингредиенты в большой миске."
@@ -9034,7 +8863,7 @@
       "translation_id": 8011007,
       "source_id": 8012015,
       "target_id": 8012016,
-      "source_word": "pour [v.]",
+      "source_word": "pour",
       "target_word": "лить|наливать",
       "source_example": "Could you pour some water into the glass?",
       "target_example": "Не мог бы ты налить немного воды в стакан?"
@@ -9070,26 +8899,17 @@
       "translation_id": 8011011,
       "source_id": 8012023,
       "target_id": 8012024,
-      "source_word": "prove [v.]",
+      "source_word": "prove",
       "target_word": "доказывать",
       "source_example": "The lawyer was unable to prove his client's innocence.",
       "target_example": "Адвокат не смог доказать невиновность своего клиента."
     },
     {
-      "translation_id": 8011012,
-      "source_id": 8012025,
-      "target_id": 8012026,
-      "source_word": "pull",
-      "target_word": "усилие|рывок",
-      "source_example": "Give the rope a strong pull.",
-      "target_example": "Сильно потяни за веревку (сделай рывок)."
-    },
-    {
       "translation_id": 8011013,
       "source_id": 8012027,
       "target_id": 8012028,
-      "source_word": "push [n.]",
-      "target_word": "толчок",
+      "source_word": "push",
+      "target_word": "толчок, толкать",
       "source_example": "The door opened with a gentle push.",
       "target_example": "Дверь открылась от легкого толчка."
     },
@@ -9133,7 +8953,7 @@
       "translation_id": 8011018,
       "source_id": 8012037,
       "target_id": 8012038,
-      "source_word": "remind [v.]",
+      "source_word": "remind",
       "target_word": "напоминать",
       "source_example": "Could you remind me to buy milk?",
       "target_example": "Не мог бы ты напомнить мне купить молоко?"
@@ -9142,7 +8962,7 @@
       "translation_id": 8011019,
       "source_id": 8012039,
       "target_id": 8012040,
-      "source_word": "rent [v.]",
+      "source_word": "rent",
       "target_word": "арендовать|снимать",
       "source_example": "They decided to rent an apartment in the city center.",
       "target_example": "Они решили снять квартиру в центре города."
@@ -9151,7 +8971,7 @@
       "translation_id": 8011020,
       "source_id": 8012041,
       "target_id": 8012042,
-      "source_word": "repair [v.]",
+      "source_word": "repair",
       "target_word": "чинить|ремонтировать",
       "source_example": "He needs to repair the broken fence.",
       "target_example": "Ему нужно починить сломанный забор."
@@ -9169,7 +8989,7 @@
       "translation_id": 8011022,
       "source_id": 8012045,
       "target_id": 8012046,
-      "source_word": "roll [v.]",
+      "source_word": "roll",
       "target_word": "катить(ся)",
       "source_example": "The ball rolled down the hill.",
       "target_example": "Мяч скатился с холма."
@@ -9241,7 +9061,7 @@
       "translation_id": 8011030,
       "source_id": 8012061,
       "target_id": 8012062,
-      "source_word": "shake [v.]",
+      "source_word": "shake",
       "target_word": "трясти|встряхивать",
       "source_example": "Shake the bottle well before opening it.",
       "target_example": "Хорошо встряхните бутылку перед открытием."
@@ -9268,7 +9088,7 @@
       "translation_id": 8011033,
       "source_id": 8012067,
       "target_id": 8012068,
-      "source_word": "shine [v.]",
+      "source_word": "shine",
       "target_word": "светить|сиять",
       "source_example": "The sun was shining brightly in the clear blue sky.",
       "target_example": "Солнце ярко сияло на чистом голубом небе."
@@ -9277,7 +9097,7 @@
       "translation_id": 8011034,
       "source_id": 8012069,
       "target_id": 8012070,
-      "source_word": "shoot [v.]",
+      "source_word": "shoot",
       "target_word": "стрелять",
       "source_example": "The photographer was there to shoot the wedding.",
       "target_example": "Фотограф был там, чтобы снимать свадьбу."
@@ -9385,7 +9205,7 @@
       "translation_id": 8011046,
       "source_id": 8012093,
       "target_id": 8012094,
-      "source_word": "spread [v.]",
+      "source_word": "spread",
       "target_word": "распространять(ся)|намазывать",
       "source_example": "The news of his success spread quickly.",
       "target_example": "Новость о его успехе быстро распространилась."
@@ -9403,7 +9223,7 @@
       "translation_id": 8011048,
       "source_id": 8012097,
       "target_id": 8012098,
-      "source_word": "stick [v.]",
+      "source_word": "stick",
       "target_word": "приклеивать|держаться",
       "source_example": "Use glue to stick the two pieces of paper together.",
       "target_example": "Используйте клей, чтобы склеить два листа бумаги."
@@ -9436,15 +9256,6 @@
       "target_example": "Просто положи свои вещи вон там, в углу."
     },
     {
-      "translation_id": 8011052,
-      "source_id": 8012105,
-      "target_id": 8012106,
-      "source_word": "successful (description of process)",
-      "target_word": "успешный (описание процесса)",
-      "source_example": "The project was successful beyond all expectations.",
-      "target_example": "Проект был успешным сверх всяких ожиданий."
-    },
-    {
       "translation_id": 8011053,
       "source_id": 8012107,
       "target_id": 8012108,
@@ -9466,7 +9277,7 @@
       "translation_id": 8011055,
       "source_id": 8012111,
       "target_id": 8012112,
-      "source_word": "suffer [v.]",
+      "source_word": "suffer",
       "target_word": "страдать",
       "source_example": "Many people in the world suffer from hunger.",
       "target_example": "Многие люди в мире страдают от голода."
@@ -9493,7 +9304,7 @@
       "translation_id": 8011058,
       "source_id": 8012117,
       "target_id": 8012118,
-      "source_word": "switch [n.]",
+      "source_word": "switch",
       "target_word": "переключатель",
       "source_example": "He flicked a switch and the lights came on.",
       "target_example": "Он щелкнул выключателем, и зажегся свет."
@@ -9529,19 +9340,10 @@
       "translation_id": 8011062,
       "source_id": 8012125,
       "target_id": 8012126,
-      "source_word": "throw [v.]",
+      "source_word": "throw",
       "target_word": "бросать|кидать",
       "source_example": "She threw the ball to the dog.",
       "target_example": "Она бросила мяч собаке."
-    },
-    {
-      "translation_id": 8011063,
-      "source_id": 8012127,
-      "target_id": 8012128,
-      "source_word": "tie",
-      "target_word": "галстук",
-      "source_example": "He was wearing a shirt and a conservative tie.",
-      "target_example": "На нем была рубашка и консервативный галстук."
     },
     {
       "translation_id": 8011064,
@@ -9601,7 +9403,7 @@
       "translation_id": 8011070,
       "source_id": 8012141,
       "target_id": 8012142,
-      "source_word": "touch [v.]",
+      "source_word": "touch",
       "target_word": "трогать|касаться",
       "source_example": "Please do not touch the exhibits in the museum.",
       "target_example": "Пожалуйста, не трогайте экспонаты в музее."
@@ -9610,7 +9412,7 @@
       "translation_id": 8011072,
       "source_id": 8012145,
       "target_id": 8012146,
-      "source_word": "translate [v.]",
+      "source_word": "translate",
       "target_word": "переводить",
       "source_example": "She was hired to translate the document from French to English.",
       "target_example": "Ее наняли для перевода документа с французского на английский."
@@ -9619,7 +9421,7 @@
       "translation_id": 8011073,
       "source_id": 8012147,
       "target_id": 8012148,
-      "source_word": "treat [v.]",
+      "source_word": "treat",
       "target_word": "обращаться|относиться",
       "source_example": "It is important to treat everyone with kindness and respect.",
       "target_example": "Важно относиться ко всем с добротой и уважением."
@@ -9709,7 +9511,7 @@
       "translation_id": 8011083,
       "source_id": 8012167,
       "target_id": 8012168,
-      "source_word": "warn [v.]",
+      "source_word": "warn",
       "target_word": "предупреждать",
       "source_example": "The sign was intended to warn drivers about the danger.",
       "target_example": "Знак был предназначен для предупреждения водителей об опасности."
@@ -9727,8 +9529,8 @@
       "translation_id": 8011085,
       "source_id": 8012171,
       "target_id": 8012172,
-      "source_word": "wave [v.]",
-      "target_word": "махать",
+      "source_word": "wave",
+      "target_word": "волна, махать",
       "source_example": "He waved to us from the car.",
       "target_example": "Он помахал нам из машины."
     },
@@ -9745,7 +9547,7 @@
       "translation_id": 8011087,
       "source_id": 8012175,
       "target_id": 8012176,
-      "source_word": "weigh [v.]",
+      "source_word": "weigh",
       "target_word": "весить|взвешивать",
       "source_example": "She weighs the ingredients carefully before cooking.",
       "target_example": "Она тщательно взвешивает ингредиенты перед приготовлением."
@@ -9772,7 +9574,7 @@
       "translation_id": 8011090,
       "source_id": 8012181,
       "target_id": 8012182,
-      "source_word": "doubt [v.]",
+      "source_word": "doubt",
       "target_word": "сомневаться",
       "source_example": "I doubt that he will arrive on time.",
       "target_example": "Я сомневаюсь, что он прибудет вовремя."
@@ -9781,7 +9583,7 @@
       "translation_id": 8011091,
       "source_id": 8012183,
       "target_id": 8012184,
-      "source_word": "lie [n.]",
+      "source_word": "lie",
       "target_word": "ложь|неправда",
       "source_example": "It was a lie, and everyone knew it.",
       "target_example": "Это была ложь, и все это знали."
@@ -9790,8 +9592,8 @@
       "translation_id": 8011092,
       "source_id": 8012185,
       "target_id": 8012186,
-      "source_word": "mind [n.]",
-      "target_word": "разум|ум",
+      "source_word": "mind",
+      "target_word": "разум|ум, возражать",
       "source_example": "She has a very sharp and analytical mind.",
       "target_example": "У нее очень острый и аналитический ум."
     },
@@ -9799,7 +9601,7 @@
       "translation_id": 8011093,
       "source_id": 8012187,
       "target_id": 8012188,
-      "source_word": "switch [v.]",
+      "source_word": "switch",
       "target_word": "переключать|менять",
       "source_example": "Can you switch places with me?",
       "target_example": "Можешь поменяться со мной местами?"
@@ -9808,25 +9610,16 @@
       "translation_id": 8011094,
       "source_id": 8012189,
       "target_id": 8012190,
-      "source_word": "face [n.]",
+      "source_word": "face",
       "target_word": "лицо",
       "source_example": "He had a sad expression on his face.",
       "target_example": "У него было грустное выражение лица."
     },
     {
-      "translation_id": 8011095,
-      "source_id": 8012191,
-      "target_id": 8012192,
-      "source_word": "damage [v.]",
-      "target_word": "повреждать",
-      "source_example": "The fire damaged the building.",
-      "target_example": "Огонь повредил здание."
-    },
-    {
       "translation_id": 8011096,
       "source_id": 8012193,
       "target_id": 8012194,
-      "source_word": "iron [v.]",
+      "source_word": "iron",
       "target_word": "гладить",
       "source_example": "I need to iron this shirt.",
       "target_example": "Мне нужно погладить эту рубашку."
@@ -9835,25 +9628,16 @@
       "translation_id": 8011097,
       "source_id": 8012195,
       "target_id": 8012196,
-      "source_word": "stay [v.]",
-      "target_word": "оставаться",
+      "source_word": "stay",
+      "target_word": "оставаться, пребывание",
       "source_example": "Please stay in your seat.",
       "target_example": "Пожалуйста, оставайтесь на своем месте."
-    },
-    {
-      "translation_id": 8011098,
-      "source_id": 8012197,
-      "target_id": 8012198,
-      "source_word": "tie [v.]",
-      "target_word": "завязывать",
-      "source_example": "Can you teach me how to tie my shoes?",
-      "target_example": "Можешь научить меня завязывать шнурки?"
     },
     {
       "translation_id": 8011099,
       "source_id": 8012199,
       "target_id": 8012200,
-      "source_word": "lie (tell an untruth) [v.]",
+      "source_word": "lie (tell an untruth)",
       "target_word": "лгать",
       "source_example": "He knew it was wrong to lie to his parents.",
       "target_example": "Он знал, что лгать родителям — это неправильно."

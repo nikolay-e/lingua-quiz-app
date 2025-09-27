@@ -39,33 +39,15 @@ class WordNormalizer(ABC):
             Set of normalized word variants
         """
 
-    def normalize_for_validation(self, word: str) -> str:
-        """
-        Normalize a word for duplicate validation purposes.
-
-        This is more conservative than normalize() to preserve semantic distinctions
-        that prevent false positive duplicates.
-
-        Args:
-            word: Raw word to normalize
-
-        Returns:
-            Normalized word preserving important distinctions
-        """
-        # Default implementation - remove only basic formatting
-        word = word.strip()
-        word = re.sub(r"\s+", " ", word)
-        return word.lower()
-
     def _remove_accents(self, text: str) -> str:
         """Remove accents and diacritical marks from text."""
         nfd = unicodedata.normalize("NFD", text)
         return "".join(c for c in nfd if unicodedata.category(c) != "Mn")
 
     def _clean_word(self, word: str) -> str:
-        """Basic word cleaning - remove parenthetical content and extra spaces."""
-        # Remove parenthetical content like "(noun)", "(informal)", etc.
-        word = re.sub(r"\s*\([^)]*\)", "", word)
+        """Basic word cleaning - remove bracketed content and extra spaces."""
+        # Remove content in square brackets like [n.] or [adj.|n.]
+        word = re.sub(r"\s*\[.*?\]", "", word)
         return word.strip()
 
 
@@ -170,23 +152,8 @@ class GermanNormalizer(WordNormalizer):
         # Remove hyphens from compound words
         word = word.replace("-", "")
 
-        # Handle basic separable verb prefix patterns (e.g., "rufe an" -> "anrufen")
-        separable_prefixes = {
-            "an",
-            "auf",
-            "aus",
-            "ein",
-            "mit",
-            "vor",
-            "zu",
-            "ab",
-            "bei",
-            "nach",
-        }
-        if " " in word:
-            parts = word.split(" ", 1)
-            if len(parts) == 2 and parts[1] in separable_prefixes:
-                word = parts[1] + parts[0]  # Combine prefix with verb
+        # Note: Separable verb normalization is complex and error-prone.
+        # Let spaCy lemmatization handle this instead of custom rules.
 
         # Convert to lowercase but preserve umlauts
         word = word.lower().strip()
@@ -227,32 +194,6 @@ class GermanNormalizer(WordNormalizer):
 
         return variants
 
-    def normalize_for_validation(self, word: str) -> str:
-        """
-        German validation normalization that preserves case-sensitive pronouns.
-
-        Preserves case distinctions for:
-        - Sie (formal you) vs sie (they/she)
-        - Ihr (formal your) vs ihr (their/her)
-
-        Args:
-            word: German word to normalize
-
-        Returns:
-            Normalized word preserving case-sensitive pronouns
-        """
-        word = self._clean_word(word)
-
-        # Preserve case for pronouns that change meaning with capitalization
-        case_sensitive_pronouns = {"Sie", "sie", "Ihr", "ihr"}
-        if word in case_sensitive_pronouns:
-            return word  # Keep original case
-
-        # For other words, apply basic normalization
-        word = word.strip()
-        word = re.sub(r"\s+", " ", word)
-        return word.lower()
-
 
 class SpanishNormalizer(WordNormalizer):
     """Word normalizer for Spanish text."""
@@ -275,31 +216,9 @@ class SpanishNormalizer(WordNormalizer):
         word = self._clean_word(word)
         original = word.lower().strip()
 
-        # Enhanced normalization: handle common diminutive suffixes
-        # This helps match "gatito" to "gato", "casita" to "casa", etc.
-        diminutive_patterns = [
-            ("ito", ""),
-            ("ita", ""),
-            ("itos", "s"),
-            ("itas", "s"),
-            ("ico", ""),
-            ("ica", ""),
-            ("icos", "s"),
-            ("icas", "s"),
-            ("illo", ""),
-            ("illa", ""),
-            ("illos", "s"),
-            ("illas", "s"),
-        ]
-
-        # Only apply diminutive normalization if the word is long enough
-        if len(original) > 5:
-            for suffix, replacement in diminutive_patterns:
-                if original.endswith(suffix):
-                    base = original[: -len(suffix)] + replacement
-                    # Ensure the base form makes sense (has vowels)
-                    if any(c in base for c in "aeiouáéíóúü"):
-                        return base
+        # Note: Diminutive normalization is complex and error-prone.
+        # Spanish diminutives have complex rules (gatito→gato needs 'o', casita→casa needs 'a')
+        # and risk creating invalid bases. Let spaCy lemmatization handle this instead.
 
         return original
 

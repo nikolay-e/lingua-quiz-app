@@ -39,9 +39,7 @@ class TTSService:
 
                 credentials_json = base64.b64decode(credentials_b64).decode("utf-8")
                 credentials_info = json.loads(credentials_json)
-                credentials = service_account.Credentials.from_service_account_info(
-                    credentials_info
-                )
+                credentials = service_account.Credentials.from_service_account_info(credentials_info)
                 self.client = texttospeech.TextToSpeechClient(credentials=credentials)
                 logger.info("TTS client initialized with service account credentials")
             else:
@@ -60,9 +58,7 @@ class TTSService:
         """Generate MD5 hash for cache key"""
         return hashlib.md5(f"{text}_{language}".encode("utf-8")).hexdigest()
 
-    def _get_from_cache_validated(
-        self, cache_key: str, text: str
-    ) -> tuple[Optional[bytes], bool]:
+    def _get_from_cache_validated(self, cache_key: str, text: str) -> tuple[Optional[bytes], bool]:
         """Retrieve audio data from database cache with text validation"""
         conn = None
         try:
@@ -77,9 +73,7 @@ class TTSService:
                 if result:
                     conn.commit()
                     is_valid = result["is_valid_text"]
-                    audio_data = (
-                        bytes(result["audio_data"]) if result["audio_data"] else None
-                    )
+                    audio_data = bytes(result["audio_data"]) if result["audio_data"] else None
 
                     if is_valid and audio_data:
                         logger.debug(f"TTS cache hit for key: {cache_key}")
@@ -103,9 +97,7 @@ class TTSService:
                 self.db_pool.putconn(conn)
         return None, False
 
-    def _save_to_cache_validated(
-        self, cache_key: str, audio_content: bytes, text: str, language: str
-    ) -> bool:
+    def _save_to_cache_validated(self, cache_key: str, audio_content: bytes, text: str, language: str) -> bool:
         """Save audio data to database cache with validation"""
         conn = None
         try:
@@ -119,14 +111,10 @@ class TTSService:
                 conn.commit()
 
                 if result:
-                    logger.debug(
-                        f"TTS cached: {language} - {text[:30]}... (size: {len(audio_content)} bytes)"
-                    )
+                    logger.debug(f"TTS cached: {language} - {text[:30]}... (size: {len(audio_content)} bytes)")
                     return True
                 else:
-                    logger.warning(
-                        f"TTS cache rejected - text not in database: {text[:30]}..."
-                    )
+                    logger.warning(f"TTS cache rejected - text not in database: {text[:30]}...")
                     return False
 
         except Exception as e:
@@ -180,9 +168,7 @@ class TTSService:
 
         # Synthesize new audio (only for valid database text)
         try:
-            logger.info(
-                f"Synthesizing TTS for database text: {language} - {text[:30]}..."
-            )
+            logger.info(f"Synthesizing TTS for database text: {language} - {text[:30]}...")
 
             response = self.client.synthesize_speech(
                 input=texttospeech.SynthesisInput(text=text),
@@ -193,18 +179,14 @@ class TTSService:
                 audio_config=texttospeech.AudioConfig(
                     audio_encoding=texttospeech.AudioEncoding.MP3,
                     speaking_rate=0.9,  # Slightly slower for language learning
-                    effects_profile_id=[
-                        "telephony-class-application"
-                    ],  # Better quality
+                    effects_profile_id=["telephony-class-application"],  # Better quality
                 ),
             )
 
             audio_content = response.audio_content
 
             # Save to cache (will double-check validation)
-            saved = self._save_to_cache_validated(
-                cache_key, audio_content, text, language
-            )
+            saved = self._save_to_cache_validated(cache_key, audio_content, text, language)
             if not saved:
                 logger.error("Failed to cache TTS - validation failed during save")
 
