@@ -1,9 +1,9 @@
-fastapi==0.116.1
-uvicorn[standard]==0.35.0
+fastapi==0.118.0
+uvicorn[standard]==0.37.0
 python-multipart==0.0.20
 slowapi==0.1.9
 psycopg2-binary==2.9.10
-bcrypt==4.3.0
+bcrypt==5.0.0
 pyjwt==2.10.1
-requests==2.32.4
-google-cloud-texttospeech==2.27.0
+requests==2.32.5
+google-cloud-texttospeech==2.31.0
