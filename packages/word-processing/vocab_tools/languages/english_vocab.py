@@ -26,9 +26,7 @@ class EnglishVocabularyAnalyzer(VocabularyAnalyzer):
         if not silent:
             print("🏴󠁧󠁢󠁥󠁮󠁧󠁿 Initializing English vocabulary analyzer...")
 
-    def analyze_word_linguistics(
-        self, word: str, existing_words: Set[str], rank: int = None
-    ) -> Tuple[str, str, str]:
+    def analyze_word_linguistics(self, word: str, existing_words: Set[str], rank: int = None) -> Tuple[str, str, str]:
         """
         Analyze English word using spaCy NLP for comprehensive classification.
 
@@ -111,9 +109,7 @@ class EnglishVocabularyAnalyzer(VocabularyAnalyzer):
 
         return "other"
 
-    def _generate_analysis_reason(
-        self, word: str, pos_tag: str, morphology: str, rank: int = None
-    ) -> str:
+    def _generate_analysis_reason(self, word: str, pos_tag: str, morphology: str, rank: int = None) -> str:
         """
         Generate human-readable analysis reason with frequency rank.
 

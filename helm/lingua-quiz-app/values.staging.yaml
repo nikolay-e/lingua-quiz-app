@@ -56,7 +56,7 @@ ingress:
     host: # Same host as frontend - API will be served from /api path
   tls:
     enabled: true
-    secretName: lingua-quiz-staging-tls
+    secretName: lingua-quiz-staging-tls  # pragma: allowlist secret
 
 migrations:
   enabled: true

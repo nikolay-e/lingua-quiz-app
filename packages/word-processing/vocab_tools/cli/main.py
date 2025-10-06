@@ -71,40 +71,28 @@ Requirements:
         subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
         # Analyze command
-        analyze_parser = subparsers.add_parser(
-            "analyze", help="Analyze vocabulary gaps for specified languages"
-        )
+        analyze_parser = subparsers.add_parser("analyze", help="Analyze vocabulary gaps for specified languages")
         self._setup_analyze_parser(analyze_parser)
 
         # Validate command
-        validate_parser = subparsers.add_parser(
-            "validate", help="Validate migration files for data integrity"
-        )
+        validate_parser = subparsers.add_parser("validate", help="Validate migration files for data integrity")
         self._setup_validate_parser(validate_parser)
 
         # Full analysis command (analysis + validation)
-        full_parser = subparsers.add_parser(
-            "full-analysis", help="Run complete analysis with validation"
-        )
+        full_parser = subparsers.add_parser("full-analysis", help="Run complete analysis with validation")
         self._setup_full_analysis_parser(full_parser)
 
         # Results history command
-        history_parser = subparsers.add_parser(
-            "history", help="View analysis results history"
-        )
+        history_parser = subparsers.add_parser("history", help="View analysis results history")
         self._setup_history_parser(history_parser)
 
         # Results summary command
-        summary_parser = subparsers.add_parser(
-            "summary", help="Generate summary report of all analyses"
-        )
+        summary_parser = subparsers.add_parser("summary", help="Generate summary report of all analyses")
         self._setup_summary_parser(summary_parser)
 
         return parser
 
-    def _add_common_arguments(
-        self, parser: argparse.ArgumentParser, include_output: bool = True
-    ):
+    def _add_common_arguments(self, parser: argparse.ArgumentParser, include_output: bool = True):
         """Add common arguments to a subparser."""
         parser.add_argument(
             "--migrations-dir",
@@ -155,19 +143,13 @@ Requirements:
             action="store_true",
             help="Hide detailed category breakdown",
         )
-        parser.add_argument(
-            "--save-results", type=str, help="Save results to specified file"
-        )
+        parser.add_argument("--save-results", type=str, help="Save results to specified file")
 
     def _setup_validate_parser(self, parser: argparse.ArgumentParser):
         """Set up the validate command parser."""
         self._add_common_arguments(parser)
-        parser.add_argument(
-            "--brief", action="store_true", help="Show brief report (less detailed)"
-        )
-        parser.add_argument(
-            "--errors-only", action="store_true", help="Only show errors, not warnings"
-        )
+        parser.add_argument("--brief", action="store_true", help="Show brief report (less detailed)")
+        parser.add_argument("--errors-only", action="store_true", help="Only show errors, not warnings")
 
     def _setup_full_analysis_parser(self, parser: argparse.ArgumentParser):
         """Set up the full analysis command parser."""
@@ -252,9 +234,7 @@ Requirements:
 
                 # Print results if text output
                 if args.output == "text":
-                    analyzer.print_analysis_results(
-                        result, show_details=not args.hide_details
-                    )
+                    analyzer.print_analysis_results(result, show_details=not args.hide_details)
 
             except Exception as e:
                 if args.output == "text":
@@ -312,9 +292,7 @@ Requirements:
             "errors_only": args.errors_only,
         }
 
-        self.results_tracker.store_analysis_run(
-            run_type="validation", config=config, validation_result=result
-        )
+        self.results_tracker.store_analysis_run(run_type="validation", config=config, validation_result=result)
 
         return result.to_dict()
 
@@ -341,9 +319,7 @@ Requirements:
             results["validation"] = validation_result.to_dict()
 
             if not validation_result.is_valid and args.output == "text":
-                print(
-                    "\n⚠️  Migration validation found errors, but continuing with analysis..."
-                )
+                print("\n⚠️  Migration validation found errors, but continuing with analysis...")
 
             # Store validation results
             config = {
@@ -422,9 +398,7 @@ Requirements:
         if results["validation"]:
             val = results["validation"]
             status = "✅ PASSED" if val["is_valid"] else "❌ FAILED"
-            print(
-                f"🔍 Validation: {status} ({val['error_count']} errors, {val['warning_count']} warnings)"
-            )
+            print(f"🔍 Validation: {status} ({val['error_count']} errors, {val['warning_count']} warnings)")
         else:
             print("🔍 Validation: SKIPPED")
 
@@ -453,16 +427,12 @@ Requirements:
             if "error" not in result:
                 analyzed = result["total_analyzed_words"]
                 recs = result["recommendation_count"]
-                print(
-                    f"   • {lang.upper()}: {analyzed:,} missing words analyzed → {recs:,} recommendations"
-                )
+                print(f"   • {lang.upper()}: {analyzed:,} missing words analyzed → {recs:,} recommendations")
 
         print("\n📊 TOTALS:")
         print(f"   • Total existing vocabulary: {total_existing_words:,} words")
         print(f"   • Total missing words analyzed: {total_analyzed_words:,} words")
-        print(
-            f"   • Total recommendations for addition: {total_recommendations:,} words"
-        )
+        print(f"   • Total recommendations for addition: {total_recommendations:,} words")
         print("=" * 80)
 
     def run_history(self, args: argparse.Namespace) -> Dict[str, Any]:
@@ -484,9 +454,7 @@ Requirements:
             trends = self.results_tracker.get_language_trends(args.language, args.days)
 
             if args.output == "text":
-                print(
-                    f"\n📊 {args.language.upper()} Language Trends ({args.days} days)"
-                )
+                print(f"\n📊 {args.language.upper()} Language Trends ({args.days} days)")
                 print("-" * 50)
                 if trends["runs_found"] > 0:
                     print(f"• Analysis runs found: {trends['runs_found']}")
@@ -506,9 +474,7 @@ Requirements:
             recent_runs = runs[-args.limit :] if runs else []
 
             if args.output == "text":
-                print(
-                    f"\n📋 Recent {args.run_type.title()} Runs (showing last {len(recent_runs)})"
-                )
+                print(f"\n📋 Recent {args.run_type.title()} Runs (showing last {len(recent_runs)})")
                 print("-" * 60)
                 for run in reversed(recent_runs):
                     timestamp = run["timestamp"][:19].replace("T", " ")
@@ -532,9 +498,7 @@ Requirements:
                     run_type = run["run_type"].ljust(12)
                     summary = run.get("summary", {})
                     total_recs = summary.get("total_recommendations", 0)
-                    print(
-                        f"• {timestamp} | {run_type} | {total_recs:4,} recommendations"
-                    )
+                    print(f"• {timestamp} | {run_type} | {total_recs:4,} recommendations")
 
             return {"recent_runs": recent_runs}
 

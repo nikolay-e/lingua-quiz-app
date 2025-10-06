@@ -39,17 +39,14 @@ class VocabularyFileParser:
         Searches upwards from this file for a .git directory.
         """
         current_path = Path.cwd()
-        while (
-            not (current_path / ".git").exists() and current_path != current_path.parent
-        ):
+        while not (current_path / ".git").exists() and current_path != current_path.parent:
             current_path = current_path.parent
         if (current_path / ".git").exists():
             migrations_path = current_path / "packages" / "backend" / "migrations"
             if migrations_path.is_dir():
                 return migrations_path
         raise FileNotFoundError(
-            "Could not auto-detect migrations directory. "
-            "Please specify the path to the migrations directory using --migrations-dir."
+            "Could not auto-detect migrations directory. " "Please specify the path to the migrations directory using --migrations-dir."
         )
 
     def discover_migration_files(self) -> Dict[str, List[str]]:
@@ -65,9 +62,7 @@ class VocabularyFileParser:
             if len(parts) >= 2:
                 source_lang = parts[0]
                 if source_lang in ["english", "german", "spanish"]:
-                    lang_code = {"english": "en", "german": "de", "spanish": "es"}[
-                        source_lang
-                    ]
+                    lang_code = {"english": "en", "german": "de", "spanish": "es"}[source_lang]
                     if lang_code not in discovered:
                         discovered[lang_code] = []
                     discovered[lang_code].append(filename)
@@ -89,9 +84,7 @@ class VocabularyFileParser:
 
         return self._extract_entries_from_json(data, filename)
 
-    def _extract_entries_from_json(
-        self, data: dict, filename: str
-    ) -> List[VocabularyEntry]:
+    def _extract_entries_from_json(self, data: dict, filename: str) -> List[VocabularyEntry]:
         entries = []
 
         if "word_pairs" not in data:
@@ -110,8 +103,6 @@ class VocabularyFileParser:
                 )
                 entries.append(entry)
             except KeyError as e:
-                raise ValueError(
-                    f"JSON file {filename} has malformed word_pair missing field: {e}"
-                )
+                raise ValueError(f"JSON file {filename} has malformed word_pair missing field: {e}")
 
         return entries
