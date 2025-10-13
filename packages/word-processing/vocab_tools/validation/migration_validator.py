@@ -10,7 +10,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
 
-from ..core.database_parser import VocabularyFileParser, VocabularyEntry
+from ..core.database_parser import VocabularyEntry, VocabularyFileParser
 from ..core.word_normalizer import get_normalizer
 
 
@@ -127,9 +127,7 @@ class MigrationValidator:
                     # Merge results
                     result.files_validated.append(filename)
                     result.issues.extend(language_result.issues)
-                    result.total_entries_checked += (
-                        language_result.total_entries_checked
-                    )
+                    result.total_entries_checked += language_result.total_entries_checked
 
                 except Exception as e:
                     error_issue = ValidationIssue(
@@ -212,9 +210,7 @@ class MigrationValidator:
                 )
 
         # Check for duplicate source/target ID pairs
-        duplicate_pairs = {
-            pair: ids for pair, ids in duplicate_id_pairs.items() if len(ids) > 1
-        }
+        duplicate_pairs = {pair: ids for pair, ids in duplicate_id_pairs.items() if len(ids) > 1}
         if duplicate_pairs:
             for (source_id, target_id), translation_ids in duplicate_pairs.items():
                 result.issues.append(
@@ -232,9 +228,7 @@ class MigrationValidator:
 
         return result
 
-    def _validate_entry(
-        self, entry: VocabularyEntry, filename: str, normalizer
-    ) -> List[ValidationIssue]:
+    def _validate_entry(self, entry: VocabularyEntry, filename: str, normalizer) -> List[ValidationIssue]:
         """
         Validate a single vocabulary entry.
 
@@ -309,9 +303,7 @@ class MigrationValidator:
 
         return issues
 
-    def _validate_id_sequences(
-        self, language: str, filename: str, seen_ids: Dict[str, Set[int]]
-    ) -> List[ValidationIssue]:
+    def _validate_id_sequences(self, language: str, filename: str, seen_ids: Dict[str, Set[int]]) -> List[ValidationIssue]:
         """
         Validate ID sequences for internal consistency (no hardcoded expectations).
 

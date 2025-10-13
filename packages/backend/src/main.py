@@ -44,9 +44,7 @@ DB_USER = os.getenv("POSTGRES_USER", "linguaquiz_user")
 DB_PASSWORD = os.getenv("POSTGRES_PASSWORD", "password")
 JWT_SECRET = os.getenv("JWT_SECRET")
 if not JWT_SECRET:
-    raise RuntimeError(
-        "JWT_SECRET environment variable must be set - never use default secrets in production!"
-    )
+    raise RuntimeError("JWT_SECRET environment variable must be set - never use default secrets in production!")
 JWT_EXPIRES_HOURS = int(os.getenv("JWT_EXPIRES_HOURS", "24"))
 JWT_EXPIRES_IN = f"{JWT_EXPIRES_HOURS}h"
 PORT = int(os.getenv("PORT", 9000))
@@ -97,9 +95,7 @@ async def add_security_headers(request: Request, call_next):
     response.headers["X-Content-Type-Options"] = "nosniff"
 
     # Strict-Transport-Security (HSTS) - enforces HTTPS
-    response.headers["Strict-Transport-Security"] = (
-        "max-age=31536000; includeSubDomains; preload"
-    )
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains; preload"
 
     # Cross-Origin-Embedder-Policy - helps mitigate Spectre attacks
     response.headers["Cross-Origin-Embedder-Policy"] = "credentialless"
@@ -109,14 +105,7 @@ async def add_security_headers(request: Request, call_next):
 
     # Permissions Policy - controls browser features
     permissions_policy = (
-        "geolocation=(), "
-        "microphone=(), "
-        "camera=(), "
-        "payment=(), "
-        "usb=(), "
-        "magnetometer=(), "
-        "gyroscope=(), "
-        "accelerometer=()"
+        "geolocation=(), " "microphone=(), " "camera=(), " "payment=(), " "usb=(), " "magnetometer=(), " "gyroscope=(), " "accelerometer=()"
     )
     response.headers["Permissions-Policy"] = permissions_policy
 
@@ -215,9 +204,7 @@ class UserWordSetResponse(BaseModel):
 
 
 class UserWordSetStatusUpdate(BaseModel):
-    status: str = Field(
-        ..., pattern="^(LEVEL_0|LEVEL_1|LEVEL_2|LEVEL_3|LEVEL_4|LEVEL_5)$"
-    )
+    status: str = Field(..., pattern="^(LEVEL_0|LEVEL_1|LEVEL_2|LEVEL_3|LEVEL_4|LEVEL_5)$")
     word_pair_ids: List[int] = Field(alias="wordPairIds")
 
     class Config:
@@ -307,9 +294,7 @@ def convert_keys_to_camel_case(obj):
     if isinstance(obj, list):
         return [convert_keys_to_camel_case(item) for item in obj]
     elif isinstance(obj, dict):
-        return {
-            snake_to_camel(k): convert_keys_to_camel_case(v) for k, v in obj.items()
-        }
+        return {snake_to_camel(k): convert_keys_to_camel_case(v) for k, v in obj.items()}
     else:
         return obj
 
@@ -459,9 +444,7 @@ def hash_password(password: str) -> str:
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return bcrypt.checkpw(
-        plain_password.encode("utf-8"), hashed_password.encode("utf-8")
-    )
+    return bcrypt.checkpw(plain_password.encode("utf-8"), hashed_password.encode("utf-8"))
 
 
 def create_access_token(data: dict) -> str:
@@ -479,18 +462,12 @@ async def get_current_user(
         user_id = payload.get("userId")
         username = payload.get("sub")
         if user_id is None or username is None:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token payload"
-            )
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token payload")
         return {"user_id": user_id, "username": username}
     except jwt.ExpiredSignatureError:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Token has expired"
-        )
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Token has expired")
     except jwt.PyJWTError:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
-        )
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
 
 
 # =================================================================
@@ -537,9 +514,7 @@ async def register_user(request: Request, user_data: UserRegistration):
     logger.info(f"Starting registration for user: {user_data.username}")
     try:
         # Check if user already exists
-        existing_user = query_db(
-            "SELECT id FROM users WHERE username = %s", (user_data.username,), one=True
-        )
+        existing_user = query_db("SELECT id FROM users WHERE username = %s", (user_data.username,), one=True)
         if existing_user:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
@@ -604,9 +579,7 @@ async def login_user(request: Request, user_data: UserLogin):
             )
 
         # Create access token
-        token = create_access_token(
-            data={"userId": user["id"], "sub": user["username"]}
-        )
+        token = create_access_token(data={"userId": user["id"], "sub": user["username"]})
         logger.info(f"Successful login for user: {user_data.username}")
 
         return TokenResponse(
@@ -619,9 +592,7 @@ async def login_user(request: Request, user_data: UserLogin):
         raise
     except Exception as e:
         logger.error(f"Login error: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Login failed"
-        )
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Login failed")
 
 
 @app.delete("/api/auth/delete-account", tags=["Authentication"])
@@ -629,21 +600,13 @@ async def delete_account(current_user: dict = Depends(get_current_user)):
     """Delete the current user's account"""
     logger.info(f"Account deletion request for user: {current_user['username']}")
     try:
-        result = execute_write_transaction(
-            "DELETE FROM users WHERE id = %s", (current_user["user_id"],)
-        )
+        result = execute_write_transaction("DELETE FROM users WHERE id = %s", (current_user["user_id"],))
 
         if result == 0:
-            logger.warning(
-                f"Account deletion failed - user not found: {current_user['username']}"
-            )
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
-            )
+            logger.warning(f"Account deletion failed - user not found: {current_user['username']}")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
-        logger.info(
-            f"Account successfully deleted for user: {current_user['username']}"
-        )
+        logger.info(f"Account successfully deleted for user: {current_user['username']}")
         return {"message": "Account deleted successfully"}
 
     except HTTPException:
@@ -668,9 +631,7 @@ async def get_current_level(current_user: dict = Depends(get_current_user)):
         )
 
         if not user:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
-            )
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
         return UserLevelResponse(currentLevel=user["current_level"])
 
@@ -684,12 +645,8 @@ async def get_current_level(current_user: dict = Depends(get_current_user)):
         )
 
 
-@app.post(
-    "/api/user/current-level", response_model=UserLevelUpdateResponse, tags=["User"]
-)
-async def update_current_level(
-    level_data: UserLevelUpdateRequest, current_user: dict = Depends(get_current_user)
-):
+@app.post("/api/user/current-level", response_model=UserLevelUpdateResponse, tags=["User"])
+async def update_current_level(level_data: UserLevelUpdateRequest, current_user: dict = Depends(get_current_user)):
     """Update the current level for the authenticated user"""
     try:
         # Validate level value
@@ -707,9 +664,7 @@ async def update_current_level(
         )
 
         if result == 0:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
-            )
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
         return UserLevelUpdateResponse(
             message="Current level updated successfully",
@@ -730,9 +685,7 @@ async def update_current_level(
 async def get_user_profile(current_user: dict = Depends(get_current_user)):
     """Get the current user's profile"""
     try:
-        return UserResponse(
-            id=current_user["user_id"], username=current_user["username"]
-        )
+        return UserResponse(id=current_user["user_id"], username=current_user["username"])
     except Exception as e:
         logger.error(f"Error fetching user profile: {e}")
         raise HTTPException(
@@ -758,12 +711,8 @@ async def get_word_sets(current_user: dict = Depends(get_current_user)):
         )
 
 
-@app.get(
-    "/api/word-sets/user", response_model=List[UserWordSetResponse], tags=["Word Sets"]
-)
-async def get_user_word_sets(
-    word_list_name: str, current_user: dict = Depends(get_current_user)
-):
+@app.get("/api/word-sets/user", response_model=List[UserWordSetResponse], tags=["Word Sets"])
+async def get_user_word_sets(word_list_name: str, current_user: dict = Depends(get_current_user)):
     """Get user-specific word sets with progress status"""
     try:
         user_word_sets = query_db(
@@ -786,20 +735,14 @@ async def get_user_word_sets(
     response_model=WordSetWithWordsResponse,
     tags=["Word Sets"],
 )
-async def get_word_set(
-    word_set_id: int, current_user: dict = Depends(get_current_user)
-):
+async def get_word_set(word_set_id: int, current_user: dict = Depends(get_current_user)):
     """Get a specific word set with all its words"""
     try:
         # Get word set info
-        word_set = query_db(
-            "SELECT * FROM get_word_lists() WHERE id = %s", (word_set_id,), one=True
-        )
+        word_set = query_db("SELECT * FROM get_word_lists() WHERE id = %s", (word_set_id,), one=True)
 
         if not word_set:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="Word set not found"
-            )
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Word set not found")
 
         # Get words for this set
         words = query_db(
@@ -834,9 +777,7 @@ async def get_word_set(
 
 
 @app.post("/api/word-sets/user", tags=["Word Sets"])
-async def update_user_word_sets(
-    update_data: UserWordSetStatusUpdate, current_user: dict = Depends(get_current_user)
-):
+async def update_user_word_sets(update_data: UserWordSetStatusUpdate, current_user: dict = Depends(get_current_user)):
     """Update status for multiple user word sets"""
     try:
         # Validate status
@@ -860,9 +801,7 @@ async def update_user_word_sets(
             (current_user["user_id"], update_data.word_pair_ids, update_data.status),
         )
 
-        return {
-            "message": f"Updated {len(update_data.word_pair_ids)} word sets to {update_data.status}"
-        }
+        return {"message": f"Updated {len(update_data.word_pair_ids)} word sets to {update_data.status}"}
 
     except HTTPException:
         raise
@@ -912,9 +851,7 @@ async def synthesize_speech(
         )
 
 
-@app.get(
-    "/api/tts/languages", response_model=TTSLanguagesResponse, tags=["Text-to-Speech"]
-)
+@app.get("/api/tts/languages", response_model=TTSLanguagesResponse, tags=["Text-to-Speech"])
 async def get_tts_languages(current_user: dict = Depends(get_current_user)):
     """Get available TTS languages"""
     try:
@@ -947,9 +884,7 @@ async def validation_exception_handler(request: Request, exc: ValidationError):
 
 @app.exception_handler(404)
 async def not_found_handler(request: Request, exc):
-    return JSONResponse(
-        status_code=status.HTTP_404_NOT_FOUND, content={"error": "Resource not found"}
-    )
+    return JSONResponse(status_code=status.HTTP_404_NOT_FOUND, content={"error": "Resource not found"})
 
 
 @app.exception_handler(500)

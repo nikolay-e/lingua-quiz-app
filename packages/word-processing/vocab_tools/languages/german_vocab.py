@@ -44,9 +44,7 @@ class GermanVocabularyAnalyzer(VocabularyAnalyzer):
 
         # Note: Manual verb mapping removed - spaCy's lemmatization handles this better
 
-    def analyze_word_linguistics(
-        self, word: str, existing_words: Set[str], rank: int = None
-    ) -> Tuple[str, str, str]:
+    def analyze_word_linguistics(self, word: str, existing_words: Set[str], rank: int = None) -> Tuple[str, str, str]:
         """
         Analyze German word with specialized German linguistic processing.
 
@@ -81,9 +79,7 @@ class GermanVocabularyAnalyzer(VocabularyAnalyzer):
         # Check for lemma in existing words (after German normalization)
         normalized_lemma = self.normalizer.normalize(lemma)
         if normalized_lemma != normalized_word and normalized_lemma in existing_words:
-            reason = self._get_german_inflection_reason(
-                word, lemma, morphology, pos_tag
-            )
+            reason = self._get_german_inflection_reason(word, lemma, morphology, pos_tag)
             return "inflected_forms", pos_tag, reason
 
         # Note: Compound word detection is handled by spaCy lemmatization
@@ -95,9 +91,7 @@ class GermanVocabularyAnalyzer(VocabularyAnalyzer):
 
         return category, pos_tag, reason
 
-    def _get_german_inflection_reason(
-        self, word: str, lemma: str, morphology: str, pos_tag: str
-    ) -> str:
+    def _get_german_inflection_reason(self, word: str, lemma: str, morphology: str, pos_tag: str) -> str:
         """
         Generate specific reason for German inflected forms.
 

@@ -27,9 +27,7 @@ class NLPModelManager:
 
     def __init__(self):
         self._model_cache: Dict[str, Any] = {}
-        self._download_attempted: set = (
-            set()
-        )  # Track which models we've tried to download
+        self._download_attempted: set = set()  # Track which models we've tried to download
 
     def load_model(
         self,
@@ -78,22 +76,16 @@ class NLPModelManager:
                     # Try loading again after download
                     try:
                         if not silent:
-                            print(
-                                f"  Attempting to load {model_name} after download..."
-                            )
+                            print(f"  Attempting to load {model_name} after download...")
                         model = spacy.load(model_name)
                         self._validate_model_components(model, language_code)
                         self._model_cache[language_code] = model
                         if not silent:
-                            print(
-                                f"  ✅ Successfully loaded {model_name} after download"
-                            )
+                            print(f"  ✅ Successfully loaded {model_name} after download")
                         return model
                     except (OSError, RuntimeError) as e:
                         if not silent:
-                            print(
-                                f"  ❌ Still can't load or validate {model_name} after download: {e}"
-                            )
+                            print(f"  ❌ Still can't load or validate {model_name} after download: {e}")
                         continue
 
                 continue
@@ -136,9 +128,7 @@ class NLPModelManager:
             return
 
         required_components = {"lemmatizer", "tagger"}
-        available_components = (
-            set(model.pipe_names) if hasattr(model, "pipe_names") else set()
-        )
+        available_components = set(model.pipe_names) if hasattr(model, "pipe_names") else set()
 
         if not required_components.issubset(available_components):
             # Get a suggestion for a proper core model
@@ -147,9 +137,7 @@ class NLPModelManager:
                 "de": "de_core_news_sm",
                 "es": "es_core_news_sm",
             }
-            suggested_model = model_suggestions.get(
-                language_code, f"{language_code}_core_web_sm"
-            )
+            suggested_model = model_suggestions.get(language_code, f"{language_code}_core_web_sm")
 
             raise RuntimeError(
                 f"{language_code.upper()}: spaCy model lacks required components (lemmatizer, tagger). "
@@ -213,9 +201,7 @@ class NLPModelManager:
                 return True
             else:
                 if not silent:
-                    print(
-                        f"  ❌ Failed to download {model_name}: {result.stderr.strip()}"
-                    )
+                    print(f"  ❌ Failed to download {model_name}: {result.stderr.strip()}")
                 return False
 
         except subprocess.TimeoutExpired:
@@ -261,14 +247,8 @@ class NLPModelManager:
             "language": language_code,
             "model_name": getattr(model.meta, "name", "unknown"),
             "model_version": getattr(model.meta, "version", "unknown"),
-            "has_vectors": (
-                model.vocab.vectors.size > 0
-                if hasattr(model.vocab, "vectors")
-                else False
-            ),
-            "pipeline_components": (
-                list(model.pipe_names) if hasattr(model, "pipe_names") else []
-            ),
+            "has_vectors": (model.vocab.vectors.size > 0 if hasattr(model.vocab, "vectors") else False),
+            "pipeline_components": (list(model.pipe_names) if hasattr(model, "pipe_names") else []),
         }
 
     def clear_cache(self):

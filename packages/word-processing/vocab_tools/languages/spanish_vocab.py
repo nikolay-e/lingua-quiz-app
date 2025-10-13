@@ -33,9 +33,7 @@ class SpanishVocabularyAnalyzer(VocabularyAnalyzer):
 
         # Note: Regular verb pattern mapping removed - spaCy's lemmatization handles this better
 
-    def analyze_word_linguistics(
-        self, word: str, existing_words: Set[str], rank: int = None
-    ) -> Tuple[str, str, str]:
+    def analyze_word_linguistics(self, word: str, existing_words: Set[str], rank: int = None) -> Tuple[str, str, str]:
         """
         Analyze Spanish word with specialized Spanish linguistic processing.
 
@@ -74,9 +72,7 @@ class SpanishVocabularyAnalyzer(VocabularyAnalyzer):
         # Check for lemma in existing words
         normalized_lemma = self.normalizer.normalize(lemma)
         if normalized_lemma != normalized_word and normalized_lemma in existing_words:
-            reason = self._get_spanish_inflection_reason(
-                word, lemma, morphology, pos_tag
-            )
+            reason = self._get_spanish_inflection_reason(word, lemma, morphology, pos_tag)
             return "inflected_forms", pos_tag, reason
 
         # Categorize based on POS and Spanish-specific rules
@@ -85,9 +81,7 @@ class SpanishVocabularyAnalyzer(VocabularyAnalyzer):
 
         return category, pos_tag, reason
 
-    def _get_spanish_inflection_reason(
-        self, word: str, lemma: str, morphology: str, pos_tag: str
-    ) -> str:
+    def _get_spanish_inflection_reason(self, word: str, lemma: str, morphology: str, pos_tag: str) -> str:
         """
         Generate specific reason for Spanish inflected forms.
 

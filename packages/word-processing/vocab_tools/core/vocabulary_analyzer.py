@@ -19,7 +19,7 @@ from ..config.constants import (
     ESSENTIAL_VOCABULARY_CATEGORIES,
     SUPPORTED_LANGUAGES,
 )
-from .database_parser import VocabularyFileParser, VocabularyEntry
+from .database_parser import VocabularyEntry, VocabularyFileParser
 from .word_normalizer import get_normalizer
 
 
@@ -134,9 +134,7 @@ class VocabularyAnalyzer(ABC):
         return get_nlp_model(self.language_code, model_preferences, silent=silent)
 
     @abstractmethod
-    def analyze_word_linguistics(
-        self, word: str, existing_words: Set[str], rank: int = None
-    ) -> Tuple[str, str, str]:
+    def analyze_word_linguistics(self, word: str, existing_words: Set[str], rank: int = None) -> Tuple[str, str, str]:
         """
         Perform language-specific linguistic analysis of a word.
 
@@ -163,9 +161,7 @@ class VocabularyAnalyzer(ABC):
                 entries = self.db_parser.parse_migration_file(migration_file)
                 for entry in entries:
                     if self._is_valid_vocabulary_entry(entry):
-                        word_variants = self.normalizer.extract_word_variants(
-                            entry.source_word
-                        )
+                        word_variants = self.normalizer.extract_word_variants(entry.source_word)
                         existing_words.update(word_variants)
             except FileNotFoundError:
                 print(f"⚠️ Migration file not found: {migration_file}")
@@ -224,10 +220,7 @@ class VocabularyAnalyzer(ABC):
         # Filter to valid words not in existing vocabulary, preserving original ranks
         missing_words = []
         for i, word in enumerate(frequent_words):
-            if (
-                self._is_word_valid_for_analysis(word)
-                and self.normalizer.normalize(word) not in existing_words
-            ):
+            if self._is_word_valid_for_analysis(word) and self.normalizer.normalize(word) not in existing_words:
                 original_rank = start_rank + i  # Calculate original rank
                 missing_words.append((word, original_rank))
 
@@ -292,9 +285,7 @@ class VocabularyAnalyzer(ABC):
             print(f"📊 Found {len(existing_words)} existing words")
 
         # Get missing words to analyze within the specified frequency range
-        missing_words = self.get_frequent_missing_words(
-            top_n, start_rank, existing_words
-        )
+        missing_words = self.get_frequent_missing_words(top_n, start_rank, existing_words)
         if limit_analysis and limit_analysis < len(missing_words):
             missing_words = missing_words[:limit_analysis]
             if show_progress:
@@ -331,9 +322,7 @@ class VocabularyAnalyzer(ABC):
                 if not self._is_word_valid_for_analysis(lemma):
                     continue
 
-                category, pos_tag, reason = self.analyze_word_linguistics(
-                    lemma, existing_words, rank=original_rank
-                )
+                category, pos_tag, reason = self.analyze_word_linguistics(lemma, existing_words, rank=original_rank)
                 frequency = word_frequency(lemma, self.language_code)
 
                 analysis = WordAnalysis(
@@ -374,9 +363,7 @@ class VocabularyAnalyzer(ABC):
             categories=dict(categories),
         )
 
-    def print_analysis_results(
-        self, result: VocabularyAnalysisResult, show_details: bool = True
-    ):
+    def print_analysis_results(self, result: VocabularyAnalysisResult, show_details: bool = True):
         """
         Print formatted analysis results.
 
@@ -402,8 +389,6 @@ class VocabularyAnalyzer(ABC):
         if result.recommendations:
             print("\n🎯 Top Recommendations (by frequency):")
             for i, analysis in enumerate(result.recommendations[:20], 1):
-                print(
-                    f"   {i:2d}. {analysis.word:<15} ({analysis.frequency:.2e}) - {analysis.reason}"
-                )
+                print(f"   {i:2d}. {analysis.word:<15} ({analysis.frequency:.2e}) - {analysis.reason}")
 
         print(f"\n{'='*80}")

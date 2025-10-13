@@ -7,7 +7,7 @@ secrets:
       password: ENC[AES256_GCM,data:AEE0v04B4IKQH+l+s5wuRFjFCmE=,iv:W+2Tig2oDk960tdX8KUi7DPdhDmKCimF/jbmdgJeTjA=,tag:dJQzyy1gKBFWzwGfjg3hPg==,type:str]
 sops:
   age:
-    - recipient: age15n3fvp4rrp7r2ugkalzrad9u3h6y68c03kr8s7k74a8za48dfqcsaprfuw
+    - recipient: age15n3fvp4rrp7r2ugkalzrad9u3h6y68c03kr8s7k74a8za48dfqcsaprfuw # pragma: allowlist secret
       enc: |
         -----BEGIN AGE ENCRYPTED FILE-----
         YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBiODd1ZzMra0d3MHFZVDhn
