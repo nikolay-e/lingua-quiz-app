@@ -8,10 +8,12 @@ spec:
   interval: 10m
   sourceRef:
     kind: GitRepository
-    name: flux-system
+    name: lingua-quiz-repo
   path: ./flux/clusters/staging/infrastructure
   prune: true
   wait: true
   timeout: 5m
   decryption:
     provider: sops
+    secretRef:
+      name: sops-age

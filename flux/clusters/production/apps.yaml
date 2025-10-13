@@ -2,16 +2,16 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: lingua-quiz-staging-apps
+  name: lingua-quiz-production-apps
   namespace: flux-system
 spec:
   interval: 5m
   dependsOn:
-    - name: lingua-quiz-staging-infrastructure
+    - name: lingua-quiz-production-infrastructure
   sourceRef:
     kind: GitRepository
     name: lingua-quiz-repo
-  path: ./flux/clusters/staging/apps
+  path: ./flux/clusters/production/apps
   prune: true
   wait: true
   timeout: 10m

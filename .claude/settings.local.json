@@ -1,6 +1,6 @@
 {
   "permissions": {
-    "allow": ["Bash(docker compose:*)", "Bash(docker build:*)", "Bash(chmod:*)", "Bash(kubectl get:*)"],
+    "allow": ["Bash(docker compose:*)", "Bash(docker build:*)", "Bash(chmod:*)", "Bash(kubectl get:*)", "Bash(cat:*)"],
     "deny": [],
     "ask": []
   }

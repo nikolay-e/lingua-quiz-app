@@ -6,3 +6,4 @@ resources:
   - image-repository-frontend.yaml
   - image-policy-backend.yaml
   - image-policy-frontend.yaml
+  - values-secret-encrypted.yaml

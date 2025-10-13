@@ -13,6 +13,9 @@ spec:
         name: lingua-quiz-repo
         namespace: flux-system
       interval: 1m
+      valuesFiles:
+        - values.yaml
+        - values.prod.yaml
   values:
     registry: ghcr.io/nikolay-e/lingua-quiz
     imagePullSecrets:
@@ -24,6 +27,6 @@ spec:
       image:
         tag: main # {"$imagepolicy": "lingua-quiz-production:frontend"}
   valuesFrom:
-    - kind: ConfigMap
-      name: lingua-quiz-values
+    - kind: Secret
+      name: lingua-quiz-sops-values
       valuesKey: values.yaml
