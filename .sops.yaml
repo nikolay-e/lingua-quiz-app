@@ -5,4 +5,5 @@ creation_rules:
 
   # FluxCD secrets encryption
   - path_regex: flux/clusters/.*/.*-encrypted\.yaml$
+    encrypted_regex: ^(data|stringData)$
     age: age15n3fvp4rrp7r2ugkalzrad9u3h6y68c03kr8s7k74a8za48dfqcsaprfuw # pragma: allowlist secret
