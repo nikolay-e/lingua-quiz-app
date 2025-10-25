@@ -13,15 +13,14 @@ import logging
 # 1. Imports and App Initialization
 # =================================================================
 import os
-from typing import List, Optional
 
 import bcrypt
-import jwt
-import psycopg2
 from fastapi import Depends, FastAPI, HTTPException, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+import jwt
+import psycopg2
 from psycopg2.extras import RealDictCursor
 from psycopg2.pool import SimpleConnectionPool
 from pydantic import BaseModel, Field, ValidationError
@@ -104,9 +103,7 @@ async def add_security_headers(request: Request, call_next):
     response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
 
     # Permissions Policy - controls browser features
-    permissions_policy = (
-        "geolocation=(), " "microphone=(), " "camera=(), " "payment=(), " "usb=(), " "magnetometer=(), " "gyroscope=(), " "accelerometer=()"
-    )
+    permissions_policy = "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
     response.headers["Permissions-Policy"] = permissions_policy
 
     # Referrer Policy - controls referrer information
@@ -171,15 +168,15 @@ class WordResponse(BaseModel):
     target_word: str = Field(alias="targetWord")
     source_language: str = Field(alias="sourceLanguage")
     target_language: str = Field(alias="targetLanguage")
-    source_example: Optional[str] = Field(alias="sourceExample")
-    target_example: Optional[str] = Field(alias="targetExample")
+    source_example: str | None = Field(alias="sourceExample")
+    target_example: str | None = Field(alias="targetExample")
 
     class Config:
         populate_by_name = True
 
 
 class WordSetWithWordsResponse(WordSetResponse):
-    words: List[WordResponse]
+    words: list[WordResponse]
 
 
 class UserWordSetRequest(BaseModel):
@@ -195,9 +192,9 @@ class UserWordSetResponse(BaseModel):
     target_word: str = Field(alias="targetWord")
     source_language: str = Field(alias="sourceLanguage")
     target_language: str = Field(alias="targetLanguage")
-    source_word_usage_example: Optional[str] = Field(alias="sourceWordUsageExample")
-    target_word_usage_example: Optional[str] = Field(alias="targetWordUsageExample")
-    status: Optional[str] = None
+    source_word_usage_example: str | None = Field(alias="sourceWordUsageExample")
+    target_word_usage_example: str | None = Field(alias="targetWordUsageExample")
+    status: str | None = None
 
     class Config:
         populate_by_name = True
@@ -205,7 +202,7 @@ class UserWordSetResponse(BaseModel):
 
 class UserWordSetStatusUpdate(BaseModel):
     status: str = Field(..., pattern="^(LEVEL_0|LEVEL_1|LEVEL_2|LEVEL_3|LEVEL_4|LEVEL_5)$")
-    word_pair_ids: List[int] = Field(alias="wordPairIds")
+    word_pair_ids: list[int] = Field(alias="wordPairIds")
 
     class Config:
         populate_by_name = True
@@ -228,7 +225,7 @@ class TTSResponse(BaseModel):
 
 class TTSLanguagesResponse(BaseModel):
     available: bool
-    supported_languages: List[str] = Field(alias="supportedLanguages")
+    supported_languages: list[str] = Field(alias="supportedLanguages")
 
     class Config:
         populate_by_name = True
@@ -293,10 +290,9 @@ def convert_keys_to_camel_case(obj):
     """Convert all keys in dict/list from snake_case to camelCase"""
     if isinstance(obj, list):
         return [convert_keys_to_camel_case(item) for item in obj]
-    elif isinstance(obj, dict):
+    if isinstance(obj, dict):
         return {snake_to_camel(k): convert_keys_to_camel_case(v) for k, v in obj.items()}
-    else:
-        return obj
+    return obj
 
 
 # Database helpers
@@ -406,10 +402,9 @@ def execute_write_transaction(query, args=(), fetch_results=False, one=False):
                 rv = cur.fetchall()
                 conn.commit()
                 return (rv[0] if rv else None) if one else rv
-            else:
-                row_count = cur.rowcount
-                conn.commit()
-                return row_count
+            row_count = cur.rowcount
+            conn.commit()
+            return row_count
     except psycopg2.pool.PoolError as e:
         logger.error(f"Connection pool error: {e}")
         raise
@@ -695,7 +690,7 @@ async def get_user_profile(current_user: dict = Depends(get_current_user)):
 
 
 # Word Sets routes
-@app.get("/api/word-sets", response_model=List[WordSetResponse], tags=["Word Sets"])
+@app.get("/api/word-sets", response_model=list[WordSetResponse], tags=["Word Sets"])
 async def get_word_sets(current_user: dict = Depends(get_current_user)):
     """Get all available word sets"""
     logger.debug(f"Fetching word sets for user: {current_user['username']}")
@@ -711,7 +706,7 @@ async def get_word_sets(current_user: dict = Depends(get_current_user)):
         )
 
 
-@app.get("/api/word-sets/user", response_model=List[UserWordSetResponse], tags=["Word Sets"])
+@app.get("/api/word-sets/user", response_model=list[UserWordSetResponse], tags=["Word Sets"])
 async def get_user_word_sets(word_list_name: str, current_user: dict = Depends(get_current_user)):
     """Get user-specific word sets with progress status"""
     try:

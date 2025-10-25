@@ -4,10 +4,9 @@ Database migration file parser for LinguaQuiz vocabulary tools.
 Handles extraction and parsing of vocabulary data from JSON vocabulary files.
 """
 
-import json
 from dataclasses import dataclass
+import json
 from pathlib import Path
-from typing import Dict, List, Optional
 
 
 @dataclass
@@ -30,7 +29,7 @@ class VocabularyEntry:
 class VocabularyFileParser:
     """Parses JSON vocabulary files to extract vocabulary data."""
 
-    def __init__(self, migrations_directory: Optional[Path] = None):
+    def __init__(self, migrations_directory: Path | None = None):
         self.migrations_dir = migrations_directory or self._find_migrations_directory()
 
     def _find_migrations_directory(self) -> Path:
@@ -46,10 +45,10 @@ class VocabularyFileParser:
             if migrations_path.is_dir():
                 return migrations_path
         raise FileNotFoundError(
-            "Could not auto-detect migrations directory. " "Please specify the path to the migrations directory using --migrations-dir."
+            "Could not auto-detect migrations directory. Please specify the path to the migrations directory using --migrations-dir."
         )
 
-    def discover_migration_files(self) -> Dict[str, List[str]]:
+    def discover_migration_files(self) -> dict[str, list[str]]:
         vocabulary_dir = self.migrations_dir / "data" / "vocabulary"
         if not vocabulary_dir.exists():
             return {}
@@ -69,7 +68,7 @@ class VocabularyFileParser:
 
         return discovered
 
-    def parse_migration_file(self, filename: str) -> List[VocabularyEntry]:
+    def parse_migration_file(self, filename: str) -> list[VocabularyEntry]:
         # Use standardized vocabulary directory location
         file_path = self.migrations_dir / "data" / "vocabulary" / filename
 
@@ -77,14 +76,14 @@ class VocabularyFileParser:
             raise FileNotFoundError(f"JSON vocabulary file not found: {file_path}")
 
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
+            with open(file_path, encoding="utf-8") as f:
                 data = json.load(f)
         except Exception as e:
             raise ValueError(f"Error reading JSON file {filename}: {e}")
 
         return self._extract_entries_from_json(data, filename)
 
-    def _extract_entries_from_json(self, data: dict, filename: str) -> List[VocabularyEntry]:
+    def _extract_entries_from_json(self, data: dict, filename: str) -> list[VocabularyEntry]:
         entries = []
 
         if "word_pairs" not in data:

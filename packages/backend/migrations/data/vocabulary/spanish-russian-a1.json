@@ -34,9 +34,9 @@
       "translation_id": 4000003,
       "source_id": 4000007,
       "target_id": 4000008,
-      "source_word": "autor",
+      "source_word": "author",
       "target_word": "автор",
-      "source_example": "El autor del libro es famoso.",
+      "source_example": "El author del libro es famoso.",
       "target_example": "Автор книги известен."
     },
     {
@@ -216,7 +216,7 @@
       "target_id": 4000048,
       "source_word": "desarrollo",
       "target_word": "развитие",
-      "source_example": "El desarrollo es importante.",
+      "source_example": "El desarrollo es important.",
       "target_example": "Развитие важно."
     },
     {
@@ -466,7 +466,7 @@
       "translation_id": 4000051,
       "source_id": 4000103,
       "target_id": 4000104,
-      "source_word": "ser",
+      "source_word": "set",
       "target_word": "быть [постоянное состояние]",
       "source_example": "Es médico de profesión.",
       "target_example": "Он является врачом по профессии."
@@ -576,7 +576,7 @@
       "target_id": 4000128,
       "source_word": "viento",
       "target_word": "ветер",
-      "source_example": "Hace mucho viento hoy.",
+      "source_example": "Have mucho viento hoy.",
       "target_example": "Сегодня сильный ветер."
     },
     {
@@ -835,9 +835,9 @@
       "translation_id": 4000092,
       "source_id": 4000185,
       "target_id": 4000186,
-      "source_word": "posible",
+      "source_word": "possible",
       "target_word": "возможный",
-      "source_example": "Es posible que llueva mañana.",
+      "source_example": "Es possible que llueva mañana.",
       "target_example": "Возможно, завтра будет дождь."
     },
     {
@@ -909,7 +909,7 @@
       "target_id": 4000202,
       "source_word": "cuestión",
       "target_word": "вопрос [дело]",
-      "source_example": "Es una cuestión importante.",
+      "source_example": "Es una cuestión important.",
       "target_example": "Это важный вопрос."
     },
     {
@@ -981,7 +981,7 @@
       "target_id": 4000218,
       "source_word": "daño",
       "target_word": "вред",
-      "source_example": "Fumar hace daño a la salud.",
+      "source_example": "Fumar have daño a la salud.",
       "target_example": "Курение наносит вред здоровью."
     },
     {
@@ -1483,9 +1483,9 @@
       "translation_id": 4000164,
       "source_id": 4000329,
       "target_id": 4000330,
-      "source_word": "doble",
+      "source_word": "double",
       "target_word": "двойной",
-      "source_example": "Pidió una porción doble.",
+      "source_example": "Pidió una porción double.",
       "target_example": "Он заказал двойную порцию."
     },
     {
@@ -1557,7 +1557,7 @@
       "target_id": 4000346,
       "source_word": "asunto",
       "target_word": "дело|вопрос|тема",
-      "source_example": "Es un asunto importante.",
+      "source_example": "Es un asunto important.",
       "target_example": "Это важное дело."
     },
     {
@@ -1647,7 +1647,7 @@
       "target_id": 4000366,
       "source_word": "pieza",
       "target_word": "деталь [часть]",
-      "source_example": "Falta una pieza importante.",
+      "source_example": "Falta una pieza important.",
       "target_example": "Не хватает важной детали."
     },
     {
@@ -1870,9 +1870,9 @@
       "translation_id": 4000207,
       "source_id": 4000415,
       "target_id": 4000416,
-      "source_word": "formar",
+      "source_word": "former",
       "target_word": "формировать",
-      "source_example": "Formar un equipo.",
+      "source_example": "Former un equipo.",
       "target_example": "Формировать команду."
     },
     {
@@ -1908,7 +1908,7 @@
       "target_id": 4000424,
       "source_word": "junio",
       "target_word": "июнь",
-      "source_example": "Hace calor en junio.",
+      "source_example": "Have calor en junio.",
       "target_example": "В июне жарко."
     },
     {
@@ -1917,7 +1917,7 @@
       "target_id": 4000426,
       "source_word": "septiembre",
       "target_word": "сентябрь",
-      "source_example": "El curso empieza en septiembre.",
+      "source_example": "El cursor empieza en septiembre.",
       "target_example": "Курс начинается в сентябре."
     },
     {
@@ -2196,7 +2196,7 @@
       "target_id": 4000488,
       "source_word": "muy",
       "target_word": "очень",
-      "source_example": "Es muy importante.",
+      "source_example": "Es muy important.",
       "target_example": "Это очень важно."
     },
     {
@@ -2367,7 +2367,7 @@
       "target_id": 4000526,
       "source_word": "salud",
       "target_word": "здоровье",
-      "source_example": "La salud es lo más importante.",
+      "source_example": "La salud es lo más important.",
       "target_example": "Здоровье - самое важное."
     },
     {
@@ -2403,7 +2403,7 @@
       "target_id": 4000534,
       "source_word": "signo",
       "target_word": "знак",
-      "source_example": "Es una señal importante.",
+      "source_example": "Es una señal important.",
       "target_example": "Это важный знак."
     },
     {
@@ -2502,7 +2502,7 @@
       "target_id": 4000556,
       "source_word": "evitar",
       "target_word": "избегать",
-      "source_example": "Trato de evitar problemas.",
+      "source_example": "Trato de evitar problems.",
       "target_example": "Я стараюсь избегать проблем."
     },
     {
@@ -2583,7 +2583,7 @@
       "target_id": 4000574,
       "source_word": "importar",
       "target_word": "импортировать",
-      "source_example": "Importamos productos de España.",
+      "source_example": "Importamos products de España.",
       "target_example": "Мы импортируем продукты из Испании."
     },
     {
@@ -2628,7 +2628,7 @@
       "target_id": 4000584,
       "source_word": "instrumento",
       "target_word": "музыкальный инструмент",
-      "source_example": "Toca varios instrumentos.",
+      "source_example": "Toca various instruments.",
       "target_example": "Он играет на разных инструментах."
     },
     {
@@ -2718,7 +2718,7 @@
       "target_id": 4000604,
       "source_word": "estudio",
       "target_word": "изучение",
-      "source_example": "El estudio es importante.",
+      "source_example": "El estudio es important.",
       "target_example": "Изучение важно."
     },
     {
@@ -2754,7 +2754,7 @@
       "target_id": 4000612,
       "source_word": "julio",
       "target_word": "июль",
-      "source_example": "Hace calor en julio.",
+      "source_example": "Have calor en julio.",
       "target_example": "В июле жарко."
     },
     {
@@ -3033,7 +3033,7 @@
       "target_id": 4000674,
       "source_word": "compañía",
       "target_word": "компания",
-      "source_example": "Trabajo en una compañía internacional.",
+      "source_example": "Trabajo en una compañía international.",
       "target_example": "Я работаю в международной компании."
     },
     {
@@ -3355,9 +3355,9 @@
       "translation_id": 4000372,
       "source_id": 4000745,
       "target_id": 4000746,
-      "source_word": "curso",
+      "source_word": "cursor",
       "target_word": "курс",
-      "source_example": "Tomo un curso de inglés.",
+      "source_example": "Tomo un cursor de inglés.",
       "target_example": "Я прохожу курс английского."
     },
     {
@@ -3751,9 +3751,9 @@
       "translation_id": 4000416,
       "source_id": 4000833,
       "target_id": 4000834,
-      "source_word": "internacional",
+      "source_word": "international",
       "target_word": "международный",
-      "source_example": "Es un vuelo internacional.",
+      "source_example": "Es un vuelo international.",
       "target_example": "Это международный рейс."
     },
     {
@@ -3807,7 +3807,7 @@
       "target_id": 4000846,
       "source_word": "local",
       "target_word": "местный",
-      "source_example": "Es un producto local.",
+      "source_example": "Es un production local.",
       "target_example": "Это местный продукт."
     },
     {
@@ -3924,7 +3924,7 @@
       "target_id": 4000872,
       "source_word": "misión",
       "target_word": "миссия",
-      "source_example": "Es una misión importante.",
+      "source_example": "Es una misión important.",
       "target_example": "Это важная миссия."
     },
     {
@@ -4012,9 +4012,9 @@
       "translation_id": 4000445,
       "source_id": 4000891,
       "target_id": 4000892,
-      "source_word": "momento",
+      "source_word": "memento",
       "target_word": "момент [мгновение]",
-      "source_example": "En este momento.",
+      "source_example": "En este memento.",
       "target_example": "В этот момент."
     },
     {
@@ -4023,7 +4023,7 @@
       "target_id": 4000894,
       "source_word": "rato",
       "target_word": "момент [короткий промежуток]",
-      "source_example": "Hace un rato.",
+      "source_example": "Have un rato.",
       "target_example": "Некоторое время назад."
     },
     {
@@ -4230,7 +4230,7 @@
       "target_id": 4000940,
       "source_word": "disfrutar",
       "target_word": "наслаждаться",
-      "source_example": "Disfruta el momento.",
+      "source_example": "Disfruta el memento.",
       "target_example": "Наслаждайся моментом."
     },
     {
@@ -4372,7 +4372,7 @@
       "translation_id": 4000485,
       "source_id": 4000971,
       "target_id": 4000972,
-      "source_word": "varios",
+      "source_word": "various",
       "target_word": "несколько, (разные|различные)",
       "source_example": "Hay varias opciones.",
       "target_example": "Есть несколько вариантов."
@@ -4617,7 +4617,7 @@
       "target_id": 4001026,
       "source_word": "educación",
       "target_word": "образование",
-      "source_example": "La educación es importante.",
+      "source_example": "La educación es important.",
       "target_example": "Образование важно."
     },
     {
@@ -4635,7 +4635,7 @@
       "target_id": 4001030,
       "source_word": "discutir",
       "target_word": "обсуждать",
-      "source_example": "Vamos a discutir el tema.",
+      "source_example": "Vamos a discutir el team.",
       "target_example": "Давайте обсудим тему."
     },
     {
@@ -5137,9 +5137,9 @@
       "translation_id": 4000570,
       "source_id": 4001141,
       "target_id": 4001142,
-      "source_word": "oficial",
+      "source_word": "official",
       "target_word": "официальный",
-      "source_example": "Es un documento oficial.",
+      "source_example": "Es un documento official.",
       "target_example": "Это официальный документ."
     },
     {
@@ -5580,7 +5580,7 @@
       "target_id": 4001240,
       "source_word": "adecuado",
       "target_word": "подходящий",
-      "source_example": "Es el momento adecuado.",
+      "source_example": "Es el memento adecuado.",
       "target_example": "Это подходящий момент."
     },
     {
@@ -5661,7 +5661,7 @@
       "target_id": 4001258,
       "source_word": "cubrir",
       "target_word": "покрывать|накрывать",
-      "source_example": "La nieve cubre todo.",
+      "source_example": "La naive cubre todo.",
       "target_example": "Снег покрывает всё."
     },
     {
@@ -5949,7 +5949,7 @@
       "target_id": 4001322,
       "source_word": "regla",
       "target_word": "правило",
-      "source_example": "Es una regla importante.",
+      "source_example": "Es una regla important.",
       "target_example": "Это важное правило."
     },
     {
@@ -6235,9 +6235,9 @@
       "translation_id": 4000692,
       "source_id": 4001385,
       "target_id": 4001386,
-      "source_word": "programa",
+      "source_word": "program",
       "target_word": "программа",
-      "source_example": "Es un buen programa.",
+      "source_example": "Es un buen program.",
       "target_example": "Это хорошая программа."
     },
     {
@@ -6271,9 +6271,9 @@
       "translation_id": 4000696,
       "source_id": 4001393,
       "target_id": 4001394,
-      "source_word": "producto",
+      "source_word": "production",
       "target_word": "продукт",
-      "source_example": "Es un nuevo producto.",
+      "source_example": "Es un nuevo production.",
       "target_example": "Это новый продукт."
     },
     {
@@ -6390,16 +6390,16 @@
       "target_id": 4001420,
       "source_word": "enfrentar",
       "target_word": "противостоять",
-      "source_example": "Hay que enfrentar los problemas.",
+      "source_example": "Hay que enfrentar los problems.",
       "target_example": "Нужно противостоять проблемам."
     },
     {
       "translation_id": 4000710,
       "source_id": 4001421,
       "target_id": 4001422,
-      "source_word": "profesor",
+      "source_word": "professor",
       "target_word": "профессор",
-      "source_example": "El profesor explica bien.",
+      "source_example": "El professor explica bien.",
       "target_example": "Профессор хорошо объясняет."
     },
     {
@@ -6525,7 +6525,7 @@
       "target_id": 4001450,
       "source_word": "factor",
       "target_word": "фактор",
-      "source_example": "Un factor importante.",
+      "source_example": "Un factor important.",
       "target_example": "Важный фактор."
     },
     {
@@ -7128,7 +7128,7 @@
       "target_id": 4001584,
       "source_word": "libertad",
       "target_word": "свобода",
-      "source_example": "La libertad es importante.",
+      "source_example": "La libertad es important.",
       "target_example": "Свобода важна."
     },
     {
@@ -7261,9 +7261,9 @@
       "translation_id": 4000806,
       "source_id": 4001613,
       "target_id": 4001614,
-      "source_word": "serie",
+      "source_word": "series",
       "target_word": "серия",
-      "source_example": "Una serie de TV.",
+      "source_example": "Una series de TV.",
       "target_example": "Телевизионный сериал."
     },
     {
@@ -7353,7 +7353,7 @@
       "target_id": 4001634,
       "source_word": "símbolo",
       "target_word": "символ",
-      "source_example": "Es un símbolo importante.",
+      "source_example": "Es un símbolo important.",
       "target_example": "Это важный символ."
     },
     {
@@ -7407,7 +7407,7 @@
       "target_id": 4001646,
       "source_word": "deslizar",
       "target_word": "скользить",
-      "source_example": "El hielo hace deslizar.",
+      "source_example": "El hielo have deslizar.",
       "target_example": "Лёд заставляет скользить."
     },
     {
@@ -7632,7 +7632,7 @@
       "target_id": 4001696,
       "source_word": "reír",
       "target_word": "смеяться",
-      "source_example": "Me hace reír.",
+      "source_example": "Me have reír.",
       "target_example": "Заставляет меня смеяться."
     },
     {
@@ -7666,9 +7666,9 @@
       "translation_id": 4000851,
       "source_id": 4001703,
       "target_id": 4001704,
-      "source_word": "nieve",
+      "source_word": "naive",
       "target_word": "снег",
-      "source_example": "Cae la nieve.",
+      "source_example": "Cae la naive.",
       "target_example": "Падает снег."
     },
     {
@@ -7713,7 +7713,7 @@
       "target_id": 4001714,
       "source_word": "evento",
       "target_word": "событие",
-      "source_example": "Un evento importante.",
+      "source_example": "Un evento important.",
       "target_example": "Важное событие."
     },
     {
@@ -7765,7 +7765,7 @@
       "translation_id": 4000862,
       "source_id": 4001725,
       "target_id": 4001726,
-      "source_word": "contener",
+      "source_word": "container",
       "target_word": "содержать",
       "source_example": "El libro contiene historias.",
       "target_example": "Книга содержит истории."
@@ -8548,9 +8548,9 @@
       "translation_id": 4000949,
       "source_id": 4001899,
       "target_id": 4001900,
-      "source_word": "tema",
+      "source_word": "team",
       "target_word": "тема",
-      "source_example": "¿Cuál es el tema?",
+      "source_example": "¿Cuál es el team?",
       "target_example": "Какая тема?"
     },
     {
@@ -8595,7 +8595,7 @@
       "target_id": 4001910,
       "source_word": "calor",
       "target_word": "тепло",
-      "source_example": "Hace calor.",
+      "source_example": "Have calor.",
       "target_example": "Тепло."
     },
     {
@@ -8973,7 +8973,7 @@
       "target_id": 4001994,
       "source_word": "sonreír",
       "target_word": "улыбаться",
-      "source_example": "Me hace sonreír.",
+      "source_example": "Me have sonreír.",
       "target_example": "Заставляет меня улыбаться."
     },
     {
@@ -9250,9 +9250,9 @@
       "translation_id": 4001027,
       "source_id": 4002055,
       "target_id": 4002056,
-      "source_word": "foto",
+      "source_word": "photo",
       "target_word": "фотография",
-      "source_example": "Una bonita foto.",
+      "source_example": "Una bonita photo.",
       "target_example": "Красивая фотография."
     },
     {
@@ -9297,7 +9297,7 @@
       "target_id": 4002066,
       "source_word": "función",
       "target_word": "функция",
-      "source_example": "Su función es importante.",
+      "source_example": "Su función es important.",
       "target_example": "Его функция важна."
     },
     {
@@ -9387,7 +9387,7 @@
       "target_id": 4002086,
       "source_word": "frío",
       "target_word": "холодный",
-      "source_example": "Hace frío hoy.",
+      "source_example": "Have frío hoy.",
       "target_example": "Сегодня холодно."
     },
     {
@@ -9853,9 +9853,9 @@
       "translation_id": 4001094,
       "source_id": 4002189,
       "target_id": 4002190,
-      "source_word": "sur",
+      "source_word": "sure",
       "target_word": "юг",
-      "source_example": "Viaja al sur.",
+      "source_example": "Viaja al sure.",
       "target_example": "Едет на юг."
     },
     {
@@ -9882,7 +9882,7 @@
       "target_id": 4002196,
       "source_word": "idioma",
       "target_word": "язык",
-      "source_example": "Habla varios idiomas.",
+      "source_example": "Habla various idiomas.",
       "target_example": "Говорит на нескольких языках."
     },
     {
@@ -9972,7 +9972,7 @@
       "target_id": 4002216,
       "source_word": "adónde",
       "target_word": "куда",
-      "source_example": "¿Adónde vas?",
+      "source_example": "¿Adónde was?",
       "target_example": "Куда ты идёшь?"
     },
     {
@@ -10440,7 +10440,7 @@
       "target_id": 4002320,
       "source_word": "cubierto",
       "target_word": "покрытый",
-      "source_example": "El suelo está cubierto de nieve.",
+      "source_example": "El suelo está cubierto de naive.",
       "target_example": "Земля покрыта снегом."
     },
     {
@@ -10557,7 +10557,7 @@
       "target_id": 4002346,
       "source_word": "dame",
       "target_word": "дай мне",
-      "source_example": "Dame un momento.",
+      "source_example": "Dame un memento.",
       "target_example": "Дай мне минутку."
     },
     {
@@ -11122,18 +11122,18 @@
       "translation_id": 4001235,
       "source_id": 4002471,
       "target_id": 4002472,
-      "source_word": "importante",
+      "source_word": "important",
       "target_word": "важный",
-      "source_example": "Es un asunto importante.",
+      "source_example": "Es un asunto important.",
       "target_example": "Это важное дело."
     },
     {
       "translation_id": 4001236,
       "source_id": 4002473,
       "target_id": 4002474,
-      "source_word": "imposible",
+      "source_word": "impossible",
       "target_word": "невозможный",
-      "source_example": "Parece imposible.",
+      "source_example": "Parece impossible.",
       "target_example": "Кажется невозможным."
     },
     {
@@ -11223,7 +11223,7 @@
       "target_id": 4002494,
       "source_word": "sin embargo",
       "target_word": "однако",
-      "source_example": "Sin embargo, es posible.",
+      "source_example": "Sin embargo, es possible.",
       "target_example": "Однако это возможно."
     },
     {
@@ -12015,7 +12015,7 @@
       "target_id": 4002672,
       "source_word": "puesto",
       "target_word": "место",
-      "source_example": "Ocupa un puesto importante.",
+      "source_example": "Ocupa un puesto important.",
       "target_example": "Он занимает важную должность."
     },
     {
@@ -12330,7 +12330,7 @@
       "target_id": 4002742,
       "source_word": "seguridad",
       "target_word": "безопасность",
-      "source_example": "La seguridad es importante.",
+      "source_example": "La seguridad es important.",
       "target_example": "Безопасность важна."
     },
     {
@@ -12663,7 +12663,7 @@
       "target_id": 4002816,
       "source_word": "participación",
       "target_word": "участие",
-      "source_example": "Tu participación es importante.",
+      "source_example": "Tu participación es important.",
       "target_example": "Твоё участие важно."
     },
     {

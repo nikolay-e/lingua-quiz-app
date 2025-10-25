@@ -1,114 +1,157 @@
-# Pre-commit configuration for Lingua Quiz
-# Hooks are organized from fastest to slowest for optimal developer experience
+# Optimized pre-commit configuration for Lingua Quiz
+# Based on industry best practices for fast feedback and high defect prevention
+# Target: median runtime <20 seconds for pre-commit hooks
+#
+# Philosophy:
+# - Pre-commit: Fast, auto-fixable, schema, and secret checks
+# - Pre-push: Type checking, security scanning (heavier)
+# - CI: Deep SAST, tests with coverage, image scanning
+
+minimum_pre_commit_version: "3.5.0"
+default_stages: [pre-commit]
+default_language_version:
+  python: python3.13
+  node: system
+
+fail_fast: false  # Run all hooks to get complete feedback
 
 repos:
   # =============================================================================
-  # STAGE 1: Fast Safety Checks (runs in milliseconds)
+  # STAGE 1: Fast Safety & Hygiene Checks (<2 seconds)
   # =============================================================================
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
-      - id: trailing-whitespace
-        name: Trim trailing whitespace
-        exclude: ^(flux/clusters/preview-pr-*|flux/clusters/cleanup/.*)$
-      - id: end-of-file-fixer
-        name: Fix end of files
-        exclude: ^(flux/clusters/preview-pr-*|flux/clusters/cleanup/.*)$
-      - id: check-yaml
-        name: Check YAML syntax
-        exclude: ^(helm/.*\.yaml|code\.yaml|flux/.*/flux-system/.*|flux/clusters/preview-pr-*|flux/clusters/cleanup/.*)$
-      - id: check-json
-        name: Check JSON syntax
+      # Critical safety checks
       - id: check-merge-conflict
-        name: Check for merge conflicts
-      - id: mixed-line-ending
-        name: Fix mixed line endings
       - id: check-case-conflict
-        name: Check for case conflicts
+      - id: detect-private-key
       - id: debug-statements
-        name: Check for debug statements
+        language_version: python3
       - id: check-added-large-files
-        name: Check for large files
-        args: ['--maxkb=1000']
+        args: ["--maxkb=1024"]
+
+      # File format checks
+      - id: check-yaml
+        exclude: ^(helm/.*\.yaml|flux/.*/flux-system/.*)$
+      - id: check-json
+      - id: check-toml
+
+      # Auto-fixable hygiene
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
 
   # =============================================================================
-  # STAGE 2: File Format Validation
+  # STAGE 2: Schema & CI Configuration Validation (<1 second)
+  # Hidden gems with high impact - prevents pipeline breakage
   # =============================================================================
-  # YAML linting
-  - repo: https://github.com/adrienverge/yamllint
-    rev: v1.37.1
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.34.1
     hooks:
-      - id: yamllint
-        name: Lint YAML files
-        args: [-d, relaxed]
-        files: \.(yaml|yml)$
-        exclude: ^(helm/.*\.yaml|code\.yaml|flux/.*/flux-system/.*|flux/clusters/preview-pr-*|flux/clusters/cleanup/.*)$
+      - id: check-github-workflows
+        name: Validate GitHub workflows
+        args: ["--verbose"]
+      - id: check-dependabot
+        name: Validate Dependabot config
 
-  # SQL linting and formatting
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.8
+    hooks:
+      - id: actionlint
+        name: Lint GitHub Actions
+
+  # =============================================================================
+  # STAGE 3: Security - Secrets Scanning (<3 seconds)
+  # CRITICAL: Run on staged files only for speed
+  # =============================================================================
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.28.0
+    hooks:
+      - id: gitleaks
+        name: Scan for secrets (gitleaks)
+
+  # =============================================================================
+  # STAGE 4: Python - Fast Consolidated Toolchain (<5 seconds)
+  # Ruff replaces: isort + autoflake + black + flake8 (10x faster)
+  # =============================================================================
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.14.2
+    hooks:
+      - id: ruff
+        name: Lint Python with ruff
+        args: ["--fix", "--exit-non-zero-on-fix"]
+        types_or: [python, pyi]
+      - id: ruff-format
+        name: Format Python with ruff
+        types_or: [python, pyi]
+
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.21.0
+    hooks:
+      - id: pyupgrade
+        name: Upgrade Python syntax
+        args: ["--py313-plus"]
+
+  # =============================================================================
+  # STAGE 5: Python Type Checking & Security (pre-push only, ~10 seconds)
+  # Heavier checks moved to pre-push to keep pre-commit fast
+  # =============================================================================
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.18.2
+    hooks:
+      - id: mypy
+        name: Type check Python with mypy
+        args: [
+          "--python-version=3.13",
+          "--check-untyped-defs",
+          "--ignore-missing-imports",
+          "--no-warn-unused-ignores"
+        ]
+        additional_dependencies: [
+          "types-requests",
+          "types-PyYAML"
+        ]
+        files: ^packages/backend/
+        stages: [pre-push]
+
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.8.6
+    hooks:
+      - id: bandit
+        name: Security scan Python (bandit)
+        args: ["-q", "-r", "-x", "tests,*/test_*.py,*/conftest.py"]
+        files: ^packages/backend/
+        stages: [pre-push]
+
+  # =============================================================================
+  # STAGE 6: SQL Quality (<2 seconds)
+  # =============================================================================
   - repo: https://github.com/sqlfluff/sqlfluff
-    rev: 3.4.2
+    rev: 3.5.0
     hooks:
       - id: sqlfluff-fix
         name: Format SQL files
-        args: [--dialect=postgres]
+        args: ["--dialect=postgres", "--exclude-rules=RF04"]
         files: \.sql$
       - id: sqlfluff-lint
         name: Lint SQL files
-        args: [--dialect=postgres]
+        args: ["--dialect=postgres", "--exclude-rules=RF04"]
         files: \.sql$
 
   # =============================================================================
-  # STAGE 3: Python Code Quality
+  # STAGE 7: JavaScript/TypeScript (<5 seconds)
   # =============================================================================
-  # Python import sorting
-  - repo: https://github.com/pycqa/isort
-    rev: 6.1.0
-    hooks:
-      - id: isort
-        name: Sort Python imports
-        args: ['--profile', 'black']
-        files: \.py$
-
-  # Python auto-formatting
-  - repo: https://github.com/pycqa/autoflake
-    rev: v2.3.1
-    hooks:
-      - id: autoflake
-        name: Remove unused Python imports
-        args: [--remove-all-unused-imports, --remove-unused-variables, --in-place]
-        files: \.py$
-
-  - repo: https://github.com/psf/black
-    rev: 25.9.0
-    hooks:
-      - id: black
-        name: Format Python code
-        args: ['--line-length=150']
-        files: \.py$
-
-  # Python linting
-  - repo: https://github.com/pycqa/flake8
-    rev: 7.3.0
-    hooks:
-      - id: flake8
-        name: Lint Python code
-        files: \.py$
-        args: ['--max-line-length=150', '--extend-ignore=E203,W503']
-
-  # =============================================================================
-  # STAGE 4: JavaScript/TypeScript Code Quality
-  # =============================================================================
-  # Prettier formatting (runs before ESLint to avoid conflicts)
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v4.0.0-alpha.8
     hooks:
       - id: prettier
-        name: Format with Prettier
-        args: [--write, --ignore-path, .gitignore]
-        files: \.(js|jsx|ts|tsx|svelte|json|css|scss|html|yaml|yml|md)$
-        exclude: ^(packages/.*/(dist|build|node_modules)/.*|helm/.*\.yaml|code\.yaml|package-lock\.json|flux/.*/flux-system/.*|flux/clusters/preview-pr-*|flux/clusters/cleanup/.*)$
+        name: Format JS/TS/Svelte with Prettier
+        args: ["--write", "--ignore-path", ".gitignore"]
+        files: \.(js|jsx|ts|tsx|svelte|json|css|scss|html|md)$
+        exclude: ^(packages/.*/((dist|build|node_modules)/.*)|package-lock\.json|flux/.*/flux-system/.*)$
 
-  # ESLint (runs after Prettier)
   - repo: local
     hooks:
       - id: eslint
@@ -117,45 +160,115 @@ repos:
         language: system
         files: \.(js|jsx|ts|tsx|svelte)$
         pass_filenames: false
-        require_serial: true
 
-  # TypeScript type checking
-  - repo: local
-    hooks:
       - id: typescript-check
         name: TypeScript type checking
         entry: npm run typecheck
         language: system
-        files: \.(ts|tsx)$
+        files: \.(ts|tsx|svelte)$
         pass_filenames: false
-        require_serial: true
+        stages: [pre-push]
 
   # =============================================================================
-  # STAGE 5: Infrastructure and Configuration
+  # STAGE 8: Shell Scripts (<2 seconds)
   # =============================================================================
-  # Helm chart linting
-  - repo: https://github.com/gruntwork-io/pre-commit
-    rev: v0.1.30
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.11.0.1
     hooks:
-      - id: helmlint
-        name: Lint Helm charts
+      - id: shellcheck
+        name: Lint shell scripts
+        args: ["--exclude=SC2034,SC2155,SC2086"]
 
-  # Docker file linting
+  - repo: https://github.com/scop/pre-commit-shfmt
+    rev: v3.12.0-2
+    hooks:
+      - id: shfmt
+        name: Format shell scripts
+        args: ["-i", "2", "-ci", "-bn", "-w"]
+
+  # =============================================================================
+  # STAGE 9: Docker (<1 second)
+  # =============================================================================
   - repo: https://github.com/hadolint/hadolint
     rev: v2.14.0
     hooks:
       - id: hadolint-docker
-        name: Lint Dockerfile
-        args: ['--ignore', 'DL3018', '--ignore', 'DL3013', '--ignore', 'DL3029', '--ignore', 'DL3059', '--ignore', 'DL3003']
+        name: Lint Dockerfiles
+        files: (^|/)[Dd]ockerfile(\..*)?$
+        args: [
+          "--ignore", "DL3018",  # Pin versions (alpine apk)
+          "--ignore", "DL3013",  # Pin versions (pip)
+          "--ignore", "DL3029",  # Do not use --platform flag
+          "--ignore", "DL3059",  # Multiple consecutive RUN
+          "--ignore", "DL3003"   # Use WORKDIR
+        ]
 
   # =============================================================================
-  # STAGE 6: Security Checks
+  # STAGE 10: YAML & Markdown (<3 seconds)
   # =============================================================================
-  # Detect secrets and credentials
-  - repo: https://github.com/Yelp/detect-secrets
-    rev: v1.5.0
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.37.1
     hooks:
-      - id: detect-secrets
-        name: Detect secrets
-        args: ['--baseline', '.secrets.baseline']
-        exclude: package-lock.json
+      - id: yamllint
+        name: Lint YAML files
+        args: ["-d", "relaxed"]
+        files: \.(yaml|yml)$
+        exclude: ^(helm/.*\.yaml|flux/.*/flux-system/.*)$
+
+  # =============================================================================
+  # STAGE 12: Kubernetes/Helm (changed files only, <5 seconds)
+  # =============================================================================
+  - repo: local
+    hooks:
+      - id: helm-lint-changed
+        name: Helm lint changed charts
+        entry: bash -c
+        args:
+          - |
+            CHANGED_CHARTS=$(git diff --name-only --cached | grep "^helm/" | cut -d/ -f1-2 | sort -u || true);
+            [ -z "$CHANGED_CHARTS" ] && exit 0;
+            for chart in $CHANGED_CHARTS; do
+              [ -f "$chart/Chart.yaml" ] || continue;
+              echo "Linting $chart...";
+              helm dependency build "$chart" >/dev/null 2>&1 || true;
+              helm lint "$chart" || exit 1;
+            done
+        language: system
+        files: ^helm/
+        pass_filenames: false
+
+  # =============================================================================
+  # STAGE 13: Commit Message Quality (commit-msg hook)
+  # Enables conventional commits for changelog automation
+  # =============================================================================
+  - repo: https://github.com/jorisroovers/gitlint
+    rev: v0.19.1
+    hooks:
+      - id: gitlint
+        name: Validate commit message
+        stages: [commit-msg]
+        args: ["--msg-filename"]
+
+# =============================================================================
+# Installation Instructions
+# =============================================================================
+# Run these commands to enable all hook types:
+#
+#   pre-commit install
+#   pre-commit install --hook-type commit-msg
+#   pre-commit install --hook-type pre-push
+#
+# Optional: Enable auto-update monthly
+#   pre-commit autoupdate
+#
+# Optional: Run manually on all files
+#   pre-commit run --all-files
+#
+# =============================================================================
+# Performance Targets
+# =============================================================================
+# - Pre-commit median: <20 seconds
+# - Pre-push median: <30 seconds
+# - Bypass rate: <5-10% per month
+#
+# If hooks are too slow, move to pre-push or CI

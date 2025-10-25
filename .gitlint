@@ -1,0 +1,26 @@
+# Gitlint configuration for conventional commits
+# https://jorisroovers.com/gitlint/
+
+[general]
+# Enable community contributed rules
+contrib=contrib-title-conventional-commits
+
+# Ignore merge/revert commits
+ignore=body-is-missing,T3
+
+[title-max-length]
+line-length=72
+
+[title-must-not-contain-word]
+# Comma-separated list of words that should not occur in the title
+words=wip,WIP
+
+[body-max-line-length]
+line-length=100
+
+[body-min-length]
+min-length=0  # Allow empty body
+
+[contrib-title-conventional-commits]
+# Conventional commit types we allow
+types=feat,fix,docs,style,refactor,test,chore,build,ci,perf,revert

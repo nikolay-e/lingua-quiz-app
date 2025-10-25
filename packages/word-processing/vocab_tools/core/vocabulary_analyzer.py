@@ -9,7 +9,7 @@ from abc import ABC, abstractmethod
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any
 
 from wordfreq import top_n_list, word_frequency
 
@@ -42,18 +42,18 @@ class VocabularyAnalysisResult:
     language_code: str
     total_existing_words: int
     total_analyzed_words: int
-    recommendations: List[WordAnalysis]
-    categories: Dict[str, List[WordAnalysis]]
+    recommendations: list[WordAnalysis]
+    categories: dict[str, list[WordAnalysis]]
 
     def get_recommendation_count(self) -> int:
         """Get the number of recommended words."""
         return len(self.recommendations)
 
-    def get_category_summary(self) -> Dict[str, int]:
+    def get_category_summary(self) -> dict[str, int]:
         """Get word counts by category."""
         return {category: len(words) for category, words in self.categories.items()}
 
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict:
         """Convert to dictionary for JSON serialization."""
         return {
             "language_code": self.language_code,
@@ -85,8 +85,8 @@ class VocabularyAnalyzer(ABC):
     def __init__(
         self,
         language_code: str,
-        migrations_directory: Optional[Path] = None,
-        config: Optional[Dict[str, Any]] = None,
+        migrations_directory: Path | None = None,
+        config: dict[str, Any] | None = None,
         silent: bool = False,
     ):
         """
@@ -104,7 +104,7 @@ class VocabularyAnalyzer(ABC):
         # Initialize components
         self.db_parser = VocabularyFileParser(migrations_directory)
         self.normalizer = get_normalizer(language_code)
-        self._nlp_model: Optional[Any] = None
+        self._nlp_model: Any | None = None
 
         # Supported languages
         if language_code not in SUPPORTED_LANGUAGES:
@@ -134,7 +134,7 @@ class VocabularyAnalyzer(ABC):
         return get_nlp_model(self.language_code, model_preferences, silent=silent)
 
     @abstractmethod
-    def analyze_word_linguistics(self, word: str, existing_words: Set[str], rank: int = None) -> Tuple[str, str, str]:
+    def analyze_word_linguistics(self, word: str, existing_words: set[str], rank: int = None) -> tuple[str, str, str]:
         """
         Perform language-specific linguistic analysis of a word.
 
@@ -147,7 +147,7 @@ class VocabularyAnalyzer(ABC):
             Tuple of (category, pos_tag, analysis_reason)
         """
 
-    def extract_existing_vocabulary(self) -> Set[str]:
+    def extract_existing_vocabulary(self) -> set[str]:
         discovered_files = self.db_parser.discover_migration_files()
         language_files = discovered_files.get(self.language_code, [])
 
@@ -193,8 +193,8 @@ class VocabularyAnalyzer(ABC):
         self,
         top_n: int = 1000,
         start_rank: int = 1,
-        existing_words: Optional[Set[str]] = None,
-    ) -> List[Tuple[str, int]]:
+        existing_words: set[str] | None = None,
+    ) -> list[tuple[str, int]]:
         """
         Get most frequent words that are missing from vocabulary within a frequency range.
 
@@ -261,7 +261,7 @@ class VocabularyAnalyzer(ABC):
         self,
         top_n: int = 1000,
         start_rank: int = 1,
-        limit_analysis: Optional[int] = None,
+        limit_analysis: int | None = None,
         show_progress: bool = True,
     ) -> VocabularyAnalysisResult:
         """
@@ -371,9 +371,9 @@ class VocabularyAnalyzer(ABC):
             result: Analysis results to print
             show_details: Whether to show detailed category breakdown
         """
-        print(f"\n{'='*80}")
+        print(f"\n{'=' * 80}")
         print(f"📊 {result.language_code.upper()} VOCABULARY ANALYSIS RESULTS")
-        print(f"{'='*80}")
+        print(f"{'=' * 80}")
 
         print("📈 Summary:")
         print(f"   • Existing vocabulary: {result.total_existing_words:,} words")
@@ -391,4 +391,4 @@ class VocabularyAnalyzer(ABC):
             for i, analysis in enumerate(result.recommendations[:20], 1):
                 print(f"   {i:2d}. {analysis.word:<15} ({analysis.frequency:.2e}) - {analysis.reason}")
 
-        print(f"\n{'='*80}")
+        print(f"\n{'=' * 80}")

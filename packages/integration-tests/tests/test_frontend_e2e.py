@@ -2,8 +2,8 @@
 
 import time
 
-import pytest
 from bs4 import BeautifulSoup
+import pytest
 from tests.conftest import FRONTEND_URL
 
 

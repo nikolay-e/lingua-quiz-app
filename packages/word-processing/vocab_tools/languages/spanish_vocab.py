@@ -6,7 +6,6 @@ Spanish linguistic features like verb conjugations, gender, and accents.
 """
 
 from pathlib import Path
-from typing import Set, Tuple
 
 from ..config.constants import WORD_CATEGORY_MAPPING
 from ..core.vocabulary_analyzer import VocabularyAnalyzer
@@ -33,7 +32,7 @@ class SpanishVocabularyAnalyzer(VocabularyAnalyzer):
 
         # Note: Regular verb pattern mapping removed - spaCy's lemmatization handles this better
 
-    def analyze_word_linguistics(self, word: str, existing_words: Set[str], rank: int = None) -> Tuple[str, str, str]:
+    def analyze_word_linguistics(self, word: str, existing_words: set[str], rank: int = None) -> tuple[str, str, str]:
         """
         Analyze Spanish word with specialized Spanish linguistic processing.
 
@@ -97,47 +96,43 @@ class SpanishVocabularyAnalyzer(VocabularyAnalyzer):
         if pos_tag == "VERB":
             if "Tense=Past" in morphology:
                 return f"Past tense of '{lemma}'"
-            elif "Tense=Pres" in morphology and "Person=1" in morphology:
+            if "Tense=Pres" in morphology and "Person=1" in morphology:
                 return f"First person present of '{lemma}'"
-            elif "Tense=Pres" in morphology and "Person=2" in morphology:
+            if "Tense=Pres" in morphology and "Person=2" in morphology:
                 return f"Second person present of '{lemma}'"
-            elif "Tense=Pres" in morphology and "Person=3" in morphology:
+            if "Tense=Pres" in morphology and "Person=3" in morphology:
                 return f"Third person present of '{lemma}'"
-            elif "Tense=Imp" in morphology:
+            if "Tense=Imp" in morphology:
                 return f"Imperfect tense of '{lemma}'"
-            elif "Tense=Fut" in morphology:
+            if "Tense=Fut" in morphology:
                 return f"Future tense of '{lemma}'"
-            elif "Mood=Sub" in morphology:
+            if "Mood=Sub" in morphology:
                 return f"Subjunctive form of '{lemma}'"
-            else:
-                return f"Conjugated form of '{lemma}'"
+            return f"Conjugated form of '{lemma}'"
 
-        elif pos_tag == "NOUN":
+        if pos_tag == "NOUN":
             if "Number=Plur" in morphology:
                 return f"Plural form of '{lemma}'"
-            elif "Gender=Masc" in morphology and word.endswith("o"):
+            if "Gender=Masc" in morphology and word.endswith("o"):
                 return f"Masculine form of '{lemma}'"
-            elif "Gender=Fem" in morphology and word.endswith("a"):
+            if "Gender=Fem" in morphology and word.endswith("a"):
                 return f"Feminine form of '{lemma}'"
-            else:
-                return f"Inflected form of '{lemma}'"
+            return f"Inflected form of '{lemma}'"
 
-        elif pos_tag == "ADJ":
+        if pos_tag == "ADJ":
             if "Degree=Cmp" in morphology:
                 return f"Comparative form of '{lemma}'"
-            elif "Degree=Sup" in morphology:
+            if "Degree=Sup" in morphology:
                 return f"Superlative form of '{lemma}'"
-            elif "Number=Plur" in morphology and "Gender=Masc" in morphology:
+            if "Number=Plur" in morphology and "Gender=Masc" in morphology:
                 return f"Masculine plural form of '{lemma}'"
-            elif "Number=Plur" in morphology and "Gender=Fem" in morphology:
+            if "Number=Plur" in morphology and "Gender=Fem" in morphology:
                 return f"Feminine plural form of '{lemma}'"
-            elif "Gender=Fem" in morphology:
+            if "Gender=Fem" in morphology:
                 return f"Feminine form of '{lemma}'"
-            else:
-                return f"Inflected adjective form of '{lemma}'"
+            return f"Inflected adjective form of '{lemma}'"
 
-        else:
-            return f"Inflected form of '{lemma}'"
+        return f"Inflected form of '{lemma}'"
 
     def _categorize_spanish_word(self, pos_tag: str, word: str, morphology: str) -> str:
         """

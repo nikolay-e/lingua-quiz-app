@@ -6,10 +6,9 @@ handling language-specific characteristics like German umlauts,
 Spanish accents, and English contractions.
 """
 
+from abc import ABC, abstractmethod
 import re
 import unicodedata
-from abc import ABC, abstractmethod
-from typing import Set
 
 
 class WordNormalizer(ABC):
@@ -28,7 +27,7 @@ class WordNormalizer(ABC):
         """
 
     @abstractmethod
-    def extract_word_variants(self, text: str) -> Set[str]:
+    def extract_word_variants(self, text: str) -> set[str]:
         """
         Extract and normalize word variants from text (handles pipes, spaces, etc).
 
@@ -68,7 +67,7 @@ class EnglishNormalizer(WordNormalizer):
         word = self._remove_accents(word)
         return word.lower().strip()
 
-    def extract_word_variants(self, text: str) -> Set[str]:
+    def extract_word_variants(self, text: str) -> set[str]:
         """
         Extract English word variants from text.
         English typically uses pipes (|) for alternatives.
@@ -85,24 +84,23 @@ class EnglishNormalizer(WordNormalizer):
         if "|" in text:
             for variant in text.split("|"):
                 variants.update(self.extract_word_variants(variant.strip()))
-        else:
-            # Handle multi-word phrases
-            if " " in text:
-                # Add full phrase
-                normalized_full = self.normalize(text)
-                if normalized_full and len(normalized_full) > 1:
-                    variants.add(normalized_full)
+        # Handle multi-word phrases
+        elif " " in text:
+            # Add full phrase
+            normalized_full = self.normalize(text)
+            if normalized_full and len(normalized_full) > 1:
+                variants.add(normalized_full)
 
-                # Add individual words if they're meaningful
-                for part in text.split():
-                    part_normalized = self.normalize(part)
-                    if part_normalized and len(part_normalized) > 2:
-                        variants.add(part_normalized)
-            else:
-                # Single word
-                normalized = self.normalize(text)
-                if normalized:
-                    variants.add(normalized)
+            # Add individual words if they're meaningful
+            for part in text.split():
+                part_normalized = self.normalize(part)
+                if part_normalized and len(part_normalized) > 2:
+                    variants.add(part_normalized)
+        else:
+            # Single word
+            normalized = self.normalize(text)
+            if normalized:
+                variants.add(normalized)
 
         return variants
 
@@ -119,7 +117,7 @@ class GermanNormalizer(WordNormalizer):
             "den",
             "dem",
             "des",
-            "ein",
+            "in",
             "eine",
             "einer",
             "einen",
@@ -160,7 +158,7 @@ class GermanNormalizer(WordNormalizer):
 
         return word
 
-    def extract_word_variants(self, text: str) -> Set[str]:
+    def extract_word_variants(self, text: str) -> set[str]:
         """
         Extract German word variants with special handling for compound words
         and comma-separated alternatives.
@@ -177,20 +175,19 @@ class GermanNormalizer(WordNormalizer):
         if "|" in text:
             for variant in text.split("|"):
                 variants.update(self.extract_word_variants(variant.strip()))
+        # Handle comma-separated alternatives (common in German)
+        elif "," in text and not text.count(",") > 2:  # Avoid sentences
+            for variant in text.split(","):
+                variant = variant.strip()
+                if variant:
+                    normalized = self.normalize(variant)
+                    if normalized and len(normalized) > 2:
+                        variants.add(normalized)
         else:
-            # Handle comma-separated alternatives (common in German)
-            if "," in text and not text.count(",") > 2:  # Avoid sentences
-                for variant in text.split(","):
-                    variant = variant.strip()
-                    if variant:
-                        normalized = self.normalize(variant)
-                        if normalized and len(normalized) > 2:
-                            variants.add(normalized)
-            else:
-                # Single word or phrase
-                normalized = self.normalize(text)
-                if normalized:
-                    variants.add(normalized)
+            # Single word or phrase
+            normalized = self.normalize(text)
+            if normalized:
+                variants.add(normalized)
 
         return variants
 
@@ -222,7 +219,7 @@ class SpanishNormalizer(WordNormalizer):
 
         return original
 
-    def extract_word_variants(self, text: str) -> Set[str]:
+    def extract_word_variants(self, text: str) -> set[str]:
         """
         Extract Spanish word variants from text.
 
@@ -238,24 +235,23 @@ class SpanishNormalizer(WordNormalizer):
         if "|" in text:
             for variant in text.split("|"):
                 variants.update(self.extract_word_variants(variant.strip()))
-        else:
-            # Handle multi-word phrases
-            if " " in text:
-                # Add full phrase
-                normalized_full = self.normalize(text)
-                if normalized_full and len(normalized_full) > 1:
-                    variants.add(normalized_full)
+        # Handle multi-word phrases
+        elif " " in text:
+            # Add full phrase
+            normalized_full = self.normalize(text)
+            if normalized_full and len(normalized_full) > 1:
+                variants.add(normalized_full)
 
-                # Add individual meaningful words
-                for part in text.split():
-                    part_normalized = self.normalize(part)
-                    if part_normalized and len(part_normalized) > 2:
-                        variants.add(part_normalized)
-            else:
-                # Single word
-                normalized = self.normalize(text)
-                if normalized:
-                    variants.add(normalized)
+            # Add individual meaningful words
+            for part in text.split():
+                part_normalized = self.normalize(part)
+                if part_normalized and len(part_normalized) > 2:
+                    variants.add(part_normalized)
+        else:
+            # Single word
+            normalized = self.normalize(text)
+            if normalized:
+                variants.add(normalized)
 
         return variants
 

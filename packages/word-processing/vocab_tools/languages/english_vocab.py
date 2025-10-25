@@ -6,7 +6,6 @@ to identify missing essential words and classify them appropriately.
 """
 
 from pathlib import Path
-from typing import Set, Tuple
 
 from ..config.constants import WORD_CATEGORY_MAPPING
 from ..core.vocabulary_analyzer import VocabularyAnalyzer
@@ -26,7 +25,7 @@ class EnglishVocabularyAnalyzer(VocabularyAnalyzer):
         if not silent:
             print("🏴󠁧󠁢󠁥󠁮󠁧󠁿 Initializing English vocabulary analyzer...")
 
-    def analyze_word_linguistics(self, word: str, existing_words: Set[str], rank: int = None) -> Tuple[str, str, str]:
+    def analyze_word_linguistics(self, word: str, existing_words: set[str], rank: int = None) -> tuple[str, str, str]:
         """
         Analyze English word using spaCy NLP for comprehensive classification.
 
@@ -79,18 +78,17 @@ class EnglishVocabularyAnalyzer(VocabularyAnalyzer):
         """
         if "Tense=Past" in morphology:
             return f"Past tense of '{lemma}'"
-        elif "Number=Plur" in morphology:
+        if "Number=Plur" in morphology:
             return f"Plural form of '{lemma}'"
-        elif "Degree=Cmp" in morphology:
+        if "Degree=Cmp" in morphology:
             return f"Comparative form of '{lemma}'"
-        elif "Degree=Sup" in morphology:
+        if "Degree=Sup" in morphology:
             return f"Superlative form of '{lemma}'"
-        elif "VerbForm=Ger" in morphology:
+        if "VerbForm=Ger" in morphology:
             return f"Gerund form of '{lemma}'"
-        elif "VerbForm=Part" in morphology:
+        if "VerbForm=Part" in morphology:
             return f"Participle form of '{lemma}'"
-        else:
-            return f"Inflected form of '{lemma}'"
+        return f"Inflected form of '{lemma}'"
 
     def _categorize_by_pos(self, pos_tag: str) -> str:
         """
@@ -155,5 +153,4 @@ class EnglishVocabularyAnalyzer(VocabularyAnalyzer):
         # Build enriched reason with rank information
         if rank:
             return f"Top {rank:,} word; classified as {description.lower()}"
-        else:
-            return f"High frequency {description.lower()}"
+        return f"High frequency {description.lower()}"

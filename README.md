@@ -9,6 +9,7 @@ A language learning web application that helps users master vocabulary through s
    - [kubectl](https://kubernetes.io/docs/tasks/tools/)
    - [Helm](https://helm.sh/docs/intro/install/)
    - NGINX Ingress Controller:
+
      ```bash
      kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.0/deploy/static/provider/cloud/deploy.yaml
      ```
@@ -22,10 +23,11 @@ A language learning web application that helps users master vocabulary through s
    ```
 
 3. **Access the App**:
-   - Frontend: http://localhost
-   - Backend API: http://localhost/api
+   - Frontend: <http://localhost>
+   - Backend API: <http://localhost/api>
 
 4. **Clean Up**:
+
    ```bash
    make clean-local
    ```

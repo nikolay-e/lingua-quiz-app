@@ -1,50 +1,90 @@
 version: 2
 
 updates:
-  # NPM dependencies
+  # NPM dependencies - разделены на major и minor/patch
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
       interval: 'weekly'
+      day: 'monday'
     labels:
       - 'dependencies'
+      - 'npm'
     groups:
-      npm-dependencies:
+      npm-major:
+        update-types:
+          - 'major'
+        patterns:
+          - '*'
+      npm-minor-patch:
+        update-types:
+          - 'minor'
+          - 'patch'
         patterns:
           - '*'
 
-  # Pip dependencies
+  # Pip dependencies - разделены на major и minor/patch
   - package-ecosystem: 'pip'
     directory: '/packages/backend/'
     schedule:
       interval: 'weekly'
+      day: 'monday'
     labels:
       - 'dependencies'
+      - 'python'
     groups:
-      pip-dependencies:
+      pip-major:
+        update-types:
+          - 'major'
+        patterns:
+          - '*'
+      pip-minor-patch:
+        update-types:
+          - 'minor'
+          - 'patch'
         patterns:
           - '*'
 
-  # Docker dependencies (single root Dockerfile)
+  # Docker dependencies - разделены на major и minor/patch
   - package-ecosystem: 'docker'
     directory: '/'
     schedule:
       interval: 'weekly'
+      day: 'monday'
     labels:
       - 'dependencies'
+      - 'docker'
     groups:
-      docker-dependencies:
+      docker-major:
+        update-types:
+          - 'major'
+        patterns:
+          - '*'
+      docker-minor-patch:
+        update-types:
+          - 'minor'
+          - 'patch'
         patterns:
           - '*'
 
-  # GitHub Actions dependencies
+  # GitHub Actions dependencies - разделены на major и minor/patch
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: 'weekly'
+      day: 'monday'
     labels:
       - 'dependencies'
+      - 'github-actions'
     groups:
-      actions-dependencies:
+      actions-major:
+        update-types:
+          - 'major'
+        patterns:
+          - '*'
+      actions-minor-patch:
+        update-types:
+          - 'minor'
+          - 'patch'
         patterns:
           - '*'

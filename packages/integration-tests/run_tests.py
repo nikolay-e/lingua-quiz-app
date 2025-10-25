@@ -3,10 +3,11 @@
 Integration and E2E Test Runner
 Runs all tests with proper reporting and exit codes
 """
+
 import os
+from pathlib import Path
 import subprocess
 import sys
-from pathlib import Path
 
 
 def main():

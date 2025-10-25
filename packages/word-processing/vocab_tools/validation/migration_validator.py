@@ -8,7 +8,6 @@ ID consistency, and overall database quality.
 from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional, Set, Tuple
 
 from ..core.database_parser import VocabularyEntry, VocabularyFileParser
 from ..core.word_normalizer import get_normalizer
@@ -22,7 +21,7 @@ class ValidationIssue:
     category: str
     message: str
     file_name: str
-    entry_id: Optional[int] = None
+    entry_id: int | None = None
 
     def __str__(self) -> str:
         location = f"{self.file_name}"
@@ -36,8 +35,8 @@ class ValidationResult:
     """Complete results of migration validation."""
 
     total_entries_checked: int
-    files_validated: List[str] = field(default_factory=list)
-    issues: List[ValidationIssue] = field(default_factory=list)
+    files_validated: list[str] = field(default_factory=list)
+    issues: list[ValidationIssue] = field(default_factory=list)
 
     @property
     def error_count(self) -> int:
@@ -54,7 +53,7 @@ class ValidationResult:
         """Check if validation passed (no errors)."""
         return self.error_count == 0
 
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict:
         """Convert to dictionary for JSON serialization."""
         return {
             "is_valid": self.is_valid,
@@ -86,7 +85,7 @@ class MigrationValidator:
     - Cross-language consistency
     """
 
-    def __init__(self, migrations_directory: Optional[Path] = None):
+    def __init__(self, migrations_directory: Path | None = None):
         """
         Initialize the migration validator.
 
@@ -133,7 +132,7 @@ class MigrationValidator:
                     error_issue = ValidationIssue(
                         severity="error",
                         category="file_access",
-                        message=f"Failed to validate {filename}: {str(e)}",
+                        message=f"Failed to validate {filename}: {e!s}",
                         file_name=filename,
                     )
                     result.issues.append(error_issue)
@@ -161,7 +160,7 @@ class MigrationValidator:
                 ValidationIssue(
                     severity="error",
                     category="file_parsing",
-                    message=f"Cannot parse migration file: {str(e)}",
+                    message=f"Cannot parse migration file: {e!s}",
                     file_name=filename,
                 )
             )
@@ -171,9 +170,9 @@ class MigrationValidator:
         normalizer = self.normalizers[language]
 
         # Track data for validation
-        seen_words: Dict[str, List[int]] = defaultdict(list)
-        seen_ids: Dict[str, Set[int]] = defaultdict(set)
-        duplicate_id_pairs: Dict[Tuple[int, int], List[int]] = defaultdict(list)
+        seen_words: dict[str, list[int]] = defaultdict(list)
+        seen_ids: dict[str, set[int]] = defaultdict(set)
+        duplicate_id_pairs: dict[tuple[int, int], list[int]] = defaultdict(list)
 
         # Validate each entry
         for entry in entries:
@@ -228,7 +227,7 @@ class MigrationValidator:
 
         return result
 
-    def _validate_entry(self, entry: VocabularyEntry, filename: str, normalizer) -> List[ValidationIssue]:
+    def _validate_entry(self, entry: VocabularyEntry, filename: str, normalizer) -> list[ValidationIssue]:
         """
         Validate a single vocabulary entry.
 
@@ -303,7 +302,7 @@ class MigrationValidator:
 
         return issues
 
-    def _validate_id_sequences(self, language: str, filename: str, seen_ids: Dict[str, Set[int]]) -> List[ValidationIssue]:
+    def _validate_id_sequences(self, language: str, filename: str, seen_ids: dict[str, set[int]]) -> list[ValidationIssue]:
         """
         Validate ID sequences for internal consistency (no hardcoded expectations).
 
@@ -359,9 +358,9 @@ class MigrationValidator:
             result: Validation results to report
             detailed: Whether to show detailed issue breakdown
         """
-        print(f"\n{'='*80}")
+        print(f"\n{'=' * 80}")
         print("📋 MIGRATION VALIDATION REPORT")
-        print(f"{'='*80}")
+        print(f"{'=' * 80}")
 
         print("📊 Summary:")
         print(f"   • Files validated: {len(result.files_validated)}")
@@ -395,4 +394,4 @@ class MigrationValidator:
 
         # Duplicate information is already shown in the issues section above
 
-        print(f"\n{'='*80}")
+        print(f"\n{'=' * 80}")

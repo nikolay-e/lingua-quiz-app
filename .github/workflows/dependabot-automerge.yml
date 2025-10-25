@@ -1,0 +1,87 @@
+name: Dependabot Auto-merge
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  automerge:
+    name: Auto-merge Minor/Patch Updates
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+
+    steps:
+      - name: Check PR labels
+        id: check
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const labels = pr.labels.map(l => l.name);
+
+            // Проверяем что это minor/patch обновление
+            const title = pr.title.toLowerCase();
+            const isMinorOrPatch =
+              title.includes('minor') ||
+              title.includes('patch') ||
+              title.match(/bump .* from .* to .*/);
+
+            const isMajor = title.includes('major');
+
+            // Автомерж только для minor/patch, не для major
+            const shouldAutomerge = isMinorOrPatch && !isMajor && labels.includes('dependencies');
+
+            core.setOutput('automerge', shouldAutomerge);
+
+            if (shouldAutomerge) {
+              console.log(`✓ Will auto-merge: ${pr.title}`);
+            } else {
+              console.log(`✗ Skip auto-merge: ${pr.title} (major update or not dependencies)`);
+            }
+
+      - name: Wait for CI checks
+        if: steps.check.outputs.automerge == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+
+            // Ждём 2 минуты пока запустятся проверки
+            await new Promise(resolve => setTimeout(resolve, 120000));
+
+            // Проверяем статус CI
+            const { data: checks } = await github.rest.checks.listForRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: pr.head.sha
+            });
+
+            const allChecks = checks.check_runs;
+            const failedChecks = allChecks.filter(c => c.conclusion === 'failure');
+            const pendingChecks = allChecks.filter(c => c.status !== 'completed');
+
+            if (failedChecks.length > 0) {
+              throw new Error(`CI checks failed: ${failedChecks.map(c => c.name).join(', ')}`);
+            }
+
+            if (pendingChecks.length > 0) {
+              console.log(`Waiting for checks: ${pendingChecks.map(c => c.name).join(', ')}`);
+            }
+
+      - name: Enable auto-merge
+        if: steps.check.outputs.automerge == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.pulls.merge({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              merge_method: 'squash'
+            });
+
+            console.log('✓ PR auto-merged successfully');

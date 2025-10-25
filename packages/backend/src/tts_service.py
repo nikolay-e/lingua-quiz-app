@@ -7,7 +7,6 @@ import base64
 import hashlib
 import logging
 import os
-from typing import Optional
 
 from google.cloud import texttospeech
 from google.oauth2 import service_account
@@ -56,9 +55,9 @@ class TTSService:
 
     def get_cache_key(self, text: str, language: str) -> str:
         """Generate MD5 hash for cache key"""
-        return hashlib.md5(f"{text}_{language}".encode("utf-8")).hexdigest()
+        return hashlib.md5(f"{text}_{language}".encode()).hexdigest()
 
-    def _get_from_cache_validated(self, cache_key: str, text: str) -> tuple[Optional[bytes], bool]:
+    def _get_from_cache_validated(self, cache_key: str, text: str) -> tuple[bytes | None, bool]:
         """Retrieve audio data from database cache with text validation"""
         conn = None
         try:
@@ -78,12 +77,11 @@ class TTSService:
                     if is_valid and audio_data:
                         logger.debug(f"TTS cache hit for key: {cache_key}")
                         return audio_data, True
-                    elif is_valid:
+                    if is_valid:
                         logger.debug(f"TTS cache miss for valid text: {cache_key}")
                         return None, True
-                    else:
-                        logger.debug(f"TTS text not allowed: {text[:30]}...")
-                        return None, False
+                    logger.debug(f"TTS text not allowed: {text[:30]}...")
+                    return None, False
 
         except Exception as e:
             logger.error(f"Cache read error: {e}")
@@ -113,9 +111,8 @@ class TTSService:
                 if result:
                     logger.debug(f"TTS cached: {language} - {text[:30]}... (size: {len(audio_content)} bytes)")
                     return True
-                else:
-                    logger.warning(f"TTS cache rejected - text not in database: {text[:30]}...")
-                    return False
+                logger.warning(f"TTS cache rejected - text not in database: {text[:30]}...")
+                return False
 
         except Exception as e:
             logger.error(f"Cache save error: {e}")
@@ -130,7 +127,7 @@ class TTSService:
                 self.db_pool.putconn(conn)
         return False
 
-    def synthesize_speech(self, text: str, language: str) -> Optional[bytes]:
+    def synthesize_speech(self, text: str, language: str) -> bytes | None:
         """
         Synthesize speech for given text and language.
         Only works with text that exists in database words/phrases.

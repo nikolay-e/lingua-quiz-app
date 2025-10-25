@@ -6,9 +6,8 @@ Runs all SQL files in migrations directory in order with proper validation
 
 import json
 import os
-import sys
 from pathlib import Path
-from typing import Dict, List
+import sys
 
 import psycopg2
 from pydantic import BaseModel, Field, field_validator
@@ -119,7 +118,7 @@ def get_connection(db_config: DatabaseConfig):
     )
 
 
-def get_migration_files(migration_config: MigrationConfig) -> List[MigrationFile]:
+def get_migration_files(migration_config: MigrationConfig) -> list[MigrationFile]:
     """Get validated list of migration files from schema and data directories"""
     if not migration_config.migrations_dir.exists():
         print(f"{RED}Migration directory not found: {migration_config.migrations_dir}{RESET}")
@@ -172,7 +171,7 @@ def get_migration_files(migration_config: MigrationConfig) -> List[MigrationFile
 def load_json_vocabulary_data(json_file_path: Path) -> dict:
     """Load vocabulary data from JSON file"""
     try:
-        with open(json_file_path, "r", encoding="utf-8") as f:
+        with open(json_file_path, encoding="utf-8") as f:
             return json.load(f)
     except Exception as e:
         print(f"{RED}Error loading JSON file {json_file_path}: {e}{RESET}")
@@ -263,7 +262,7 @@ def run_migration(conn, migration_file: MigrationFile) -> bool:
 
 def analyze_vocabulary_ranges(
     migration_config: MigrationConfig,
-) -> Dict[str, List[int]]:
+) -> dict[str, list[int]]:
     """
     Analyze vocabulary JSON files to determine valid translation_id ranges.
 
@@ -278,7 +277,7 @@ def analyze_vocabulary_ranges(
 
     for json_file in vocab_dir.glob("*.json"):
         try:
-            with open(json_file, "r", encoding="utf-8") as f:
+            with open(json_file, encoding="utf-8") as f:
                 data = json.load(f)
 
             if "word_pairs" in data:

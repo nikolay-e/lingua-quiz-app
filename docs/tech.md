@@ -14,9 +14,9 @@ The system is built on a decoupled architecture that separates business logic fr
 
 ### **Session & Persistence Flow**
 
-1.  **Start Session:** The client fetches word data and the user's latest saved progress from the backend.
-2.  **In-Memory Learning:** The `quiz-core` module builds the learning queues in the client's memory. The entire session (answering questions, updating queues, leveling up) runs locally.
-3.  **Asynchronous Persistence:** To maintain UI responsiveness, progress is saved to the backend **only when a word's level changes**. The session's detailed state (like queue positions) is ephemeral and not saved.
+1. **Start Session:** The client fetches word data and the user's latest saved progress from the backend.
+2. **In-Memory Learning:** The `quiz-core` module builds the learning queues in the client's memory. The entire session (answering questions, updating queues, leveling up) runs locally.
+3. **Asynchronous Persistence:** To maintain UI responsiveness, progress is saved to the backend **only when a word's level changes**. The session's detailed state (like queue positions) is ephemeral and not saved.
 
 ---
 

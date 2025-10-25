@@ -52,9 +52,9 @@
       "translation_id": 3000005,
       "source_id": 3000011,
       "target_id": 3000012,
-      "source_word": "ein",
+      "source_word": "in",
       "target_word": "один [неопределенный артикль]",
-      "source_example": "Ich habe nur ein Auto.",
+      "source_example": "Ich habe nur in Auto.",
       "target_example": "У меня только одна машина."
     },
     {
@@ -70,9 +70,9 @@
       "translation_id": 3000007,
       "source_id": 3000015,
       "target_id": 3000016,
-      "source_word": "die Adresse [Adressen]",
+      "source_word": "die Address [Adressen]",
       "target_word": "адрес",
-      "source_example": "Bitte geben Sie Ihre Adresse an.",
+      "source_example": "Bitte geben Sie Ihre Address an.",
       "target_example": "Пожалуйста, укажите свой адрес."
     },
     {
@@ -115,9 +115,9 @@
       "translation_id": 3000012,
       "source_id": 3000025,
       "target_id": 3000026,
-      "source_word": "als",
+      "source_word": "also",
       "target_word": "когда [в прошлом], чем [что-то]",
-      "source_example": "Als ich klein war, spielte ich viel draußen.",
+      "source_example": "Also ich klein war, spielte ich viel draußen.",
       "target_example": "Когда я был маленьким, я много играл на улице."
     },
     {
@@ -333,7 +333,7 @@
       "target_id": 3000074,
       "source_word": "der Apfel [Äpfel]",
       "target_word": "яблоко",
-      "source_example": "Ein Apfel am Tag hält den Doktor fern.",
+      "source_example": "In Apfel am Tag hält den Doktor fern.",
       "target_example": "Одно яблоко в день держит доктора подальше."
     },
     {
@@ -378,7 +378,7 @@
       "target_id": 3000084,
       "source_word": "arbeiten",
       "target_word": "работать|трудиться",
-      "source_example": "Er arbeitet als Ingenieur.",
+      "source_example": "Er arbeitet also Ingenieur.",
       "target_example": "Он работает инженером."
     },
     {
@@ -387,7 +387,7 @@
       "target_id": 3000086,
       "source_word": "der Arbeitstag [Arbeitstage]",
       "target_word": "рабочий день",
-      "source_example": "Ein Arbeitstag beginnt um 9 Uhr.",
+      "source_example": "In Arbeitstag beginnt um 9 Uhr.",
       "target_example": "Рабочий день начинается в 9 часов."
     },
     {
@@ -601,9 +601,9 @@
       "translation_id": 3000066,
       "source_id": 3000133,
       "target_id": 3000134,
-      "source_word": "backen",
+      "source_word": "backend",
       "target_word": "печь",
-      "source_example": "Wir backen heute einen Kuchen.",
+      "source_example": "Wir backend heute einen Kuchen.",
       "target_example": "Сегодня мы печём торт."
     },
     {
@@ -621,7 +621,7 @@
       "target_id": 3000138,
       "source_word": "das Bad [Bäder]",
       "target_word": "ванная комната, ванна [прибор]",
-      "source_example": "Ich nehme jeden Abend ein Bad.",
+      "source_example": "Ich nehme jeden Abend in Bad.",
       "target_example": "Я принимаю ванну каждый вечер."
     },
     {
@@ -738,7 +738,7 @@
       "target_id": 3000164,
       "source_word": "bauen",
       "target_word": "строить",
-      "source_example": "Wir bauen ein neues Haus.",
+      "source_example": "Wir bauen in neues Haus.",
       "target_example": "Мы строим новый дом."
     },
     {
@@ -810,7 +810,7 @@
       "target_id": 3000180,
       "source_word": "beige",
       "target_word": "бежевый",
-      "source_example": "Sie trägt ein beiges Kleid.",
+      "source_example": "Sie trägt in beiges Kleid.",
       "target_example": "Она носит бежевое платье."
     },
     {
@@ -828,7 +828,7 @@
       "target_id": 3000184,
       "source_word": "das Beispiel [Beispiele]",
       "target_word": "пример",
-      "source_example": "Hier ist ein gutes Beispiel.",
+      "source_example": "Hier ist in gutes Beispiel.",
       "target_example": "Вот хороший пример."
     },
     {
@@ -837,7 +837,7 @@
       "target_id": 3000186,
       "source_word": "bekommen",
       "target_word": "получать",
-      "source_example": "Ich habe ein Geschenk bekommen.",
+      "source_example": "Ich habe in Geschenk bekommen.",
       "target_example": "Я получил подарок."
     },
     {
@@ -891,7 +891,7 @@
       "target_id": 3000198,
       "source_word": "die Butter",
       "target_word": "масло [сливочное]",
-      "source_example": "Ich kaufe Butter im Supermarkt.",
+      "source_example": "Ich kaufe Butter im Supermarket.",
       "target_example": "Я покупаю сливочное масло в супермаркете."
     },
     {
@@ -1017,7 +1017,7 @@
       "target_id": 3000226,
       "source_word": "das Bier [Biere]",
       "target_word": "пиво",
-      "source_example": "Zum Abendessen trinke ich gern ein Bier.",
+      "source_example": "Zum Abendessen trinke ich gern in Bier.",
       "target_example": "На ужин я с удовольствием пью пиво."
     },
     {
@@ -1044,7 +1044,7 @@
       "target_id": 3000232,
       "source_word": "billig",
       "target_word": "дешевый",
-      "source_example": "Das ist ein billiges Angebot.",
+      "source_example": "Das ist in billiges Angebot.",
       "target_example": "Это дешевое предложение."
     },
     {
@@ -1069,9 +1069,9 @@
       "translation_id": 3000118,
       "source_id": 3000237,
       "target_id": 3000238,
-      "source_word": "ein bisschen",
+      "source_word": "in bisschen",
       "target_word": "немного",
-      "source_example": "Kannst du mir ein bisschen helfen?",
+      "source_example": "Kannst du mir in bisschen helfen?",
       "target_example": "Ты можешь мне немного помочь?"
     },
     {
@@ -1098,7 +1098,7 @@
       "target_id": 3000244,
       "source_word": "das Blatt [Blätter]",
       "target_word": "лист",
-      "source_example": "Ein Blatt fällt vom Baum.",
+      "source_example": "In Blatt fällt vom Baum.",
       "target_example": "Лист падает с дерева."
     },
     {
@@ -1107,7 +1107,7 @@
       "target_id": 3000246,
       "source_word": "blau",
       "target_word": "синий|голубой",
-      "source_example": "Sie trägt ein blaues Kleid.",
+      "source_example": "Sie trägt in blaues Kleid.",
       "target_example": "Она носит синее платье."
     },
     {
@@ -1251,7 +1251,7 @@
       "target_id": 3000278,
       "source_word": "das Brötchen [Brötchen]",
       "target_word": "булочка",
-      "source_example": "Zum Frühstück esse ich ein Brötchen.",
+      "source_example": "Zum Frühstück esse ich in Brötchen.",
       "target_example": "На завтрак я ем булочку."
     },
     {
@@ -1350,7 +1350,7 @@
       "target_id": 3000300,
       "source_word": "der Cent [Cent]",
       "target_word": "цент",
-      "source_example": "Ein Cent ist ein Hundertstel Euro.",
+      "source_example": "In Cent ist in Hundertstel Euro.",
       "target_example": "Цент — это сотая часть евро."
     },
     {
@@ -1431,7 +1431,7 @@
       "target_id": 3000318,
       "source_word": "da",
       "target_word": "(тут|здесь), там, так как",
-      "source_example": "Da drüben ist ein schönes Restaurant.",
+      "source_example": "Da drüben ist in schönes Restaurant.",
       "target_example": "Там напротив находится хороший ресторан."
     },
     {
@@ -1467,7 +1467,7 @@
       "target_id": 3000326,
       "source_word": "danke",
       "target_word": "спасибо",
-      "source_example": "Danke für deine Hilfe.",
+      "source_example": "Danke für define Hilfe.",
       "target_example": "Спасибо за твою помощь."
     },
     {
@@ -1582,9 +1582,9 @@
       "translation_id": 3000176,
       "source_id": 3000353,
       "target_id": 3000354,
-      "source_word": "der Dezember [Dezember]",
+      "source_word": "der December [December]",
       "target_word": "декабрь",
-      "source_example": "Im Dezember ist es oft kalt.",
+      "source_example": "Im December ist es oft kalt.",
       "target_example": "В декабре часто холодно."
     },
     {
@@ -1638,7 +1638,7 @@
       "target_id": 3000366,
       "source_word": "dir",
       "target_word": "тебе",
-      "source_example": "Ich gebe dir ein Geschenk.",
+      "source_example": "Ich gebe dir in Geschenk.",
       "target_example": "Я дарю тебе подарок."
     },
     {
@@ -1674,7 +1674,7 @@
       "target_id": 3000374,
       "source_word": "dort",
       "target_word": "там",
-      "source_example": "Dort drüben ist der Supermarkt.",
+      "source_example": "Dort drüben ist der Supermarket.",
       "target_example": "Там напротив находится супермаркет."
     },
     {
@@ -1782,7 +1782,7 @@
       "target_id": 3000398,
       "source_word": "das Ei [Eier]",
       "target_word": "яйцо",
-      "source_example": "Ich esse ein Ei zum Frühstück.",
+      "source_example": "Ich esse in Ei zum Frühstück.",
       "target_example": "Я ем яйцо на завтрак."
     },
     {
@@ -1897,9 +1897,9 @@
       "translation_id": 3000211,
       "source_id": 3000423,
       "target_id": 3000424,
-      "source_word": "das Eis [Eis]",
+      "source_word": "das Is [Is]",
       "target_word": "мороженое, лёд",
-      "source_example": "Im Sommer esse ich gerne Eis.",
+      "source_example": "Im Sommer esse ich gerne Is.",
       "target_example": "Летом я с удовольствием ем мороженое."
     },
     {
@@ -2124,7 +2124,7 @@
       "target_id": 3000474,
       "source_word": "euch",
       "target_word": "вам",
-      "source_example": "Ich habe euch ein Geschenk gekauft.",
+      "source_example": "Ich habe euch in Geschenk gekauft.",
       "target_example": "Я купил вам подарок."
     },
     {
@@ -2142,7 +2142,7 @@
       "target_id": 3000478,
       "source_word": "der Euro [Euro]",
       "target_word": "евро",
-      "source_example": "Ein Euro ist gleich hundert Cent.",
+      "source_example": "In Euro ist gleich hundert Cent.",
       "target_example": "Единица евро равна ста центам."
     },
     {
@@ -2178,7 +2178,7 @@
       "target_id": 3000486,
       "source_word": "der Fahrgast [Fahrgäste]",
       "target_word": "пассажир",
-      "source_example": "Die Fahrgäste steigen ein.",
+      "source_example": "Die Fahrgäste steigen in.",
       "target_example": "Пассажиры садятся в автобус."
     },
     {
@@ -2232,7 +2232,7 @@
       "target_id": 3000498,
       "source_word": "das Familienfoto [Familienfotos]",
       "target_word": "семейная фотография",
-      "source_example": "Wir haben ein neues Familienfoto gemacht.",
+      "source_example": "Wir haben in neues Familienfoto gemacht.",
       "target_example": "Мы сделали новую семейную фотографию."
     },
     {
@@ -2248,9 +2248,9 @@
       "translation_id": 3000250,
       "source_id": 3000501,
       "target_id": 3000502,
-      "source_word": "spanisch",
+      "source_word": "spanish",
       "target_word": "испанский",
-      "source_example": "Sie lernt spanisch.",
+      "source_example": "Sie lernt spanish.",
       "target_example": "Она учит испанский."
     },
     {
@@ -2284,9 +2284,9 @@
       "translation_id": 3000254,
       "source_id": 3000509,
       "target_id": 3000510,
-      "source_word": "der Februar [Februare]",
+      "source_word": "der February [Februare]",
       "target_word": "февраль",
-      "source_example": "Im Februar ist es oft kalt.",
+      "source_example": "Im February ist es oft kalt.",
       "target_example": "В феврале часто холодно."
     },
     {
@@ -2322,7 +2322,7 @@
       "target_id": 3000518,
       "source_word": "der Feiertag [Feiertage]",
       "target_word": "праздничный день",
-      "source_example": "Ostern ist ein wichtiger Feiertag.",
+      "source_example": "Ostern ist in wichtiger Feiertag.",
       "target_example": "Пасха — важный праздничный день."
     },
     {
@@ -2331,7 +2331,7 @@
       "target_id": 3000520,
       "source_word": "das Fenster [Fenster]",
       "target_word": "окно",
-      "source_example": "Das Fenster ist offen.",
+      "source_example": "Das Fenster ist often.",
       "target_example": "Окно открыто."
     },
     {
@@ -2376,7 +2376,7 @@
       "target_id": 3000530,
       "source_word": "das Fest [Feste]",
       "target_word": "праздник",
-      "source_example": "Das Fest war ein großer Erfolg.",
+      "source_example": "Das Fest war in großer Erfolg.",
       "target_example": "Праздник был большим успехом."
     },
     {
@@ -2455,9 +2455,9 @@
       "translation_id": 3000273,
       "source_id": 3000547,
       "target_id": 3000548,
-      "source_word": "flexibel",
+      "source_word": "flexible",
       "target_word": "гибкий",
-      "source_example": "Mein Arbeitsplan ist sehr flexibel.",
+      "source_example": "Mein Arbeitsplan ist sehr flexible.",
       "target_example": "Мой рабочий график очень гибкий."
     },
     {
@@ -2482,7 +2482,7 @@
       "translation_id": 3000276,
       "source_id": 3000553,
       "target_id": 3000554,
-      "source_word": "die Form [Formen]",
+      "source_word": "die Form [Foremen]",
       "target_word": "форма",
       "source_example": "Der Kuchen hat die Form eines Herzens.",
       "target_example": "Этот торт в форме сердца."
@@ -2500,9 +2500,9 @@
       "translation_id": 3000278,
       "source_id": 3000557,
       "target_id": 3000558,
-      "source_word": "das Foto [Fotos]",
+      "source_word": "das Photo [Fotos]",
       "target_word": "фотография",
-      "source_example": "Ich habe ein schönes Foto von uns.",
+      "source_example": "Ich habe in schönes Photo von uns.",
       "target_example": "У меня есть красивая фотография нас."
     },
     {
@@ -2637,7 +2637,7 @@
       "target_id": 3000588,
       "source_word": "das Frühstück [Frühstücke]",
       "target_word": "завтрак",
-      "source_example": "Zum Frühstück esse ich Brot mit Marmelade.",
+      "source_example": "Zum Frühstück esse ich Brot mit Marmalade.",
       "target_example": "На завтрак я ем хлеб с вареньем."
     },
     {
@@ -2700,7 +2700,7 @@
       "target_id": 3000602,
       "source_word": "der Fußballspieler [Fußballspieler]",
       "target_word": "футболист",
-      "source_example": "Der Fußballspieler hat ein Tor geschossen.",
+      "source_example": "Der Fußballspieler hat in Tor geschossen.",
       "target_example": "Футболист забил гол."
     },
     {
@@ -2736,7 +2736,7 @@
       "target_id": 3000610,
       "source_word": "die Gartenparty [Gartenpartys]",
       "target_word": "вечеринка в саду",
-      "source_example": "Wir veranstalten eine Gartenparty im Juli.",
+      "source_example": "Wir veranstalten eine Gartenparty im July.",
       "target_example": "Мы устраиваем вечеринку в саду в июле."
     },
     {
@@ -2772,7 +2772,7 @@
       "target_id": 3000618,
       "source_word": "geboren sein",
       "target_word": "родиться",
-      "source_example": "Ich bin am 1. Januar geboren.",
+      "source_example": "Ich bin am 1. January geboren.",
       "target_example": "Я родился 1 января."
     },
     {
@@ -2826,7 +2826,7 @@
       "target_id": 3000630,
       "source_word": "gegenüber",
       "target_word": "напротив",
-      "source_example": "Die Apotheke ist gegenüber dem Supermarkt.",
+      "source_example": "Die Apotheke ist gegenüber dem Supermarket.",
       "target_example": "Аптека напротив супермаркета."
     },
     {
@@ -2916,7 +2916,7 @@
       "target_id": 3000650,
       "source_word": "gepflegt",
       "target_word": "ухоженный",
-      "source_example": "Sie hat immer ein gepflegtes Erscheinungsbild.",
+      "source_example": "Sie hat immer in gepflegtes Erscheinungsbild.",
       "target_example": "У нее всегда ухоженный вид."
     },
     {
@@ -2970,7 +2970,7 @@
       "target_id": 3000662,
       "source_word": "das Geschenk [Geschenke]",
       "target_word": "подарок",
-      "source_example": "Ich habe ein schönes Geschenk für dich.",
+      "source_example": "Ich habe in schönes Geschenk für dich.",
       "target_example": "У меня есть красивый подарок для тебя."
     },
     {
@@ -3006,7 +3006,7 @@
       "target_id": 3000670,
       "source_word": "das Gespräch [Gespräche]",
       "target_word": "разговор",
-      "source_example": "Wir hatten ein interessantes Gespräch.",
+      "source_example": "Wir hatten in interessantes Gespräch.",
       "target_example": "У нас был интересный разговор."
     },
     {
@@ -3015,7 +3015,7 @@
       "target_id": 3000672,
       "source_word": "gestern",
       "target_word": "вчера",
-      "source_example": "Gestern war ein schöner Tag.",
+      "source_example": "Gestern war in schöner Tag.",
       "target_example": "Вчера был прекрасный день."
     },
     {
@@ -3033,7 +3033,7 @@
       "target_id": 3000676,
       "source_word": "die Gesundheitskarte [Gesundheitskarten]",
       "target_word": "медицинская страховая карта|полис ОМС",
-      "source_example": "Vergiss nicht deine Gesundheitskarte.",
+      "source_example": "Vergiss nicht define Gesundheitskarte.",
       "target_example": "Не забудь свою медицинскую страховую карту."
     },
     {
@@ -3042,7 +3042,7 @@
       "target_id": 3000678,
       "source_word": "das Getränk [Getränke]",
       "target_word": "напиток",
-      "source_example": "Ich nehme ein kaltes Getränk.",
+      "source_example": "Ich nehme in kaltes Getränk.",
       "target_example": "Я возьму холодный напиток."
     },
     {
@@ -3060,7 +3060,7 @@
       "target_id": 3000682,
       "source_word": "das Glas [Gläser]",
       "target_word": "стакан, банка [стеклянная], стекло",
-      "source_example": "Kannst du mir ein Glas Wasser geben?",
+      "source_example": "Kannst du mir in Glas Wasser geben?",
       "target_example": "Можешь дать мне стакан воды?"
     },
     {
@@ -3357,7 +3357,7 @@
       "target_id": 3000748,
       "source_word": "der Handschuh [Handschuhe]",
       "target_word": "перчатка",
-      "source_example": "Zieh deine Handschuhe an.",
+      "source_example": "Zieh define Handschuhe an.",
       "target_example": "Надень перчатки."
     },
     {
@@ -3366,7 +3366,7 @@
       "target_id": 3000750,
       "source_word": "die Handynummer [Handynummern]",
       "target_word": "номер мобильного телефона",
-      "source_example": "Kann ich deine Handynummer haben?",
+      "source_example": "Kann ich define Handynummer haben?",
       "target_example": "Могу ли я получить твой номер мобильного телефона?"
     },
     {
@@ -3474,7 +3474,7 @@
       "target_id": 3000774,
       "source_word": "das Haustier [Haustiere]",
       "target_word": "домашнее животное",
-      "source_example": "Mein Haustier ist ein Hund.",
+      "source_example": "Mein Haustier ist in Hund.",
       "target_example": "Мое домашнее животное — собака."
     },
     {
@@ -3555,7 +3555,7 @@
       "target_id": 3000792,
       "source_word": "das Hemd [Hemden]",
       "target_word": "рубашка",
-      "source_example": "Er trägt ein weißes Hemd.",
+      "source_example": "Er trägt in weißes Hemd.",
       "target_example": "Он носит белую рубашку."
     },
     {
@@ -3591,7 +3591,7 @@
       "target_id": 3000800,
       "source_word": "heute",
       "target_word": "сегодня",
-      "source_example": "Heute ist ein schöner Tag.",
+      "source_example": "Heute ist in schöner Tag.",
       "target_example": "Сегодня прекрасный день."
     },
     {
@@ -3609,7 +3609,7 @@
       "target_id": 3000804,
       "source_word": "die Hilfe [Hilfen]",
       "target_word": "помощь",
-      "source_example": "Danke für deine Hilfe.",
+      "source_example": "Danke für define Hilfe.",
       "target_example": "Спасибо за твою помощь."
     },
     {
@@ -3690,7 +3690,7 @@
       "target_id": 3000822,
       "source_word": "der Honig [Honige]",
       "target_word": "мёд",
-      "source_example": "Honig ist ein natürliches Süßungsmittel.",
+      "source_example": "Honig ist in natürliches Süßungsmittel.",
       "target_example": "Мёд — это натуральный подсластитель."
     },
     {
@@ -3870,7 +3870,7 @@
       "target_id": 3000862,
       "source_word": "der Ingenieur [Ingenieure]",
       "target_word": "инженер",
-      "source_example": "Er ist ein erfahrener Ingenieur.",
+      "source_example": "Er ist in erfahrener Ingenieur.",
       "target_example": "Он опытный инженер."
     },
     {
@@ -3886,9 +3886,9 @@
       "translation_id": 3000432,
       "source_id": 3000865,
       "target_id": 3000866,
-      "source_word": "unter",
+      "source_word": "under",
       "target_word": "под",
-      "source_example": "Die Katze liegt unter dem Tisch.",
+      "source_example": "Die Katze liegt under dem Tisch.",
       "target_example": "Кошка лежит под столом."
     },
     {
@@ -3897,7 +3897,7 @@
       "target_id": 3000868,
       "source_word": "insgesamt",
       "target_word": "в целом",
-      "source_example": "Insgesamt war das Konzert ein Erfolg.",
+      "source_example": "Insgesamt war das Konzert in Erfolg.",
       "target_example": "В целом концерт был успешным."
     },
     {
@@ -3933,7 +3933,7 @@
       "target_id": 3000876,
       "source_word": "das Interview [Interviews]",
       "target_word": "интервью",
-      "source_example": "Er hat ein Interview bei der Zeitung gegeben.",
+      "source_example": "Er hat in Interview bei der Zeitung gegeben.",
       "target_example": "Он дал интервью газете."
     },
     {
@@ -3985,9 +3985,9 @@
       "translation_id": 3000443,
       "source_id": 3000887,
       "target_id": 3000888,
-      "source_word": "der Januar [Januare]",
+      "source_word": "der January [Januare]",
       "target_word": "январь",
-      "source_example": "Im Januar ist es oft kalt.",
+      "source_example": "Im January ist es oft kalt.",
       "target_example": "В январе часто холодно."
     },
     {
@@ -4048,18 +4048,18 @@
       "translation_id": 3000450,
       "source_id": 3000901,
       "target_id": 3000902,
-      "source_word": "der Juli [Julis]",
+      "source_word": "der July [Julis]",
       "target_word": "июль",
-      "source_example": "Im Juli ist es am heißesten.",
+      "source_example": "Im July ist es am heißesten.",
       "target_example": "В июле самая жара."
     },
     {
       "translation_id": 3000451,
       "source_id": 3000903,
       "target_id": 3000904,
-      "source_word": "der Juni [Junis]",
+      "source_word": "der June [Junis]",
       "target_word": "июнь",
-      "source_example": "Der Juni bringt oft Regen.",
+      "source_example": "Der June bringt oft Regen.",
       "target_example": "Июнь часто приносит дождь."
     },
     {
@@ -4131,7 +4131,7 @@
       "target_id": 3000920,
       "source_word": "die Kartoffel [Kartoffeln]",
       "target_word": "картофель",
-      "source_example": "Kartoffeln sind ein Grundnahrungsmittel.",
+      "source_example": "Kartoffeln sind in Grundnahrungsmittel.",
       "target_example": "Картофель — основной продукт питания."
     },
     {
@@ -4176,7 +4176,7 @@
       "target_id": 3000930,
       "source_word": "kaufen",
       "target_word": "покупать",
-      "source_example": "Ich möchte ein neues Auto kaufen.",
+      "source_example": "Ich möchte in neues Auto kaufen.",
       "target_example": "Я хочу купить новую машину."
     },
     {
@@ -4266,7 +4266,7 @@
       "target_id": 3000950,
       "source_word": "das Kilo [Kilos]",
       "target_word": "килограмм",
-      "source_example": "Ein Kilo Äpfel kostet drei Euro.",
+      "source_example": "In Kilo Äpfel kostet drei Euro.",
       "target_example": "Килограмм яблок стоит три евро."
     },
     {
@@ -4365,7 +4365,7 @@
       "target_id": 3000972,
       "source_word": "das Kleid [Kleider]",
       "target_word": "платье",
-      "source_example": "Sie trägt ein schönes Kleid.",
+      "source_example": "Sie trägt in schönes Kleid.",
       "target_example": "Она носит красивое платье."
     },
     {
@@ -4437,7 +4437,7 @@
       "target_id": 3000988,
       "source_word": "der Koch [Köche]",
       "target_word": "повар",
-      "source_example": "Der Koch bereitet ein leckeres Gericht zu.",
+      "source_example": "Der Koch bereitet in leckeres Gericht zu.",
       "target_example": "Повар готовит вкусное блюдо."
     },
     {
@@ -4500,7 +4500,7 @@
       "target_id": 3001002,
       "source_word": "die Ferien [Ferien]",
       "target_word": "каникулы",
-      "source_example": "Die Ferien beginnen im Juli.",
+      "source_example": "Die Ferien beginnen im July.",
       "target_example": "Каникулы начинаются в июле."
     },
     {
@@ -4536,7 +4536,7 @@
       "target_id": 3001010,
       "source_word": "der Körper [Körper]",
       "target_word": "тело",
-      "source_example": "Ein gesunder Körper ist wichtig.",
+      "source_example": "In gesunder Körper ist wichtig.",
       "target_example": "Здоровое тело важно."
     },
     {
@@ -4770,7 +4770,7 @@
       "target_id": 3001062,
       "source_word": "das Land [Länder]",
       "target_word": "страна, сельская местность, земля [федеральная]",
-      "source_example": "Deutschland ist ein schönes Land.",
+      "source_example": "Deutschland ist in schönes Land.",
       "target_example": "Германия — красивая страна."
     },
     {
@@ -4842,7 +4842,7 @@
       "target_id": 3001078,
       "source_word": "die Lebensmittel",
       "target_word": "продукты питания|продукты",
-      "source_example": "Ich kaufe Lebensmittel im Supermarkt.",
+      "source_example": "Ich kaufe Lebensmittel im Supermarket.",
       "target_example": "Я покупаю продукты питания в супермаркете."
     },
     {
@@ -4959,7 +4959,7 @@
       "target_id": 3001104,
       "source_word": "lila",
       "target_word": "фиолетовый",
-      "source_example": "Sie trägt ein lila Kleid.",
+      "source_example": "Sie trägt in lila Kleid.",
       "target_example": "Она носит фиолетовое платье."
     },
     {
@@ -5128,7 +5128,7 @@
       "translation_id": 3000570,
       "source_id": 3001141,
       "target_id": 3001142,
-      "source_word": "die Marmelade [Marmeladen]",
+      "source_word": "die Marmalade [Marmeladen]",
       "target_word": "варенье",
       "source_example": "Ich mag Erdbeermarmelade.",
       "target_example": "Я люблю клубничное варенье."
@@ -5256,7 +5256,7 @@
       "target_id": 3001170,
       "source_word": "der Mensch [Menschen]",
       "target_word": "человек [как биологический вид]",
-      "source_example": "Der Mensch ist ein soziales Wesen.",
+      "source_example": "Der Mensch ist in soziales Wesen.",
       "target_example": "Человек — социальное существо."
     },
     {
@@ -5355,7 +5355,7 @@
       "target_id": 3001192,
       "source_word": "mitbringen",
       "target_word": "приносить [с собой]|привозить [с собой]",
-      "source_example": "Bitte bringe ein Geschenk mit.",
+      "source_example": "Bitte bringe in Geschenk mit.",
       "target_example": "Пожалуйста, принеси подарок с собой."
     },
     {
@@ -5452,9 +5452,9 @@
       "translation_id": 3000606,
       "source_id": 3001213,
       "target_id": 3001214,
-      "source_word": "das Modell [Modelle]",
+      "source_word": "das Model [Modelle]",
       "target_word": "модель",
-      "source_example": "Das neue Modell gefällt mir.",
+      "source_example": "Das neue Model gefällt mir.",
       "target_example": "Мне нравится новая модель."
     },
     {
@@ -5535,7 +5535,7 @@
       "target_id": 3001232,
       "source_word": "Afrika",
       "target_word": "Африка",
-      "source_example": "Afrika ist ein großer Kontinent.",
+      "source_example": "Afrika ist in großer Kontinent.",
       "target_example": "Африка - большой континент."
     },
     {
@@ -5697,7 +5697,7 @@
       "target_id": 3001268,
       "source_word": "wirst",
       "target_word": "станешь",
-      "source_example": "Du wirst ein guter Arzt.",
+      "source_example": "Du wirst in guter Arzt.",
       "target_example": "Ты станешь хорошим врачом."
     },
     {
@@ -5841,7 +5841,7 @@
       "target_id": 3001300,
       "source_word": "neu",
       "target_word": "новый",
-      "source_example": "Ich habe ein neues Handy.",
+      "source_example": "Ich habe in neues Handy.",
       "target_example": "У меня новый телефон."
     },
     {
@@ -5994,7 +5994,7 @@
       "target_id": 3001334,
       "source_word": "öffentlich",
       "target_word": "публичный",
-      "source_example": "Das ist ein öffentlicher Park.",
+      "source_example": "Das ist in öffentlicher Park.",
       "target_example": "Это общественный парк."
     },
     {
@@ -6028,9 +6028,9 @@
       "translation_id": 3000670,
       "source_id": 3001341,
       "target_id": 3001342,
-      "source_word": "der Oktober [Oktober]",
+      "source_word": "der October [October]",
       "target_word": "октябрь",
-      "source_example": "Im Oktober fallen die Blätter.",
+      "source_example": "Im October fallen die Blätter.",
       "target_example": "В октябре опадают листья."
     },
     {
@@ -6084,7 +6084,7 @@
       "target_id": 3001354,
       "source_word": "orange",
       "target_word": "оранжевый",
-      "source_example": "Sie trägt ein orangefarbenes Kleid.",
+      "source_example": "Sie trägt in orangefarbenes Kleid.",
       "target_example": "Она носит оранжевое платье."
     },
     {
@@ -6129,7 +6129,7 @@
       "target_id": 3001364,
       "source_word": "der Ort [Orte]",
       "target_word": "место",
-      "source_example": "Das ist ein schöner Ort zum Entspannen.",
+      "source_example": "Das ist in schöner Ort zum Entspannen.",
       "target_example": "Это красивое место для отдыха."
     },
     {
@@ -6219,7 +6219,7 @@
       "target_id": 3001384,
       "source_word": "der Papa [Papas]",
       "target_word": "папа",
-      "source_example": "Mein Papa arbeitet als Ingenieur.",
+      "source_example": "Mein Papa arbeitet also Ingenieur.",
       "target_example": "Мой папа работает инженером."
     },
     {
@@ -6363,7 +6363,7 @@
       "target_id": 3001416,
       "source_word": "das Pfund [Pfunde]",
       "target_word": "фунт",
-      "source_example": "Ein Pfund Butter kostet drei Euro.",
+      "source_example": "In Pfund Butter kostet drei Euro.",
       "target_example": "Фунт масла стоит три евро."
     },
     {
@@ -6442,9 +6442,9 @@
       "translation_id": 3000716,
       "source_id": 3001433,
       "target_id": 3001434,
-      "source_word": "positiv",
+      "source_word": "positive",
       "target_word": "положительный",
-      "source_example": "Das Testergebnis war positiv.",
+      "source_example": "Das Testergebnis war positive.",
       "target_example": "Результат теста был положительным."
     },
     {
@@ -6471,7 +6471,7 @@
       "target_id": 3001440,
       "source_word": "die Postleitzahl [Postleitzahlen]",
       "target_word": "почтовый индекс",
-      "source_example": "Bitte gib deine Postleitzahl an.",
+      "source_example": "Bitte gib define Postleitzahl an.",
       "target_example": "Пожалуйста, укажи свой почтовый индекс."
     },
     {
@@ -6480,7 +6480,7 @@
       "target_id": 3001442,
       "source_word": "das Praktikum [Praktika]",
       "target_word": "стажировка",
-      "source_example": "Ich mache ein Praktikum in einer Firma.",
+      "source_example": "Ich mache in Praktikum in einer Firma.",
       "target_example": "Я прохожу стажировку в компании."
     },
     {
@@ -6541,7 +6541,7 @@
       "translation_id": 3000727,
       "source_id": 3001455,
       "target_id": 3001456,
-      "source_word": "das Problem [Probleme]",
+      "source_word": "das Problem [Problem]",
       "target_word": "проблема",
       "source_example": "Wir müssen das Problem lösen.",
       "target_example": "Нам нужно решить проблему."
@@ -6669,7 +6669,7 @@
       "target_id": 3001484,
       "source_word": "nervös",
       "target_word": "нервный",
-      "source_example": "Vor der Prüfung bin ich nervös.",
+      "source_example": "For der Prüfung bin ich nervös.",
       "target_example": "Перед экзаменом я нервничаю."
     },
     {
@@ -6903,7 +6903,7 @@
       "target_id": 3001536,
       "source_word": "ruhig",
       "target_word": "спокойный",
-      "source_example": "Er ist ein ruhiger Mensch.",
+      "source_example": "Er ist in ruhiger Mensch.",
       "target_example": "Он спокойный человек."
     },
     {
@@ -7038,7 +7038,7 @@
       "target_id": 3001566,
       "source_word": "schenken",
       "target_word": "дарить",
-      "source_example": "Ich möchte dir ein Geschenk schenken.",
+      "source_example": "Ich möchte dir in Geschenk schenken.",
       "target_example": "Я хочу подарить тебе подарок."
     },
     {
@@ -7101,7 +7101,7 @@
       "target_id": 3001580,
       "source_word": "schlimm",
       "target_word": "плохой|скверный",
-      "source_example": "Es war ein schlimmer Unfall.",
+      "source_example": "Es war in schlimmer Unfall.",
       "target_example": "Это была ужасная авария."
     },
     {
@@ -7452,7 +7452,7 @@
       "target_id": 3001658,
       "source_word": "das Shirt [Shirts]",
       "target_word": "футболка",
-      "source_example": "Ich habe ein neues Shirt gekauft.",
+      "source_example": "Ich habe in neues Shirt gekauft.",
       "target_example": "Я купил новую футболку."
     },
     {
@@ -7497,7 +7497,7 @@
       "target_id": 3001668,
       "source_word": "singen",
       "target_word": "петь",
-      "source_example": "Die Kinder singen ein Lied.",
+      "source_example": "Die Kinder singen in Lied.",
       "target_example": "Дети поют песню."
     },
     {
@@ -7569,7 +7569,7 @@
       "target_id": 3001684,
       "source_word": "sollen",
       "target_word": "быть должным, стоить [в значении совета]",
-      "source_example": "Du sollst deine Hausaufgaben machen.",
+      "source_example": "Du sollst define Hausaufgaben machen.",
       "target_example": "Тебе стоит делать домашнее задание."
     },
     {
@@ -7605,7 +7605,7 @@
       "target_id": 3001692,
       "source_word": "sonnig",
       "target_word": "солнечно",
-      "source_example": "Heute ist ein sonniger Tag.",
+      "source_example": "Heute ist in sonniger Tag.",
       "target_example": "Сегодня солнечный день."
     },
     {
@@ -7821,7 +7821,7 @@
       "target_id": 3001740,
       "source_word": "der Stadtplan [Stadtpläne]",
       "target_word": "карта города",
-      "source_example": "Mit dem Stadtplan finde ich den Weg.",
+      "source_example": "Mit dem Stadtplan find ich den Weg.",
       "target_example": "С картой города я нахожу путь."
     },
     {
@@ -7965,7 +7965,7 @@
       "target_id": 3001772,
       "source_word": "das Stück [Stücke]",
       "target_word": "штука",
-      "source_example": "Ich nehme ein Stück Kuchen.",
+      "source_example": "Ich nehme in Stück Kuchen.",
       "target_example": "Я беру кусок торта."
     },
     {
@@ -8046,7 +8046,7 @@
       "target_id": 3001790,
       "source_word": "der Süden [Süden]",
       "target_word": "юг",
-      "source_example": "Der Süden ist wärmer als der Norden.",
+      "source_example": "Der Süden ist wärmer also der Norden.",
       "target_example": "Юг теплее, чем север."
     },
     {
@@ -8071,9 +8071,9 @@
       "translation_id": 3000897,
       "source_id": 3001795,
       "target_id": 3001796,
-      "source_word": "der Supermarkt [Supermärkte]",
+      "source_word": "der Supermarket [Supermärkte]",
       "target_word": "супермаркет",
-      "source_example": "Ich kaufe Lebensmittel im Supermarkt.",
+      "source_example": "Ich kaufe Lebensmittel im Supermarket.",
       "target_example": "Я покупаю продукты в супермаркете."
     },
     {
@@ -8127,7 +8127,7 @@
       "target_id": 3001808,
       "source_word": "der Tag [Tage]",
       "target_word": "день",
-      "source_example": "Heute ist ein schöner Tag.",
+      "source_example": "Heute ist in schöner Tag.",
       "target_example": "Сегодня хороший день."
     },
     {
@@ -8172,7 +8172,7 @@
       "target_id": 3001818,
       "source_word": "das Taxi [Taxis]",
       "target_word": "такси",
-      "source_example": "Wir nehmen ein Taxi zum Flughafen.",
+      "source_example": "Wir nehmen in Taxi zum Flughafen.",
       "target_example": "Мы берем такси до аэропорта."
     },
     {
@@ -8226,7 +8226,7 @@
       "target_id": 3001830,
       "source_word": "die Telefonnummer [Telefonnummern]",
       "target_word": "номер телефона",
-      "source_example": "Wie ist deine Telefonnummer?",
+      "source_example": "Wie ist define Telefonnummer?",
       "target_example": "Какой у тебя номер телефона?"
     },
     {
@@ -8260,7 +8260,7 @@
       "translation_id": 3000918,
       "source_id": 3001837,
       "target_id": 3001838,
-      "source_word": "der Termin [Termine]",
+      "source_word": "der Termin [Determine]",
       "target_word": "срок, встреча",
       "source_example": "Ich habe einen Termin beim Arzt.",
       "target_example": "У меня встреча у врача."
@@ -8370,7 +8370,7 @@
       "target_id": 3001862,
       "source_word": "tragen",
       "target_word": "носить [одежду], нести",
-      "source_example": "Ich trage heute ein neues Hemd.",
+      "source_example": "Ich trage heute in neues Hemd.",
       "target_example": "Сегодня я ношу новую рубашку."
     },
     {
@@ -8397,7 +8397,7 @@
       "target_id": 3001868,
       "source_word": "tausend",
       "target_word": "тысяча",
-      "source_example": "Tausend Dank für deine Hilfe!",
+      "source_example": "Tausend Dank für define Hilfe!",
       "target_example": "Тысяча благодарностей за твою помощь!"
     },
     {
@@ -8433,7 +8433,7 @@
       "target_id": 3001876,
       "source_word": "der Tropfen [Tropfen]",
       "target_word": "капля",
-      "source_example": "Ein Tropfen Wasser genügt.",
+      "source_example": "In Tropfen Wasser genügt.",
       "target_example": "Достаточно одной капли воды."
     },
     {
@@ -8469,7 +8469,7 @@
       "target_id": 3001884,
       "source_word": "typisch",
       "target_word": "типичный",
-      "source_example": "Das ist ein typisches deutsches Essen.",
+      "source_example": "Das ist in typisches deutsches Essen.",
       "target_example": "Это типичная немецкая еда."
     },
     {
@@ -8694,7 +8694,7 @@
       "target_id": 3001934,
       "source_word": "die Unterschrift [Unterschriften]",
       "target_word": "подпись",
-      "source_example": "Bitte gib deine Unterschrift hier.",
+      "source_example": "Bitte gib define Unterschrift hier.",
       "target_example": "Пожалуйста, поставь свою подпись здесь."
     },
     {
@@ -8730,7 +8730,7 @@
       "target_id": 3001942,
       "source_word": "der Vater [Väter]",
       "target_word": "отец",
-      "source_example": "Mein Vater arbeitet als Ingenieur.",
+      "source_example": "Mein Vater arbeitet also Ingenieur.",
       "target_example": "Мой отец работает инженером."
     },
     {
@@ -8766,7 +8766,7 @@
       "target_id": 3001950,
       "source_word": "Chemie",
       "target_word": "химия",
-      "source_example": "Chemie ist ein schwieriges Fach.",
+      "source_example": "Chemie ist in schwieriges Fach.",
       "target_example": "Химия - сложный предмет."
     },
     {
@@ -8847,7 +8847,7 @@
       "target_id": 3001968,
       "source_word": "Religion",
       "target_word": "религия",
-      "source_example": "Religion ist ein Wahlfach.",
+      "source_example": "Religion ist in Wahlfach.",
       "target_example": "Религия - предмет по выбору."
     },
     {
@@ -8917,9 +8917,9 @@
       "translation_id": 3000991,
       "source_id": 3001983,
       "target_id": 3001984,
-      "source_word": "vor",
+      "source_word": "for",
       "target_word": "до, перед",
-      "source_example": "Das Treffen ist vor dem Kino.",
+      "source_example": "Das Treffen ist for dem Kino.",
       "target_example": "Встреча перед кинотеатром."
     },
     {
@@ -9000,7 +9000,7 @@
       "target_id": 3002002,
       "source_word": "wählen",
       "target_word": "выбирать",
-      "source_example": "Wähle bitte deine Lieblingsfarbe.",
+      "source_example": "Wähle bitte define Lieblingsfarbe.",
       "target_example": "Пожалуйста, выбери свой любимый цвет."
     },
     {
@@ -9124,7 +9124,7 @@
       "translation_id": 3001014,
       "source_id": 3002029,
       "target_id": 3002030,
-      "source_word": "der Weg [Wege]",
+      "source_word": "der Weg [Wedge]",
       "target_word": "дорога",
       "source_example": "Der Weg zum Park ist schön.",
       "target_example": "Дорога к парку красивая."
@@ -9378,7 +9378,7 @@
       "target_id": 3002086,
       "source_word": "windig",
       "target_word": "ветреный",
-      "source_example": "Heute ist ein windiger Tag.",
+      "source_example": "Heute ist in windiger Tag.",
       "target_example": "Сегодня ветреный день."
     },
     {
@@ -9522,7 +9522,7 @@
       "target_id": 3002118,
       "source_word": "das Wohnzimmer [Wohnzimmer]",
       "target_word": "гостиная",
-      "source_example": "Im Wohnzimmer steht ein großer Fernseher.",
+      "source_example": "Im Wohnzimmer steht in großer Fernseher.",
       "target_example": "В гостиной стоит большой телевизор."
     },
     {
@@ -9531,7 +9531,7 @@
       "target_id": 3002120,
       "source_word": "wollen",
       "target_word": "хотеть",
-      "source_example": "Ich will ein neues Auto kaufen.",
+      "source_example": "Ich will in neues Auto kaufen.",
       "target_example": "Я хочу купить новый автомобиль."
     },
     {
@@ -9549,7 +9549,7 @@
       "target_id": 3002124,
       "source_word": "das Wörterbuch [Wörterbücher]",
       "target_word": "словарь",
-      "source_example": "Ich benutze ein deutsches Wörterbuch.",
+      "source_example": "Ich benutze in deutsches Wörterbuch.",
       "target_example": "Я использую немецкий словарь."
     },
     {
@@ -10053,7 +10053,7 @@
       "target_id": 3002236,
       "source_word": "verwenden",
       "target_word": "применять",
-      "source_example": "Wir verwenden moderne Technik.",
+      "source_example": "Wir verwenden moderne Technique.",
       "target_example": "Мы используем современную технику."
     },
     {
@@ -10080,7 +10080,7 @@
       "target_id": 3002242,
       "source_word": "bekannt",
       "target_word": "известный",
-      "source_example": "Er ist ein bekannter Schauspieler.",
+      "source_example": "Er ist in bekannter Schauspieler.",
       "target_example": "Он известный актер."
     },
     {
@@ -10503,7 +10503,7 @@
       "target_id": 3002336,
       "source_word": "dessen",
       "target_word": "чей",
-      "source_example": "Das ist ein Mann, dessen Frau Ärztin ist.",
+      "source_example": "Das ist in Mann, dessen Frau Ärztin ist.",
       "target_example": "Это мужчина, жена которого врач."
     },
     {
@@ -10593,7 +10593,7 @@
       "target_id": 3002356,
       "source_word": "solche",
       "target_word": "такие",
-      "source_example": "Solche Probleme kenne ich.",
+      "source_example": "Solche Problem kenne ich.",
       "target_example": "Такие проблемы я знаю."
     },
     {
@@ -10647,7 +10647,7 @@
       "target_id": 3002368,
       "source_word": "älter",
       "target_word": "старше",
-      "source_example": "Er ist älter als ich.",
+      "source_example": "Er ist älter also ich.",
       "target_example": "Он старше меня."
     },
     {
@@ -10656,7 +10656,7 @@
       "target_id": 3002370,
       "source_word": "jünger",
       "target_word": "моложе",
-      "source_example": "Sie ist jünger als er.",
+      "source_example": "Sie ist jünger also er.",
       "target_example": "Она моложе его."
     },
     {
@@ -10944,16 +10944,16 @@
       "target_id": 3002434,
       "source_word": "der Teil [Teile]",
       "target_word": "часть",
-      "source_example": "Das ist ein wichtiger Teil.",
+      "source_example": "Das ist in wichtiger Teil.",
       "target_example": "Это важная часть."
     },
     {
       "translation_id": 3001217,
       "source_id": 3002435,
       "target_id": 3002436,
-      "source_word": "dran",
+      "source_word": "drawn",
       "target_word": "на очереди",
-      "source_example": "Du bist dran!",
+      "source_example": "Du bist drawn!",
       "target_example": "Твоя очередь!"
     },
     {
@@ -11104,9 +11104,9 @@
       "translation_id": 3001234,
       "source_id": 3002469,
       "target_id": 3002470,
-      "source_word": "das Ende [Enden]",
+      "source_word": "das End [Enden]",
       "target_word": "конец",
-      "source_example": "Das ist das Ende.",
+      "source_example": "Das ist das End.",
       "target_example": "Это конец."
     },
     {
@@ -11187,7 +11187,7 @@
       "target_id": 3002488,
       "source_word": "das Thema [Themen]",
       "target_word": "тема",
-      "source_example": "Das ist ein wichtiges Thema.",
+      "source_example": "Das ist in wichtiges Thema.",
       "target_example": "Это важная тема."
     },
     {
@@ -11221,9 +11221,9 @@
       "translation_id": 3001247,
       "source_id": 3002495,
       "target_id": 3002496,
-      "source_word": "egal",
+      "source_word": "equal",
       "target_word": "всё равно",
-      "source_example": "Das ist mir egal.",
+      "source_example": "Das ist mir equal.",
       "target_example": "Мне всё равно."
     },
     {
@@ -11385,7 +11385,7 @@
       "target_id": 3002532,
       "source_word": "das Ding [Dinge]",
       "target_word": "вещь, предмет",
-      "source_example": "Das ist ein seltsames Ding.",
+      "source_example": "Das ist in seltsames Ding.",
       "target_example": "Это странная вещь."
     },
     {
@@ -11437,9 +11437,9 @@
       "translation_id": 3001271,
       "source_id": 3002543,
       "target_id": 3002544,
-      "source_word": "die Lage [Lagen]",
+      "source_word": "die Large [Lagen]",
       "target_word": "положение",
-      "source_example": "Die Lage ist ernst.",
+      "source_example": "Die Large ist ernst.",
       "target_example": "Положение серьезное."
     },
     {
@@ -11484,7 +11484,7 @@
       "target_id": 3002554,
       "source_word": "die Mitte",
       "target_word": "середина",
-      "source_example": "In der Mitte steht ein Baum.",
+      "source_example": "In der Mitte steht in Baum.",
       "target_example": "В середине стоит дерево."
     },
     {
@@ -11502,7 +11502,7 @@
       "target_id": 3002558,
       "source_word": "sowohl",
       "target_word": "как... так и",
-      "source_example": "Sowohl du als auch ich.",
+      "source_example": "Sowohl du also auch ich.",
       "target_example": "Как ты, так и я."
     },
     {
@@ -11563,9 +11563,9 @@
       "translation_id": 3001285,
       "source_id": 3002571,
       "target_id": 3002572,
-      "source_word": "der Titel [Titel]",
+      "source_word": "der Title [Title]",
       "target_word": "заголовок",
-      "source_example": "Wie lautet der Titel?",
+      "source_example": "Wie lautet der Title?",
       "target_example": "Как звучит заголовок?"
     },
     {
@@ -11709,7 +11709,7 @@
       "target_id": 3002604,
       "source_word": "der Fehler [Fehler]",
       "target_word": "ошибка",
-      "source_example": "Das war ein Fehler.",
+      "source_example": "Das war in Fehler.",
       "target_example": "Это была ошибка."
     },
     {
@@ -11727,7 +11727,7 @@
       "target_id": 3002608,
       "source_word": "das Gefühl [Gefühle]",
       "target_word": "чувство",
-      "source_example": "Ich habe ein gutes Gefühl.",
+      "source_example": "Ich habe in gutes Gefühl.",
       "target_example": "У меня хорошее чувство."
     },
     {
@@ -11763,7 +11763,7 @@
       "target_id": 3002616,
       "source_word": "der Gedanke [Gedanken]",
       "target_word": "мысль",
-      "source_example": "Das ist ein guter Gedanke.",
+      "source_example": "Das ist in guter Gedanke.",
       "target_example": "Это хорошая мысль."
     },
     {
@@ -11781,7 +11781,7 @@
       "target_id": 3002620,
       "source_word": "die Nähe",
       "target_word": "близость",
-      "source_example": "In der Nähe ist ein Park.",
+      "source_example": "In der Nähe ist in Park.",
       "target_example": "Рядом есть парк."
     },
     {
@@ -11808,7 +11808,7 @@
       "target_id": 3002626,
       "source_word": "die Stimme [Stimmen]",
       "target_word": "голос",
-      "source_example": "Deine Stimme ist sehr schön.",
+      "source_example": "Define Stimme ist sehr schön.",
       "target_example": "Твой голос очень красивый."
     },
     {
@@ -11925,7 +11925,7 @@
       "target_id": 3002652,
       "source_word": "das Opfer [Opfer]",
       "target_word": "жертва",
-      "source_example": "Er war ein Opfer des Unfalls.",
+      "source_example": "Er war in Opfer des Unfalls.",
       "target_example": "Он был жертвой несчастного случая."
     },
     {
@@ -11952,7 +11952,7 @@
       "target_id": 3002658,
       "source_word": "der Punkt [Punkte]",
       "target_word": "точка",
-      "source_example": "Das ist ein wichtiger Punkt.",
+      "source_example": "Das ist in wichtiger Punkt.",
       "target_example": "Это важная точка."
     },
     {
@@ -11961,7 +11961,7 @@
       "target_id": 3002660,
       "source_word": "der Typ [Typen]",
       "target_word": "тип",
-      "source_example": "Er ist ein netter Typ.",
+      "source_example": "Er ist in netter Typ.",
       "target_example": "Он приятный тип."
     },
     {
@@ -12058,9 +12058,9 @@
       "translation_id": 3001340,
       "source_id": 3002681,
       "target_id": 3002682,
-      "source_word": "offen",
+      "source_word": "often",
       "target_word": "открыто",
-      "source_example": "Ich sage das ganz offen.",
+      "source_example": "Ich sage das ganz often.",
       "target_example": "Я говорю это совершенно открыто."
     },
     {
@@ -12195,7 +12195,7 @@
       "target_id": 3002712,
       "source_word": "der Schritt [Schritte]",
       "target_word": "шаг",
-      "source_example": "Das ist ein großer Schritt.",
+      "source_example": "Das ist in großer Schritt.",
       "target_example": "Это большой шаг."
     },
     {
@@ -12204,7 +12204,7 @@
       "target_id": 3002714,
       "source_word": "die Unterstützung [Unterstützungen]",
       "target_word": "поддержка",
-      "source_example": "Ich brauche deine Unterstützung.",
+      "source_example": "Ich brauche define Unterstützung.",
       "target_example": "Мне нужна твоя поддержка."
     },
     {
@@ -12247,9 +12247,9 @@
       "translation_id": 3001361,
       "source_id": 3002723,
       "target_id": 3002724,
-      "source_word": "der Beginn [Beginne]",
+      "source_word": "der Begin [Beginne]",
       "target_word": "начало",
-      "source_example": "Der Beginn ist wichtig.",
+      "source_example": "Der Begin ist wichtig.",
       "target_example": "Начало важно."
     }
   ]

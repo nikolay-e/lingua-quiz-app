@@ -7,7 +7,7 @@ for different model sizes and availability.
 
 import subprocess
 import sys
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import spacy
 from spacy.lang.de import German
@@ -26,13 +26,13 @@ class NLPModelManager:
     """
 
     def __init__(self):
-        self._model_cache: Dict[str, Any] = {}
+        self._model_cache: dict[str, Any] = {}
         self._download_attempted: set = set()  # Track which models we've tried to download
 
     def load_model(
         self,
         language_code: str,
-        model_preferences: Optional[List[str]] = None,
+        model_preferences: list[str] | None = None,
         silent: bool = False,
     ) -> Any:
         """
@@ -145,7 +145,7 @@ class NLPModelManager:
                 f"Install a core model with: python -m spacy download {suggested_model}"
             )
 
-    def _load_basic_model(self, language_code: str) -> Optional[Any]:
+    def _load_basic_model(self, language_code: str) -> Any | None:
         """
         Load a basic language model as fallback.
 
@@ -190,6 +190,7 @@ class NLPModelManager:
             # Run spacy download command
             result = subprocess.run(
                 [sys.executable, "-m", "spacy", "download", model_name],
+                check=False,
                 capture_output=True,
                 text=True,
                 timeout=300,  # 5 minute timeout
@@ -199,10 +200,9 @@ class NLPModelManager:
                 if not silent:
                     print(f"  ✅ Successfully downloaded {model_name}")
                 return True
-            else:
-                if not silent:
-                    print(f"  ❌ Failed to download {model_name}: {result.stderr.strip()}")
-                return False
+            if not silent:
+                print(f"  ❌ Failed to download {model_name}: {result.stderr.strip()}")
+            return False
 
         except subprocess.TimeoutExpired:
             if not silent:
@@ -225,7 +225,7 @@ class NLPModelManager:
         """
         return language_code in self._model_cache
 
-    def get_model_info(self, language_code: str) -> Dict[str, Any]:
+    def get_model_info(self, language_code: str) -> dict[str, Any]:
         """
         Get information about the loaded model.
 
@@ -262,7 +262,7 @@ _model_manager = NLPModelManager()
 
 def get_nlp_model(
     language_code: str,
-    model_preferences: Optional[List[str]] = None,
+    model_preferences: list[str] | None = None,
     silent: bool = False,
 ) -> Any:
     """

@@ -48,7 +48,7 @@ def test_user(api_client):
 
     user_data = response.json()
 
-    yield {
+    return {
         "username": username,
         "password": password,
         "id": user_data.get("user", {}).get("id"),

@@ -19,7 +19,7 @@ from .core.vocabulary_analyzer import VocabularyAnalyzer
 from .validation.migration_validator import MigrationValidator
 
 __all__ = [
+    "MigrationValidator",
     "VocabularyAnalyzer",
     "VocabularyFileParser",
-    "MigrationValidator",
 ]

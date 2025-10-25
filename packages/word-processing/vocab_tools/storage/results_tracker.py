@@ -5,11 +5,11 @@ Stores all analysis results in a single JSON file for historical tracking
 and trend analysis.
 """
 
+from dataclasses import dataclass
 import datetime
 import json
-from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from ..core.vocabulary_analyzer import VocabularyAnalysisResult
 from ..validation.migration_validator import ValidationResult
@@ -21,10 +21,10 @@ class AnalysisRun:
 
     timestamp: str
     run_type: str  # 'analysis', 'validation', 'full-analysis'
-    config: Dict[str, Any]
-    validation_result: Optional[Dict[str, Any]] = None
-    vocabulary_results: Dict[str, Any] = None
-    summary: Dict[str, Any] = None
+    config: dict[str, Any]
+    validation_result: dict[str, Any] | None = None
+    vocabulary_results: dict[str, Any] = None
+    summary: dict[str, Any] = None
 
 
 class ResultsTracker:
@@ -35,7 +35,7 @@ class ResultsTracker:
     and generate trend reports.
     """
 
-    def __init__(self, results_file: Optional[Path] = None):
+    def __init__(self, results_file: Path | None = None):
         """Initialize the results tracker."""
         if results_file is None:
             # Store in the word_processing_scripts directory
@@ -50,17 +50,17 @@ class ResultsTracker:
         if not self.results_file.exists():
             self._save_results([])
 
-    def _load_results(self) -> List[Dict[str, Any]]:
+    def _load_results(self) -> list[dict[str, Any]]:
         """Load all results from file."""
         try:
-            with open(self.results_file, "r", encoding="utf-8") as f:
+            with open(self.results_file, encoding="utf-8") as f:
                 return json.load(f)
         except (json.JSONDecodeError, FileNotFoundError) as e:
             if isinstance(e, json.JSONDecodeError):
                 print(f"Warning: Corrupted history file {self.results_file}, starting fresh")
             return []
 
-    def _save_results(self, results: List[Dict[str, Any]]):
+    def _save_results(self, results: list[dict[str, Any]]):
         """Save all results to file."""
         with open(self.results_file, "w", encoding="utf-8") as f:
             json.dump(results, f, indent=2, ensure_ascii=False)
@@ -68,9 +68,9 @@ class ResultsTracker:
     def store_analysis_run(
         self,
         run_type: str,
-        config: Dict[str, Any],
-        validation_result: Optional[ValidationResult] = None,
-        vocabulary_results: Optional[Dict[str, VocabularyAnalysisResult]] = None,
+        config: dict[str, Any],
+        validation_result: ValidationResult | None = None,
+        vocabulary_results: dict[str, VocabularyAnalysisResult] | None = None,
     ) -> str:
         """
         Store a complete analysis run.
@@ -167,17 +167,17 @@ class ResultsTracker:
         print(f"📁 Analysis results stored to: {self.results_file}")
         return timestamp
 
-    def get_recent_runs(self, limit: int = 10) -> List[Dict[str, Any]]:
+    def get_recent_runs(self, limit: int = 10) -> list[dict[str, Any]]:
         """Get the most recent analysis runs."""
         all_results = self._load_results()
         return all_results[-limit:] if all_results else []
 
-    def get_runs_by_type(self, run_type: str) -> List[Dict[str, Any]]:
+    def get_runs_by_type(self, run_type: str) -> list[dict[str, Any]]:
         """Get all runs of a specific type."""
         all_results = self._load_results()
         return [r for r in all_results if r.get("run_type") == run_type]
 
-    def get_language_trends(self, language: str, days: int = 30) -> Dict[str, Any]:
+    def get_language_trends(self, language: str, days: int = 30) -> dict[str, Any]:
         """Get trends for a specific language over time."""
         cutoff_date = datetime.datetime.now() - datetime.timedelta(days=days)
         all_results = self._load_results()
@@ -224,7 +224,7 @@ class ResultsTracker:
             "latest_stats": (recommendations_over_time[-1] if recommendations_over_time else None),
         }
 
-    def generate_summary_report(self) -> Dict[str, Any]:
+    def generate_summary_report(self) -> dict[str, Any]:
         """Generate a comprehensive summary report."""
         all_results = self._load_results()
 
@@ -287,7 +287,7 @@ class ResultsTracker:
             "results_file": str(self.results_file),
         }
 
-    def create_backup(self, backup_dir: Optional[Path] = None) -> Path:
+    def create_backup(self, backup_dir: Path | None = None) -> Path:
         """
         Create a timestamped backup of the results file.
 
@@ -342,7 +342,7 @@ class ResultsTracker:
 _results_tracker = None
 
 
-def get_results_tracker(results_file: Optional[Path] = None) -> ResultsTracker:
+def get_results_tracker(results_file: Path | None = None) -> ResultsTracker:
     """Get the global results tracker instance."""
     global _results_tracker
     if _results_tracker is None:

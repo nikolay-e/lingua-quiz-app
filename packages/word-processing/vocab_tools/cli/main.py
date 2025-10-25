@@ -7,9 +7,9 @@ across all supported languages.
 
 import argparse
 import json
-import sys
 from pathlib import Path
-from typing import Any, Dict
+import sys
+from typing import Any
 
 from ..languages.english_vocab import EnglishVocabularyAnalyzer
 from ..languages.german_vocab import GermanVocabularyAnalyzer
@@ -191,7 +191,7 @@ Requirements:
         """Set up the summary command parser."""
         self._add_common_arguments(parser, include_output=True)
 
-    def run_analyze(self, args: argparse.Namespace) -> Dict[str, Any]:
+    def run_analyze(self, args: argparse.Namespace) -> dict[str, Any]:
         """
         Run vocabulary analysis for specified languages.
 
@@ -258,7 +258,7 @@ Requirements:
 
         return results
 
-    def run_validate(self, args: argparse.Namespace) -> Dict[str, Any]:
+    def run_validate(self, args: argparse.Namespace) -> dict[str, Any]:
         """
         Run migration validation.
 
@@ -296,7 +296,7 @@ Requirements:
 
         return result.to_dict()
 
-    def run_full_analysis(self, args: argparse.Namespace) -> Dict[str, Any]:
+    def run_full_analysis(self, args: argparse.Namespace) -> dict[str, Any]:
         if args.output == "text":
             print("🚀 STARTING FULL VOCABULARY ANALYSIS")
             print("=" * 80)
@@ -389,7 +389,7 @@ Requirements:
 
         return results
 
-    def _print_full_analysis_summary(self, results: Dict[str, Any]):
+    def _print_full_analysis_summary(self, results: dict[str, Any]):
         """Print summary of full analysis results."""
         print("\n🎯 FULL ANALYSIS SUMMARY")
         print("=" * 80)
@@ -435,7 +435,7 @@ Requirements:
         print(f"   • Total recommendations for addition: {total_recommendations:,} words")
         print("=" * 80)
 
-    def run_history(self, args: argparse.Namespace) -> Dict[str, Any]:
+    def run_history(self, args: argparse.Namespace) -> dict[str, Any]:
         """
         Show analysis results history.
 
@@ -468,7 +468,7 @@ Requirements:
 
             return trends
 
-        elif args.run_type:
+        if args.run_type:
             # Show runs of specific type
             runs = self.results_tracker.get_runs_by_type(args.run_type)
             recent_runs = runs[-args.limit :] if runs else []
@@ -486,23 +486,22 @@ Requirements:
 
             return {"run_type": args.run_type, "runs": recent_runs}
 
-        else:
-            # Show general recent history
-            recent_runs = self.results_tracker.get_recent_runs(args.limit)
+        # Show general recent history
+        recent_runs = self.results_tracker.get_recent_runs(args.limit)
 
-            if args.output == "text":
-                print(f"\n📋 Recent Analysis Runs (showing last {len(recent_runs)})")
-                print("-" * 60)
-                for run in reversed(recent_runs):
-                    timestamp = run["timestamp"][:19].replace("T", " ")
-                    run_type = run["run_type"].ljust(12)
-                    summary = run.get("summary", {})
-                    total_recs = summary.get("total_recommendations", 0)
-                    print(f"• {timestamp} | {run_type} | {total_recs:4,} recommendations")
+        if args.output == "text":
+            print(f"\n📋 Recent Analysis Runs (showing last {len(recent_runs)})")
+            print("-" * 60)
+            for run in reversed(recent_runs):
+                timestamp = run["timestamp"][:19].replace("T", " ")
+                run_type = run["run_type"].ljust(12)
+                summary = run.get("summary", {})
+                total_recs = summary.get("total_recommendations", 0)
+                print(f"• {timestamp} | {run_type} | {total_recs:4,} recommendations")
 
-            return {"recent_runs": recent_runs}
+        return {"recent_runs": recent_runs}
 
-    def run_summary(self, args: argparse.Namespace) -> Dict[str, Any]:
+    def run_summary(self, args: argparse.Namespace) -> dict[str, Any]:
         """
         Generate summary report of all analyses.
 
@@ -547,7 +546,7 @@ Requirements:
 
         return summary
 
-    def save_results(self, results: Dict[str, Any], filepath: str):
+    def save_results(self, results: dict[str, Any], filepath: str):
         """Save results to a file."""
         try:
             with open(filepath, "w", encoding="utf-8") as f:

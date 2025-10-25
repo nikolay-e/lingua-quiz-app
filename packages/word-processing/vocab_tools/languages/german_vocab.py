@@ -6,7 +6,6 @@ German linguistic features like articles, compound words, and inflections.
 """
 
 from pathlib import Path
-from typing import Set, Tuple
 
 from ..config.constants import WORD_CATEGORY_MAPPING
 from ..core.vocabulary_analyzer import VocabularyAnalyzer
@@ -34,7 +33,7 @@ class GermanVocabularyAnalyzer(VocabularyAnalyzer):
             "den",
             "dem",
             "des",
-            "ein",
+            "in",
             "eine",
             "einer",
             "einen",
@@ -44,7 +43,7 @@ class GermanVocabularyAnalyzer(VocabularyAnalyzer):
 
         # Note: Manual verb mapping removed - spaCy's lemmatization handles this better
 
-    def analyze_word_linguistics(self, word: str, existing_words: Set[str], rank: int = None) -> Tuple[str, str, str]:
+    def analyze_word_linguistics(self, word: str, existing_words: set[str], rank: int = None) -> tuple[str, str, str]:
         """
         Analyze German word with specialized German linguistic processing.
 
@@ -107,39 +106,35 @@ class GermanVocabularyAnalyzer(VocabularyAnalyzer):
         if pos_tag == "VERB":
             if "Tense=Past" in morphology:
                 return f"Past tense of '{lemma}'"
-            elif "Number=Plur" in morphology:
-                return f"Plural form of '{lemma}'"
-            elif "Person=1" in morphology and "Number=Sing" in morphology:
-                return f"First person singular of '{lemma}'"
-            elif "Person=2" in morphology:
-                return f"Second person form of '{lemma}'"
-            elif "Person=3" in morphology:
-                return f"Third person form of '{lemma}'"
-            else:
-                return f"Conjugated form of '{lemma}'"
-
-        elif pos_tag == "NOUN":
             if "Number=Plur" in morphology:
                 return f"Plural form of '{lemma}'"
-            elif "Case=Dat" in morphology:
-                return f"Dative form of '{lemma}'"
-            elif "Case=Gen" in morphology:
-                return f"Genitive form of '{lemma}'"
-            elif "Case=Acc" in morphology:
-                return f"Accusative form of '{lemma}'"
-            else:
-                return f"Inflected form of '{lemma}'"
+            if "Person=1" in morphology and "Number=Sing" in morphology:
+                return f"First person singular of '{lemma}'"
+            if "Person=2" in morphology:
+                return f"Second person form of '{lemma}'"
+            if "Person=3" in morphology:
+                return f"Third person form of '{lemma}'"
+            return f"Conjugated form of '{lemma}'"
 
-        elif pos_tag == "ADJ":
+        if pos_tag == "NOUN":
+            if "Number=Plur" in morphology:
+                return f"Plural form of '{lemma}'"
+            if "Case=Dat" in morphology:
+                return f"Dative form of '{lemma}'"
+            if "Case=Gen" in morphology:
+                return f"Genitive form of '{lemma}'"
+            if "Case=Acc" in morphology:
+                return f"Accusative form of '{lemma}'"
+            return f"Inflected form of '{lemma}'"
+
+        if pos_tag == "ADJ":
             if "Degree=Cmp" in morphology:
                 return f"Comparative form of '{lemma}'"
-            elif "Degree=Sup" in morphology:
+            if "Degree=Sup" in morphology:
                 return f"Superlative form of '{lemma}'"
-            else:
-                return f"Inflected adjective form of '{lemma}'"
+            return f"Inflected adjective form of '{lemma}'"
 
-        else:
-            return f"Inflected form of '{lemma}'"
+        return f"Inflected form of '{lemma}'"
 
     def _categorize_german_word(self, pos_tag: str, word: str, morphology: str) -> str:
         """
