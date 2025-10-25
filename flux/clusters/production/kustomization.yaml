@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - infrastructure.yaml
+  - apps.yaml
+  - image-update-automation.yaml
+  - preview-image-update-automation.yaml
+  - cleanup.yaml
+  # Preview environment Kustomizations (managed by GitHub Actions)
+  - preview-pr-202-infra.yaml
+  - preview-pr-202-apps.yaml
+  - preview-pr-215-infra.yaml
+  - preview-pr-215-apps.yaml
+  - preview-pr-217-infra.yaml
+  - preview-pr-217-apps.yaml
+  - preview-pr-218-infra.yaml
+  - preview-pr-218-apps.yaml
+  - preview-pr-219-infra.yaml
+  - preview-pr-219-apps.yaml

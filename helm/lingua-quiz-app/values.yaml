@@ -111,7 +111,7 @@ ingress:
     host: # Empty for same-host deployment (API served from /api path)
   tls:
     enabled: true
-    secretName: lingua-quiz-tls # Name of the K8s secret holding the cert/key
+    secretName: lingua-quiz-tls  # pragma: allowlist secret
 
 # Secrets - These MUST be provided during deployment (e.g., via --set or a secrets file)
 secrets:

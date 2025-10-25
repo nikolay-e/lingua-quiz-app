@@ -1,0 +1,14 @@
+apiVersion: image.toolkit.fluxcd.io/v1
+kind: ImagePolicy
+metadata:
+  name: backend
+  namespace: preview-pr-215
+spec:
+  imageRepositoryRef:
+    name: backend
+  policy:
+    numerical:
+      order: asc
+  filterTags:
+    pattern: '^pr-215-[a-f0-9]+-(?P<ts>[0-9]+)$'
+    extract: '$ts'

@@ -28,6 +28,7 @@ export default [
       ...js.configs.recommended.rules,
       'no-console': ['error', { allow: ['warn', 'error'] }],
       'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      'max-len': ['error', { code: 150, ignoreUrls: true, ignoreStrings: true, ignoreTemplateLiterals: true }],
     },
   },
   // TypeScript files in packages/frontend/src
@@ -57,6 +58,7 @@ export default [
       'no-console': ['error', { allow: ['warn', 'error'] }],
       'no-unused-vars': 'off',
       'no-undef': 'off', // TypeScript handles this
+      'max-len': ['error', { code: 150, ignoreUrls: true, ignoreStrings: true, ignoreTemplateLiterals: true }],
     },
   },
   // TypeScript files in packages/core/src
@@ -86,6 +88,7 @@ export default [
       'no-console': ['error', { allow: ['warn', 'error'] }],
       'no-unused-vars': 'off',
       'no-undef': 'off', // TypeScript handles this
+      'max-len': ['error', { code: 150, ignoreUrls: true, ignoreStrings: true, ignoreTemplateLiterals: true }],
     },
   },
   // TypeScript test files in packages/core/tests (without project)
@@ -112,6 +115,7 @@ export default [
       'no-console': 'off', // Allow console in tests
       'no-unused-vars': 'off',
       'no-undef': 'off',
+      'max-len': ['error', { code: 150, ignoreUrls: true, ignoreStrings: true, ignoreTemplateLiterals: true }],
       // Disable rules that require type info
       '@typescript-eslint/no-unsafe-assignment': 'off',
       '@typescript-eslint/no-unsafe-member-access': 'off',
@@ -146,6 +150,7 @@ export default [
       'no-console': ['error', { allow: ['warn', 'error'] }],
       'no-unused-vars': 'off',
       'no-undef': 'off',
+      'max-len': ['error', { code: 150, ignoreUrls: true, ignoreStrings: true, ignoreTemplateLiterals: true }],
     },
   },
   // Core config files
@@ -175,6 +180,7 @@ export default [
       'no-console': ['error', { allow: ['warn', 'error'] }],
       'no-unused-vars': 'off',
       'no-undef': 'off',
+      'max-len': ['error', { code: 150, ignoreUrls: true, ignoreStrings: true, ignoreTemplateLiterals: true }],
     },
   },
   // Svelte files
@@ -202,6 +208,7 @@ export default [
       'no-unused-vars': 'off',
       'no-undef': 'off', // TypeScript handles this
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      'max-len': ['error', { code: 150, ignoreUrls: true, ignoreStrings: true, ignoreTemplateLiterals: true }],
       // Disable rules that require type info for Svelte
       '@typescript-eslint/no-unsafe-assignment': 'off',
       '@typescript-eslint/no-unsafe-member-access': 'off',

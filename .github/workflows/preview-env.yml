@@ -1,0 +1,255 @@
+name: Preview Environment Management
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - '.github/**'
+
+env:
+  MAX_PREVIEW_ENVS: 10
+
+jobs:
+  # Deploy or update preview environment
+  deploy-preview:
+    name: Deploy Preview Environment
+    runs-on: ubuntu-latest
+    if: github.event.action != 'closed'
+    permissions:
+      contents: write
+      pull-requests: write
+      packages: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up environment variables
+        id: vars
+        run: |
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          echo "pr_number=${PR_NUMBER}" >> $GITHUB_OUTPUT
+          echo "namespace=preview-pr-${PR_NUMBER}" >> $GITHUB_OUTPUT
+          echo "domain=pr-${PR_NUMBER}.lingua-quiz.nikolay-eremeev.com" >> $GITHUB_OUTPUT
+
+          echo "### Preview Environment Info" >> $GITHUB_STEP_SUMMARY
+          echo "- **PR Number:** #${PR_NUMBER}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch:** ${{ github.head_ref }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Namespace:** preview-pr-${PR_NUMBER}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Domain:** https://pr-${PR_NUMBER}.lingua-quiz.nikolay-eremeev.com" >> $GITHUB_STEP_SUMMARY
+
+      - name: Check and enforce preview limit
+        run: |
+          bash .github/scripts/preview-env.sh enforce-limit
+
+      - name: Generate preview manifests
+        run: |
+          bash .github/scripts/preview-env.sh generate \
+            "${{ steps.vars.outputs.pr_number }}" \
+            "${{ github.head_ref }}"
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Commit and push preview manifests
+        run: |
+          git add flux/clusters/preview-pr-* flux/clusters/production/preview-pr-*-infra.yaml flux/clusters/production/preview-pr-*-apps.yaml helm/lingua-quiz-app/values.preview-pr-*.yaml || true
+
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            echo "✅ Preview environment already up to date" >> $GITHUB_STEP_SUMMARY
+          else
+            git commit -m "Deploy preview environment for PR #${{ steps.vars.outputs.pr_number }}
+
+          Preview URL: https://${{ steps.vars.outputs.domain }}
+          Branch: ${{ github.head_ref }}
+          Namespace: ${{ steps.vars.outputs.namespace }}
+
+          🤖 Automated preview deployment"
+
+            git pull --rebase origin main || true
+            git push origin main
+
+            echo "✅ Preview manifests committed and pushed" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Post preview URL comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const previewUrl = 'https://${{ steps.vars.outputs.domain }}';
+            const namespace = '${{ steps.vars.outputs.namespace }}';
+            const prNumber = ${{ steps.vars.outputs.pr_number }};
+
+            const body = `## 🚀 Preview Environment Deployed
+
+            Your preview environment is being deployed and will be available shortly at:
+
+            **Preview URL:** ${previewUrl}
+
+            **Details:**
+            - Namespace: \`${namespace}\`
+            - Database: \`linguaquiz_pr_${prNumber}\`
+            - Branch: \`${{ github.head_ref }}\`
+
+            ⏳ **Note:** It may take 2-3 minutes for FluxCD to deploy the application after this workflow completes.
+
+            The preview environment will be automatically cleaned up when this PR is closed or merged.`;
+
+            // Check if preview comment already exists
+            const comments = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+            });
+
+            const existingComment = comments.data.find(
+              comment => comment.user.login === 'github-actions[bot]' &&
+                         comment.body.includes('Preview Environment Deployed')
+            );
+
+            if (existingComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existingComment.id,
+                body: body,
+              });
+            } else {
+              // Create new comment
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: body,
+              });
+            }
+
+  # Cleanup preview environment when PR is closed
+  cleanup-preview:
+    name: Cleanup Preview Environment
+    runs-on: ubuntu-latest
+    if: github.event.action == 'closed'
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up environment variables
+        id: vars
+        run: |
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          echo "pr_number=${PR_NUMBER}" >> $GITHUB_OUTPUT
+          echo "namespace=preview-pr-${PR_NUMBER}" >> $GITHUB_OUTPUT
+
+          echo "### Cleanup Info" >> $GITHUB_STEP_SUMMARY
+          echo "- **PR Number:** #${PR_NUMBER}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch:** ${{ github.head_ref }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Namespace:** preview-pr-${PR_NUMBER}" >> $GITHUB_STEP_SUMMARY
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Generate and commit database cleanup job
+        run: |
+          # Generate cleanup job manifest
+          CLEANUP_FILE="flux/clusters/cleanup/database-cleanup-pr-${{ steps.vars.outputs.pr_number }}.yaml"
+          sed -e "s/{PR_NUMBER}/${{ steps.vars.outputs.pr_number }}/g" \
+              flux/templates/cleanup/database-cleanup-job.yaml > "$CLEANUP_FILE"
+
+          # Add to kustomization
+          if ! grep -q "database-cleanup-pr-${{ steps.vars.outputs.pr_number }}.yaml" flux/clusters/cleanup/kustomization.yaml; then
+            sed -i '/^resources:/a\  - database-cleanup-pr-${{ steps.vars.outputs.pr_number }}.yaml' flux/clusters/cleanup/kustomization.yaml
+          fi
+
+          # Commit and push cleanup job
+          git add "$CLEANUP_FILE" flux/clusters/cleanup/kustomization.yaml
+          git commit -m "Add database cleanup job for PR #${{ steps.vars.outputs.pr_number }}"
+          git pull --rebase origin main || true
+          git push origin main
+
+          echo "✅ Cleanup job committed, waiting for FluxCD to apply..." >> $GITHUB_STEP_SUMMARY
+
+      - name: Wait for cleanup job to complete
+        run: |
+          echo "Waiting 120 seconds for FluxCD to apply cleanup job and drop database..."
+          sleep 120
+          echo "✅ Cleanup job should be complete" >> $GITHUB_STEP_SUMMARY
+
+      - name: Remove cleanup job and delete preview manifests
+        run: |
+          # Remove cleanup job
+          CLEANUP_FILE="flux/clusters/cleanup/database-cleanup-pr-${{ steps.vars.outputs.pr_number }}.yaml"
+          rm -f "$CLEANUP_FILE"
+
+          # Remove from kustomization
+          sed -i "/database-cleanup-pr-${{ steps.vars.outputs.pr_number }}.yaml/d" flux/clusters/cleanup/kustomization.yaml
+
+          # Remove preview manifests, Kustomization CRDs, and per-preview values file
+          rm -rf "flux/clusters/preview-pr-${{ steps.vars.outputs.pr_number }}"
+          rm -f "flux/clusters/production/preview-pr-${{ steps.vars.outputs.pr_number }}-infra.yaml"
+          rm -f "flux/clusters/production/preview-pr-${{ steps.vars.outputs.pr_number }}-apps.yaml"
+          rm -f "helm/lingua-quiz-app/values.preview-pr-${{ steps.vars.outputs.pr_number }}.yaml"
+
+      - name: Commit and push cleanup
+        run: |
+          git add -A
+
+          if git diff --staged --quiet; then
+            echo "No changes to commit (preview may have been already cleaned up)"
+            echo "✅ Preview environment already cleaned up" >> $GITHUB_STEP_SUMMARY
+          else
+            git commit -m "Cleanup preview environment for PR #${{ steps.vars.outputs.pr_number }}
+
+          Removed preview manifests for: ${{ github.head_ref }}
+          Namespace: ${{ steps.vars.outputs.namespace }}
+
+          🤖 Automated preview cleanup"
+
+            git pull --rebase origin main || true
+            git push origin main
+
+            echo "✅ Preview environment cleaned up successfully" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Post cleanup comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const namespace = '${{ steps.vars.outputs.namespace }}';
+            const prNumber = ${{ steps.vars.outputs.pr_number }};
+
+            const body = `## 🧹 Preview Environment Cleaned Up
+
+            The preview environment has been cleaned up:
+
+            - Namespace: \`${namespace}\` - Deleted by FluxCD
+            - Database: \`linguaquiz_pr_${prNumber}\` - Dropped from shared PostgreSQL
+            - Manifests: Removed from repository
+
+            All resources associated with this preview environment have been removed.`;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: body,
+            });

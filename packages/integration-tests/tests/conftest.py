@@ -7,7 +7,6 @@ import string
 import pytest
 import requests
 
-
 # Configuration from environment
 API_URL = os.getenv("API_URL", "http://localhost:9000/api")
 FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:80")
@@ -23,9 +22,7 @@ def random_username() -> str:
 
 def random_password() -> str:
     """Generate random test password."""
-    return "".join(
-        random.choices(string.ascii_letters + string.digits + "!@#$%^&*", k=12)
-    )
+    return "".join(random.choices(string.ascii_letters + string.digits + "!@#$%^&*", k=12))
 
 
 @pytest.fixture(scope="session")
@@ -44,9 +41,7 @@ def test_user(api_client):
     password = random_password()
 
     # Register test user
-    response = api_client.post(
-        f"{API_URL}/auth/register", json={"username": username, "password": password}
-    )
+    response = api_client.post(f"{API_URL}/auth/register", json={"username": username, "password": password})
 
     if response.status_code != 201:
         pytest.skip(f"Failed to create test user: {response.text}")

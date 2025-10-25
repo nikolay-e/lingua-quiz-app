@@ -1,7 +1,7 @@
 """Backend API integration tests."""
 
 import pytest
-from tests.conftest import API_URL, SKIP_TTS_TESTS, random_username, random_password
+from tests.conftest import API_URL, SKIP_TTS_TESTS, random_password, random_username
 
 
 @pytest.mark.integration
@@ -79,9 +79,7 @@ class TestAuthentication:
 
         assert response.status_code == 401
         data = response.json()
-        assert (
-            "invalid" in data["detail"].lower() or "incorrect" in data["detail"].lower()
-        )
+        assert "invalid" in data["detail"].lower() or "incorrect" in data["detail"].lower()
 
     def test_protected_endpoint_without_token(self, api_client):
         """Test accessing protected endpoint without token."""
@@ -114,9 +112,7 @@ class TestUserProfile:
         """Test updating user profile."""
         new_display_name = "Updated Test User"
 
-        response = authenticated_api_client.put(
-            f"{API_URL}/user/profile", json={"display_name": new_display_name}
-        )
+        response = authenticated_api_client.put(f"{API_URL}/user/profile", json={"display_name": new_display_name})
 
         if response.status_code == 200:
             data = response.json()

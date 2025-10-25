@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: preview-pr-215
+  labels:
+    app: lingua-quiz
+    environment: preview
+    pr-number: '215'
+    branch: 'pr-215'

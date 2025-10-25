@@ -1,0 +1,5 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources: []
+# Database cleanup jobs will be added here dynamically by GitHub Actions
+# Example: - database-cleanup-pr-123.yaml

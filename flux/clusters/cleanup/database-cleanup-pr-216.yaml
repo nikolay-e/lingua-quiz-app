@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cleanup-db-pr-216
+  namespace: shared-database
+spec:
+  ttlSecondsAfterFinished: 60
+  backoffLimit: 3
+  template:
+    metadata:
+      labels:
+        app: database-cleanup
+        pr-number: '216'
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: drop-database
+          image: postgres:15-alpine
+          env:
+            - name: PGHOST
+              value: shared-postgres.shared-database.svc.cluster.local
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: shared-postgres-admin
+                  key: POSTGRES_USER
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: shared-postgres-admin
+                  key: POSTGRES_PASSWORD
+            - name: DATABASE_NAME
+              value: linguaquiz_pr_216
+          command:
+            - sh
+            - -c
+            - |
+              echo "Checking if database ${DATABASE_NAME} exists..."
+              if psql -lqt | cut -d \| -f 1 | grep -qw ${DATABASE_NAME}; then
+                echo "Dropping database ${DATABASE_NAME}..."
+                psql -c "DROP DATABASE IF EXISTS ${DATABASE_NAME};"
+                echo "Database ${DATABASE_NAME} dropped successfully."
+              else
+                echo "Database ${DATABASE_NAME} does not exist. Nothing to clean up."
+              fi

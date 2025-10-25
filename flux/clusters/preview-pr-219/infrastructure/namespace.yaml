@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: preview-pr-219
+  labels:
+    app: lingua-quiz
+    environment: preview
+    pr-number: '219'
+    branch: 'pr-219'

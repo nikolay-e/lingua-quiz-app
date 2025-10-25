@@ -57,9 +57,7 @@ class ResultsTracker:
                 return json.load(f)
         except (json.JSONDecodeError, FileNotFoundError) as e:
             if isinstance(e, json.JSONDecodeError):
-                print(
-                    f"Warning: Corrupted history file {self.results_file}, starting fresh"
-                )
+                print(f"Warning: Corrupted history file {self.results_file}, starting fresh")
             return []
 
     def _save_results(self, results: List[Dict[str, Any]]):
@@ -223,9 +221,7 @@ class ResultsTracker:
             "days_analyzed": days,
             "runs_found": len(relevant_runs),
             "metrics_over_time": recommendations_over_time,
-            "latest_stats": (
-                recommendations_over_time[-1] if recommendations_over_time else None
-            ),
+            "latest_stats": (recommendations_over_time[-1] if recommendations_over_time else None),
         }
 
     def generate_summary_report(self) -> Dict[str, Any]:
@@ -264,9 +260,7 @@ class ResultsTracker:
                     vocab_result = run["vocabulary"][lang]
                     if "error" not in vocab_result:
                         if "recommendation_count" in vocab_result:
-                            latest_recommendations[lang] = vocab_result[
-                                "recommendation_count"
-                            ]
+                            latest_recommendations[lang] = vocab_result["recommendation_count"]
                         else:
                             # Fallback: compute from stored words
                             count = 0
@@ -279,20 +273,14 @@ class ResultsTracker:
             "total_analysis_runs": total_runs,
             "run_types": run_types,
             "languages_analyzed": list(languages_analyzed),
-            "validation_success_rate": (
-                f"{passed_validations}/{validation_runs}"
-                if validation_runs > 0
-                else "N/A"
-            ),
+            "validation_success_rate": (f"{passed_validations}/{validation_runs}" if validation_runs > 0 else "N/A"),
             "latest_recommendations_by_language": latest_recommendations,
             "recent_runs": [
                 {
                     "timestamp": run["timestamp"],
                     "run_type": run["run_type"],
                     "languages": list(run.get("vocabulary", {}).keys()),
-                    "total_recommendations": run.get("summary", {}).get(
-                        "total_recommendations", 0
-                    ),
+                    "total_recommendations": run.get("summary", {}).get("total_recommendations", 0),
                 }
                 for run in recent_runs
             ],

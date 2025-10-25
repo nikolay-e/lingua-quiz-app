@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  # PostgreSQL database for testing
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres # pragma: allowlist secret
+      POSTGRES_DB: lingua_quiz_test
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Backend API service
+  backend:
+    image: lingua-quiz-backend:latest
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/lingua_quiz_test # pragma: allowlist secret
+      JWT_SECRET: test-jwt-secret-for-integration-tests # pragma: allowlist secret
+      CORS_ALLOWED_ORIGINS: http://frontend
+      PORT: 9000
+      DB_HOST: postgres
+      DB_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres # pragma: allowlist secret
+      POSTGRES_DB: lingua_quiz_test
+      MIGRATE: 'true'
+      DOCKER_ENVIRONMENT: 'true'
+    ports:
+      - '9000:9000'
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:9000/api/health']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  # Frontend service
+  frontend:
+    image: lingua-quiz-frontend:latest
+    ports:
+      - '80:80'
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost/']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Integration and E2E tests
+  tests:
+    image: lingua-quiz-integration-e2e-tests:latest
+    environment:
+      API_URL: http://backend:9000/api
+      FRONTEND_URL: http://frontend
+      SKIP_TTS_TESTS: 'true'
+      TEST_TYPE: all
+    volumes:
+      - ./test-reports:/home/appuser/reports
+    depends_on:
+      backend:
+        condition: service_healthy
+      frontend:
+        condition: service_healthy

@@ -1,0 +1,97 @@
+# Preview environment values template
+# This file is used as a template for PR preview environments
+# Placeholders: pr-202, 202, preview-pr-202
+namespace: preview-pr-202
+
+backend:
+  image:
+    repository: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-backend
+    pullPolicy: Always
+    tag: 'latest'
+  port: 9000
+  corsAllowedOrigins: 'https://pr-202.lingua-quiz.nikolay-eremeev.com'
+  service:
+    type: ClusterIP
+    port: 9000
+  # Optimized resources for 10 concurrent preview environments
+  resources:
+    limits:
+      cpu: '250m'
+      memory: '384Mi'
+    requests:
+      cpu: '50m'
+      memory: '128Mi'
+
+frontend:
+  image:
+    repository: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-frontend
+    pullPolicy: Always
+    tag: 'latest'
+  port: 80
+  service:
+    type: ClusterIP
+    port: 80
+  # Optimized resources for 10 concurrent preview environments
+  resources:
+    limits:
+      cpu: '50m'
+      memory: '196Mi'
+    requests:
+      cpu: '25m'
+      memory: '128Mi'
+
+# PostgreSQL configuration - use shared instance with PR-specific database
+postgres:
+  enabled: false
+  external:
+    host: 'shared-postgres.shared-database.svc.cluster.local'
+    port: 5432
+    database: 'linguaquiz_pr_202'
+
+ingress:
+  enabled: true
+  className: 'traefik'
+  annotations:
+    cert-manager.io/cluster-issuer: 'letsencrypt-prod'
+    traefik.ingress.kubernetes.io/router.entrypoints: 'web,websecure'
+    traefik.ingress.kubernetes.io/router.tls: 'true'
+  frontend:
+    host: pr-202.lingua-quiz.nikolay-eremeev.com
+  backend:
+    host: # Same host as frontend - API will be served from /api path
+  tls:
+    enabled: true
+    secretName: preview-pr-202-tls  # pragma: allowlist secret
+
+migrations:
+  enabled: true
+  command: ['python', 'migrate.py']
+  ttlSecondsAfterFinished: 300 # Shorter TTL for preview envs
+  restartPolicy: OnFailure
+  backoffLimit: 3
+  # Optimized resources for preview environments
+  resources:
+    limits:
+      cpu: '100m'
+      memory: '256Mi'
+    requests:
+      cpu: '25m'
+      memory: '64Mi'
+
+tests:
+  enabled: false # Disabled for preview envs to save resources
+  image:
+    repository: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-integration-e2e-tests
+    pullPolicy: Always
+    tag: 'latest'
+  ttlSecondsAfterFinished: 180 # Shorter TTL for preview envs
+  restartPolicy: Never
+  backoffLimit: 2
+  skipTtsTests: 'true'
+  resources:
+    limits:
+      cpu: '200m'
+      memory: '256Mi'
+    requests:
+      cpu: '50m'
+      memory: '128Mi'

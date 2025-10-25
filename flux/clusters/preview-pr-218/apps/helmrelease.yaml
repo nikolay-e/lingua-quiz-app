@@ -1,0 +1,32 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: lingua-quiz
+  namespace: preview-pr-218
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: ./helm/lingua-quiz-app
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+      interval: 1m
+      valuesFiles:
+        - helm/lingua-quiz-app/values.yaml
+        - helm/lingua-quiz-app/values.preview-pr-218.yaml
+  values:
+    registry: ghcr.io/nikolay-e/lingua-quiz
+    imagePullSecrets:
+      - name: ghcr-secret
+    backend:
+      image:
+        tag: pr-218-eafb6bd-1761409623 # {"$imagepolicy": "preview-pr-218:backend"}
+    frontend:
+      image:
+        tag: pr-218-eafb6bd-1761409624 # {"$imagepolicy": "preview-pr-218:frontend"}
+  valuesFrom:
+    - kind: Secret
+      name: lingua-quiz-sops-values
+      valuesKey: values.yaml

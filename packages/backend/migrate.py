@@ -8,7 +8,7 @@ import json
 import os
 import sys
 from pathlib import Path
-from typing import List, Dict
+from typing import Dict, List
 
 import psycopg2
 from pydantic import BaseModel, Field, field_validator
@@ -22,12 +22,8 @@ class DatabaseConfig(BaseModel):
 
     host: str = Field(default="localhost", description="Database host")
     port: int = Field(default=5432, ge=1, le=65535, description="Database port")
-    name: str = Field(
-        default="linguaquiz_db", min_length=1, description="Database name"
-    )
-    user: str = Field(
-        default="linguaquiz_user", min_length=1, description="Database user"
-    )
+    name: str = Field(default="linguaquiz_db", min_length=1, description="Database name")
+    user: str = Field(default="linguaquiz_user", min_length=1, description="Database user")
     password: str = Field(default="", description="Database password")
 
     @field_validator("port")
@@ -41,9 +37,7 @@ class DatabaseConfig(BaseModel):
 class MigrationConfig(BaseModel):
     """Migration runner configuration with validation"""
 
-    migrations_dir: Path = Field(
-        default=Path("./migrations"), description="Migrations directory path"
-    )
+    migrations_dir: Path = Field(default=Path("./migrations"), description="Migrations directory path")
     auto_confirm: bool = Field(default=False, description="Skip confirmation prompts")
 
     @field_validator("migrations_dir")
@@ -93,11 +87,7 @@ def load_config() -> tuple[DatabaseConfig, MigrationConfig]:
         )
 
         # Auto-confirm in CI/CD environments
-        auto_confirm = (
-            os.getenv("CI") == "true"
-            or os.getenv("KUBERNETES_SERVICE_HOST") is not None
-            or os.getenv("DOCKER_ENVIRONMENT") == "true"
-        )
+        auto_confirm = os.getenv("CI") == "true" or os.getenv("KUBERNETES_SERVICE_HOST") is not None or os.getenv("DOCKER_ENVIRONMENT") == "true"
 
         migration_config = MigrationConfig(
             migrations_dir=Path(os.getenv("MIGRATIONS_DIR", "./migrations")),
@@ -132,9 +122,7 @@ def get_connection(db_config: DatabaseConfig):
 def get_migration_files(migration_config: MigrationConfig) -> List[MigrationFile]:
     """Get validated list of migration files from schema and data directories"""
     if not migration_config.migrations_dir.exists():
-        print(
-            f"{RED}Migration directory not found: {migration_config.migrations_dir}{RESET}"
-        )
+        print(f"{RED}Migration directory not found: {migration_config.migrations_dir}{RESET}")
         sys.exit(1)
 
     files = []
@@ -145,14 +133,10 @@ def get_migration_files(migration_config: MigrationConfig) -> List[MigrationFile
         for filepath in sorted(schema_dir.glob("*.sql")):
             try:
                 content = filepath.read_text(encoding="utf-8")
-                migration_file = MigrationFile(
-                    filename=filepath.name, filepath=filepath, content=content
-                )
+                migration_file = MigrationFile(filename=filepath.name, filepath=filepath, content=content)
                 files.append(migration_file)
             except Exception as e:
-                print(
-                    f"{RED}Error reading schema migration file {filepath}: {e}{RESET}"
-                )
+                print(f"{RED}Error reading schema migration file {filepath}: {e}{RESET}")
                 sys.exit(1)
 
     # Load data migrations second (901+)
@@ -161,9 +145,7 @@ def get_migration_files(migration_config: MigrationConfig) -> List[MigrationFile
         for filepath in sorted(data_dir.glob("*.sql")):
             try:
                 content = filepath.read_text(encoding="utf-8")
-                migration_file = MigrationFile(
-                    filename=filepath.name, filepath=filepath, content=content
-                )
+                migration_file = MigrationFile(filename=filepath.name, filepath=filepath, content=content)
                 files.append(migration_file)
             except Exception as e:
                 print(f"{RED}Error reading data migration file {filepath}: {e}{RESET}")
@@ -177,9 +159,7 @@ def get_migration_files(migration_config: MigrationConfig) -> List[MigrationFile
 
         try:
             content = filepath.read_text(encoding="utf-8")
-            migration_file = MigrationFile(
-                filename=filepath.name, filepath=filepath, content=content
-            )
+            migration_file = MigrationFile(filename=filepath.name, filepath=filepath, content=content)
             files.append(migration_file)
         except Exception as e:
             print(f"{RED}Error reading migration file {filepath}: {e}{RESET}")
@@ -209,16 +189,12 @@ def run_migration(conn, migration_file: MigrationFile) -> bool:
         if requires_json:
             # Extract JSON file path from migration content
             lines = migration_file.content.split("\n")
-            json_file_line = next(
-                (line for line in lines if json_file_pattern in line), None
-            )
+            json_file_line = next((line for line in lines if json_file_pattern in line), None)
 
             if json_file_line:
                 # Extract JSON filename from the comment
                 json_filename = json_file_line.split(json_file_pattern)[1].strip("\"';")
-                json_file_path = (
-                    migration_file.filepath.parent / "vocabulary" / json_filename
-                )
+                json_file_path = migration_file.filepath.parent / "vocabulary" / json_filename
 
                 print(f"{YELLOW}Loading JSON data from: {json_file_path}{RESET}")
 
@@ -233,9 +209,7 @@ def run_migration(conn, migration_file: MigrationFile) -> bool:
                     target_lang = vocab_data["target_language"]
                     word_list = vocab_data["word_list_name"]
 
-                    print(
-                        f"{YELLOW}Processing {len(vocab_data['word_pairs'])} word pairs...{RESET}"
-                    )
+                    print(f"{YELLOW}Processing {len(vocab_data['word_pairs'])} word pairs...{RESET}")
 
                     for word_pair in vocab_data["word_pairs"]:
                         cur.execute(
@@ -268,9 +242,7 @@ def run_migration(conn, migration_file: MigrationFile) -> bool:
                         )
 
                     conn.commit()
-                    print(
-                        f"{GREEN}Successfully loaded {len(vocab_data['word_pairs'])} word pairs{RESET}"
-                    )
+                    print(f"{GREEN}Successfully loaded {len(vocab_data['word_pairs'])} word pairs{RESET}")
             else:
                 # Run as regular migration if no JSON file found
                 with conn.cursor() as cur:
@@ -310,22 +282,16 @@ def analyze_vocabulary_ranges(
                 data = json.load(f)
 
             if "word_pairs" in data:
-                translation_ids = [
-                    pair["translation_id"] for pair in data["word_pairs"]
-                ]
+                translation_ids = [pair["translation_id"] for pair in data["word_pairs"]]
                 vocab_ranges[json_file.name] = sorted(translation_ids)
-                print(
-                    f"  {json_file.name}: {len(translation_ids)} valid IDs ({min(translation_ids)}-{max(translation_ids)})"
-                )
+                print(f"  {json_file.name}: {len(translation_ids)} valid IDs ({min(translation_ids)}-{max(translation_ids)})")
         except Exception as e:
             print(f"{RED}Warning: Could not analyze {json_file.name}: {e}{RESET}")
 
     return vocab_ranges
 
 
-def cleanup_inconsistent_vocabulary_data(
-    conn, migration_config: MigrationConfig
-) -> int:
+def cleanup_inconsistent_vocabulary_data(conn, migration_config: MigrationConfig) -> int:
     """
     Clean up vocabulary data that doesn't match the current JSON files.
 
@@ -347,9 +313,7 @@ def cleanup_inconsistent_vocabulary_data(
     for translation_ids in vocab_ranges.values():
         all_valid_ids.update(translation_ids)
 
-    print(
-        f"  Found {len(all_valid_ids)} valid translation IDs across all vocabulary files"
-    )
+    print(f"  Found {len(all_valid_ids)} valid translation IDs across all vocabulary files")
 
     cleanup_count = 0
 
@@ -368,9 +332,7 @@ def cleanup_inconsistent_vocabulary_data(
             invalid_translation_ids = [row[0] for row in cur.fetchall()]
 
             if invalid_translation_ids:
-                print(
-                    f"  Found {len(invalid_translation_ids)} invalid translation entries to remove"
-                )
+                print(f"  Found {len(invalid_translation_ids)} invalid translation entries to remove")
 
                 # Remove invalid entries using the existing cleanup function
                 for translation_id in invalid_translation_ids:
@@ -402,9 +364,7 @@ def main():
     # Load and validate configuration
     db_config, migration_config = load_config()
 
-    print(
-        f"Database: {db_config.user}@{db_config.host}:{db_config.port}/{db_config.name}"
-    )
+    print(f"Database: {db_config.user}@{db_config.host}:{db_config.port}/{db_config.name}")
     print(f"Migrations directory: {migration_config.migrations_dir}")
     print(f"Auto-confirm: {migration_config.auto_confirm}\n")
 
@@ -447,9 +407,7 @@ def main():
                 print(f"{RED}✗ MIGRATION FAILED. ABORTING.{RESET}")
                 sys.exit(1)
 
-        print(
-            f"\n{GREEN}✓ Completed: {success_count}/{len(migration_files)} migrations successful{RESET}"
-        )
+        print(f"\n{GREEN}✓ Completed: {success_count}/{len(migration_files)} migrations successful{RESET}")
 
         # Note: Vocabulary data cleanup is available via cleanup_inconsistent_vocabulary_data()
         # but is not run automatically to prevent accidental data loss.

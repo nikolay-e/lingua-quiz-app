@@ -91,9 +91,7 @@ class TestRunner:
 
         # Enhanced word set tests
         self.test("Get non-existent word set", self.test_get_nonexistent_word_set)
-        self.test(
-            "Update word status with invalid data", self.test_invalid_word_status_update
-        )
+        self.test("Update word status with invalid data", self.test_invalid_word_status_update)
         self.test(
             "Get user word sets with invalid list name",
             self.test_invalid_word_list_name,
@@ -102,9 +100,7 @@ class TestRunner:
         # User level persistence tests
         self.test("Get user current level", self.test_get_current_level)
         self.test("Update user current level", self.test_update_current_level)
-        self.test(
-            "Update current level with invalid value", self.test_invalid_current_level
-        )
+        self.test("Update current level with invalid value", self.test_invalid_current_level)
         self.test(
             "Get current level without authentication",
             self.test_current_level_unauthorized,
@@ -117,16 +113,12 @@ class TestRunner:
                 "TTS synthesis with valid database word",
                 self.test_tts_synthesize_valid_word,
             )
-            self.test(
-                "TTS synthesis with invalid word", self.test_tts_synthesize_invalid_word
-            )
+            self.test("TTS synthesis with invalid word", self.test_tts_synthesize_invalid_word)
             self.test(
                 "TTS synthesis with unsupported language",
                 self.test_tts_synthesize_unsupported_language,
             )
-            self.test(
-                "TTS synthesis with empty text", self.test_tts_synthesize_empty_text
-            )
+            self.test("TTS synthesis with empty text", self.test_tts_synthesize_empty_text)
             self.test(
                 "TTS synthesis with too long text",
                 self.test_tts_synthesize_too_long_text,
@@ -167,9 +159,7 @@ class TestRunner:
             "username": self.random_username(),
             "password": "TestPassword123!",
         }
-        r = requests.post(
-            f"{API_URL}/auth/register", json=self.test_user, timeout=TIMEOUT
-        )
+        r = requests.post(f"{API_URL}/auth/register", json=self.test_user, timeout=TIMEOUT)
         self.assert_equal(r.status_code, 201)
         data = r.json()
         self.assert_in("token", data)
@@ -187,9 +177,7 @@ class TestRunner:
 
     def test_duplicate_register(self):
         """Test duplicate registration rejection"""
-        r = requests.post(
-            f"{API_URL}/auth/register", json=self.test_user, timeout=TIMEOUT
-        )
+        r = requests.post(f"{API_URL}/auth/register", json=self.test_user, timeout=TIMEOUT)
         self.assert_equal(r.status_code, 400)
         self.assert_in("already exists", r.json()["detail"])
 
@@ -243,12 +231,8 @@ class TestRunner:
                 self.assert_in("targetWord", first_item)  # Should be camelCase
                 self.assert_in("sourceLanguage", first_item)  # Should be camelCase
                 self.assert_in("targetLanguage", first_item)  # Should be camelCase
-                self.assert_in(
-                    "sourceWordUsageExample", first_item
-                )  # Should be camelCase
-                self.assert_in(
-                    "targetWordUsageExample", first_item
-                )  # Should be camelCase
+                self.assert_in("sourceWordUsageExample", first_item)  # Should be camelCase
+                self.assert_in("targetWordUsageExample", first_item)  # Should be camelCase
 
     def test_get_word_set_by_id(self):
         """Test getting specific word set by ID"""
@@ -258,9 +242,7 @@ class TestRunner:
         if r.status_code == 200 and r.json():
             word_set_id = r.json()[0]["id"]
             # Get specific word set
-            r = requests.get(
-                f"{API_URL}/word-sets/{word_set_id}", headers=headers, timeout=TIMEOUT
-            )
+            r = requests.get(f"{API_URL}/word-sets/{word_set_id}", headers=headers, timeout=TIMEOUT)
             self.assert_equal(r.status_code, 200)
             data = r.json()
             self.assert_in("id", data)
@@ -284,9 +266,7 @@ class TestRunner:
         """Test updating word status"""
         headers = {"Authorization": f"Bearer {self.token}"}
         data = {"status": "LEVEL_1", "wordPairIds": []}  # Empty list should still work
-        r = requests.post(
-            f"{API_URL}/word-sets/user", json=data, headers=headers, timeout=TIMEOUT
-        )
+        r = requests.post(f"{API_URL}/word-sets/user", json=data, headers=headers, timeout=TIMEOUT)
         self.assert_equal(r.status_code, 200)
 
     def test_unauthorized(self):
@@ -297,9 +277,7 @@ class TestRunner:
     def test_delete_account(self):
         """Test account deletion"""
         headers = {"Authorization": f"Bearer {self.token}"}
-        r = requests.delete(
-            f"{API_URL}/auth/delete-account", headers=headers, timeout=TIMEOUT
-        )
+        r = requests.delete(f"{API_URL}/auth/delete-account", headers=headers, timeout=TIMEOUT)
         self.assert_equal(r.status_code, 200)
         # Verify account is deleted by trying to login
         r = requests.post(f"{API_URL}/auth/login", json=self.test_user, timeout=TIMEOUT)
@@ -364,9 +342,7 @@ class TestRunner:
         headers = {"Authorization": f"Bearer {self.token}"}
         # Use text that definitely won't be in the database
         payload = {"text": "xyzzyx_invalid_word_12345", "language": "German"}
-        r = requests.post(
-            f"{API_URL}/tts/synthesize", json=payload, headers=headers, timeout=TIMEOUT
-        )
+        r = requests.post(f"{API_URL}/tts/synthesize", json=payload, headers=headers, timeout=TIMEOUT)
         # The API returns 400 when the word is not found in database
         self.assert_equal(r.status_code, 400)
         data = r.json()
@@ -376,9 +352,7 @@ class TestRunner:
         """Test TTS synthesis with unsupported language"""
         headers = {"Authorization": f"Bearer {self.token}"}
         payload = {"text": "hello", "language": "Klingon"}
-        r = requests.post(
-            f"{API_URL}/tts/synthesize", json=payload, headers=headers, timeout=TIMEOUT
-        )
+        r = requests.post(f"{API_URL}/tts/synthesize", json=payload, headers=headers, timeout=TIMEOUT)
         self.assert_equal(r.status_code, 422)
         data = r.json()
         self.assert_in("detail", data)
@@ -387,9 +361,7 @@ class TestRunner:
         """Test TTS synthesis with empty text"""
         headers = {"Authorization": f"Bearer {self.token}"}
         payload = {"text": "", "language": "German"}
-        r = requests.post(
-            f"{API_URL}/tts/synthesize", json=payload, headers=headers, timeout=TIMEOUT
-        )
+        r = requests.post(f"{API_URL}/tts/synthesize", json=payload, headers=headers, timeout=TIMEOUT)
         self.assert_equal(r.status_code, 422)
         data = r.json()
         self.assert_in("detail", data)
@@ -399,9 +371,7 @@ class TestRunner:
         headers = {"Authorization": f"Bearer {self.token}"}
         long_text = "a" * 501  # 501 characters
         payload = {"text": long_text, "language": "German"}
-        r = requests.post(
-            f"{API_URL}/tts/synthesize", json=payload, headers=headers, timeout=TIMEOUT
-        )
+        r = requests.post(f"{API_URL}/tts/synthesize", json=payload, headers=headers, timeout=TIMEOUT)
         self.assert_equal(r.status_code, 422)
         data = r.json()
         self.assert_in("detail", data)
@@ -465,9 +435,7 @@ class TestRunner:
     def test_get_nonexistent_word_set(self):
         """Test getting non-existent word set"""
         headers = {"Authorization": f"Bearer {self.token}"}
-        r = requests.get(
-            f"{API_URL}/word-sets/999999", headers=headers, timeout=TIMEOUT
-        )
+        r = requests.get(f"{API_URL}/word-sets/999999", headers=headers, timeout=TIMEOUT)
         self.assert_equal(r.status_code, 404)
 
     def test_invalid_word_status_update(self):
@@ -515,9 +483,7 @@ class TestRunner:
     def test_get_current_level(self):
         """Test getting user current level"""
         headers = {"Authorization": f"Bearer {self.token}"}
-        r = requests.get(
-            f"{API_URL}/user/current-level", headers=headers, timeout=TIMEOUT
-        )
+        r = requests.get(f"{API_URL}/user/current-level", headers=headers, timeout=TIMEOUT)
         self.assert_equal(r.status_code, 200)
         data = r.json()
         self.assert_in("currentLevel", data)
@@ -547,9 +513,7 @@ class TestRunner:
             self.assert_equal(data["currentLevel"], level)
 
             # Verify the level was actually updated by getting it
-            r = requests.get(
-                f"{API_URL}/user/current-level", headers=headers, timeout=TIMEOUT
-            )
+            r = requests.get(f"{API_URL}/user/current-level", headers=headers, timeout=TIMEOUT)
             self.assert_equal(r.status_code, 200)
             data = r.json()
             self.assert_equal(data["currentLevel"], level)

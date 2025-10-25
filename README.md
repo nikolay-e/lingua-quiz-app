@@ -30,6 +30,45 @@ A language learning web application that helps users master vocabulary through s
    make clean-local
    ```
 
+## Production Deployment with FluxCD 🚀
+
+LinguaQuiz uses **FluxCD** for GitOps-based continuous deployment to Kubernetes clusters.
+
+### Quick Start
+
+```bash
+# Bootstrap FluxCD for production
+cd flux
+./bootstrap.sh production
+
+# Check deployment status
+flux get all
+flux get helmreleases -n lingua-quiz-production
+```
+
+### How It Works
+
+1. **CI Pipeline** (GitHub Actions):
+   - Runs tests on every PR
+   - Builds Docker images
+   - Pushes images to GitHub Container Registry
+
+2. **CD Pipeline** (FluxCD):
+   - Monitors GHCR for new images
+   - Automatically updates Kubernetes deployments
+   - Manages secrets with SOPS encryption
+   - Provides automated rollbacks on failure
+
+### Features
+
+- ✅ Automated image updates from GHCR
+- ✅ SOPS-encrypted secrets
+- ✅ Separate production and staging environments
+- ✅ No direct cluster access from CI/CD
+- ✅ GitOps workflow with full audit trail
+
+See [flux/README.md](flux/README.md) for detailed setup instructions.
+
 ## Documentation 📚
 
 - [Development Guidelines](docs/tech.md#development--testing) - LLM-centric development approach
