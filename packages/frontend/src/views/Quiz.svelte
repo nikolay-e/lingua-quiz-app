@@ -2,6 +2,7 @@
   import { onMount, tick, onDestroy } from 'svelte';
   import { authStore, quizStore, levelWordLists, safeStorage } from '../stores';
   import type { SubmissionResult, QuizQuestion } from '@lingua-quiz/core';
+  import { checkAnswer } from '@lingua-quiz/core';
   import type { QuizFeedback } from '../api-types';
   import { LEVEL_CONFIG } from '../lib/config/levelConfig';
   import { ttsService } from '../lib/services/ttsService';
@@ -98,9 +99,47 @@
     answerInput.focus();
   }
 
+  // Auto-submit when answer is correct
+  let autoSubmitTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  function handleAnswerInput(): void {
+    // Clear any pending auto-submit
+    if (autoSubmitTimeout) {
+      clearTimeout(autoSubmitTimeout);
+      autoSubmitTimeout = null;
+    }
+
+    // Check if we should auto-submit
+    if (!currentQuestion || !userAnswer.trim() || isSubmitting || !$quizStore.quizManager) {
+      return;
+    }
+
+    const translation = $quizStore.quizManager.getTranslation(currentQuestion.translationId);
+    if (!translation) return;
+
+    const correctAnswer = direction === 'normal'
+      ? translation.targetWord.text
+      : translation.sourceWord.text;
+
+    const isCorrect = checkAnswer(userAnswer, correctAnswer);
+
+    if (isCorrect) {
+      // Add small delay for better UX (300ms)
+      autoSubmitTimeout = setTimeout(() => {
+        submitAnswer();
+      }, 300);
+    }
+  }
+
 
   async function handleQuizSelect(event: CustomEvent<{ quiz: string }>): Promise<void> {
     const quiz = event.detail.quiz;
+
+    // Clear any pending auto-submit
+    if (autoSubmitTimeout) {
+      clearTimeout(autoSubmitTimeout);
+      autoSubmitTimeout = null;
+    }
 
     // Reset state
     quizStore.reset();
@@ -128,6 +167,12 @@
   }
 
   function handleBackToMenu(): void {
+    // Clear any pending auto-submit
+    if (autoSubmitTimeout) {
+      clearTimeout(autoSubmitTimeout);
+      autoSubmitTimeout = null;
+    }
+
     // Save progress in background (non-blocking)
     if ($authStore.token) {
       quizStore.saveAndCleanup($authStore.token).catch((error) => {
@@ -260,6 +305,11 @@
   onDestroy(() => {
     // Cleanup TTS service resources
     ttsService.destroy();
+
+    // Clear any pending auto-submit timeout
+    if (autoSubmitTimeout) {
+      clearTimeout(autoSubmitTimeout);
+    }
   });
 </script>
 
@@ -326,6 +376,7 @@
           type="text"
           bind:this={answerInput}
           bind:value={userAnswer}
+          on:input={handleAnswerInput}
           on:keydown={handleKeydown}
           placeholder="Type your answer…"
           disabled={isSubmitting}
