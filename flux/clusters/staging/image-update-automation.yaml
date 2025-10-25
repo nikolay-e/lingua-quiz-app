@@ -1,11 +1,10 @@
 apiVersion: image.toolkit.fluxcd.io/v1
 kind: ImageUpdateAutomation
 metadata:
-  name: lingua-quiz-production
+  name: lingua-quiz-staging
   namespace: flux-system
 spec:
-  suspend: true  # Manual updates only - staging auto-deploys, production is manual
-  interval: 5m
+  interval: 1m  # Check every minute for staging
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -19,11 +18,11 @@ spec:
         email: fluxcd@users.noreply.github.com
         name: Flux CD
       messageTemplate: |
-        [production] Update image tags
+        [staging] Update image tags
 
         {{range .Updated.Images}}{{println .}}{{end}}
     push:
       branch: main
   update:
-    path: ./flux/clusters/production/apps
+    path: ./flux/clusters/staging/apps
     strategy: Setters
