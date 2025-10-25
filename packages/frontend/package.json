@@ -22,7 +22,7 @@
     "@tsconfig/svelte": "^5.0.5",
     "svelte": "^5.39.9",
     "svelte-check": "^4.3.2",
-    "vite": "^7.1.9",
+    "vite": "^7.1.11",
     "vite-plugin-pwa": "^1.0.3"
   },
   "keywords": [
