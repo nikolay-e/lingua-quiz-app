@@ -81,7 +81,7 @@ RUN cd packages/frontend && npm run build
 # FRONTEND PRODUCTION STAGE
 # ======================================================================================
 # Pinned to specific version for reproducible builds
-FROM --platform=linux/amd64 nginx:1.29.1-alpine AS frontend
+FROM --platform=linux/amd64 nginx:1.29.2-alpine AS frontend
 
 # Copy nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
