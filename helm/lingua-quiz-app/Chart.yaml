@@ -1,8 +1,0 @@
-apiVersion: v2
-name: lingua-quiz-app
-description: A Helm chart for Lingua Quiz Application (Frontend and Backend)
-type: application
-# Chart version, increment this for chart changes
-version: 0.1.0
-# App version - this would typically match your released application version
-appVersion: 1.0.0
