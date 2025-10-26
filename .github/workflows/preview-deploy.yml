@@ -57,7 +57,7 @@ jobs:
           echo "Verifying images are available for tag: ${IMAGE_TAG}"
 
           # Check if backend image exists
-          if docker manifest inspect ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-backend:${IMAGE_TAG} > /dev/null 2>&1; then
+          if docker manifest inspect "ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-backend:${IMAGE_TAG}" > /dev/null 2>&1; then
             echo "✓ Backend image found"
           else
             echo "❌ Backend image not found: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-backend:${IMAGE_TAG}"
@@ -65,7 +65,7 @@ jobs:
           fi
 
           # Check if frontend image exists
-          if docker manifest inspect ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-frontend:${IMAGE_TAG} > /dev/null 2>&1; then
+          if docker manifest inspect "ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-frontend:${IMAGE_TAG}" > /dev/null 2>&1; then
             echo "✓ Frontend image found"
           else
             echo "❌ Frontend image not found: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-frontend:${IMAGE_TAG}"
@@ -225,8 +225,6 @@ jobs:
         env:
           PR_NUMBER: ${{ steps.pr.outputs.number }}
         run: |
-          NAMESPACE="lingua-quiz-preview-pr-${PR_NUMBER}"
-
           echo "Creating Flux Kustomization resource for preview-pr-${PR_NUMBER}"
 
           # Apply the Kustomization directly to Kubernetes (faster than waiting for Flux to discover it)
@@ -237,7 +235,7 @@ jobs:
           echo "Flux will now reconcile the preview environment from git"
 
           # Trigger immediate reconciliation (don't wait for interval)
-          flux reconcile kustomization preview-pr-${PR_NUMBER} --with-source || true
+          flux reconcile kustomization "preview-pr-${PR_NUMBER}" --with-source || true
 
       - name: Wait for Flux reconciliation
         env:
@@ -249,7 +247,7 @@ jobs:
 
           # Wait for Kustomization to appear
           for i in {1..30}; do
-            if kubectl get kustomization preview-pr-${PR_NUMBER} -n flux-system &>/dev/null; then
+            if kubectl get kustomization "preview-pr-${PR_NUMBER}" -n flux-system &>/dev/null; then
               echo "✓ Flux Kustomization found"
               break
             fi
