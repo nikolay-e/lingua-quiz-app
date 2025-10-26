@@ -1,27 +1,147 @@
 name: Deploy Preview Environment
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  # Trigger after CI completes successfully
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
     branches: [main]
 
 concurrency:
-  group: preview-${{ github.event.pull_request.number }}
+  group: preview-${{ github.event.workflow_run.pull_requests[0].number }}
   cancel-in-progress: true
 
 env:
-  PR_NUMBER: ${{ github.event.pull_request.number }}
   GITOPS_REPO: nikolay-e/lingua-quiz-gitops
 
 jobs:
   deploy-preview:
+    # Only run on PRs when CI succeeds
+    if: >
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.pull_requests[0] != null
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     permissions:
       contents: read
+      packages: read
       pull-requests: write
 
     steps:
+      - name: Get PR details
+        id: pr
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.workflow_run.pull_requests[0];
+            const prNumber = pr.number;
+            const headSha = context.payload.workflow_run.head_sha;
+
+            core.setOutput('number', prNumber);
+            core.setOutput('head_sha', headSha);
+
+            console.log(`PR #${prNumber}, commit: ${headSha}`);
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify images exist
+        env:
+          IMAGE_TAG: ${{ steps.pr.outputs.head_sha }}
+        run: |
+          echo "Verifying images are available for tag: ${IMAGE_TAG}"
+
+          # Check if backend image exists
+          if docker manifest inspect ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-backend:${IMAGE_TAG} > /dev/null 2>&1; then
+            echo "✓ Backend image found"
+          else
+            echo "❌ Backend image not found: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-backend:${IMAGE_TAG}"
+            exit 1
+          fi
+
+          # Check if frontend image exists
+          if docker manifest inspect ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-frontend:${IMAGE_TAG} > /dev/null 2>&1; then
+            echo "✓ Frontend image found"
+          else
+            echo "❌ Frontend image not found: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-frontend:${IMAGE_TAG}"
+            exit 1
+          fi
+
+          echo "✓ All images verified and ready for deployment"
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Configure kubeconfig
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
+          chmod 600 ~/.kube/config
+
+      - name: Install Flux CLI
+        run: |
+          curl -s https://fluxcd.io/install.sh | sudo bash
+
+      - name: Create preview namespace
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        run: |
+          NAMESPACE="lingua-quiz-preview-pr-${PR_NUMBER}"
+
+          echo "Creating namespace: ${NAMESPACE}"
+
+          kubectl create namespace "${NAMESPACE}" \
+            --dry-run=client -o yaml | kubectl apply -f -
+
+          # Add labels for tracking and cleanup
+          kubectl label namespace "${NAMESPACE}" \
+            preview-environment=true \
+            pr-number="${PR_NUMBER}" \
+            created-at="$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            --overwrite
+
+          echo "✓ Namespace created and labeled"
+
+      - name: Copy secrets to preview namespace
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        run: |
+          NAMESPACE="lingua-quiz-preview-pr-${PR_NUMBER}"
+          SOURCE_NAMESPACE="lingua-quiz-staging"
+
+          echo "Copying secrets from ${SOURCE_NAMESPACE} to ${NAMESPACE}"
+
+          # Copy ghcr-secret for image pull
+          if kubectl get secret ghcr-secret -n "${SOURCE_NAMESPACE}" &>/dev/null; then
+            kubectl get secret ghcr-secret -n "${SOURCE_NAMESPACE}" -o yaml \
+              | sed "s/namespace: ${SOURCE_NAMESPACE}/namespace: ${NAMESPACE}/" \
+              | sed '/resourceVersion:/d' \
+              | sed '/uid:/d' \
+              | sed '/creationTimestamp:/d' \
+              | kubectl apply -f -
+            echo "✓ Copied ghcr-secret"
+          else
+            echo "⚠️  ghcr-secret not found in ${SOURCE_NAMESPACE}"
+          fi
+
+          # Copy lingua-quiz-sops-values for database credentials
+          if kubectl get secret lingua-quiz-sops-values -n "${SOURCE_NAMESPACE}" &>/dev/null; then
+            kubectl get secret lingua-quiz-sops-values -n "${SOURCE_NAMESPACE}" -o yaml \
+              | sed "s/namespace: ${SOURCE_NAMESPACE}/namespace: ${NAMESPACE}/" \
+              | sed '/resourceVersion:/d' \
+              | sed '/uid:/d' \
+              | sed '/creationTimestamp:/d' \
+              | kubectl apply -f -
+            echo "✓ Copied lingua-quiz-sops-values"
+          else
+            echo "⚠️  lingua-quiz-sops-values not found in ${SOURCE_NAMESPACE}"
+          fi
+
       - name: Checkout gitops repository
         uses: actions/checkout@v5
         with:
@@ -30,9 +150,10 @@ jobs:
           ref: main
 
       - name: Create preview Kustomization
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          IMAGE_TAG: ${{ steps.pr.outputs.head_sha }}
         run: |
-          # Use commit SHA as image tag (matches CI workflow)
-          IMAGE_TAG="${{ github.event.pull_request.head.sha }}"
           NAMESPACE="lingua-quiz-preview-pr-${PR_NUMBER}"
           PREVIEW_DOMAIN="${PR_NUMBER}.lingua-quiz.nikolay-eremeev.com"
 
@@ -77,6 +198,9 @@ jobs:
           EOF
 
       - name: Commit and push
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          IMAGE_TAG: ${{ steps.pr.outputs.head_sha }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -89,8 +213,7 @@ jobs:
             git commit -m "feat: deploy preview environment for PR #${PR_NUMBER}
 
           Preview URL: https://${PR_NUMBER}.lingua-quiz.nikolay-eremeev.com
-          PR: ${{ github.event.pull_request.html_url }}
-          Commit: ${{ github.event.pull_request.head.sha }}
+          Commit: ${IMAGE_TAG}
 
           🤖 Automated deployment via GitHub Actions"
 
@@ -98,11 +221,62 @@ jobs:
             echo "✓ Preview configuration committed to gitops repository"
           fi
 
+      - name: Apply Flux Kustomization directly
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        run: |
+          NAMESPACE="lingua-quiz-preview-pr-${PR_NUMBER}"
+
+          echo "Creating Flux Kustomization resource for preview-pr-${PR_NUMBER}"
+
+          # Apply the Kustomization directly to Kubernetes (faster than waiting for Flux to discover it)
+          # This creates the Flux Kustomization resource that watches the git path we just committed
+          kubectl apply -f "clusters/previews/pr-${PR_NUMBER}.yaml"
+
+          echo "✓ Flux Kustomization resource created and applied"
+          echo "Flux will now reconcile the preview environment from git"
+
+          # Trigger immediate reconciliation (don't wait for interval)
+          flux reconcile kustomization preview-pr-${PR_NUMBER} --with-source || true
+
+      - name: Wait for Flux reconciliation
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+        run: |
+          NAMESPACE="lingua-quiz-preview-pr-${PR_NUMBER}"
+
+          echo "Waiting for Flux to reconcile preview environment..."
+
+          # Wait for Kustomization to appear
+          for i in {1..30}; do
+            if kubectl get kustomization preview-pr-${PR_NUMBER} -n flux-system &>/dev/null; then
+              echo "✓ Flux Kustomization found"
+              break
+            fi
+            echo "⏳ Waiting for Flux Kustomization... ($i/30)"
+            sleep 10
+          done
+
+          # Wait for HelmRelease to be ready
+          echo "⏳ Waiting for HelmRelease to be ready..."
+          kubectl wait helmrelease lingua-quiz \
+            -n "${NAMESPACE}" \
+            --for=condition=Ready \
+            --timeout=5m || echo "⚠️  HelmRelease not ready yet, continuing..."
+
+          # Check deployment status
+          echo "Checking deployment status..."
+          kubectl get pods -n "${NAMESPACE}"
+
       - name: Comment on PR
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          IMAGE_TAG: ${{ steps.pr.outputs.head_sha }}
         uses: actions/github-script@v7
         with:
           script: |
-            const prNumber = context.payload.pull_request.number;
+            const prNumber = parseInt(process.env.PR_NUMBER);
+            const imageTag = process.env.IMAGE_TAG;
             const previewUrl = `https://${prNumber}.lingua-quiz.nikolay-eremeev.com`;
 
             const comment = `## 🚀 Preview Environment Deploying
@@ -117,7 +291,7 @@ jobs:
             - ✅ Dedicated namespace
             - ✅ Isolated database
             - ✅ SSL certificate (auto-provisioned)
-            - ✅ Image: \`${context.payload.pull_request.head.sha}\`
+            - ✅ Image: \`${imageTag}\`
 
             Updates will be automatic when you push new commits.
             `;

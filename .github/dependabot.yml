@@ -1,7 +1,7 @@
 version: 2
 
 updates:
-  # NPM dependencies - разделены на major и minor/patch
+  # NPM dependencies
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
@@ -11,19 +11,11 @@ updates:
       - 'dependencies'
       - 'npm'
     groups:
-      npm-major:
-        update-types:
-          - 'major'
-        patterns:
-          - '*'
-      npm-minor-patch:
-        update-types:
-          - 'minor'
-          - 'patch'
+      npm-dependencies:
         patterns:
           - '*'
 
-  # Pip dependencies - разделены на major и minor/patch
+  # Python dependencies
   - package-ecosystem: 'pip'
     directory: '/packages/backend/'
     schedule:
@@ -33,19 +25,11 @@ updates:
       - 'dependencies'
       - 'python'
     groups:
-      pip-major:
-        update-types:
-          - 'major'
-        patterns:
-          - '*'
-      pip-minor-patch:
-        update-types:
-          - 'minor'
-          - 'patch'
+      pip-dependencies:
         patterns:
           - '*'
 
-  # Docker dependencies - разделены на major и minor/patch
+  # Docker dependencies
   - package-ecosystem: 'docker'
     directory: '/'
     schedule:
@@ -55,19 +39,11 @@ updates:
       - 'dependencies'
       - 'docker'
     groups:
-      docker-major:
-        update-types:
-          - 'major'
-        patterns:
-          - '*'
-      docker-minor-patch:
-        update-types:
-          - 'minor'
-          - 'patch'
+      docker-dependencies:
         patterns:
           - '*'
 
-  # GitHub Actions dependencies - разделены на major и minor/patch
+  # GitHub Actions dependencies
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
@@ -77,14 +53,6 @@ updates:
       - 'dependencies'
       - 'github-actions'
     groups:
-      actions-major:
-        update-types:
-          - 'major'
-        patterns:
-          - '*'
-      actions-minor-patch:
-        update-types:
-          - 'minor'
-          - 'patch'
+      github-actions-dependencies:
         patterns:
           - '*'
