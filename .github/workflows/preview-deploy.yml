@@ -56,18 +56,18 @@ jobs:
           echo "Verifying images are available for tag: ${IMAGE_TAG}"
 
           # Check if backend image exists
-          if docker manifest inspect "ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-backend:${IMAGE_TAG}" > /dev/null 2>&1; then
+          if docker manifest inspect "ghcr.io/nikolay-e/lingua-quiz-app/lingua-quiz-backend:${IMAGE_TAG}" > /dev/null 2>&1; then
             echo "✓ Backend image found"
           else
-            echo "❌ Backend image not found: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-backend:${IMAGE_TAG}"
+            echo "❌ Backend image not found: ghcr.io/nikolay-e/lingua-quiz-app/lingua-quiz-backend:${IMAGE_TAG}"
             exit 1
           fi
 
           # Check if frontend image exists
-          if docker manifest inspect "ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-frontend:${IMAGE_TAG}" > /dev/null 2>&1; then
+          if docker manifest inspect "ghcr.io/nikolay-e/lingua-quiz-app/lingua-quiz-frontend:${IMAGE_TAG}" > /dev/null 2>&1; then
             echo "✓ Frontend image found"
           else
-            echo "❌ Frontend image not found: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-frontend:${IMAGE_TAG}"
+            echo "❌ Frontend image not found: ghcr.io/nikolay-e/lingua-quiz-app/lingua-quiz-frontend:${IMAGE_TAG}"
             exit 1
           fi
 

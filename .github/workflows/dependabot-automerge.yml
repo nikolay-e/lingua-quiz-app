@@ -33,15 +33,15 @@ jobs:
               return;
             }
 
-            // Fetch full PR details
+            // Fetch full PR details to get node_id
             const { data: pullRequest } = await github.rest.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: pr.number
             });
 
-            core.setOutput('number', pr.number);
-            core.setOutput('node_id', pr.node_id);
+            core.setOutput('number', pullRequest.number);
+            core.setOutput('node_id', pullRequest.node_id);
             core.setOutput('title', pullRequest.title);
             core.setOutput('labels', JSON.stringify(pullRequest.labels.map(l => l.name)));
 
