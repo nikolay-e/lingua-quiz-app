@@ -1,0 +1,159 @@
+name: Preview Environment Garbage Collection
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # Daily at 2 AM UTC
+  workflow_dispatch:      # Allow manual trigger
+
+env:
+  GITOPS_REPO: nikolay-e/lingua-quiz-gitops
+
+jobs:
+  cleanup-orphaned:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: write
+
+    steps:
+      - name: Get open PRs
+        id: open_prs
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: prs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open'
+            });
+            const prNumbers = prs.map(pr => pr.number);
+            console.log(`Open PRs: ${prNumbers.join(', ')}`);
+            return prNumbers;
+
+      - name: Checkout gitops repository
+        uses: actions/checkout@v5.0.0
+        with:
+          repository: ${{ env.GITOPS_REPO }}
+          token: ${{ secrets.GITOPS_PAT }}
+          ref: main
+
+      - name: Find orphaned previews
+        id: orphaned
+        run: |
+          OPEN_PRS='${{ steps.open_prs.outputs.result }}'
+          echo "Open PRs: ${OPEN_PRS}"
+
+          ORPHANED=()
+
+          # Find all preview files
+          if [ -d "clusters/previews" ]; then
+            for file in clusters/previews/pr-*.yaml; do
+              if [ ! -f "$file" ]; then
+                continue
+              fi
+
+              # Extract PR number from filename
+              PR_NUM=$(basename "$file" | sed 's/pr-\(.*\)\.yaml/\1/')
+
+              # Check if PR is still open
+              if ! echo "$OPEN_PRS" | grep -q "\\b$PR_NUM\\b"; then
+                echo "Found orphaned preview: PR #${PR_NUM}"
+                ORPHANED+=("$file")
+              fi
+            done
+          fi
+
+          # Export for next step
+          if [ ${#ORPHANED[@]} -gt 0 ]; then
+            echo "found=true" >> $GITHUB_OUTPUT
+            echo "count=${#ORPHANED[@]}" >> $GITHUB_OUTPUT
+            # Convert array to space-separated string
+            echo "files=${ORPHANED[*]}" >> $GITHUB_OUTPUT
+          else
+            echo "found=false" >> $GITHUB_OUTPUT
+            echo "count=0" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Remove orphaned previews
+        if: steps.orphaned.outputs.found == 'true'
+        run: |
+          FILES="${{ steps.orphaned.outputs.files }}"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          for file in $FILES; do
+            echo "Removing: $file"
+            git rm "$file"
+          done
+
+          git commit -m "chore: garbage collect orphaned preview environments
+
+          Removed ${{ steps.orphaned.outputs.count }} orphaned preview(s).
+
+          These previews were associated with closed PRs where the cleanup
+          workflow may have failed or webhooks were missed.
+
+          🤖 Automated cleanup via scheduled GitHub Actions"
+
+          git push origin main
+
+          echo "✓ Removed ${{ steps.orphaned.outputs.count }} orphaned preview(s)"
+
+      - name: Report summary
+        run: |
+          if [ "${{ steps.orphaned.outputs.found }}" == "true" ]; then
+            echo "🧹 Cleaned up ${{ steps.orphaned.outputs.count }} orphaned preview environment(s)"
+          else
+            echo "✓ No orphaned preview environments found"
+          fi
+
+      - name: Create issue for large cleanups
+        if: steps.orphaned.outputs.found == 'true' && steps.orphaned.outputs.count >= 5
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const count = ${{ steps.orphaned.outputs.count }};
+            const files = `${{ steps.orphaned.outputs.files }}`.split(' ');
+
+            const body = `## 🧹 Preview Environment Garbage Collection Report
+
+            Cleaned up **${count}** orphaned preview environments.
+
+            ### Removed Previews
+
+            ${files.map(f => {
+              const pr = f.match(/pr-(\d+)\.yaml/)[1];
+              return `- PR #${pr}`;
+            }).join('\n')}
+
+            ### Possible Causes
+
+            This cleanup was needed because:
+            - PR close webhooks may have failed
+            - Cleanup workflow encountered errors
+            - Manual PR deletion bypassed workflows
+
+            ### Recommendations
+
+            ${count >= 10 ? '⚠️ **High number of orphaned previews detected.**\n' +
+            'Consider investigating why the cleanup workflow is failing.\n\n' : ''}
+
+            - Monitor cleanup workflow runs
+            - Check GitHub webhook delivery status
+            - Review preview environment limits
+
+            ---
+
+            🤖 Automated report via scheduled GitHub Actions
+            `;
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Preview GC: Cleaned ${count} orphaned environment(s)`,
+              body: body,
+              labels: ['infrastructure', 'automated', 'preview-environments']
+            });

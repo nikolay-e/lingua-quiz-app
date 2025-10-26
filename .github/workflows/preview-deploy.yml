@@ -1,0 +1,144 @@
+name: Deploy Preview Environment
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+
+concurrency:
+  group: preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+env:
+  PR_NUMBER: ${{ github.event.pull_request.number }}
+  GITOPS_REPO: nikolay-e/lingua-quiz-gitops
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout gitops repository
+        uses: actions/checkout@v5.0.0
+        with:
+          repository: ${{ env.GITOPS_REPO }}
+          token: ${{ secrets.GITOPS_PAT }}
+          ref: main
+
+      - name: Create preview Kustomization
+        run: |
+          # Use commit SHA as image tag (matches CI workflow)
+          IMAGE_TAG="${{ github.event.pull_request.head.sha }}"
+          NAMESPACE="lingua-quiz-preview-pr-${PR_NUMBER}"
+          PREVIEW_DOMAIN="${PR_NUMBER}.lingua-quiz.nikolay-eremeev.com"
+
+          echo "Creating preview environment for PR #${PR_NUMBER}"
+          echo "  Namespace: ${NAMESPACE}"
+          echo "  Image tag: ${IMAGE_TAG}"
+          echo "  URL: https://${PREVIEW_DOMAIN}"
+
+          # Create single declarative Kustomization file
+          cat > "clusters/previews/pr-${PR_NUMBER}.yaml" <<EOF
+          apiVersion: kustomize.toolkit.fluxcd.io/v1
+          kind: Kustomization
+          metadata:
+            name: preview-pr-${PR_NUMBER}
+            namespace: flux-system
+            labels:
+              preview-env: "true"
+              pr-number: "${PR_NUMBER}"
+          spec:
+            interval: 2m
+            prune: true
+            wait: true
+            timeout: 10m
+            sourceRef:
+              kind: GitRepository
+              name: flux-system
+            path: ./flux/base/preview
+            postBuild:
+              substitute:
+                PR_NUMBER: "${PR_NUMBER}"
+                IMAGE_TAG: "${IMAGE_TAG}"
+                NAMESPACE: "${NAMESPACE}"
+          EOF
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add clusters/previews/pr-${PR_NUMBER}.yaml
+
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "feat: deploy preview environment for PR #${PR_NUMBER}
+
+          Preview URL: https://${PR_NUMBER}.lingua-quiz.nikolay-eremeev.com
+          PR: ${{ github.event.pull_request.html_url }}
+          Commit: ${{ github.event.pull_request.head.sha }}
+
+          🤖 Automated deployment via GitHub Actions"
+
+            git push origin main
+            echo "✓ Preview configuration committed to gitops repository"
+          fi
+
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const previewUrl = `https://${prNumber}.lingua-quiz.nikolay-eremeev.com`;
+
+            const comment = `## 🚀 Preview Environment Deploying
+
+            Your preview environment is being deployed!
+
+            **Preview URL:** ${previewUrl}
+
+            **Status:** Flux CD is reconciling (~2 minutes)
+
+            The deployment includes:
+            - ✅ Dedicated namespace
+            - ✅ Isolated database
+            - ✅ SSL certificate (auto-provisioned)
+            - ✅ Image: \`${context.payload.pull_request.head.sha}\`
+
+            Updates will be automatic when you push new commits.
+            `;
+
+            // Find existing preview comment
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+            });
+
+            const botComment = comments.find(comment =>
+              comment.user.type === 'Bot' &&
+              comment.body.includes('Preview Environment')
+            );
+
+            if (botComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: comment
+              });
+            } else {
+              // Create new comment
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: comment
+              });
+            }

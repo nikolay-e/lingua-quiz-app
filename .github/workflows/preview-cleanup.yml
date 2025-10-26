@@ -1,0 +1,82 @@
+name: Cleanup Preview Environment
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+env:
+  PR_NUMBER: ${{ github.event.pull_request.number }}
+  GITOPS_REPO: nikolay-e/lingua-quiz-gitops
+
+jobs:
+  cleanup-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout gitops repository
+        uses: actions/checkout@v5.0.0
+        with:
+          repository: ${{ env.GITOPS_REPO }}
+          token: ${{ secrets.GITOPS_PAT }}
+          ref: main
+
+      - name: Remove preview Kustomization
+        run: |
+          PREVIEW_FILE="clusters/previews/pr-${PR_NUMBER}.yaml"
+
+          if [ -f "${PREVIEW_FILE}" ]; then
+            echo "Removing preview environment for PR #${PR_NUMBER}"
+
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+
+            git rm "${PREVIEW_FILE}"
+            git commit -m "chore: cleanup preview environment for PR #${PR_NUMBER}
+
+          PR closed: ${{ github.event.pull_request.html_url }}
+
+          Flux will automatically prune all resources via 'spec.prune: true'.
+
+          🤖 Automated cleanup via GitHub Actions"
+
+            git push origin main
+
+            echo "✓ Preview Kustomization removed"
+            echo "✓ Flux will prune namespace and all resources in ~2 minutes"
+          else
+            echo "No preview environment found for PR #${PR_NUMBER}"
+            echo "File does not exist: ${PREVIEW_FILE}"
+          fi
+
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+
+            const comment = `## 🧹 Preview Environment Cleaned Up
+
+            The preview environment for this PR has been removed.
+
+            **Cleanup Status:** Flux CD is pruning resources (~2 minutes)
+
+            Resources being removed:
+            - ✅ Namespace: \`lingua-quiz-preview-pr-${prNumber}\`
+            - ✅ Database: \`linguaquiz_pr_${prNumber}\`
+            - ✅ SSL Certificate
+            - ✅ All pods, services, and ingresses
+
+            Thank you for using preview environments!
+            `;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: comment
+            });
