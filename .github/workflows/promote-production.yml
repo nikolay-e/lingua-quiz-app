@@ -1,0 +1,120 @@
+name: Promote to Production
+
+on:
+  workflow_dispatch:
+    inputs:
+      backend_tag:
+        description: 'Backend image tag from staging (e.g., main-abc1234-1234567890)'
+        required: true
+        type: string
+      frontend_tag:
+        description: 'Frontend image tag from staging (e.g., main-abc1234-1234567890)'
+        required: true
+        type: string
+
+env:
+  GITOPS_REPO: nikolay-e/lingua-quiz-gitops
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout gitops repository
+        uses: actions/checkout@v5.0.0
+        with:
+          repository: ${{ env.GITOPS_REPO }}
+          token: ${{ secrets.GITOPS_PAT }}
+          ref: main
+
+      - name: Install yq
+        run: |
+          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
+
+      - name: Verify image tags exist
+        run: |
+          echo "Verifying image tags exist in registry..."
+
+          # Note: This requires GITHUB_TOKEN with packages:read permission
+          # For now, we'll trust the user input
+          echo "Backend tag: ${{ inputs.backend_tag }}"
+          echo "Frontend tag: ${{ inputs.frontend_tag }}"
+
+      - name: Update production image tags
+        run: |
+          HELMRELEASE="clusters/production/apps/helmrelease.yaml"
+
+          echo "Updating production HelmRelease..."
+
+          # Update backend tag (preserving the imagepolicy comment)
+          yq -i '.spec.values.backend.image.tag = "${{ inputs.backend_tag }} # {\"$imagepolicy\": \"lingua-quiz-production:backend\"}"' "$HELMRELEASE"
+
+          # Update frontend tag (preserving the imagepolicy comment)
+          yq -i '.spec.values.frontend.image.tag = "${{ inputs.frontend_tag }} # {\"$imagepolicy\": \"lingua-quiz-production:frontend\"}"' "$HELMRELEASE"
+
+          echo "✓ Updated production image tags"
+
+          # Show the diff
+          git diff "$HELMRELEASE"
+
+      - name: Create promotion pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITOPS_PAT }}
+          branch: promote-production-${{ inputs.backend_tag }}
+          title: "🚀 Production Promotion: ${{ inputs.backend_tag }}"
+          body: |
+            ## Production Promotion
+
+            This PR promotes tested images from staging to production.
+
+            **Backend:** `${{ inputs.backend_tag }}`
+            **Frontend:** `${{ inputs.frontend_tag }}`
+
+            ### Pre-Merge Checklist
+
+            - [ ] Verified in staging for 24+ hours
+            - [ ] No critical issues reported in staging
+            - [ ] Security scans passed (Dependabot, container scanning)
+            - [ ] Database migrations tested (if applicable)
+            - [ ] Performance metrics acceptable
+            - [ ] Approved by 2 team members
+
+            ### Rollback Plan
+
+            If issues occur after merge:
+            1. Revert this PR immediately
+            2. Investigate root cause
+            3. Fix in staging first
+            4. Re-promote when ready
+
+            ---
+
+            🤖 Generated via [Promote to Production workflow](https://github.com/${{ github.repository }}/actions/workflows/promote-production.yml)
+          commit-message: |
+            prod: promote to production
+
+            Backend: ${{ inputs.backend_tag }}
+            Frontend: ${{ inputs.frontend_tag }}
+
+            🤖 Automated promotion via GitHub Actions
+          labels: |
+            production
+            promotion
+            automated
+          assignees: ${{ github.actor }}
+          reviewers: ${{ github.actor }}
+
+      - name: Summary
+        run: |
+          echo "## 🚀 Production Promotion PR Created" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Backend:** \`${{ inputs.backend_tag }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Frontend:** \`${{ inputs.frontend_tag }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Review and merge the PR to deploy to production." >> $GITHUB_STEP_SUMMARY

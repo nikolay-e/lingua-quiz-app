@@ -73,7 +73,10 @@ RUN cd packages/core && npm run build
 # Copy and build the 'frontend' application
 COPY packages/frontend/ ./packages/frontend/
 # Fix npm optional dependencies bug by cleaning and reinstalling
-RUN rm -rf node_modules package-lock.json && npm install
+# Layer 3: Update workspace links after core build
+# This updates the symlinks in node_modules to point to the built core package
+# More efficient than removing and reinstalling all dependencies
+RUN npm install --workspaces
 RUN cd packages/frontend && npm run build
 
 

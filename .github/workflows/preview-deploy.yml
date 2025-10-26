@@ -56,6 +56,15 @@ jobs:
             prune: true
             wait: true
             timeout: 10m
+            healthChecks:
+              - apiVersion: apps/v1
+                kind: Deployment
+                name: lingua-quiz-backend
+                namespace: ${NAMESPACE}
+              - apiVersion: apps/v1
+                kind: Deployment
+                name: lingua-quiz-frontend
+                namespace: ${NAMESPACE}
             sourceRef:
               kind: GitRepository
               name: flux-system
