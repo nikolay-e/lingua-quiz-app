@@ -1,11 +1,10 @@
 name: Dependabot Auto-merge
 
 on:
-  # Trigger after CI workflow completes successfully
+  # Trigger after CI workflow completes successfully on any PR
   workflow_run:
     workflows: ["CI"]
     types: [completed]
-    branches: [main]
 
 permissions:
   contents: write

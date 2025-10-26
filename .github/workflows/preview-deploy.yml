@@ -1,11 +1,10 @@
 name: Deploy Preview Environment
 
 on:
-  # Trigger after CI completes successfully
+  # Trigger after CI completes successfully on any PR
   workflow_run:
     workflows: ["CI"]
     types: [completed]
-    branches: [main]
 
 concurrency:
   group: preview-${{ github.event.workflow_run.pull_requests[0].number }}
