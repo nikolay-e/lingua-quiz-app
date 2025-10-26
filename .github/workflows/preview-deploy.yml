@@ -73,74 +73,6 @@ jobs:
 
           echo "✓ All images verified and ready for deployment"
 
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v3
-
-      - name: Configure kubeconfig
-        run: |
-          mkdir -p ~/.kube
-          echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
-          chmod 600 ~/.kube/config
-
-      - name: Install Flux CLI
-        run: |
-          curl -s https://fluxcd.io/install.sh | sudo bash
-
-      - name: Create preview namespace
-        env:
-          PR_NUMBER: ${{ steps.pr.outputs.number }}
-        run: |
-          NAMESPACE="lingua-quiz-preview-pr-${PR_NUMBER}"
-
-          echo "Creating namespace: ${NAMESPACE}"
-
-          kubectl create namespace "${NAMESPACE}" \
-            --dry-run=client -o yaml | kubectl apply --validate=false -f -
-
-          # Add labels for tracking and cleanup
-          kubectl label namespace "${NAMESPACE}" \
-            preview-environment=true \
-            pr-number="${PR_NUMBER}" \
-            created-at="$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
-            --overwrite
-
-          echo "✓ Namespace created and labeled"
-
-      - name: Copy secrets to preview namespace
-        env:
-          PR_NUMBER: ${{ steps.pr.outputs.number }}
-        run: |
-          NAMESPACE="lingua-quiz-preview-pr-${PR_NUMBER}"
-          SOURCE_NAMESPACE="lingua-quiz-staging"
-
-          echo "Copying secrets from ${SOURCE_NAMESPACE} to ${NAMESPACE}"
-
-          # Copy ghcr-secret for image pull
-          if kubectl get secret ghcr-secret -n "${SOURCE_NAMESPACE}" &>/dev/null; then
-            kubectl get secret ghcr-secret -n "${SOURCE_NAMESPACE}" -o yaml \
-              | sed "s/namespace: ${SOURCE_NAMESPACE}/namespace: ${NAMESPACE}/" \
-              | sed '/resourceVersion:/d' \
-              | sed '/uid:/d' \
-              | sed '/creationTimestamp:/d' \
-              | kubectl apply --validate=false -f -
-            echo "✓ Copied ghcr-secret"
-          else
-            echo "⚠️  ghcr-secret not found in ${SOURCE_NAMESPACE}"
-          fi
-
-          # Copy lingua-quiz-sops-values for database credentials
-          if kubectl get secret lingua-quiz-sops-values -n "${SOURCE_NAMESPACE}" &>/dev/null; then
-            kubectl get secret lingua-quiz-sops-values -n "${SOURCE_NAMESPACE}" -o yaml \
-              | sed "s/namespace: ${SOURCE_NAMESPACE}/namespace: ${NAMESPACE}/" \
-              | sed '/resourceVersion:/d' \
-              | sed '/uid:/d' \
-              | sed '/creationTimestamp:/d' \
-              | kubectl apply --validate=false -f -
-            echo "✓ Copied lingua-quiz-sops-values"
-          else
-            echo "⚠️  lingua-quiz-sops-values not found in ${SOURCE_NAMESPACE}"
-          fi
-
       - name: Checkout gitops repository
         uses: actions/checkout@v5
         with:
@@ -218,52 +150,8 @@ jobs:
 
             git push origin main
             echo "✓ Preview configuration committed to gitops repository"
+            echo "✓ Flux will automatically reconcile and deploy the preview environment"
           fi
-
-      - name: Apply Flux Kustomization directly
-        env:
-          PR_NUMBER: ${{ steps.pr.outputs.number }}
-        run: |
-          echo "Creating Flux Kustomization resource for preview-pr-${PR_NUMBER}"
-
-          # Apply the Kustomization directly to Kubernetes (faster than waiting for Flux to discover it)
-          # This creates the Flux Kustomization resource that watches the git path we just committed
-          kubectl apply --validate=false -f "clusters/previews/pr-${PR_NUMBER}.yaml"
-
-          echo "✓ Flux Kustomization resource created and applied"
-          echo "Flux will now reconcile the preview environment from git"
-
-          # Trigger immediate reconciliation (don't wait for interval)
-          flux reconcile kustomization "preview-pr-${PR_NUMBER}" --with-source || true
-
-      - name: Wait for Flux reconciliation
-        env:
-          PR_NUMBER: ${{ steps.pr.outputs.number }}
-        run: |
-          NAMESPACE="lingua-quiz-preview-pr-${PR_NUMBER}"
-
-          echo "Waiting for Flux to reconcile preview environment..."
-
-          # Wait for Kustomization to appear
-          for i in {1..30}; do
-            if kubectl get kustomization "preview-pr-${PR_NUMBER}" -n flux-system &>/dev/null; then
-              echo "✓ Flux Kustomization found"
-              break
-            fi
-            echo "⏳ Waiting for Flux Kustomization... ($i/30)"
-            sleep 10
-          done
-
-          # Wait for HelmRelease to be ready
-          echo "⏳ Waiting for HelmRelease to be ready..."
-          kubectl wait helmrelease lingua-quiz \
-            -n "${NAMESPACE}" \
-            --for=condition=Ready \
-            --timeout=5m || echo "⚠️  HelmRelease not ready yet, continuing..."
-
-          # Check deployment status
-          echo "Checking deployment status..."
-          kubectl get pods -n "${NAMESPACE}"
 
       - name: Comment on PR
         env:
