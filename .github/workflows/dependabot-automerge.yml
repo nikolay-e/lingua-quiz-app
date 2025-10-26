@@ -117,6 +117,9 @@ jobs:
                 console.log(`⚠️  Auto-merge not available for this repository`);
               } else if (error.message?.includes('unstable status')) {
                 console.log(`⚠️  PR #${prNumber} still has pending/failing checks, cannot enable auto-merge yet`);
+              } else if (error.message?.includes('clean status')) {
+                console.log(`✅ PR #${prNumber} is already in clean status (all checks passed)`);
+                console.log(`   The PR can be merged manually or will auto-merge if more checks are added`);
               } else {
                 console.error('Error enabling auto-merge:', error.message);
                 throw error;
