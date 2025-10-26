@@ -47,26 +47,39 @@ jobs:
         if: steps.check.outputs.automerge == 'true'
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const pr = context.payload.pull_request;
 
-            // Use GitHub's native auto-merge feature
-            // This will automatically merge once all required checks pass
+            // Use GitHub's GraphQL API to enable auto-merge
+            // The REST API doesn't have this endpoint - must use GraphQL
             try {
-              await github.rest.pulls.createAutoMerge({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: pr.number,
-                merge_method: 'squash'
+              await github.graphql(`
+                mutation($pullRequestId: ID!, $mergeMethod: PullRequestMergeMethod!) {
+                  enablePullRequestAutoMerge(input: {
+                    pullRequestId: $pullRequestId,
+                    mergeMethod: $mergeMethod
+                  }) {
+                    pullRequest {
+                      autoMergeRequest {
+                        enabledAt
+                      }
+                    }
+                  }
+                }
+              `, {
+                pullRequestId: pr.node_id,
+                mergeMethod: 'SQUASH'
               });
 
               console.log(`✓ Auto-merge enabled for PR #${pr.number}`);
               console.log('  PR will merge automatically once all checks pass');
             } catch (error) {
               // Auto-merge might already be enabled or repo doesn't support it
-              if (error.status === 422) {
-                console.log('Auto-merge already enabled or not available');
+              if (error.message?.includes('already has') || error.message?.includes('not allowed')) {
+                console.log('Auto-merge already enabled or not available for this repository');
               } else {
+                console.error('Error enabling auto-merge:', error.message);
                 throw error;
               }
             }
