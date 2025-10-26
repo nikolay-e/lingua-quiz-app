@@ -1,8 +1,11 @@
 name: Dependabot Auto-merge
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  # Trigger after CI workflow completes successfully
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+    branches: [main]
 
 permissions:
   contents: write
@@ -12,19 +15,47 @@ jobs:
   automerge:
     name: Auto-merge Minor/Patch Updates
     runs-on: ubuntu-latest
-    if: github.actor == 'dependabot[bot]'
+    # Only run on PRs from Dependabot when CI succeeds
+    if: >
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.actor.login == 'dependabot[bot]'
 
     steps:
-      - name: Check PR labels
-        id: check
+      - name: Get PR details
+        id: pr
         uses: actions/github-script@v7
         with:
           script: |
-            const pr = context.payload.pull_request;
-            const labels = pr.labels.map(l => l.name);
+            // Get PR from workflow_run event
+            const pr = context.payload.workflow_run.pull_requests[0];
+            if (!pr) {
+              console.log('No PR associated with this workflow run');
+              return;
+            }
 
-            // Проверяем что это minor/patch обновление
-            const title = pr.title.toLowerCase();
+            // Fetch full PR details
+            const { data: pullRequest } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number
+            });
+
+            core.setOutput('number', pr.number);
+            core.setOutput('node_id', pr.node_id);
+            core.setOutput('title', pullRequest.title);
+            core.setOutput('labels', JSON.stringify(pullRequest.labels.map(l => l.name)));
+
+      - name: Check PR labels
+        id: check
+        if: steps.pr.outputs.number
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = `${{ steps.pr.outputs.title }}`.toLowerCase();
+            const labels = JSON.parse(`${{ steps.pr.outputs.labels }}`);
+
+            // Check if this is a minor/patch update
             const isMinorOrPatch =
               title.includes('minor') ||
               title.includes('patch') ||
@@ -32,27 +63,32 @@ jobs:
 
             const isMajor = title.includes('major');
 
-            // Автомерж только для minor/patch, не для major
+            // Auto-merge only for minor/patch, not for major
             const shouldAutomerge = isMinorOrPatch && !isMajor && labels.includes('dependencies');
 
             core.setOutput('automerge', shouldAutomerge);
 
             if (shouldAutomerge) {
-              console.log(`✓ Will auto-merge: ${pr.title}`);
+              console.log(`✓ Will auto-merge: ${title}`);
             } else {
-              console.log(`✗ Skip auto-merge: ${pr.title} (major update or not dependencies)`);
+              console.log(`✗ Skip auto-merge: ${title} (major update or not dependencies)`);
             }
 
       - name: Enable auto-merge
         if: steps.check.outputs.automerge == 'true'
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.number }}
+          PR_NODE_ID: ${{ steps.pr.outputs.node_id }}
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const pr = context.payload.pull_request;
+            const prNumber = process.env.PR_NUMBER;
+            const prNodeId = process.env.PR_NODE_ID;
 
             // Use GitHub's GraphQL API to enable auto-merge
             // The REST API doesn't have this endpoint - must use GraphQL
+            // This runs AFTER CI passes, so the PR should be in a stable state
             try {
               await github.graphql(`
                 mutation($pullRequestId: ID!, $mergeMethod: PullRequestMergeMethod!) {
@@ -68,16 +104,20 @@ jobs:
                   }
                 }
               `, {
-                pullRequestId: pr.node_id,
+                pullRequestId: prNodeId,
                 mergeMethod: 'SQUASH'
               });
 
-              console.log(`✓ Auto-merge enabled for PR #${pr.number}`);
-              console.log('  PR will merge automatically once all checks pass');
+              console.log(`✓ Auto-merge enabled for PR #${prNumber}`);
+              console.log('  PR will merge automatically once all remaining checks pass');
             } catch (error) {
-              // Auto-merge might already be enabled or repo doesn't support it
-              if (error.message?.includes('already has') || error.message?.includes('not allowed')) {
-                console.log('Auto-merge already enabled or not available for this repository');
+              // Handle common errors gracefully
+              if (error.message?.includes('already has')) {
+                console.log(`ℹ️  Auto-merge already enabled for PR #${prNumber}`);
+              } else if (error.message?.includes('not allowed')) {
+                console.log(`⚠️  Auto-merge not available for this repository`);
+              } else if (error.message?.includes('unstable status')) {
+                console.log(`⚠️  PR #${prNumber} still has pending/failing checks, cannot enable auto-merge yet`);
               } else {
                 console.error('Error enabling auto-merge:', error.message);
                 throw error;
