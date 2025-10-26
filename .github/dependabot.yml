@@ -10,9 +10,10 @@ updates:
     labels:
       - 'dependencies'
     groups:
-      npm-dependencies:
-        patterns:
-          - '*'
+      npm-dev-dependencies:
+        dependency-type: 'development'
+      npm-prod-dependencies:
+        dependency-type: 'production'
 
   # Python dependencies
   - package-ecosystem: 'pip'
@@ -22,10 +23,6 @@ updates:
       day: 'monday'
     labels:
       - 'dependencies'
-    groups:
-      pip-dependencies:
-        patterns:
-          - '*'
 
   # Docker dependencies
   - package-ecosystem: 'docker'
@@ -35,10 +32,6 @@ updates:
       day: 'monday'
     labels:
       - 'dependencies'
-    groups:
-      docker-dependencies:
-        patterns:
-          - '*'
 
   # GitHub Actions dependencies
   - package-ecosystem: 'github-actions'
@@ -48,7 +41,3 @@ updates:
       day: 'monday'
     labels:
       - 'dependencies'
-    groups:
-      github-actions-dependencies:
-        patterns:
-          - '*'
