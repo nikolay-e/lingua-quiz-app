@@ -9,7 +9,6 @@ updates:
       day: 'monday'
     labels:
       - 'dependencies'
-      - 'npm'
     groups:
       npm-dependencies:
         patterns:
@@ -23,7 +22,6 @@ updates:
       day: 'monday'
     labels:
       - 'dependencies'
-      - 'python'
     groups:
       pip-dependencies:
         patterns:
@@ -37,7 +35,6 @@ updates:
       day: 'monday'
     labels:
       - 'dependencies'
-      - 'docker'
     groups:
       docker-dependencies:
         patterns:
@@ -51,7 +48,6 @@ updates:
       day: 'monday'
     labels:
       - 'dependencies'
-      - 'github-actions'
     groups:
       github-actions-dependencies:
         patterns:
