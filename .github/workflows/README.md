@@ -5,7 +5,9 @@ This directory contains CI/CD workflows for the Lingua Quiz application.
 ## Workflows
 
 ### CI (`ci.yml`)
+
 Main CI workflow that runs on push and pull requests:
+
 - Runs pre-commit hooks
 - Builds Docker images for backend, frontend, and integration tests
 - Tags images with:
@@ -15,7 +17,9 @@ Main CI workflow that runs on push and pull requests:
 - Runs integration tests
 
 ### Preview Environment Deploy (`preview-deploy.yml`)
+
 Automatically deploys preview environments for each pull request:
+
 - Triggers on PR opened, synchronized, or reopened
 - Creates a dedicated namespace `preview-pr-<NUMBER>`
 - Deploys the application with PR-specific configuration
@@ -24,12 +28,15 @@ Automatically deploys preview environments for each pull request:
 - Posts deployment status as PR comment
 
 ### Preview Environment Cleanup (`preview-cleanup.yml`)
+
 Automatically cleans up preview environments when PRs are closed:
+
 - Removes preview environment namespace and resources
 - Cleans up GitOps repository configuration
 - Posts cleanup status as PR comment
 
 ### Dependabot Auto-merge (`dependabot-automerge.yml`)
+
 Automatically merges Dependabot PRs that pass CI checks.
 
 ## Setup Requirements
@@ -39,9 +46,11 @@ Automatically merges Dependabot PRs that pass CI checks.
 The preview environment workflows require the following GitHub secret:
 
 #### `GITOPS_PAT`
+
 A Personal Access Token (PAT) with write access to the GitOps repository.
 
 **How to create:**
+
 1. Go to GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)
 2. Click "Generate new token (classic)"
 3. Name it: `lingua-quiz-gitops-access`
@@ -82,6 +91,7 @@ A Personal Access Token (PAT) with write access to the GitOps repository.
 ### Resource Limits
 
 Preview environments use optimized resource limits:
+
 - **Backend:** 50m CPU / 128Mi memory (requests), 250m CPU / 384Mi memory (limits)
 - **Frontend:** 25m CPU / 128Mi memory (requests), 50m CPU / 196Mi memory (limits)
 - **Migrations:** 25m CPU / 64Mi memory (requests), 100m CPU / 256Mi memory (limits)
@@ -91,6 +101,7 @@ These limits allow for approximately 10 concurrent preview environments on a sta
 ### Database
 
 Each preview environment gets its own database on the shared PostgreSQL instance:
+
 - Database name: `linguaquiz_pr_<PR_NUMBER>`
 - Migrations run automatically on deployment
 - Database is cleaned up when PR is closed
@@ -98,6 +109,7 @@ Each preview environment gets its own database on the shared PostgreSQL instance
 ### SSL Certificates
 
 SSL certificates are automatically provisioned using cert-manager and Let's Encrypt:
+
 - Certificate issuer: `letsencrypt-prod`
 - Certificate secret: `preview-pr-<NUMBER>-tls`
 - Initial certificate generation may take 1-2 minutes
@@ -105,16 +117,19 @@ SSL certificates are automatically provisioned using cert-manager and Let's Encr
 ### Monitoring Preview Environments
 
 List all preview environments:
+
 ```bash
 kubectl get namespaces -l preview-env=true
 ```
 
 Check status of a specific preview:
+
 ```bash
 kubectl get all -n preview-pr-<NUMBER>
 ```
 
 View Flux reconciliation status:
+
 ```bash
 flux get kustomizations -n flux-system | grep preview-pr
 ```
@@ -124,6 +139,7 @@ flux get kustomizations -n flux-system | grep preview-pr
 If needed, you can manually manage preview environments using kubectl:
 
 **Copy GHCR secret (usually automated):**
+
 ```bash
 kubectl get secret ghcr-secret -n lingua-quiz-staging -o yaml | \
   sed 's/namespace: lingua-quiz-staging/namespace: preview-pr-<NUMBER>/' | \
@@ -131,12 +147,14 @@ kubectl get secret ghcr-secret -n lingua-quiz-staging -o yaml | \
 ```
 
 **Force Flux reconciliation:**
+
 ```bash
 flux reconcile kustomization preview-pr-<NUMBER>-infrastructure
 flux reconcile kustomization preview-pr-<NUMBER>-apps
 ```
 
 **Manually delete a preview environment:**
+
 ```bash
 kubectl delete namespace preview-pr-<NUMBER>
 # Remove from gitops repo:
@@ -167,6 +185,7 @@ git add -A && git commit -m "Remove preview PR <NUMBER>" && git push
 ### SSL certificate not provisioning
 
 Check cert-manager status:
+
 ```bash
 kubectl get certificate -n preview-pr-<NUMBER>
 kubectl describe certificate preview-pr-<NUMBER>-tls -n preview-pr-<NUMBER>
@@ -175,11 +194,13 @@ kubectl describe certificate preview-pr-<NUMBER>-tls -n preview-pr-<NUMBER>
 ### Images not pulling
 
 Verify the GHCR secret was copied:
+
 ```bash
 kubectl get secret ghcr-secret -n preview-pr-<NUMBER>
 ```
 
 If not, check the copy job:
+
 ```bash
 kubectl get jobs -n preview-pr-<NUMBER>
 kubectl logs -n preview-pr-<NUMBER> job/copy-ghcr-secret

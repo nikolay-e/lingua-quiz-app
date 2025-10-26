@@ -52,15 +52,17 @@ jobs:
           echo "Updating production HelmRelease..."
 
           # Update backend tag (preserving the imagepolicy comment)
-          yq -i '.spec.values.backend.image.tag = "${{ inputs.backend_tag }} # {\"$imagepolicy\": \"lingua-quiz-production:backend\"}"' "$HELMRELEASE"
+          BACKEND_TAG="${{ inputs.backend_tag }}"
+          yq -i ".spec.values.backend.image.tag = \"${BACKEND_TAG} # {\\\"\\$imagepolicy\\\": \\\"lingua-quiz-production:backend\\\"}\"" "${HELMRELEASE}"
 
           # Update frontend tag (preserving the imagepolicy comment)
-          yq -i '.spec.values.frontend.image.tag = "${{ inputs.frontend_tag }} # {\"$imagepolicy\": \"lingua-quiz-production:frontend\"}"' "$HELMRELEASE"
+          FRONTEND_TAG="${{ inputs.frontend_tag }}"
+          yq -i ".spec.values.frontend.image.tag = \"${FRONTEND_TAG} # {\\\"\\$imagepolicy\\\": \\\"lingua-quiz-production:frontend\\\"}\"" "${HELMRELEASE}"
 
           echo "✓ Updated production image tags"
 
           # Show the diff
-          git diff "$HELMRELEASE"
+          git diff "${HELMRELEASE}"
 
       - name: Create promotion pull request
         uses: peter-evans/create-pull-request@v7
@@ -112,9 +114,11 @@ jobs:
 
       - name: Summary
         run: |
-          echo "## 🚀 Production Promotion PR Created" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Backend:** \`${{ inputs.backend_tag }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "**Frontend:** \`${{ inputs.frontend_tag }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Review and merge the PR to deploy to production." >> $GITHUB_STEP_SUMMARY
+          {
+            echo "## 🚀 Production Promotion PR Created"
+            echo ""
+            echo "**Backend:** \`${{ inputs.backend_tag }}\`"
+            echo "**Frontend:** \`${{ inputs.frontend_tag }}\`"
+            echo ""
+            echo "Review and merge the PR to deploy to production."
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -67,13 +67,16 @@ jobs:
 
           # Export for next step
           if [ ${#ORPHANED[@]} -gt 0 ]; then
-            echo "found=true" >> $GITHUB_OUTPUT
-            echo "count=${#ORPHANED[@]}" >> $GITHUB_OUTPUT
-            # Convert array to space-separated string
-            echo "files=${ORPHANED[*]}" >> $GITHUB_OUTPUT
+            {
+              echo "found=true"
+              echo "count=${#ORPHANED[@]}"
+              echo "files=${ORPHANED[*]}"
+            } >> "$GITHUB_OUTPUT"
           else
-            echo "found=false" >> $GITHUB_OUTPUT
-            echo "count=0" >> $GITHUB_OUTPUT
+            {
+              echo "found=false"
+              echo "count=0"
+            } >> "$GITHUB_OUTPUT"
           fi
 
       - name: Remove orphaned previews
@@ -84,9 +87,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          for file in $FILES; do
-            echo "Removing: $file"
-            git rm "$file"
+          for file in ${FILES}; do
+            echo "Removing: ${file}"
+            git rm "${file}"
           done
 
           git commit -m "chore: garbage collect orphaned preview environments
