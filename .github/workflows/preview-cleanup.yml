@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - name: Set up kubectl
-        uses: azure/setup-kubectl@v3
+        uses: azure/setup-kubectl@v4
 
       - name: Configure kubeconfig
         run: |
@@ -89,7 +89,7 @@ jobs:
           fi
 
       - name: Comment on PR
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const prNumber = context.payload.pull_request.number;
