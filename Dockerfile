@@ -53,7 +53,7 @@ CMD ["./start.sh"]
 # FRONTEND BUILDER STAGE
 # ======================================================================================
 # Pinned to specific version for reproducible builds
-FROM --platform=linux/amd64 node:24.8.0-slim AS frontend-builder
+FROM --platform=linux/amd64 node:25.0.0-slim AS frontend-builder
 
 WORKDIR /app
 
