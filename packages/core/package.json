@@ -22,7 +22,7 @@
     "portable"
   ],
   "devDependencies": {
-    "@vitest/coverage-v8": "^4.0.3",
+    "@vitest/coverage-v8": "^4.0.4",
     "@vitest/ui": "^4.0.3",
     "typescript": "^5.9.3",
     "vitest": "^4.0.3"
