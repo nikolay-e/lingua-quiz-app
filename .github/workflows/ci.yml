@@ -87,19 +87,16 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: docker/build-push-action@v6
+      - name: Build amd64 image for scanning
+        uses: docker/build-push-action@v6
         with:
           context: .
           target: ${{ matrix.service }}
+          platforms: linux/amd64
           push: false
           load: true
           tags: |
             ${{ env.REGISTRY }}/lingua-quiz-${{ matrix.service }}:${{ steps.tag.outputs.value }}
-            ${{ env.REGISTRY }}/lingua-quiz-${{ matrix.service }}:${{ github.sha }}
-          labels: |
-            org.opencontainers.image.source=${{ github.event.repository.html_url }}
-            org.opencontainers.image.revision=${{ github.sha }}
-            org.opencontainers.image.created=${{ steps.tag.outputs.timestamp }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -122,6 +119,7 @@ jobs:
         with:
           context: .
           target: ${{ matrix.service }}
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             ${{ env.REGISTRY }}/lingua-quiz-${{ matrix.service }}:${{ steps.tag.outputs.value }}
