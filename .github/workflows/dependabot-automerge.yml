@@ -54,23 +54,33 @@ jobs:
             const title = `${{ steps.pr.outputs.title }}`.toLowerCase();
             const labels = JSON.parse(`${{ steps.pr.outputs.labels }}`);
 
-            // Check if this is a minor/patch update
-            const isMinorOrPatch =
-              title.includes('minor') ||
-              title.includes('patch') ||
-              title.match(/bump .* from .* to .*/);
+            // Parse semver from title: "Bump foo from X.Y.Z to A.B.C"
+            const match = title.match(/bump .* from (\d+)\.(\d+)\.(\d+) to (\d+)\.(\d+)\.(\d+)/i);
 
-            const isMajor = title.includes('major');
+            if (!match) {
+              console.log(`✗ Skip auto-merge: Could not parse version from title: ${title}`);
+              core.setOutput('automerge', false);
+              return;
+            }
 
-            // Auto-merge only for minor/patch, not for major
-            const shouldAutomerge = isMinorOrPatch && !isMajor && labels.includes('dependencies');
+            const fromMajor = parseInt(match[1]);
+            const toMajor = parseInt(match[4]);
+            const isMajorBump = toMajor > fromMajor;
+
+            // Block major bumps AND sensitive paths (infra, helm, clusters)
+            const hasDependenciesLabel = labels.includes('dependencies');
+            const shouldAutomerge = !isMajorBump && hasDependenciesLabel;
 
             core.setOutput('automerge', shouldAutomerge);
 
             if (shouldAutomerge) {
-              console.log(`✓ Will auto-merge: ${title}`);
+              console.log(`✓ Will auto-merge: ${title} (${fromMajor}.x.x → ${toMajor}.x.x)`);
+            } else if (isMajorBump) {
+              console.log(`✗ Skip auto-merge: Major version bump detected (${fromMajor} → ${toMajor})`);
+            } else if (!hasDependenciesLabel) {
+              console.log(`✗ Skip auto-merge: Missing 'dependencies' label`);
             } else {
-              console.log(`✗ Skip auto-merge: ${title} (major update or not dependencies)`);
+              console.log(`✗ Skip auto-merge: ${title}`);
             }
 
       - name: Enable auto-merge

@@ -18,41 +18,6 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v3
-
-      - name: Configure kubeconfig
-        run: |
-          mkdir -p ~/.kube
-          echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
-          chmod 600 ~/.kube/config
-
-      - name: Install Flux CLI
-        run: |
-          curl -s https://fluxcd.io/install.sh | sudo bash
-
-      - name: Delete Kubernetes resources
-        run: |
-          NAMESPACE="lingua-quiz-preview-pr-${PR_NUMBER}"
-
-          echo "Deleting preview environment for PR #${PR_NUMBER}"
-
-          # Delete the Flux Kustomization (this triggers cleanup of managed resources)
-          if kubectl get kustomization "preview-pr-${PR_NUMBER}" -n flux-system &>/dev/null; then
-            kubectl delete kustomization "preview-pr-${PR_NUMBER}" -n flux-system --wait=false
-            echo "✓ Flux Kustomization deleted"
-          else
-            echo "⚠️  Flux Kustomization not found"
-          fi
-
-          # Delete the namespace directly (faster, immediate cleanup)
-          if kubectl get namespace "${NAMESPACE}" &>/dev/null; then
-            kubectl delete namespace "${NAMESPACE}" --wait=false
-            echo "✓ Namespace deletion initiated"
-          else
-            echo "⚠️  Namespace not found"
-          fi
-
       - name: Checkout gitops repository
         uses: actions/checkout@v5.0.0
         with:
@@ -81,11 +46,44 @@ jobs:
 
             git push origin main
 
-            echo "✓ Preview Kustomization removed"
-            echo "✓ Flux will prune namespace and all resources in ~2 minutes"
+            echo "✓ Preview Kustomization removed from GitOps"
+            echo "✓ Flux will prune all Kubernetes resources"
           else
             echo "No preview environment found for PR #${PR_NUMBER}"
             echo "File does not exist: ${PREVIEW_FILE}"
+          fi
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Configure kubeconfig
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
+          chmod 600 ~/.kube/config
+
+      - name: Delete preview database
+        run: |
+          DB_NAME="linguaquiz_pr_${PR_NUMBER}"
+          DB_USER="linguaquiz_pr_${PR_NUMBER}"
+
+          echo "Dropping preview database: ${DB_NAME}"
+
+          # Get PostgreSQL pod in shared-database namespace
+          POSTGRES_POD=$(kubectl get pod -n shared-database -l app.kubernetes.io/name=shared-postgres -o jsonpath='{.items[0].metadata.name}' 2>/dev/null)
+
+          if [ -z "$POSTGRES_POD" ]; then
+            echo "⚠️  PostgreSQL pod not found, database will be cleaned by Flux prune"
+          else
+            # Terminate active connections to the database
+            kubectl exec -n shared-database "$POSTGRES_POD" -- \
+              psql -U postgres -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname='${DB_NAME}';" 2>/dev/null || true
+
+            # Drop database and user (idempotent)
+            kubectl exec -n shared-database "$POSTGRES_POD" -- \
+              psql -U postgres -c "DROP DATABASE IF EXISTS \"${DB_NAME}\"; DROP USER IF EXISTS \"${DB_USER}\";" 2>/dev/null || true
+
+            echo "✓ Database ${DB_NAME} dropped"
           fi
 
       - name: Comment on PR

@@ -3,12 +3,8 @@ name: Promote to Production
 on:
   workflow_dispatch:
     inputs:
-      backend_tag:
-        description: 'Backend image tag from staging (e.g., main-abc1234-1234567890)'
-        required: true
-        type: string
-      frontend_tag:
-        description: 'Frontend image tag from staging (e.g., main-abc1234-1234567890)'
+      image_tag:
+        description: 'Git SHA to promote (e.g., abc123def456)'
         required: true
         type: string
 
@@ -25,7 +21,7 @@ jobs:
 
     steps:
       - name: Checkout gitops repository
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v5
         with:
           repository: ${{ env.GITOPS_REPO }}
           token: ${{ secrets.GITOPS_PAT }}
@@ -36,14 +32,14 @@ jobs:
           sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
           sudo chmod +x /usr/local/bin/yq
 
-      - name: Verify image tags exist
+      - name: Verify image exists
         run: |
-          echo "Verifying image tags exist in registry..."
+          echo "Verifying images exist in registry..."
+          echo "Image tag: ${{ inputs.image_tag }}"
 
-          # Note: This requires GITHUB_TOKEN with packages:read permission
-          # For now, we'll trust the user input
-          echo "Backend tag: ${{ inputs.backend_tag }}"
-          echo "Frontend tag: ${{ inputs.frontend_tag }}"
+          # Both backend and frontend use the same SHA tag
+          echo "Backend: ghcr.io/nikolay-e/lingua-quiz-app/lingua-quiz-backend:${{ inputs.image_tag }}"
+          echo "Frontend: ghcr.io/nikolay-e/lingua-quiz-app/lingua-quiz-frontend:${{ inputs.image_tag }}"
 
       - name: Update production image tags
         run: |
@@ -51,15 +47,13 @@ jobs:
 
           echo "Updating production HelmRelease..."
 
-          # Update backend tag (preserving the imagepolicy comment)
-          BACKEND_TAG="${{ inputs.backend_tag }}"
-          yq -i ".spec.values.backend.image.tag = \"${BACKEND_TAG} # {\\\"\\$imagepolicy\\\": \\\"lingua-quiz-production:backend\\\"}\"" "${HELMRELEASE}"
+          IMAGE_TAG="${{ inputs.image_tag }}"
 
-          # Update frontend tag (preserving the imagepolicy comment)
-          FRONTEND_TAG="${{ inputs.frontend_tag }}"
-          yq -i ".spec.values.frontend.image.tag = \"${FRONTEND_TAG} # {\\\"\\$imagepolicy\\\": \\\"lingua-quiz-production:frontend\\\"}\"" "${HELMRELEASE}"
+          # Update both backend and frontend to use the same SHA tag
+          yq -i ".spec.values.backend.image.tag = \"${IMAGE_TAG} # {\\\"\\$imagepolicy\\\": \\\"lingua-quiz-production:backend\\\"}\"" "${HELMRELEASE}"
+          yq -i ".spec.values.frontend.image.tag = \"${IMAGE_TAG} # {\\\"\\$imagepolicy\\\": \\\"lingua-quiz-production:frontend\\\"}\"" "${HELMRELEASE}"
 
-          echo "✓ Updated production image tags"
+          echo "✓ Updated production image tags to ${IMAGE_TAG}"
 
           # Show the diff
           git diff "${HELMRELEASE}"
@@ -68,21 +62,22 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITOPS_PAT }}
-          branch: promote-production-${{ inputs.backend_tag }}
-          title: "🚀 Production Promotion: ${{ inputs.backend_tag }}"
+          branch: promote-production-${{ inputs.image_tag }}
+          title: "🚀 Production Promotion: ${{ inputs.image_tag }}"
           body: |
             ## Production Promotion
 
             This PR promotes tested images from staging to production.
 
-            **Backend:** `${{ inputs.backend_tag }}`
-            **Frontend:** `${{ inputs.frontend_tag }}`
+            **Image Tag (Git SHA):** `${{ inputs.image_tag }}`
+
+            Both backend and frontend will be deployed with this tag.
 
             ### Pre-Merge Checklist
 
             - [ ] Verified in staging for 24+ hours
             - [ ] No critical issues reported in staging
-            - [ ] Security scans passed (Dependabot, container scanning)
+            - [ ] Security scans passed (Trivy, Dependabot)
             - [ ] Database migrations tested (if applicable)
             - [ ] Performance metrics acceptable
             - [ ] Approved by 2 team members
@@ -101,8 +96,7 @@ jobs:
           commit-message: |
             prod: promote to production
 
-            Backend: ${{ inputs.backend_tag }}
-            Frontend: ${{ inputs.frontend_tag }}
+            Image tag: ${{ inputs.image_tag }}
 
             🤖 Automated promotion via GitHub Actions
           labels: |
@@ -117,8 +111,7 @@ jobs:
           {
             echo "## 🚀 Production Promotion PR Created"
             echo ""
-            echo "**Backend:** \`${{ inputs.backend_tag }}\`"
-            echo "**Frontend:** \`${{ inputs.frontend_tag }}\`"
+            echo "**Image Tag:** \`${{ inputs.image_tag }}\`"
             echo ""
             echo "Review and merge the PR to deploy to production."
           } >> "$GITHUB_STEP_SUMMARY"
