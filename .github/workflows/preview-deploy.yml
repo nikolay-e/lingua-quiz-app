@@ -35,12 +35,13 @@ jobs:
           script: |
             const pr = context.payload.workflow_run.pull_requests[0];
             const prNumber = pr.number;
-            const headSha = context.payload.workflow_run.head_sha;
+            // Use the SHA from the workflow run (merge commit) that CI actually used
+            const ciSha = context.payload.workflow_run.head_commit.id;
 
             core.setOutput('number', prNumber);
-            core.setOutput('head_sha', headSha);
+            core.setOutput('ci_sha', ciSha);
 
-            console.log(`PR #${prNumber}, commit: ${headSha}`);
+            console.log(`PR #${prNumber}, CI commit SHA: ${ciSha}`);
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
@@ -51,23 +52,40 @@ jobs:
 
       - name: Verify images exist
         env:
-          IMAGE_TAG: ${{ steps.pr.outputs.head_sha }}
+          IMAGE_TAG: ${{ steps.pr.outputs.ci_sha }}
         run: |
           echo "Verifying images are available for tag: ${IMAGE_TAG}"
 
+          # Function to check if image exists with retries
+          check_image() {
+            local image=$1
+            local max_attempts=5
+            local wait_seconds=10
+
+            for attempt in $(seq 1 $max_attempts); do
+              echo "Attempt $attempt/$max_attempts: Checking $image..."
+              if docker manifest inspect "$image" > /dev/null 2>&1; then
+                echo "✓ Image found: $image"
+                return 0
+              fi
+
+              if [ $attempt -lt $max_attempts ]; then
+                echo "Image not found yet, waiting ${wait_seconds}s before retry..."
+                sleep $wait_seconds
+              fi
+            done
+
+            echo "❌ Image not found after $max_attempts attempts: $image"
+            return 1
+          }
+
           # Check if backend image exists
-          if docker manifest inspect "ghcr.io/nikolay-e/lingua-quiz-app/lingua-quiz-backend:${IMAGE_TAG}" > /dev/null 2>&1; then
-            echo "✓ Backend image found"
-          else
-            echo "❌ Backend image not found: ghcr.io/nikolay-e/lingua-quiz-app/lingua-quiz-backend:${IMAGE_TAG}"
+          if ! check_image "ghcr.io/nikolay-e/lingua-quiz-app/lingua-quiz-backend:${IMAGE_TAG}"; then
             exit 1
           fi
 
           # Check if frontend image exists
-          if docker manifest inspect "ghcr.io/nikolay-e/lingua-quiz-app/lingua-quiz-frontend:${IMAGE_TAG}" > /dev/null 2>&1; then
-            echo "✓ Frontend image found"
-          else
-            echo "❌ Frontend image not found: ghcr.io/nikolay-e/lingua-quiz-app/lingua-quiz-frontend:${IMAGE_TAG}"
+          if ! check_image "ghcr.io/nikolay-e/lingua-quiz-app/lingua-quiz-frontend:${IMAGE_TAG}"; then
             exit 1
           fi
 
@@ -83,7 +101,7 @@ jobs:
       - name: Create preview Kustomization
         env:
           PR_NUMBER: ${{ steps.pr.outputs.number }}
-          IMAGE_TAG: ${{ steps.pr.outputs.head_sha }}
+          IMAGE_TAG: ${{ steps.pr.outputs.ci_sha }}
         run: |
           NAMESPACE="lingua-quiz-preview-pr-${PR_NUMBER}"
           PREVIEW_DOMAIN="${PR_NUMBER}.lingua-quiz.nikolay-eremeev.com"
