@@ -69,12 +69,22 @@ jobs:
       - name: Generate image tag
         id: tag
         run: |
-          # Format: {branch}-{short-sha}-{timestamp}
-          # e.g., main-5db1366-1761421093
+          # Format: {ref}-{short-sha}-{timestamp}
+          # e.g., main-5db1366-1761421093 or pr-243-5db1366-1761421093
           # Deterministic tagging - same commit always produces same tag
           SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
           TIMESTAMP=$(date +%s)
-          TAG="${{ github.ref_name }}-${SHORT_SHA}-${TIMESTAMP}"
+
+          # Sanitize ref name for Docker tag compatibility
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            # For PRs, use pr-{number} format
+            REF="pr-${{ github.event.pull_request.number }}"
+          else
+            # For branches, sanitize by replacing / with -
+            REF=$(echo "${{ github.ref_name }}" | sed 's/\//-/g')
+          fi
+
+          TAG="${REF}-${SHORT_SHA}-${TIMESTAMP}"
           echo "value=${TAG}" >> "$GITHUB_OUTPUT"
           echo "timestamp=${TIMESTAMP}" >> "$GITHUB_OUTPUT"
           echo "Generated image tag: ${TAG}"
