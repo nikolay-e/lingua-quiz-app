@@ -54,28 +54,29 @@ jobs:
         env:
           IMAGE_TAG: ${{ steps.pr.outputs.ci_sha }}
         run: |
+          # shellcheck disable=SC2086
           echo "Verifying images are available for tag: ${IMAGE_TAG}"
 
           # Function to check if image exists with retries
           check_image() {
-            local image=$1
+            local image="$1"
             local max_attempts=5
             local wait_seconds=10
 
-            for attempt in $(seq 1 $max_attempts); do
-              echo "Attempt $attempt/$max_attempts: Checking $image..."
+            for attempt in $(seq 1 "$max_attempts"); do
+              echo "Attempt ${attempt}/${max_attempts}: Checking ${image}..."
               if docker manifest inspect "$image" > /dev/null 2>&1; then
-                echo "✓ Image found: $image"
+                echo "✓ Image found: ${image}"
                 return 0
               fi
 
-              if [ $attempt -lt $max_attempts ]; then
+              if [ "$attempt" -lt "$max_attempts" ]; then
                 echo "Image not found yet, waiting ${wait_seconds}s before retry..."
-                sleep $wait_seconds
+                sleep "$wait_seconds"
               fi
             done
 
-            echo "❌ Image not found after $max_attempts attempts: $image"
+            echo "❌ Image not found after ${max_attempts} attempts: ${image}"
             return 1
           }
 
