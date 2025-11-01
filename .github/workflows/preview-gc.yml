@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Get open PRs
         id: open_prs
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const { data: prs } = await github.rest.pulls.list({
@@ -115,7 +115,7 @@ jobs:
 
       - name: Create issue for large cleanups
         if: steps.orphaned.outputs.found == 'true' && steps.orphaned.outputs.count >= 5
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const count = ${{ steps.orphaned.outputs.count }};
