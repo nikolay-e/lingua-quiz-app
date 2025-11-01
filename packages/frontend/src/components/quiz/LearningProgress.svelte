@@ -132,15 +132,16 @@
   }
 
   .foldable-content {
-    animation: fadeIn var(--transition-speed) ease;
+    animation: fade-in var(--transition-speed) ease;
     margin-top: var(--spacing-sm);
   }
 
   /* Animations */
-  @keyframes fadeIn {
+  @keyframes fade-in {
     from {
       opacity: 0;
     }
+
     to {
       opacity: 1;
     }

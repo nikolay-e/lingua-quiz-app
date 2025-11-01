@@ -169,14 +169,19 @@ git add -A && git commit -m "Remove preview PR <NUMBER>" && git push
 
 1. Check GitHub Actions workflow status
 2. Check Flux reconciliation:
+
    ```bash
    flux get kustomizations -n flux-system
    ```
+
 3. Check HelmRelease status:
+
    ```bash
    kubectl get helmrelease -n preview-pr-<NUMBER>
    ```
+
 4. Check pod status:
+
    ```bash
    kubectl get pods -n preview-pr-<NUMBER>
    kubectl logs -n preview-pr-<NUMBER> <POD_NAME>

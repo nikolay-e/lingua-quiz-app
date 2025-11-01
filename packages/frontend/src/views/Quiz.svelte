@@ -390,6 +390,7 @@
   .delete-button {
     background-color: var(--error-color);
   }
+
   .delete-button:hover {
     background-color: #c0392b;
   }
@@ -413,6 +414,6 @@
     background-color: var(--primary-color);
     color: white;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+    box-shadow: 0 4px 12px rgb(74 144 226 / 30%);
   }
 </style>
