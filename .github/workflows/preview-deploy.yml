@@ -35,8 +35,8 @@ jobs:
           script: |
             const pr = context.payload.workflow_run.pull_requests[0];
             const prNumber = pr.number;
-            // Use the SHA from the workflow run (merge commit) that CI actually used
-            const ciSha = context.payload.workflow_run.head_commit.id;
+            // Use the HEAD SHA that CI actually built with
+            const ciSha = context.payload.workflow_run.head_sha;
 
             core.setOutput('number', prNumber);
             core.setOutput('ci_sha', ciSha);
