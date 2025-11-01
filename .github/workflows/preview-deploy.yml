@@ -113,7 +113,7 @@ jobs:
           PR_NUMBER: ${{ steps.pr.outputs.number }}
           IMAGE_TAG: ${{ steps.pr.outputs.ci_sha }}
         run: |
-          PREVIEW_DOMAIN="${PR_NUMBER}.lingua-quiz.nikolay-eremeev.com"
+          PREVIEW_DOMAIN="lingua-quiz-pr-${PR_NUMBER}.nikolay-eremeev.com"
 
           echo "Creating preview environment for PR #${PR_NUMBER}"
           echo "  Image tag: ${IMAGE_TAG}"
@@ -133,7 +133,10 @@ jobs:
               repository: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-frontend
               tag: ${IMAGE_TAG}
           ingress:
-            host: ${PREVIEW_DOMAIN}
+            frontend:
+              host: ${PREVIEW_DOMAIN}
+            backend:
+              host: # Empty for same-host deployment
           cors:
             origins:
               - https://${PREVIEW_DOMAIN}
@@ -157,7 +160,7 @@ jobs:
           else
             git commit -m "feat: deploy preview environment for PR #${PR_NUMBER}
 
-          Preview URL: https://${PR_NUMBER}.lingua-quiz.nikolay-eremeev.com
+          Preview URL: https://lingua-quiz-pr-${PR_NUMBER}.nikolay-eremeev.com
           Commit: ${IMAGE_TAG}
 
           🤖 Automated deployment via GitHub Actions"
@@ -176,7 +179,7 @@ jobs:
           script: |
             const prNumber = parseInt(process.env.PR_NUMBER);
             const imageTag = process.env.IMAGE_TAG;
-            const previewUrl = `https://${prNumber}.lingua-quiz.nikolay-eremeev.com`;
+            const previewUrl = `https://lingua-quiz-pr-${prNumber}.nikolay-eremeev.com`;
 
             const comment = `## 🚀 Preview Environment Deploying
 
