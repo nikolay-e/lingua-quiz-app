@@ -53,8 +53,9 @@ jobs:
           # Update production Application
           PROD_FILE="argocd/applications/production.yaml"
 
-          yq -i ".spec.source.helm.values = (.spec.source.helm.values |
-            sub(\"tag: .*\", \"tag: ${IMAGE_TAG}\"))" "${PROD_FILE}"
+          # Use sed to replace the image tags - more reliable for inline YAML strings
+          # Update backend tag
+          sed -i "s|tag: [a-zA-Z0-9._-]*$|tag: ${IMAGE_TAG}|g" "${PROD_FILE}"
 
           echo "✅ Updated production to ${IMAGE_TAG}"
           git diff "${PROD_FILE}"
