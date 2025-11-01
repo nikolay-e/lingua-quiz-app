@@ -1,7 +1,9 @@
 analysis_history.json
 .age-key.txt
 
-!.claude/settings.local.json
+# CLAUDE-related files
+CLAUDE.md
+.claude/
 
 # Dependency directories
 node_modules/

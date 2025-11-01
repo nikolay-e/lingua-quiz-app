@@ -1,4 +1,5 @@
-name: 🚀 Deploy to Production (Simple)
+---
+name: 🚀 Deploy to Production
 
 on:
   workflow_dispatch:
@@ -9,73 +10,300 @@ on:
         type: string
 
 env:
+  REGISTRY: ghcr.io/${{ github.repository }}
   GITOPS_REPO: nikolay-e/gitops
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
     if: ${{ github.event.inputs.confirm == 'deploy' }}
+    permissions:
+      contents: write
+      packages: write
+      deployments: write
 
     steps:
-      - name: 🎯 Get current staging image tag
-        id: staging
+      - name: 📥 Checkout main branch
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: 📊 Get current version and increment
+        id: version
         run: |
-          # Get staging image tag via GitHub API
-          echo "Fetching current staging version..."
+          # Get current version from package.json
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          echo "Current version: ${CURRENT_VERSION}"
 
-          # Get the staging Application from gitops repo
-          STAGING_TAG=$(curl -s -H "Authorization: token ${{ secrets.GITOPS_PAT }}" \
-            "https://api.github.com/repos/${{ env.GITOPS_REPO }}/contents/argocd/applications/staging.yaml" \
-            | jq -r '.content' | base64 -d | grep 'tag:' | head -1 | awk '{print $2}')
+          # Split version into major.minor.patch
+          IFS='.' read -r -a VERSION_PARTS <<< "${CURRENT_VERSION}"
+          MAJOR="${VERSION_PARTS[0]}"
+          MINOR="${VERSION_PARTS[1]}"
+          PATCH="${VERSION_PARTS[2]}"
 
-          echo "staging_tag=${STAGING_TAG}" >> "$GITHUB_OUTPUT"
-          echo "📦 Staging is running: ${STAGING_TAG}"
+          # Increment patch version by 1
+          NEW_PATCH=$((PATCH + 1))
+          NEW_VERSION="${MAJOR}.${MINOR}.${NEW_PATCH}"
 
-      - name: 📥 Checkout gitops repository
+          echo "New version: ${NEW_VERSION}"
+          {
+            echo "current=${CURRENT_VERSION}"
+            echo "new=${NEW_VERSION}"
+            echo "tag=v${NEW_VERSION}"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: ✏️ Update version in package.json
+        run: |
+          # Update version in root package.json
+          npm version ${{ steps.version.outputs.new }} --no-git-tag-version
+
+          # Update version in all workspace packages
+          for package_json in packages/*/package.json; do
+            if [ -f "$package_json" ]; then
+              echo "Updating version in $package_json"
+              cd "$(dirname "$package_json")"
+              npm version ${{ steps.version.outputs.new }} --no-git-tag-version
+              cd - > /dev/null
+            fi
+          done
+
+      - name: 📝 Commit version update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add package.json packages/*/package.json
+          git commit -m "chore: bump version to ${{ steps.version.outputs.new }}"
+
+          # Push to main
+          git push origin main
+
+      - name: 🏷️ Create and push Git tag
+        run: |
+          git tag ${{ steps.version.outputs.tag }}
+          git push origin ${{ steps.version.outputs.tag }}
+
+      - name: 🔧 Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: 🔐 Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🏗️ Build and push backend image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: backend
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/lingua-quiz-backend:${{ steps.version.outputs.tag }}
+            ${{ env.REGISTRY }}/lingua-quiz-backend:latest
+            ${{ env.REGISTRY }}/lingua-quiz-backend:${{ github.sha }}
+          labels: |
+            org.opencontainers.image.source=${{ github.event.repository.html_url }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.version=${{ steps.version.outputs.new }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: 🏗️ Build and push frontend image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: frontend
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/lingua-quiz-frontend:${{ steps.version.outputs.tag }}
+            ${{ env.REGISTRY }}/lingua-quiz-frontend:latest
+            ${{ env.REGISTRY }}/lingua-quiz-frontend:${{ github.sha }}
+          labels: |
+            org.opencontainers.image.source=${{ github.event.repository.html_url }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.version=${{ steps.version.outputs.new }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: 📥 Checkout GitOps repository
         uses: actions/checkout@v5
         with:
           repository: ${{ env.GITOPS_REPO }}
           token: ${{ secrets.GITOPS_PAT }}
           ref: main
+          path: gitops
 
       - name: 🔧 Install yq
         run: |
           sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
           sudo chmod +x /usr/local/bin/yq
 
-      - name: ✏️ Update production image tags
+      - name: ✏️ Update production image tags in GitOps
+        working-directory: gitops
         run: |
-          IMAGE_TAG="${{ steps.staging.outputs.staging_tag }}"
+          TAG="${{ steps.version.outputs.tag }}"
 
-          echo "🚀 Deploying ${IMAGE_TAG} to production..."
+          echo "🚀 Updating production to ${TAG}..."
 
           # Update production Application
           PROD_FILE="argocd/applications/production.yaml"
 
           # Use sed to replace the image tags - more reliable for inline YAML strings
-          # Update backend tag
-          sed -i "s|tag: [a-zA-Z0-9._-]*$|tag: ${IMAGE_TAG}|g" "${PROD_FILE}"
+          sed -i "s|tag: [a-zA-Z0-9._-]*$|tag: ${TAG}|g" "${PROD_FILE}"
 
-          echo "✅ Updated production to ${IMAGE_TAG}"
+          echo "✅ Updated production to ${TAG}"
           git diff "${PROD_FILE}"
 
-      - name: 📤 Commit and push changes
+      - name: 📤 Commit and push GitOps changes
+        working-directory: gitops
         run: |
-          IMAGE_TAG="${{ steps.staging.outputs.staging_tag }}"
+          TAG="${{ steps.version.outputs.tag }}"
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           git add argocd/applications/production.yaml
 
-          git commit -m "prod: deploy ${IMAGE_TAG} to production" \
-            -m "One-click deployment from staging" \
-            -m "Automated via GitHub Actions"
+          git commit -m "prod: deploy ${TAG} to production" \
+            -m "Version: ${{ steps.version.outputs.new }}" \
+            -m "Commit: ${{ github.sha }}" \
+            -m "Automated production deployment via GitHub Actions"
 
           git push origin main
 
-          echo "✅ Pushed to gitops repository"
+          echo "✅ Pushed to GitOps repository"
+
+      - name: 🗑️ Delete old production deployment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // List all deployments for production environment
+            const deployments = await github.rest.repos.listDeployments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              environment: 'production'
+            });
+
+            // Delete all existing production deployments
+            for (const deployment of deployments.data) {
+              console.log(`Deleting deployment ${deployment.id}...`);
+
+              // First, mark deployment as inactive
+              await github.rest.repos.createDeploymentStatus({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                deployment_id: deployment.id,
+                state: 'inactive'
+              });
+
+              // Then delete the deployment
+              try {
+                await github.rest.repos.deleteDeployment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  deployment_id: deployment.id
+                });
+                console.log(`Deleted deployment ${deployment.id}`);
+              } catch (error) {
+                console.log(`Could not delete deployment ${deployment.id}: ${error.message}`);
+              }
+            }
+
+      - name: 🚀 Create new production deployment
+        uses: actions/github-script@v7
+        id: deployment
+        with:
+          script: |
+            // Create new production deployment
+            const deployment = await github.rest.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: '${{ steps.version.outputs.tag }}',
+              environment: 'production',
+              auto_merge: false,
+              required_contexts: [],
+              production_environment: true,
+              description: 'Production deployment v${{ steps.version.outputs.new }}'
+            });
+
+            // Mark deployment as successful
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: deployment.data.id,
+              state: 'success',
+              environment_url: 'https://lingua-quiz.nikolay-eremeev.com',
+              description: 'Deployed v${{ steps.version.outputs.new }} to production'
+            });
+
+            console.log(`Created deployment ${deployment.data.id}`);
+            return deployment.data.id;
+
+      - name: 📦 Create GitHub Release
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Get the last release tag for comparison
+            let previousTag;
+            try {
+              const latestRelease = await github.rest.repos.getLatestRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo
+              });
+              previousTag = latestRelease.data.tag_name;
+            } catch (error) {
+              // No previous release found
+              console.log('No previous release found');
+              previousTag = null;
+            }
+
+            // Generate release notes
+            let releaseNotes = `## 🚀 Production Release ${{ steps.version.outputs.tag }}\n\n`;
+            releaseNotes += `### 📦 Version\n`;
+            releaseNotes += `- **Version:** ${{ steps.version.outputs.new }}\n`;
+            releaseNotes += `- **Commit:** ${{ github.sha }}\n`;
+            releaseNotes += `- **Deployed:** ${new Date().toISOString()}\n\n`;
+
+            releaseNotes += `### 🐳 Docker Images\n`;
+            releaseNotes += `- Backend: \`ghcr.io/${{ github.repository }}/lingua-quiz-backend:${{ steps.version.outputs.tag }}\`\n`;
+            releaseNotes += `- Frontend: \`ghcr.io/${{ github.repository }}/lingua-quiz-frontend:${{ steps.version.outputs.tag }}\`\n\n`;
+
+            releaseNotes += `### 🔗 Links\n`;
+            releaseNotes += `- [Production Site](https://lingua-quiz.nikolay-eremeev.com)\n`;
+            releaseNotes += `- [Health Check](https://lingua-quiz.nikolay-eremeev.com/api/health)\n`;
+
+            if (previousTag) {
+              releaseNotes += `\n### 📝 Changes\n`;
+              const compareUrl = `https://github.com/${{ github.repository }}/compare/${previousTag}...${{ steps.version.outputs.tag }}`;
+              releaseNotes += `[View changes since ${previousTag}](${compareUrl})\n`;
+            }
+
+            // Create the release
+            const release = await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: '${{ steps.version.outputs.tag }}',
+              name: 'Release ${{ steps.version.outputs.tag }}',
+              body: releaseNotes,
+              draft: false,
+              prerelease: false,
+              generate_release_notes: false
+            });
+
+            console.log(`Created release: ${release.data.html_url}`);
 
       - name: 🔄 Trigger ArgoCD sync
         run: |
@@ -84,17 +312,32 @@ jobs:
 
       - name: 📊 Summary
         run: |
-          IMAGE_TAG="${{ steps.staging.outputs.staging_tag }}"
           {
-            echo "## 🚀 Production Deployed!"
+            echo "## 🚀 Production Deployed Successfully!"
             echo ""
-            echo "**Image Tag:** \`${IMAGE_TAG}\`"
+            echo "### 📦 Version Information"
+            echo "- **Previous Version:** \`${{ steps.version.outputs.current }}\`"
+            echo "- **New Version:** \`${{ steps.version.outputs.new }}\`"
+            echo "- **Git Tag:** \`${{ steps.version.outputs.tag }}\`"
             echo ""
-            echo "**Status:** ArgoCD is syncing production now"
+            echo "### 🐳 Docker Images"
+            echo "- Backend: \`${{ env.REGISTRY }}/lingua-quiz-backend:${{ steps.version.outputs.tag }}\`"
+            echo "- Frontend: \`${{ env.REGISTRY }}/lingua-quiz-frontend:${{ steps.version.outputs.tag }}\`"
             echo ""
-            echo "**Monitor deployment:**"
-            echo "- Production URL: https://lingua-quiz.nikolay-eremeev.com"
-            echo "- Health check: https://lingua-quiz.nikolay-eremeev.com/api/health"
+            echo "### 🔗 Links"
+            echo "- **Production URL:** https://lingua-quiz.nikolay-eremeev.com"
+            echo "- **Health Check:** https://lingua-quiz.nikolay-eremeev.com/api/health"
+            echo "- **GitHub Release:** https://github.com/${{ github.repository }}/releases/tag/${{ steps.version.outputs.tag }}"
             echo ""
-            echo "✅ Deployment complete!"
+            echo "### ✅ Deployment Steps Completed"
+            echo "1. ✅ Incremented version to ${{ steps.version.outputs.new }}"
+            echo "2. ✅ Committed and pushed version update to main"
+            echo "3. ✅ Created and pushed Git tag ${{ steps.version.outputs.tag }}"
+            echo "4. ✅ Built and pushed Docker images with version tag"
+            echo "5. ✅ Updated GitOps repository with new version"
+            echo "6. ✅ Recreated GitHub deployment"
+            echo "7. ✅ Created GitHub release"
+            echo "8. ✅ ArgoCD sync triggered"
+            echo ""
+            echo "🎉 **Deployment complete!**"
           } >> "$GITHUB_STEP_SUMMARY"
