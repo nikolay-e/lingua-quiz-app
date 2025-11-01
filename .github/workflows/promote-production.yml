@@ -38,8 +38,8 @@ jobs:
           echo "Image tag: ${{ inputs.image_tag }}"
 
           # Both backend and frontend use the same SHA tag
-          echo "Backend: ghcr.io/nikolay-e/lingua-quiz-app/lingua-quiz-backend:${{ inputs.image_tag }}"
-          echo "Frontend: ghcr.io/nikolay-e/lingua-quiz-app/lingua-quiz-frontend:${{ inputs.image_tag }}"
+          echo "Backend: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-backend:${{ inputs.image_tag }}"
+          echo "Frontend: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-frontend:${{ inputs.image_tag }}"
 
       - name: Update production image tags
         run: |

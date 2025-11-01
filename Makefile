@@ -27,7 +27,7 @@ DB_RELEASE_NAME  := shared-postgres
 HELM_INSTALL_FLAGS := --wait --timeout 10m
 
 # --- Paths ---
-HELM_APP_DIR      := ./helm/lingua-quiz-app
+HELM_APP_DIR      := ./helm/lingua-quiz
 HELM_DB_DIR       := ./helm/shared-postgres
 SOPS_AGE_KEY_FILE ?= .age-key.txt
 

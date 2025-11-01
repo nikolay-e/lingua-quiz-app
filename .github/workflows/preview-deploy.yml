@@ -40,7 +40,7 @@ jobs:
             // When CI runs on a PR, github.sha is the merge commit SHA
             const { data: prData } = await github.rest.pulls.get({
               owner: context.repo.owner,
-              repo: 'lingua-quiz-app',
+              repo: 'lingua-quiz',
               pull_number: prNumber
             });
 
@@ -90,12 +90,12 @@ jobs:
           }
 
           # Check if backend image exists
-          if ! check_image "ghcr.io/nikolay-e/lingua-quiz-app/lingua-quiz-backend:${IMAGE_TAG}"; then
+          if ! check_image "ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-backend:${IMAGE_TAG}"; then
             exit 1
           fi
 
           # Check if frontend image exists
-          if ! check_image "ghcr.io/nikolay-e/lingua-quiz-app/lingua-quiz-frontend:${IMAGE_TAG}"; then
+          if ! check_image "ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-frontend:${IMAGE_TAG}"; then
             exit 1
           fi
 
@@ -126,9 +126,11 @@ jobs:
           cat > "clusters/previews/pr-${PR_NUMBER}/values.yaml" <<EOF
           backend:
             image:
+              repository: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-backend
               tag: ${IMAGE_TAG}
           frontend:
             image:
+              repository: ghcr.io/nikolay-e/lingua-quiz/lingua-quiz-frontend
               tag: ${IMAGE_TAG}
           ingress:
             host: ${PREVIEW_DOMAIN}
