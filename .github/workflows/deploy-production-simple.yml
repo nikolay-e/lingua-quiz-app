@@ -1,0 +1,99 @@
+name: 🚀 Deploy to Production (Simple)
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "deploy" to confirm production deployment'
+        required: true
+        type: string
+
+env:
+  GITOPS_REPO: nikolay-e/gitops
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: ${{ github.event.inputs.confirm == 'deploy' }}
+
+    steps:
+      - name: 🎯 Get current staging image tag
+        id: staging
+        run: |
+          # Get staging image tag via GitHub API
+          echo "Fetching current staging version..."
+
+          # Get the staging Application from gitops repo
+          STAGING_TAG=$(curl -s -H "Authorization: token ${{ secrets.GITOPS_PAT }}" \
+            "https://api.github.com/repos/${{ env.GITOPS_REPO }}/contents/argocd/applications/staging.yaml" \
+            | jq -r '.content' | base64 -d | grep 'tag:' | head -1 | awk '{print $2}')
+
+          echo "staging_tag=${STAGING_TAG}" >> "$GITHUB_OUTPUT"
+          echo "📦 Staging is running: ${STAGING_TAG}"
+
+      - name: 📥 Checkout gitops repository
+        uses: actions/checkout@v5
+        with:
+          repository: ${{ env.GITOPS_REPO }}
+          token: ${{ secrets.GITOPS_PAT }}
+          ref: main
+
+      - name: 🔧 Install yq
+        run: |
+          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
+
+      - name: ✏️ Update production image tags
+        run: |
+          IMAGE_TAG="${{ steps.staging.outputs.staging_tag }}"
+
+          echo "🚀 Deploying ${IMAGE_TAG} to production..."
+
+          # Update production Application
+          PROD_FILE="argocd/applications/production.yaml"
+
+          yq -i ".spec.source.helm.values = (.spec.source.helm.values |
+            sub(\"tag: .*\", \"tag: ${IMAGE_TAG}\"))" "${PROD_FILE}"
+
+          echo "✅ Updated production to ${IMAGE_TAG}"
+          git diff "${PROD_FILE}"
+
+      - name: 📤 Commit and push changes
+        run: |
+          IMAGE_TAG="${{ steps.staging.outputs.staging_tag }}"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add argocd/applications/production.yaml
+
+          git commit -m "prod: deploy ${IMAGE_TAG} to production" \
+            -m "One-click deployment from staging" \
+            -m "Automated via GitHub Actions"
+
+          git push origin main
+
+          echo "✅ Pushed to gitops repository"
+
+      - name: 🔄 Trigger ArgoCD sync
+        run: |
+          echo "🔄 ArgoCD will auto-detect the change and sync production"
+          echo "✅ Production deployment initiated!"
+
+      - name: 📊 Summary
+        run: |
+          IMAGE_TAG="${{ steps.staging.outputs.staging_tag }}"
+          {
+            echo "## 🚀 Production Deployed!"
+            echo ""
+            echo "**Image Tag:** \`${IMAGE_TAG}\`"
+            echo ""
+            echo "**Status:** ArgoCD is syncing production now"
+            echo ""
+            echo "**Monitor deployment:**"
+            echo "- Production URL: https://lingua-quiz.nikolay-eremeev.com"
+            echo "- Health check: https://lingua-quiz.nikolay-eremeev.com/api/health"
+            echo ""
+            echo "✅ Deployment complete!"
+          } >> "$GITHUB_STEP_SUMMARY"

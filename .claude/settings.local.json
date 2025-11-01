@@ -8,7 +8,17 @@
       "Bash(cat:*)",
       "Bash(bash .github/scripts/preview-env.sh:*)",
       "Bash(pre-commit run:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(git stash:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(yamllint:*)",
+      "Bash(git fetch:*)",
+      "Bash(gh run list:*)",
+      "Bash(kubectl config current-context:*)",
+      "Bash(gh api:*)",
+      "Bash(gh run view:*)"
     ],
     "deny": [],
     "ask": []
