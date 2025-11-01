@@ -126,9 +126,11 @@ jobs:
           cat > "clusters/previews/pr-${PR_NUMBER}/values.yaml" <<EOF
           backend:
             image:
+              repository: ghcr.io/nikolay-e/lingua-quiz-app/lingua-quiz-backend
               tag: ${IMAGE_TAG}
           frontend:
             image:
+              repository: ghcr.io/nikolay-e/lingua-quiz-app/lingua-quiz-frontend
               tag: ${IMAGE_TAG}
           ingress:
             host: ${PREVIEW_DOMAIN}
