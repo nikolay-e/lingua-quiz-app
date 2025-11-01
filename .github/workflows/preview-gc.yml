@@ -6,7 +6,7 @@ on:
   workflow_dispatch:      # Allow manual trigger
 
 env:
-  GITOPS_REPO: nikolay-e/lingua-quiz-gitops
+  GITOPS_REPO: nikolay-e/gitops
 
 jobs:
   cleanup-orphaned:

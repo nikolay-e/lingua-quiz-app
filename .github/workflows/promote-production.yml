@@ -9,7 +9,7 @@ on:
         type: string
 
 env:
-  GITOPS_REPO: nikolay-e/lingua-quiz-gitops
+  GITOPS_REPO: nikolay-e/gitops
 
 jobs:
   promote:

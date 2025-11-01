@@ -7,7 +7,7 @@ on:
 
 env:
   PR_NUMBER: ${{ github.event.pull_request.number }}
-  GITOPS_REPO: nikolay-e/lingua-quiz-gitops
+  GITOPS_REPO: nikolay-e/gitops
 
 jobs:
   cleanup-preview:

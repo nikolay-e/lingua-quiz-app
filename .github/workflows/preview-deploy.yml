@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  GITOPS_REPO: nikolay-e/lingua-quiz-gitops
+  GITOPS_REPO: nikolay-e/gitops
 
 jobs:
   deploy-preview:
