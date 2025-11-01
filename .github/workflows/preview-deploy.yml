@@ -108,85 +108,47 @@ jobs:
           token: ${{ secrets.GITOPS_PAT }}
           ref: main
 
-      - name: Create preview Application
+      - name: Create preview directory
         env:
           PR_NUMBER: ${{ steps.pr.outputs.number }}
           IMAGE_TAG: ${{ steps.pr.outputs.ci_sha }}
         run: |
-          NAMESPACE="lingua-quiz-preview-pr-${PR_NUMBER}"
           PREVIEW_DOMAIN="${PR_NUMBER}.lingua-quiz.nikolay-eremeev.com"
 
           echo "Creating preview environment for PR #${PR_NUMBER}"
-          echo "  Namespace: ${NAMESPACE}"
           echo "  Image tag: ${IMAGE_TAG}"
           echo "  URL: https://${PREVIEW_DOMAIN}"
 
-          # Create Argo CD Application manifest
-          mkdir -p clusters/previews
-          cat > "clusters/previews/pr-${PR_NUMBER}.yaml" <<EOF
-          apiVersion: argoproj.io/v1alpha1
-          kind: Application
-          metadata:
-            name: lingua-quiz-preview-pr-${PR_NUMBER}
-            namespace: argocd
-            labels:
-              preview-env: "true"
-              pr-number: "${PR_NUMBER}"
-            finalizers:
-              - resources-finalizer.argocd.argoproj.io
-          spec:
-            project: default
-            source:
-              repoURL: https://github.com/nikolay-e/lingua-quiz-gitops.git
-              targetRevision: HEAD
-              path: helm-charts/lingua-quiz-app
-              helm:
-                valueFiles:
-                  - values.yaml
-                  - values.preview.yaml
-                values: |
-                  imagePullSecrets:
-                    - name: ghcr-secret
-                  backend:
-                    image:
-                      repository: ghcr.io/nikolay-e/lingua-quiz-app/lingua-quiz-backend
-                      tag: ${IMAGE_TAG}
-                  frontend:
-                    image:
-                      repository: ghcr.io/nikolay-e/lingua-quiz-app/lingua-quiz-frontend
-                      tag: ${IMAGE_TAG}
-                  ingress:
-                    host: ${PREVIEW_DOMAIN}
-                  cors:
-                    origins:
-                      - https://${PREVIEW_DOMAIN}
-            destination:
-              server: https://kubernetes.default.svc
-              namespace: ${NAMESPACE}
-            syncPolicy:
-              automated:
-                prune: true
-                selfHeal: true
-              syncOptions:
-                - CreateNamespace=true
-                - ServerSideApply=true
-              retry:
-                limit: 3
-                backoff:
-                  duration: 5s
-                  factor: 2
-                  maxDuration: 3m
+          # Create directory for ApplicationSet to discover
+          mkdir -p "clusters/previews/pr-${PR_NUMBER}"
+
+          # Create preview-specific Helm values file
+          cat > "clusters/previews/pr-${PR_NUMBER}/values.yaml" <<EOF
+          backend:
+            image:
+              tag: ${IMAGE_TAG}
+          frontend:
+            image:
+              tag: ${IMAGE_TAG}
+          ingress:
+            host: ${PREVIEW_DOMAIN}
+          cors:
+            origins:
+              - https://${PREVIEW_DOMAIN}
           EOF
+
+          # Create marker file so ApplicationSet discovers this directory
+          touch "clusters/previews/pr-${PR_NUMBER}/.preview"
 
       - name: Commit and push
         env:
           PR_NUMBER: ${{ steps.pr.outputs.number }}
-          IMAGE_TAG: ${{ steps.pr.outputs.head_sha }}
+          IMAGE_TAG: ${{ steps.pr.outputs.ci_sha }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add "clusters/previews/pr-${PR_NUMBER}.yaml"
+          git add "clusters/previews/pr-${PR_NUMBER}/"
 
           if git diff --staged --quiet; then
             echo "No changes to commit"
@@ -206,7 +168,7 @@ jobs:
       - name: Comment on PR
         env:
           PR_NUMBER: ${{ steps.pr.outputs.number }}
-          IMAGE_TAG: ${{ steps.pr.outputs.head_sha }}
+          IMAGE_TAG: ${{ steps.pr.outputs.ci_sha }}
         uses: actions/github-script@v7
         with:
           script: |
