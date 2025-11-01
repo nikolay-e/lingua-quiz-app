@@ -25,7 +25,7 @@ jobs:
           token: ${{ secrets.GITOPS_PAT }}
           ref: main
 
-      - name: Remove preview Kustomization
+      - name: Remove preview Application
         run: |
           PREVIEW_FILE="clusters/previews/pr-${PR_NUMBER}.yaml"
 
@@ -40,14 +40,14 @@ jobs:
 
           PR closed: ${{ github.event.pull_request.html_url }}
 
-          Flux will automatically prune all resources via 'spec.prune: true'.
+          Argo CD will automatically prune all resources via 'spec.syncPolicy.automated.prune: true'.
 
           🤖 Automated cleanup via GitHub Actions"
 
             git push origin main
 
-            echo "✓ Preview Kustomization removed from GitOps"
-            echo "✓ Flux will prune all Kubernetes resources"
+            echo "✓ Preview Application removed from GitOps"
+            echo "✓ Argo CD will prune all Kubernetes resources"
           else
             echo "No preview environment found for PR #${PR_NUMBER}"
             echo "File does not exist: ${PREVIEW_FILE}"
@@ -73,7 +73,7 @@ jobs:
           POSTGRES_POD=$(kubectl get pod -n shared-database -l app.kubernetes.io/name=shared-postgres -o jsonpath='{.items[0].metadata.name}' 2>/dev/null)
 
           if [ -z "$POSTGRES_POD" ]; then
-            echo "⚠️  PostgreSQL pod not found, database will be cleaned by Flux prune"
+            echo "⚠️  PostgreSQL pod not found, database will be cleaned by Argo CD prune"
           else
             # Terminate active connections to the database
             kubectl exec -n shared-database "$POSTGRES_POD" -- \
@@ -96,7 +96,7 @@ jobs:
 
             The preview environment for this PR has been removed.
 
-            **Cleanup Status:** Flux CD is pruning resources (~2 minutes)
+            **Cleanup Status:** Argo CD is pruning resources (~2 minutes)
 
             Resources being removed:
             - ✅ Namespace: \`lingua-quiz-preview-pr-${prNumber}\`
