@@ -77,7 +77,7 @@ repos:
   # Ruff replaces: isort + autoflake + black + flake8 (10x faster)
   # =============================================================================
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.2
+    rev: v0.14.3
     hooks:
       - id: ruff
         name: Lint Python with ruff
@@ -129,7 +129,7 @@ repos:
   # STAGE 6: SQL Quality (<2 seconds)
   # =============================================================================
   - repo: https://github.com/sqlfluff/sqlfluff
-    rev: 3.5.0
+    rev: 4.0.0a1
     hooks:
       - id: sqlfluff-fix
         name: Format SQL files
@@ -154,6 +154,14 @@ repos:
 
   - repo: local
     hooks:
+      # Sort package.json files to maintain consistent order
+      - id: sort-package-json
+        name: Sort package.json files
+        entry: npx sort-package-json "package.json" "packages/*/package.json"
+        language: system
+        files: ^(package\.json|packages/.*/package\.json)$
+        pass_filenames: false
+
       - id: eslint
         name: Lint JS/TS/Svelte with ESLint
         entry: npm run lint:fix
@@ -166,6 +174,24 @@ repos:
         entry: npm run typecheck
         language: system
         files: \.(ts|tsx|svelte)$
+        pass_filenames: false
+        stages: [pre-push]
+
+      # Svelte-specific type checking
+      - id: svelte-check
+        name: Svelte type checking
+        entry: npm run check
+        language: system
+        files: \.(svelte)$
+        pass_filenames: false
+        stages: [pre-push]
+
+      # NPM security audit for production dependencies
+      - id: npm-audit
+        name: npm audit (security check)
+        entry: npm audit --audit-level=high --production
+        language: system
+        files: ^package(-lock)?\.json$
         pass_filenames: false
         stages: [pre-push]
 
@@ -203,6 +229,16 @@ repos:
           "--ignore", "DL3003"   # Use WORKDIR
         ]
 
+  - repo: local
+    hooks:
+      # Docker Compose validation
+      - id: docker-compose-check
+        name: Docker Compose config validation
+        entry: bash -c 'for f in docker-compose*.yml docker-compose*.yaml; do [ -f "$f" ] && docker compose -f "$f" config -q || true; done'
+        language: system
+        files: ^docker-compose.*\.(yml|yaml)$
+        pass_filenames: false
+
   # =============================================================================
   # STAGE 10: YAML & Markdown (<3 seconds)
   # =============================================================================
@@ -214,6 +250,26 @@ repos:
         args: ["-d", "relaxed"]
         files: \.(yaml|yml)$
         exclude: ^(helm/.*\.yaml|flux/.*/flux-system/.*)$
+
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.45.0
+    hooks:
+      - id: markdownlint
+        name: Lint and fix Markdown files
+        args: ["--fix", "--config", ".markdownlint.yaml"]
+        files: \.(md|markdown)$
+
+  # =============================================================================
+  # STAGE 11: CSS Quality (<2 seconds)
+  # =============================================================================
+  - repo: local
+    hooks:
+      - id: stylelint
+        name: Lint CSS/SCSS in files and Svelte components
+        entry: npx stylelint --fix --config .stylelintrc.json
+        language: system
+        files: \.(css|scss|svelte)$
+        pass_filenames: true
 
   # =============================================================================
   # STAGE 12: Kubernetes/Helm (changed files only, <5 seconds)

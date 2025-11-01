@@ -1,0 +1,35 @@
+{
+  "extends": ["stylelint-config-standard", "stylelint-config-html/svelte"],
+  "customSyntax": "postcss-html",
+  "rules": {
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": ["global", "local"]
+      }
+    ],
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": ["tailwind", "apply", "layer", "responsive", "screen"]
+      }
+    ],
+    "color-hex-length": "short",
+    "declaration-block-no-redundant-longhand-properties": true,
+    "shorthand-property-no-redundant-values": true,
+    "selector-class-pattern": null,
+    "custom-property-pattern": null,
+    "value-keyword-case": [
+      "lower",
+      {
+        "camelCaseSvgKeywords": true
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["*.svelte", "**/*.svelte"],
+      "customSyntax": "postcss-html"
+    }
+  ]
+}

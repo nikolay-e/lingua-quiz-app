@@ -2,16 +2,22 @@
   "name": "@lingua-quiz/frontend",
   "version": "1.0.2",
   "description": "Frontend application for Lingua Quiz",
+  "keywords": [
+    "svelte",
+    "frontend",
+    "language-learning",
+    "quiz"
+  ],
   "type": "module",
   "scripts": {
-    "predev": "npm run build --workspace=@lingua-quiz/core",
-    "dev": "vite",
     "build": "npm run build --workspace=@lingua-quiz/core && vite build",
-    "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
+    "predev": "npm run build --workspace=@lingua-quiz/core",
+    "dev": "vite",
+    "format": "prettier --write .",
     "lint": "prettier --check . && eslint .",
-    "format": "prettier --write ."
+    "preview": "vite preview"
   },
   "dependencies": {
     "@lingua-quiz/core": "file:../core",
@@ -24,11 +30,5 @@
     "svelte-check": "^4.3.3",
     "vite": "^7.1.12",
     "vite-plugin-pwa": "^1.1.0"
-  },
-  "keywords": [
-    "svelte",
-    "frontend",
-    "language-learning",
-    "quiz"
-  ]
+  }
 }
