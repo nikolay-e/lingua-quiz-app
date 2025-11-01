@@ -187,7 +187,7 @@ jobs:
           echo "✅ Pushed to GitOps repository"
 
       - name: 🗑️ Delete old production deployment
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             // List all deployments for production environment
@@ -223,7 +223,7 @@ jobs:
             }
 
       - name: 🚀 Create new production deployment
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         id: deployment
         with:
           script: |
@@ -253,7 +253,7 @@ jobs:
             return deployment.data.id;
 
       - name: 📦 Create GitHub Release
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             // Get the last release tag for comparison
