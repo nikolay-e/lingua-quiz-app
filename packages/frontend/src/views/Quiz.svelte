@@ -37,7 +37,7 @@
 
   // Initialize foldedLists dynamically
   LEVEL_CONFIG.forEach(level => {
-    foldedLists[level.id] = false;
+    foldedLists[level.id] = true;
   });
 
   // Load saved fold states from localStorage
