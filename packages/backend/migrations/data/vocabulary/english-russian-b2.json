@@ -193,15 +193,6 @@
       "target_example": "Сельское хозяйство является основной отраслью в этом регионе."
     },
     {
-      "translation_id": 9005021,
-      "source_id": 9005043,
-      "target_id": 9005044,
-      "source_word": "AIDS",
-      "target_word": "СПИД",
-      "source_example": "AIDS is a serious disease caused by the HIV virus.",
-      "target_example": "СПИД – это серьёзное заболевание, вызываемое вирусом ВИЧ."
-    },
-    {
       "translation_id": 9005022,
       "source_id": 9005045,
       "target_id": 9005046,
@@ -2990,15 +2981,6 @@
       "target_word": "иконка|значок|кумир",
       "source_example": "She is a fashion icon.",
       "target_example": "Она икона моды."
-    },
-    {
-      "translation_id": 9005332,
-      "source_id": 9005665,
-      "target_id": 9005666,
-      "source_word": "ID",
-      "target_word": "удостоверение личности",
-      "source_example": "Can I see your ID, please?",
-      "target_example": "Можно ваше удостоверение, пожалуйста?"
     },
     {
       "translation_id": 9005333,
@@ -8048,15 +8030,6 @@
       "target_word": "жестокий|зверский",
       "source_example": "It was a brutal attack.",
       "target_example": "Это было жестокое нападение."
-    },
-    {
-      "translation_id": 9005894,
-      "source_id": 9006789,
-      "target_id": 9006790,
-      "source_word": "buddy",
-      "target_word": "приятель|дружище",
-      "source_example": "He is my best buddy.",
-      "target_example": "Он мой лучший приятель."
     },
     {
       "translation_id": 9005895,

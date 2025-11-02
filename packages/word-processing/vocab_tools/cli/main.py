@@ -11,13 +11,15 @@ from pathlib import Path
 import sys
 from typing import Any
 
+from ..core.vocabulary_processor import VocabularyProcessor
+from ..core.word_source import FrequencySource
+from ..exporters.vocabulary_exporter import VocabularyExporter
 from ..languages.english_vocab import EnglishVocabularyAnalyzer
 from ..languages.german_vocab import GermanVocabularyAnalyzer
 from ..languages.spanish_vocab import SpanishVocabularyAnalyzer
 from ..storage.results_tracker import get_results_tracker
 from ..validation.migration_validator import MigrationValidator
-
-# No more hardcoded constants needed
+from ..validation.word_quality_validator import WordQualityValidator
 
 
 class VocabularyToolsCLI:
@@ -38,6 +40,37 @@ class VocabularyToolsCLI:
 
     def create_parser(self) -> argparse.ArgumentParser:
         """Create the main argument parser."""
+        # Parent parsers for common argument groups
+        common_parent = argparse.ArgumentParser(add_help=False)
+        common_parent.add_argument(
+            "--migrations-dir",
+            type=str,
+            help="Path to migrations directory (default: auto-detect)",
+        )
+
+        output_parent = argparse.ArgumentParser(add_help=False)
+        output_parent.add_argument(
+            "--output",
+            choices=["text", "json"],
+            default="text",
+            help="Output format (default: text)",
+        )
+
+        analysis_parent = argparse.ArgumentParser(add_help=False)
+        analysis_parent.add_argument(
+            "--languages",
+            nargs="+",
+            choices=["en", "de", "es"],
+            default=["en", "de", "es"],
+            help="Languages to analyze (default: all)",
+        )
+        analysis_parent.add_argument(
+            "--top-n",
+            type=int,
+            default=1000,
+            help="Number of top frequency words to analyze (default: 1000)",
+        )
+
         parser = argparse.ArgumentParser(
             prog="vocab-tools",
             description="LinguaQuiz Vocabulary Analysis and Validation Tools",
@@ -71,62 +104,51 @@ Requirements:
         subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
         # Analyze command
-        analyze_parser = subparsers.add_parser("analyze", help="Analyze vocabulary gaps for specified languages")
+        analyze_parser = subparsers.add_parser(
+            "analyze",
+            help="Analyze vocabulary gaps for specified languages",
+            parents=[common_parent, output_parent, analysis_parent],
+        )
         self._setup_analyze_parser(analyze_parser)
 
-        # Validate command
-        validate_parser = subparsers.add_parser("validate", help="Validate migration files for data integrity")
+        # Validate command (structure)
+        validate_parser = subparsers.add_parser(
+            "validate", help="Validate migration files for data integrity", parents=[common_parent, output_parent]
+        )
         self._setup_validate_parser(validate_parser)
 
+        # Validate words command (quality)
+        validate_words_parser = subparsers.add_parser(
+            "validate-words",
+            help="Validate word quality in migration files using filter rules",
+            parents=[common_parent, output_parent],
+        )
+        self._setup_validate_words_parser(validate_words_parser)
+
         # Full analysis command (analysis + validation)
-        full_parser = subparsers.add_parser("full-analysis", help="Run complete analysis with validation")
+        full_parser = subparsers.add_parser(
+            "full-analysis",
+            help="Run complete analysis with validation",
+            parents=[common_parent, output_parent, analysis_parent],
+        )
         self._setup_full_analysis_parser(full_parser)
 
         # Results history command
-        history_parser = subparsers.add_parser("history", help="View analysis results history")
+        history_parser = subparsers.add_parser("history", help="View analysis results history", parents=[output_parent])
         self._setup_history_parser(history_parser)
 
         # Results summary command
-        summary_parser = subparsers.add_parser("summary", help="Generate summary report of all analyses")
+        summary_parser = subparsers.add_parser("summary", help="Generate summary report of all analyses", parents=[output_parent])
         self._setup_summary_parser(summary_parser)
+
+        # Generate frequency lists command
+        generate_parser = subparsers.add_parser("generate", help="Generate frequency word lists for languages")
+        self._setup_generate_parser(generate_parser)
 
         return parser
 
-    def _add_common_arguments(self, parser: argparse.ArgumentParser, include_output: bool = True):
-        """Add common arguments to a subparser."""
-        parser.add_argument(
-            "--migrations-dir",
-            type=str,
-            help="Path to migrations directory (default: auto-detect)",
-        )
-        if include_output:
-            parser.add_argument(
-                "--output",
-                choices=["text", "json"],
-                default="text",
-                help="Output format (default: text)",
-            )
-
-    def _add_analysis_arguments(self, parser: argparse.ArgumentParser):
-        """Add analysis-specific arguments to a subparser."""
-        parser.add_argument(
-            "--languages",
-            nargs="+",
-            choices=["en", "de", "es"],
-            default=["en", "de", "es"],
-            help="Languages to analyze (default: all)",
-        )
-        parser.add_argument(
-            "--top-n",
-            type=int,
-            default=1000,
-            help="Number of top frequency words to analyze (default: 1000)",
-        )
-
     def _setup_analyze_parser(self, parser: argparse.ArgumentParser):
         """Set up the analyze command parser."""
-        self._add_common_arguments(parser)
-        self._add_analysis_arguments(parser)
         parser.add_argument(
             "--start-rank",
             type=int,
@@ -147,14 +169,21 @@ Requirements:
 
     def _setup_validate_parser(self, parser: argparse.ArgumentParser):
         """Set up the validate command parser."""
-        self._add_common_arguments(parser)
         parser.add_argument("--brief", action="store_true", help="Show brief report (less detailed)")
         parser.add_argument("--errors-only", action="store_true", help="Only show errors, not warnings")
 
+    def _setup_validate_words_parser(self, parser: argparse.ArgumentParser):
+        """Set up the validate-words command parser."""
+        parser.add_argument("--brief", action="store_true", help="Hide detailed issue breakdown")
+        parser.add_argument(
+            "--languages",
+            nargs="+",
+            choices=["en", "de", "es", "ru"],
+            help="Validate specific languages only (default: all discovered)",
+        )
+
     def _setup_full_analysis_parser(self, parser: argparse.ArgumentParser):
         """Set up the full analysis command parser."""
-        self._add_common_arguments(parser)
-        self._add_analysis_arguments(parser)
         parser.add_argument(
             "--skip-validation",
             action="store_true",
@@ -185,11 +214,48 @@ Requirements:
             default=30,
             help="Number of days for trend analysis (default: 30)",
         )
-        self._add_common_arguments(parser, include_output=True)
 
     def _setup_summary_parser(self, parser: argparse.ArgumentParser):
         """Set up the summary command parser."""
-        self._add_common_arguments(parser, include_output=True)
+
+    def _setup_generate_parser(self, parser: argparse.ArgumentParser):
+        """Set up the generate command parser."""
+        parser.add_argument(
+            "--languages",
+            nargs="+",
+            choices=["en", "de", "es", "ru"],
+            default=["en", "de", "es", "ru"],
+            help="Languages to generate lists for (default: all)",
+        )
+        parser.add_argument(
+            "--top-n",
+            type=int,
+            default=8000,
+            help="Number of top frequency words to generate (default: 8000)",
+        )
+        parser.add_argument(
+            "--start-rank",
+            type=int,
+            default=1,
+            help="Starting rank for frequency list (1-based, default: 1)",
+        )
+        parser.add_argument(
+            "--output-dir",
+            type=str,
+            default="./frequency_lists",
+            help="Output directory for generated lists (default: ./frequency_lists)",
+        )
+        parser.add_argument(
+            "--format",
+            choices=["csv"],
+            default="csv",
+            help="Output format (default: csv - simple word list)",
+        )
+        parser.add_argument(
+            "--no-filter",
+            action="store_true",
+            help="Do not filter inflections (include all word forms)",
+        )
 
     def run_analyze(self, args: argparse.Namespace) -> dict[str, Any]:
         """
@@ -546,6 +612,91 @@ Requirements:
 
         return summary
 
+    def run_validate_words(self, args: argparse.Namespace) -> dict[str, Any]:
+        """
+        Run word quality validation for migration files.
+
+        Args:
+            args: Parsed command line arguments
+
+        Returns:
+            Dictionary containing validation results
+        """
+        migrations_dir = Path(args.migrations_dir) if args.migrations_dir else None
+        validator = WordQualityValidator(migrations_directory=migrations_dir)
+
+        silent = args.output == "json"
+        results = validator.validate_all_migrations(silent=silent)
+
+        if args.languages:
+            results = {lang: result for lang, result in results.items() if lang in args.languages}
+
+        if args.output == "text":
+            validator.print_full_report(results, show_details=not args.brief)
+
+        return {lang: result.to_dict() for lang, result in results.items()}
+
+    def run_generate(self, args: argparse.Namespace) -> dict[str, Any]:
+        """
+        Generate frequency word lists for specified languages.
+
+        Args:
+            args: Parsed command line arguments
+
+        Returns:
+            Dictionary containing generation results
+        """
+        print("🔧 GENERATING FREQUENCY WORD LISTS")
+        print("=" * 80)
+
+        output_dir = Path(args.output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+        results = {}
+
+        for language in args.languages:
+            try:
+                print(f"\n🌐 Processing {language.upper()}...")
+
+                fetch_multiplier = 2.5
+                fetch_count = int(args.top_n * fetch_multiplier)
+
+                source = FrequencySource(language, top_n=fetch_count, start_rank=args.start_rank)
+
+                processor = VocabularyProcessor(language, silent=False)
+
+                filter_inflections = not args.no_filter
+
+                vocab = processor.process_words(source, existing_words=None, filter_inflections=filter_inflections, target_count=args.top_n)
+
+                print(f"   ✅ Processed {vocab.total_words} words (filtered {vocab.filtered_count})")
+
+                exporter = VocabularyExporter(output_format="csv")
+                filename = f"{language}_top{args.top_n}.csv"
+                output_path = output_dir / filename
+                exporter.export(vocab, output_path)
+                print(f"   💾 Saved to: {output_path}")
+
+                results[language] = {
+                    "total_words": vocab.total_words,
+                    "filtered_count": vocab.filtered_count,
+                    "categories": {cat: len(words) for cat, words in vocab.categories.items()},
+                }
+
+            except Exception as e:
+                print(f"   ❌ Error generating {language}: {e}")
+                results[language] = {"error": str(e)}
+
+        print("\n🎯 GENERATION SUMMARY")
+        print("=" * 80)
+        total_words = sum(r.get("total_words", 0) for r in results.values() if "error" not in r)
+        print(f"• Total words generated: {total_words:,}")
+        print(f"• Languages processed: {len([r for r in results.values() if 'error' not in r])}/{len(args.languages)}")
+        print(f"• Output directory: {output_dir.absolute()}")
+        print("=" * 80)
+
+        return results
+
     def save_results(self, results: dict[str, Any], filepath: str):
         """Save results to a file."""
         try:
@@ -606,6 +757,17 @@ Requirements:
 
                 if args.output == "json":
                     print(json.dumps(results, indent=2, ensure_ascii=False))
+
+            elif args.command == "validate-words":
+                results = self.run_validate_words(args)
+
+                if args.output == "json":
+                    print(json.dumps(results, indent=2, ensure_ascii=False))
+
+            elif args.command == "generate":
+                results = self.run_generate(args)
+
+                print(json.dumps(results, indent=2, ensure_ascii=False))
 
             else:
                 parser.print_help()

@@ -285,7 +285,7 @@
             <h3>Welcome to LinguaQuiz!</h3>
             <p class="muted mb-lg">Start learning with these features:</p>
             <div class="stack">
-              <a href="https://github.com/nikolay-e/lingua-quiz/blob/main/docs/LearningAlgorithm.md" target="_blank" class="feature feature-link">
+              <a href="https://github.com/nikolay-e/lingua-quiz/blob/main/CLAUDE.md#learning-algorithm" target="_blank" class="feature feature-link">
                 ✨ Adaptive learning algorithm
               </a>
               <div class="feature">📊 Track your progress in real-time</div>

@@ -99,3 +99,8 @@ packages/core/tests/*.js
 
 # Frontend app types
 packages/frontend/src/app.d.ts
+
+# TODO files (local task tracking)
+TODO.md
+*TODO.md
+TODO*.md

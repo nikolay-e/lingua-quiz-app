@@ -13,6 +13,7 @@ import spacy
 from spacy.lang.de import German
 from spacy.lang.en import English
 from spacy.lang.es import Spanish
+from spacy.lang.ru import Russian
 
 from ..config.constants import NLP_MODEL_PREFERENCES
 
@@ -123,7 +124,7 @@ class NLPModelManager:
             RuntimeError: If model lacks essential components
         """
         # Skip validation for basic language models (they're blank fallbacks)
-        if type(model).__name__ in ["English", "German", "Spanish"]:
+        if type(model).__name__ in ["English", "German", "Spanish", "Russian"]:
             # Basic models are acceptable fallbacks even without full components
             return
 
@@ -136,6 +137,7 @@ class NLPModelManager:
                 "en": "en_core_web_sm",
                 "de": "de_core_news_sm",
                 "es": "es_core_news_sm",
+                "ru": "ru_core_news_sm",
             }
             suggested_model = model_suggestions.get(language_code, f"{language_code}_core_web_sm")
 
@@ -159,6 +161,7 @@ class NLPModelManager:
             "en": English,
             "de": German,
             "es": Spanish,
+            "ru": Russian,
         }
 
         if language_code in basic_models:

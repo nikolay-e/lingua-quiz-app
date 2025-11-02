@@ -9632,15 +9632,6 @@
       "target_word": "оставаться, пребывание",
       "source_example": "Please stay in your seat.",
       "target_example": "Пожалуйста, оставайтесь на своем месте."
-    },
-    {
-      "translation_id": 8011099,
-      "source_id": 8012199,
-      "target_id": 8012200,
-      "source_word": "lie (tell an untruth)",
-      "target_word": "лгать",
-      "source_example": "He knew it was wrong to lie to his parents.",
-      "target_example": "Он знал, что лгать родителям — это неправильно."
     }
   ]
 }

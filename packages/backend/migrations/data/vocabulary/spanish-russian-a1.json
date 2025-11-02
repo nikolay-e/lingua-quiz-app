@@ -202,15 +202,6 @@
       "target_example": "Его бизнес очень успешный."
     },
     {
-      "translation_id": 4000022,
-      "source_id": 4000045,
-      "target_id": 4000046,
-      "source_word": "o",
-      "target_word": "или",
-      "source_example": "Café o té.",
-      "target_example": "Кофе или чай."
-    },
-    {
       "translation_id": 4000023,
       "source_id": 4000047,
       "target_id": 4000048,
@@ -1984,15 +1975,6 @@
       "target_example": "Это мой единственный сын."
     },
     {
-      "translation_id": 4000220,
-      "source_id": 4000441,
-      "target_id": 4000442,
-      "source_word": "si",
-      "target_word": "если",
-      "source_example": "Si llueve, no salgo.",
-      "target_example": "Если идёт дождь, я не выйду."
-    },
-    {
       "translation_id": 4000221,
       "source_id": 4000443,
       "target_id": 4000444,
@@ -2488,15 +2470,6 @@
       "target_example": "Не будь идиотом."
     },
     {
-      "translation_id": 4000276,
-      "source_id": 4000553,
-      "target_id": 4000554,
-      "source_word": "ir",
-      "target_word": "идти",
-      "source_example": "Voy al trabajo.",
-      "target_example": "Я иду на работу."
-    },
-    {
       "translation_id": 4000277,
       "source_id": 4000555,
       "target_id": 4000556,
@@ -2756,15 +2729,6 @@
       "target_word": "июль",
       "source_example": "Have calor en julio.",
       "target_example": "В июле жарко."
-    },
-    {
-      "translation_id": 4000306,
-      "source_id": 4000613,
-      "target_id": 4000614,
-      "source_word": "a",
-      "target_word": "к",
-      "source_example": "Voy a casa.",
-      "target_example": "Я иду домой."
     },
     {
       "translation_id": 4000307,
@@ -8545,15 +8509,6 @@
       "target_example": "Человеческое тело."
     },
     {
-      "translation_id": 4000949,
-      "source_id": 4001899,
-      "target_id": 4001900,
-      "source_word": "team",
-      "target_word": "тема",
-      "source_example": "¿Cuál es el team?",
-      "target_example": "Какая тема?"
-    },
-    {
       "translation_id": 4000950,
       "source_id": 4001901,
       "target_id": 4001902,
@@ -8930,15 +8885,6 @@
       "target_word": "ужасный",
       "source_example": "Es terrible.",
       "target_example": "Это ужасно."
-    },
-    {
-      "translation_id": 4000992,
-      "source_id": 4001985,
-      "target_id": 4001986,
-      "source_word": "ya",
-      "target_word": "уже",
-      "source_example": "Ya llegó.",
-      "target_example": "Уже пришёл."
     },
     {
       "translation_id": 4000993,
@@ -9859,15 +9805,6 @@
       "target_example": "Едет на юг."
     },
     {
-      "translation_id": 4001095,
-      "source_id": 4002191,
-      "target_id": 4002192,
-      "source_word": "yo",
-      "target_word": "я",
-      "source_example": "Yo hablo español.",
-      "target_example": "Я говорю по-испански."
-    },
-    {
       "translation_id": 4001096,
       "source_id": 4002193,
       "target_id": 4002194,
@@ -9974,24 +9911,6 @@
       "target_word": "куда",
       "source_example": "¿Adónde was?",
       "target_example": "Куда ты идёшь?"
-    },
-    {
-      "translation_id": 4001108,
-      "source_id": 4002217,
-      "target_id": 4002218,
-      "source_word": "ah",
-      "target_word": "а",
-      "source_example": "Ah, entiendo.",
-      "target_example": "А, понимаю."
-    },
-    {
-      "translation_id": 4001109,
-      "source_id": 4002219,
-      "target_id": 4002220,
-      "source_word": "al [a + el]",
-      "target_word": "к",
-      "source_example": "Voy al mercado.",
-      "target_example": "Я иду на рынок."
     },
     {
       "translation_id": 4001110,
@@ -10109,15 +10028,6 @@
       "target_word": "даже",
       "source_example": "Aun así, lo intentaré.",
       "target_example": "Даже так, я попытаюсь."
-    },
-    {
-      "translation_id": 4001123,
-      "source_id": 4002247,
-      "target_id": 4002248,
-      "source_word": "ay",
-      "target_word": "ай",
-      "source_example": "¡Ay, me duele!",
-      "target_example": "Ай, мне больно!"
     },
     {
       "translation_id": 4001124,
@@ -10244,15 +10154,6 @@
       "target_word": "хорошая",
       "source_example": "Es una buena idea.",
       "target_example": "Это хорошая идея."
-    },
-    {
-      "translation_id": 4001138,
-      "source_id": 4002277,
-      "target_id": 4002278,
-      "source_word": "ex",
-      "target_word": "бывший [префикс]",
-      "source_example": "Mi ex novio.",
-      "target_example": "Мой бывший парень."
     },
     {
       "translation_id": 4001139,
@@ -10534,15 +10435,6 @@
       "target_example": "Как дела?"
     },
     {
-      "translation_id": 4001170,
-      "source_id": 4002341,
-      "target_id": 4002342,
-      "source_word": "da",
-      "target_word": "даёт",
-      "source_example": "Él me da un regalo.",
-      "target_example": "Он даёт мне подарок."
-    },
-    {
       "translation_id": 4001171,
       "source_id": 4002343,
       "target_id": 4002344,
@@ -10561,15 +10453,6 @@
       "target_example": "Дай мне минутку."
     },
     {
-      "translation_id": 4001173,
-      "source_id": 4002347,
-      "target_id": 4002348,
-      "source_word": "de",
-      "target_word": "из",
-      "source_example": "Soy de España.",
-      "target_example": "Я из Испании."
-    },
-    {
       "translation_id": 4001174,
       "source_id": 4002349,
       "target_id": 4002350,
@@ -10586,15 +10469,6 @@
       "target_word": "оставленный",
       "source_example": "He dejado las llaves en casa.",
       "target_example": "Я оставил ключи дома."
-    },
-    {
-      "translation_id": 4001176,
-      "source_id": 4002353,
-      "target_id": 4002354,
-      "source_word": "del",
-      "target_word": "от",
-      "source_example": "La casa del vecino.",
-      "target_example": "Дом соседа."
     },
     {
       "translation_id": 4001177,
@@ -10741,15 +10615,6 @@
       "target_example": "Из-за дождя."
     },
     {
-      "translation_id": 4001193,
-      "source_id": 4002387,
-      "target_id": 4002388,
-      "source_word": "eh",
-      "target_word": "эй",
-      "source_example": "Eh, ¿qué haces?",
-      "target_example": "Эй, что ты делаешь?"
-    },
-    {
       "translation_id": 4001194,
       "source_id": 4002389,
       "target_id": 4002390,
@@ -10775,15 +10640,6 @@
       "target_word": "электрический",
       "source_example": "Tengo un coche eléctrico.",
       "target_example": "У меня электрический автомобиль."
-    },
-    {
-      "translation_id": 4001197,
-      "source_id": 4002395,
-      "target_id": 4002396,
-      "source_word": "en",
-      "target_word": "в",
-      "source_example": "Vivo en Madrid.",
-      "target_example": "Я живу в Мадриде."
     },
     {
       "translation_id": 4001198,
@@ -11083,15 +10939,6 @@
       "target_example": "Сделай это прямо сейчас."
     },
     {
-      "translation_id": 4001231,
-      "source_id": 4002463,
-      "target_id": 4002464,
-      "source_word": "web",
-      "target_word": "веб-сайт",
-      "source_example": "Navego por la web.",
-      "target_example": "Я просматриваю веб-сайты."
-    },
-    {
       "translation_id": 4001232,
       "source_id": 4002465,
       "target_id": 4002466,
@@ -11099,15 +10946,6 @@
       "target_word": "ты сделал",
       "source_example": "¿Qué hiciste ayer?",
       "target_example": "Что ты сделал вчера?"
-    },
-    {
-      "translation_id": 4001233,
-      "source_id": 4002467,
-      "target_id": 4002468,
-      "source_word": "hola",
-      "target_word": "привет",
-      "source_example": "Hola, buenos días.",
-      "target_example": "Привет, доброе утро."
     },
     {
       "translation_id": 4001234,
@@ -11261,15 +11099,6 @@
       "target_word": "найти [определить местонахождение]",
       "source_example": "No puedo localizar mis llaves.",
       "target_example": "Я не могу найти свои ключи."
-    },
-    {
-      "translation_id": 4001252,
-      "source_id": 4002505,
-      "target_id": 4002506,
-      "source_word": "y",
-      "target_word": "и",
-      "source_example": "Juan y María.",
-      "target_example": "Хуан и Мария."
     },
     {
       "translation_id": 4001253,
@@ -11470,15 +11299,6 @@
       "target_example": "Февраль - самый короткий месяц."
     },
     {
-      "translation_id": 4001275,
-      "source_id": 4002551,
-      "target_id": 4002552,
-      "source_word": "ni",
-      "target_word": "ни",
-      "source_example": "No tengo ni idea.",
-      "target_example": "Не имею ни малейшего представления."
-    },
-    {
       "translation_id": 4001276,
       "source_id": 4002553,
       "target_id": 4002554,
@@ -11486,15 +11306,6 @@
       "target_word": "девочка",
       "source_example": "La niña juega en el parque.",
       "target_example": "Девочка играет в парке."
-    },
-    {
-      "translation_id": 4001277,
-      "source_id": 4002555,
-      "target_id": 4002556,
-      "source_word": "no",
-      "target_word": "нет",
-      "source_example": "No, gracias.",
-      "target_example": "Нет, спасибо."
     },
     {
       "translation_id": 4001278,
@@ -11549,15 +11360,6 @@
       "target_word": "предложение",
       "source_example": "Es una buena oferta.",
       "target_example": "Это хорошее предложение."
-    },
-    {
-      "translation_id": 4001284,
-      "source_id": 4002569,
-      "target_id": 4002570,
-      "source_word": "oh",
-      "target_word": "ой",
-      "source_example": "Oh, lo siento mucho.",
-      "target_example": "Ой, мне очень жаль."
     },
     {
       "translation_id": 4001285,
@@ -11623,15 +11425,6 @@
       "target_example": "В марте приходит весна."
     },
     {
-      "translation_id": 4001292,
-      "source_id": 4002585,
-      "target_id": 4002586,
-      "source_word": "oí",
-      "target_word": "я слышал",
-      "source_example": "Oí un ruido extraño.",
-      "target_example": "Я слышал странный шум."
-    },
-    {
       "translation_id": 4001293,
       "source_id": 4002587,
       "target_id": 4002588,
@@ -11648,15 +11441,6 @@
       "target_word": "папа",
       "source_example": "Mi papá trabaja mucho.",
       "target_example": "Мой папа много работает."
-    },
-    {
-      "translation_id": 4001295,
-      "source_id": 4002591,
-      "target_id": 4002592,
-      "source_word": "para",
-      "target_word": "для",
-      "source_example": "Este regalo es para ti.",
-      "target_example": "Этот подарок для тебя."
     },
     {
       "translation_id": 4001296,
@@ -11839,15 +11623,6 @@
       "target_example": "Вы увидите результаты завтра."
     },
     {
-      "translation_id": 4001316,
-      "source_id": 4002633,
-      "target_id": 4002634,
-      "source_word": "por",
-      "target_word": "для",
-      "source_example": "Lo hago por ti.",
-      "target_example": "Я делаю это для тебя."
-    },
-    {
       "translation_id": 4001317,
       "source_id": 4002635,
       "target_id": 4002636,
@@ -12001,15 +11776,6 @@
       "target_example": "Следующий поезд отправляется в 10."
     },
     {
-      "translation_id": 4001334,
-      "source_id": 4002669,
-      "target_id": 4002670,
-      "source_word": "pues",
-      "target_word": "ну",
-      "source_example": "Pues, no lo sé.",
-      "target_example": "Ну, я не знаю."
-    },
-    {
       "translation_id": 4001335,
       "source_id": 4002671,
       "target_id": 4002672,
@@ -12026,15 +11792,6 @@
       "target_word": "менять [ся]|изменять[ся]|варьировать",
       "source_example": "Los precios pueden variar.",
       "target_example": "Цены могут варьироваться."
-    },
-    {
-      "translation_id": 4001337,
-      "source_id": 4002675,
-      "target_id": 4002676,
-      "source_word": "va",
-      "target_word": "идёт",
-      "source_example": "Él va a la escuela.",
-      "target_example": "Он идёт в школу."
     },
     {
       "translation_id": 4001338,
@@ -12163,15 +11920,6 @@
       "target_example": "Мне действительно нравится эта книга."
     },
     {
-      "translation_id": 4001352,
-      "source_id": 4002705,
-      "target_id": 4002706,
-      "source_word": "tío",
-      "target_word": "дядя",
-      "source_example": "Mi tío vive en Madrid.",
-      "target_example": "Мой дядя живёт в Мадриде."
-    },
-    {
       "translation_id": 4001353,
       "source_id": 4002707,
       "target_id": 4002708,
@@ -12260,15 +12008,6 @@
       "target_word": "раунд",
       "source_example": "La primera ronda del torneo.",
       "target_example": "Первый раунд турнира."
-    },
-    {
-      "translation_id": 4001363,
-      "source_id": 4002727,
-      "target_id": 4002728,
-      "source_word": "té",
-      "target_word": "чай",
-      "source_example": "Me gusta el té verde.",
-      "target_example": "Мне нравится зелёный чай."
     },
     {
       "translation_id": 4001364,
@@ -12505,15 +12244,6 @@
       "target_example": "У меня достаточно денег."
     },
     {
-      "translation_id": 4001390,
-      "source_id": 4002781,
-      "target_id": 4002782,
-      "source_word": "tu",
-      "target_word": "твой",
-      "source_example": "Tu casa es bonita.",
-      "target_example": "Твой дом красивый."
-    },
-    {
       "translation_id": 4001391,
       "source_id": 4002783,
       "target_id": 4002784,
@@ -12613,15 +12343,6 @@
       "target_example": "Я полностью согласен."
     },
     {
-      "translation_id": 4001402,
-      "source_id": 4002805,
-      "target_id": 4002806,
-      "source_word": "ti",
-      "target_word": "тебя",
-      "source_example": "Este regalo es para ti.",
-      "target_example": "Этот подарок для тебя."
-    },
-    {
       "translation_id": 4001403,
       "source_id": 4002807,
       "target_id": 4002808,
@@ -12638,15 +12359,6 @@
       "target_word": "законченный",
       "source_example": "Ya he terminado mi trabajo.",
       "target_example": "Я уже закончил свою работу."
-    },
-    {
-      "translation_id": 4001405,
-      "source_id": 4002811,
-      "target_id": 4002812,
-      "source_word": "mierda",
-      "target_word": "дерьмо|чёрт",
-      "source_example": "¡Mierda! Me olvidé las llaves.",
-      "target_example": "Чёрт! Я забыл ключи."
     },
     {
       "translation_id": 4001406,

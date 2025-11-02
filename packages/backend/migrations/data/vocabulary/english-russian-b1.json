@@ -85,15 +85,6 @@
       "target_example": "Нам нужно действовать сейчас, чтобы решить проблему."
     },
     {
-      "translation_id": 9000009,
-      "source_id": 9000019,
-      "target_id": 9000020,
-      "source_word": "ad",
-      "target_word": "реклама|объявление",
-      "source_example": "I saw an ad for a new car.",
-      "target_example": "Я видел рекламу новой машины."
-    },
-    {
       "translation_id": 9000010,
       "source_id": 9000021,
       "target_id": 9000022,
@@ -4088,15 +4079,6 @@
       "target_word": "выдавать|выпускать",
       "source_example": "The government will issue new passports.",
       "target_example": "Правительство будет выдавать новые паспорта."
-    },
-    {
-      "translation_id": 9000454,
-      "source_id": 9000909,
-      "target_id": 9000910,
-      "source_word": "IT",
-      "target_word": "информационные технологии",
-      "source_example": "He works in IT.",
-      "target_example": "Он работает в сфере информационных технологий."
     },
     {
       "translation_id": 9000455,

@@ -107,6 +107,9 @@ jobs:
           load: true
           tags: |
             ${{ env.REGISTRY }}/lingua-quiz-${{ matrix.service }}:${{ steps.tag.outputs.value }}
+          build-args: |
+            APP_VERSION=${{ steps.tag.outputs.value }}
+            APP_ENVIRONMENT=staging
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -134,6 +137,9 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/lingua-quiz-${{ matrix.service }}:${{ steps.tag.outputs.value }}
             ${{ env.REGISTRY }}/lingua-quiz-${{ matrix.service }}:${{ github.sha }}
+          build-args: |
+            APP_VERSION=${{ steps.tag.outputs.value }}
+            APP_ENVIRONMENT=staging
           labels: |
             org.opencontainers.image.source=${{ github.event.repository.html_url }}
             org.opencontainers.image.revision=${{ github.sha }}
@@ -173,6 +179,9 @@ jobs:
           push: false
           load: true
           tags: lingua-quiz-${{ matrix.service }}:test
+          build-args: |
+            APP_VERSION=test
+            APP_ENVIRONMENT=test
           cache-from: type=gha
 
   integration-test:

@@ -4,15 +4,6 @@
   "word_list_name": "German Russian A1",
   "word_pairs": [
     {
-      "translation_id": 3000000,
-      "source_id": 3000001,
-      "target_id": 3000002,
-      "source_word": "ab",
-      "target_word": "от, с",
-      "source_example": "Ab Montag bin ich im Urlaub.",
-      "target_example": "С понедельника я в отпуске."
-    },
-    {
       "translation_id": 3000001,
       "source_id": 3000003,
       "target_id": 3000004,
@@ -47,15 +38,6 @@
       "target_word": "отменять",
       "source_example": "Sie musste das Treffen absagen.",
       "target_example": "Ей пришлось отменить встречу."
-    },
-    {
-      "translation_id": 3000005,
-      "source_id": 3000011,
-      "target_id": 3000012,
-      "source_word": "in",
-      "target_word": "один [неопределенный артикль]",
-      "source_example": "Ich habe nur in Auto.",
-      "target_example": "У меня только одна машина."
     },
     {
       "translation_id": 3000006,
@@ -164,15 +146,6 @@
       "target_word": "светофор",
       "source_example": "An der Ampel muss man warten.",
       "target_example": "На светофоре нужно ждать."
-    },
-    {
-      "translation_id": 3000018,
-      "source_id": 3000037,
-      "target_id": 3000038,
-      "source_word": "an",
-      "target_word": "у, при, на",
-      "source_example": "Das Bild hängt an der Wand.",
-      "target_example": "Картина висит на стене."
     },
     {
       "translation_id": 3000019,
@@ -434,15 +407,6 @@
       "target_word": "тоже",
       "source_example": "Ich komme auch zur Party.",
       "target_example": "Я тоже приду на вечеринку."
-    },
-    {
-      "translation_id": 3000048,
-      "source_id": 3000097,
-      "target_id": 3000098,
-      "source_word": "auf",
-      "target_word": "на [горизонтальной поверхности]",
-      "source_example": "Das Buch liegt auf dem Tisch.",
-      "target_example": "Книга лежит на столе."
     },
     {
       "translation_id": 3000049,
@@ -1426,15 +1390,6 @@
       "target_example": "Занятия начинаются в восемь часов."
     },
     {
-      "translation_id": 3000158,
-      "source_id": 3000317,
-      "target_id": 3000318,
-      "source_word": "da",
-      "target_word": "(тут|здесь), там, так как",
-      "source_example": "Da drüben ist in schönes Restaurant.",
-      "target_example": "Там напротив находится хороший ресторан."
-    },
-    {
       "translation_id": 3000159,
       "source_id": 3000319,
       "target_id": 3000320,
@@ -1489,15 +1444,6 @@
       "target_example": "Мы долго говорили об этом."
     },
     {
-      "translation_id": 3000165,
-      "source_id": 3000331,
-      "target_id": 3000332,
-      "source_word": "das",
-      "target_word": "это",
-      "source_example": "Das ist mein Haus.",
-      "target_example": "Это мой дом."
-    },
-    {
       "translation_id": 3000166,
       "source_id": 3000333,
       "target_id": 3000334,
@@ -1550,15 +1496,6 @@
       "target_word": "поэтому",
       "source_example": "Es regnet, deshalb bleibe ich zu Hause.",
       "target_example": "Идет дождь, поэтому я остаюсь дома."
-    },
-    {
-      "translation_id": 3000172,
-      "source_id": 3000345,
-      "target_id": 3000346,
-      "source_word": "der",
-      "target_word": "мужской артикль",
-      "source_example": "Der Hund ist süß.",
-      "target_example": "Собака милая."
     },
     {
       "translation_id": 3000174,
@@ -1721,15 +1658,6 @@
       "target_word": "третья",
       "source_example": "Die dritte Etage ist reserviert.",
       "target_example": "Третий этаж зарезервирован."
-    },
-    {
-      "translation_id": 3000192,
-      "source_id": 3000385,
-      "target_id": 3000386,
-      "source_word": "du",
-      "target_word": "ты",
-      "source_example": "Wie geht es dir?",
-      "target_example": "Как у тебя дела?"
     },
     {
       "translation_id": 3000193,
@@ -1984,15 +1912,6 @@
       "target_example": "Он американец."
     },
     {
-      "translation_id": 3000221,
-      "source_id": 3000443,
-      "target_id": 3000444,
-      "source_word": "er",
-      "target_word": "он",
-      "source_example": "Er ist mein Freund.",
-      "target_example": "Он мой друг."
-    },
-    {
       "translation_id": 3000222,
       "source_id": 3000445,
       "target_id": 3000446,
@@ -2090,15 +2009,6 @@
       "target_word": "рассказывать",
       "source_example": "Kannst du mir eine Geschichte erzählen?",
       "target_example": "Можешь рассказать мне историю?"
-    },
-    {
-      "translation_id": 3000233,
-      "source_id": 3000467,
-      "target_id": 3000468,
-      "source_word": "es",
-      "target_word": "оно",
-      "source_example": "Es regnet heute.",
-      "target_example": "Сегодня идет дождь."
     },
     {
       "translation_id": 3000234,
@@ -3836,15 +3746,6 @@
       "target_word": "что [союз]",
       "source_example": "Ich denke, dass es morgen regnet.",
       "target_example": "Я думаю, что завтра будет дождь."
-    },
-    {
-      "translation_id": 3000427,
-      "source_id": 3000855,
-      "target_id": 3000856,
-      "source_word": "in",
-      "target_word": "в",
-      "source_example": "Ich wohne in Berlin.",
-      "target_example": "Я живу в Берлине."
     },
     {
       "translation_id": 3000428,
@@ -5980,15 +5881,6 @@
       "target_example": "На завтрак я ем фруктовый салат."
     },
     {
-      "translation_id": 3000665,
-      "source_id": 3001331,
-      "target_id": 3001332,
-      "source_word": "oder",
-      "target_word": "или",
-      "source_example": "Möchtest du Tee oder Kaffee?",
-      "target_example": "Ты хочешь чай или кофе?"
-    },
-    {
       "translation_id": 3000666,
       "source_id": 3001333,
       "target_id": 3001334,
@@ -7519,15 +7411,6 @@
       "target_example": "Зимой мы катаемся на лыжах."
     },
     {
-      "translation_id": 3000836,
-      "source_id": 3001673,
-      "target_id": 3001674,
-      "source_word": "so",
-      "target_word": "так",
-      "source_example": "So mach ich das.",
-      "target_example": "Так я это делаю."
-    },
-    {
       "translation_id": 3000837,
       "source_id": 3001675,
       "target_id": 3001676,
@@ -8579,15 +8462,6 @@
       "target_word": "необходимо",
       "source_example": "Du musst unbedingt einen Arzt aufsuchen.",
       "target_example": "Тебе обязательно нужно обратиться к врачу."
-    },
-    {
-      "translation_id": 3000954,
-      "source_id": 3001909,
-      "target_id": 3001910,
-      "source_word": "und",
-      "target_word": "и",
-      "source_example": "Ich mag Äpfel und Bananen.",
-      "target_example": "Я люблю яблоки и бананы."
     },
     {
       "translation_id": 3000955,
@@ -9679,15 +9553,6 @@
       "target_example": "Я делаю лимонад с лимоном."
     },
     {
-      "translation_id": 3001076,
-      "source_id": 3002153,
-      "target_id": 3002154,
-      "source_word": "zu",
-      "target_word": "к, на",
-      "source_example": "Ich gehe zu Fuß zur Arbeit.",
-      "target_example": "Я иду пешком на работу."
-    },
-    {
       "translation_id": 3001077,
       "source_id": 3002155,
       "target_id": 3002156,
@@ -10480,15 +10345,6 @@
       "target_example": "Я радуюсь этому."
     },
     {
-      "translation_id": 3001165,
-      "source_id": 3002331,
-      "target_id": 3002332,
-      "source_word": "Scheisse",
-      "target_word": "Дерьмо",
-      "source_example": "Scheisse, das ist kaputt!",
-      "target_example": "Дерьмо, это сломано!"
-    },
-    {
       "translation_id": 3001166,
       "source_id": 3002333,
       "target_id": 3002334,
@@ -11155,15 +11011,6 @@
       "target_example": "Это моя собственная машина."
     },
     {
-      "translation_id": 3001240,
-      "source_id": 3002481,
-      "target_id": 3002482,
-      "source_word": "je",
-      "target_word": "когда-либо",
-      "source_example": "Hast du je davon gehört?",
-      "target_example": "Ты когда-нибудь об этом слышал?"
-    },
-    {
       "translation_id": 3001241,
       "source_id": 3002483,
       "target_id": 3002484,
@@ -11630,15 +11477,6 @@
       "target_word": "не хватать",
       "source_example": "Mir fehlt etwas.",
       "target_example": "Мне чего-то не хватает."
-    },
-    {
-      "translation_id": 3001293,
-      "source_id": 3002587,
-      "target_id": 3002588,
-      "source_word": "ne",
-      "target_word": "не так ли",
-      "source_example": "Das ist gut, ne?",
-      "target_example": "Это хорошо, не так ли?"
     },
     {
       "translation_id": 3001294,

@@ -4,6 +4,7 @@
   import Login from './views/Login.svelte';
   import Register from './views/Register.svelte';
   import Quiz from './views/Quiz.svelte';
+  import EnvironmentInfo from './components/EnvironmentInfo.svelte';
   import { PAGES, type PageType } from './lib/constants';
 
   let isAuthenticated = false;
@@ -45,3 +46,5 @@
     {/key}
   {/if}
 {/key}
+
+<EnvironmentInfo />

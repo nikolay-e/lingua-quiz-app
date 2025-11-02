@@ -8,10 +8,10 @@ from pathlib import Path
 
 import yaml
 
+from .config_loader import get_config_loader
+
 
 def _load_config() -> dict:
-    """Load configuration from config.yaml file."""
-    # Look for config.yaml in the project root (parent of vocab_tools)
     config_path = Path(__file__).parent.parent.parent / "config.yaml"
 
     if not config_path.exists():
@@ -21,35 +21,40 @@ def _load_config() -> dict:
         return yaml.safe_load(f)
 
 
-# Load configuration once at module import
 _CONFIG = _load_config()
+_config_loader = get_config_loader()
 
-# Category mapping for word classification
-WORD_CATEGORY_MAPPING = _CONFIG["word_categories"]
-
-# Essential categories for vocabulary learning (ordered by priority)
 ESSENTIAL_VOCABULARY_CATEGORIES = _CONFIG["essential_vocabulary_categories"]
 
-# Common skip words for analysis (converted to set for performance)
-ANALYSIS_SKIP_WORDS: set[str] = set(_CONFIG["skip_words"])
-
-# NLP model preferences (in order of preference)
-NLP_MODEL_PREFERENCES = _CONFIG["nlp_models"]
-
-# Default analysis parameters
 DEFAULT_ANALYSIS_CONFIG = _CONFIG["analysis_defaults"]
 
-# Supported languages from config
-SUPPORTED_LANGUAGES = _CONFIG["languages"]
+SUPPORTED_LANGUAGES = list(_CONFIG["languages"].keys())
 
-# Base POS descriptions (language-neutral)
+_all_skip_words = set()
+_all_pos_categories = {}
+_all_nlp_models = {}
+
+for lang_code in SUPPORTED_LANGUAGES:
+    lang_config = _CONFIG["languages"][lang_code]
+    _all_skip_words.update(lang_config["skip_words"])
+    _all_nlp_models[lang_code] = lang_config["spacy_models"]
+
+    if not _all_pos_categories:
+        _all_pos_categories = lang_config["pos_categories"]
+
+ANALYSIS_SKIP_WORDS: set[str] = _all_skip_words
+
+WORD_CATEGORY_MAPPING = _all_pos_categories
+
+NLP_MODEL_PREFERENCES = _all_nlp_models
+
 BASE_POS_DESCRIPTIONS = {
     "NOUN": "noun",
     "PROPN": "proper noun",
     "VERB": "verb",
     "ADJ": "adjective",
     "ADV": "adverb",
-    "DET": "determiner/article",
+    "DET": "determiner",
     "PRON": "pronoun",
     "ADP": "preposition",
     "CONJ": "conjunction",
@@ -57,4 +62,24 @@ BASE_POS_DESCRIPTIONS = {
     "NUM": "number",
     "PART": "particle",
     "AUX": "auxiliary verb",
+    "INTJ": "interjection",
 }
+
+
+def get_pos_description(pos_tag: str, language_prefix: str | None = None) -> str:
+    """
+    Get description for a POS tag.
+
+    Args:
+        pos_tag: Part-of-speech tag (e.g., "NOUN", "VERB")
+        language_prefix: Optional language prefix (e.g., "German", "Spanish")
+
+    Returns:
+        Description string (e.g., "noun", "German noun", "Spanish verb")
+    """
+    base_description = BASE_POS_DESCRIPTIONS.get(pos_tag, "word")
+
+    if language_prefix:
+        return f"{language_prefix} {base_description}"
+
+    return base_description

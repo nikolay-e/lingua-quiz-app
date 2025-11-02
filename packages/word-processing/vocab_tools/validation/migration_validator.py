@@ -6,72 +6,46 @@ ID consistency, and overall database quality.
 """
 
 from collections import defaultdict
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 
+from ..config.config_loader import get_config_loader
+from ..core.base_normalizer import get_universal_normalizer
 from ..core.database_parser import VocabularyEntry, VocabularyFileParser
-from ..core.word_normalizer import get_normalizer
+from .base_validation import BaseValidationIssue, BaseValidationResult
 
 
 @dataclass
-class ValidationIssue:
+class ValidationIssue(BaseValidationIssue):
     """Represents a validation issue found during migration validation."""
 
-    severity: str  # 'error' or 'warning'
-    category: str
-    message: str
-    file_name: str
-    entry_id: int | None = None
+    message: str = ""
 
-    def __str__(self) -> str:
-        location = f"{self.file_name}"
-        if self.entry_id:
-            location += f" (ID: {self.entry_id})"
-        return f"{self.severity.upper()}: {self.message} [{location}]"
-
-
-@dataclass
-class ValidationResult:
-    """Complete results of migration validation."""
-
-    total_entries_checked: int
-    files_validated: list[str] = field(default_factory=list)
-    issues: list[ValidationIssue] = field(default_factory=list)
-
-    @property
-    def error_count(self) -> int:
-        """Get count of error-level issues."""
-        return len([i for i in self.issues if i.severity == "error"])
-
-    @property
-    def warning_count(self) -> int:
-        """Get count of warning-level issues."""
-        return len([i for i in self.issues if i.severity == "warning"])
-
-    @property
-    def is_valid(self) -> bool:
-        """Check if validation passed (no errors)."""
-        return self.error_count == 0
+    def get_message(self) -> str:
+        """Get the issue message."""
+        return self.message
 
     def to_dict(self) -> dict:
         """Convert to dictionary for JSON serialization."""
-        return {
-            "is_valid": self.is_valid,
-            "total_entries_checked": self.total_entries_checked,
-            "files_validated": self.files_validated,
-            "error_count": self.error_count,
-            "warning_count": self.warning_count,
-            "issues": [
-                {
-                    "severity": issue.severity,
-                    "category": issue.category,
-                    "message": issue.message,
-                    "file_name": issue.file_name,
-                    "entry_id": issue.entry_id,
-                }
-                for issue in self.issues
-            ],
-        }
+        base_dict = super().to_dict()
+        base_dict["message"] = self.message
+        return base_dict
+
+
+@dataclass
+class ValidationResult(BaseValidationResult):
+    """Complete results of migration validation."""
+
+    @property
+    def total_entries_checked(self) -> int:
+        """Alias for backward compatibility."""
+        return self.total_checked
+
+    def to_dict(self) -> dict:
+        """Convert to dictionary for JSON serialization."""
+        result = super().to_dict()
+        result["total_entries_checked"] = self.total_entries_checked
+        return result
 
 
 class MigrationValidator:
@@ -95,7 +69,8 @@ class MigrationValidator:
         self.db_parser = VocabularyFileParser(migrations_directory)
         # Initialize normalizers for supported languages
         supported_languages = ["en", "de", "es"]
-        self.normalizers = {lang: get_normalizer(lang) for lang in supported_languages}
+        config_loader = get_config_loader()
+        self.normalizers = {lang: get_universal_normalizer(lang, config_loader) for lang in supported_languages}
 
     def validate_all_migrations(self, silent: bool = False) -> ValidationResult:
         """
@@ -110,7 +85,7 @@ class MigrationValidator:
         if not silent:
             print("🔍 Starting comprehensive migration validation...")
 
-        result = ValidationResult(total_entries_checked=0)
+        result = ValidationResult(total_checked=0)
 
         # Discover migration files dynamically
         discovered_files = self.db_parser.discover_migration_files()
@@ -126,7 +101,7 @@ class MigrationValidator:
                     # Merge results
                     result.files_validated.append(filename)
                     result.issues.extend(language_result.issues)
-                    result.total_entries_checked += language_result.total_entries_checked
+                    result.total_checked += language_result.total_checked
 
                 except Exception as e:
                     error_issue = ValidationIssue(
@@ -155,7 +130,7 @@ class MigrationValidator:
         try:
             entries = self.db_parser.parse_migration_file(filename)
         except Exception as e:
-            result = ValidationResult(total_entries_checked=0)
+            result = ValidationResult(total_checked=0)
             result.issues.append(
                 ValidationIssue(
                     severity="error",
@@ -166,7 +141,7 @@ class MigrationValidator:
             )
             return result
 
-        result = ValidationResult(total_entries_checked=len(entries))
+        result = ValidationResult(total_checked=len(entries))
         normalizer = self.normalizers[language]
 
         # Track data for validation
@@ -338,7 +313,10 @@ class MigrationValidator:
                     max_gap = max(max_gap, gap)
 
             # Only report if there are significant gaps (potential data issues)
-            if max_gap > 100:  # Arbitrary threshold for "suspicious" gaps
+            config_loader = get_config_loader()
+            gap_threshold = config_loader.get_analysis_defaults().get("id_gap_threshold", 100)
+
+            if max_gap > gap_threshold:
                 issues.append(
                     ValidationIssue(
                         severity="warning",

@@ -1,63 +1,202 @@
 # Configuration for LinguaQuiz Vocabulary Analysis
-languages:
-  - 'en'
-  - 'de'
-  - 'es'
 
 analysis_defaults:
   min_word_length: 2
   max_word_length: 20
   frequency_threshold: 1.0e-7
   top_words_count: 1000
+  id_gap_threshold: 100  # Maximum gap in ID sequences before warning
 
-# NLP model preferences (in order of preference)
-nlp_models:
-  en: ['en_core_web_sm', 'en_core_web_md', 'en_core_web_lg']
-  de: ['de_core_news_sm', 'de_core_news_md', 'de_core_news_lg']
-  es: ['es_core_news_sm', 'es_core_news_md', 'es_core_news_lg']
+languages:
+  en:
+    name: "English"
+    wordfreq_code: "en"
+    spacy_models: ['en_core_web_sm', 'en_core_web_md', 'en_core_web_lg']
 
-# Category mapping for word classification
-word_categories:
-  essential_nouns: ['NOUN']
-  essential_verbs: ['VERB', 'AUX']
-  essential_adjectives: ['ADJ']
-  function_words: ['DET', 'PRON', 'ADP', 'CONJ', 'SCONJ']
-  other: ['ADV', 'NUM', 'PART', 'INTJ', 'X']
+    normalization:
+      preserve_diacritics: false
+      articles: []
+      remove_hyphens: false
+      comma_separator: false
+      special_chars: []
 
-# Essential categories for vocabulary learning (ordered by priority)
+    inflection_patterns:
+      plural_noun: ['s$', 'es$', 'ies$', 'ves$']
+      past_tense: ['ed$', 'd$']
+      past_participle: ['ed$', 'en$', 'd$', 'n$']
+      present_participle: ['ing$']
+      comparative: ['er$']
+      superlative: ['est$']
+      third_person: ['s$', 'es$']
+
+    skip_words: ['a', 'an', 'the', 'to', 'of', 'and', 'or', 'in', 'on', 'at']
+
+    blacklist:
+      contractions: ["don't", "can't", "won't", "i'm", "you're", "it's", "i've", "doesn't", "didn't", "isn't", "aren't", "wasn't", "weren't", "we're", "they're", "haven't", "hasn't", "hadn't", "couldn't", "shouldn't", "wouldn't", "i'll", "you'll", "we'll", "he'll", "she'll", "that's", "what's", "who's", "there's", "here's", "we've", "you've", "they've", "it'll", "that'll", "would've", "could've", "should've"]
+      profanity: ["fuck", "fucking", "shit", "damn", "ass", "bullshit", "bitch", "asshole", "goddamn", "crap", "pussy", "bastard", "piss", "dick", "cock"]
+      abbreviations: ["mr", "mrs", "ms", "dr", "st", "co", "inc", "ltd", "etc", "vs", "pp", "tv", "http", "https", "www", "uk", "usa", "ii", "iii", "iv", "vi", "vii", "viii", "ix", "xix", "xx"]
+      interjections: ["oh", "ah", "uh", "um", "hmm", "haha", "ha", "huh", "ugh", "eh", "yo", "lol", "omg", "wtf", "yep", "nope", "yup", "yea"]
+      slang: ["dude", "bro", "buddy", "ain't", "gonna", "wanna", "gotta", "kinda", "sorta", "ya", "cos", "cuz", "dunno", "lemme", "gimme"]
+      too_short: ["i", "a"]
+
+    filtering:
+      min_word_length: 3
+      short_word_whitelist: ["no", "ok", "am", "be", "go", "do", "up", "we", "he", "me", "my", "us", "or", "so", "if", "at", "by", "is", "to", "of", "in", "on", "as"]
+      exclude_patterns:
+        - "^\\w'\\w+"
+        - "^\\d+$"
+        - "^[A-Z]{2,}$"
+        - "^https?://"
+
+    pos_categories:
+      essential_nouns: ['NOUN', 'PROPN']
+      essential_verbs: ['VERB', 'AUX']
+      essential_adjectives: ['ADJ']
+      function_words: ['DET', 'PRON', 'ADP', 'CONJ', 'SCONJ']
+      other: ['ADV', 'NUM', 'PART', 'INTJ', 'X']
+
+  de:
+    name: "German"
+    wordfreq_code: "de"
+    spacy_models: ['de_core_news_sm', 'de_core_news_md', 'de_core_news_lg']
+    max_word_length: 45  # German compound words with articles and plural forms
+
+    normalization:
+      preserve_diacritics: true
+      articles: ['der', 'die', 'das', 'den', 'dem', 'des', 'ein', 'eine', 'einer', 'einen', 'einem', 'eines']
+      remove_hyphens: true
+      comma_separator: true
+      special_chars: ['ä', 'ö', 'ü', 'ß']
+
+    inflection_patterns:
+      case_noun: ['es$', 'en$', 'em$', 'er$', 's$', 'n$']
+      plural: ['e$', 'en$', 'er$', 'n$', 's$']
+      verb_conjugation: ['e$', 'st$', 't$', 'en$', 'et$']
+      past_participle: ['ge.*t$', 'ge.*en$']
+
+    skip_words: ['der', 'die', 'das', 'den', 'dem', 'des', 'ein', 'eine', 'einer', 'einen', 'einem', 'eines', 'und', 'oder', 'in', 'an', 'auf', 'zu']
+
+    blacklist:
+      profanity: ["scheisse", "scheiße", "arsch", "fick", "ficken", "schlampe", "arschloch", "hurensohn", "fuck", "kacke", "kotzen", "porno"]
+      abbreviations: ["dr", "de", "co", "nr", "ca", "mm", "cm", "pp", "dm", "kg", "ha", "ma", "mr", "fm", "ab", "st", "etc", "usa", "uk", "ii", "iii", "iv"]
+      interjections: ["oh", "ok", "ah", "ach", "hm", "eh", "na", "hä", "ey", "xd", "ähm", "mmm"]
+      slang: ["nen", "nem", "ka", "ned"]
+      anglicisms: ["of", "and", "the", "in", "on", "at"]  # Keep only pure English words
+      too_short: ["of", "to", "eh", "er", "re", "ne", "ad", "et", "un", "at", "op", "us", "ii"]
+
+    filtering:
+      min_word_length: 3
+      short_word_whitelist: ["am", "ab", "an", "zu", "um", "im", "ja", "wo", "ob"]
+      exclude_patterns:
+        - "^\\d+$"
+        - "^[A-Z]{2,}$"
+        - "^https?://"
+
+    pos_categories:
+      essential_nouns: ['NOUN', 'PROPN']
+      essential_verbs: ['VERB', 'AUX']
+      essential_adjectives: ['ADJ']
+      function_words: ['DET', 'PRON', 'ADP', 'CONJ', 'SCONJ']
+      other: ['ADV', 'NUM', 'PART', 'INTJ', 'X']
+
+  es:
+    name: "Spanish"
+    wordfreq_code: "es"
+    spacy_models: ['es_core_news_sm', 'es_core_news_md', 'es_core_news_lg']
+    max_word_length: 20
+
+    normalization:
+      preserve_diacritics: true
+      articles: ['el', 'la', 'los', 'las', 'un', 'una', 'unos', 'unas']
+      remove_hyphens: false
+      comma_separator: false
+      special_chars: ['á', 'é', 'í', 'ó', 'ú', 'ñ', 'ü']
+
+    inflection_patterns:
+      plural: ['s$', 'es$']
+      verb_present: ['o$', 'as$', 'a$', 'amos$', 'áis$', 'an$']
+      verb_preterite: ['é$', 'aste$', 'ó$', 'amos$', 'asteis$', 'aron$']
+      verb_imperfect: ['aba$', 'abas$', 'ábamos$', 'abais$', 'aban$', 'ía$', 'ías$', 'íamos$', 'íais$', 'ían$']
+      verb_future: ['é$', 'ás$', 'á$', 'emos$', 'éis$', 'án$']
+      verb_participle: ['ado$', 'ido$']
+      gender_feminine: ['a$']
+      gender_masculine: ['o$']
+
+    skip_words: ['el', 'la', 'los', 'las', 'un', 'una', 'unos', 'unas', 'y', 'o', 'de', 'del', 'en', 'a', 'al', 'por', 'para']
+
+    blacklist:
+      profanity: ["puta", "mierda", "joder", "carajo", "coño", "cabrón", "pene", "culo", "polla", "boludo", "pendejo", "verga", "chingar"]
+      abbreviations: ["dr", "sr", "st", "of", "de", "pp", "etc", "mr", "sra", "km", "mg", "mm", "cc", "cm"]
+      interjections: ["oh", "ah", "uh", "hey", "hola", "eh", "ay", "uf", "oye", "ey"]
+      anglicisms: ["of", "and", "in", "new", "post", "show", "the", "internet", "online", "for", "team", "football", "love", "web", "boy", "email", "okay"]
+      slang: ["pa", "po", "pues", "che", "tío", "tía", "pibe"]
+      too_short: ["oh", "pa", "po", "ta", "na", "eh"]
+
+    filtering:
+      min_word_length: 3
+      short_word_whitelist: ["no", "sí", "ya", "me", "mi", "le", "lo", "se", "si", "un", "te", "su", "es", "al", "yo", "él", "tú"]
+      exclude_patterns:
+        - "^\\d+$"
+        - "^[A-Z]{2,}$"
+        - "^https?://"
+
+    pos_categories:
+      essential_nouns: ['NOUN', 'PROPN']
+      essential_verbs: ['VERB', 'AUX']
+      essential_adjectives: ['ADJ']
+      function_words: ['DET', 'PRON', 'ADP', 'CONJ', 'SCONJ']
+      other: ['ADV', 'NUM', 'PART', 'INTJ', 'X']
+
+  ru:
+    name: "Russian"
+    wordfreq_code: "ru"
+    spacy_models: ['ru_core_news_sm', 'ru_core_news_md', 'ru_core_news_lg']
+
+    normalization:
+      preserve_diacritics: true
+      articles: []
+      remove_hyphens: false
+      comma_separator: false
+      special_chars: ['ё', 'й']
+
+    inflection_patterns:
+      case_noun: ['а$', 'у$', 'ом$', 'е$', 'ы$', 'ам$', 'ами$', 'ах$', 'ей$', 'ем$', 'ою$']
+      case_adj: ['ого$', 'ому$', 'ым$', 'ом$', 'ая$', 'ой$', 'ую$', 'ою$', 'ые$', 'ых$', 'ыми$']
+      verb_person: ['ю$', 'у$', 'ешь$', 'ишь$', 'ет$', 'ит$', 'ем$', 'им$', 'ете$', 'ите$', 'ут$', 'ют$', 'ат$', 'ят$']
+      verb_past: ['л$', 'ла$', 'ло$', 'ли$']
+      participle: ['щий$', 'щая$', 'щее$', 'щие$', 'вший$', 'вшая$', 'вшее$', 'вшие$', 'мый$', 'мая$', 'мое$', 'мые$', 'нный$', 'нная$', 'нное$', 'нные$', 'тый$', 'тая$', 'тое$', 'тые$']
+      gerund: ['я$', 'а$', 'в$', 'вши$', 'вшись$']
+
+    skip_words: ['и', 'в', 'не', 'на', 'с', 'что', 'он', 'это', 'как', 'по', 'за', 'к', 'о', 'у', 'от', 'из', 'для', 'до', 'при', 'без', 'я', 'ты', 'мы', 'вы', 'они']
+
+    blacklist:
+      profanity: ["блядь", "хрен", "дерьмо", "сука", "хуй", "пиздец", "ебать", "говно"]
+      interjections: ["ой", "ах", "эх", "ох", "ага", "угу", "ха", "хм"]
+      anglicisms: ["of", "in", "and", "for", "the", "on", "you", "ru", "no", "at", "one", "is", "news", "group", "love", "world", "http", "https", "me", "my", "internet", "online", "post", "email", "web"]
+      abbreviations: ["т", "п", "д", "г", "кг", "см", "мм", "км", "etc", "vs"]
+      too_short: ["т", "п", "д", "г", "ах", "эх", "ха"]
+
+    filtering:
+      min_word_length: 2
+      short_word_whitelist: ["не", "в", "и", "на", "с", "у", "о", "он", "за", "из", "к", "до", "от", "об", "ли", "во", "же", "со", "ну", "вы", "их", "ни", "ко", "об"]
+      exclude_patterns:
+        - "^\\d+$"
+        - "^[A-Z]{2,}$"
+        - "^https?://"
+        - "^xix$"
+        - "^xx$"
+
+    pos_categories:
+      essential_nouns: ['NOUN', 'PROPN']
+      essential_verbs: ['VERB']
+      essential_adjectives: ['ADJ']
+      function_words: ['DET', 'PRON', 'ADP', 'CONJ', 'SCONJ', 'PART']
+      other: ['ADV', 'NUM', 'INTJ', 'X']
+
+    aspect_pairs: true
+
 essential_vocabulary_categories:
   - 'essential_nouns'
   - 'essential_verbs'
   - 'essential_adjectives'
   - 'function_words'
-
-# Common skip words for analysis (too generic or not useful for learning)
-skip_words:
-  # English
-  - 'a'
-  - 'an'
-  - 'the'
-
-  # German articles and particles
-  - 'der'
-  - 'die'
-  - 'das'
-  - 'den'
-  - 'dem'
-  - 'des'
-  - 'in'
-  - 'eine'
-  - 'einer'
-  - 'einen'
-  - 'einem'
-  - 'eines'
-
-  # Spanish articles and prepositions
-  - 'el'
-  - 'la'
-  - 'los'
-  - 'las'
-  - 'un'
-  - 'una'
-  - 'unos'
-  - 'unas'

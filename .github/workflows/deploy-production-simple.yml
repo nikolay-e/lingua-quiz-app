@@ -120,6 +120,9 @@ jobs:
             ${{ env.REGISTRY }}/lingua-quiz-backend:${{ steps.version.outputs.tag }}
             ${{ env.REGISTRY }}/lingua-quiz-backend:latest
             ${{ env.REGISTRY }}/lingua-quiz-backend:${{ github.sha }}
+          build-args: |
+            APP_VERSION=${{ steps.version.outputs.new }}
+            APP_ENVIRONMENT=production
           labels: |
             org.opencontainers.image.source=${{ github.event.repository.html_url }}
             org.opencontainers.image.revision=${{ github.sha }}
@@ -138,6 +141,9 @@ jobs:
             ${{ env.REGISTRY }}/lingua-quiz-frontend:${{ steps.version.outputs.tag }}
             ${{ env.REGISTRY }}/lingua-quiz-frontend:latest
             ${{ env.REGISTRY }}/lingua-quiz-frontend:${{ github.sha }}
+          build-args: |
+            APP_VERSION=${{ steps.version.outputs.new }}
+            APP_ENVIRONMENT=production
           labels: |
             org.opencontainers.image.source=${{ github.event.repository.html_url }}
             org.opencontainers.image.revision=${{ github.sha }}
