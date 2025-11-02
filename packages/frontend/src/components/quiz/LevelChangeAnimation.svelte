@@ -57,7 +57,7 @@
     background: rgb(255 255 255 / 95%);
     border-radius: 12px;
     padding: 16px 24px;
-    box-shadow: 0 8px 32px rgb(0 0 0 / 20%);
+    box-shadow: var(--shadow-xl);
     backdrop-filter: blur(10px);
     border: 2px solid;
     display: flex;
@@ -67,13 +67,13 @@
   }
 
   .level-up .animation-content {
-    border-color: #4ade80;
-    color: #059669;
+    border-color: var(--level-up-border);
+    color: var(--level-up-text);
   }
 
   .level-down .animation-content {
-    border-color: #f87171;
-    color: #dc2626;
+    border-color: var(--level-down-border);
+    color: var(--level-down-text);
   }
 
   .icon {

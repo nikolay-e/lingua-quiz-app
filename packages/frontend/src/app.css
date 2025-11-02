@@ -27,6 +27,30 @@
   --feature-gradient-end: #e8f0ff;
   --hover-bg-light: rgba(74, 144, 226, 0.1);
 
+  /* Level animation colors */
+  --level-up-border: #4ade80;
+  --level-up-text: #059669;
+  --level-down-border: #f87171;
+  --level-down-text: #dc2626;
+  --error-hover: #c0392b;
+
+  /* Shadow System (elevation levels) */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.12);
+  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-focus: 0 0 0 3px var(--primary-focus-shadow);
+  --shadow-button-hover: 0 4px 12px rgba(74, 144, 226, 0.3);
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+  --gradient-success: linear-gradient(135deg, var(--success-color) 0%, #229954 100%);
+  --gradient-error: linear-gradient(135deg, var(--error-color) 0%, #c0392b 100%);
+  --gradient-feature: linear-gradient(135deg, var(--feature-gradient-start) 0%, var(--feature-gradient-end) 100%);
+
   /* Transitions and animations */
   --transition-speed: 0.3s;
   --transition-speed-fast: 0.2s;
@@ -78,6 +102,28 @@
   --feature-gradient-start: #1a2332;
   --feature-gradient-end: #2a3342;
   --hover-bg-light: rgba(91, 163, 245, 0.1);
+
+  /* Level animation colors for dark theme */
+  --level-up-border: #4ade80;
+  --level-up-text: #10b981;
+  --level-down-border: #f87171;
+  --level-down-text: #ef4444;
+  --error-hover: #d35656;
+
+  /* Shadow System for dark theme */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.4);
+  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.5);
+  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  --shadow-button-hover: 0 4px 12px rgba(91, 163, 245, 0.3);
+
+  /* Gradients for dark theme */
+  --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+  --gradient-success: linear-gradient(135deg, var(--success-color) 0%, #27a060 100%);
+  --gradient-error: linear-gradient(135deg, var(--error-color) 0%, #d35656 100%);
 }
 
 /* ============================================
@@ -159,7 +205,7 @@ input[type='email']:focus,
 select:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px var(--primary-focus-shadow);
+  box-shadow: var(--shadow-focus);
 }
 
 select {
@@ -430,7 +476,7 @@ button:disabled {
   font-size: 3rem;
 }
 .feature {
-  background: linear-gradient(135deg, var(--feature-gradient-start) 0%, var(--feature-gradient-end) 100%);
+  background: var(--gradient-feature);
   padding: 12px var(--spacing-md);
   border-radius: var(--radius-lg);
   color: var(--primary-color);

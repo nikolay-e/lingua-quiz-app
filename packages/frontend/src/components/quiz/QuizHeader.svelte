@@ -11,7 +11,7 @@
   let selected = '';
 
   function handleQuizSelect(): void {
-    if (!selected) return;  // guard placeholder
+    if (!selected) return; // guard placeholder
     dispatch('select', { quiz: selected });
   }
 
@@ -44,7 +44,7 @@
         <i class="fas fa-book"></i>
         <span class="quiz-name">{selectedQuiz}</span>
       </div>
-      <button class="back-to-menu-btn" on:click={handleBackToMenu}>
+      <button class="btn-base" on:click={handleBackToMenu}>
         <i class="fas fa-arrow-left"></i>
         <span>Back to Menu</span>
       </button>
@@ -73,7 +73,7 @@
 
   .quiz-select:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px var(--primary-focus-shadow);
+    box-shadow: var(--shadow-focus);
   }
 
   .quiz-select:disabled {
@@ -102,26 +102,9 @@
     font-size: var(--font-size-lg);
   }
 
-
-  .back-to-menu-btn {
-    display: flex;
-    align-items: center;
+  .btn-base {
     gap: var(--spacing-xs);
-    background: none;
-    border: 1px solid var(--input-border-color);
-    color: var(--text-color);
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: all var(--transition-speed) ease;
-    font-size: var(--font-size-sm);
     margin: 0;
     width: auto;
-  }
-
-  .back-to-menu-btn:hover {
-    background-color: var(--hover-bg-light);
-    border-color: var(--primary-color);
-    color: var(--primary-color);
   }
 </style>

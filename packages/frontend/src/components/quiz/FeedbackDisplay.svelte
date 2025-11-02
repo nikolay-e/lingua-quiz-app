@@ -1,7 +1,6 @@
 <script lang="ts">
-  import type { SubmissionResult, QuizQuestion } from '@lingua-quiz/core';
+  import { formatForDisplay, type SubmissionResult, type QuizQuestion } from '@lingua-quiz/core';
   import type { QuizFeedback } from '../../api-types';
-  import { formatForDisplay } from '@lingua-quiz/core';
 
   export let feedback: SubmissionResult | QuizFeedback | null = null;
   export let usageExamples: { source: string; target: string } | null = null;
@@ -13,9 +12,9 @@
   // Helper to get the feedback message
   $: feedbackMessage = feedback
     ? ('message' in feedback
-        ? feedback.message
-        : `${questionForFeedback ? questionForFeedback.questionText : ''} = ${formatForDisplay(feedback.correctAnswerText)}`
-      )
+      ? feedback.message
+      : `${questionForFeedback ? questionForFeedback.questionText : ''} = ${formatForDisplay(feedback.correctAnswerText)}`
+    )
     : '';
 </script>
 
@@ -43,7 +42,7 @@
     margin-top: var(--spacing-md);
     background-color: var(--container-bg);
     border-radius: var(--radius-lg);
-    box-shadow: 0 2px 4px var(--shadow-color);
+    box-shadow: var(--shadow-sm);
     overflow: hidden;
   }
 

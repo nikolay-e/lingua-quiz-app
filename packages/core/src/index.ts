@@ -10,9 +10,17 @@
  * This package contains NO UI dependencies and focuses purely on business logic.
  */
 
-import { F, K, T_PROMO, MISTAKE_THRESHOLD, MISTAKE_WINDOW, MAX_FOCUS_POOL_SIZE, MIN_HISTORY_FOR_DEGRADATION } from './constants';
+import {
+  F,
+  K,
+  T_PROMO,
+  MISTAKE_THRESHOLD,
+  MISTAKE_WINDOW,
+  MAX_FOCUS_POOL_SIZE,
+  MIN_HISTORY_FOR_DEGRADATION,
+} from './constants';
 import { checkAnswer, formatForDisplay } from './answer-comparison';
-import { Translation, ProgressEntry } from './types';
+import type { Translation, ProgressEntry } from './types';
 
 export interface QuizQuestion {
   translationId: number;
@@ -226,7 +234,12 @@ export class QuizManager {
       sourceLanguage: t.sourceWord.language,
       targetLanguage: t.targetWord.language,
       questionType,
-      usageExample: questionType === 'usage' ? (direction === 'normal' ? t.sourceWord.usageExample : t.targetWord.usageExample) : undefined,
+      usageExample:
+        questionType === 'usage'
+          ? direction === 'normal'
+            ? t.sourceWord.usageExample
+            : t.targetWord.usageExample
+          : undefined,
     };
   };
 
@@ -495,7 +508,7 @@ export class QuizManager {
   private replenishFocusPool = (): number[] => {
     // MODIFICATION: Refactored to be more direct and reliable.
     const level1Count = this.queues.LEVEL_1.length;
-    let needed = this.opts.maxFocusWords - level1Count;
+    const needed = this.opts.maxFocusWords - level1Count;
     if (needed <= 0) return [];
 
     // Directly take from the front of the LEVEL_0 queue.
@@ -518,11 +531,10 @@ export class QuizManager {
     if (this.opts.enableUsageExamples) {
       // With usage examples enabled, complete means all at LEVEL_5 (Fully Mastered)
       return allProgress.every((p) => p.status === 'LEVEL_5');
-    } else {
-      // Without usage examples, complete means all at LEVEL_3 (Translation Mastered Both Ways)
-      // LEVEL_3 completes basic translation mastery; LEVEL_4+ are for usage examples
-      return allProgress.every((p) => p.status === 'LEVEL_3');
     }
+    // Without usage examples, complete means all at LEVEL_3 (Translation Mastered Both Ways)
+    // LEVEL_3 completes basic translation mastery; LEVEL_4+ are for usage examples
+    return allProgress.every((p) => p.status === 'LEVEL_3');
   };
 
   /**

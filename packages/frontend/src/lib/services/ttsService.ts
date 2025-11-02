@@ -86,7 +86,9 @@ export class TTSService {
 
     try {
       const ttsData = await api.synthesizeSpeech(token, text, language);
-      const audioBlob = new Blob([Uint8Array.from(atob(ttsData.audioData), (c) => c.charCodeAt(0))], { type: 'audio/mpeg' });
+      const audioBlob = new Blob([Uint8Array.from(atob(ttsData.audioData), (c) => c.charCodeAt(0))], {
+        type: 'audio/mpeg',
+      });
       const audioUrl = URL.createObjectURL(audioBlob);
 
       this.currentAudio = new Audio(audioUrl);

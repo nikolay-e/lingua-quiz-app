@@ -92,7 +92,8 @@ function createThemeStore(): ThemeStore {
     },
     clearPreference: () => {
       safeStorage.removeItem(STORAGE_KEYS.THEME);
-      const systemPreference = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const systemPreference =
+        typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       applyTheme(systemPreference);
       set({ isDarkMode: systemPreference });
     },
@@ -233,7 +234,7 @@ interface QuizStore {
   getNextQuestion: () => QuizQuestion | null;
   submitAnswer: (token: string, answer: string) => Promise<SubmissionResult | null>;
   setLevel: (
-    level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4'
+    level: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4',
   ) => Promise<{ success: boolean; actualLevel: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4'; message?: string }>;
   reset: () => void;
   saveAndCleanup: (token: string) => Promise<void>;
@@ -254,7 +255,7 @@ function createQuizStore(): QuizStore {
   const DEBOUNCE_DELAY = 1000; // 1 second debounce for rapid actions
   let debounceTimer: NodeJS.Timeout | null = null;
 
-  const bulkSaveProgress = (token: string) => {
+  const bulkSaveProgress = async (token: string): Promise<void> => {
     const state = get(store);
     if (!state.quizManager) return;
 
@@ -277,20 +278,14 @@ function createQuizStore(): QuizStore {
               console.error(`Bulk save failed for ${level}:`, err);
               // Don't fail the entire operation if one level fails
               return Promise.resolve();
-            })
+            }),
           );
         }
       }
 
       if (persistencePromises.length > 0) {
-        // Process API calls in background (non-blocking)
-        Promise.allSettled(persistencePromises)
-          .then(() => {
-            // Bulk save completed for ${persistencePromises.length} levels
-          })
-          .catch((error) => {
-            console.error('Bulk save promises failed unexpectedly:', error);
-          });
+        // Wait for all API calls to complete
+        await Promise.allSettled(persistencePromises);
       }
     } catch (error) {
       const errorInfo = handleQuiz401Error(error);
@@ -321,7 +316,11 @@ function createQuizStore(): QuizStore {
   };
 
   // Higher-order function to handle 401 errors uniformly
-  async function withAuth401Handling<T>(operation: () => Promise<T>, onError?: (error: unknown) => void): Promise<T | null> {
+
+  async function withAuth401Handling<T>(
+    operation: () => Promise<T>,
+    onError?: (error: unknown) => void,
+  ): Promise<T | null> {
     try {
       return await operation();
     } catch (error) {
@@ -343,7 +342,7 @@ function createQuizStore(): QuizStore {
       update((state) => ({ ...state, loading: true, error: null }));
       const result = await withAuth401Handling(
         () => api.fetchWordSets(token),
-        (error) => update((state) => ({ ...state, error: error as string, loading: false }))
+        (error) => update((state) => ({ ...state, error: error as string, loading: false })),
       );
 
       if (result) {
@@ -407,7 +406,7 @@ function createQuizStore(): QuizStore {
 
           return { manager, currentQuestion };
         },
-        (error) => update((state) => ({ ...state, error: error as string, loading: false }))
+        (error) => update((state) => ({ ...state, error: error as string, loading: false })),
       );
 
       if (result) {
@@ -425,7 +424,7 @@ function createQuizStore(): QuizStore {
       if (!state.quizManager) return null;
 
       const questionResult = state.quizManager.getNextQuestion();
-      const question = questionResult.question;
+      const { question } = questionResult;
 
       // Handle automatic level changes
       if (questionResult.levelAdjusted && questionResult.newLevel) {
@@ -534,7 +533,7 @@ function createQuizStore(): QuizStore {
       }
       // Save current progress (non-blocking)
       if (state.quizManager) {
-        bulkSaveProgress(token);
+        void bulkSaveProgress(token).catch((err) => console.error('Failed to save progress on stop:', err));
       }
       return Promise.resolve(); // Return resolved promise for compatibility
     },
@@ -584,5 +583,5 @@ export const levelWordLists = derived(
 
     set(newLevelWordLists);
   },
-  {} as LevelWordLists // Initial value
+  {} as LevelWordLists, // Initial value
 );
