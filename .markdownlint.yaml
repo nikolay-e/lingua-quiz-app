@@ -1,0 +1,45 @@
+# Markdownlint configuration for Lingua Quiz
+# https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
+
+# Default state for all rules
+default: true
+
+# Line length
+MD013:
+  line_length: 120
+  heading_line_length: 120
+  code_block_line_length: 120
+  tables: false
+
+# Heading style
+MD003:
+  style: "atx"
+
+# First heading should be h1
+MD041: true
+
+# Ordered list item prefix
+MD029:
+  style: "ordered"
+
+# Inline HTML
+MD033: false
+
+# Bare URLs
+MD034: false
+
+# Code block style
+MD046:
+  style: "fenced"
+
+# Code fence style
+MD048:
+  style: "backtick"
+
+# Emphasis style
+MD049:
+  style: "asterisk"
+
+# Strong style
+MD050:
+  style: "asterisk"

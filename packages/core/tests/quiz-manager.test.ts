@@ -57,7 +57,7 @@ describe('QuizManager Tests', () => {
       const result = quizManager.getNextQuestion();
       expect(result.question).toBeTruthy();
 
-      const translationId = result.question!.translationId;
+      const { translationId } = result.question!;
       const translation = quizManager.getTranslation(translationId);
       expect(translation).toBeTruthy();
 
@@ -72,7 +72,7 @@ describe('QuizManager Tests', () => {
       const result = quizManager.getNextQuestion();
       expect(result.question).toBeTruthy();
 
-      const translationId = result.question!.translationId;
+      const { translationId } = result.question!;
 
       // Submit incorrect answer
       const submission = quizManager.submitAnswer(translationId, 'wrong answer');
@@ -91,7 +91,7 @@ describe('QuizManager Tests', () => {
       const result = quizManager.getNextQuestion();
       expect(result.question).toBeTruthy();
 
-      const translationId = result.question!.translationId;
+      const { translationId } = result.question!;
       const translation = quizManager.getTranslation(translationId);
       expect(translation).toBeTruthy();
 
@@ -117,7 +117,7 @@ describe('QuizManager Tests', () => {
       const result = quizManager.getNextQuestion();
       expect(result.question).toBeTruthy();
 
-      const translationId = result.question!.translationId;
+      const { translationId } = result.question!;
 
       // Wait a bit before submitting
       await new Promise((resolve) => setTimeout(resolve, 10));

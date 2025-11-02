@@ -20,6 +20,7 @@
     align-items: center;
     gap: 10px;
   }
+
   h1 {
     margin: 0;
   }

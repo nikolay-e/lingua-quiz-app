@@ -32,13 +32,13 @@
     { id: 'uppercase', label: 'Contains at least one uppercase letter', test: (pwd: string) => /[A-Z]/.test(pwd) },
     { id: 'lowercase', label: 'Contains at least one lowercase letter', test: (pwd: string) => /[a-z]/.test(pwd) },
     { id: 'number', label: 'Contains at least one number', test: (pwd: string) => /\d/.test(pwd) },
-    { id: 'special', label: 'Contains at least one special character', test: (pwd: string) => /[!@#$%^&*()_\-+=\[\]{};:'",.<>/?\\|`~]/.test(pwd) }
+    { id: 'special', label: 'Contains at least one special character', test: (pwd: string) => /[!@#$%^&*()_\-+=[\]{};:'",.<>/?\\|`~]/.test(pwd) },
   ];
 
   // Reactive password validation (data-driven)
   $: passwordValidation = passwordRequirements.map(req => ({
     ...req,
-    valid: req.test(password)
+    valid: req.test(password),
   })) as PasswordValidation[];
 
   $: isPasswordValid = passwordValidation.every((req: PasswordValidation) => req.valid);
@@ -132,7 +132,7 @@
     padding: 10px;
     margin-top: 10px;
     margin-bottom: 15px;
-    box-shadow: 0 2px 4px var(--shadow-color);
+    box-shadow: var(--shadow-sm);
   }
 
   .password-requirements-title {

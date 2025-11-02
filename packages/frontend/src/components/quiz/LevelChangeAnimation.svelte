@@ -46,18 +46,18 @@
   }
 
   .level-up {
-    animation: levelUpAnimation 1.5s ease-out forwards;
+    animation: level-up-animation 1.5s ease-out forwards;
   }
 
   .level-down {
-    animation: levelDownAnimation 1.5s ease-out forwards;
+    animation: level-down-animation 1.5s ease-out forwards;
   }
 
   .animation-content {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgb(255 255 255 / 95%);
     border-radius: 12px;
     padding: 16px 24px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-xl);
     backdrop-filter: blur(10px);
     border: 2px solid;
     display: flex;
@@ -67,13 +67,13 @@
   }
 
   .level-up .animation-content {
-    border-color: #4ade80;
-    color: #059669;
+    border-color: var(--level-up-border);
+    color: var(--level-up-text);
   }
 
   .level-down .animation-content {
-    border-color: #f87171;
-    color: #dc2626;
+    border-color: var(--level-down-border);
+    color: var(--level-down-text);
   }
 
   .icon {
@@ -84,36 +84,42 @@
     font-size: 18px;
   }
 
-  @keyframes levelUpAnimation {
+  @keyframes level-up-animation {
     0% {
       transform: translate(-50%, -50%) scale(0.5);
       opacity: 0;
     }
+
     20% {
       transform: translate(-50%, -50%) scale(1.2);
       opacity: 1;
     }
+
     40% {
       transform: translate(-50%, -50%) scale(1);
     }
+
     100% {
       transform: translate(-50%, -60%) scale(1);
       opacity: 0;
     }
   }
 
-  @keyframes levelDownAnimation {
+  @keyframes level-down-animation {
     0% {
       transform: translate(-50%, -50%) scale(0.5);
       opacity: 0;
     }
+
     20% {
       transform: translate(-50%, -50%) scale(1.2);
       opacity: 1;
     }
+
     40% {
       transform: translate(-50%, -50%) scale(1);
     }
+
     100% {
       transform: translate(-50%, -40%) scale(1);
       opacity: 0;

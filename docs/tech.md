@@ -8,31 +8,37 @@ This document outlines the system architecture, core learning algorithm, and dev
 
 The system is built on a decoupled architecture that separates business logic from the presentation and persistence layers.
 
-- **`quiz-core` (Portable Logic):** A standalone TypeScript package containing the entire learning and answer validation algorithm. It is framework-agnostic and can run on any client (web, mobile, etc.).
-- **Client (Frontend):** Executes all `quiz-core` logic locally for a zero-latency user experience. It manages the active session state in memory and is responsible for displaying the UI.
-- **Backend (Persistence Layer):** A stateless CRUD API. Its only role is to store and retrieve user progress and word data. It performs **no business logic validation**.
+- **`quiz-core` (Portable Logic):** A standalone TypeScript package containing the entire learning and answer
+  validation algorithm. It is framework-agnostic and can run on any client (web, mobile, etc.).
+- **Client (Frontend):** Executes all `quiz-core` logic locally for a zero-latency user experience. It manages the
+  active session state in memory and is responsible for displaying the UI.
+- **Backend (Persistence Layer):** A stateless CRUD API. Its only role is to store and retrieve user progress and
+  word data. It performs **no business logic validation**.
 
 ### **Session & Persistence Flow**
 
 1. **Start Session:** The client fetches word data and the user's latest saved progress from the backend.
-2. **In-Memory Learning:** The `quiz-core` module builds the learning queues in the client's memory. The entire session (answering questions, updating queues, leveling up) runs locally.
-3. **Asynchronous Persistence:** To maintain UI responsiveness, progress is saved to the backend **only when a word's level changes**. The session's detailed state (like queue positions) is ephemeral and not saved.
+2. **In-Memory Learning:** The `quiz-core` module builds the learning queues in the client's memory. The entire
+   session (answering questions, updating queues, leveling up) runs locally.
+3. **Asynchronous Persistence:** To maintain UI responsiveness, progress is saved to the backend **only when a
+   word's level changes**. The session's detailed state (like queue positions) is ephemeral and not saved.
 
 ---
 
 ## **Learning Algorithm**
 
-The system uses a level-based mastery and queueing system, not a traditional time-based Spaced Repetition System (SRS).
+The system uses a level-based mastery and queueing system, not a traditional time-based Spaced Repetition
+System (SRS).
 
 ### **Algorithm Parameters**
 
-| Param              | Value | Description                                                                                            |
-| :----------------- | :---- | :----------------------------------------------------------------------------------------------------- |
-| `F`                | 5     | **Focus Loop Size:** The queue position an incorrectly answered word moves to.                         |
-| `K`                | 2     | **Promotion Coefficient:** A multiplier for `F` to determine spacing for correct answers.              |
-| `T_promo`          | 3     | **Promotion Threshold:** Consecutive correct answers needed to advance to the next level.              |
-| `MistakeThreshold` | 3     | **Degradation Threshold:** Number of mistakes within the `MistakeWindow` to trigger level degradation. |
-| `MistakeWindow`    | 10    | **Degradation Window:** The number of recent attempts checked for degradation.                         |
+| Param              | Value | Description                                                       |
+| :----------------- | :---- | :---------------------------------------------------------------- |
+| `F`                | 5     | **Focus Loop Size:** Queue position for incorrect answers         |
+| `K`                | 2     | **Promotion Coefficient:** Multiplier for spacing correct answers |
+| `T_promo`          | 3     | **Promotion Threshold:** Correct answers to advance level         |
+| `MistakeThreshold` | 3     | **Degradation Threshold:** Mistakes in window to trigger demotion |
+| `MistakeWindow`    | 10    | **Degradation Window:** Recent attempts checked                   |
 
 ### **Mastery Levels**
 
@@ -54,30 +60,34 @@ The system uses a level-based mastery and queueing system, not a traditional tim
 - **Incorrect Answer:**
   - The consecutive correct count `T` resets to 0.
   - The word moves to queue position `F` (5).
-  - The system checks if the mistake count within the last `MistakeWindow` (10 attempts) has reached the `MistakeThreshold` (3). If so, the word is degraded one level.
+  - The system checks if the mistake count within the last `MistakeWindow` (10 attempts) has reached the
+    `MistakeThreshold` (3). If so, the word is degraded one level.
 
 ---
 
 ## **Answer Validation Logic (`quiz-core`)**
 
-The system uses special characters in the correct answer string to handle various answer types. User input is normalized before comparison.
+The system uses special characters in the correct answer string to handle various answer types. User input is
+normalized before comparison.
 
 ### **Separators and Rules**
 
-| Separator | Name        | Rule                                                                                     | Example                             | Required User Input                                                   |
-| :-------- | :---------- | :--------------------------------------------------------------------------------------- | :---------------------------------- | :-------------------------------------------------------------------- |
-| `,`       | Comma       | **All Parts Required.** For words with multiple distinct meanings. Order doesn't matter. | `floor, apartment`                  | Must provide both "floor" AND "apartment".                            |
-| `\|`      | Pipe        | **Any Part Required.** For synonyms or alternative phrasings.                            | `car\|automobile`                   | Must provide either "car" OR "automobile".                            |
-| `()`      | Parentheses | **Grouped Alternatives.** Requires one choice from each comma-separated group.           | `(equal\|same), (now\|immediately)` | One from the first group AND one from the second (e.g., "same, now"). |
-| `[]`      | Brackets    | **Optional Content.** For clarifications or optional suffixes.                           | `world [universe]`                  | "world" is sufficient; "world universe" is also correct.              |
+| Separator | Name        | Rule                                                | Example                             | Required User Input                     |
+| :-------- | :---------- | :-------------------------------------------------- | :---------------------------------- | :-------------------------------------- |
+| `,`       | Comma       | **All Parts Required.** Multiple distinct meanings. | `floor, apartment`                  | Both "floor" AND "apartment"            |
+| `\|`      | Pipe        | **Any Part Required.** Synonyms or alternatives.    | `car\|automobile`                   | Either "car" OR "automobile"            |
+| `()`      | Parentheses | **Grouped Alternatives.** One from each group.      | `(equal\|same), (now\|immediately)` | One from each group (e.g., "same, now") |
+| `[]`      | Brackets    | **Optional Content.** Clarifications or suffixes.   | `world [universe]`                  | "world" or "world universe"             |
 
 ### **Text Normalization**
 
-The normalization strategy differs between the user-facing answer validation and the backend analysis tools to balance user convenience with linguistic accuracy.
+The normalization strategy differs between the user-facing answer validation and the backend analysis tools to
+balance user convenience with linguistic accuracy.
 
 #### **Answer Validation (`quiz-core`)**
 
-For real-time answer checking, normalization is aggressive to forgive minor user typos. Before comparison, all input (user answer and correct answer) is normalized as follows:
+For real-time answer checking, normalization is aggressive to forgive minor user typos. Before comparison, all input
+(user answer and correct answer) is normalized as follows:
 
 - **Case-insensitive** (`Word` → `word`)
 - **Whitespace removed** (`my answer` → `myanswer`)
@@ -87,10 +97,13 @@ For real-time answer checking, normalization is aggressive to forgive minor user
 
 #### **Vocabulary Analysis (`word-processing`)**
 
-For accurate linguistic analysis (e.g., duplicate detection, lemmatization), the Python scripts are more conservative:
+For accurate linguistic analysis (e.g., duplicate detection, lemmatization), the Python scripts are more
+conservative:
 
-- **Diacritics Preserved:** German umlauts and Spanish accents are kept because they are linguistically significant (e.g., `schon` vs. `schön`).
-- **Language-Specific Rules:** Each language uses a tailored normalization strategy. For example, only English text has accents stripped by default.
+- **Diacritics Preserved:** German umlauts and Spanish accents are kept because they are linguistically significant
+  (e.g., `schon` vs. `schön`).
+- **Language-Specific Rules:** Each language uses a tailored normalization strategy. For example, only English text
+  has accents stripped by default.
 
 ---
 
@@ -102,8 +115,10 @@ This project prioritizes development velocity via LLM assistance, overseen by hu
 
 - **Self-Documenting Code:** Use clear, descriptive names for variables, functions, and files.
 - **Separation of Tasks:** Work is strictly divided into two types: **Feature Tasks** and **Architectural Tasks**.
-- **Minimal Change Principle (for Feature Tasks):** Only commit changes without which the new feature will not work. Revert all other changes (e.g., reformatting, unrelated refactoring).
-- **Human-led Architecture:** All architectural changes, refactoring, and dependency upgrades are initiated by a human in a dedicated **Architectural Task**.
+- **Minimal Change Principle (for Feature Tasks):** Only commit changes without which the new feature will not work.
+  Revert all other changes (e.g., reformatting, unrelated refactoring).
+- **Human-led Architecture:** All architectural changes, refactoring, and dependency upgrades are initiated by a human
+  in a dedicated **Architectural Task**.
 
 ### **Git & PR Guidelines**
 

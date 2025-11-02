@@ -2,18 +2,6 @@
   "name": "@lingua-quiz/core",
   "version": "1.0.2",
   "description": "Core business logic for Lingua Quiz - portable across all platforms",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "test": "vitest run",
-    "test:run": "vitest run",
-    "test:ui": "vitest --ui",
-    "test:coverage": "vitest run --coverage",
-    "typecheck": "tsc --noEmit"
-  },
   "keywords": [
     "quiz",
     "language-learning",
@@ -21,21 +9,33 @@
     "headless",
     "portable"
   ],
-  "devDependencies": {
-    "@vitest/coverage-v8": "^4.0.6",
-    "@vitest/ui": "^4.0.3",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.3"
-  },
-  "files": [
-    "dist",
-    "README.md"
-  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.js"
     }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:run": "vitest run",
+    "test:ui": "vitest --ui",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.0.6",
+    "@vitest/ui": "^4.0.3",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.3"
   }
 }

@@ -33,7 +33,7 @@
   let ttsState: import('../lib/services/ttsService').TTSState = { isAvailable: false, supportedLanguages: [], isPlaying: false };
 
   // 2. REFACTOR: Initialize foldedLists from LEVEL_CONFIG instead of hardcoding
-  let foldedLists: Record<string, boolean> = {};
+  const foldedLists: Record<string, boolean> = {};
 
   // Initialize foldedLists dynamically
   LEVEL_CONFIG.forEach(level => {
@@ -52,13 +52,13 @@
         }
       });
     } catch {
-      // Use defaults if parsing fails
+    // Use defaults if parsing fails
     }
   }
 
   // 3. REFACTOR: Single dynamic toggle function (eliminates repetition)
   function toggleFold(event: CustomEvent<{ levelId: string }>) {
-    const levelId = event.detail.levelId;
+    const {levelId} = event.detail;
     foldedLists[levelId] = !foldedLists[levelId];
     safeStorage.setItem(STORAGE_KEYS.FOLDED_LISTS, JSON.stringify(foldedLists));
   }
@@ -98,9 +98,8 @@
     answerInput.focus();
   }
 
-
   async function handleQuizSelect(event: CustomEvent<{ quiz: string }>): Promise<void> {
-    const quiz = event.detail.quiz;
+    const {quiz} = event.detail;
 
     // Reset state
     quizStore.reset();
@@ -132,7 +131,7 @@
     if ($authStore.token) {
       quizStore.saveAndCleanup($authStore.token).catch((error) => {
         console.error('Failed to save progress before returning to menu:', error);
-        // Progress will be saved on next session
+      // Progress will be saved on next session
       });
     }
 
@@ -160,7 +159,7 @@
         if ('translation' in result && result.translation) {
           usageExamples = {
             source: result.translation.sourceWord.usageExample || '',
-            target: result.translation.targetWord.usageExample || ''
+            target: result.translation.targetWord.usageExample || '',
           };
         } else {
           usageExamples = null;
@@ -264,118 +263,120 @@
 </script>
 
 {#key selectedQuiz}
-<main class="feed">
-  <!-- Card: Quiz picker / header -->
-  <FeedCard title={selectedQuiz ? undefined : undefined}>
-    {#if !selectedQuiz}
-      <header class="flex-align-center gap-sm mb-md">
-        <h1 class="logo"><i class="fas fa-language"></i> LinguaQuiz</h1>
-      </header>
-    {/if}
-    <div class="stack">
-      <QuizHeader
-        {wordSets}
-        {selectedQuiz}
-        {loading}
-        on:select={handleQuizSelect}
-        on:backToMenu={handleBackToMenu}
-      />
+  <main class="feed">
+    <!-- Card: Quiz picker / header -->
+    <FeedCard title={selectedQuiz ? undefined : undefined}>
       {#if !selectedQuiz}
-        <div class="text-center p-xl">
-          <div class="welcome-icon mb-md">🎯</div>
-          <h3>Welcome to LinguaQuiz!</h3>
-          <p class="muted mb-lg">Start learning with these features:</p>
-          <div class="stack">
-            <a href="https://github.com/nikolay-e/lingua-quiz/blob/main/docs/LearningAlgorithm.md" target="_blank" class="feature feature-link">
-              ✨ Adaptive learning algorithm
-            </a>
-            <div class="feature">📊 Track your progress in real-time</div>
-            <div class="feature">🎧 Listen to pronunciations</div>
-          </div>
-        </div>
+        <header class="flex-align-center gap-sm mb-md">
+          <h1 class="logo"><i class="fas fa-language"></i> LinguaQuiz</h1>
+        </header>
       {/if}
-    </div>
-  </FeedCard>
-
-  <!-- Card: Question -->
-  {#if selectedQuiz}
-    <FeedCard dense title="Translate">
-      <svelte:fragment slot="headerAction">
-        {#if canUseTTS}
-          <button
-            class="tts-button {ttsState.isPlaying ? 'speaking' : ''}"
-            on:click={() => currentQuestion && ttsService.playTTS($authStore.token!, currentQuestion.questionText, currentLanguage)}
-            disabled={ttsState.isPlaying}
-            title="Listen to pronunciation"
-            aria-label="Listen to pronunciation"
-          >
-            <i class="fas fa-volume-up"></i>
-            <span>Listen</span>
-          </button>
+      <div class="stack">
+        <QuizHeader
+          {wordSets}
+          {selectedQuiz}
+          {loading}
+          on:select={handleQuizSelect}
+          on:backToMenu={handleBackToMenu}
+        />
+        {#if !selectedQuiz}
+          <div class="text-center p-xl">
+            <div class="welcome-icon mb-md">🎯</div>
+            <h3>Welcome to LinguaQuiz!</h3>
+            <p class="muted mb-lg">Start learning with these features:</p>
+            <div class="stack">
+              <a href="https://github.com/nikolay-e/lingua-quiz/blob/main/docs/LearningAlgorithm.md" target="_blank" class="feature feature-link">
+                ✨ Adaptive learning algorithm
+              </a>
+              <div class="feature">📊 Track your progress in real-time</div>
+              <div class="feature">🎧 Listen to pronunciations</div>
+            </div>
+          </div>
         {/if}
-      </svelte:fragment>
-      <QuestionDisplay {currentQuestion} />
+      </div>
     </FeedCard>
-  {/if}
 
-  <!-- Card: Answer input -->
-  {#if currentQuestion}
+    <!-- Card: Question -->
+    {#if selectedQuiz}
+      <FeedCard dense title="Translate">
+        <svelte:fragment slot="headerAction">
+          {#if canUseTTS}
+            <button
+              class="btn-base {ttsState.isPlaying ? 'speaking' : ''}"
+              on:click={() =>
+                currentQuestion &&
+                  ttsService.playTTS($authStore.token!, currentQuestion.questionText, currentLanguage)}
+              disabled={ttsState.isPlaying}
+              title="Listen to pronunciation"
+              aria-label="Listen to pronunciation"
+            >
+              <i class="fas fa-volume-up"></i>
+              <span>Listen</span>
+            </button>
+          {/if}
+        </svelte:fragment>
+        <QuestionDisplay {currentQuestion} />
+      </FeedCard>
+    {/if}
+
+    <!-- Card: Answer input -->
+    {#if currentQuestion}
+      <FeedCard dense>
+        <div class="actions">
+          <input
+            type="text"
+            bind:this={answerInput}
+            bind:value={userAnswer}
+            on:keydown={handleKeydown}
+            placeholder="Type your answer…"
+            disabled={isSubmitting}
+            aria-describedby="word"
+          />
+          <button type="button" on:click={submitAnswer} disabled={isSubmitting}>
+            <i class="fas fa-paper-plane"></i> {isSubmitting ? 'Submitting…' : 'Submit'}
+          </button>
+        </div>
+      </FeedCard>
+    {/if}
+
+    <!-- Card: Feedback -->
+    {#if feedback}
+      <FeedCard dense>
+        <FeedbackDisplay
+          {feedback}
+          {usageExamples}
+          {questionForFeedback}
+        />
+      </FeedCard>
+    {/if}
+
+    <!-- Card: Progress -->
+    {#if selectedQuiz}
+      <FeedCard>
+        <LearningProgress
+          selectedQuiz={selectedQuiz || undefined}
+          {currentLevel}
+          {sourceLanguage}
+          {targetLanguage}
+          levelWordLists={$levelWordLists}
+          {foldedLists}
+          on:toggleFold={toggleFold}
+        />
+      </FeedCard>
+    {/if}
+
+    <!-- Card: Account actions -->
     <FeedCard dense>
       <div class="actions">
-        <input
-          type="text"
-          bind:this={answerInput}
-          bind:value={userAnswer}
-          on:keydown={handleKeydown}
-          placeholder="Type your answer…"
-          disabled={isSubmitting}
-          aria-describedby="word"
-        />
-        <button type="button" on:click={submitAnswer} disabled={isSubmitting}>
-          <i class="fas fa-paper-plane"></i> {isSubmitting ? 'Submitting…' : 'Submit'}
+        <button class="logout-button" on:click={logout}>
+          <i class="fas fa-sign-out-alt"></i> Logout ({username})
+        </button>
+        <button class="delete-button" on:click={handleDeleteAccount}>
+          <i class="fas fa-trash-alt"></i> Delete Account
         </button>
       </div>
     </FeedCard>
-  {/if}
-
-  <!-- Card: Feedback -->
-  {#if feedback}
-    <FeedCard dense>
-      <FeedbackDisplay
-        {feedback}
-        {usageExamples}
-        {questionForFeedback}
-      />
-    </FeedCard>
-  {/if}
-
-  <!-- Card: Progress -->
-  {#if selectedQuiz}
-    <FeedCard>
-      <LearningProgress
-        selectedQuiz={selectedQuiz || undefined}
-        {currentLevel}
-        {sourceLanguage}
-        {targetLanguage}
-        levelWordLists={$levelWordLists}
-        {foldedLists}
-        on:toggleFold={toggleFold}
-      />
-    </FeedCard>
-  {/if}
-
-  <!-- Card: Account actions -->
-  <FeedCard dense>
-    <div class="actions">
-      <button class="logout-button" on:click={logout}>
-        <i class="fas fa-sign-out-alt"></i> Logout ({username})
-      </button>
-      <button class="delete-button" on:click={handleDeleteAccount}>
-        <i class="fas fa-trash-alt"></i> Delete Account
-      </button>
-    </div>
-  </FeedCard>
-</main>
+  </main>
 {/key}
 
 <!-- Level change animation overlay -->
@@ -390,8 +391,9 @@
   .delete-button {
     background-color: var(--error-color);
   }
+
   .delete-button:hover {
-    background-color: #c0392b;
+    background-color: var(--error-hover);
   }
 
   /* Custom styles not covered by utilities */
@@ -413,6 +415,6 @@
     background-color: var(--primary-color);
     color: white;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+    box-shadow: var(--shadow-button-hover);
   }
 </style>

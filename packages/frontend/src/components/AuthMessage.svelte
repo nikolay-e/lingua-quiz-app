@@ -6,12 +6,16 @@
 
   $: messageColor =
     variant === 'success' ? 'var(--success-color)'
-    : variant === 'error' ? 'var(--error-color)'
-    : 'inherit';
+      : variant === 'error' ? 'var(--error-color)'
+      : 'inherit';
 </script>
 
 {#if message}
-  <p {id} style:color={messageColor} role="status" aria-live="polite">
+  <p
+    {id}
+    style:color={messageColor}
+    role="status"
+    aria-live="polite">
     {message}
   </p>
 {/if}

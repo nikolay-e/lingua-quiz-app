@@ -26,7 +26,14 @@ const getServerAddress = (): string => {
   return '/api';
 };
 
-import type { AuthResponse, WordSet, UserWordSet, TTSResponse, TTSLanguagesResponse, WordSetWithWords } from './api-types';
+import type {
+  AuthResponse,
+  WordSet,
+  UserWordSet,
+  TTSResponse,
+  TTSLanguagesResponse,
+  WordSetWithWords,
+} from './api-types';
 
 const serverAddress = getServerAddress();
 
@@ -103,7 +110,7 @@ function withAuth(token: string, options: RequestInit = {}): RequestInit {
 /**
  * Factory function for creating API methods
  */
-const createApiMethod = <TResponse, TParams = void>(endpoint: string, method: string = 'GET', requiresAuth: boolean = true) => {
+const createApiMethod = <TResponse, TParams = void>(endpoint: string, method = 'GET', requiresAuth = true) => {
   if (requiresAuth) {
     return async (token: string, params?: TParams): Promise<TResponse> => {
       const url = `${serverAddress}${endpoint}`;
@@ -119,18 +126,17 @@ const createApiMethod = <TResponse, TParams = void>(endpoint: string, method: st
 
       return fetchWrapper<TResponse>(url, options);
     };
-  } else {
-    return async (params: TParams): Promise<TResponse> => {
-      const options: RequestInit = { method };
-
-      if (params && method !== 'GET' && method !== 'DELETE') {
-        options.headers = { 'Content-Type': 'application/json' };
-        options.body = JSON.stringify(params);
-      }
-
-      return fetchWrapper<TResponse>(`${serverAddress}${endpoint}`, options);
-    };
   }
+  return async (params: TParams): Promise<TResponse> => {
+    const options: RequestInit = { method };
+
+    if (params && method !== 'GET' && method !== 'DELETE') {
+      options.headers = { 'Content-Type': 'application/json' };
+      options.body = JSON.stringify(params);
+    }
+
+    return fetchWrapper<TResponse>(`${serverAddress}${endpoint}`, options);
+  };
 };
 
 /**
@@ -156,7 +162,10 @@ const api = {
 
   // Custom methods that need special handling
   async fetchUserWordSets(token: string, wordListName: string): Promise<UserWordSet[]> {
-    return fetchWrapper(`${serverAddress}/word-sets/user?word_list_name=${encodeURIComponent(wordListName)}`, withAuth(token, { method: 'GET' }));
+    return fetchWrapper(
+      `${serverAddress}/word-sets/user?word_list_name=${encodeURIComponent(wordListName)}`,
+      withAuth(token, { method: 'GET' }),
+    );
   },
 
   async fetchWordSet(token: string, wordSetId: number): Promise<WordSetWithWords> {

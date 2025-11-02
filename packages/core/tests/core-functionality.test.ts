@@ -81,7 +81,7 @@ describe('Core Functionality Tests', () => {
 
       const result = customQuiz.getNextQuestion();
       if (result.question) {
-        const translationId = result.question.translationId;
+        const { translationId } = result.question;
 
         // Answer correctly once (should advance with custom setting)
         const correctAnswer = translationId === 1 ? 'привет' : translationId === 2 ? 'мир' : 'кот';
@@ -158,7 +158,7 @@ describe('Core Functionality Tests', () => {
       // Get a word and answer it correctly multiple times
       const result = quizManager.getNextQuestion();
       if (result.question) {
-        const translationId = result.question.translationId;
+        const { translationId } = result.question;
         const correctAnswer = translationId === 1 ? 'привет' : translationId === 2 ? 'мир' : 'кот';
 
         let submissionResult: ReturnType<typeof quizManager.submitAnswer> | undefined;
@@ -187,7 +187,7 @@ describe('Core Functionality Tests', () => {
       for (let i = 0; i < 8; i++) {
         const result = quizManager.getNextQuestion();
         if (result.question) {
-          const translationId = result.question.translationId;
+          const { translationId } = result.question;
           const correctAnswer = translationId === 1 ? 'привет' : translationId === 2 ? 'мир' : 'кот';
           const answer = i % 2 === 0 ? correctAnswer : 'wrong';
 
