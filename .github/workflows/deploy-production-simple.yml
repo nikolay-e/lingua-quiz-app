@@ -252,11 +252,10 @@ jobs:
             console.log(`Created deployment ${deployment.data.id}`);
             return deployment.data.id;
 
-      - name: 📦 Create GitHub Release
+      - name: Create GitHub Release
         uses: actions/github-script@v8
         with:
           script: |
-            // Get the last release tag for comparison
             let previousTag;
             try {
               const latestRelease = await github.rest.repos.getLatestRelease({
@@ -265,38 +264,31 @@ jobs:
               });
               previousTag = latestRelease.data.tag_name;
             } catch (error) {
-              // No previous release found
               console.log('No previous release found');
               previousTag = null;
             }
 
-            // Generate release notes
-            let releaseNotes = `## 🚀 Production Release ${{ steps.version.outputs.tag }}\n\n`;
-            releaseNotes += `### 📦 Version\n`;
-            releaseNotes += `- **Version:** ${{ steps.version.outputs.new }}\n`;
-            releaseNotes += `- **Commit:** ${{ github.sha }}\n`;
-            releaseNotes += `- **Deployed:** ${new Date().toISOString()}\n\n`;
+            let releaseNotes = `**Version:** ${{ steps.version.outputs.new }}\n`;
+            releaseNotes += `**Commit:** \`${{ github.sha }}\`\n\n`;
 
-            releaseNotes += `### 🐳 Docker Images\n`;
-            releaseNotes += `- Backend: \`ghcr.io/${{ github.repository }}/lingua-quiz-backend:${{ steps.version.outputs.tag }}\`\n`;
-            releaseNotes += `- Frontend: \`ghcr.io/${{ github.repository }}/lingua-quiz-frontend:${{ steps.version.outputs.tag }}\`\n\n`;
+            releaseNotes += `**Images:**\n`;
+            releaseNotes += `- \`ghcr.io/${{ github.repository }}/lingua-quiz-backend:${{ steps.version.outputs.tag }}\`\n`;
+            releaseNotes += `- \`ghcr.io/${{ github.repository }}/lingua-quiz-frontend:${{ steps.version.outputs.tag }}\`\n\n`;
 
-            releaseNotes += `### 🔗 Links\n`;
-            releaseNotes += `- [Production Site](https://lingua-quiz.nikolay-eremeev.com)\n`;
-            releaseNotes += `- [Health Check](https://lingua-quiz.nikolay-eremeev.com/api/health)\n`;
+            releaseNotes += `**Links:**\n`;
+            releaseNotes += `- Production: https://lingua-quiz.nikolay-eremeev.com\n`;
+            releaseNotes += `- Health Check: https://lingua-quiz.nikolay-eremeev.com/api/health\n`;
 
             if (previousTag) {
-              releaseNotes += `\n### 📝 Changes\n`;
               const compareUrl = `https://github.com/${{ github.repository }}/compare/${previousTag}...${{ steps.version.outputs.tag }}`;
-              releaseNotes += `[View changes since ${previousTag}](${compareUrl})\n`;
+              releaseNotes += `\n[Full Changelog](${compareUrl})\n`;
             }
 
-            // Create the release
             const release = await github.rest.repos.createRelease({
               owner: context.repo.owner,
               repo: context.repo.repo,
               tag_name: '${{ steps.version.outputs.tag }}',
-              name: 'Release ${{ steps.version.outputs.tag }}',
+              name: '${{ steps.version.outputs.tag }}',
               body: releaseNotes,
               draft: false,
               prerelease: false,
