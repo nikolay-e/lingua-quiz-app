@@ -47,20 +47,20 @@ jobs:
 
           ORPHANED=()
 
-          # Find all preview files
+          # Find all preview directories
           if [ -d "clusters/previews" ]; then
-            for file in clusters/previews/pr-*.yaml; do
-              if [ ! -f "$file" ]; then
+            for dir in clusters/previews/pr-*/; do
+              if [ ! -d "$dir" ]; then
                 continue
               fi
 
-              # Extract PR number from filename
-              PR_NUM=$(basename "$file" | sed 's/pr-\(.*\)\.yaml/\1/')
+              # Extract PR number from directory name
+              PR_NUM=$(basename "$dir" | sed 's/pr-\(.*\)/\1/')
 
               # Check if PR is still open
               if ! echo "$OPEN_PRS" | grep -q "\\b$PR_NUM\\b"; then
-                echo "Found orphaned preview: PR #${PR_NUM}"
-                ORPHANED+=("$file")
+                echo "Found orphaned preview: PR #${PR_NUM} (${dir})"
+                ORPHANED+=("$dir")
               fi
             done
           fi
@@ -70,7 +70,7 @@ jobs:
             {
               echo "found=true"
               echo "count=${#ORPHANED[@]}"
-              echo "files=${ORPHANED[*]}"
+              echo "dirs=${ORPHANED[*]}"
             } >> "$GITHUB_OUTPUT"
           else
             {
@@ -82,14 +82,14 @@ jobs:
       - name: Remove orphaned previews
         if: steps.orphaned.outputs.found == 'true'
         run: |
-          FILES="${{ steps.orphaned.outputs.files }}"
+          DIRS="${{ steps.orphaned.outputs.dirs }}"
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          for file in ${FILES}; do
-            echo "Removing: ${file}"
-            git rm "${file}"
+          for dir in ${DIRS}; do
+            echo "Removing: ${dir}"
+            git rm -r "${dir}"
           done
 
           git commit -m "chore: garbage collect orphaned preview environments
@@ -99,11 +99,14 @@ jobs:
           These previews were associated with closed PRs where the cleanup
           workflow may have failed or webhooks were missed.
 
+          ArgoCD will automatically prune all Kubernetes resources.
+
           🤖 Automated cleanup via scheduled GitHub Actions"
 
           git push origin main
 
-          echo "✓ Removed ${{ steps.orphaned.outputs.count }} orphaned preview(s)"
+          echo "✓ Removed ${{ steps.orphaned.outputs.count }} orphaned preview directory/directories"
+          echo "✓ ArgoCD will prune all Kubernetes resources automatically"
 
       - name: Report summary
         run: |
@@ -119,7 +122,7 @@ jobs:
         with:
           script: |
             const count = ${{ steps.orphaned.outputs.count }};
-            const files = `${{ steps.orphaned.outputs.files }}`.split(' ');
+            const dirs = `${{ steps.orphaned.outputs.dirs }}`.split(' ');
 
             const body = `## 🧹 Preview Environment Garbage Collection Report
 
@@ -127,9 +130,9 @@ jobs:
 
             ### Removed Previews
 
-            ${files.map(f => {
-              const pr = f.match(/pr-(\d+)\.yaml/)[1];
-              return `- PR #${pr}`;
+            ${dirs.map(d => {
+              const pr = d.match(/pr-(\d+)/)[1];
+              return `- PR #${pr} (\`${d}\`)`;
             }).join('\n')}
 
             ### Possible Causes

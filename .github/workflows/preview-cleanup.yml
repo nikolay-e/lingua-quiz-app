@@ -27,15 +27,15 @@ jobs:
 
       - name: Remove preview Application
         run: |
-          PREVIEW_FILE="clusters/previews/pr-${PR_NUMBER}.yaml"
+          PREVIEW_DIR="clusters/previews/pr-${PR_NUMBER}"
 
-          if [ -f "${PREVIEW_FILE}" ]; then
+          if [ -d "${PREVIEW_DIR}" ]; then
             echo "Removing preview environment for PR #${PR_NUMBER}"
 
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
 
-            git rm "${PREVIEW_FILE}"
+            git rm -r "${PREVIEW_DIR}"
             git commit -m "chore: cleanup preview environment for PR #${PR_NUMBER}
 
           PR closed: ${{ github.event.pull_request.html_url }}
@@ -46,44 +46,11 @@ jobs:
 
             git push origin main
 
-            echo "✓ Preview Application removed from GitOps"
-            echo "✓ Argo CD will prune all Kubernetes resources"
+            echo "✓ Preview directory removed from GitOps"
+            echo "✓ Argo CD will prune all Kubernetes resources (namespace, pods, database, certificates)"
           else
             echo "No preview environment found for PR #${PR_NUMBER}"
-            echo "File does not exist: ${PREVIEW_FILE}"
-          fi
-
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v4
-
-      - name: Configure kubeconfig
-        run: |
-          mkdir -p ~/.kube
-          echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
-          chmod 600 ~/.kube/config
-
-      - name: Delete preview database
-        run: |
-          DB_NAME="linguaquiz_pr_${PR_NUMBER}"
-          DB_USER="linguaquiz_pr_${PR_NUMBER}"
-
-          echo "Dropping preview database: ${DB_NAME}"
-
-          # Get PostgreSQL pod in shared-database namespace
-          POSTGRES_POD=$(kubectl get pod -n shared-database -l app.kubernetes.io/name=shared-postgres -o jsonpath='{.items[0].metadata.name}' 2>/dev/null)
-
-          if [ -z "$POSTGRES_POD" ]; then
-            echo "⚠️  PostgreSQL pod not found, database will be cleaned by Argo CD prune"
-          else
-            # Terminate active connections to the database
-            kubectl exec -n shared-database "$POSTGRES_POD" -- \
-              psql -U postgres -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname='${DB_NAME}';" 2>/dev/null || true
-
-            # Drop database and user (idempotent)
-            kubectl exec -n shared-database "$POSTGRES_POD" -- \
-              psql -U postgres -c "DROP DATABASE IF EXISTS \"${DB_NAME}\"; DROP USER IF EXISTS \"${DB_USER}\";" 2>/dev/null || true
-
-            echo "✓ Database ${DB_NAME} dropped"
+            echo "Directory does not exist: ${PREVIEW_DIR}"
           fi
 
       - name: Comment on PR
@@ -92,19 +59,24 @@ jobs:
           script: |
             const prNumber = context.payload.pull_request.number;
 
-            const comment = `## 🧹 Preview Environment Cleaned Up
+            const comment = `## 🧹 Preview Environment Cleanup Initiated
 
-            The preview environment for this PR has been removed.
+            The preview environment configuration has been removed from GitOps.
 
-            **Cleanup Status:** Argo CD is pruning resources (~2 minutes)
+            **Cleanup Status:** ArgoCD is automatically pruning all resources (~2-3 minutes)
 
-            Resources being removed:
+            Resources being removed via ArgoCD automated prune:
             - ✅ Namespace: \`lingua-quiz-preview-pr-${prNumber}\`
-            - ✅ Database: \`linguaquiz_pr_${prNumber}\`
-            - ✅ SSL Certificate
-            - ✅ All pods, services, and ingresses
+            - ✅ Database: \`linguaquiz_pr_${prNumber}\` (via Kubernetes Job)
+            - ✅ Database Secret \`linguaquiz-pr-${prNumber}-db-secret\`
+            - ✅ SSL Certificate \`lingua-quiz-preview-pr-${prNumber}-tls\`
+            - ✅ Deployment, Service, Ingress
+            - ✅ All pods and persistent volume claims
 
-            Thank you for using preview environments!
+            ArgoCD prunes resources automatically when source directory is removed from Git.
+            No manual intervention required.
+
+            Thank you for using preview environments! 🚀
             `;
 
             await github.rest.issues.createComment({
