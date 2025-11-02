@@ -1,5 +1,12 @@
 ---
-name: 🚀 Deploy to Production
+# Production Deployment Workflow
+#
+# Requirements:
+# - GITOPS_PAT secret must have 'Contents: Write' permission
+# - GITOPS_PAT must have permission to bypass branch protection rules
+# - Alternatively, configure branch protection to allow github-actions[bot] to bypass
+#
+name: Deploy to Production
 
 on:
   workflow_dispatch:
@@ -24,20 +31,20 @@ jobs:
       deployments: write
 
     steps:
-      - name: 📥 Checkout main branch
+      - name: Checkout main branch
         uses: actions/checkout@v5
         with:
           ref: main
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITOPS_PAT }}
 
-      - name: 🔧 Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: '22'
           cache: 'npm'
 
-      - name: 📊 Get current version and increment
+      - name: Get current version and increment
         id: version
         run: |
           # Get current version from package.json
@@ -61,7 +68,7 @@ jobs:
             echo "tag=v${NEW_VERSION}"
           } >> "$GITHUB_OUTPUT"
 
-      - name: ✏️ Update version in package.json
+      - name: Update version in package.json
         run: |
           # Update version in root package.json
           npm version ${{ steps.version.outputs.new }} --no-git-tag-version
@@ -76,7 +83,7 @@ jobs:
             fi
           done
 
-      - name: 📝 Commit version update
+      - name: Commit version update
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -87,22 +94,22 @@ jobs:
           # Push to main
           git push origin main
 
-      - name: 🏷️ Create and push Git tag
+      - name: Create and push Git tag
         run: |
           git tag ${{ steps.version.outputs.tag }}
           git push origin ${{ steps.version.outputs.tag }}
 
-      - name: 🔧 Setup Docker Buildx
+      - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: 🔐 Login to GitHub Container Registry
+      - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 🏗️ Build and push backend image
+      - name: Build and push backend image
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -120,7 +127,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: 🏗️ Build and push frontend image
+      - name: Build and push frontend image
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -138,7 +145,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: 📥 Checkout GitOps repository
+      - name: Checkout GitOps repository
         uses: actions/checkout@v5
         with:
           repository: ${{ env.GITOPS_REPO }}
@@ -146,17 +153,17 @@ jobs:
           ref: main
           path: gitops
 
-      - name: 🔧 Install yq
+      - name: Install yq
         run: |
           sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
           sudo chmod +x /usr/local/bin/yq
 
-      - name: ✏️ Update production image tags in GitOps
+      - name: Update production image tags in GitOps
         working-directory: gitops
         run: |
           TAG="${{ steps.version.outputs.tag }}"
 
-          echo "🚀 Updating production to ${TAG}..."
+          echo "Updating production to ${TAG}..."
 
           # Update production Application
           PROD_FILE="argocd/applications/production.yaml"
@@ -164,10 +171,10 @@ jobs:
           # Use sed to replace the image tags - more reliable for inline YAML strings
           sed -i "s|tag: [a-zA-Z0-9._-]*$|tag: ${TAG}|g" "${PROD_FILE}"
 
-          echo "✅ Updated production to ${TAG}"
+          echo "Updated production to ${TAG}"
           git diff "${PROD_FILE}"
 
-      - name: 📤 Commit and push GitOps changes
+      - name: Commit and push GitOps changes
         working-directory: gitops
         run: |
           TAG="${{ steps.version.outputs.tag }}"
@@ -184,9 +191,9 @@ jobs:
 
           git push origin main
 
-          echo "✅ Pushed to GitOps repository"
+          echo "Pushed to GitOps repository"
 
-      - name: 🗑️ Delete old production deployment
+      - name: Delete old production deployment
         uses: actions/github-script@v8
         with:
           script: |
@@ -222,7 +229,7 @@ jobs:
               }
             }
 
-      - name: 🚀 Create new production deployment
+      - name: Create new production deployment
         uses: actions/github-script@v8
         id: deployment
         with:
@@ -297,39 +304,39 @@ jobs:
 
             console.log(`Created release: ${release.data.html_url}`);
 
-      - name: 🔄 Trigger ArgoCD sync
+      - name: Trigger ArgoCD sync
         run: |
-          echo "🔄 ArgoCD will auto-detect the change and sync production"
-          echo "✅ Production deployment initiated!"
+          echo "ArgoCD will auto-detect the change and sync production"
+          echo "Production deployment initiated"
 
-      - name: 📊 Summary
+      - name: Summary
         run: |
           {
-            echo "## 🚀 Production Deployed Successfully!"
+            echo "## Production Deployed Successfully"
             echo ""
-            echo "### 📦 Version Information"
+            echo "### Version Information"
             echo "- **Previous Version:** \`${{ steps.version.outputs.current }}\`"
             echo "- **New Version:** \`${{ steps.version.outputs.new }}\`"
             echo "- **Git Tag:** \`${{ steps.version.outputs.tag }}\`"
             echo ""
-            echo "### 🐳 Docker Images"
+            echo "### Docker Images"
             echo "- Backend: \`${{ env.REGISTRY }}/lingua-quiz-backend:${{ steps.version.outputs.tag }}\`"
             echo "- Frontend: \`${{ env.REGISTRY }}/lingua-quiz-frontend:${{ steps.version.outputs.tag }}\`"
             echo ""
-            echo "### 🔗 Links"
+            echo "### Links"
             echo "- **Production URL:** https://lingua-quiz.nikolay-eremeev.com"
             echo "- **Health Check:** https://lingua-quiz.nikolay-eremeev.com/api/health"
             echo "- **GitHub Release:** https://github.com/${{ github.repository }}/releases/tag/${{ steps.version.outputs.tag }}"
             echo ""
-            echo "### ✅ Deployment Steps Completed"
-            echo "1. ✅ Incremented version to ${{ steps.version.outputs.new }}"
-            echo "2. ✅ Committed and pushed version update to main"
-            echo "3. ✅ Created and pushed Git tag ${{ steps.version.outputs.tag }}"
-            echo "4. ✅ Built and pushed Docker images with version tag"
-            echo "5. ✅ Updated GitOps repository with new version"
-            echo "6. ✅ Recreated GitHub deployment"
-            echo "7. ✅ Created GitHub release"
-            echo "8. ✅ ArgoCD sync triggered"
+            echo "### Deployment Steps Completed"
+            echo "1. Incremented version to ${{ steps.version.outputs.new }}"
+            echo "2. Committed and pushed version update to main"
+            echo "3. Created and pushed Git tag ${{ steps.version.outputs.tag }}"
+            echo "4. Built and pushed Docker images with version tag"
+            echo "5. Updated GitOps repository with new version"
+            echo "6. Recreated GitHub deployment"
+            echo "7. Created GitHub release"
+            echo "8. ArgoCD sync triggered"
             echo ""
-            echo "🎉 **Deployment complete!**"
+            echo "**Deployment complete**"
           } >> "$GITHUB_STEP_SUMMARY"
