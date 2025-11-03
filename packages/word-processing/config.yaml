@@ -29,7 +29,7 @@ languages:
       superlative: ['est$']
       third_person: ['s$', 'es$']
 
-    skip_words: ['a', 'an', 'the', 'to', 'of', 'and', 'or', 'in', 'on', 'at']
+    skip_words: []
 
     blacklist:
       contractions: ["don't", "can't", "won't", "i'm", "you're", "it's", "i've", "doesn't", "didn't", "isn't", "aren't", "wasn't", "weren't", "we're", "they're", "haven't", "hasn't", "hadn't", "couldn't", "shouldn't", "wouldn't", "i'll", "you'll", "we'll", "he'll", "she'll", "that's", "what's", "who's", "there's", "here's", "we've", "you've", "they've", "it'll", "that'll", "would've", "could've", "should've"]
@@ -37,11 +37,12 @@ languages:
       abbreviations: ["mr", "mrs", "ms", "dr", "st", "co", "inc", "ltd", "etc", "vs", "pp", "tv", "http", "https", "www", "uk", "usa", "ii", "iii", "iv", "vi", "vii", "viii", "ix", "xix", "xx"]
       interjections: ["oh", "ah", "uh", "um", "hmm", "haha", "ha", "huh", "ugh", "eh", "yo", "lol", "omg", "wtf", "yep", "nope", "yup", "yea"]
       slang: ["dude", "bro", "buddy", "ain't", "gonna", "wanna", "gotta", "kinda", "sorta", "ya", "cos", "cuz", "dunno", "lemme", "gimme"]
+      proper_nouns: ["america", "china", "india", "europe", "london", "paris", "york", "john", "james", "mary", "robert", "david", "michael", "william", "richard", "joseph", "thomas", "charles", "donald", "trump", "obama"]
       too_short: ["i", "a"]
 
     filtering:
-      min_word_length: 3
-      short_word_whitelist: ["no", "ok", "am", "be", "go", "do", "up", "we", "he", "me", "my", "us", "or", "so", "if", "at", "by", "is", "to", "of", "in", "on", "as"]
+      min_word_length: 2
+      short_word_whitelist: ["no", "ok", "am", "be", "go", "do", "up", "we", "he", "me", "my", "us", "or", "so", "if", "at", "by", "is", "to", "of", "in", "on", "as", "an", "a", "i"]
       exclude_patterns:
         - "^\\w'\\w+"
         - "^\\d+$"
@@ -74,19 +75,20 @@ languages:
       verb_conjugation: ['e$', 'st$', 't$', 'en$', 'et$']
       past_participle: ['ge.*t$', 'ge.*en$']
 
-    skip_words: ['der', 'die', 'das', 'den', 'dem', 'des', 'ein', 'eine', 'einer', 'einen', 'einem', 'eines', 'und', 'oder', 'in', 'an', 'auf', 'zu']
+    skip_words: []
 
     blacklist:
       profanity: ["scheisse", "scheiße", "arsch", "fick", "ficken", "schlampe", "arschloch", "hurensohn", "fuck", "kacke", "kotzen", "porno"]
       abbreviations: ["dr", "de", "co", "nr", "ca", "mm", "cm", "pp", "dm", "kg", "ha", "ma", "mr", "fm", "ab", "st", "etc", "usa", "uk", "ii", "iii", "iv"]
       interjections: ["oh", "ok", "ah", "ach", "hm", "eh", "na", "hä", "ey", "xd", "ähm", "mmm"]
       slang: ["nen", "nem", "ka", "ned"]
-      anglicisms: ["of", "and", "the", "in", "on", "at"]  # Keep only pure English words
+      anglicisms: ["of", "and", "the", "in", "on", "at"]
+      proper_nouns: ["deutschland", "berlin", "münchen", "hamburg", "wien", "zürich", "europa", "amerika", "hans", "peter", "anna", "maria", "schmidt", "müller", "weber"]
       too_short: ["of", "to", "eh", "er", "re", "ne", "ad", "et", "un", "at", "op", "us", "ii"]
 
     filtering:
-      min_word_length: 3
-      short_word_whitelist: ["am", "ab", "an", "zu", "um", "im", "ja", "wo", "ob"]
+      min_word_length: 2
+      short_word_whitelist: ["am", "ab", "an", "zu", "um", "im", "ja", "wo", "ob", "in", "zu", "um", "im", "er", "es", "du", "wir", "ihr", "ich", "und", "der", "die", "das", "ein", "den", "dem", "des"]
       exclude_patterns:
         - "^\\d+$"
         - "^[A-Z]{2,}$"
@@ -122,19 +124,22 @@ languages:
       gender_feminine: ['a$']
       gender_masculine: ['o$']
 
-    skip_words: ['el', 'la', 'los', 'las', 'un', 'una', 'unos', 'unas', 'y', 'o', 'de', 'del', 'en', 'a', 'al', 'por', 'para']
+    skip_words: []
 
     blacklist:
       profanity: ["puta", "mierda", "joder", "carajo", "coño", "cabrón", "pene", "culo", "polla", "boludo", "pendejo", "verga", "chingar"]
-      abbreviations: ["dr", "sr", "st", "of", "de", "pp", "etc", "mr", "sra", "km", "mg", "mm", "cc", "cm"]
+      abbreviations: ["dr", "sr", "st", "of", "de", "pp", "etc", "mr", "sra", "km", "mg", "mm", "cc", "cm", "ex"]
       interjections: ["oh", "ah", "uh", "hey", "hola", "eh", "ay", "uf", "oye", "ey"]
-      anglicisms: ["of", "and", "in", "new", "post", "show", "the", "internet", "online", "for", "team", "football", "love", "web", "boy", "email", "okay"]
-      slang: ["pa", "po", "pues", "che", "tío", "tía", "pibe"]
+      anglicisms: ["of", "and", "in", "new", "post", "show", "the", "internet", "online", "for", "team", "football", "love", "web", "boy", "email", "okay", "twitter", "video", "photo", "blog"]
+      slang: ["pa", "po", "che", "tío", "tía", "pibe", "pues"]
+      proper_nouns: ["méxico", "españa", "argentina", "chile", "colombia", "venezuela", "perú", "cuba", "brasil", "madrid", "barcelona", "buenos", "aires", "josé", "juan", "maría", "carlos", "luis", "jorge", "pedro", "miguel", "antonio", "argentino", "américo"]
+      technical: ["internet", "web", "twitter", "video", "foto", "blog", "ministerio", "congreso"]
+      lemma_errors: ["sar", "mierdo", "va", "vo", "quier", "diar", "contiguir"]
       too_short: ["oh", "pa", "po", "ta", "na", "eh"]
 
     filtering:
-      min_word_length: 3
-      short_word_whitelist: ["no", "sí", "ya", "me", "mi", "le", "lo", "se", "si", "un", "te", "su", "es", "al", "yo", "él", "tú"]
+      min_word_length: 2
+      short_word_whitelist: ["no", "sí", "ya", "me", "mi", "le", "lo", "se", "si", "un", "te", "su", "es", "al", "yo", "él", "tú", "ni", "en", "el", "la", "de", "y", "a", "o"]
       exclude_patterns:
         - "^\\d+$"
         - "^[A-Z]{2,}$"

@@ -58,16 +58,102 @@ class MigrationFileSource(WordSource):
 
 
 class FrequencySource(WordSource):
-    def __init__(self, language_code: str, top_n: int = 8000, start_rank: int = 1):
+    def __init__(self, language_code: str, top_n: int = 8000, start_rank: int = 1, lemmatize: bool = False):
         self.language_code = language_code
         self.top_n = top_n
         self.start_rank = start_rank
+        self.lemmatize = lemmatize
         self._words = None
+        self._lemmatizer = None
+
+    def _get_lemmatizer(self):
+        if self._lemmatizer is None and self.lemmatize:
+            from .lemmatizer import Lemmatizer
+
+            self._lemmatizer = Lemmatizer()
+        return self._lemmatizer
+
+    def _filter_junk_words(self, words: list[str]) -> list[str]:
+        """
+        Filter out junk words (numbers, proper nouns, blacklisted words, etc.).
+
+        Args:
+            words: List of words to filter
+
+        Returns:
+            Filtered list without junk
+        """
+        if not self.lemmatize:
+            return words
+
+        from ..config.config_loader import get_config_loader
+        from .nlp_models import get_nlp_model
+
+        config_loader = get_config_loader()
+        lang_config = config_loader.get_language_config(self.language_code)
+        blacklist = lang_config.get("blacklist", {})
+
+        # Build set of all blacklisted words
+        blacklisted_words = set()
+        for _, word_list in blacklist.items():
+            blacklisted_words.update(w.lower() for w in word_list)
+
+        model_preferences = config_loader.get_spacy_models(self.language_code)
+        nlp = get_nlp_model(self.language_code, model_preferences, silent=True)
+
+        if nlp is None:
+            return words
+
+        filtered = []
+        for word in words:
+            word_lower = word.lower()
+
+            # Skip pure numbers
+            if word.isdigit():
+                continue
+
+            # Skip single letters (except important ones)
+            if len(word) == 1 and word_lower not in ["y", "a", "o", "e", "i"]:
+                continue
+
+            # Skip blacklisted words
+            if word_lower in blacklisted_words:
+                continue
+
+            # Check POS tag
+            try:
+                doc = nlp(word)
+                if doc and len(doc) > 0:
+                    token = doc[0]
+                    # Skip proper nouns (names, places, etc.)
+                    if token.pos_ == "PROPN":
+                        continue
+                    # Skip words with suspicious lemmatization (lemma too different from word)
+                    lemma = token.lemma_.lower()
+                    if len(word) > 3 and len(lemma) <= 3 and lemma not in ["ser", "ir", "dar", "ver", "haber", "estar"]:
+                        # Lemma is suspiciously short, likely an error
+                        continue
+                filtered.append(word)
+            except Exception:
+                # If analysis fails, keep the word
+                filtered.append(word)
+
+        return filtered
 
     def _load_words(self):
         if self._words is None:
             all_words = top_n_list(self.language_code, self.start_rank + self.top_n - 1)
-            self._words = all_words[self.start_rank - 1 :]
+            words_slice = all_words[self.start_rank - 1 :]
+
+            # Filter junk before lemmatization
+            if self.lemmatize:
+                words_slice = self._filter_junk_words(words_slice)
+
+            if self.lemmatize:
+                lemmatizer = self._get_lemmatizer()
+                self._words = lemmatizer.lemmatize_word_list(words_slice, self.language_code)
+            else:
+                self._words = words_slice
 
     def get_words(self) -> Iterator[Word]:
         self._load_words()

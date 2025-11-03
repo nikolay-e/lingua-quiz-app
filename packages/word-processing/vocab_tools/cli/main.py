@@ -256,6 +256,11 @@ Requirements:
             help="Number of top frequency words to generate (default: 8000)",
         )
         parser.add_argument(
+            "--lemmatize",
+            action="store_true",
+            help="Lemmatize words and deduplicate by lemma (removes inflected forms)",
+        )
+        parser.add_argument(
             "--start-rank",
             type=int,
             default=1,
@@ -683,7 +688,8 @@ Requirements:
                 fetch_multiplier = 2.5
                 fetch_count = int(args.top_n * fetch_multiplier)
 
-                source = FrequencySource(language, top_n=fetch_count, start_rank=args.start_rank)
+                lemmatize = getattr(args, "lemmatize", False)
+                source = FrequencySource(language, top_n=fetch_count, start_rank=args.start_rank, lemmatize=lemmatize)
 
                 processor = VocabularyProcessor(language, silent=False)
 

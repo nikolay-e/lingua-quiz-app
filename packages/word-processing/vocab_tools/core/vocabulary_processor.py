@@ -121,6 +121,11 @@ class VocabularyProcessor:
         pos_tag = token.pos_
         morphology = self._extract_morphology(token)
 
+        # Filter out proper nouns (names, places, etc.)
+        if pos_tag == "PROPN":
+            return None
+
+        # Filter out named entities (except numbers)
         if token.ent_type_ and token.ent_type_ not in ["ORDINAL", "CARDINAL"]:
             return None
 

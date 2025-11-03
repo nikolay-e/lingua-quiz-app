@@ -89,6 +89,16 @@ class LevelCoverageAnalyzer:
         """
         self.db_parser = VocabularyFileParser(migrations_directory)
         self.migrations_dir = self.db_parser.migrations_dir
+        self._lemmatizer = None
+        self._lemma_rank_maps = {}
+
+    def _get_lemmatizer(self):
+        """Get or create lemmatizer instance."""
+        if self._lemmatizer is None:
+            from ..core.lemmatizer import Lemmatizer
+
+            self._lemmatizer = Lemmatizer()
+        return self._lemmatizer
 
     def extract_level_from_filename(self, filename: str) -> str | None:
         """
@@ -124,13 +134,14 @@ class LevelCoverageAnalyzer:
                 return lang_code
         return None
 
-    def get_word_frequency_rank(self, word: str, language_code: str) -> int | None:
+    def get_word_frequency_rank(self, word: str, language_code: str, show_progress: bool = False) -> int | None:
         """
-        Get the frequency rank of a word.
+        Get the frequency rank of a word using lemmatization.
 
         Args:
             word: Word to check
             language_code: ISO language code
+            show_progress: Whether to show progress for initial lemmatization
 
         Returns:
             Rank (1-based) or None if word not in frequency list
@@ -138,10 +149,20 @@ class LevelCoverageAnalyzer:
         from wordfreq import top_n_list
 
         try:
-            # Check up to 25000 words
-            top_words = top_n_list(language_code, 25000)
-            if word.lower() in top_words:
-                return top_words.index(word.lower()) + 1
+            lemmatizer = self._get_lemmatizer()
+
+            # Build lemma -> rank mapping if not cached
+            if language_code not in self._lemma_rank_maps:
+                if show_progress:
+                    print(f"   🔄 Building lemma rank map for {language_code.upper()} (25000 words)...")
+                top_words = top_n_list(language_code, 25000)
+                self._lemma_rank_maps[language_code] = lemmatizer.build_lemma_rank_map(top_words, language_code)
+                if show_progress:
+                    print(f"   ✅ Lemma rank map ready for {language_code.upper()}")
+
+            # Get lemma of input word and find its rank
+            word_lemma = lemmatizer.get_lemma(word, language_code)
+            return self._lemma_rank_maps[language_code].get(word_lemma)
         except Exception:
             pass
         return None
@@ -169,6 +190,7 @@ class LevelCoverageAnalyzer:
         level: str,
         expected_range: tuple[int, int],
         filename: str,
+        show_progress: bool = False,
     ) -> tuple[int, int, list[WordLevelMismatch]]:
         """
         Analyze words from entries and categorize them.
@@ -189,7 +211,7 @@ class LevelCoverageAnalyzer:
                     continue
 
                 analyzed_words.add(word)
-                rank = self.get_word_frequency_rank(word, lang_code)
+                rank = self.get_word_frequency_rank(word, lang_code, show_progress=show_progress)
 
                 if rank is None:
                     words_out_of_range += 1
@@ -282,7 +304,7 @@ class LevelCoverageAnalyzer:
         # Analyze each word
         try:
             words_in_range, words_out_of_range, mismatches = self._analyze_words_from_entries(
-                entries, normalizer, lang_code, level, expected_range, filename
+                entries, normalizer, lang_code, level, expected_range, filename, show_progress=show_progress
             )
         except Exception as e:
             if show_progress:

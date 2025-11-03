@@ -2,7 +2,6 @@ analysis_history.json
 .age-key.txt
 
 # CLAUDE-related files
-CLAUDE.md
 .claude/
 
 # Dependency directories
