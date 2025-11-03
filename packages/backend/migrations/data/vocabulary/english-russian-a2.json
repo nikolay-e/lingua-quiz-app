@@ -7973,7 +7973,7 @@
       "source_id": 8011813,
       "target_id": 8011814,
       "source_word": "doubt",
-      "target_word": "сомнение",
+      "target_word": "сомнение [verb: сомневаться]",
       "source_example": "There is some doubt about the accuracy of the report.",
       "target_example": "Есть некоторые сомнения в точности отчета."
     },
@@ -8120,15 +8120,6 @@
       "target_word": "чрезвычайно|крайне|очень",
       "source_example": "The weather in the Arctic is extremely cold.",
       "target_example": "Погода в Арктике чрезвычайно холодная."
-    },
-    {
-      "translation_id": 8010924,
-      "source_id": 8011849,
-      "target_id": 8011850,
-      "source_word": "face",
-      "target_word": "сталкиваться|встречаться лицом к лицу",
-      "source_example": "You must face the consequences of your actions.",
-      "target_example": "Ты должен столкнуться с последствиями своих действий."
     },
     {
       "translation_id": 8010925,
@@ -8522,7 +8513,7 @@
       "source_id": 8011939,
       "target_id": 8011940,
       "source_word": "iron",
-      "target_word": "железо|утюг",
+      "target_word": "железо|утюг [verb: гладить]",
       "source_example": "She used an iron to press her clothes.",
       "target_example": "Она использовала утюг, чтобы погладить свою одежду."
     },
@@ -8597,15 +8588,6 @@
       "target_word": "длина",
       "source_example": "The swimming pool has a length of 25 meters.",
       "target_example": "Длина бассейна составляет 25 метров."
-    },
-    {
-      "translation_id": 8010978,
-      "source_id": 8011957,
-      "target_id": 8011958,
-      "source_word": "lie",
-      "target_word": "лежать",
-      "source_example": "I just want to lie on the sofa and watch TV.",
-      "target_example": "Я просто хочу лежать на диване и смотреть телевизор."
     },
     {
       "translation_id": 8010979,
@@ -9305,7 +9287,7 @@
       "source_id": 8012117,
       "target_id": 8012118,
       "source_word": "switch",
-      "target_word": "переключатель",
+      "target_word": "переключатель [verb: переключать]",
       "source_example": "He flicked a switch and the lights came on.",
       "target_example": "Он щелкнул выключателем, и зажегся свет."
     },
@@ -9571,20 +9553,11 @@
       "target_example": "Этот свитер сделан из 100% натуральной шерсти."
     },
     {
-      "translation_id": 8011090,
-      "source_id": 8012181,
-      "target_id": 8012182,
-      "source_word": "doubt",
-      "target_word": "сомневаться",
-      "source_example": "I doubt that he will arrive on time.",
-      "target_example": "Я сомневаюсь, что он прибудет вовремя."
-    },
-    {
       "translation_id": 8011091,
       "source_id": 8012183,
       "target_id": 8012184,
       "source_word": "lie",
-      "target_word": "ложь|неправда",
+      "target_word": "ложь|неправда [verb: лежать]",
       "source_example": "It was a lie, and everyone knew it.",
       "target_example": "Это была ложь, и все это знали."
     },
@@ -9598,31 +9571,13 @@
       "target_example": "У нее очень острый и аналитический ум."
     },
     {
-      "translation_id": 8011093,
-      "source_id": 8012187,
-      "target_id": 8012188,
-      "source_word": "switch",
-      "target_word": "переключать|менять",
-      "source_example": "Can you switch places with me?",
-      "target_example": "Можешь поменяться со мной местами?"
-    },
-    {
       "translation_id": 8011094,
       "source_id": 8012189,
       "target_id": 8012190,
       "source_word": "face",
-      "target_word": "лицо",
+      "target_word": "лицо [verb: сталкиваться]",
       "source_example": "He had a sad expression on his face.",
       "target_example": "У него было грустное выражение лица."
-    },
-    {
-      "translation_id": 8011096,
-      "source_id": 8012193,
-      "target_id": 8012194,
-      "source_word": "iron",
-      "target_word": "гладить",
-      "source_example": "I need to iron this shirt.",
-      "target_example": "Мне нужно погладить эту рубашку."
     },
     {
       "translation_id": 8011097,

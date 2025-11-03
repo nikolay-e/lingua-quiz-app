@@ -155,11 +155,8 @@ class MigrationValidator:
             entry_issues = self._validate_entry(entry, filename, normalizer)
             result.issues.extend(entry_issues)
 
-            # Track for duplicate detection (handle all word variants)
-            word_variants = normalizer.extract_word_variants(entry.source_word)
-            for variant in word_variants:
-                if variant:
-                    seen_words[variant].append(entry.translation_id)
+            # Track for duplicate detection (exact source_word match only)
+            seen_words[entry.source_word].append(entry.translation_id)
 
             # Track IDs
             seen_ids["translation"].add(entry.translation_id)

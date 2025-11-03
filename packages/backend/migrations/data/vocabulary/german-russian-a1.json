@@ -94,20 +94,11 @@
       "target_example": "Будни иногда могут быть стрессовыми."
     },
     {
-      "translation_id": 3000012,
-      "source_id": 3000025,
-      "target_id": 3000026,
-      "source_word": "also",
-      "target_word": "когда [в прошлом], чем [что-то]",
-      "source_example": "Also ich klein war, spielte ich viel draußen.",
-      "target_example": "Когда я был маленьким, я много играл на улице."
-    },
-    {
       "translation_id": 3000013,
       "source_id": 3000027,
       "target_id": 3000028,
       "source_word": "also",
-      "target_word": "итак",
+      "target_word": "итак|так что",
       "source_example": "Also, was machen wir heute Abend?",
       "target_example": "Итак, что мы делаем сегодня вечером?"
     },

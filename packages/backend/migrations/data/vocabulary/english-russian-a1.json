@@ -1543,15 +1543,6 @@
       "target_example": "Корова в поле."
     },
     {
-      "translation_id": 8000175,
-      "source_id": 8000351,
-      "target_id": 8000352,
-      "source_word": "cream",
-      "target_word": "сливки|крем",
-      "source_example": "I like cream in my coffee.",
-      "target_example": "Я люблю сливки в кофе."
-    },
-    {
       "translation_id": 8000176,
       "source_id": 8000353,
       "target_id": 8000354,
@@ -3055,20 +3046,11 @@
       "target_example": "Я ненавижу пауков."
     },
     {
-      "translation_id": 8000344,
-      "source_id": 8000689,
-      "target_id": 8000690,
-      "source_word": "have",
-      "target_word": "иметь|обладать",
-      "source_example": "I have a car.",
-      "target_example": "У меня есть машина."
-    },
-    {
       "translation_id": 8000345,
       "source_id": 8000691,
       "target_id": 8000692,
       "source_word": "have to",
-      "target_word": "должен|вынужден",
+      "target_word": "должен|вынужден [verb: иметь]",
       "source_example": "I have to go now.",
       "target_example": "Мне нужно идти."
     },
@@ -3325,20 +3307,11 @@
       "target_example": "Он мой муж."
     },
     {
-      "translation_id": 8000377,
-      "source_id": 8000755,
-      "target_id": 8000756,
-      "source_word": "ice",
-      "target_word": "лёд",
-      "source_example": "The ice is cold.",
-      "target_example": "Лед холодный."
-    },
-    {
       "translation_id": 8000378,
       "source_id": 8000757,
       "target_id": 8000758,
       "source_word": "ice cream",
-      "target_word": "мороженое",
+      "target_word": "мороженое [noun: сливки, noun: лёд]",
       "source_example": "I like ice cream.",
       "target_example": "Я люблю мороженое."
     },
@@ -3775,20 +3748,11 @@
       "target_example": "Пожалуйста, включи свет."
     },
     {
-      "translation_id": 8000429,
-      "source_id": 8000859,
-      "target_id": 8000860,
-      "source_word": "like (similar)",
-      "target_word": "как|похожий",
-      "source_example": "She is like her mother.",
-      "target_example": "Она похожа на свою мать."
-    },
-    {
       "translation_id": 8000430,
       "source_id": 8000861,
       "target_id": 8000862,
       "source_word": "like (find pleasant)",
-      "target_word": "нравиться|любить",
+      "target_word": "нравиться|любить [prep: как]",
       "source_example": "I like you.",
       "target_example": "Ты мне нравишься."
     },
@@ -4459,20 +4423,11 @@
       "target_example": "Я читаю газету каждый день."
     },
     {
-      "translation_id": 8000507,
-      "source_id": 8001015,
-      "target_id": 8001016,
-      "source_word": "next",
-      "target_word": "следующий",
-      "source_example": "I will see you next week.",
-      "target_example": "Увидимся на следующей неделе."
-    },
-    {
       "translation_id": 8000508,
       "source_id": 8001017,
       "target_id": 8001018,
       "source_word": "next to",
-      "target_word": "рядом с",
+      "target_word": "рядом с [adj: следующий]",
       "source_example": "The bank is next to the post office.",
       "target_example": "Банк рядом с почтой."
     },
@@ -4520,15 +4475,6 @@
       "target_word": "девяносто",
       "source_example": "He is ninety years old.",
       "target_example": "Ему девяносто лет."
-    },
-    {
-      "translation_id": 8000515,
-      "source_id": 8001031,
-      "target_id": 8001032,
-      "source_word": "no one",
-      "target_word": "никто",
-      "source_example": "No one is here.",
-      "target_example": "Здесь никого нет."
     },
     {
       "translation_id": 8000516,
@@ -4697,7 +4643,7 @@
       "source_id": 8001079,
       "target_id": 8001080,
       "source_word": "one",
-      "target_word": "один",
+      "target_word": "один [pron: никто]",
       "source_example": "I have one brother.",
       "target_example": "У меня один брат."
     },

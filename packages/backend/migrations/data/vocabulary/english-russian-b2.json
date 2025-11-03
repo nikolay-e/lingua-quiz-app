@@ -98,7 +98,7 @@
       "source_id": 9005021,
       "target_id": 9005022,
       "source_word": "acid",
-      "target_word": "кислота",
+      "target_word": "кислота [adj: кислый]",
       "source_example": "Lemon juice contains citric acid.",
       "target_example": "Лимонный сок содержит лимонную кислоту."
     },
@@ -197,7 +197,7 @@
       "source_id": 9005045,
       "target_id": 9005046,
       "source_word": "alien",
-      "target_word": "инопланетянин|пришелец, иностранец|чужак",
+      "target_word": "инопланетянин|пришелец [adj: чужой]",
       "source_example": "The movie is about an alien from another planet.",
       "target_example": "Фильм о пришельце с другой планеты."
     },
@@ -521,7 +521,7 @@
       "source_id": 9005117,
       "target_id": 9005118,
       "source_word": "bat",
-      "target_word": "летучая мышь, бита",
+      "target_word": "летучая мышь|бита [verb: отбивать]",
       "source_example": "A bat is a mammal that can fly.",
       "target_example": "Летучая мышь — это млекопитающее, которое умеет летать."
     },
@@ -544,20 +544,11 @@
       "target_example": "Он сел рядом с ней."
     },
     {
-      "translation_id": 9005061,
-      "source_id": 9005123,
-      "target_id": 9005124,
-      "source_word": "besides [prep.]",
-      "target_word": "кроме|помимо",
-      "source_example": "Who was at the party besides you?",
-      "target_example": "Кто был на вечеринке кроме тебя?"
-    },
-    {
       "translation_id": 9005062,
       "source_id": 9005125,
       "target_id": 9005126,
       "source_word": "besides",
-      "target_word": "кроме того|к тому же",
+      "target_word": "кроме того|к тому же [prep: кроме]",
       "source_example": "I don't want to go; besides, I'm tired.",
       "target_example": "Я не хочу идти, к тому же я устал."
     },
@@ -575,18 +566,9 @@
       "source_id": 9005129,
       "target_id": 9005130,
       "source_word": "bid",
-      "target_word": "ставка|предложение [цены]",
+      "target_word": "ставка|предложение [verb: предлагать цену]",
       "source_example": "She made the highest bid at the auction.",
       "target_example": "Она сделала самую высокую ставку на аукционе."
-    },
-    {
-      "translation_id": 9005065,
-      "source_id": 9005131,
-      "target_id": 9005132,
-      "source_word": "bid",
-      "target_word": "предлагать цену|делать ставку",
-      "source_example": "I bid $100 for the painting.",
-      "target_example": "Я предложил 100 долларов за картину."
     },
     {
       "translation_id": 9005066,
@@ -634,20 +616,11 @@
       "target_example": "В результате бомбардировки было много жертв."
     },
     {
-      "translation_id": 9005071,
-      "source_id": 9005143,
-      "target_id": 9005144,
-      "source_word": "boost",
-      "target_word": "повышать|стимулировать|увеличивать",
-      "source_example": "The new policy is designed to boost the economy.",
-      "target_example": "Новая политика призвана стимулировать экономику."
-    },
-    {
       "translation_id": 9005072,
       "source_id": 9005145,
       "target_id": 9005146,
       "source_word": "boost",
-      "target_word": "повышение|стимул|рост",
+      "target_word": "повышение|стимул [verb: повышать]",
       "source_example": "The tax cuts will give the economy a boost.",
       "target_example": "Снижение налогов даст толчок экономике."
     },
@@ -823,20 +796,11 @@
       "target_example": "У него очаровательная улыбка."
     },
     {
-      "translation_id": 9005092,
-      "source_id": 9005185,
-      "target_id": 9005186,
-      "source_word": "chase",
-      "target_word": "гнаться|преследовать",
-      "source_example": "The police car was chasing the thieves.",
-      "target_example": "Полицейская машина преследовала воров."
-    },
-    {
       "translation_id": 9005093,
       "source_id": 9005187,
       "target_id": 9005188,
       "source_word": "chase",
-      "target_word": "погоня|преследование",
+      "target_word": "погоня [verb: гнаться]",
       "source_example": "The robbers were caught after a long chase.",
       "target_example": "Грабителей поймали после долгой погони."
     },
@@ -850,20 +814,11 @@
       "target_example": "Она поцеловала его в щеку."
     },
     {
-      "translation_id": 9005095,
-      "source_id": 9005191,
-      "target_id": 9005192,
-      "source_word": "cheer",
-      "target_word": "аплодировать|подбадривать|болеть [за команду]",
-      "source_example": "The crowd cheered for the home team.",
-      "target_example": "Толпа болела за домашнюю команду."
-    },
-    {
       "translation_id": 9005096,
       "source_id": 9005193,
       "target_id": 9005194,
       "source_word": "cheer",
-      "target_word": "возглас одобрения|аплодисменты",
+      "target_word": "возглас одобрения|аплодисменты [verb: аплодировать]",
       "source_example": "A loud cheer went up from the crowd.",
       "target_example": "Из толпы раздались громкие аплодисменты."
     },
@@ -976,20 +931,11 @@
       "target_example": "Сад полон ярких цветов."
     },
     {
-      "translation_id": 9005109,
-      "source_id": 9005219,
-      "target_id": 9005220,
-      "source_word": "comic",
-      "target_word": "комический|смешной",
-      "source_example": "He is a famous comic actor.",
-      "target_example": "Он известный комический актер."
-    },
-    {
       "translation_id": 9005110,
       "source_id": 9005221,
       "target_id": 9005222,
       "source_word": "comic",
-      "target_word": "комик, комикс",
+      "target_word": "комик|комикс [adj: комический]",
       "source_example": "I used to love reading comics as a child.",
       "target_example": "В детстве я любил читать комиксы."
     },
@@ -1075,20 +1021,11 @@
       "target_example": "Образование является обязательным для всех детей."
     },
     {
-      "translation_id": 9005120,
-      "source_id": 9005241,
-      "target_id": 9005242,
-      "source_word": "concrete",
-      "target_word": "бетонный, (конкретный|определённый)",
-      "source_example": "We need concrete evidence, not just theories.",
-      "target_example": "Нам нужны конкретные доказательства, а не просто теории."
-    },
-    {
       "translation_id": 9005121,
       "source_id": 9005243,
       "target_id": 9005244,
       "source_word": "concrete",
-      "target_word": "бетон",
+      "target_word": "бетон [adj: бетонный]",
       "source_example": "The walls are made of concrete.",
       "target_example": "Стены сделаны из бетона."
     },
@@ -1295,7 +1232,7 @@
       "source_id": 9005289,
       "target_id": 9005290,
       "source_word": "counter",
-      "target_word": "прилавок|стойка",
+      "target_word": "прилавок|стойка [verb: противостоять]",
       "source_example": "I bought it at the sales counter.",
       "target_example": "Я купил это у прилавка."
     },
@@ -1318,20 +1255,11 @@
       "target_example": "Фильм о ковбоях на Диком Западе."
     },
     {
-      "translation_id": 9005147,
-      "source_id": 9005295,
-      "target_id": 9005296,
-      "source_word": "crack",
-      "target_word": "трескаться|взламывать",
-      "source_example": "The mirror cracked.",
-      "target_example": "Зеркало треснуло."
-    },
-    {
       "translation_id": 9005148,
       "source_id": 9005297,
       "target_id": 9005298,
       "source_word": "crack",
-      "target_word": "трещина",
+      "target_word": "трещина [verb: трескаться]",
       "source_example": "There is a crack in the wall.",
       "target_example": "В стене есть трещина."
     },
@@ -1340,7 +1268,7 @@
       "source_id": 9005299,
       "target_id": 9005300,
       "source_word": "craft",
-      "target_word": "ремесло|умение",
+      "target_word": "ремесло|умение [verb: мастерить]",
       "source_example": "He is a master of his craft.",
       "target_example": "Он мастер своего ремесла."
     },
@@ -1367,18 +1295,9 @@
       "source_id": 9005305,
       "target_id": 9005306,
       "source_word": "cruise",
-      "target_word": "круиз|морское путешествие",
+      "target_word": "круиз [verb: совершать круиз]",
       "source_example": "We went on a cruise in the Caribbean.",
       "target_example": "Мы отправились в круиз по Карибскому морю."
-    },
-    {
-      "translation_id": 9005153,
-      "source_id": 9005307,
-      "target_id": 9005308,
-      "source_word": "cruise",
-      "target_word": "совершать круиз|плавать",
-      "source_example": "We cruised along the coast.",
-      "target_example": "Мы плыли вдоль побережья."
     },
     {
       "translation_id": 9005154,
@@ -1421,18 +1340,9 @@
       "source_id": 9005317,
       "target_id": 9005318,
       "source_word": "dairy",
-      "target_word": "молочные продукты",
+      "target_word": "молочные продукты [adj: молочный]",
       "source_example": "I'm allergic to dairy.",
       "target_example": "У меня аллергия на молочные продукты."
-    },
-    {
-      "translation_id": 9005159,
-      "source_id": 9005319,
-      "target_id": 9005320,
-      "source_word": "dairy",
-      "target_word": "молочный",
-      "source_example": "She works on a dairy farm.",
-      "target_example": "Она работает на молочной ферме."
     },
     {
       "translation_id": 9005160,
@@ -1574,18 +1484,9 @@
       "source_id": 9005351,
       "target_id": 9005352,
       "source_word": "deposit",
-      "target_word": "депозит|залог",
+      "target_word": "депозит|залог [verb: вносить депозит]",
       "source_example": "You need to pay a deposit.",
       "target_example": "Вам нужно внести залог."
-    },
-    {
-      "translation_id": 9005176,
-      "source_id": 9005353,
-      "target_id": 9005354,
-      "source_word": "deposit",
-      "target_word": "вносить депозит|класть [деньги в банк]",
-      "source_example": "I deposited the check this morning.",
-      "target_example": "Я положил чек на счет сегодня утром."
     },
     {
       "translation_id": 9005177,
@@ -1768,20 +1669,11 @@
       "target_example": "Пожалуйста, не беспокоить."
     },
     {
-      "translation_id": 9005197,
-      "source_id": 9005395,
-      "target_id": 9005396,
-      "source_word": "dive",
-      "target_word": "нырять|погружаться",
-      "source_example": "He dived into the water.",
-      "target_example": "Он нырнул в воду."
-    },
-    {
       "translation_id": 9005198,
       "source_id": 9005397,
       "target_id": 9005398,
       "source_word": "dive",
-      "target_word": "ныряние|погружение",
+      "target_word": "ныряние|погружение [verb: нырять]",
       "source_example": "She did a beautiful dive.",
       "target_example": "Она совершила красивый прыжок в воду."
     },
@@ -1808,18 +1700,9 @@
       "source_id": 9005403,
       "target_id": 9005404,
       "source_word": "divorce",
-      "target_word": "развод",
+      "target_word": "развод [verb: разводиться]",
       "source_example": "They are getting a divorce.",
       "target_example": "Они разводятся."
-    },
-    {
-      "translation_id": 9005202,
-      "source_id": 9005405,
-      "target_id": 9005406,
-      "source_word": "divorce",
-      "target_word": "разводиться",
-      "source_example": "She divorced her husband last year.",
-      "target_example": "Она развелась с мужем в прошлом году."
     },
     {
       "translation_id": 9005203,
@@ -1892,15 +1775,6 @@
       "target_word": "продолжительность|длительность",
       "source_example": "What is the duration of the flight?",
       "target_example": "Какова продолжительность полета?"
-    },
-    {
-      "translation_id": 9005211,
-      "source_id": 9005423,
-      "target_id": 9005424,
-      "source_word": "dynamic",
-      "target_word": "динамичный",
-      "source_example": "He is a dynamic speaker.",
-      "target_example": "Он динамичный оратор."
     },
     {
       "translation_id": 9005212,
@@ -2078,18 +1952,9 @@
       "source_id": 9005463,
       "target_id": 9005464,
       "source_word": "equivalent",
-      "target_word": "эквивалент",
+      "target_word": "эквивалент [adj: эквивалентный]",
       "source_example": "What is the equivalent of this word in Russian?",
       "target_example": "Какой эквивалент этого слова в русском языке?"
-    },
-    {
-      "translation_id": 9005232,
-      "source_id": 9005465,
-      "target_id": 9005466,
-      "source_word": "equivalent",
-      "target_word": "эквивалентный",
-      "source_example": "One dollar is equivalent to about 90 rubles.",
-      "target_example": "Один доллар эквивалентен примерно 90 рублям."
     },
     {
       "translation_id": 9005233,
@@ -2294,7 +2159,7 @@
       "source_id": 9005511,
       "target_id": 9005512,
       "source_word": "extract",
-      "target_word": "экстракт|выдержка",
+      "target_word": "экстракт|выдержка [verb: извлекать]",
       "source_example": "This is a vanilla extract.",
       "target_example": "Это ванильный экстракт."
     },
@@ -2447,18 +2312,9 @@
       "source_id": 9005545,
       "target_id": 9005546,
       "source_word": "forecast",
-      "target_word": "прогноз",
+      "target_word": "прогноз [verb: прогнозировать]",
       "source_example": "What is the weather forecast for tomorrow?",
       "target_example": "Какой прогноз погоды на завтра?"
-    },
-    {
-      "translation_id": 9005273,
-      "source_id": 9005547,
-      "target_id": 9005548,
-      "source_word": "forecast",
-      "target_word": "прогнозировать",
-      "source_example": "They forecast rain for tomorrow.",
-      "target_example": "Они прогнозируют дождь на завтра."
     },
     {
       "translation_id": 9005274,
@@ -2942,7 +2798,7 @@
       "source_id": 9005655,
       "target_id": 9005656,
       "source_word": "hook",
-      "target_word": "крюк|крючок",
+      "target_word": "крюк|крючок [verb: цеплять]",
       "source_example": "Hang your coat on the hook.",
       "target_example": "Повесьте пальто на крючок."
     },
@@ -3253,15 +3109,6 @@
       "target_example": "Нам нужно интегрировать две системы."
     },
     {
-      "translation_id": 9005363,
-      "source_id": 9005727,
-      "target_id": 9005728,
-      "source_word": "intellectual",
-      "target_word": "интеллектуальный",
-      "source_example": "He is a very intellectual person.",
-      "target_example": "Он очень интеллектуальный человек."
-    },
-    {
       "translation_id": 9005364,
       "source_id": 9005729,
       "target_id": 9005730,
@@ -3347,18 +3194,9 @@
       "source_id": 9005747,
       "target_id": 9005748,
       "source_word": "jail",
-      "target_word": "тюрьма",
+      "target_word": "тюрьма [verb: сажать в тюрьму]",
       "source_example": "He was sent to jail.",
       "target_example": "Его отправили в тюрьму."
-    },
-    {
-      "translation_id": 9005374,
-      "source_id": 9005749,
-      "target_id": 9005750,
-      "source_word": "jail",
-      "target_word": "сажать в тюрьму",
-      "source_example": "He was jailed for three years.",
-      "target_example": "Его посадили в тюрьму на три года."
     },
     {
       "translation_id": 9005375,
@@ -3370,20 +3208,11 @@
       "target_example": "Из трубы вырвалась струя воды."
     },
     {
-      "translation_id": 9005376,
-      "source_id": 9005753,
-      "target_id": 9005754,
-      "source_word": "joint",
-      "target_word": "совместный",
-      "source_example": "It was a joint decision.",
-      "target_example": "Это было совместное решение."
-    },
-    {
       "translation_id": 9005377,
       "source_id": 9005755,
       "target_id": 9005756,
       "source_word": "joint",
-      "target_word": "сустав",
+      "target_word": "сустав [adj: совместный]",
       "source_example": "I have a pain in my knee joint.",
       "target_example": "У меня болит коленный сустав."
     },
@@ -3653,18 +3482,9 @@
       "source_id": 9005815,
       "target_id": 9005816,
       "source_word": "mate",
-      "target_word": "приятель|товарищ, партнёр|самец|самка",
+      "target_word": "приятель|товарищ [verb: спариваться]",
       "source_example": "He went to the pub with his mates.",
       "target_example": "Он пошел в паб со своими приятелями."
-    },
-    {
-      "translation_id": 9005408,
-      "source_id": 9005817,
-      "target_id": 9005818,
-      "source_word": "mate",
-      "target_word": "спариваться",
-      "source_example": "Birds mate in the spring.",
-      "target_example": "Птицы спариваются весной."
     },
     {
       "translation_id": 9005409,
@@ -3914,18 +3734,9 @@
       "source_id": 9005873,
       "target_id": 9005874,
       "source_word": "nearby",
-      "target_word": "близлежащий|соседний",
+      "target_word": "близлежащий [adv: рядом]",
       "source_example": "We went to a nearby restaurant.",
       "target_example": "Мы пошли в близлежащий ресторан."
-    },
-    {
-      "translation_id": 9005437,
-      "source_id": 9005875,
-      "target_id": 9005876,
-      "source_word": "nearby",
-      "target_word": "рядом|поблизости",
-      "source_example": "My parents live nearby.",
-      "target_example": "Мои родители живут поблизости."
     },
     {
       "translation_id": 9005438,
@@ -4252,20 +4063,11 @@
       "target_example": "Мы смотрели военный парад."
     },
     {
-      "translation_id": 9005474,
-      "source_id": 9005949,
-      "target_id": 9005950,
-      "source_word": "parallel",
-      "target_word": "параллельный",
-      "source_example": "The two lines are parallel.",
-      "target_example": "Эти две линии параллельны."
-    },
-    {
       "translation_id": 9005475,
       "source_id": 9005951,
       "target_id": 9005952,
       "source_word": "parallel",
-      "target_word": "параллель",
+      "target_word": "параллель [adj: параллельный]",
       "source_example": "There are many parallels between the two situations.",
       "target_example": "Между этими двумя ситуациями много параллелей."
     },
@@ -4333,20 +4135,11 @@
       "target_example": "Нужно много терпения, чтобы быть учителем."
     },
     {
-      "translation_id": 9005483,
-      "source_id": 9005967,
-      "target_id": 9005968,
-      "source_word": "pause",
-      "target_word": "делать паузу|останавливаться",
-      "source_example": "He paused for a moment.",
-      "target_example": "Он остановился на мгновение."
-    },
-    {
       "translation_id": 9005484,
       "source_id": 9005969,
       "target_id": 9005970,
       "source_word": "pause",
-      "target_word": "пауза",
+      "target_word": "пауза [verb: делать паузу]",
       "source_example": "There was a long pause in the conversation.",
       "target_example": "В разговоре была долгая пауза."
     },
@@ -4747,20 +4540,11 @@
       "target_example": "Нам нужно бороться с расизмом."
     },
     {
-      "translation_id": 9005529,
-      "source_id": 9006059,
-      "target_id": 9006060,
-      "source_word": "racist",
-      "target_word": "расистский",
-      "source_example": "He made a racist comment.",
-      "target_example": "Он сделал расистский комментарий."
-    },
-    {
       "translation_id": 9005530,
       "source_id": 9006061,
       "target_id": 9006062,
       "source_word": "racist",
-      "target_word": "расист",
+      "target_word": "расист [adj: расистский]",
       "source_example": "He is a racist.",
       "target_example": "Он расист."
     },
@@ -4873,20 +4657,11 @@
       "target_example": "Желаем вам скорейшего выздоровления."
     },
     {
-      "translation_id": 9005543,
-      "source_id": 9006087,
-      "target_id": 9006088,
-      "source_word": "recruit",
-      "target_word": "набирать|вербовать",
-      "source_example": "The company is recruiting new employees.",
-      "target_example": "Компания набирает новых сотрудников."
-    },
-    {
       "translation_id": 9005544,
       "source_id": 9006089,
       "target_id": 9006090,
       "source_word": "recruit",
-      "target_word": "новобранец|новый сотрудник",
+      "target_word": "новобранец [verb: набирать]",
       "source_example": "He is a new recruit.",
       "target_example": "Он новый сотрудник."
     },
@@ -5039,7 +4814,7 @@
       "source_id": 9006123,
       "target_id": 9006124,
       "source_word": "résumé",
-      "target_word": "резюме",
+      "target_word": "резюме [verb: возобновлять]",
       "source_example": "Please send your résumé to this address.",
       "target_example": "Пожалуйста, отправьте свое резюме по этому адресу."
     },
@@ -5102,18 +4877,9 @@
       "source_id": 9006137,
       "target_id": 9006138,
       "source_word": "rival",
-      "target_word": "соперник|конкурент",
+      "target_word": "соперник [adj: соперничающий]",
       "source_example": "They are business rivals.",
       "target_example": "Они деловые конкуренты."
-    },
-    {
-      "translation_id": 9005569,
-      "source_id": 9006139,
-      "target_id": 9006140,
-      "source_word": "rival",
-      "target_word": "соперничающий",
-      "source_example": "The two rival companies.",
-      "target_example": "Две конкурирующие компании."
     },
     {
       "translation_id": 9005570,
@@ -5170,20 +4936,11 @@
       "target_example": "Поездка занимает примерно два часа."
     },
     {
-      "translation_id": 9005576,
-      "source_id": 9006153,
-      "target_id": 9006154,
-      "source_word": "ruin",
-      "target_word": "разрушать|портить",
-      "source_example": "The rain ruined our picnic.",
-      "target_example": "Дождь испортил наш пикник."
-    },
-    {
       "translation_id": 9005577,
       "source_id": 9006155,
       "target_id": 9006156,
       "source_word": "ruin",
-      "target_word": "разрушение|руины",
+      "target_word": "разрушение|руины [verb: разрушать]",
       "source_example": "The city is in ruins.",
       "target_example": "Город в руинах."
     },
@@ -5206,20 +4963,11 @@
       "target_example": "Политик был замешан в скандале."
     },
     {
-      "translation_id": 9005580,
-      "source_id": 9006161,
-      "target_id": 9006162,
-      "source_word": "scare",
-      "target_word": "пугать",
-      "source_example": "Don't scare me like that.",
-      "target_example": "Не пугай меня так."
-    },
-    {
       "translation_id": 9005581,
       "source_id": 9006163,
       "target_id": 9006164,
       "source_word": "scare",
-      "target_word": "испуг",
+      "target_word": "испуг [verb: пугать]",
       "source_example": "You gave me a scare.",
       "target_example": "Ты меня напугал."
     },
@@ -5251,20 +4999,11 @@
       "target_example": "Она выиграла стипендию на обучение за границей."
     },
     {
-      "translation_id": 9005585,
-      "source_id": 9006171,
-      "target_id": 9006172,
-      "source_word": "scratch",
-      "target_word": "царапать",
-      "source_example": "The cat scratched me.",
-      "target_example": "Кошка меня поцарапала."
-    },
-    {
       "translation_id": 9005586,
       "source_id": 9006173,
       "target_id": 9006174,
       "source_word": "scratch",
-      "target_word": "царапина",
+      "target_word": "царапина [verb: царапать]",
       "source_example": "I have a scratch on my arm.",
       "target_example": "У меня царапина на руке."
     },
@@ -5480,7 +5219,7 @@
       "source_id": 9006221,
       "target_id": 9006222,
       "source_word": "spare",
-      "target_word": "запасной|лишний",
+      "target_word": "запасной|лишний [verb: уделять]",
       "source_example": "Do you have a spare pen?",
       "target_example": "У вас есть запасная ручка?"
     },
@@ -5827,15 +5566,6 @@
       "target_example": "Она очень сочувствовала, когда я рассказал ей о своей проблеме."
     },
     {
-      "translation_id": 9005649,
-      "source_id": 9006299,
-      "target_id": 9006300,
-      "source_word": "tackle",
-      "target_word": "браться [за дело]|решать [проблему]",
-      "source_example": "We need to tackle the problem of pollution.",
-      "target_example": "Нам нужно взяться за проблему загрязнения."
-    },
-    {
       "translation_id": 9005650,
       "source_id": 9006301,
       "target_id": 9006302,
@@ -5845,20 +5575,11 @@
       "target_example": "На рубашке все еще была этикетка с ценой."
     },
     {
-      "translation_id": 9005651,
-      "source_id": 9006303,
-      "target_id": 9006304,
-      "source_word": "tap",
-      "target_word": "стучать|постукивать",
-      "source_example": "He tapped his fingers on the table.",
-      "target_example": "Он постукивал пальцами по столу."
-    },
-    {
       "translation_id": 9005652,
       "source_id": 9006305,
       "target_id": 9006306,
       "source_word": "tap",
-      "target_word": "кран [водопроводный]",
+      "target_word": "кран [verb: стучать]",
       "source_example": "Please turn off the tap.",
       "target_example": "Пожалуйста, закрой кран."
     },
@@ -5876,18 +5597,9 @@
       "source_id": 9006309,
       "target_id": 9006310,
       "source_word": "teen",
-      "target_word": "подросток",
+      "target_word": "подросток [adj: подростковый]",
       "source_example": "This magazine is for teens.",
       "target_example": "Этот журнал для подростков."
-    },
-    {
-      "translation_id": 9005655,
-      "source_id": 9006311,
-      "target_id": 9006312,
-      "source_word": "teen",
-      "target_word": "подростковый",
-      "source_example": "She has a teen daughter.",
-      "target_example": "У нее дочь-подросток."
     },
     {
       "translation_id": 9005656,
@@ -5930,7 +5642,7 @@
       "source_id": 9006321,
       "target_id": 9006322,
       "source_word": "terminal",
-      "target_word": "терминал|вокзал",
+      "target_word": "терминал|вокзал [adj: терминальный]",
       "source_example": "The bus leaves from terminal 4.",
       "target_example": "Автобус отправляется с терминала 4."
     },
@@ -6151,20 +5863,11 @@
       "target_example": "Болезнь передается комарами."
     },
     {
-      "translation_id": 9005685,
-      "source_id": 9006371,
-      "target_id": 9006372,
-      "source_word": "trap",
-      "target_word": "ловить в ловушку|заманивать",
-      "source_example": "The mouse was trapped.",
-      "target_example": "Мышь попала в ловушку."
-    },
-    {
       "translation_id": 9005686,
       "source_id": 9006373,
       "target_id": 9006374,
       "source_word": "trap",
-      "target_word": "ловушка|капкан",
+      "target_word": "ловушка|капкан [verb: ловить в ловушку]",
       "source_example": "He set a trap for the rabbit.",
       "target_example": "Он поставил ловушку на кролика."
     },
@@ -6605,18 +6308,9 @@
       "source_id": 9006471,
       "target_id": 9006472,
       "source_word": "abuse",
-      "target_word": "злоупотребление|жестокое обращение",
+      "target_word": "злоупотребление|жестокое обращение [verb: злоупотреблять]",
       "source_example": "Child abuse is a serious crime.",
       "target_example": "Жестокое обращение с детьми — серьезное преступление."
-    },
-    {
-      "translation_id": 9005736,
-      "source_id": 9006473,
-      "target_id": 9006474,
-      "source_word": "abuse",
-      "target_word": "злоупотреблять|жестоко обращаться",
-      "source_example": "He abused his power.",
-      "target_example": "Он злоупотребил своей властью."
     },
     {
       "translation_id": 9005737,
@@ -6668,18 +6362,9 @@
       "source_id": 9006485,
       "target_id": 9006486,
       "source_word": "accordingly",
-      "target_word": "соответственно|таким образом",
+      "target_word": "адвокат|сторонник [verb: отстаивать]",
       "source_example": "She is the boss, and you should act accordingly.",
       "target_example": "Она босс, и вы должны вести себя соответственно."
-    },
-    {
-      "translation_id": 9005743,
-      "source_id": 9006487,
-      "target_id": 9006488,
-      "source_word": "accountability",
-      "target_word": "подотчётность|ответственность",
-      "source_example": "There is a lack of accountability in the government.",
-      "target_example": "В правительстве отсутствует подотчетность."
     },
     {
       "translation_id": 9005744,
@@ -6725,15 +6410,6 @@
       "target_word": "обвиняемый|подсудимый",
       "source_example": "The accused was found guilty.",
       "target_example": "Обвиняемый был признан виновным."
-    },
-    {
-      "translation_id": 9005749,
-      "source_id": 9006499,
-      "target_id": 9006500,
-      "source_word": "acid",
-      "target_word": "кислый",
-      "source_example": "The lemon has an acid taste.",
-      "target_example": "У лимона кислый вкус."
     },
     {
       "translation_id": 9005750,
@@ -6875,18 +6551,9 @@
       "source_id": 9006531,
       "target_id": 9006532,
       "source_word": "advocate",
-      "target_word": "адвокат|сторонник",
+      "target_word": "адвокат|сторонник [verb: отстаивать]",
       "source_example": "He is an advocate for peace.",
       "target_example": "Он сторонник мира."
-    },
-    {
-      "translation_id": 9005766,
-      "source_id": 9006533,
-      "target_id": 9006534,
-      "source_word": "advocate",
-      "target_word": "отстаивать|защищать",
-      "source_example": "She advocates for women's rights.",
-      "target_example": "Она защищает права женщин."
     },
     {
       "translation_id": 9005767,
@@ -6943,40 +6610,13 @@
       "target_example": "Он помощник президента."
     },
     {
-      "translation_id": 9005773,
-      "source_id": 9006547,
-      "target_id": 9006548,
-      "source_word": "alert",
-      "target_word": "предупреждать|оповещать",
-      "source_example": "He alerted the police.",
-      "target_example": "Он предупредил полицию."
-    },
-    {
       "translation_id": 9005774,
       "source_id": 9006549,
       "target_id": 9006550,
       "source_word": "alert",
-      "target_word": "тревога",
+      "target_word": "тревога [verb: предупреждать, adj: бдительный]",
       "source_example": "The city is on high alert.",
       "target_example": "Город в состоянии повышенной готовности."
-    },
-    {
-      "translation_id": 9005775,
-      "source_id": 9006551,
-      "target_id": 9006552,
-      "source_word": "alert",
-      "target_word": "бдительный|настороже",
-      "source_example": "You need to be alert when driving.",
-      "target_example": "Нужно быть бдительным за рулем."
-    },
-    {
-      "translation_id": 9005776,
-      "source_id": 9006553,
-      "target_id": 9006554,
-      "source_word": "alien",
-      "target_word": "чужой|инопланетный",
-      "source_example": "It was an alien environment.",
-      "target_example": "Это была чуждая среда."
     },
     {
       "translation_id": 9005777,
@@ -6997,20 +6637,11 @@
       "target_example": "Выравнивание колес неправильное."
     },
     {
-      "translation_id": 9005779,
-      "source_id": 9006559,
-      "target_id": 9006560,
-      "source_word": "alike",
-      "target_word": "одинаково",
-      "source_example": "They dress alike.",
-      "target_example": "Они одеваются одинаково."
-    },
-    {
       "translation_id": 9005780,
       "source_id": 9006561,
       "target_id": 9006562,
       "source_word": "alike",
-      "target_word": "похожий",
+      "target_word": "похожий [adv: одинаково]",
       "source_example": "The two sisters are very alike.",
       "target_example": "Две сестры очень похожи."
     },
@@ -7096,20 +6727,11 @@
       "target_example": "Банки сделаны из алюминия."
     },
     {
-      "translation_id": 9005790,
-      "source_id": 9006581,
-      "target_id": 9006582,
-      "source_word": "amateur",
-      "target_word": "любительский",
-      "source_example": "He is an amateur photographer.",
-      "target_example": "Он фотограф-любитель."
-    },
-    {
       "translation_id": 9005791,
       "source_id": 9006583,
       "target_id": 9006584,
       "source_word": "amateur",
-      "target_word": "любитель",
+      "target_word": "любитель [adj: любительский]",
       "source_example": "He plays tennis as an amateur.",
       "target_example": "Он играет в теннис как любитель."
     },
@@ -7361,18 +6983,9 @@
       "source_id": 9006639,
       "target_id": 9006640,
       "source_word": "assault",
-      "target_word": "нападение",
+      "target_word": "нападение [verb: нападать]",
       "source_example": "He was arrested for assault.",
       "target_example": "Его арестовали за нападение."
-    },
-    {
-      "translation_id": 9005820,
-      "source_id": 9006641,
-      "target_id": 9006642,
-      "source_word": "assault",
-      "target_word": "нападать",
-      "source_example": "He assaulted a police officer.",
-      "target_example": "Он напал на полицейского."
     },
     {
       "translation_id": 9005821,
@@ -7456,20 +7069,11 @@
       "target_example": "Посещение собрания обязательно."
     },
     {
-      "translation_id": 9005830,
-      "source_id": 9006661,
-      "target_id": 9006662,
-      "source_word": "attribute",
-      "target_word": "приписывать",
-      "source_example": "He attributed his success to hard work.",
-      "target_example": "Он приписал свой успех усердной работе."
-    },
-    {
       "translation_id": 9005831,
       "source_id": 9006663,
       "target_id": 9006664,
       "source_word": "attribute",
-      "target_word": "атрибут|свойство",
+      "target_word": "атрибут|свойство [verb: приписывать]",
       "source_example": "Patience is an important attribute.",
       "target_example": "Терпение — важное качество."
     },
@@ -7645,15 +7249,6 @@
       "target_example": "Он играет на бас-гитаре."
     },
     {
-      "translation_id": 9005851,
-      "source_id": 9006703,
-      "target_id": 9006704,
-      "source_word": "bat",
-      "target_word": "отбивать (битой)",
-      "source_example": "He batted the ball.",
-      "target_example": "Он отбил мяч."
-    },
-    {
       "translation_id": 9005852,
       "source_id": 9006705,
       "target_id": 9006706,
@@ -7820,18 +7415,9 @@
       "source_id": 9006741,
       "target_id": 9006742,
       "source_word": "blast",
-      "target_word": "взрыв",
+      "target_word": "взрыв [verb: взрывать]",
       "source_example": "There was a loud blast.",
       "target_example": "Произошел громкий взрыв."
-    },
-    {
-      "translation_id": 9005871,
-      "source_id": 9006743,
-      "target_id": 9006744,
-      "source_word": "blast",
-      "target_word": "взрывать",
-      "source_example": "They blasted the old building.",
-      "target_example": "Они взорвали старое здание."
     },
     {
       "translation_id": 9005872,
@@ -7843,20 +7429,11 @@
       "target_example": "У меня кровоточит палец."
     },
     {
-      "translation_id": 9005873,
-      "source_id": 9006747,
-      "target_id": 9006748,
-      "source_word": "blend",
-      "target_word": "смешивать",
-      "source_example": "Blend the ingredients together.",
-      "target_example": "Смешайте ингредиенты вместе."
-    },
-    {
       "translation_id": 9005874,
       "source_id": 9006749,
       "target_id": 9006750,
       "source_word": "blend",
-      "target_word": "смесь",
+      "target_word": "смесь [verb: смешивать]",
       "source_example": "This is a blend of different coffees.",
       "target_example": "Это смесь разных сортов кофе."
     },
@@ -7933,20 +7510,11 @@
       "target_example": "Река обозначает границу между двумя странами."
     },
     {
-      "translation_id": 9005883,
-      "source_id": 9006767,
-      "target_id": 9006768,
-      "source_word": "bow",
-      "target_word": "кланяться",
-      "source_example": "He bowed to the queen.",
-      "target_example": "Он поклонился королеве."
-    },
-    {
       "translation_id": 9005884,
       "source_id": 9006769,
       "target_id": 9006770,
       "source_word": "bow",
-      "target_word": "лук (оружие)|поклон|бант",
+      "target_word": "лук|поклон|бант [verb: кланяться]",
       "source_example": "She tied her hair with a bow.",
       "target_example": "Она завязала волосы бантом."
     },
@@ -7955,18 +7523,9 @@
       "source_id": 9006771,
       "target_id": 9006772,
       "source_word": "breach",
-      "target_word": "нарушение",
+      "target_word": "нарушение [verb: нарушать]",
       "source_example": "It was a breach of contract.",
       "target_example": "Это было нарушением контракта."
-    },
-    {
-      "translation_id": 9005886,
-      "source_id": 9006773,
-      "target_id": 9006774,
-      "source_word": "breach",
-      "target_word": "нарушать",
-      "source_example": "He breached the agreement.",
-      "target_example": "Он нарушил соглашение."
     },
     {
       "translation_id": 9005887,
@@ -7987,20 +7546,11 @@
       "target_example": "Ученые совершили крупный прорыв."
     },
     {
-      "translation_id": 9005889,
-      "source_id": 9006779,
-      "target_id": 9006780,
-      "source_word": "breed",
-      "target_word": "разводить|размножаться",
-      "source_example": "They breed horses on their farm.",
-      "target_example": "Они разводят лошадей на своей ферме."
-    },
-    {
       "translation_id": 9005890,
       "source_id": 9006781,
       "target_id": 9006782,
       "source_word": "breed",
-      "target_word": "порода",
+      "target_word": "порода [verb: разводить]",
       "source_example": "What breed of dog is it?",
       "target_example": "Какой породы эта собака?"
     },
@@ -8360,18 +7910,9 @@
       "source_id": 9006863,
       "target_id": 9006864,
       "source_word": "civilian",
-      "target_word": "гражданское лицо",
+      "target_word": "гражданское лицо [adj: гражданский]",
       "source_example": "Many civilians were killed in the war.",
       "target_example": "В войне погибло много мирных жителей."
-    },
-    {
-      "translation_id": 9005932,
-      "source_id": 9006865,
-      "target_id": 9006866,
-      "source_word": "civilian",
-      "target_word": "гражданский",
-      "source_example": "This is a civilian area.",
-      "target_example": "Это гражданский район."
     },
     {
       "translation_id": 9005933,
@@ -8540,18 +8081,9 @@
       "source_id": 9006903,
       "target_id": 9006904,
       "source_word": "combat",
-      "target_word": "бой|борьба",
+      "target_word": "бой|борьба [verb: бороться]",
       "source_example": "He was killed in combat.",
       "target_example": "Он был убит в бою."
-    },
-    {
-      "translation_id": 9005952,
-      "source_id": 9006905,
-      "target_id": 9006906,
-      "source_word": "combat",
-      "target_word": "бороться",
-      "source_example": "We need to combat poverty.",
-      "target_example": "Нам нужно бороться с бедностью."
     },
     {
       "translation_id": 9005953,
@@ -8765,18 +8297,9 @@
       "source_id": 9006953,
       "target_id": 9006954,
       "source_word": "compromise",
-      "target_word": "компромисс",
+      "target_word": "компромисс [verb: идти на компромисс]",
       "source_example": "We need to find a compromise.",
       "target_example": "Нам нужно найти компромисс."
-    },
-    {
-      "translation_id": 9005977,
-      "source_id": 9006955,
-      "target_id": 9006956,
-      "source_word": "compromise",
-      "target_word": "идти на компромисс",
-      "source_example": "They refused to compromise.",
-      "target_example": "Они отказались идти на компромисс."
     },
     {
       "translation_id": 9005978,
@@ -8981,18 +8504,9 @@
       "source_id": 9007001,
       "target_id": 9007002,
       "source_word": "consent",
-      "target_word": "согласие",
+      "target_word": "согласие [verb: соглашаться]",
       "source_example": "You need your parents' consent.",
       "target_example": "Тебе нужно согласие родителей."
-    },
-    {
-      "translation_id": 9006001,
-      "source_id": 9007003,
-      "target_id": 9007004,
-      "source_word": "consent",
-      "target_word": "соглашаться",
-      "source_example": "She consented to the marriage.",
-      "target_example": "Она согласилась на брак."
     },
     {
       "translation_id": 9006002,
@@ -9148,20 +8662,11 @@
       "target_example": "В его заявлении есть противоречие."
     },
     {
-      "translation_id": 9006019,
-      "source_id": 9007039,
-      "target_id": 9007040,
-      "source_word": "contrary",
-      "target_word": "противоположный",
-      "source_example": "We have contrary opinions.",
-      "target_example": "У нас противоположные мнения."
-    },
-    {
       "translation_id": 9006020,
       "source_id": 9007041,
       "target_id": 9007042,
       "source_word": "contrary",
-      "target_word": "противоположность",
+      "target_word": "противоположность [adj: противоположный]",
       "source_example": "On the contrary, I think it's a good idea.",
       "target_example": "Напротив, я думаю, это хорошая идея."
     },
@@ -9382,15 +8887,6 @@
       "target_example": "Он консультант по вопросам брака."
     },
     {
-      "translation_id": 9006045,
-      "source_id": 9007091,
-      "target_id": 9007092,
-      "source_word": "counter",
-      "target_word": "противостоять|возражать",
-      "source_example": "He countered my argument.",
-      "target_example": "Он возразил на мой довод."
-    },
-    {
       "translation_id": 9006046,
       "source_id": 9007093,
       "target_id": 9007094,
@@ -9425,15 +8921,6 @@
       "target_word": "вежливость|любезность",
       "source_example": "He treated us with great courtesy.",
       "target_example": "Он обращался с нами с большой вежливостью."
-    },
-    {
-      "translation_id": 9006050,
-      "source_id": 9007101,
-      "target_id": 9007102,
-      "source_word": "craft",
-      "target_word": "мастерить",
-      "source_example": "He crafted a beautiful table.",
-      "target_example": "Он смастерил красивый стол."
     },
     {
       "translation_id": 9006051,
@@ -9530,18 +9017,9 @@
       "source_id": 9007123,
       "target_id": 9007124,
       "source_word": "cult",
-      "target_word": "культ",
+      "target_word": "культ [adj: культовый]",
       "source_example": "He is a member of a religious cult.",
       "target_example": "Он член религиозного культа."
-    },
-    {
-      "translation_id": 9006062,
-      "source_id": 9007125,
-      "target_id": 9007126,
-      "source_word": "cult",
-      "target_word": "культовый",
-      "source_example": "This is a cult movie.",
-      "target_example": "Это культовый фильм."
     },
     {
       "translation_id": 9006063,
@@ -10223,18 +9701,9 @@
       "source_id": 9007277,
       "target_id": 9007278,
       "source_word": "dispute",
-      "target_word": "спор|конфликт",
+      "target_word": "спор|конфликт [verb: оспаривать]",
       "source_example": "There is a dispute between the two countries.",
       "target_example": "Между двумя странами существует спор."
-    },
-    {
-      "translation_id": 9006139,
-      "source_id": 9007279,
-      "target_id": 9007280,
-      "source_word": "dispute",
-      "target_word": "оспаривать",
-      "source_example": "He disputed the referee's decision.",
-      "target_example": "Он оспорил решение судьи."
     },
     {
       "translation_id": 9006140,
@@ -10295,18 +9764,9 @@
       "source_id": 9007293,
       "target_id": 9007294,
       "source_word": "distress",
-      "target_word": "горе|страдание",
+      "target_word": "горе|страдание [verb: огорчать]",
       "source_example": "She was in great distress.",
       "target_example": "Она была в большом горе."
-    },
-    {
-      "translation_id": 9006147,
-      "source_id": 9007295,
-      "target_id": 9007296,
-      "source_word": "distress",
-      "target_word": "огорчать|причинять страдание",
-      "source_example": "The news distressed her.",
-      "target_example": "Новость огорчила ее."
     },
     {
       "translation_id": 9006148,
@@ -10466,7 +9926,7 @@
       "source_id": 9007331,
       "target_id": 9007332,
       "source_word": "dynamic",
-      "target_word": "динамика",
+      "target_word": "динамика [adj: динамичный]",
       "source_example": "The dynamics of the situation.",
       "target_example": "Динамика ситуации."
     },
@@ -10484,34 +9944,16 @@
       "source_id": 9007335,
       "target_id": 9007336,
       "source_word": "ease",
-      "target_word": "лёгкость",
+      "target_word": "лёгкость [verb: облегчать]",
       "source_example": "He did it with ease.",
       "target_example": "Он сделал это с легкостью."
-    },
-    {
-      "translation_id": 9006168,
-      "source_id": 9007337,
-      "target_id": 9007338,
-      "source_word": "ease",
-      "target_word": "облегчать",
-      "source_example": "This will ease the pain.",
-      "target_example": "Это облегчит боль."
-    },
-    {
-      "translation_id": 9006169,
-      "source_id": 9007339,
-      "target_id": 9007340,
-      "source_word": "echo",
-      "target_word": "отражаться эхом",
-      "source_example": "His voice echoed in the cave.",
-      "target_example": "Его голос отразился эхом в пещере."
     },
     {
       "translation_id": 9006170,
       "source_id": 9007341,
       "target_id": 9007342,
       "source_word": "echo",
-      "target_word": "эхо",
+      "target_word": "эхо [verb: отражаться эхом]",
       "source_example": "There was an echo in the cave.",
       "target_example": "В пещере было эхо."
     },
@@ -10988,18 +10430,9 @@
       "source_id": 9007447,
       "target_id": 9007448,
       "source_word": "excess",
-      "target_word": "избыток|излишек",
+      "target_word": "избыток|излишек [adj: избыточный]",
       "source_example": "An excess of food.",
       "target_example": "Избыток еды."
-    },
-    {
-      "translation_id": 9006224,
-      "source_id": 9007449,
-      "target_id": 9007450,
-      "source_word": "excess",
-      "target_word": "избыточный|лишний",
-      "source_example": "Excess weight.",
-      "target_example": "Лишний вес."
     },
     {
       "translation_id": 9006225,
@@ -11119,31 +10552,13 @@
       "target_example": "Эксплуатация рабочих."
     },
     {
-      "translation_id": 9006238,
-      "source_id": 9007477,
-      "target_id": 9007478,
-      "source_word": "explosive",
-      "target_word": "взрывчатый|взрывной",
-      "source_example": "An explosive device.",
-      "target_example": "Взрывное устройство."
-    },
-    {
       "translation_id": 9006239,
       "source_id": 9007479,
       "target_id": 9007480,
       "source_word": "explosive",
-      "target_word": "взрывчатое вещество",
+      "target_word": "взрывчатое вещество [adj: взрывчатый]",
       "source_example": "The bomb was made of high explosives.",
       "target_example": "Бомба была сделана из мощной взрывчатки."
-    },
-    {
-      "translation_id": 9006240,
-      "source_id": 9007481,
-      "target_id": 9007482,
-      "source_word": "extract",
-      "target_word": "извлекать|добывать",
-      "source_example": "The dentist extracted his tooth.",
-      "target_example": "Стоматолог удалил ему зуб."
     },
     {
       "translation_id": 9006241,
@@ -11236,20 +10651,11 @@
       "target_example": "Он был осужден за тяжкое преступление и отправлен в тюрьму."
     },
     {
-      "translation_id": 9006251,
-      "source_id": 9007503,
-      "target_id": 9007504,
-      "source_word": "feminist",
-      "target_word": "феминистский",
-      "source_example": "She has strong feminist views.",
-      "target_example": "У нее сильные феминистские взгляды."
-    },
-    {
       "translation_id": 9006252,
       "source_id": 9007505,
       "target_id": 9007506,
       "source_word": "feminist",
-      "target_word": "феминистка|феминист",
+      "target_word": "феминистка|феминист [adj: феминистский]",
       "source_example": "She is a well-known feminist writer.",
       "target_example": "Она известная писательница-феминистка."
     },
@@ -11285,36 +10691,18 @@
       "source_id": 9007513,
       "target_id": 9007514,
       "source_word": "filter",
-      "target_word": "фильтр",
+      "target_word": "фильтр [verb: фильтровать]",
       "source_example": "You need to change the air filter in your car.",
       "target_example": "Вам нужно поменять воздушный фильтр в машине."
-    },
-    {
-      "translation_id": 9006257,
-      "source_id": 9007515,
-      "target_id": 9007516,
-      "source_word": "filter",
-      "target_word": "фильтровать",
-      "source_example": "The system filters out impurities from the water.",
-      "target_example": "Система отфильтровывает примеси из воды."
     },
     {
       "translation_id": 9006258,
       "source_id": 9007517,
       "target_id": 9007518,
       "source_word": "fine",
-      "target_word": "штраф",
+      "target_word": "штраф [verb: штрафовать]",
       "source_example": "He had to pay a fine for parking illegally.",
       "target_example": "Ему пришлось заплатить штраф за незаконную парковку."
-    },
-    {
-      "translation_id": 9006259,
-      "source_id": 9007519,
-      "target_id": 9007520,
-      "source_word": "fine",
-      "target_word": "штрафовать",
-      "source_example": "The police fined him for speeding.",
-      "target_example": "Полиция оштрафовала его за превышение скорости."
     },
     {
       "translation_id": 9006260,
@@ -11600,18 +10988,9 @@
       "source_id": 9007583,
       "target_id": 9007584,
       "source_word": "gaze",
-      "target_word": "пристальный взгляд",
+      "target_word": "пристальный взгляд [verb: пристально смотреть]",
       "source_example": "She met his gaze.",
       "target_example": "Она встретила его взгляд."
-    },
-    {
-      "translation_id": 9006292,
-      "source_id": 9007585,
-      "target_id": 9007586,
-      "source_word": "gaze",
-      "target_word": "пристально смотреть|вглядываться",
-      "source_example": "He gazed at the stars.",
-      "target_example": "Он вглядывался в звезды."
     },
     {
       "translation_id": 9006293,
@@ -11654,18 +11033,9 @@
       "source_id": 9007595,
       "target_id": 9007596,
       "source_word": "glance",
-      "target_word": "взгляд",
+      "target_word": "взгляд [verb: взглянуть]",
       "source_example": "He gave me a quick glance.",
       "target_example": "Он бросил на меня быстрый взгляд."
-    },
-    {
-      "translation_id": 9006298,
-      "source_id": 9007597,
-      "target_id": 9007598,
-      "source_word": "glance",
-      "target_word": "взглянуть",
-      "source_example": "He glanced at his watch.",
-      "target_example": "Он взглянул на свои часы."
     },
     {
       "translation_id": 9006299,
@@ -11726,18 +11096,9 @@
       "source_id": 9007611,
       "target_id": 9007612,
       "source_word": "grave",
-      "target_word": "могила",
+      "target_word": "могила [adj: серьёзный]",
       "source_example": "He visited his mother's grave.",
       "target_example": "Он посетил могилу своей матери."
-    },
-    {
-      "translation_id": 9006306,
-      "source_id": 9007613,
-      "target_id": 9007614,
-      "source_word": "grave",
-      "target_word": "серьёзный|важный",
-      "source_example": "He is in grave danger.",
-      "target_example": "Он в серьезной опасности."
     },
     {
       "translation_id": 9006307,
@@ -11767,20 +11128,11 @@
       "target_example": "Она была охвачена горем."
     },
     {
-      "translation_id": 9006310,
-      "source_id": 9007621,
-      "target_id": 9007622,
-      "source_word": "grin",
-      "target_word": "ухмыляться|широко улыбаться",
-      "source_example": "He grinned at me.",
-      "target_example": "Он мне ухмыльнулся."
-    },
-    {
       "translation_id": 9006311,
       "source_id": 9007623,
       "target_id": 9007624,
       "source_word": "grin",
-      "target_word": "ухмылка|широкая улыбка",
+      "target_word": "ухмылка [verb: ухмыляться]",
       "source_example": "She had a big grin on her face.",
       "target_example": "У нее была широкая улыбка на лице."
     },
@@ -11798,18 +11150,9 @@
       "source_id": 9007627,
       "target_id": 9007628,
       "source_word": "grip",
-      "target_word": "хватка|рукоятка",
+      "target_word": "хватка|рукоятка [verb: крепко сжимать]",
       "source_example": "He has a firm grip.",
       "target_example": "У него крепкая хватка."
-    },
-    {
-      "translation_id": 9006314,
-      "source_id": 9007629,
-      "target_id": 9007630,
-      "source_word": "grip",
-      "target_word": "крепко сжимать",
-      "source_example": "She gripped his arm.",
-      "target_example": "Она крепко сжала его руку."
     },
     {
       "translation_id": 9006315,
@@ -11875,20 +11218,11 @@
       "target_example": "Мы на полпути."
     },
     {
-      "translation_id": 9006322,
-      "source_id": 9007645,
-      "target_id": 9007646,
-      "source_word": "halt",
-      "target_word": "останавливать(ся)",
-      "source_example": "The train halted at the station.",
-      "target_example": "Поезд остановился на станции."
-    },
-    {
       "translation_id": 9006323,
       "source_id": 9007647,
       "target_id": 9007648,
       "source_word": "halt",
-      "target_word": "остановка",
+      "target_word": "остановка [verb: останавливать]",
       "source_example": "The car came to a halt.",
       "target_example": "Машина остановилась."
     },
@@ -11960,18 +11294,9 @@
       "source_id": 9007663,
       "target_id": 9007664,
       "source_word": "harvest",
-      "target_word": "урожай",
+      "target_word": "урожай [verb: собирать урожай]",
       "source_example": "It was a good harvest this year.",
       "target_example": "В этом году был хороший урожай."
-    },
-    {
-      "translation_id": 9006332,
-      "source_id": 9007665,
-      "target_id": 9007666,
-      "source_word": "harvest",
-      "target_word": "собирать урожай",
-      "source_example": "They are harvesting the wheat.",
-      "target_example": "Они собирают пшеницу."
     },
     {
       "translation_id": 9006333,
@@ -12041,18 +11366,9 @@
       "source_id": 9007681,
       "target_id": 9007682,
       "source_word": "hint",
-      "target_word": "намёк|подсказка",
+      "target_word": "намёк|подсказка [verb: намекать]",
       "source_example": "Give me a hint.",
       "target_example": "Дай мне подсказку."
-    },
-    {
-      "translation_id": 9006341,
-      "source_id": 9007683,
-      "target_id": 9007684,
-      "source_word": "hint",
-      "target_word": "намекать",
-      "source_example": "He hinted that he might be leaving.",
-      "target_example": "Он намекнул, что может уйти."
     },
     {
       "translation_id": 9006342,
@@ -12062,15 +11378,6 @@
       "target_word": "родина",
       "source_example": "He returned to his homeland.",
       "target_example": "Он вернулся на родину."
-    },
-    {
-      "translation_id": 9006343,
-      "source_id": 9007687,
-      "target_id": 9007688,
-      "source_word": "hook",
-      "target_word": "цеплять крючком",
-      "source_example": "He hooked the fish.",
-      "target_example": "Он подцепил рыбу на крючок."
     },
     {
       "translation_id": 9006344,
@@ -12599,18 +11906,9 @@
       "source_id": 9007805,
       "target_id": 9007806,
       "source_word": "insult",
-      "target_word": "оскорбление",
+      "target_word": "оскорбление [verb: оскорблять]",
       "source_example": "He shouted an insult at me.",
       "target_example": "Он выкрикнул мне оскорбление."
-    },
-    {
-      "translation_id": 9006403,
-      "source_id": 9007807,
-      "target_id": 9007808,
-      "source_word": "insult",
-      "target_word": "оскорблять",
-      "source_example": "Don't insult me.",
-      "target_example": "Не оскорбляй меня."
     },
     {
       "translation_id": 9006404,
@@ -12671,7 +11969,7 @@
       "source_id": 9007821,
       "target_id": 9007822,
       "source_word": "intellectual",
-      "target_word": "интеллектуал",
+      "target_word": "интеллектуал [adj: интеллектуальный]",
       "source_example": "He is a leading intellectual.",
       "target_example": "Он ведущий интеллектуал."
     },
@@ -12757,20 +12055,11 @@
       "target_example": "Временное правительство."
     },
     {
-      "translation_id": 9006420,
-      "source_id": 9007841,
-      "target_id": 9007842,
-      "source_word": "interior",
-      "target_word": "внутренний",
-      "source_example": "The interior walls of the house.",
-      "target_example": "Внутренние стены дома."
-    },
-    {
       "translation_id": 9006421,
       "source_id": 9007843,
       "target_id": 9007844,
       "source_word": "interior",
-      "target_word": "интерьер",
+      "target_word": "интерьер [adj: внутренний]",
       "source_example": "The interior of the house is beautiful.",
       "target_example": "Интерьер дома красив."
     },
@@ -13040,18 +12329,9 @@
       "source_id": 9007903,
       "target_id": 9007904,
       "source_word": "latter",
-      "target_word": "последний (из двух)",
+      "target_word": "последний (из двух) [alt: последний]",
       "source_example": "The latter option is better.",
       "target_example": "Последний вариант лучше."
-    },
-    {
-      "translation_id": 9006452,
-      "source_id": 9007905,
-      "target_id": 9007906,
-      "source_word": "latter",
-      "target_word": "последний",
-      "source_example": "Of the two, I prefer the latter.",
-      "target_example": "Из двух я предпочитаю последнее."
     },
     {
       "translation_id": 9006453,
@@ -13090,38 +12370,20 @@
       "target_example": "Планировка нового офиса."
     },
     {
-      "translation_id": 9006457,
-      "source_id": 9007915,
-      "target_id": 9007916,
-      "source_word": "leak",
-      "target_word": "протекать|просачиваться",
-      "source_example": "The roof is leaking.",
-      "target_example": "Крыша протекает."
-    },
-    {
       "translation_id": 9006458,
       "source_id": 9007917,
       "target_id": 9007918,
       "source_word": "leak",
-      "target_word": "утечка",
+      "target_word": "утечка [verb: протекать]",
       "source_example": "There is a gas leak.",
       "target_example": "Произошла утечка газа."
-    },
-    {
-      "translation_id": 9006459,
-      "source_id": 9007919,
-      "target_id": 9007920,
-      "source_word": "leap",
-      "target_word": "прыгать",
-      "source_example": "He leaped over the fence.",
-      "target_example": "Он перепрыгнул через забор."
     },
     {
       "translation_id": 9006460,
       "source_id": 9007921,
       "target_id": 9007922,
       "source_word": "leap",
-      "target_word": "прыжок",
+      "target_word": "прыжок [verb: прыгать]",
       "source_example": "A leap of faith.",
       "target_example": "Прыжок веры."
     },
@@ -13225,20 +12487,11 @@
       "target_example": "Вы несете ответственность за ущерб."
     },
     {
-      "translation_id": 9006472,
-      "source_id": 9007945,
-      "target_id": 9007946,
-      "source_word": "liberal",
-      "target_word": "либеральный",
-      "source_example": "He has liberal views.",
-      "target_example": "У него либеральные взгляды."
-    },
-    {
       "translation_id": 9006473,
       "source_id": 9007947,
       "target_id": 9007948,
       "source_word": "liberal",
-      "target_word": "либерал",
+      "target_word": "либерал [adj: либеральный]",
       "source_example": "He is a liberal.",
       "target_example": "Он либерал."
     },
@@ -13355,36 +12608,18 @@
       "source_id": 9007973,
       "target_id": 9007974,
       "source_word": "lobby",
-      "target_word": "лобби|вестибюль",
+      "target_word": "лобби|вестибюль [verb: лоббировать]",
       "source_example": "I will meet you in the hotel lobby.",
       "target_example": "Я встречу тебя в вестибюле отеля."
-    },
-    {
-      "translation_id": 9006487,
-      "source_id": 9007975,
-      "target_id": 9007976,
-      "source_word": "lobby",
-      "target_word": "лоббировать",
-      "source_example": "They are lobbying for a change in the law.",
-      "target_example": "Они лоббируют изменение закона."
     },
     {
       "translation_id": 9006488,
       "source_id": 9007977,
       "target_id": 9007978,
       "source_word": "log",
-      "target_word": "бревно|журнал",
+      "target_word": "бревно|журнал [verb: регистрировать]",
       "source_example": "A log file.",
       "target_example": "Файл журнала."
-    },
-    {
-      "translation_id": 9006489,
-      "source_id": 9007979,
-      "target_id": 9007980,
-      "source_word": "log",
-      "target_word": "регистрировать|записывать в журнал",
-      "source_example": "Please log all your expenses.",
-      "target_example": "Пожалуйста, записывайте все свои расходы."
     },
     {
       "translation_id": 9006490,
@@ -13499,18 +12734,9 @@
       "source_id": 9008005,
       "target_id": 9008006,
       "source_word": "mainstream",
-      "target_word": "основное течение|мейнстрим",
+      "target_word": "основное течение [adj: основной]",
       "source_example": "This is a mainstream movie.",
       "target_example": "Это мейнстримный фильм."
-    },
-    {
-      "translation_id": 9006503,
-      "source_id": 9008007,
-      "target_id": 9008008,
-      "source_word": "mainstream",
-      "target_word": "основной|традиционный",
-      "source_example": "Mainstream culture.",
-      "target_example": "Основная культура."
     },
     {
       "translation_id": 9006504,
@@ -13580,18 +12806,9 @@
       "source_id": 9008023,
       "target_id": 9008024,
       "source_word": "march",
-      "target_word": "марш",
+      "target_word": "марш [verb: маршировать]",
       "source_example": "A protest march.",
       "target_example": "Марш протеста."
-    },
-    {
-      "translation_id": 9006512,
-      "source_id": 9008025,
-      "target_id": 9008026,
-      "source_word": "march",
-      "target_word": "маршировать",
-      "source_example": "The soldiers marched through the streets.",
-      "target_example": "Солдаты маршировали по улицам."
     },
     {
       "translation_id": 9006513,
@@ -13652,18 +12869,9 @@
       "source_id": 9008039,
       "target_id": 9008040,
       "source_word": "mature",
-      "target_word": "зрелый",
+      "target_word": "зрелый [verb: созревать]",
       "source_example": "He is a mature young man.",
       "target_example": "Он зрелый молодой человек."
-    },
-    {
-      "translation_id": 9006520,
-      "source_id": 9008041,
-      "target_id": 9008042,
-      "source_word": "mature",
-      "target_word": "созревать|взрослеть",
-      "source_example": "He has matured a lot.",
-      "target_example": "Он сильно повзрослел."
     },
     {
       "translation_id": 9006521,
@@ -13850,18 +13058,9 @@
       "source_id": 9008083,
       "target_id": 9008084,
       "source_word": "militant",
-      "target_word": "боевик",
+      "target_word": "боевик [adj: воинствующий]",
       "source_example": "The militants attacked the village.",
       "target_example": "Боевики атаковали деревню."
-    },
-    {
-      "translation_id": 9006542,
-      "source_id": 9008085,
-      "target_id": 9008086,
-      "source_word": "militant",
-      "target_word": "воинствующий",
-      "source_example": "A militant group.",
-      "target_example": "Воинствующая группа."
     },
     {
       "translation_id": 9006543,
@@ -14498,18 +13697,9 @@
       "source_id": 9008227,
       "target_id": 9008228,
       "source_word": "outrage",
-      "target_word": "возмущение|безобразие",
+      "target_word": "возмущение [verb: возмущать]",
       "source_example": "The decision caused public outrage.",
       "target_example": "Решение вызвало общественное возмущение."
-    },
-    {
-      "translation_id": 9006614,
-      "source_id": 9008229,
-      "target_id": 9008230,
-      "source_word": "outrage",
-      "target_word": "возмущать",
-      "source_example": "The public was outraged.",
-      "target_example": "Общественность была возмущена."
     },
     {
       "translation_id": 9006615,
@@ -14678,18 +13868,9 @@
       "source_id": 9008267,
       "target_id": 9008268,
       "source_word": "patrol",
-      "target_word": "патруль",
+      "target_word": "патруль [verb: патрулировать]",
       "source_example": "A police patrol.",
       "target_example": "Полицейский патруль."
-    },
-    {
-      "translation_id": 9006634,
-      "source_id": 9008269,
-      "target_id": 9008270,
-      "source_word": "patrol",
-      "target_word": "патрулировать",
-      "source_example": "The police patrol the streets.",
-      "target_example": "Полиция патрулирует улицы."
     },
     {
       "translation_id": 9006635,
@@ -14795,18 +13976,9 @@
       "source_id": 9008293,
       "target_id": 9008294,
       "source_word": "pioneer",
-      "target_word": "пионер|первопроходец",
+      "target_word": "пионер|первопроходец [verb: быть первопроходцем]",
       "source_example": "A pioneer in the field of medicine.",
       "target_example": "Пионер в области медицины."
-    },
-    {
-      "translation_id": 9006647,
-      "source_id": 9008295,
-      "target_id": 9008296,
-      "source_word": "pioneer",
-      "target_word": "быть первопроходцем|начинать",
-      "source_example": "He pioneered a new technique.",
-      "target_example": "Он был пионером новой техники."
     },
     {
       "translation_id": 9006648,
@@ -14854,38 +14026,20 @@
       "target_example": "Он умолял о пощаде."
     },
     {
-      "translation_id": 9006653,
-      "source_id": 9008307,
-      "target_id": 9008308,
-      "source_word": "pledge",
-      "target_word": "обещать|клясться",
-      "source_example": "He pledged his support.",
-      "target_example": "Он пообещал свою поддержку."
-    },
-    {
       "translation_id": 9006654,
       "source_id": 9008309,
       "target_id": 9008310,
       "source_word": "pledge",
-      "target_word": "обещание|залог",
+      "target_word": "обещание|залог [verb: обещать]",
       "source_example": "A pledge of allegiance.",
       "target_example": "Клятва верности."
-    },
-    {
-      "translation_id": 9006655,
-      "source_id": 9008311,
-      "target_id": 9008312,
-      "source_word": "plug",
-      "target_word": "затыкать|подключать",
-      "source_example": "He plugged in the TV.",
-      "target_example": "Он включил телевизор в розетку."
     },
     {
       "translation_id": 9006656,
       "source_id": 9008313,
       "target_id": 9008314,
       "source_word": "plug",
-      "target_word": "вилка|пробка",
+      "target_word": "вилка|пробка [verb: затыкать]",
       "source_example": "The plug for the TV.",
       "target_example": "Вилка для телевизора."
     },
@@ -15227,18 +14381,9 @@
       "source_id": 9008389,
       "target_id": 9008390,
       "source_word": "probe",
-      "target_word": "зонд|расследование",
+      "target_word": "зонд|расследование [verb: расследовать]",
       "source_example": "A police probe into the murder.",
       "target_example": "Полицейское расследование убийства."
-    },
-    {
-      "translation_id": 9006695,
-      "source_id": 9008391,
-      "target_id": 9008392,
-      "source_word": "probe",
-      "target_word": "расследовать|зондировать",
-      "source_example": "The police are probing the case.",
-      "target_example": "Полиция расследует дело."
     },
     {
       "translation_id": 9006696,
@@ -15493,20 +14638,11 @@
       "target_example": "Врач проверил его пульс."
     },
     {
-      "translation_id": 9006724,
-      "source_id": 9008449,
-      "target_id": 9008450,
-      "source_word": "pump",
-      "target_word": "качать",
-      "source_example": "He was pumping gas.",
-      "target_example": "Он качал бензин."
-    },
-    {
       "translation_id": 9006725,
       "source_id": 9008451,
       "target_id": 9008452,
       "source_word": "pump",
-      "target_word": "насос",
+      "target_word": "насос [verb: качать]",
       "source_example": "A water pump.",
       "target_example": "Водяной насос."
     },
@@ -15515,18 +14651,9 @@
       "source_id": 9008453,
       "target_id": 9008454,
       "source_word": "punch",
-      "target_word": "удар кулаком",
+      "target_word": "удар кулаком [verb: бить кулаком]",
       "source_example": "He gave him a punch.",
       "target_example": "Он нанес ему удар кулаком."
-    },
-    {
-      "translation_id": 9006727,
-      "source_id": 9008455,
-      "target_id": 9008456,
-      "source_word": "punch",
-      "target_word": "бить кулаком",
-      "source_example": "He punched him in the face.",
-      "target_example": "Он ударил его кулаком в лицо."
     },
     {
       "translation_id": 9006728,
@@ -15587,36 +14714,18 @@
       "source_id": 9008469,
       "target_id": 9008470,
       "source_word": "raid",
-      "target_word": "рейд|налёт",
+      "target_word": "рейд|налёт [verb: совершать налёт]",
       "source_example": "A police raid.",
       "target_example": "Полицейский рейд."
-    },
-    {
-      "translation_id": 9006735,
-      "source_id": 9008471,
-      "target_id": 9008472,
-      "source_word": "raid",
-      "target_word": "совершать налёт",
-      "source_example": "The police raided the building.",
-      "target_example": "Полиция совершила налёт на здание."
     },
     {
       "translation_id": 9006736,
       "source_id": 9008473,
       "target_id": 9008474,
       "source_word": "rally",
-      "target_word": "митинг|ралли",
+      "target_word": "митинг|ралли [verb: собираться]",
       "source_example": "A political rally.",
       "target_example": "Политический митинг."
-    },
-    {
-      "translation_id": 9006737,
-      "source_id": 9008475,
-      "target_id": 9008476,
-      "source_word": "rally",
-      "target_word": "собираться|объединяться",
-      "source_example": "The team rallied to win the game.",
-      "target_example": "Команда собралась, чтобы выиграть игру."
     },
     {
       "translation_id": 9006738,
@@ -15632,18 +14741,9 @@
       "source_id": 9008479,
       "target_id": 9008480,
       "source_word": "rape",
-      "target_word": "изнасилование",
+      "target_word": "изнасилование [verb: насиловать]",
       "source_example": "He was accused of rape.",
       "target_example": "Его обвинили в изнасиловании."
-    },
-    {
-      "translation_id": 9006740,
-      "source_id": 9008481,
-      "target_id": 9008482,
-      "source_word": "rape",
-      "target_word": "насиловать",
-      "source_example": "He was convicted of raping a woman.",
-      "target_example": "Его осудили за изнасилование женщины."
     },
     {
       "translation_id": 9006741,
@@ -15700,20 +14800,11 @@
       "target_example": "Сфера политики."
     },
     {
-      "translation_id": 9006747,
-      "source_id": 9008495,
-      "target_id": 9008496,
-      "source_word": "rear",
-      "target_word": "задний",
-      "source_example": "Please use the rear entrance of the building.",
-      "target_example": "Пожалуйста, воспользуйтесь задним входом в здание."
-    },
-    {
       "translation_id": 9006748,
       "source_id": 9008497,
       "target_id": 9008498,
       "source_word": "rear",
-      "target_word": "тыл|задняя часть",
+      "target_word": "тыл|задняя часть [adj: задний]",
       "source_example": "The kitchen is at the rear of the house.",
       "target_example": "Кухня находится в задней части дома."
     },
@@ -15812,18 +14903,9 @@
       "source_id": 9008519,
       "target_id": 9008520,
       "source_word": "reform",
-      "target_word": "реформа",
+      "target_word": "реформа [verb: реформировать]",
       "source_example": "Economic reform.",
       "target_example": "Экономическая реформа."
-    },
-    {
-      "translation_id": 9006760,
-      "source_id": 9008521,
-      "target_id": 9008522,
-      "source_word": "reform",
-      "target_word": "реформировать",
-      "source_example": "They are trying to reform the system.",
-      "target_example": "Они пытаются реформировать систему."
     },
     {
       "translation_id": 9006761,
@@ -15902,18 +14984,9 @@
       "source_id": 9008539,
       "target_id": 9008540,
       "source_word": "reign",
-      "target_word": "царствование|правление",
+      "target_word": "царствование [verb: царствовать]",
       "source_example": "The reign of Queen Victoria.",
       "target_example": "Царствование королевы Виктории."
-    },
-    {
-      "translation_id": 9006770,
-      "source_id": 9008541,
-      "target_id": 9008542,
-      "source_word": "reign",
-      "target_word": "царствовать|править",
-      "source_example": "The king reigned for forty years.",
-      "target_example": "Король правил сорок лет."
     },
     {
       "translation_id": 9006771,
@@ -16177,31 +15250,13 @@
       "target_example": "Он проявил большую сдержанность."
     },
     {
-      "translation_id": 9006800,
-      "source_id": 9008601,
-      "target_id": 9008602,
-      "source_word": "resume",
-      "target_word": "возобновлять",
-      "source_example": "The meeting will resume after lunch.",
-      "target_example": "Собрание возобновится после обеда."
-    },
-    {
       "translation_id": 9006801,
       "source_id": 9008603,
       "target_id": 9008604,
       "source_word": "retreat",
-      "target_word": "отступление",
+      "target_word": "отступление [verb: отступать]",
       "source_example": "The army was in retreat.",
       "target_example": "Армия отступала."
-    },
-    {
-      "translation_id": 9006802,
-      "source_id": 9008605,
-      "target_id": 9008606,
-      "source_word": "retreat",
-      "target_word": "отступать",
-      "source_example": "The soldiers retreated.",
-      "target_example": "Солдаты отступили."
     },
     {
       "translation_id": 9006803,
@@ -16231,31 +15286,13 @@
       "target_example": "Он хотел мести."
     },
     {
-      "translation_id": 9006806,
-      "source_id": 9008613,
-      "target_id": 9008614,
-      "source_word": "reverse",
-      "target_word": "поворачивать вспять|отменять",
-      "source_example": "He reversed his decision.",
-      "target_example": "Он отменил свое решение."
-    },
-    {
       "translation_id": 9006807,
       "source_id": 9008615,
       "target_id": 9008616,
       "source_word": "reverse",
-      "target_word": "обратная сторона",
+      "target_word": "обратная сторона [adj: обратный]",
       "source_example": "The reverse side of the coin.",
       "target_example": "Обратная сторона монеты."
-    },
-    {
-      "translation_id": 9006808,
-      "source_id": 9008617,
-      "target_id": 9008618,
-      "source_word": "reverse",
-      "target_word": "обратный",
-      "source_example": "In reverse order.",
-      "target_example": "В обратном порядке."
     },
     {
       "translation_id": 9006809,
@@ -16424,18 +15461,9 @@
       "source_id": 9008655,
       "target_id": 9008656,
       "source_word": "sacrifice",
-      "target_word": "жертва",
+      "target_word": "жертва [verb: жертвовать]",
       "source_example": "He made a great sacrifice.",
       "target_example": "Он принес большую жертву."
-    },
-    {
-      "translation_id": 9006828,
-      "source_id": 9008657,
-      "target_id": 9008658,
-      "source_word": "sacrifice",
-      "target_word": "жертвовать",
-      "source_example": "She sacrificed her career for her family.",
-      "target_example": "Она пожертвовала своей карьерой ради семьи."
     },
     {
       "translation_id": 9006829,
@@ -16492,20 +15520,11 @@
       "target_example": "Масштаб проекта."
     },
     {
-      "translation_id": 9006835,
-      "source_id": 9008671,
-      "target_id": 9008672,
-      "source_word": "screw",
-      "target_word": "завинчивать",
-      "source_example": "He screwed the lid on the jar.",
-      "target_example": "Он завинтил крышку на банке."
-    },
-    {
       "translation_id": 9006836,
       "source_id": 9008673,
       "target_id": 9008674,
       "source_word": "screw",
-      "target_word": "винт|шуруп",
+      "target_word": "винт|шуруп [verb: завинчивать]",
       "source_example": "I need a screw.",
       "target_example": "Мне нужен винт."
     },
@@ -16519,20 +15538,11 @@
       "target_example": "Проект под пристальным вниманием."
     },
     {
-      "translation_id": 9006838,
-      "source_id": 9008677,
-      "target_id": 9008678,
-      "source_word": "seal",
-      "target_word": "запечатывать",
-      "source_example": "He sealed the envelope.",
-      "target_example": "Он запечатал конверт."
-    },
-    {
       "translation_id": 9006839,
       "source_id": 9008679,
       "target_id": 9008680,
       "source_word": "seal",
-      "target_word": "печать|тюлень",
+      "target_word": "печать|тюлень [verb: запечатывать]",
       "source_example": "The letter had a wax seal.",
       "target_example": "На письме была восковая печать."
     },
@@ -16744,20 +15754,11 @@
       "target_example": "Он пожал плечами."
     },
     {
-      "translation_id": 9006863,
-      "source_id": 9008727,
-      "target_id": 9008728,
-      "source_word": "sigh",
-      "target_word": "вздыхать",
-      "source_example": "She sighed with relief.",
-      "target_example": "Она вздохнула с облегчением."
-    },
-    {
       "translation_id": 9006864,
       "source_id": 9008729,
       "target_id": 9008730,
       "source_word": "sigh",
-      "target_word": "вздох",
+      "target_word": "вздох [verb: вздыхать]",
       "source_example": "A deep sigh.",
       "target_example": "Глубокий вздох."
     },
@@ -16951,20 +15952,11 @@
       "target_example": "Жест солидарности."
     },
     {
-      "translation_id": 9006886,
-      "source_id": 9008773,
-      "target_id": 9008774,
-      "source_word": "solo",
-      "target_word": "сольный",
-      "source_example": "A solo performance.",
-      "target_example": "Сольное выступление."
-    },
-    {
       "translation_id": 9006887,
       "source_id": 9008775,
       "target_id": 9008776,
       "source_word": "solo",
-      "target_word": "соло",
+      "target_word": "соло [adj: сольный]",
       "source_example": "A guitar solo.",
       "target_example": "Гитарное соло."
     },
@@ -17005,31 +15997,13 @@
       "target_example": "Я получаю много спама."
     },
     {
-      "translation_id": 9006892,
-      "source_id": 9008785,
-      "target_id": 9008786,
-      "source_word": "span",
-      "target_word": "охватывать|простираться",
-      "source_example": "His career spanned fifty years.",
-      "target_example": "Его карьера охватывала пятьдесят лет."
-    },
-    {
       "translation_id": 9006893,
       "source_id": 9008787,
       "target_id": 9008788,
       "source_word": "span",
-      "target_word": "промежуток|диапазон",
+      "target_word": "промежуток|диапазон [verb: охватывать]",
       "source_example": "A short span of time.",
       "target_example": "Короткий промежуток времени."
-    },
-    {
-      "translation_id": 9006894,
-      "source_id": 9008789,
-      "target_id": 9008790,
-      "source_word": "spare",
-      "target_word": "уделять|жалеть",
-      "source_example": "Can you spare a minute?",
-      "target_example": "Можете уделить минуту?"
     },
     {
       "translation_id": 9006895,
@@ -17104,20 +16078,11 @@
       "target_example": "Политическая сфера."
     },
     {
-      "translation_id": 9006903,
-      "source_id": 9008807,
-      "target_id": 9008808,
-      "source_word": "spin",
-      "target_word": "крутить(ся)|вращать(ся)",
-      "source_example": "The Earth spins on its axis.",
-      "target_example": "Земля вращается вокруг своей оси."
-    },
-    {
       "translation_id": 9006904,
       "source_id": 9008809,
       "target_id": 9008810,
       "source_word": "spin",
-      "target_word": "вращение",
+      "target_word": "вращение [verb: крутить]",
       "source_example": "The spin of a coin.",
       "target_example": "Вращение монеты."
     },
@@ -17153,18 +16118,9 @@
       "source_id": 9008817,
       "target_id": 9008818,
       "source_word": "spy",
-      "target_word": "шпион",
+      "target_word": "шпион [verb: шпионить]",
       "source_example": "He was a foreign spy.",
       "target_example": "Он был иностранным шпионом."
-    },
-    {
-      "translation_id": 9006909,
-      "source_id": 9008819,
-      "target_id": 9008820,
-      "source_word": "spy",
-      "target_word": "шпионить",
-      "source_example": "He was spying for the enemy.",
-      "target_example": "Он шпионил на врага."
     },
     {
       "translation_id": 9006910,
@@ -17261,18 +16217,9 @@
       "source_id": 9008841,
       "target_id": 9008842,
       "source_word": "stem",
-      "target_word": "стебель",
+      "target_word": "стебель [verb: происходить]",
       "source_example": "A flower stem.",
       "target_example": "Стебель цветка."
-    },
-    {
-      "translation_id": 9006921,
-      "source_id": 9008843,
-      "target_id": 9008844,
-      "source_word": "stem",
-      "target_word": "происходить|возникать",
-      "source_example": "The problem stems from a lack of communication.",
-      "target_example": "Проблема проистекает из-за недостатка общения."
     },
     {
       "translation_id": 9006922,
@@ -17360,18 +16307,9 @@
       "source_id": 9008863,
       "target_id": 9008864,
       "source_word": "strip",
-      "target_word": "полоса",
+      "target_word": "полоса [verb: раздевать]",
       "source_example": "A strip of paper.",
       "target_example": "Полоска бумаги."
-    },
-    {
-      "translation_id": 9006932,
-      "source_id": 9008865,
-      "target_id": 9008866,
-      "source_word": "strip",
-      "target_word": "раздевать|снимать слой",
-      "source_example": "He stripped off his clothes.",
-      "target_example": "Он снял одежду."
     },
     {
       "translation_id": 9006933,
@@ -17468,18 +16406,9 @@
       "source_id": 9008887,
       "target_id": 9008888,
       "source_word": "substitute",
-      "target_word": "замена|заменитель",
+      "target_word": "замена|заменитель [verb: заменять]",
       "source_example": "A substitute for sugar.",
       "target_example": "Заменитель сахара."
-    },
-    {
-      "translation_id": 9006944,
-      "source_id": 9008889,
-      "target_id": 9008890,
-      "source_word": "substitute",
-      "target_word": "заменять",
-      "source_example": "You can substitute honey for sugar.",
-      "target_example": "Вы можете заменить сахар медом."
     },
     {
       "translation_id": 9006945,
@@ -17639,18 +16568,9 @@
       "source_id": 9008925,
       "target_id": 9008926,
       "source_word": "supplement",
-      "target_word": "дополнение|добавка",
+      "target_word": "дополнение|добавка [verb: дополнять]",
       "source_example": "A dietary supplement.",
       "target_example": "Пищевая добавка."
-    },
-    {
-      "translation_id": 9006963,
-      "source_id": 9008927,
-      "target_id": 9008928,
-      "source_word": "supplement",
-      "target_word": "дополнять",
-      "source_example": "He supplements his income by working a second job.",
-      "target_example": "Он дополняет свой доход, работая на второй работе."
     },
     {
       "translation_id": 9006964,
@@ -17693,18 +16613,9 @@
       "source_id": 9008937,
       "target_id": 9008938,
       "source_word": "surge",
-      "target_word": "всплеск|волна",
+      "target_word": "всплеск|волна [verb: резко возрастать]",
       "source_example": "A surge of anger.",
       "target_example": "Всплеск гнева."
-    },
-    {
-      "translation_id": 9006969,
-      "source_id": 9008939,
-      "target_id": 9008940,
-      "source_word": "surge",
-      "target_word": "резко возрастать|хлынуть",
-      "source_example": "The crowd surged forward.",
-      "target_example": "Толпа хлынула вперед."
     },
     {
       "translation_id": 9006970,
@@ -17779,20 +16690,11 @@
       "target_example": "Он получил серьезную травму."
     },
     {
-      "translation_id": 9006978,
-      "source_id": 9008957,
-      "target_id": 9008958,
-      "source_word": "swing",
-      "target_word": "качаться|раскачивать",
-      "source_example": "He was swinging his arms.",
-      "target_example": "Он размахивал руками."
-    },
-    {
       "translation_id": 9006979,
       "source_id": 9008959,
       "target_id": 9008960,
       "source_word": "swing",
-      "target_word": "качели|размах",
+      "target_word": "качели|размах [verb: качаться]",
       "source_example": "A swing of the bat.",
       "target_example": "Размах биты."
     },
@@ -17846,7 +16748,7 @@
       "source_id": 9008971,
       "target_id": 9008972,
       "source_word": "tackle",
-      "target_word": "снасти|оборудование",
+      "target_word": "снасти|оборудование [verb: браться за дело]",
       "source_example": "Fishing tackle.",
       "target_example": "Рыболовные снасти."
     },
@@ -17912,15 +16814,6 @@
       "target_word": "срок пребывания в должности",
       "source_example": "His tenure as president.",
       "target_example": "Его срок пребывания на посту президента."
-    },
-    {
-      "translation_id": 9006993,
-      "source_id": 9008987,
-      "target_id": 9008988,
-      "source_word": "terminal",
-      "target_word": "терминальный|смертельный",
-      "source_example": "A terminal illness.",
-      "target_example": "Смертельная болезнь."
     },
     {
       "translation_id": 9006994,
@@ -17990,18 +16883,9 @@
       "source_id": 9009003,
       "target_id": 9009004,
       "source_word": "warrant",
-      "target_word": "ордер",
+      "target_word": "ордер [verb: гарантировать]",
       "source_example": "A search warrant.",
       "target_example": "Ордер на обыск."
-    },
-    {
-      "translation_id": 9007002,
-      "source_id": 9009005,
-      "target_id": 9009006,
-      "source_word": "warrant",
-      "target_word": "гарантировать|оправдывать",
-      "source_example": "His actions warrant a severe punishment.",
-      "target_example": "Его действия заслуживают сурового наказания."
     },
     {
       "translation_id": 9007003,
@@ -18170,18 +17054,9 @@
       "source_id": 9009043,
       "target_id": 9009044,
       "source_word": "worship",
-      "target_word": "поклонение|культ",
+      "target_word": "поклонение|культ [verb: поклоняться]",
       "source_example": "The worship of money.",
       "target_example": "Культ денег."
-    },
-    {
-      "translation_id": 9007022,
-      "source_id": 9009045,
-      "target_id": 9009046,
-      "source_word": "worship",
-      "target_word": "поклоняться|боготворить",
-      "source_example": "They worship their ancestors.",
-      "target_example": "Они поклоняются своим предкам."
     },
     {
       "translation_id": 9007023,
@@ -18215,18 +17090,9 @@
       "source_id": 9009053,
       "target_id": 9009054,
       "source_word": "yield",
-      "target_word": "урожай|доходность",
+      "target_word": "урожай|доходность [verb: уступать]",
       "source_example": "A high yield.",
       "target_example": "Высокая урожайность."
-    },
-    {
-      "translation_id": 9007027,
-      "source_id": 9009055,
-      "target_id": 9009056,
-      "source_word": "yield",
-      "target_word": "уступать|приносить (урожай, доход)",
-      "source_example": "The tree yields good fruit.",
-      "target_example": "Дерево приносит хорошие плоды."
     }
   ]
 }
