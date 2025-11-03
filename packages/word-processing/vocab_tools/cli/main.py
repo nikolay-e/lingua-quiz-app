@@ -145,6 +145,14 @@ Requirements:
         generate_parser = subparsers.add_parser("generate", help="Generate frequency word lists for languages")
         self._setup_generate_parser(generate_parser)
 
+        # Check level coverage command
+        check_levels_parser = subparsers.add_parser(
+            "check-levels",
+            help="Check if words in each level match their expected frequency range",
+            parents=[common_parent, output_parent],
+        )
+        self._setup_check_levels_parser(check_levels_parser)
+
         return parser
 
     def _setup_analyze_parser(self, parser: argparse.ArgumentParser):
@@ -217,6 +225,20 @@ Requirements:
 
     def _setup_summary_parser(self, parser: argparse.ArgumentParser):
         """Set up the summary command parser."""
+
+    def _setup_check_levels_parser(self, parser: argparse.ArgumentParser):
+        """Set up the check-levels command parser."""
+        parser.add_argument(
+            "--show-mismatches",
+            action="store_true",
+            help="Show detailed mismatch information for words",
+        )
+        parser.add_argument(
+            "--limit-mismatches",
+            type=int,
+            default=20,
+            help="Limit number of mismatches shown per file (default: 20)",
+        )
 
     def _setup_generate_parser(self, parser: argparse.ArgumentParser):
         """Set up the generate command parser."""
@@ -706,6 +728,51 @@ Requirements:
         except Exception as e:
             print(f"\n❌ Error saving results: {e}")
 
+    def run_check_levels(self, args: argparse.Namespace) -> dict[str, Any]:
+        """
+        Check level coverage for all migration files.
+
+        Args:
+            args: Parsed command line arguments
+
+        Returns:
+            Dictionary containing level coverage results
+        """
+        from ..analysis.level_coverage_analyzer import LevelCoverageAnalyzer
+
+        if args.output == "text":
+            print("🔍 CHECKING LEVEL COVERAGE")
+            print("=" * 80)
+
+        migrations_dir = Path(args.migrations_dir) if args.migrations_dir else None
+        analyzer = LevelCoverageAnalyzer(migrations_directory=migrations_dir)
+
+        # Run analysis
+        results = analyzer.analyze_all_files(show_progress=(args.output == "text"))
+
+        # Print summary if text output
+        if args.output == "text":
+            analyzer.print_summary_report(results)
+
+            # Show detailed mismatches if requested
+            if args.show_mismatches:
+                print("\n" + "=" * 80)
+                print("⚠️  DETAILED MISMATCH REPORT")
+                print("=" * 80)
+
+                for filename in sorted(results.keys()):
+                    result = results[filename]
+                    if result.mismatches:
+                        print(f"\n📄 {filename}:")
+                        limit = args.limit_mismatches if hasattr(args, "limit_mismatches") else 20
+                        for mismatch in result.mismatches[:limit]:
+                            print(f"   • {mismatch.word}: rank {mismatch.actual_rank} → {mismatch.reason}")
+                        if len(result.mismatches) > limit:
+                            print(f"   ... and {len(result.mismatches) - limit} more")
+
+        # Convert to serializable format
+        return {filename: result.to_dict() for filename, result in results.items()}
+
     def run(self):
         """Main entry point for the CLI."""
         parser = self.create_parser()
@@ -767,7 +834,11 @@ Requirements:
             elif args.command == "generate":
                 results = self.run_generate(args)
 
-                print(json.dumps(results, indent=2, ensure_ascii=False))
+            elif args.command == "check-levels":
+                results = self.run_check_levels(args)
+
+                if args.output == "json":
+                    print(json.dumps(results, indent=2, ensure_ascii=False))
 
             else:
                 parser.print_help()
