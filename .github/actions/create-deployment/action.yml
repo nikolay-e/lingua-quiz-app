@@ -1,0 +1,156 @@
+name: 'Create GitHub Deployment'
+description: 'Creates a GitHub deployment with standardized parameters and initial status'
+
+inputs:
+  environment:
+    description: 'Environment name (production, staging, preview-pr-123)'
+    required: true
+  ref:
+    description: 'Git ref (tag, SHA, or branch)'
+    required: true
+  is-production:
+    description: 'Is this a production environment?'
+    required: false
+    default: 'false'
+  is-transient:
+    description: 'Is this a transient environment (e.g., preview)?'
+    required: false
+    default: 'false'
+  description:
+    description: 'Deployment description'
+    required: true
+  payload:
+    description: 'JSON payload with metadata'
+    required: false
+    default: '{}'
+  environment-url:
+    description: 'Environment URL'
+    required: true
+  initial-status:
+    description: 'Initial deployment status (in_progress, success, queued)'
+    required: false
+    default: 'in_progress'
+  status-description:
+    description: 'Initial status description'
+    required: false
+    default: 'Deployment initiated'
+
+outputs:
+  deployment-id:
+    description: 'Created deployment ID'
+    value: ${{ steps.create.outputs.deployment-id }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Create deployment
+      id: create
+      uses: actions/github-script@v8
+      env:
+        ENVIRONMENT: ${{ inputs.environment }}
+        REF: ${{ inputs.ref }}
+        IS_PRODUCTION: ${{ inputs.is-production }}
+        IS_TRANSIENT: ${{ inputs.is-transient }}
+        DESCRIPTION: ${{ inputs.description }}
+        PAYLOAD: ${{ inputs.payload }}
+        ENVIRONMENT_URL: ${{ inputs.environment-url }}
+        INITIAL_STATUS: ${{ inputs.initial-status }}
+        STATUS_DESCRIPTION: ${{ inputs.status-description }}
+      with:
+        script: |
+          const environment = process.env.ENVIRONMENT;
+          const ref = process.env.REF;
+          const isProduction = process.env.IS_PRODUCTION === 'true';
+          const isTransient = process.env.IS_TRANSIENT === 'true';
+          const description = process.env.DESCRIPTION;
+          const environmentUrl = process.env.ENVIRONMENT_URL;
+          const initialStatus = process.env.INITIAL_STATUS;
+          const statusDescription = process.env.STATUS_DESCRIPTION;
+
+          // Validate required inputs
+          if (!environment || environment.trim() === '') {
+            core.setFailed('Environment name is required');
+            throw new Error('Environment name is required');
+          }
+          if (!ref || ref.trim() === '') {
+            core.setFailed('Git ref is required');
+            throw new Error('Git ref is required');
+          }
+          if (!description || description.trim() === '') {
+            core.setFailed('Description is required');
+            throw new Error('Description is required');
+          }
+          if (!environmentUrl || environmentUrl.trim() === '') {
+            core.setFailed('Environment URL is required');
+            throw new Error('Environment URL is required');
+          }
+
+          // Validate environment name pattern (alphanumeric, hyphens, underscores)
+          const envPattern = /^[a-zA-Z0-9_-]+$/;
+          if (!envPattern.test(environment)) {
+            core.setFailed(`Invalid environment name: ${environment}. Must contain only alphanumeric characters, hyphens, and underscores.`);
+            throw new Error('Invalid environment name');
+          }
+
+          // Validate initial status (whitelist)
+          const validStatuses = ['in_progress', 'success', 'queued', 'pending'];
+          if (!validStatuses.includes(initialStatus)) {
+            core.setFailed(`Invalid initial status: ${initialStatus}. Must be one of: ${validStatuses.join(', ')}`);
+            throw new Error('Invalid initial status');
+          }
+
+          // Validate environment URL format
+          try {
+            new URL(environmentUrl);
+          } catch (error) {
+            core.setFailed(`Invalid environment URL: ${environmentUrl}`);
+            throw new Error('Invalid environment URL');
+          }
+
+          let payload = {};
+          try {
+            payload = JSON.parse(process.env.PAYLOAD || '{}');
+          } catch (error) {
+            console.log(`Warning: Invalid JSON payload, using empty object. Error: ${error.message}`);
+          }
+
+          console.log(`Creating deployment for environment: ${environment}`);
+          console.log(`  Ref: ${ref}`);
+          console.log(`  Production: ${isProduction}`);
+          console.log(`  Transient: ${isTransient}`);
+
+          // Create deployment
+          try {
+            const { data: deployment } = await github.rest.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: ref,
+              environment: environment,
+              auto_merge: false,
+              required_contexts: [],
+              production_environment: isProduction,
+              transient_environment: isTransient,
+              description: description,
+              payload: payload
+            });
+
+            console.log(`✅ Deployment created: ${deployment.id}`);
+
+            // Set initial status
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: deployment.id,
+              state: initialStatus,
+              description: statusDescription,
+              environment_url: environmentUrl,
+              auto_inactive: false
+            });
+
+            console.log(`✅ Deployment status set to: ${initialStatus}`);
+
+            core.setOutput('deployment-id', deployment.id);
+          } catch (error) {
+            core.setFailed(`Failed to create deployment: ${error.message}`);
+            throw error;
+          }

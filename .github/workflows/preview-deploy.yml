@@ -26,6 +26,7 @@ jobs:
       contents: read
       packages: read
       pull-requests: write
+      deployments: write
 
     steps:
       - name: Get PR details and find image tag
@@ -36,21 +37,30 @@ jobs:
             const pr = context.payload.workflow_run.pull_requests[0];
             const prNumber = pr.number;
 
-            // Get the full PR details to access merge_commit_sha
-            // When CI runs on a PR, github.sha is the merge commit SHA
+            // Get the full PR details to access head SHA
             const { data: prData } = await github.rest.pulls.get({
               owner: context.repo.owner,
               repo: 'lingua-quiz',
               pull_number: prNumber
             });
 
-            // The merge_commit_sha is what CI actually builds with (github.sha during CI)
-            const ciSha = prData.merge_commit_sha;
+            // Security: Block fork PRs
+            const isFork = prData.head.repo.fork || prData.head.repo.full_name !== context.repo.full_name;
+            if (isFork) {
+              core.setFailed(`PR #${prNumber} is from a fork (${prData.head.repo.full_name}). Preview deployments are not allowed for fork PRs due to security restrictions.`);
+              throw new Error('Fork PR detected - preview deployment blocked');
+            }
+
+            console.log(`✅ PR #${prNumber} is from same repository (not a fork)`);
+
+            // Use head SHA - it's persistent and matches what CI builds
+            // (CI was fixed to use head.sha instead of merge_commit_sha)
+            const headSha = prData.head.sha;
 
             core.setOutput('number', prNumber);
-            core.setOutput('ci_sha', ciSha);
+            core.setOutput('head_sha', headSha);
 
-            console.log(`PR #${prNumber}, CI merge commit SHA: ${ciSha}`);
+            console.log(`PR #${prNumber}, HEAD SHA: ${headSha}`);
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
@@ -61,7 +71,7 @@ jobs:
 
       - name: Verify images exist
         env:
-          IMAGE_TAG: ${{ steps.pr.outputs.ci_sha }}
+          IMAGE_TAG: ${{ steps.pr.outputs.head_sha }}
         run: |
           # shellcheck disable=SC2086
           echo "Verifying images are available for tag: ${IMAGE_TAG}"
@@ -111,7 +121,7 @@ jobs:
       - name: Create preview directory
         env:
           PR_NUMBER: ${{ steps.pr.outputs.number }}
-          IMAGE_TAG: ${{ steps.pr.outputs.ci_sha }}
+          IMAGE_TAG: ${{ steps.pr.outputs.head_sha }}
         run: |
           PREVIEW_DOMAIN="lingua-quiz-pr-${PR_NUMBER}.nikolay-eremeev.com"
 
@@ -148,7 +158,7 @@ jobs:
       - name: Commit and push
         env:
           PR_NUMBER: ${{ steps.pr.outputs.number }}
-          IMAGE_TAG: ${{ steps.pr.outputs.ci_sha }}
+          IMAGE_TAG: ${{ steps.pr.outputs.head_sha }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -170,16 +180,38 @@ jobs:
             echo "✓ Argo CD will automatically sync and deploy the preview environment"
           fi
 
+      - name: Create GitHub Deployment
+        id: deployment
+        uses: ./.github/actions/create-deployment
+        with:
+          environment: 'preview-pr-${{ steps.pr.outputs.number }}'
+          ref: ${{ steps.pr.outputs.head_sha }}
+          is-production: 'false'
+          is-transient: 'true'
+          description: 'Preview environment for PR #${{ steps.pr.outputs.number }}'
+          payload: |
+            {
+              "pr_number": ${{ steps.pr.outputs.number }},
+              "commit_sha": "${{ steps.pr.outputs.head_sha }}",
+              "preview_url": "https://lingua-quiz-pr-${{ steps.pr.outputs.number }}.nikolay-eremeev.com"
+            }
+          environment-url: 'https://lingua-quiz-pr-${{ steps.pr.outputs.number }}.nikolay-eremeev.com'
+          initial-status: 'in_progress'
+          status-description: 'ArgoCD is syncing the preview environment (~2 min)'
+
       - name: Comment on PR
         env:
           PR_NUMBER: ${{ steps.pr.outputs.number }}
-          IMAGE_TAG: ${{ steps.pr.outputs.ci_sha }}
+          IMAGE_TAG: ${{ steps.pr.outputs.head_sha }}
+          DEPLOYMENT_ID: ${{ steps.deployment.outputs.deployment-id }}
         uses: actions/github-script@v8
         with:
           script: |
             const prNumber = parseInt(process.env.PR_NUMBER);
             const imageTag = process.env.IMAGE_TAG;
+            const deploymentId = process.env.DEPLOYMENT_ID;
             const previewUrl = `https://lingua-quiz-pr-${prNumber}.nikolay-eremeev.com`;
+            const environmentUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/deployments`;
 
             const comment = `## 🚀 Preview Environment Deploying
 
@@ -187,7 +219,9 @@ jobs:
 
             **Preview URL:** ${previewUrl}
 
-            **Status:** Argo CD is syncing (~2 minutes)
+            **Status:** ⏳ ArgoCD is syncing (~2 minutes)
+
+            **Deployment:** [View in GitHub](${environmentUrl}) (ID: ${deploymentId})
 
             The deployment includes:
             - ✅ Dedicated namespace

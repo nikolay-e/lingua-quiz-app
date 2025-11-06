@@ -7,6 +7,65 @@ analysis_defaults:
   top_words_count: 1000
   id_gap_threshold: 100  # Maximum gap in ID sequences before warning
 
+# CEFR Cumulative Totals (for vocabulary analysis)
+# When analyzing level X, compare against cumulative lemma count (current + all previous levels)
+cefr_cumulative_totals:
+  a0: 0
+  a1: 1000      # A1 only
+  a2: 2000      # A1 + A2
+  b1: 4000      # A1 + A2 + B1
+  b2: 6000      # A1 + A2 + B1 + B2
+  c1: 10000     # Sum up to C1
+  c2: 14000     # Sum up to C2
+
+# CEFR Level Distribution (based on Zipf's Law)
+# Research shows vocabulary should follow exponential growth, not linear:
+# - 2000-3000 words → 95% lexical coverage (adequate comprehension)
+# - 8000-9000 words → 98% coverage (full fluency)
+# Zipf scale: content words range 1-6, tipping point at 3-4 (low→high frequency)
+cefr_levels:
+  a1:
+    words: 1000
+    rank_range: [1, 1000]
+    zipf_threshold: 4.0
+    coverage_target: "60-70% of everyday texts"
+    description: "Very high frequency words - essential for basic communication"
+
+  a2:
+    words: 1000
+    rank_range: [1001, 2000]
+    zipf_threshold: 3.5
+    coverage_target: "+15% (total ~85%)"
+    description: "High frequency words - common everyday situations"
+
+  b1:
+    words: 2000
+    rank_range: [2001, 4000]
+    zipf_threshold: 3.0
+    coverage_target: "+8% (total ~93%)"
+    description: "Medium-high frequency - main points of clear texts"
+
+  b2:
+    words: 2000
+    rank_range: [4001, 6000]
+    zipf_threshold: 2.5
+    coverage_target: "+3% (total ~96%)"
+    description: "Medium frequency - complex topics and abstract ideas"
+
+  c1:
+    words: 5000
+    rank_range: [7001, 12000]
+    zipf_threshold: 2.0
+    coverage_target: "+2% (total ~98%)"
+    description: "Lower frequency - fluent and spontaneous expression"
+
+  c2:
+    words: 8000
+    rank_range: [12001, 20000]
+    zipf_threshold: 1.5
+    coverage_target: "+1% (total ~99%)"
+    description: "Rare words - near-native proficiency"
+
 languages:
   en:
     name: "English"
@@ -14,6 +73,7 @@ languages:
     spacy_models: ['en_core_web_sm', 'en_core_web_md', 'en_core_web_lg']
 
     normalization:
+      unicode_normalization_form: "NFC"  # W3C recommendation for text comparison
       preserve_diacritics: false
       articles: []
       remove_hyphens: false
@@ -29,6 +89,15 @@ languages:
       superlative: ['est$']
       third_person: ['s$', 'es$']
 
+    lemmatization_exceptions:
+      short_lemmas: ["be", "do", "go", "see", "get", "put", "run", "cut", "let", "set", "sit", "hit", "fit", "bid", "rid", "win", "lie", "die", "tie", "eat", "buy", "pay", "say", "may"]
+      reason: "Common English verbs and function words with short lemmas (2-3 chars)"
+
+    inflection_exceptions:
+      # Keep high-frequency irregular verb forms that differ significantly from infinitive
+      irregular_verbs: ["am", "is", "are", "was", "were", "been", "being", "went", "gone", "did", "done", "had", "has", "have", "having", "saw", "seen", "got", "gotten", "came", "come", "took", "taken", "made", "gave", "given"]
+      reason: "Common irregular verb forms that learners should recognize as distinct words"
+
     skip_words: []
 
     blacklist:
@@ -43,6 +112,9 @@ languages:
     filtering:
       min_word_length: 2
       short_word_whitelist: ["no", "ok", "am", "be", "go", "do", "up", "we", "he", "me", "my", "us", "or", "so", "if", "at", "by", "is", "to", "of", "in", "on", "as", "an", "a", "i"]
+      inflection_frequency_ratio: 0.7  # English has low inflection (strict filtering)
+      raw_frequency_multiplier: 2.0  # Multiplier for raw subtitle data (less inflections)
+      test_whitelist: ["book", "table", "chair", "cat", "dog", "house", "eat", "run", "have"]  # For integration tests only
       exclude_patterns:
         - "^\\w'\\w+"
         - "^\\d+$"
@@ -63,6 +135,7 @@ languages:
     max_word_length: 45  # German compound words with articles and plural forms
 
     normalization:
+      unicode_normalization_form: "NFC"  # Preserves ä, ö, ü, ß as composed characters
       preserve_diacritics: true
       articles: ['der', 'die', 'das', 'den', 'dem', 'des', 'ein', 'eine', 'einer', 'einen', 'einem', 'eines']
       remove_hyphens: true
@@ -74,6 +147,15 @@ languages:
       plural: ['e$', 'en$', 'er$', 'n$', 's$']
       verb_conjugation: ['e$', 'st$', 't$', 'en$', 'et$']
       past_participle: ['ge.*t$', 'ge.*en$']
+
+    lemmatization_exceptions:
+      short_lemmas: ["sein", "tun", "gehen", "sehen", "geben", "nehmen", "kommen", "sagen", "tun", "gut", "neu", "alt", "aus", "vor", "ein", "der", "die", "das"]
+      reason: "Common German verbs, adjectives, and function words with short lemmas (2-3 chars)"
+
+    inflection_exceptions:
+      # Keep inflected forms that are commonly taught separately or have distinct meanings
+      irregular_verbs: ["bin", "bist", "ist", "sind", "war", "warst", "gewesen", "habe", "hast", "hat", "hatte", "gehabt"]
+      reason: "Common irregular verb forms that learners should recognize separately"
 
     skip_words: []
 
@@ -89,6 +171,9 @@ languages:
     filtering:
       min_word_length: 2
       short_word_whitelist: ["am", "ab", "an", "zu", "um", "im", "ja", "wo", "ob", "in", "zu", "um", "im", "er", "es", "du", "wir", "ihr", "ich", "und", "der", "die", "das", "ein", "den", "dem", "des"]
+      inflection_frequency_ratio: 0.2  # German has high inflection (relaxed filtering)
+      raw_frequency_multiplier: 3.0  # Multiplier for raw subtitle data (high inflections)
+      test_whitelist: ["Buch", "Tisch", "Stuhl", "Katze", "Hund", "Haus", "essen", "laufen", "haben"]  # For integration tests only
       exclude_patterns:
         - "^\\d+$"
         - "^[A-Z]{2,}$"
@@ -108,6 +193,7 @@ languages:
     max_word_length: 20
 
     normalization:
+      unicode_normalization_form: "NFC"  # Preserves á, é, í, ó, ú, ñ as composed characters
       preserve_diacritics: true
       articles: ['el', 'la', 'los', 'las', 'un', 'una', 'unos', 'unas']
       remove_hyphens: false
@@ -124,22 +210,35 @@ languages:
       gender_feminine: ['a$']
       gender_masculine: ['o$']
 
+    lemmatization_exceptions:
+      short_lemmas: ["ser", "ir", "dar", "ver", "haber", "estar", "por", "con", "sin", "más", "muy", "tan", "bien", "mal", "no", "sí", "yo", "tú", "él", "su", "tu", "mi", "te", "me", "le", "lo", "la", "un", "una", "dos", "tres"]
+      reason: "Common Spanish verbs, prepositions, and function words with short lemmas (2-3 chars)"
+
+    inflection_exceptions:
+      # Keep inflected forms that are commonly taught separately or have distinct meanings
+      irregular_verbs: ["soy", "eres", "es", "somos", "son", "fui", "fue", "fueron", "sido", "voy", "vas", "va", "vamos", "van", "he", "has", "ha", "hemos", "han", "tengo", "tienes", "tiene", "tienen", "tuve", "tuvo", "hago", "haces", "hace", "hacen"]
+      reason: "Common irregular verb forms (ser, ir, haber, tener, hacer) that learners should recognize separately"
+
     skip_words: []
 
     blacklist:
       profanity: ["puta", "mierda", "joder", "carajo", "coño", "cabrón", "pene", "culo", "polla", "boludo", "pendejo", "verga", "chingar"]
-      abbreviations: ["dr", "sr", "st", "of", "de", "pp", "etc", "mr", "sra", "km", "mg", "mm", "cc", "cm", "ex"]
+      abbreviations: ["dr", "sr", "st", "of", "pp", "etc", "mr", "sra", "km", "mg", "mm", "cc", "cm", "ex"]
       interjections: ["oh", "ah", "uh", "hey", "hola", "eh", "ay", "uf", "oye", "ey"]
       anglicisms: ["of", "and", "in", "new", "post", "show", "the", "internet", "online", "for", "team", "football", "love", "web", "boy", "email", "okay", "twitter", "video", "photo", "blog"]
-      slang: ["pa", "po", "che", "tío", "tía", "pibe", "pues"]
+      slang: ["pa", "po", "che", "tío", "tía", "pibe"]
       proper_nouns: ["méxico", "españa", "argentina", "chile", "colombia", "venezuela", "perú", "cuba", "brasil", "madrid", "barcelona", "buenos", "aires", "josé", "juan", "maría", "carlos", "luis", "jorge", "pedro", "miguel", "antonio", "argentino", "américo"]
       technical: ["internet", "web", "twitter", "video", "foto", "blog", "ministerio", "congreso"]
-      lemma_errors: ["sar", "mierdo", "va", "vo", "quier", "diar", "contiguir"]
+      lemma_errors: ["sar", "mierdo", "vo", "quier", "diar", "contiguir"]
       too_short: ["oh", "pa", "po", "ta", "na", "eh"]
 
     filtering:
       min_word_length: 2
       short_word_whitelist: ["no", "sí", "ya", "me", "mi", "le", "lo", "se", "si", "un", "te", "su", "es", "al", "yo", "él", "tú", "ni", "en", "el", "la", "de", "y", "a", "o"]
+      inflection_frequency_ratio: 0.4  # Spanish has medium inflection (balanced filtering)
+      raw_frequency_multiplier: 2.5  # Multiplier for raw subtitle data (medium inflections)
+      ner_frequency_threshold: 0.0005
+      test_whitelist: ["libro", "mesa", "silla", "gato", "perro", "casa", "estar", "comer", "tener"]  # For integration tests only
       exclude_patterns:
         - "^\\d+$"
         - "^[A-Z]{2,}$"
@@ -158,6 +257,7 @@ languages:
     spacy_models: ['ru_core_news_sm', 'ru_core_news_md', 'ru_core_news_lg']
 
     normalization:
+      unicode_normalization_form: "NFC"  # Preserves ё, й and other Cyrillic characters
       preserve_diacritics: true
       articles: []
       remove_hyphens: false
@@ -172,18 +272,34 @@ languages:
       participle: ['щий$', 'щая$', 'щее$', 'щие$', 'вший$', 'вшая$', 'вшее$', 'вшие$', 'мый$', 'мая$', 'мое$', 'мые$', 'нный$', 'нная$', 'нное$', 'нные$', 'тый$', 'тая$', 'тое$', 'тые$']
       gerund: ['я$', 'а$', 'в$', 'вши$', 'вшись$']
 
+    lemmatization_exceptions:
+      short_lemmas: ["быть", "дать", "идти", "жить", "есть", "мочь", "знать", "стать", "год", "раз", "два", "три", "он", "она", "они", "это", "весь", "сам", "свой", "мой", "твой", "наш", "ваш", "их", "тот", "этот", "кто", "что", "где", "как"]
+      reason: "Common Russian verbs, pronouns, and function words with short lemmas (2-4 chars)"
+
+    inflection_exceptions:
+      # Keep aspectual pairs (perfective/imperfective) and important irregular forms
+      # Russian aspectual pairs are semantically distinct and should be taught separately
+      irregular_verbs: ["был", "была", "было", "были", "буду", "будешь", "будет", "будем", "будут", "дал", "дала", "дали", "дам", "дашь", "даст", "идёт", "идут", "шёл", "шла", "могу", "можешь", "может", "могут", "мог", "могла"]
+      aspectual_pairs_keep_both: true  # Both делать (imperfective) and сделать (perfective) should be kept
+      reason: "Russian aspectual pairs and high-frequency irregular verb forms that learners must recognize separately"
+
     skip_words: ['и', 'в', 'не', 'на', 'с', 'что', 'он', 'это', 'как', 'по', 'за', 'к', 'о', 'у', 'от', 'из', 'для', 'до', 'при', 'без', 'я', 'ты', 'мы', 'вы', 'они']
 
     blacklist:
+      contractions: []
       profanity: ["блядь", "хрен", "дерьмо", "сука", "хуй", "пиздец", "ебать", "говно"]
-      interjections: ["ой", "ах", "эх", "ох", "ага", "угу", "ха", "хм"]
-      anglicisms: ["of", "in", "and", "for", "the", "on", "you", "ru", "no", "at", "one", "is", "news", "group", "love", "world", "http", "https", "me", "my", "internet", "online", "post", "email", "web"]
       abbreviations: ["т", "п", "д", "г", "кг", "см", "мм", "км", "etc", "vs"]
+      interjections: ["ой", "ах", "эх", "ох", "ага", "угу", "ха", "хм"]
+      slang: ["бля", "чё", "чо", "щас", "нормас", "го", "изи", "кек", "лол"]
+      proper_nouns: ["россия", "москва", "петербург", "владимир", "александр", "михаил", "иван", "европа", "америка", "китай"]
       too_short: ["т", "п", "д", "г", "ах", "эх", "ха"]
 
     filtering:
       min_word_length: 2
       short_word_whitelist: ["не", "в", "и", "на", "с", "у", "о", "он", "за", "из", "к", "до", "от", "об", "ли", "во", "же", "со", "ну", "вы", "их", "ни", "ко", "об"]
+      inflection_frequency_ratio: 0.15  # Russian has very high inflection (most relaxed filtering)
+      raw_frequency_multiplier: 3.5  # Multiplier for raw subtitle data (very high inflections)
+      test_whitelist: ["книга", "стол", "стул", "кошка", "собака", "дом", "быть", "есть", "иметь"]  # For integration tests only
       exclude_patterns:
         - "^\\d+$"
         - "^[A-Z]{2,}$"

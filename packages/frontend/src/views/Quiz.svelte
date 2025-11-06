@@ -7,7 +7,6 @@
   import { ttsService } from '../lib/services/ttsService';
   import { STORAGE_KEYS } from '../lib/constants';
 
-  // Import new components
   import QuizHeader from '../components/quiz/QuizHeader.svelte';
   import QuestionDisplay from '../components/quiz/QuestionDisplay.svelte';
   import FeedbackDisplay from '../components/quiz/FeedbackDisplay.svelte';
@@ -15,9 +14,6 @@
   import FeedCard from '../components/FeedCard.svelte';
   import LevelChangeAnimation from '../components/quiz/LevelChangeAnimation.svelte';
 
-  // Level configuration imported from @lingua-quiz/core
-
-  // State variables
   let userAnswer: string = '';
   let answerInput: HTMLInputElement;
   let feedback: SubmissionResult | QuizFeedback | null = null;
@@ -25,57 +21,52 @@
   let isSubmitting: boolean = false;
   let questionForFeedback: QuizQuestion | null = null;
 
-  // Level change animation state
   let showLevelAnimation = false;
   let isLevelUp = true;
 
-  // TTS state (managed by service)
   let ttsState: import('../lib/services/ttsService').TTSState = { isAvailable: false, supportedLanguages: [], isPlaying: false };
 
-  // 2. REFACTOR: Initialize foldedLists from LEVEL_CONFIG instead of hardcoding
   const foldedLists: Record<string, boolean> = {};
 
-  // Initialize foldedLists dynamically
   LEVEL_CONFIG.forEach(level => {
     foldedLists[level.id] = true;
   });
 
-  // Load saved fold states from localStorage
   const savedFoldStates = safeStorage.getItem(STORAGE_KEYS.FOLDED_LISTS);
   if (savedFoldStates) {
     try {
       const saved = JSON.parse(savedFoldStates);
-      // Only update existing keys to prevent issues with config changes
       Object.keys(foldedLists).forEach(key => {
         if (key in saved) {
           foldedLists[key] = saved[key];
         }
       });
     } catch {
-    // Use defaults if parsing fails
+    // Ignore parsing errors for corrupted localStorage
     }
   }
 
-  // 3. REFACTOR: Single dynamic toggle function (eliminates repetition)
   function toggleFold(event: CustomEvent<{ levelId: string }>) {
     const {levelId} = event.detail;
     foldedLists[levelId] = !foldedLists[levelId];
     safeStorage.setItem(STORAGE_KEYS.FOLDED_LISTS, JSON.stringify(foldedLists));
   }
 
-  // Reactive state from stores
+  // eslint-disable-next-line prefer-destructuring
   $: wordSets = $quizStore.wordSets;
+  // eslint-disable-next-line prefer-destructuring
   $: selectedQuiz = $quizStore.selectedQuiz;
+  // eslint-disable-next-line prefer-destructuring
   $: currentQuestion = $quizStore.currentQuestion;
+  // eslint-disable-next-line prefer-destructuring
   $: loading = $quizStore.loading;
+  // eslint-disable-next-line prefer-destructuring
   $: username = $authStore.username;
 
-  // Derived reactive state from currentQuestion and quizManager
-  $: direction = currentQuestion?.direction || 'normal';
-  $: sourceLanguage = currentQuestion?.sourceLanguage || $quizStore.quizManager?.getState().translations[0]?.sourceWord.language || '';
-  $: targetLanguage = currentQuestion?.targetLanguage || $quizStore.quizManager?.getState().translations[0]?.targetWord.language || '';
+  $: direction = currentQuestion?.direction ?? 'normal';
+  $: sourceLanguage = currentQuestion?.sourceLanguage ?? $quizStore.quizManager?.getState().translations[0]?.sourceWord.language ?? '';
+  $: targetLanguage = currentQuestion?.targetLanguage ?? $quizStore.quizManager?.getState().translations[0]?.targetWord.language ?? '';
 
-  // Get current level from quiz manager for display purposes only (memoized)
   let currentLevel: string = 'LEVEL_1';
   let lastCurrentLevel: string = 'LEVEL_1';
 
@@ -87,13 +78,9 @@
     }
   }
 
-  // Level word lists are now handled by a derived store for efficiency
-
-  // TTS reactive state
   $: currentLanguage = direction === 'normal' ? sourceLanguage : targetLanguage;
   $: canUseTTS = currentQuestion && ttsService.canUseTTS(currentLanguage);
 
-  // Reactive focus management - focus input when it becomes available
   $: if (answerInput && currentQuestion) {
     answerInput.focus();
   }
@@ -101,7 +88,6 @@
   async function handleQuizSelect(event: CustomEvent<{ quiz: string }>): Promise<void> {
     const {quiz} = event.detail;
 
-    // Reset state
     quizStore.reset();
     feedback = null;
     usageExamples = null;
@@ -116,7 +102,6 @@
       if (!question) {
         feedback = { message: 'No questions available for this quiz.', isSuccess: false } as QuizFeedback;
       }
-      // Use tick to ensure DOM updates before focusing
       await tick();
       if (answerInput) answerInput.focus();
     } catch (error: unknown) {
@@ -127,15 +112,12 @@
   }
 
   function handleBackToMenu(): void {
-    // Save progress in background (non-blocking)
     if ($authStore.token) {
       quizStore.saveAndCleanup($authStore.token).catch((error) => {
         console.error('Failed to save progress before returning to menu:', error);
-      // Progress will be saved on next session
       });
     }
 
-    // Reset UI immediately
     quizStore.reset();
     feedback = null;
     usageExamples = null;
@@ -150,11 +132,9 @@
     questionForFeedback = currentQuestion;
 
     try {
-      // Submit answer and get feedback (this is now non-blocking for API calls)
       const result = await quizStore.submitAnswer($authStore.token!, userAnswer);
 
       if (result) {
-        // Update UI immediately
         feedback = result;
         if ('translation' in result && result.translation) {
           usageExamples = {
@@ -165,7 +145,6 @@
           usageExamples = null;
         }
 
-        // Check for level change and trigger animation
         if ('levelChange' in result && result.levelChange) {
           const fromLevel = parseInt(result.levelChange.from.replace('LEVEL_', ''));
           const toLevel = parseInt(result.levelChange.to.replace('LEVEL_', ''));
@@ -175,7 +154,6 @@
 
         userAnswer = '';
 
-        // Get next question (local operation, no API call)
         quizStore.getNextQuestion();
 
         await tick();
@@ -215,16 +193,13 @@
   }
 
   onMount(() => {
-    // Subscribe to TTS service state
     const unsubscribeTTS = ttsService.subscribe((state) => {
       ttsState = state;
     });
 
-    // Initialize asynchronously
     (async () => {
       if ($authStore.token) {
         await ttsService.initializeLanguages($authStore.token);
-        // Load available word sets
         try {
           await quizStore.loadWordSets($authStore.token);
         } catch (error) {
@@ -235,7 +210,6 @@
       if (answerInput) answerInput.focus();
     })();
 
-    // Return cleanup function
     return () => {
       unsubscribeTTS();
     };
@@ -250,21 +224,18 @@
 
     window.addEventListener('beforeunload', handleBeforeUnload);
 
-    // Cleanup function
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
   });
 
   onDestroy(() => {
-    // Cleanup TTS service resources
     ttsService.destroy();
   });
 </script>
 
 {#key selectedQuiz}
   <main class="feed">
-    <!-- Card: Quiz picker / header -->
     <FeedCard title={selectedQuiz ? undefined : undefined}>
       {#if !selectedQuiz}
         <header class="flex-align-center gap-sm mb-md">
@@ -296,7 +267,6 @@
       </div>
     </FeedCard>
 
-    <!-- Card: Question -->
     {#if selectedQuiz}
       <FeedCard dense title="Translate">
         <svelte:fragment slot="headerAction">
@@ -319,7 +289,6 @@
       </FeedCard>
     {/if}
 
-    <!-- Card: Answer input -->
     {#if currentQuestion}
       <FeedCard dense>
         <div class="actions">
@@ -339,7 +308,6 @@
       </FeedCard>
     {/if}
 
-    <!-- Card: Feedback -->
     {#if feedback}
       <FeedCard dense>
         <FeedbackDisplay
@@ -350,7 +318,6 @@
       </FeedCard>
     {/if}
 
-    <!-- Card: Progress -->
     {#if selectedQuiz}
       <FeedCard>
         <LearningProgress
@@ -365,7 +332,6 @@
       </FeedCard>
     {/if}
 
-    <!-- Card: Account actions -->
     <FeedCard dense>
       <div class="actions">
         <button class="logout-button" on:click={logout}>
@@ -379,7 +345,6 @@
   </main>
 {/key}
 
-<!-- Level change animation overlay -->
 <LevelChangeAnimation
   bind:isVisible={showLevelAnimation}
   {isLevelUp}
@@ -387,7 +352,6 @@
 />
 
 <style>
-  /* Trim the old quiz-container/blocky layout—feed + cards do the layout now */
   .delete-button {
     background-color: var(--error-color);
   }
@@ -396,14 +360,12 @@
     background-color: var(--error-hover);
   }
 
-  /* Custom styles not covered by utilities */
   .logo {
     margin: 0;
     color: var(--primary-color);
     font-size: var(--font-size-xl);
   }
 
-  /* Feature link styling */
   .feature-link {
     text-decoration: none;
     color: inherit;

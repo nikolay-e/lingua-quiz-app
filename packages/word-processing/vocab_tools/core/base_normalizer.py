@@ -9,8 +9,10 @@ class UniversalNormalizer:
         self.remove_hyphens = language_config.get("remove_hyphens", False)
         self.comma_separator = language_config.get("comma_separator", False)
         self.special_chars = language_config.get("special_chars", [])
+        self.unicode_form = language_config.get("unicode_normalization_form", "NFC")
 
     def normalize(self, word: str) -> str:
+        word = self.normalize_unicode(word)
         word = self._clean_word(word)
 
         if "," in word and not self.comma_separator:
@@ -30,6 +32,9 @@ class UniversalNormalizer:
             word = word.replace("-", "")
 
         return word.strip()
+
+    def normalize_unicode(self, text: str) -> str:
+        return unicodedata.normalize(self.unicode_form, text)
 
     def extract_word_variants(self, text: str) -> set[str]:
         variants = set()

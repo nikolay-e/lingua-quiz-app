@@ -131,7 +131,7 @@ export class QuizManager {
 
     translations.forEach((t) => {
       const existing = initialProgressMap.get(t.id);
-      const progress: ProgressEntry = existing || {
+      const progress: ProgressEntry = existing ?? {
         translationId: t.id,
         status: 'LEVEL_0',
         consecutiveCorrect: 0,
@@ -234,12 +234,7 @@ export class QuizManager {
       sourceLanguage: t.sourceWord.language,
       targetLanguage: t.targetWord.language,
       questionType,
-      usageExample:
-        questionType === 'usage'
-          ? direction === 'normal'
-            ? t.sourceWord.usageExample
-            : t.targetWord.usageExample
-          : undefined,
+      usageExample: this.getUsageExample(questionType, direction, t),
     };
   };
 
@@ -278,6 +273,20 @@ export class QuizManager {
    */
   private getLevelQuestionType = (level: PracticeLevel): QuestionType => {
     return level === 'LEVEL_3' || level === 'LEVEL_4' ? 'usage' : 'translation';
+  };
+
+  /**
+   * Gets the usage example based on question type and direction
+   */
+  private getUsageExample = (
+    questionType: QuestionType,
+    direction: QuestionDirection,
+    translation: Translation,
+  ): string | undefined => {
+    if (questionType !== 'usage') {
+      return undefined;
+    }
+    return direction === 'normal' ? translation.sourceWord.usageExample : translation.targetWord.usageExample;
   };
 
   /**

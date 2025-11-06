@@ -1,13 +1,18 @@
-<!-- Reusable authentication message component -->
 <script lang="ts">
   export let message: string;
   export let variant: 'success' | 'error' | null = null;
   export let id: string = 'auth-message';
 
-  $: messageColor =
-    variant === 'success' ? 'var(--success-color)'
-      : variant === 'error' ? 'var(--error-color)'
-      : 'inherit';
+  $: {
+    if (variant === 'success') {
+      messageColor = 'var(--success-color)';
+    } else if (variant === 'error') {
+      messageColor = 'var(--error-color)';
+    } else {
+      messageColor = 'inherit';
+    }
+  }
+  let messageColor = 'inherit';
 </script>
 
 {#if message}

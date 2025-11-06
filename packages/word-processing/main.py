@@ -1,23 +1,16 @@
 #!/usr/bin/env python3
 """
-Single command to run complete vocabulary analysis and validation.
-Loads configuration from config.yaml and executes the core CLI functions.
+Main entry point for vocab-tools CLI.
 
-Usage: python main.py <command> [options]
-Example: python main.py all
+Usage:
+    python main.py                    # Interactive mode
+    python main.py analyze es-a1      # Direct command execution
+    python main.py --help             # Show help
+
+This is a convenience wrapper around the new Typer-based CLI.
 """
 
-from vocab_tools.cli.main import VocabularyToolsCLI
-
-
-def main():
-    """
-    Main entry point for the vocab-tools CLI.
-    This function instantiates and runs the command-line interface.
-    """
-    cli = VocabularyToolsCLI()
-    cli.run()
-
+from vocab_tools.cli.app import main
 
 if __name__ == "__main__":
     main()

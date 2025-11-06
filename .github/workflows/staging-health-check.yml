@@ -1,0 +1,72 @@
+name: Staging Environment Health Check
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+
+permissions:
+  deployments: write
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    if: >
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.conclusion == 'success'
+    timeout-minutes: 10
+
+    steps:
+      - name: Wait for staging environment
+        id: wait
+        run: |
+          echo "Waiting for staging environment to become accessible..."
+          STAGING_URL="https://test-lingua-quiz.nikolay-eremeev.com"
+
+          MAX_ATTEMPTS=15  # ~10 minutes total with exponential backoff (ArgoCD Image Updater + sync)
+          INITIAL_WAIT=5   # Start with 5 seconds
+          MAX_WAIT=60      # Cap at 60 seconds
+
+          WAIT_SECONDS=$INITIAL_WAIT
+
+          for attempt in $(seq 1 "$MAX_ATTEMPTS"); do
+            echo "Attempt ${attempt}/${MAX_ATTEMPTS}: Testing ${STAGING_URL}"
+
+            HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+              --max-time 10 \
+              --retry 2 \
+              --retry-delay 2 \
+              "${STAGING_URL}" || echo "000")
+
+            echo "HTTP Status: ${HTTP_STATUS}"
+
+            if [ "$HTTP_STATUS" = "200" ] || [ "$HTTP_STATUS" = "301" ] || [ "$HTTP_STATUS" = "302" ]; then
+              echo "SUCCESS: Staging environment is accessible"
+              echo "success=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+
+            if [ "$attempt" -lt "$MAX_ATTEMPTS" ]; then
+              echo "Not ready yet, waiting ${WAIT_SECONDS}s (exponential backoff)..."
+              sleep "$WAIT_SECONDS"
+
+              # Exponential backoff: double wait time, but cap at MAX_WAIT
+              WAIT_SECONDS=$((WAIT_SECONDS * 2))
+              if [ "$WAIT_SECONDS" -gt "$MAX_WAIT" ]; then
+                WAIT_SECONDS=$MAX_WAIT
+              fi
+            fi
+          done
+
+          echo "ERROR: Staging environment did not become accessible within timeout"
+          echo "success=false" >> "$GITHUB_OUTPUT"
+          exit 1
+
+      - name: Update deployment status
+        uses: ./.github/actions/update-deployment-status
+        with:
+          environment: 'staging'
+          status: ${{ steps.wait.outputs.success == 'true' && 'success' || 'failure' }}
+          description: ${{ steps.wait.outputs.success == 'true' && '✅ Staging environment is ready and accessible' || '❌ Staging deployment failed to become accessible' }}
+          environment-url: 'https://test-lingua-quiz.nikolay-eremeev.com'

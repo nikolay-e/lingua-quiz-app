@@ -56,7 +56,7 @@ class VocabularyExporter:
     def _export_csv(self, vocab: ProcessedVocabulary, output_path: Path):
         with open(output_path, "w", encoding="utf-8", newline="") as f:
             for w in vocab.words:
-                f.write(f"{w.word}\n")
+                f.write(f"{w.lemma}\n")
 
     def _export_migration_format(self, vocab: ProcessedVocabulary, output_path: Path):
         language_name = self.config_loader.get_language_name(vocab.language_code)

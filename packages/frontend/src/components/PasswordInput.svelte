@@ -1,4 +1,3 @@
-<!-- Reusable password input component with toggle visibility -->
 <script lang="ts">
   export let value: string;
   export let placeholder: string = 'Password';

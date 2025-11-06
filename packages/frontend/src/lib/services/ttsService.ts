@@ -1,8 +1,3 @@
-/**
- * TTS (Text-to-Speech) Service
- * Encapsulates all audio playback logic for cleaner component code
- */
-
 import api from '../../api';
 
 export interface TTSState {
@@ -20,15 +15,10 @@ export class TTSService {
   };
   private stateCallbacks: ((state: TTSState) => void)[] = [];
 
-  /**
-   * Subscribe to state changes
-   */
   subscribe(callback: (state: TTSState) => void): () => void {
     this.stateCallbacks.push(callback);
-    // Immediately call with current state
     callback(this.state);
 
-    // Return unsubscribe function
     return () => {
       const index = this.stateCallbacks.indexOf(callback);
       if (index > -1) {
@@ -37,17 +27,11 @@ export class TTSService {
     };
   }
 
-  /**
-   * Update state and notify subscribers
-   */
   private updateState(updates: Partial<TTSState>): void {
     this.state = { ...this.state, ...updates };
     this.stateCallbacks.forEach((callback) => callback(this.state));
   }
 
-  /**
-   * Initialize TTS service by loading supported languages
-   */
   async initializeLanguages(token: string): Promise<void> {
     try {
       const ttsData = await api.getTTSLanguages(token);
@@ -64,24 +48,16 @@ export class TTSService {
     }
   }
 
-  /**
-   * Check if TTS can be used for the given language
-   */
   canUseTTS(language: string): boolean {
     return this.state.isAvailable && this.state.supportedLanguages.includes(language);
   }
 
-  /**
-   * Play TTS audio for given text and language
-   */
   async playTTS(token: string, text: string, language: string): Promise<void> {
     if (!this.canUseTTS(language) || this.state.isPlaying) {
       return;
     }
 
-    // Stop any currently playing audio
     this.stopCurrentAudio();
-
     this.updateState({ isPlaying: true });
 
     try {
@@ -112,9 +88,6 @@ export class TTSService {
     }
   }
 
-  /**
-   * Stop any currently playing audio
-   */
   stopCurrentAudio(): void {
     if (this.currentAudio) {
       this.currentAudio.pause();
@@ -123,21 +96,14 @@ export class TTSService {
     }
   }
 
-  /**
-   * Get current state
-   */
   getState(): TTSState {
     return { ...this.state };
   }
 
-  /**
-   * Cleanup resources
-   */
   destroy(): void {
     this.stopCurrentAudio();
     this.stateCallbacks = [];
   }
 }
 
-// Export a singleton instance for use across the application
 export const ttsService = new TTSService();

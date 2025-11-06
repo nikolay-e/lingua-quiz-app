@@ -1,10 +1,3 @@
-"""
-Base vocabulary analyzer for language learning applications.
-
-Provides the foundation for analyzing vocabulary gaps and recommending
-new words based on frequency analysis and NLP classification.
-"""
-
 from abc import ABC, abstractmethod
 from collections import defaultdict
 from dataclasses import dataclass
@@ -26,8 +19,6 @@ from .database_parser import VocabularyEntry, VocabularyFileParser
 
 @dataclass
 class WordAnalysis:
-    """Results of analyzing a single word."""
-
     word: str
     frequency: float
     category: str
@@ -38,8 +29,6 @@ class WordAnalysis:
 
 @dataclass
 class VocabularyAnalysisResult:
-    """Complete results of vocabulary analysis."""
-
     language_code: str
     total_existing_words: int
     total_analyzed_words: int
@@ -76,13 +65,6 @@ class VocabularyAnalysisResult:
 
 
 class VocabularyAnalyzer(ABC):
-    """
-    Base class for language-specific vocabulary analyzers.
-
-    Provides common functionality for analyzing vocabulary gaps
-    and generating learning recommendations.
-    """
-
     def __init__(
         self,
         language_code: str,
@@ -90,14 +72,6 @@ class VocabularyAnalyzer(ABC):
         config: dict[str, Any] | None = None,
         silent: bool = False,
     ):
-        """
-        Initialize the vocabulary analyzer.
-
-        Args:
-            language_code: ISO language code (en, de, es)
-            migrations_directory: Path to migrations directory
-            config: Analysis configuration parameters
-        """
         self.language_code = language_code
         self.config = {**DEFAULT_ANALYSIS_CONFIG, **(config or {})}
         self.silent = silent
@@ -119,7 +93,6 @@ class VocabularyAnalyzer(ABC):
 
     @property
     def nlp_model(self) -> Any:
-        """Lazy-load the NLP model."""
         if self._nlp_model is None:
             self._nlp_model = self.load_nlp_model(silent=self.silent)
         return self._nlp_model
@@ -386,12 +359,12 @@ class VocabularyAnalyzer(ABC):
             Complete analysis results
         """
         if show_progress:
-            print(f"🔍 Analyzing {self.language_code.upper()} vocabulary gaps...")
+            print(f"Analyzing {self.language_code.upper()} vocabulary gaps...")
 
         # Extract existing vocabulary
         existing_words = self.extract_existing_vocabulary()
         if show_progress:
-            print(f"📊 Found {len(existing_words)} existing words")
+            print(f"Found {len(existing_words)} existing words")
 
         # Get missing words to analyze within the specified frequency range
         missing_words = self.get_frequent_missing_words(top_n, start_rank, existing_words)
@@ -401,7 +374,7 @@ class VocabularyAnalyzer(ABC):
                 print(f"⚠️  Limited analysis to first {limit_analysis} words")
 
         if show_progress:
-            print(f"🎯 Analyzing {len(missing_words)} missing words...")
+            print(f"Analyzing {len(missing_words)} missing words...")
 
         # Analyze each missing word with lemma prioritization
         categories = defaultdict(list)
@@ -481,22 +454,22 @@ class VocabularyAnalyzer(ABC):
             show_details: Whether to show detailed category breakdown
         """
         print(f"\n{'=' * 80}")
-        print(f"📊 {result.language_code.upper()} VOCABULARY ANALYSIS RESULTS")
+        print(f"{result.language_code.upper()} VOCABULARY ANALYSIS RESULTS")
         print(f"{'=' * 80}")
 
-        print("📈 Summary:")
+        print(" Summary:")
         print(f"   • Existing vocabulary: {result.total_existing_words:,} words")
         print(f"   • Words analyzed: {result.total_analyzed_words:,} words")
         print(f"   • Recommendations: {result.get_recommendation_count():,} words")
 
         if show_details and result.categories:
-            print("\n📋 Category Breakdown:")
+            print("\nCategory Breakdown:")
             category_summary = result.get_category_summary()
             for category, count in category_summary.items():
                 print(f"   • {category}: {count:,} words")
 
         if result.recommendations:
-            print("\n🎯 Top Recommendations (by frequency):")
+            print("\nTop Recommendations (by frequency):")
             for i, analysis in enumerate(result.recommendations[:20], 1):
                 print(f"   {i:2d}. {analysis.word:<15} ({analysis.frequency:.2e}) - {analysis.reason}")
 

@@ -14,8 +14,6 @@
   export let levelWordLists: LevelWordLists = {};
   export let foldedLists: Record<string, boolean> = {};
 
-  // Level configuration imported from @lingua-quiz/core
-
   function getLevelDescription(level: string): string {
     const levelConfig = LEVEL_CONFIG.find(config => config.key === level);
     return levelConfig?.description(sourceLanguage, targetLanguage) || '';
@@ -66,7 +64,6 @@
 </div>
 
 <style>
-  /* Current Level Display Styles */
   .current-level-display {
     background: var(--container-bg);
     border: 1px solid var(--input-border-color);
@@ -89,10 +86,9 @@
   .level-description {
     font-weight: 600;
     color: var(--primary-color);
-    font-size: var(--font-size-sm); /* Changed from hardcoded 0.95rem */
+    font-size: var(--font-size-sm);
   }
 
-  /* Learning Progress Styles */
   .learning-progress {
     flex: 1;
     overflow-y: auto;
@@ -114,8 +110,6 @@
     font-style: italic;
   }
 
-  /* Foldable Sections Styles - using standardized classes */
-
   .foldable-header {
     cursor: pointer;
     user-select: none;
@@ -134,7 +128,6 @@
     margin-top: var(--spacing-sm);
   }
 
-  /* Animations */
   @keyframes fade-in {
     from {
       opacity: 0;

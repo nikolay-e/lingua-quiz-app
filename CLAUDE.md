@@ -605,6 +605,134 @@ This project prioritizes development velocity via LLM assistance, overseen by hu
   - ❌ A multi-line message with bullet points.
 - **Pull Requests:** The title should follow the commit message format. The description should be a brief summary.
 
+### Vocabulary Generation Pipeline
+
+The `word-processing` package (`packages/word-processing/`) generates CEFR-level vocabulary lists from subtitle
+frequency data through a multi-stage pipeline:
+
+```mermaid
+flowchart TB
+    subgraph Sources["🗂️ DATA SOURCES"]
+        S1["📊 Subtitle Frequencies<br/>(50k words per language)<br/>data/subtitle_frequencies/"]
+        S2["📚 WordFreq Library<br/>(optional corpus)"]
+        S3["📄 Existing Migrations<br/>(JSON files)"]
+    end
+
+    subgraph Processing["⚙️ VOCABULARY PROCESSOR"]
+        direction TB
+        P1["1️⃣ Normalization<br/>(Unicode, diacritics, whitespace)"]
+        P2["2️⃣ Lemmatization<br/>(Stanza 95.5% accuracy)<br/>comiendo → comer"]
+        P3["3️⃣ NLP Analysis<br/>(POS tags, NER, morphology)"]
+        P4["4️⃣ Validation<br/>(blacklist, length, patterns)"]
+        P5["5️⃣ Inflection Filtering<br/>(remove verb conjugations)<br/>ratio: ES=0.4, DE=0.2, RU=0.15"]
+        P6["6️⃣ Deduplication<br/>(by lemma, prioritize base forms)"]
+
+        P1 --> P2 --> P3 --> P4 --> P5 --> P6
+    end
+
+    subgraph Analysis["📊 ANALYSIS & VALIDATION"]
+        direction TB
+        A1["A1Analyzer<br/>Compare vocabulary vs<br/>frequency top-N"]
+        A2["FullReportGenerator<br/>Categorize ALL words:<br/>• ENGLISH (delete)<br/>• HIGH_FREQ
+(<500)<br/>• LEGITIMATE (<5k)<br/>• VERY_RARE (>10k)"]
+        A3["MigrationValidator<br/>• Check duplicates<br/>• Validate ID schema<br/>• Cross-file validation"]
+
+        A1 --> A2
+        A2 --> A3
+    end
+
+    subgraph Output["📤 OUTPUT"]
+        O1["📄 Markdown Report<br/>(human-readable)"]
+        O2["📊 JSON Data<br/>(detailed metadata)"]
+        O3["📋 CSV Export<br/>(for Excel)"]
+        O4["🗄️ Migration JSON<br/>(backend database)"]
+    end
+
+    subgraph Iteration["🔄 ITERATIVE REFINEMENT"]
+        I1["[PLACEHOLDER] Filling<br/>fill_placeholders.py<br/>Auto-fill missing words"]
+        I2["Manual Review<br/>Add examples & translations"]
+        I3["Re-validation<br/>Check quality & coverage"]
+
+        I1 --> I2 --> I3
+    end
+
+    Sources --> Processing
+    Processing --> Analysis
+    Analysis --> Output
+    Output --> Iteration
+    Iteration -.re-analyze.-> Analysis
+
+    style Sources fill:#e1f5ff
+    style Processing fill:#fff4e1
+    style Analysis fill:#f0e1ff
+    style Output fill:#e1ffe1
+    style Iteration fill:#ffe1e1
+
+    classDef processBox fill:#fff,stroke:#333,stroke-width:2px
+    class P1,P2,P3,P4,P5,P6 processBox
+```
+
+**Key Components:**
+
+**1. Data Sources:**
+
+- **Subtitle Frequencies:** 50k most frequent words from movie/TV subtitles (conversational language)
+- **WordFreq Library:** Optional fallback for frequency data from web corpora
+- **Existing Migrations:** JSON files for vocabulary already in the database
+
+**2. Processing Pipeline (`VocabularyProcessor`):**
+
+- **Normalization:** Language-specific Unicode handling (preserves Spanish `ñ`, German `ß`)
+- **Lemmatization:** Stanza (95.5% accuracy) converts all forms to base: `estabas → estar`
+- **NLP Analysis:** Part-of-speech tagging, Named Entity Recognition, morphological features
+- **Validation:** Filters profanity, abbreviations, proper nouns, and invalid patterns
+- **Inflection Filtering:** Removes verb conjugations/noun plurals based on language-specific ratios
+- **Deduplication:** Keeps only one form per lemma (prioritizes base form over inflection)
+
+**3. Analysis Tools:**
+
+- **A1Analyzer:** Compares vocabulary against top-N frequency list to find gaps
+- **FullReportGenerator:** Categorizes every word by frequency rank and quality
+- **MigrationValidator:** Checks for duplicates, ID consistency, and structural issues
+
+**4. Output Formats:**
+
+- **Markdown:** Human-readable reports with statistics and recommendations
+- **JSON:** Detailed word data (lemma, POS, frequency, rank, morphology)
+- **CSV:** Simple lists for spreadsheet analysis
+- **Migration JSON:** Backend-ready format with deterministic ID schema
+
+**5. Iterative Refinement:**
+
+- **Placeholder Filling:** Automatically fills gaps with missing high-frequency words
+- **Manual Review:** Add usage examples and verify translations
+- **Re-validation:** Check quality after changes, repeat until valid
+
+**CLI Commands:**
+
+```bash
+# Generate frequency list from subtitles
+vocab-tools generate es
+
+# Analyze existing vocabulary
+vocab-tools analyze es-a1
+
+# Fill missing words in placeholders
+vocab-tools fill es-a1
+
+# Validate all migrations
+vocab-tools validate
+```
+
+**Quality Metrics:**
+
+- **Lemmatization:** Stanza 95.5% vs spaCy 84.7% (Spanish)
+- **Coverage:** A1 (1000 words) should cover top-1000 frequency words
+- **Filtering:** Language-specific inflection ratios (ES: 0.4, DE: 0.2, RU: 0.15)
+- **Validation:** 30+ integration tests ensure accuracy
+
+See `packages/word-processing/CLAUDE.md` for detailed architecture documentation.
+
 ### Vocabulary Size by CEFR Level
 
 Expected vocabulary size for each CEFR level across all supported languages:

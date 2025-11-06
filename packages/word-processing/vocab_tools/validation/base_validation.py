@@ -1,35 +1,23 @@
-"""
-Base validation classes for migration and word quality validation.
-
-Provides common functionality and structure for different types of
-validation results, eliminating duplication between validators.
-"""
-
 from dataclasses import dataclass, field
 
 
 @dataclass
 class BaseValidationIssue:
-    """Base class for validation issues."""
-
     severity: str
     category: str
     file_name: str
     entry_id: int | None = None
 
     def __str__(self) -> str:
-        """String representation of the issue."""
         location = f"{self.file_name}"
         if self.entry_id:
             location += f" (ID: {self.entry_id})"
         return f"{self.severity.upper()}: {self.get_message()} [{location}]"
 
     def get_message(self) -> str:
-        """Get the issue message. Override in subclasses."""
         return "Validation issue"
 
     def to_dict(self) -> dict:
-        """Convert to dictionary for JSON serialization."""
         return {
             "severity": self.severity,
             "category": self.category,
@@ -40,29 +28,23 @@ class BaseValidationIssue:
 
 @dataclass
 class BaseValidationResult:
-    """Base class for validation results."""
-
     total_checked: int
     files_validated: list[str] = field(default_factory=list)
     issues: list = field(default_factory=list)
 
     @property
     def error_count(self) -> int:
-        """Get count of error-level issues."""
         return len([i for i in self.issues if i.severity == "error"])
 
     @property
     def warning_count(self) -> int:
-        """Get count of warning-level issues."""
         return len([i for i in self.issues if i.severity == "warning"])
 
     @property
     def is_valid(self) -> bool:
-        """Check if validation passed (no errors)."""
         return self.error_count == 0
 
     def to_dict(self) -> dict:
-        """Convert to dictionary for JSON serialization."""
         return {
             "is_valid": self.is_valid,
             "total_checked": self.total_checked,

@@ -1,21 +1,7 @@
-"""
-Inflection analysis utilities for vocabulary processing.
-
-Provides unified inflection reason generation across all languages,
-eliminating duplication in language-specific analyzers.
-"""
-
 from typing import ClassVar
 
 
 class InflectionReasonGenerator:
-    """
-    Generates human-readable reasons for inflected word forms.
-
-    Provides base patterns common across languages with hooks
-    for language-specific extensions.
-    """
-
     BASE_PATTERNS: ClassVar[dict[str, str]] = {
         "Tense=Past": "Past tense of '{lemma}'",
         "Number=Plur": "Plural form of '{lemma}'",
@@ -26,17 +12,6 @@ class InflectionReasonGenerator:
     }
 
     def get_reason(self, morphology: str, lemma: str, pos_tag: str = None) -> str:
-        """
-        Generate reason for inflected form.
-
-        Args:
-            morphology: Morphological features string (e.g., "Tense=Past|Number=Sing")
-            lemma: Base form of the word
-            pos_tag: Optional part-of-speech tag for language-specific handling
-
-        Returns:
-            Human-readable explanation of the inflection
-        """
         for pattern, template in self.BASE_PATTERNS.items():
             if pattern in morphology:
                 return template.format(lemma=lemma)
@@ -45,14 +20,11 @@ class InflectionReasonGenerator:
 
 
 class EnglishInflectionGenerator(InflectionReasonGenerator):
-    """English-specific inflection reason generator (uses base patterns only)."""
+    pass
 
 
 class GermanInflectionGenerator(InflectionReasonGenerator):
-    """German-specific inflection reason generator with case/gender handling."""
-
     def get_reason(self, morphology: str, lemma: str, pos_tag: str = None) -> str:
-        """Generate reason for German inflected form."""
         base_reason = super().get_reason(morphology, lemma, pos_tag)
 
         if base_reason != f"Inflected form of '{lemma}'":
@@ -83,10 +55,7 @@ class GermanInflectionGenerator(InflectionReasonGenerator):
 
 
 class SpanishInflectionGenerator(InflectionReasonGenerator):
-    """Spanish-specific inflection reason generator with tense/gender handling."""
-
     def get_reason(self, morphology: str, lemma: str, pos_tag: str = None) -> str:
-        """Generate reason for Spanish inflected form."""
         base_reason = super().get_reason(morphology, lemma, pos_tag)
 
         if base_reason != f"Inflected form of '{lemma}'":
@@ -127,15 +96,6 @@ class SpanishInflectionGenerator(InflectionReasonGenerator):
 
 
 def get_inflection_generator(language_code: str) -> InflectionReasonGenerator:
-    """
-    Get language-specific inflection reason generator.
-
-    Args:
-        language_code: ISO language code (en, de, es)
-
-    Returns:
-        InflectionReasonGenerator instance for the language
-    """
     generators = {
         "en": EnglishInflectionGenerator,
         "de": GermanInflectionGenerator,

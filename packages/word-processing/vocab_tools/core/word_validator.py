@@ -1,34 +1,8 @@
-"""
-Word validation utilities for vocabulary processing.
-
-Provides unified word validation logic across all vocabulary analysis components,
-eliminating duplication between VocabularyProcessor, VocabularyAnalyzer, and
-WordQualityValidator.
-"""
-
 import re
 
 
 class WordValidator:
-    """
-    Validates words based on configurable rules.
-
-    Provides consistent word validation and rejection reason generation
-    across all components that process vocabulary data.
-    """
-
     def __init__(self, config: dict):
-        """
-        Initialize word validator with configuration.
-
-        Args:
-            config: Language configuration dictionary containing:
-                - min_word_length: Minimum word length (default: 2)
-                - max_word_length: Maximum word length (default: 20)
-                - skip_words: Set of words to skip
-                - blacklist: Dictionary of blacklist categories to word lists
-                - filtering: Dictionary with exclude_patterns, short_word_whitelist
-        """
         self.min_length = config.get("min_word_length", 2)
         self.max_length = config.get("max_word_length", 20)
         self.skip_words = set(config.get("skip_words", []))
@@ -39,16 +13,6 @@ class WordValidator:
         self.exclude_patterns = filtering.get("exclude_patterns", [])
 
     def is_valid(self, word: str, normalized: str = None) -> bool:
-        """
-        Check if word is valid according to configured rules.
-
-        Args:
-            word: Original word to validate
-            normalized: Normalized form of the word (optional)
-
-        Returns:
-            True if word passes all validation rules, False otherwise
-        """
         if normalized is None:
             normalized = word.lower()
 
@@ -74,16 +38,6 @@ class WordValidator:
         return all(not re.match(pattern, word) for pattern in self.exclude_patterns)
 
     def get_rejection_reason(self, word: str, normalized: str = None) -> tuple[str, str]:
-        """
-        Get category and reason for why word was rejected.
-
-        Args:
-            word: Original word
-            normalized: Normalized form of the word (optional)
-
-        Returns:
-            Tuple of (category, reason) explaining rejection
-        """
         if normalized is None:
             normalized = word.lower()
 
@@ -114,35 +68,11 @@ class WordValidator:
 
 
 class VocabularyAnalysisValidator(WordValidator):
-    """
-    Extended validator for vocabulary analysis with frequency threshold.
-
-    Adds frequency-based filtering on top of basic word validation.
-    """
-
     def __init__(self, config: dict, frequency_threshold: float = 0.0):
-        """
-        Initialize analysis validator.
-
-        Args:
-            config: Language configuration dictionary
-            frequency_threshold: Minimum frequency threshold for words
-        """
         super().__init__(config)
         self.frequency_threshold = frequency_threshold
 
     def is_valid_for_analysis(self, word: str, normalized: str, frequency: float = None) -> bool:
-        """
-        Check if word is valid for vocabulary analysis.
-
-        Args:
-            word: Original word
-            normalized: Normalized form
-            frequency: Word frequency (optional)
-
-        Returns:
-            True if word passes validation and frequency threshold
-        """
         if not self.is_valid(word, normalized):
             return False
 

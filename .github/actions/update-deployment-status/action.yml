@@ -1,0 +1,135 @@
+name: 'Update Deployment Status'
+description: 'Updates the status of a GitHub deployment'
+
+inputs:
+  environment:
+    description: 'Environment name'
+    required: true
+  deployment-id:
+    description: 'Deployment ID (optional - will find latest if not provided)'
+    required: false
+    default: ''
+  status:
+    description: 'Deployment status (in_progress, success, failure, error, inactive)'
+    required: true
+  description:
+    description: 'Status description'
+    required: true
+  environment-url:
+    description: 'Environment URL'
+    required: false
+    default: ''
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Update status
+      uses: actions/github-script@v8
+      env:
+        ENVIRONMENT: ${{ inputs.environment }}
+        DEPLOYMENT_ID: ${{ inputs.deployment-id }}
+        STATUS: ${{ inputs.status }}
+        DESCRIPTION: ${{ inputs.description }}
+        ENVIRONMENT_URL: ${{ inputs.environment-url }}
+      with:
+        script: |
+          const environment = process.env.ENVIRONMENT;
+          let deploymentId = process.env.DEPLOYMENT_ID;
+          const status = process.env.STATUS;
+          const description = process.env.DESCRIPTION;
+          const environmentUrl = process.env.ENVIRONMENT_URL;
+
+          // Validate required inputs
+          if (!environment || environment.trim() === '') {
+            core.setFailed('Environment name is required');
+            throw new Error('Environment name is required');
+          }
+          if (!status || status.trim() === '') {
+            core.setFailed('Status is required');
+            throw new Error('Status is required');
+          }
+          if (!description || description.trim() === '') {
+            core.setFailed('Description is required');
+            throw new Error('Description is required');
+          }
+
+          // Validate environment name pattern
+          const envPattern = /^[a-zA-Z0-9_-]+$/;
+          if (!envPattern.test(environment)) {
+            core.setFailed(`Invalid environment name: ${environment}. Must contain only alphanumeric characters, hyphens, and underscores.`);
+            throw new Error('Invalid environment name');
+          }
+
+          // Validate status (whitelist)
+          const validStatuses = ['in_progress', 'success', 'failure', 'error', 'inactive', 'queued', 'pending'];
+          if (!validStatuses.includes(status)) {
+            core.setFailed(`Invalid status: ${status}. Must be one of: ${validStatuses.join(', ')}`);
+            throw new Error('Invalid status');
+          }
+
+          // Validate environment URL if provided
+          if (environmentUrl && environmentUrl.trim() !== '') {
+            try {
+              new URL(environmentUrl);
+            } catch (error) {
+              core.setFailed(`Invalid environment URL: ${environmentUrl}`);
+              throw new Error('Invalid environment URL');
+            }
+          }
+
+          // Validate deployment ID if provided
+          if (deploymentId && deploymentId.trim() !== '') {
+            const deploymentIdNum = parseInt(deploymentId, 10);
+            if (isNaN(deploymentIdNum) || deploymentIdNum <= 0) {
+              core.setFailed(`Invalid deployment ID: ${deploymentId}. Must be a positive integer.`);
+              throw new Error('Invalid deployment ID');
+            }
+          }
+
+          console.log(`Updating deployment status for environment: ${environment}`);
+          console.log(`  Target status: ${status}`);
+
+          // If deployment ID not provided, find latest deployment
+          if (!deploymentId) {
+            console.log('Deployment ID not provided, finding latest deployment...');
+
+            try {
+              const { data: deployments } = await github.rest.repos.listDeployments({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                environment: environment,
+                per_page: 1
+              });
+
+              if (deployments.length === 0) {
+                console.log(`⚠️  No deployment found for environment: ${environment}`);
+                console.log('Skipping status update (this is not an error - deployment may not exist yet)');
+                return;
+              }
+
+              deploymentId = deployments[0].id;
+              console.log(`Found deployment: ${deploymentId}`);
+            } catch (error) {
+              console.log(`⚠️  Failed to find deployment: ${error.message}`);
+              console.log('Skipping status update');
+              return;
+            }
+          }
+
+          // Update deployment status
+          try {
+            await github.rest.repos.createDeploymentStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              deployment_id: deploymentId,
+              state: status,
+              description: description,
+              environment_url: environmentUrl || undefined,
+              auto_inactive: false
+            });
+
+            console.log(`✅ Deployment ${deploymentId} status updated to: ${status}`);
+          } catch (error) {
+            core.setFailed(`Failed to update deployment status: ${error.message}`);
+            throw error;
+          }

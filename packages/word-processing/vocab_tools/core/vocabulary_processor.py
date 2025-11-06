@@ -4,9 +4,11 @@ import re
 
 from wordfreq import word_frequency
 
+from ..analysis.morphological_analyzer import MorphologicalAnalyzer
 from ..config.config_loader import get_config_loader
 from ..config.constants import get_pos_description
 from .base_normalizer import get_universal_normalizer
+from .lemmatization_service import get_lemmatization_service
 from .nlp_models import get_nlp_model
 from .word_source import WordSource
 from .word_validator import WordValidator
@@ -32,6 +34,22 @@ class ProcessedVocabulary:
     categories: dict[str, list[ProcessedWord]]
     total_words: int
     filtered_count: int
+    filtering_stats: "FilteringStats | None" = None
+
+
+@dataclass
+class FilteringStats:
+    total_analyzed: int
+    total_filtered: int
+    by_category: dict[str, int]
+    examples: dict[str, list[str]]
+
+    def add_filtered(self, word: str, category: str, max_examples: int = 10):
+        self.by_category[category] = self.by_category.get(category, 0) + 1
+        if category not in self.examples:
+            self.examples[category] = []
+        if len(self.examples[category]) < max_examples:
+            self.examples[category].append(word)
 
 
 class VocabularyProcessor:
@@ -46,17 +64,23 @@ class VocabularyProcessor:
         self.pos_categories = self.config_loader.get_pos_categories(language_code)
         self.inflection_patterns = self.config_loader.get_inflection_patterns(language_code)
 
+        filtering_config = self.lang_config.get("filtering", {})
+        self.inflection_frequency_ratio = filtering_config.get("inflection_frequency_ratio", 0.5)
+        self.ner_frequency_threshold = filtering_config.get("ner_frequency_threshold") or 0.0005
+
         default_max_length = self.config_loader.get_analysis_defaults().get("max_word_length", 20)
         validator_config = {
-            "min_word_length": self.lang_config.get("filtering", {}).get("min_word_length", 2),
+            "min_word_length": filtering_config.get("min_word_length", 2),
             "max_word_length": self.lang_config.get("max_word_length", default_max_length),
             "skip_words": self.skip_words,
             "blacklist": self.lang_config.get("blacklist", {}),
-            "filtering": self.lang_config.get("filtering", {}),
+            "filtering": filtering_config,
         }
         self.validator = WordValidator(validator_config)
 
+        self.morph_analyzer = MorphologicalAnalyzer(language_code)
         self._nlp_model = None
+        self.lemmatization_service = get_lemmatization_service(language_code)
 
     @property
     def nlp_model(self):
@@ -71,6 +95,8 @@ class VocabularyProcessor:
         existing_words: set[str] | None = None,
         filter_inflections: bool = True,
         target_count: int | None = None,
+        collect_stats: bool = True,
+        strict_lemma_only: bool = False,
     ) -> ProcessedVocabulary:
         if existing_words is None:
             existing_words = set()
@@ -78,26 +104,93 @@ class VocabularyProcessor:
         processed_words = []
         filtered_count = 0
         categories = defaultdict(list)
+        total_analyzed = 0
+        seen_lemmas = {}
+
+        stats = (
+            FilteringStats(
+                total_analyzed=0,
+                total_filtered=0,
+                by_category={},
+                examples={},
+            )
+            if collect_stats
+            else None
+        )
 
         for word_obj in word_source.get_words():
             if target_count and len(processed_words) >= target_count:
                 break
 
+            total_analyzed += 1
             word = word_obj.text
             normalized = self.normalizer.normalize(word)
 
             if not self._is_valid_word(word, normalized):
                 filtered_count += 1
+                if collect_stats:
+                    category, _reason = self.validator.get_rejection_reason(word, normalized)
+                    stats.add_filtered(word, f"validation:{category}")
                 continue
 
-            processed = self._analyze_word(word, word_obj.metadata or {}, existing_words, filter_inflections)
+            processed, rejection_reason = self._analyze_word(word, word_obj.metadata or {}, existing_words, filter_inflections)
 
             if processed is None:
                 filtered_count += 1
+                if collect_stats and rejection_reason:
+                    stats.add_filtered(word, rejection_reason)
+                continue
+
+            if strict_lemma_only and processed.word.lower() != processed.lemma:
+                filtered_count += 1
+                if collect_stats:
+                    stats.add_filtered(word, f"strict_mode:inflection:{processed.lemma}")
+                continue
+
+            if processed.lemma in seen_lemmas:
+                existing_processed = seen_lemmas[processed.lemma]
+                should_replace = False
+                replacement_reason = ""
+
+                is_current_lemma = processed.word.lower() == processed.lemma
+                is_existing_lemma = existing_processed.word.lower() == existing_processed.lemma
+
+                if is_current_lemma and not is_existing_lemma:
+                    should_replace = True
+                    replacement_reason = f"replaced_by_lemma:{processed.lemma}"
+                elif not is_current_lemma and is_existing_lemma:
+                    filtered_count += 1
+                    if collect_stats:
+                        stats.add_filtered(word, f"duplicate:lemma_exists:{processed.lemma}")
+                    continue
+                elif processed.frequency > existing_processed.frequency * 1.2:
+                    should_replace = True
+                    replacement_reason = f"replaced_by_higher_freq:{processed.lemma}:freq={processed.frequency:.6f}"
+                else:
+                    filtered_count += 1
+                    if collect_stats:
+                        stats.add_filtered(word, f"duplicate:lower_freq:{processed.lemma}")
+                    continue
+
+                if should_replace:
+                    processed_words = [w for w in processed_words if w.lemma != processed.lemma]
+                    categories[existing_processed.category] = [w for w in categories[existing_processed.category] if w.lemma != processed.lemma]
+
+                    processed_words.append(processed)
+                    categories[processed.category].append(processed)
+                    seen_lemmas[processed.lemma] = processed
+
+                    if collect_stats:
+                        stats.add_filtered(existing_processed.word, replacement_reason)
                 continue
 
             processed_words.append(processed)
             categories[processed.category].append(processed)
+            seen_lemmas[processed.lemma] = processed
+
+        if stats:
+            stats.total_analyzed = total_analyzed
+            stats.total_filtered = filtered_count
 
         return ProcessedVocabulary(
             language_code=self.language_code,
@@ -105,41 +198,48 @@ class VocabularyProcessor:
             categories=dict(categories),
             total_words=len(processed_words),
             filtered_count=filtered_count,
+            filtering_stats=stats,
         )
 
     def _is_valid_word(self, word: str, normalized: str) -> bool:
         return self.validator.is_valid(word, normalized)
 
-    def _analyze_word(self, word: str, metadata: dict, existing_words: set[str], filter_inflections: bool) -> ProcessedWord | None:
+    def _analyze_word(self, word: str, metadata: dict, existing_words: set[str], filter_inflections: bool) -> tuple[ProcessedWord | None, str | None]:
         doc = self.nlp_model(word)
 
         if not doc or len(doc) == 0:
-            return None
+            return None, "nlp:failed_parse"
 
         token = doc[0]
-        lemma = token.lemma_.lower()
+
+        lemma = self.lemmatization_service.lemmatize(word)
+
         pos_tag = token.pos_
         morphology = self._extract_morphology(token)
 
-        # Filter out proper nouns (names, places, etc.)
-        if pos_tag == "PROPN":
-            return None
+        frequency = word_frequency(word, self.language_code)
 
-        # Filter out named entities (except numbers)
-        if token.ent_type_ and token.ent_type_ not in ["ORDINAL", "CARDINAL"]:
-            return None
+        if pos_tag == "PROPN":
+            return None, "nlp:proper_noun"
+
+        if token.ent_type_ and token.ent_type_ not in ["ORDINAL", "CARDINAL"] and frequency < self.ner_frequency_threshold:
+            return None, f"nlp:named_entity:{token.ent_type_}"
 
         if filter_inflections:
             if lemma != word.lower() and lemma in existing_words:
-                return None
+                lemma_freq = word_frequency(lemma, self.language_code)
+                if lemma_freq > 0 and frequency < lemma_freq * self.inflection_frequency_ratio:
+                    freq_ratio = frequency / lemma_freq if lemma_freq > 0 else 0
+                    return None, f"inflection:existing_lemma:{lemma}:freq_ratio={freq_ratio:.2f}"
 
             if self._is_likely_inflected(word, lemma, morphology):
-                return None
+                lemma_freq = word_frequency(lemma, self.language_code)
+                if lemma_freq > 0 and frequency < lemma_freq * self.inflection_frequency_ratio:
+                    freq_ratio = frequency / lemma_freq if lemma_freq > 0 else 0
+                    return None, f"inflection:pattern_match:{lemma}:freq_ratio={freq_ratio:.2f}"
 
         category = self._categorize_by_pos(pos_tag)
         reason = self._generate_reason(word, lemma, pos_tag, morphology, metadata.get("rank"))
-
-        frequency = word_frequency(word, self.language_code)
 
         return ProcessedWord(
             word=word,
@@ -151,19 +251,22 @@ class VocabularyProcessor:
             morphology=morphology,
             reason=reason,
             metadata=metadata,
-        )
+        ), None
 
     def _extract_morphology(self, token) -> dict:
-        morph = {}
+        features = self.morph_analyzer.analyze_token(token)
+        morph_dict = features.to_dict()
 
-        if hasattr(token, "morph"):
-            morph_str = str(token.morph)
-            for feature in morph_str.split("|"):
-                if "=" in feature:
-                    key, value = feature.split("=", 1)
-                    morph[key] = value
+        morph_dict["_paradigm_slot"] = self.morph_analyzer.get_paradigm_slot(features)
+        morph_dict["_is_marked"] = self.morph_analyzer.is_marked_form(features)
+        morph_dict["_description"] = features.get_human_readable_description()
 
-        return morph
+        if features.raw_features:
+            for key, value in features.raw_features.items():
+                if key not in morph_dict:
+                    morph_dict[key] = value
+
+        return morph_dict
 
     def _is_likely_inflected(self, word: str, lemma: str, morphology: dict) -> bool:
         if word.lower() == lemma:
@@ -183,24 +286,62 @@ class VocabularyProcessor:
         return "other"
 
     def _generate_reason(self, word: str, lemma: str, pos_tag: str, morphology: dict, rank: int | None) -> str:
-        pos_desc = get_pos_description(pos_tag)
-
         parts = []
 
         if rank:
             parts.append(f"Top {rank} word")
 
-        parts.append(f"classified as {pos_desc}")
+        if morphology.get("_description"):
+            parts.append(f"classified as {morphology['_description']}")
+        else:
+            pos_desc = get_pos_description(pos_tag)
+            parts.append(f"classified as {pos_desc}")
 
-        if morphology.get("Number") == "Plur" and pos_tag == "NOUN":
-            parts[-1] = "plural noun"
-        elif morphology.get("Tense") == "Past" and pos_tag == "VERB":
-            parts[-1] = "past tense verb"
-        elif morphology.get("Degree") == "Cmp" and pos_tag == "ADJ":
-            parts[-1] = "comparative adjective"
-        elif morphology.get("Degree") == "Sup" and pos_tag == "ADJ":
-            parts[-1] = "superlative adjective"
-        elif morphology.get("VerbForm") == "Ger":
-            parts[-1] = "gerund"
+        if morphology.get("_is_marked"):
+            parts.append("marked form")
 
         return "; ".join(parts)
+
+    def print_filtering_report(self, stats: FilteringStats, verbose: int = 1):
+        if not stats or stats.total_filtered == 0:
+            return
+
+        print("\nFiltering Statistics:")
+        print(f"   • Total analyzed: {stats.total_analyzed:,}")
+        print(f"   • Filtered out: {stats.total_filtered:,} ({stats.total_filtered / stats.total_analyzed * 100:.1f}%)")
+        print(
+            f"   • Passed: {stats.total_analyzed - stats.total_filtered:,} ({(stats.total_analyzed - stats.total_filtered) / stats.total_analyzed * 100:.1f}%)"
+        )
+
+        if verbose >= 1:
+            print("\nFiltering Breakdown:")
+
+            validation_cats = {k: v for k, v in stats.by_category.items() if k.startswith("validation:")}
+            nlp_cats = {k: v for k, v in stats.by_category.items() if k.startswith("nlp:")}
+            inflection_cats = {k: v for k, v in stats.by_category.items() if k.startswith("inflection:")}
+
+            if validation_cats:
+                total_validation = sum(validation_cats.values())
+                print(f"   • Validation filters: {total_validation:,} words ({total_validation / stats.total_filtered * 100:.1f}%)")
+                for cat, count in sorted(validation_cats.items(), key=lambda x: x[1], reverse=True):
+                    cat_name = cat.replace("validation:", "")
+                    print(f"      - {cat_name}: {count}")
+
+            if nlp_cats:
+                total_nlp = sum(nlp_cats.values())
+                print(f"   • NLP filters: {total_nlp:,} words ({total_nlp / stats.total_filtered * 100:.1f}%)")
+                for cat, count in sorted(nlp_cats.items(), key=lambda x: x[1], reverse=True)[:5]:
+                    cat_name = cat.replace("nlp:", "")
+                    print(f"      - {cat_name}: {count}")
+
+            if inflection_cats:
+                total_inflection = sum(inflection_cats.values())
+                print(f"   • Inflection filters: {total_inflection:,} words ({total_inflection / stats.total_filtered * 100:.1f}%)")
+
+        if verbose >= 2 and stats.examples:
+            print("\nExamples (first 10 per category):")
+            for cat in sorted(stats.examples.keys()):
+                examples = stats.examples[cat][:10]
+                cat_display = cat.replace("validation:", "").replace("nlp:", "").replace("inflection:", "")
+                examples_str = ", ".join(examples)
+                print(f"   • {cat_display}: [{examples_str}]")

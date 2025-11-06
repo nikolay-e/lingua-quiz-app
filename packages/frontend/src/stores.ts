@@ -6,7 +6,6 @@ import type { WordSet, LevelWordLists, TranslationDisplay, AuthResponse } from '
 import { STORAGE_KEYS, THEMES } from './lib/constants';
 import { LEVEL_CONFIG } from './lib/config/levelConfig';
 
-// Safe localStorage wrapper for SSR compatibility
 const safeStorage = {
   getItem: (key: string): string | null => {
     if (typeof localStorage === 'undefined') return null;
@@ -44,7 +43,6 @@ interface ThemeStore {
   clearPreference: () => void;
 }
 
-// Theme Store for dark mode (follows system preference)
 function createThemeStore(): ThemeStore {
   const getInitialTheme = () => {
     if (typeof window === 'undefined') return false;
@@ -65,10 +63,8 @@ function createThemeStore(): ThemeStore {
     isDarkMode: initialTheme,
   });
 
-  // Apply initial theme
   applyTheme(initialTheme);
 
-  // Listen for system theme changes
   if (typeof window !== 'undefined' && window.matchMedia) {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     mediaQuery.addEventListener('change', (e) => {
@@ -117,7 +113,6 @@ interface AuthStore {
   deleteAccount: () => Promise<void>;
 }
 
-// Auth Store with SSR-safe initialization
 function createAuthStore(): AuthStore {
   const { subscribe, set } = writable<AuthState>({
     token: null,
@@ -125,7 +120,6 @@ function createAuthStore(): AuthStore {
     isAuthenticated: false,
   });
 
-  // Function to check token validity and update store
   function checkToken() {
     const token = safeStorage.getItem(STORAGE_KEYS.TOKEN);
 
@@ -139,23 +133,20 @@ function createAuthStore(): AuthStore {
       const isExpired = payload.exp * 1000 < Date.now();
 
       if (isExpired) {
-        logoutUser(); // Token is expired, log out
+        logoutUser();
       } else {
-        // Extract username from token payload (common JWT claims)
-        const username = payload.username || payload.sub || 'Unknown User';
+        const username = payload.username ?? payload.sub ?? 'Unknown User';
         set({ token, username, isAuthenticated: true });
       }
     } catch {
       console.error('Invalid token found, logging out.');
-      logoutUser(); // Token is malformed
+      logoutUser();
     }
   }
 
-  // Function to set user data in localStorage and the store
   function setUser(data: { token: string; username: string }) {
     safeStorage.setItem(STORAGE_KEYS.TOKEN, data.token);
 
-    // Calculate and store token expiration
     try {
       const payload = jwtDecode<{ exp: number }>(data.token);
       const expirationMs = payload.exp * 1000;
@@ -163,19 +154,15 @@ function createAuthStore(): AuthStore {
     } catch (e) {
       console.error('Failed to parse token expiration:', e);
     }
-    // Username is passed from the API response, but we could also extract it from token
     set({ token: data.token, username: data.username, isAuthenticated: true });
   }
 
-  // Function to clear user data
   function logoutUser() {
     safeStorage.removeItem(STORAGE_KEYS.TOKEN);
     safeStorage.removeItem(STORAGE_KEYS.TOKEN_EXPIRATION);
-    // Note: No longer storing username separately as it's derived from token
     set({ token: null, username: null, isAuthenticated: false });
   }
 
-  // Initial check when the store is created
   if (typeof window !== 'undefined') {
     checkToken();
   }
@@ -188,14 +175,12 @@ function createAuthStore(): AuthStore {
       return data;
     },
     logout: async () => {
-      // Ensure pending quiz data is saved before clearing session
       const state = get({ subscribe });
       if (state.token) {
         try {
           await quizStore.saveAndCleanup(state.token);
         } catch (error) {
           console.error('Failed to save quiz progress during logout:', error);
-          // Continue with logout even if save fails
         }
       }
       logoutUser();
@@ -207,12 +192,11 @@ function createAuthStore(): AuthStore {
       return data;
     },
     deleteAccount: async () => {
-      // Get current state directly from the store
       const state = get({ subscribe });
       if (!state.token) throw new Error('Not authenticated');
 
       await api.deleteAccount(state.token);
-      logoutUser(); // Clear user session after successful deletion
+      logoutUser();
     },
   };
 }
@@ -240,7 +224,6 @@ interface QuizStore {
   saveAndCleanup: (token: string) => Promise<void>;
 }
 
-// Quiz Store with @lingua-quiz/core integration
 function createQuizStore(): QuizStore {
   const { subscribe, set, update } = writable<QuizState>({
     wordSets: [],
@@ -252,14 +235,13 @@ function createQuizStore(): QuizStore {
     error: null,
   });
 
-  const DEBOUNCE_DELAY = 1000; // 1 second debounce for rapid actions
+  const DEBOUNCE_DELAY = 1000;
   let debounceTimer: NodeJS.Timeout | null = null;
 
   const bulkSaveProgress = async (token: string): Promise<void> => {
     const state = get(store);
     if (!state.quizManager) return;
 
-    // Clear any pending debounce timer
     if (debounceTimer) {
       clearTimeout(debounceTimer);
       debounceTimer = null;
@@ -269,14 +251,12 @@ function createQuizStore(): QuizStore {
       const wordsByLevel = state.quizManager.getWordsByLevel();
       const persistencePromises: Promise<void>[] = [];
 
-      // Only send API calls for levels that have words
       for (const [level, wordIds] of Object.entries(wordsByLevel)) {
         const wordArray = wordIds as number[];
         if (wordArray.length > 0) {
           persistencePromises.push(
             api.saveWordStatus(token, { status: level, wordPairIds: wordArray }).catch((err) => {
               console.error(`Bulk save failed for ${level}:`, err);
-              // Don't fail the entire operation if one level fails
               return Promise.resolve();
             }),
           );
@@ -284,7 +264,6 @@ function createQuizStore(): QuizStore {
       }
 
       if (persistencePromises.length > 0) {
-        // Wait for all API calls to complete
         await Promise.allSettled(persistencePromises);
       }
     } catch (error) {
@@ -296,26 +275,21 @@ function createQuizStore(): QuizStore {
   };
 
   const debouncedBulkSave = (token: string) => {
-    // Clear existing debounce timer
     if (debounceTimer) {
       clearTimeout(debounceTimer);
     }
 
-    // Schedule debounced save for rapid actions
     debounceTimer = setTimeout(() => bulkSaveProgress(token), DEBOUNCE_DELAY);
   };
 
-  // Centralized 401 error handler for quiz store
   const handleQuiz401Error = (error: unknown) => {
     if (error instanceof Error && error.message === 'Unauthorized') {
       console.warn('Session expired during quiz operation. Redirecting to login.');
-      authStore.logoutUser(); // Use the auth store's logout function
+      authStore.logoutUser();
       return { isUnauthorized: true, message: 'Your session has expired. Please log in again.' };
     }
     return { isUnauthorized: false, message: error instanceof Error ? error.message : 'Unknown error' };
   };
-
-  // Higher-order function to handle 401 errors uniformly
 
   async function withAuth401Handling<T>(
     operation: () => Promise<T>,
@@ -355,34 +329,30 @@ function createQuizStore(): QuizStore {
 
       const result = await withAuth401Handling(
         async () => {
-          // Use the word-sets API to get translations and progress
           const userWordSets = await api.fetchUserWordSets(token, quizName);
-          // Fetched words for quiz
 
-          // Convert UserWordSet[] to the format expected by QuizManager
           const translations = userWordSets.map((word) => ({
             id: word.wordPairId,
             sourceWord: {
               text: word.sourceWord,
               language: word.sourceLanguage,
-              usageExample: word.sourceWordUsageExample || '',
+              usageExample: word.sourceWordUsageExample ?? '',
             },
             targetWord: {
               text: word.targetWord,
               language: word.targetLanguage,
-              usageExample: word.targetWordUsageExample || '',
+              usageExample: word.targetWordUsageExample ?? '',
             },
           }));
 
           const progress = userWordSets.map((word) => ({
             translationId: word.wordPairId,
-            status: (word.status || 'LEVEL_0') as 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5',
+            status: (word.status ?? 'LEVEL_0') as 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5',
             queuePosition: 0,
             consecutiveCorrect: 0,
             recentHistory: [] as boolean[],
           }));
 
-          // Get user's current level from backend
           let currentLevel: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' = 'LEVEL_1';
           try {
             const userLevelData = await api.getCurrentLevel(token);
@@ -395,14 +365,11 @@ function createQuizStore(): QuizStore {
             progress,
             currentLevel,
           });
-          // QuizManager initialized
 
-          // Bulk save all progress after initialization (handles promotions from LEVEL_0 to LEVEL_1)
           await bulkSaveProgress(token);
 
           const questionResult = manager.getNextQuestion();
           const currentQuestion = questionResult.question;
-          // First question loaded
 
           return { manager, currentQuestion };
         },
@@ -426,11 +393,6 @@ function createQuizStore(): QuizStore {
       const questionResult = state.quizManager.getNextQuestion();
       const { question } = questionResult;
 
-      // Handle automatic level changes
-      if (questionResult.levelAdjusted && questionResult.newLevel) {
-        // Level was auto-adjusted
-      }
-
       update((s) => ({ ...s, currentQuestion: question }));
       return question;
     },
@@ -444,18 +406,13 @@ function createQuizStore(): QuizStore {
         const feedback = state.quizManager.submitAnswer(state.currentQuestion.translationId, answer);
         const newLevel = state.quizManager.getCurrentLevel();
 
-        // If level changed automatically, persist it (non-blocking)
         if (oldLevel !== newLevel) {
           api.updateCurrentLevel(token, { currentLevel: newLevel }).catch((error) => {
             console.error('Failed to persist level change:', error);
-            // Level change will be retried on next save
           });
         }
 
-        // Use debounced save for rapid answer submissions to improve performance
         debouncedBulkSave(token);
-
-        // DO NOT advance to next question here - let the UI handle it after showing feedback
 
         return feedback;
       } catch (error) {
@@ -471,13 +428,11 @@ function createQuizStore(): QuizStore {
       }
 
       try {
-        // Save current progress before changing levels to prevent data loss
         if (token) {
           try {
             await bulkSaveProgress(token);
           } catch (error) {
             console.error('Failed to save progress before level change:', error);
-            // Continue with level change even if save fails, but warn user
           }
         }
 
@@ -485,17 +440,13 @@ function createQuizStore(): QuizStore {
         const questionResult = state.quizManager.getNextQuestion();
         const nextQuestion = questionResult.question;
 
-        // Update UI immediately (this is synchronous, so update is fine)
         update((s) => ({ ...s, currentQuestion: nextQuestion }));
 
-        // Persist level change to backend if token provided
         if (token) {
           try {
             await api.updateCurrentLevel(token, { currentLevel: result.actualLevel });
-            // Level persisted to backend
           } catch (error) {
             console.error('Failed to persist level to backend:', error);
-            // Don't fail the level change if persistence fails
           }
         }
 
@@ -508,13 +459,12 @@ function createQuizStore(): QuizStore {
 
     reset: () => {
       const state = get(store);
-      // Clear debounce timer if any
       if (debounceTimer) {
         clearTimeout(debounceTimer);
         debounceTimer = null;
       }
       set({
-        wordSets: state.wordSets, // Keep the loaded word sets
+        wordSets: state.wordSets,
         selectedQuiz: null,
         quizManager: null,
         currentQuestion: null,
@@ -526,16 +476,14 @@ function createQuizStore(): QuizStore {
 
     saveAndCleanup: (token: string) => {
       const state = get(store);
-      // Clear any pending debounce timer
       if (debounceTimer) {
         clearTimeout(debounceTimer);
         debounceTimer = null;
       }
-      // Save current progress (non-blocking)
       if (state.quizManager) {
         void bulkSaveProgress(token).catch((err) => console.error('Failed to save progress on stop:', err));
       }
-      return Promise.resolve(); // Return resolved promise for compatibility
+      return Promise.resolve();
     },
   };
 
@@ -545,15 +493,12 @@ function createQuizStore(): QuizStore {
 export const authStore = createAuthStore();
 export const quizStore = createQuizStore();
 
-// Export safe storage wrapper for use in components
 export { safeStorage };
 
-// Derived store for level word lists - efficiently calculates and caches level data
 export const levelWordLists = derived(
   quizStore,
   ($quizStore, set) => {
     if (!$quizStore.quizManager) {
-      // No quiz manager - return empty state
       const emptyLevelWordLists = LEVEL_CONFIG.reduce((acc, level) => {
         acc[level.id] = { ...level, words: [], count: 0 };
         return acc;
@@ -565,7 +510,6 @@ export const levelWordLists = derived(
     const state = $quizStore.quizManager.getState();
     const manager = $quizStore.quizManager;
 
-    // Calculate level word lists
     const newLevelWordLists = LEVEL_CONFIG.reduce((acc, level) => {
       const words =
         state.queues[level.key as keyof typeof state.queues]
@@ -583,5 +527,5 @@ export const levelWordLists = derived(
 
     set(newLevelWordLists);
   },
-  {} as LevelWordLists, // Initial value
+  {} as LevelWordLists,
 );

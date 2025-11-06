@@ -61,7 +61,6 @@ describe('QuizManager Tests', () => {
       const translation = quizManager.getTranslation(translationId);
       expect(translation).toBeTruthy();
 
-      // Submit correct answer
       const submission = quizManager.submitAnswer(translationId, translation!.targetWord.text);
 
       expect(submission.isCorrect).toBe(true);
@@ -74,12 +73,10 @@ describe('QuizManager Tests', () => {
 
       const { translationId } = result.question!;
 
-      // Submit incorrect answer
       const submission = quizManager.submitAnswer(translationId, 'wrong answer');
 
       expect(submission.isCorrect).toBe(false);
 
-      // Word should be moved to focus position (F or end of queue if F > queue length)
       const state = quizManager.getState();
       const wordQueue = state.queues.LEVEL_1;
       const wordIndex = wordQueue.indexOf(translationId);
@@ -95,7 +92,6 @@ describe('QuizManager Tests', () => {
       const translation = quizManager.getTranslation(translationId);
       expect(translation).toBeTruthy();
 
-      // Submit correct answers to reach promotion threshold
       const correctAnswersNeeded = quizManager.getOptions().correctAnswersToLevelUp;
       let lastSubmission: ReturnType<typeof quizManager.submitAnswer> | undefined;
 
@@ -106,7 +102,6 @@ describe('QuizManager Tests', () => {
         }
       }
 
-      // Check if word was promoted (may need multiple attempts to get the same word)
       if (lastSubmission?.levelChange) {
         expect(lastSubmission.levelChange.from).toBe('LEVEL_1');
         expect(lastSubmission.levelChange.to).toBe('LEVEL_2');
@@ -119,7 +114,6 @@ describe('QuizManager Tests', () => {
 
       const { translationId } = result.question!;
 
-      // Wait a bit before submitting
       await new Promise((resolve) => setTimeout(resolve, 10));
 
       const submission = quizManager.submitAnswer(translationId, 'any answer');
@@ -140,7 +134,6 @@ describe('QuizManager Tests', () => {
 
       expect(Object.keys(wordsByLevel)).toEqual(['LEVEL_0', 'LEVEL_1', 'LEVEL_2', 'LEVEL_3', 'LEVEL_4', 'LEVEL_5']);
 
-      // Total words across all levels should match input
       const totalWords = Object.values(wordsByLevel).reduce((sum, level) => sum + level.length, 0);
       expect(totalWords).toBe(sampleTranslations.length);
     });
@@ -165,16 +158,13 @@ describe('QuizManager Tests', () => {
     });
 
     it('should automatically switch to available level when requested level is empty', () => {
-      // Try to switch to a level that has no words
       const result = quizManager.setLevel('LEVEL_3');
       expect(result.success).toBe(false);
-      expect(result.actualLevel).toBe('LEVEL_1'); // Should fall back to lowest available
+      expect(result.actualLevel).toBe('LEVEL_1');
       expect(result.message).toContain('has no available words');
     });
 
     it('should auto-adjust level when current level becomes empty', () => {
-      // This test would require moving all words out of current level
-      // which is complex to set up, so we'll test the concept
       const currentLevel = quizManager.getCurrentLevel();
       expect(['LEVEL_1', 'LEVEL_2', 'LEVEL_3', 'LEVEL_4']).toContain(currentLevel);
     });
@@ -184,7 +174,6 @@ describe('QuizManager Tests', () => {
     let quizManager: QuizManager;
 
     beforeEach(() => {
-      // Create translations with complex patterns for display testing
       const complexTranslations: Translation[] = [
         {
           id: 1,
@@ -203,11 +192,11 @@ describe('QuizManager Tests', () => {
     it('should format translations for display correctly', () => {
       const display1 = quizManager.getTranslationForDisplay(1);
       expect(display1).toBeTruthy();
-      expect(display1?.target).toBe('тест'); // Should show first alternative
+      expect(display1?.target).toBe('тест');
 
       const display2 = quizManager.getTranslationForDisplay(2);
       expect(display2).toBeTruthy();
-      expect(display2?.target).toBe('пример, случай'); // Should resolve parentheses groups
+      expect(display2?.target).toBe('пример, случай');
     });
 
     it('should return undefined for non-existent translation', () => {
@@ -255,7 +244,6 @@ describe('QuizManager Tests', () => {
       const quizManager = new QuizManager(sampleTranslations, { progress: initialProgress });
       const state = quizManager.getState();
 
-      // Word should be in LEVEL_2 queue
       expect(state.queues.LEVEL_2).toContain(1);
       expect(state.queues.LEVEL_0).not.toContain(1);
       expect(state.queues.LEVEL_1).not.toContain(1);
@@ -264,7 +252,6 @@ describe('QuizManager Tests', () => {
     it('should set custom initial level', () => {
       const quizManager = new QuizManager(sampleTranslations, { currentLevel: 'LEVEL_2' });
 
-      // Since LEVEL_2 would be empty initially, it should fall back to available level
       const currentLevel = quizManager.getCurrentLevel();
       expect(['LEVEL_1', 'LEVEL_2', 'LEVEL_3', 'LEVEL_4']).toContain(currentLevel);
     });
@@ -287,7 +274,7 @@ describe('QuizManager Tests', () => {
       expect(result.question?.translationId).toBe(1);
     });
 
-    it('should handle invalid translation IDs in submitAnswer', () => {
+    it('should handle invalid translation IDs', () => {
       const quizManager = new QuizManager(sampleTranslations);
 
       expect(() => {
@@ -298,18 +285,15 @@ describe('QuizManager Tests', () => {
     it('should maintain consistency during rapid operations', () => {
       const quizManager = new QuizManager(sampleTranslations);
 
-      // Perform rapid operations
       for (let i = 0; i < 20; i++) {
         const result = quizManager.getNextQuestion();
         if (result.question) {
-          // Alternate between correct answers (привет, мир, кот) and wrong ones
           const correctAnswers = ['привет', 'мир', 'кот', 'собака', 'книга'];
           const answer = i % 3 === 0 ? 'wrong' : correctAnswers[result.question.translationId - 1];
           quizManager.submitAnswer(result.question.translationId, answer);
         }
       }
 
-      // Should still be in a valid state
       const finalState = quizManager.getState();
       expect(finalState.progress.length).toBe(sampleTranslations.length);
     });

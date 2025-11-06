@@ -16,6 +16,7 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
+      deployments: write
 
     steps:
       - name: Checkout gitops repository
@@ -53,19 +54,27 @@ jobs:
             echo "Directory does not exist: ${PREVIEW_DIR}"
           fi
 
+      - name: Cleanup GitHub Deployment
+        uses: ./.github/actions/cleanup-deployment
+        with:
+          environment: 'preview-pr-${{ env.PR_NUMBER }}'
+          delete-environment: 'true'
+
       - name: Comment on PR
         uses: actions/github-script@v8
         with:
           script: |
             const prNumber = context.payload.pull_request.number;
 
-            const comment = `## 🧹 Preview Environment Cleanup Initiated
+            const comment = `## 🧹 Preview Environment Cleanup Complete
 
-            The preview environment configuration has been removed from GitOps.
+            The preview environment has been cleaned up successfully!
 
-            **Cleanup Status:** ArgoCD is automatically pruning all resources (~2-3 minutes)
+            **Cleanup Status:** ✅ All resources removed
 
-            Resources being removed via ArgoCD automated prune:
+            Resources cleaned up:
+            - ✅ GitHub Deployment deactivated and deleted
+            - ✅ GitOps configuration removed
             - ✅ Namespace: \`lingua-quiz-preview-pr-${prNumber}\`
             - ✅ Database: \`linguaquiz_pr_${prNumber}\` (via Kubernetes Job)
             - ✅ Database Secret \`linguaquiz-pr-${prNumber}-db-secret\`
@@ -73,7 +82,7 @@ jobs:
             - ✅ Deployment, Service, Ingress
             - ✅ All pods and persistent volume claims
 
-            ArgoCD prunes resources automatically when source directory is removed from Git.
+            ArgoCD is automatically pruning Kubernetes resources (~2-3 minutes).
             No manual intervention required.
 
             Thank you for using preview environments! 🚀

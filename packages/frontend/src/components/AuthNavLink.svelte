@@ -1,4 +1,3 @@
-<!-- Reusable authentication navigation link component -->
 <script lang="ts">
   export let text: string;
   export let linkText: string;

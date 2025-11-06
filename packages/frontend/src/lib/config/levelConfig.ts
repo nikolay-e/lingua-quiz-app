@@ -1,9 +1,3 @@
-/**
- * Level configuration for UI display and behavior
- * Contains icons, labels, and description generators for each level
- * This file handles the presentation layer for quiz levels
- */
-
 import type { LevelStatus } from '@lingua-quiz/core';
 
 export interface LevelConfigItem {
@@ -65,17 +59,11 @@ export const LEVEL_CONFIG: readonly LevelConfigItem[] = [
   },
 ] as const;
 
-/**
- * Helper function to get level configuration by key
- */
 export function getLevelConfig(levelKey: LevelStatus): LevelConfigItem | undefined {
   return LEVEL_CONFIG.find((config) => config.key === levelKey);
 }
 
-/**
- * Helper function to get level description
- */
 export function getLevelDescription(levelKey: LevelStatus, sourceLanguage: string, targetLanguage: string): string {
   const config = getLevelConfig(levelKey);
-  return config?.description(sourceLanguage, targetLanguage) || '';
+  return config?.description(sourceLanguage, targetLanguage) ?? '';
 }

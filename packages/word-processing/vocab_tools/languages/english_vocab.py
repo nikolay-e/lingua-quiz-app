@@ -23,7 +23,7 @@ class EnglishVocabularyAnalyzer(VocabularyAnalyzer):
         """Initialize the English vocabulary analyzer."""
         super().__init__("en", migrations_directory, silent=silent)
         if not silent:
-            print("🏴󠁧󠁢󠁥󠁮󠁧󠁿 Initializing English vocabulary analyzer...")
+            print("󠁧󠁢󠁥󠁮󠁧󠁿 Initializing English vocabulary analyzer...")
 
     def analyze_word_linguistics(self, word: str, existing_words: set[str], rank: int = None) -> tuple[str, str, str]:
         """

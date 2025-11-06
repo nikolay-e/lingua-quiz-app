@@ -1,8 +1,6 @@
 <script lang="ts">
   import { authStore } from '../stores';
   import { createEventDispatcher } from 'svelte';
-
-  // Import shared components
   import AuthLayout from '../components/AuthLayout.svelte';
   import PasswordInput from '../components/PasswordInput.svelte';
   import AuthMessage from '../components/AuthMessage.svelte';
@@ -10,7 +8,6 @@
 
   const dispatch = createEventDispatcher<{ navigate: { page: 'register' } }>();
 
-  // State variables
   let username = '';
   let password = '';
   let message = '';
@@ -71,5 +68,3 @@
     onClick={navigateToRegister}
   />
 </AuthLayout>
-
-<!-- Styles now handled by global .form-compact utility class -->

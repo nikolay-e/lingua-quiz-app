@@ -10,17 +10,14 @@
   let isAuthenticated = false;
   let currentPage: PageType = PAGES.LOGIN;
 
-  const unsubscribe = authStore.subscribe(state => {
-    isAuthenticated = state.isAuthenticated;
+  const unsubscribe = authStore.subscribe(({ isAuthenticated: authenticated }) => {
+    isAuthenticated = authenticated;
     if (!isAuthenticated) {
       quizStore.reset();
     }
   });
 
-  // Initialize theme store to enable system dark mode detection
   const unsubscribeTheme = themeStore.subscribe(() => {
-  // Theme store handles DOM updates automatically in the store
-    // This subscription ensures the store is active
   });
 
   onDestroy(() => {

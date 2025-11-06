@@ -120,7 +120,7 @@ export const formatForDisplay = (input: string): string => {
       inner
         .split('|')
         .map((s: string) => s.trim())
-        .find((s: string) => s) || '';
+        .find((s: string) => s) ?? '';
     return firstAlt; // drop surrounding parentheses.
   });
 

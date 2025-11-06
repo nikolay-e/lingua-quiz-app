@@ -2,6 +2,7 @@
   "source_language": "German",
   "target_language": "Russian",
   "word_list_name": "German Russian A1",
+  "level_base_offset": 3000000,
   "word_pairs": [
     {
       "translation_id": 3000001,
