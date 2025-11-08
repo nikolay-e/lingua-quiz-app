@@ -96,7 +96,7 @@
   }
 
   .word-list {
-    padding-left: 30px;
+    padding-left: 50px;
     margin-top: var(--spacing-sm);
   }
 
