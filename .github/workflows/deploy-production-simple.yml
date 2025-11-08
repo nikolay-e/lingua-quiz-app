@@ -221,11 +221,8 @@ jobs:
 
           echo "Pushed to GitOps repository"
 
-      - name: Cleanup old production deployments
-        uses: ./.github/actions/cleanup-deployment
-        with:
-          environment: 'production'
-          delete-environment: 'false'
+      # NOTE: Production deployments are NOT cleaned up automatically for audit trail and safety.
+      # Old deployments can be manually cleaned up via GitHub UI if needed.
 
       - name: Create production deployment
         id: deployment
