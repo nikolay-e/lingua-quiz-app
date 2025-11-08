@@ -17,6 +17,8 @@ jobs:
     timeout-minutes: 10
 
     steps:
+      - uses: actions/checkout@v5
+
       - name: Extract PR number and deployment info
         id: pr
         uses: actions/github-script@v8
@@ -41,8 +43,15 @@ jobs:
 
             console.log(`PR #${prNumber}, Preview URL: ${previewUrl}`);
 
+      - name: Initial delay for ArgoCD sync
+        if: steps.pr.outputs.environment != ''
+        run: |
+          echo "Waiting 60 seconds for ArgoCD to sync preview environment..."
+          sleep 60
+
       - name: Wait for preview environment
         id: wait
+        if: steps.pr.outputs.environment != ''
         continue-on-error: true
         env:
           PREVIEW_URL: ${{ steps.pr.outputs.preview_url }}
@@ -50,7 +59,7 @@ jobs:
           echo "Waiting for preview environment to become accessible..."
           echo "URL: ${PREVIEW_URL}"
 
-          MAX_ATTEMPTS=12  # ~5 minutes total with exponential backoff
+          MAX_ATTEMPTS=15  # ~8 minutes total with exponential backoff (after initial 60s delay)
           INITIAL_WAIT=2   # Start with 2 seconds
           MAX_WAIT=30      # Cap at 30 seconds
 
@@ -67,10 +76,20 @@ jobs:
 
             echo "HTTP Status: ${HTTP_STATUS}"
 
+            # Success: app is accessible
             if [ "$HTTP_STATUS" = "200" ] || [ "$HTTP_STATUS" = "301" ] || [ "$HTTP_STATUS" = "302" ]; then
               echo "SUCCESS: Preview environment is accessible"
               echo "success=true" >> "$GITHUB_OUTPUT"
               exit 0
+            fi
+
+            # 403 means pods are restarting - this is expected during deployment
+            if [ "$HTTP_STATUS" = "403" ]; then
+              echo "Got 403 - pods are likely restarting (expected during deployment)"
+            elif [ "$HTTP_STATUS" = "502" ] || [ "$HTTP_STATUS" = "503" ] || [ "$HTTP_STATUS" = "504" ]; then
+              echo "Got ${HTTP_STATUS} - backend is not ready yet"
+            else
+              echo "Got ${HTTP_STATUS} - unexpected status"
             fi
 
             if [ "$attempt" -lt "$MAX_ATTEMPTS" ]; then
@@ -90,7 +109,7 @@ jobs:
           exit 1
 
       - name: Update deployment status
-        if: steps.pr.outputs.environment != ''
+        if: always() && steps.pr.outputs.environment != ''
         uses: ./.github/actions/update-deployment-status
         with:
           environment: ${{ steps.pr.outputs.environment }}
