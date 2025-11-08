@@ -103,3 +103,8 @@ packages/frontend/src/app.d.ts
 TODO.md
 *TODO.md
 TODO*.md
+
+# Large generated data files
+packages/word-processing/frequency_lists/*.json
+packages/word-processing/frequency_lists/*_top*.csv
+packages/word-processing/data/subtitle_frequencies/*_lemmatized.csv

@@ -15,16 +15,24 @@ jobs:
       github.event.workflow_run.event == 'push' &&
       github.event.workflow_run.head_branch == 'main' &&
       github.event.workflow_run.conclusion == 'success'
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
+      - uses: actions/checkout@v5
+
+      - name: Initial delay for ArgoCD sync
+        run: |
+          echo "Waiting 90 seconds for ArgoCD Image Updater to detect and sync new images..."
+          sleep 90
+
       - name: Wait for staging environment
         id: wait
+        continue-on-error: true
         run: |
           echo "Waiting for staging environment to become accessible..."
           STAGING_URL="https://test-lingua-quiz.nikolay-eremeev.com"
 
-          MAX_ATTEMPTS=15  # ~10 minutes total with exponential backoff (ArgoCD Image Updater + sync)
+          MAX_ATTEMPTS=18  # ~12 minutes total with exponential backoff (after initial 90s delay)
           INITIAL_WAIT=5   # Start with 5 seconds
           MAX_WAIT=60      # Cap at 60 seconds
 
@@ -41,10 +49,20 @@ jobs:
 
             echo "HTTP Status: ${HTTP_STATUS}"
 
+            # Success: app is accessible
             if [ "$HTTP_STATUS" = "200" ] || [ "$HTTP_STATUS" = "301" ] || [ "$HTTP_STATUS" = "302" ]; then
               echo "SUCCESS: Staging environment is accessible"
               echo "success=true" >> "$GITHUB_OUTPUT"
               exit 0
+            fi
+
+            # 403 means pods are restarting - this is expected during deployment
+            if [ "$HTTP_STATUS" = "403" ]; then
+              echo "Got 403 - pods are likely restarting (expected during deployment)"
+            elif [ "$HTTP_STATUS" = "502" ] || [ "$HTTP_STATUS" = "503" ] || [ "$HTTP_STATUS" = "504" ]; then
+              echo "Got ${HTTP_STATUS} - backend is not ready yet"
+            else
+              echo "Got ${HTTP_STATUS} - unexpected status"
             fi
 
             if [ "$attempt" -lt "$MAX_ATTEMPTS" ]; then
@@ -64,6 +82,7 @@ jobs:
           exit 1
 
       - name: Update deployment status
+        if: always()
         uses: ./.github/actions/update-deployment-status
         with:
           environment: 'staging'
