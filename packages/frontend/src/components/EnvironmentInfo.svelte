@@ -16,14 +16,12 @@
 
 <style>
   .environment-info {
-    position: fixed;
-    bottom: 8px;
-    right: 8px;
     display: flex;
+    justify-content: center;
     gap: 8px;
+    padding: 16px 8px;
     font-size: 11px;
     font-family: monospace;
-    z-index: 1000;
     opacity: 0.6;
     transition: opacity 0.2s;
   }
