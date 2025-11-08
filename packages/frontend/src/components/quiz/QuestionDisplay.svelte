@@ -18,7 +18,7 @@
 
 <style>
   .question {
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
     background: linear-gradient(135deg, var(--feature-gradient-start), var(--feature-gradient-end));
     border-radius: var(--radius-lg);
     display: flex;
