@@ -55,6 +55,10 @@ CMD ["./start.sh"]
 # Pinned to specific version for reproducible builds
 FROM --platform=linux/amd64 node:25.1.0-slim AS frontend-builder
 
+# Build arguments for version and environment
+ARG APP_VERSION=dev
+ARG APP_ENVIRONMENT=development
+
 WORKDIR /app
 
 # Layer 1: Copy all package manifests for better caching
@@ -77,7 +81,12 @@ COPY packages/frontend/ ./packages/frontend/
 # This updates the symlinks in node_modules to point to the built core package
 # More efficient than removing and reinstalling all dependencies
 RUN npm install --workspaces
-RUN cd packages/frontend && npm run build
+
+# Build frontend with environment variables
+RUN cd packages/frontend && \
+    VITE_APP_VERSION=${APP_VERSION} \
+    VITE_APP_ENVIRONMENT=${APP_ENVIRONMENT} \
+    npm run build
 
 
 # ======================================================================================

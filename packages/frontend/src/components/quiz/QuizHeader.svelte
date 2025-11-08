@@ -11,7 +11,7 @@
   let selected = '';
 
   function handleQuizSelect(): void {
-    if (!selected) return; // guard placeholder
+    if (!selected) return;
     dispatch('select', { quiz: selected });
   }
 
@@ -84,12 +84,7 @@
   }
 
   .selected-quiz-header {
-    /* Using utility class equivalent: flex-between */
     margin-top: var(--spacing-md);
-  }
-
-  .quiz-info {
-    /* Using utility class equivalent: flex-align-center gap-sm */
   }
 
   .quiz-info i {

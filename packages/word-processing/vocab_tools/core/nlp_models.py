@@ -13,6 +13,7 @@ import spacy
 from spacy.lang.de import German
 from spacy.lang.en import English
 from spacy.lang.es import Spanish
+from spacy.lang.ru import Russian
 
 from ..config.constants import NLP_MODEL_PREFERENCES
 
@@ -27,7 +28,7 @@ class NLPModelManager:
 
     def __init__(self):
         self._model_cache: dict[str, Any] = {}
-        self._download_attempted: set = set()  # Track which models we've tried to download
+        self._download_attempted: set = set()
 
     def load_model(
         self,
@@ -65,7 +66,7 @@ class NLPModelManager:
                 self._validate_model_components(model, language_code)
                 self._model_cache[language_code] = model
                 if not silent:
-                    print(f"  ✅ Successfully loaded {model_name}")
+                    print(f"  Successfully loaded {model_name}")
                 return model
             except (OSError, RuntimeError) as e:
                 if not silent:
@@ -81,11 +82,11 @@ class NLPModelManager:
                         self._validate_model_components(model, language_code)
                         self._model_cache[language_code] = model
                         if not silent:
-                            print(f"  ✅ Successfully loaded {model_name} after download")
+                            print(f"  Successfully loaded {model_name} after download")
                         return model
                     except (OSError, RuntimeError) as e:
                         if not silent:
-                            print(f"  ❌ Still can't load or validate {model_name} after download: {e}")
+                            print(f"  Still can't load or validate {model_name} after download: {e}")
                         continue
 
                 continue
@@ -99,11 +100,11 @@ class NLPModelManager:
                 self._validate_model_components(fallback_model, language_code)
                 self._model_cache[language_code] = fallback_model
                 if not silent:
-                    print(f"  ✅ Loaded basic {language_code} model")
+                    print(f"  Loaded basic {language_code} model")
                 return fallback_model
         except Exception as e:
             if not silent:
-                print(f"  ❌ Failed to load basic model: {e}")
+                print(f"  Failed to load basic model: {e}")
 
         raise RuntimeError(
             f"Could not load any NLP model for language '{language_code}'. "
@@ -123,7 +124,7 @@ class NLPModelManager:
             RuntimeError: If model lacks essential components
         """
         # Skip validation for basic language models (they're blank fallbacks)
-        if type(model).__name__ in ["English", "German", "Spanish"]:
+        if type(model).__name__ in ["English", "German", "Spanish", "Russian"]:
             # Basic models are acceptable fallbacks even without full components
             return
 
@@ -136,6 +137,7 @@ class NLPModelManager:
                 "en": "en_core_web_sm",
                 "de": "de_core_news_sm",
                 "es": "es_core_news_sm",
+                "ru": "ru_core_news_sm",
             }
             suggested_model = model_suggestions.get(language_code, f"{language_code}_core_web_sm")
 
@@ -159,6 +161,7 @@ class NLPModelManager:
             "en": English,
             "de": German,
             "es": Spanish,
+            "ru": Russian,
         }
 
         if language_code in basic_models:
@@ -185,7 +188,7 @@ class NLPModelManager:
         self._download_attempted.add(model_name)
 
         if not silent:
-            print(f"  🔄 Attempting to download {model_name}...")
+            print(f"   Attempting to download {model_name}...")
         try:
             # Run spacy download command
             result = subprocess.run(
@@ -198,10 +201,10 @@ class NLPModelManager:
 
             if result.returncode == 0:
                 if not silent:
-                    print(f"  ✅ Successfully downloaded {model_name}")
+                    print(f"  Successfully downloaded {model_name}")
                 return True
             if not silent:
-                print(f"  ❌ Failed to download {model_name}: {result.stderr.strip()}")
+                print(f"  Failed to download {model_name}: {result.stderr.strip()}")
             return False
 
         except subprocess.TimeoutExpired:
@@ -210,7 +213,7 @@ class NLPModelManager:
             return False
         except Exception as e:
             if not silent:
-                print(f"  ❌ Error downloading {model_name}: {e}")
+                print(f"  Error downloading {model_name}: {e}")
             return False
 
     def is_model_loaded(self, language_code: str) -> bool:

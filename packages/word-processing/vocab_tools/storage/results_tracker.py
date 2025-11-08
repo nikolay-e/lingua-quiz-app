@@ -164,7 +164,7 @@ class ResultsTracker:
 
         self._save_results(all_results)
 
-        print(f"📁 Analysis results stored to: {self.results_file}")
+        print(f" Analysis results stored to: {self.results_file}")
         return timestamp
 
     def get_recent_runs(self, limit: int = 10) -> list[dict[str, Any]]:
@@ -312,7 +312,7 @@ class ResultsTracker:
         with open(backup_path, "w", encoding="utf-8") as f:
             json.dump(all_results, f, indent=2, ensure_ascii=False)
 
-        print(f"💾 Backup created: {backup_path}")
+        print(f" Backup created: {backup_path}")
         return backup_path
 
     def clear_results(self, create_backup: bool = True):
@@ -326,7 +326,7 @@ class ResultsTracker:
             self.create_backup()
 
         self._save_results([])
-        print(f"🗑️  All results cleared from {self.results_file}")
+        print(f"️  All results cleared from {self.results_file}")
 
     def export_results(self, export_file: Path):
         """Export all results to a different file."""
@@ -335,7 +335,7 @@ class ResultsTracker:
         with open(export_file, "w", encoding="utf-8") as f:
             json.dump(all_results, f, indent=2, ensure_ascii=False)
 
-        print(f"📤 Results exported to: {export_file}")
+        print(f" Results exported to: {export_file}")
 
 
 # Global tracker instance

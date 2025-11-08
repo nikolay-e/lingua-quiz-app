@@ -1,12 +1,6 @@
-/**
- * API-specific type definitions for the LinguaQuiz frontend
- * These types define the contract between the frontend and backend API
- */
-
-import type { LevelStatus } from '@lingua-quiz/core';
+import type { LevelStatus, Translation, ProgressEntry } from '@lingua-quiz/core';
 import type { LevelConfigItem } from './lib/config/levelConfig';
 
-// User and Authentication types
 export interface User {
   id: number;
   username: string;
@@ -17,7 +11,6 @@ export interface AuthResponse {
   user: User;
 }
 
-// Quiz and Word types
 export interface WordSet {
   id: number;
   name: string;
@@ -45,10 +38,9 @@ export interface UserWordSet {
   status?: LevelStatus;
 }
 
-// API Request/Response types
 export interface InitialQuizStateResponse {
-  translations: import('@lingua-quiz/core').Translation[];
-  progress: import('@lingua-quiz/core').ProgressEntry[];
+  translations: Translation[];
+  progress: ProgressEntry[];
   session: {
     id: string;
     direction?: string;
@@ -79,7 +71,6 @@ export interface SessionData {
   lastAsked?: number[];
 }
 
-// TTS types
 export interface TTSResponse {
   audioData: string;
   contentType: string;
@@ -92,13 +83,11 @@ export interface TTSLanguagesResponse {
   supportedLanguages: string[];
 }
 
-// Component-specific types
 export interface QuizFeedback {
   message: string;
   isSuccess: boolean;
 }
 
-// Level word list types for UI display
 export interface LevelWordListItem extends LevelConfigItem {
   words: string[];
   count: number;
@@ -108,13 +97,11 @@ export interface LevelWordLists {
   [levelId: string]: LevelWordListItem;
 }
 
-// Translation display type (for quiz manager getTranslationForDisplay)
 export interface TranslationDisplay {
   source: string;
   target: string;
 }
 
-// Error handling type for consistent error objects
 export interface AppError {
   message: string;
   code?: string;

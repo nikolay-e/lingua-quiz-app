@@ -7,7 +7,7 @@ to identify missing essential words and classify them appropriately.
 
 from pathlib import Path
 
-from ..config.constants import WORD_CATEGORY_MAPPING
+from ..config.constants import get_pos_description
 from ..core.vocabulary_analyzer import VocabularyAnalyzer
 
 
@@ -23,7 +23,7 @@ class EnglishVocabularyAnalyzer(VocabularyAnalyzer):
         """Initialize the English vocabulary analyzer."""
         super().__init__("en", migrations_directory, silent=silent)
         if not silent:
-            print("🏴󠁧󠁢󠁥󠁮󠁧󠁿 Initializing English vocabulary analyzer...")
+            print("󠁧󠁢󠁥󠁮󠁧󠁿 Initializing English vocabulary analyzer...")
 
     def analyze_word_linguistics(self, word: str, existing_words: set[str], rank: int = None) -> tuple[str, str, str]:
         """
@@ -36,76 +36,22 @@ class EnglishVocabularyAnalyzer(VocabularyAnalyzer):
         Returns:
             Tuple of (category, pos_tag, analysis_reason)
         """
-        # Process word with NLP model
-        doc = self.nlp_model(word)
-        if not doc or len(doc) == 0:
-            return "other", "UNKNOWN", "NLP processing failed"
+        # Use base NLP processing (English doesn't need normalization)
+        result = self._analyze_word_linguistics_base(word, existing_words, use_normalization=False)
 
-        token = doc[0]
-        lemma = token.lemma_.lower()
-        pos_tag = token.pos_
-        morphology = str(token.morph) if hasattr(token, "morph") else ""
+        # If base method returned a complete result (proper_noun or inflected_form)
+        if isinstance(result, tuple):
+            return result
 
-        # Filter out proper nouns (names, places, brands) - focus on core vocabulary
-        if token.ent_type_ and token.ent_type_ not in ["ORDINAL", "CARDINAL"]:
-            return (
-                "proper_noun",
-                token.ent_type_,
-                f"Filtered out as named entity: {token.ent_type_}",
-            )
+        # Extract intermediate data for English-specific processing
+        pos_tag = result["pos_tag"]
+        morphology = result["morphology"]
 
-        # Check if this is an inflected form of an existing word
-        if lemma != word.lower() and lemma in existing_words:
-            reason = self._get_inflection_reason(morphology, lemma)
-            return "inflected_forms", pos_tag, reason
-
-        # Categorize based on part of speech
-        category = self._categorize_by_pos(pos_tag)
+        # Categorize based on part of speech (using base class method)
+        category = self._categorize_by_pos(pos_tag, word)
         reason = self._generate_analysis_reason(word, pos_tag, morphology, rank)
 
         return category, pos_tag, reason
-
-    def _get_inflection_reason(self, morphology: str, lemma: str) -> str:
-        """
-        Generate specific reason for inflected forms.
-
-        Args:
-            morphology: Morphological features string
-            lemma: Base form of the word
-
-        Returns:
-            Human-readable reason for the inflection
-        """
-        if "Tense=Past" in morphology:
-            return f"Past tense of '{lemma}'"
-        if "Number=Plur" in morphology:
-            return f"Plural form of '{lemma}'"
-        if "Degree=Cmp" in morphology:
-            return f"Comparative form of '{lemma}'"
-        if "Degree=Sup" in morphology:
-            return f"Superlative form of '{lemma}'"
-        if "VerbForm=Ger" in morphology:
-            return f"Gerund form of '{lemma}'"
-        if "VerbForm=Part" in morphology:
-            return f"Participle form of '{lemma}'"
-        return f"Inflected form of '{lemma}'"
-
-    def _categorize_by_pos(self, pos_tag: str) -> str:
-        """
-        Categorize word based on part-of-speech tag.
-
-        Args:
-            pos_tag: spaCy POS tag
-
-        Returns:
-            Category name for the word
-        """
-        # Map POS tags to categories using configuration
-        for category, pos_tags in WORD_CATEGORY_MAPPING.items():
-            if pos_tag in pos_tags:
-                return category
-
-        return "other"
 
     def _generate_analysis_reason(self, word: str, pos_tag: str, morphology: str, rank: int = None) -> str:
         """
@@ -120,24 +66,7 @@ class EnglishVocabularyAnalyzer(VocabularyAnalyzer):
         Returns:
             Analysis reason string
         """
-        pos_descriptions = {
-            "NOUN": "Common noun",
-            "PROPN": "Proper noun",
-            "VERB": "Verb",
-            "ADJ": "Adjective",
-            "ADV": "Adverb",
-            "DET": "Determiner",
-            "PRON": "Pronoun",
-            "ADP": "Preposition",
-            "CONJ": "Conjunction",
-            "SCONJ": "Subordinating conjunction",
-            "NUM": "Number",
-            "PART": "Particle",
-            "INTJ": "Interjection",
-            "AUX": "Auxiliary verb",
-        }
-
-        description = pos_descriptions.get(pos_tag, "Unknown word type")
+        description = get_pos_description(pos_tag).capitalize()
 
         # Add specific morphological information
         if morphology:

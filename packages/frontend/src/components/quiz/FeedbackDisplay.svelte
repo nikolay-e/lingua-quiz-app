@@ -6,16 +6,29 @@
   export let usageExamples: { source: string; target: string } | null = null;
   export let questionForFeedback: QuizQuestion | null = null;
 
-  // Helper to determine if feedback indicates success
-  $: isSuccess = feedback ? ('isSuccess' in feedback ? feedback.isSuccess : feedback.isCorrect) : false;
+  $: {
+    if (!feedback) {
+      isSuccess = false;
+    } else if ('isSuccess' in feedback) {
+      // eslint-disable-next-line prefer-destructuring
+      isSuccess = feedback.isSuccess;
+    } else {
+      isSuccess = feedback.isCorrect;
+    }
+  }
+  let isSuccess = false;
 
-  // Helper to get the feedback message
-  $: feedbackMessage = feedback
-    ? ('message' in feedback
-      ? feedback.message
-      : `${questionForFeedback ? questionForFeedback.questionText : ''} = ${formatForDisplay(feedback.correctAnswerText)}`
-    )
-    : '';
+  $: {
+    if (!feedback) {
+      feedbackMessage = '';
+    } else if ('message' in feedback) {
+      feedbackMessage = feedback.message;
+    } else {
+      const questionText = questionForFeedback?.questionText ?? '';
+      feedbackMessage = `${questionText} = ${formatForDisplay(feedback.correctAnswerText)}`;
+    }
+  }
+  let feedbackMessage = '';
 </script>
 
 {#if feedback}
@@ -47,7 +60,6 @@
   }
 
   .feedback-text {
-    /* Using utility class equivalent: flex-center text-center */
     padding: var(--spacing-sm) 12px;
     font-weight: bold;
   }
@@ -81,12 +93,9 @@
     font-size: var(--font-size-base);
   }
 
-  /* Usage Examples Styles */
   .usage-examples {
     padding: 6px 10px;
   }
-
-  /* .example-container styles now handled by utility classes: flex-col gap-sm */
 
   .example-container p {
     background-color: var(--example-bg);

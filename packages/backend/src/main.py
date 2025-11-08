@@ -1,17 +1,7 @@
 #!/usr/bin/env python3
-"""
-LinguaQuiz FastAPI Backend
-Single-file implementation with all business logic, validation, and documentation
-Migrated from Flask to FastAPI for type safety, automatic validation, and API docs
-"""
-
 import base64
 import datetime
 import logging
-
-# =================================================================
-# 1. Imports and App Initialization
-# =================================================================
 import os
 
 import bcrypt
@@ -29,13 +19,9 @@ from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
 from tts_service import TTSService
 
-# Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# =================================================================
-# 2. Configuration
-# =================================================================
 DB_HOST = os.getenv("DB_HOST", "localhost")
 DB_PORT = int(os.getenv("DB_PORT", 5432))
 DB_NAME = os.getenv("POSTGRES_DB", "linguaquiz_db")
@@ -54,13 +40,9 @@ CORS_ALLOWED_ORIGINS = os.getenv(
 if "*" in CORS_ALLOWED_ORIGINS:
     logger.warning("CORS is open to all origins (*) - this is insecure for production!")
 
-# Database pool configuration
 DB_POOL_MIN_SIZE = int(os.getenv("DB_POOL_MIN_SIZE", "5"))
 DB_POOL_MAX_SIZE = int(os.getenv("DB_POOL_MAX_SIZE", "10"))
 
-# =================================================================
-# 3. FastAPI App Initialization
-# =================================================================
 app = FastAPI(
     title="LinguaQuiz API",
     description="Language learning quiz backend with automated spaced repetition",
@@ -69,7 +51,6 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-# CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=CORS_ALLOWED_ORIGINS,
@@ -79,54 +60,29 @@ app.add_middleware(
 )
 
 
-# Security headers middleware
 @app.middleware("http")
 async def add_security_headers(request: Request, call_next):
-    """Add security headers to all responses"""
     response = await call_next(request)
-
-    # API backend should not set CSP headers - this is handled by the frontend/proxy layer
-
-    # X-Frame-Options - prevents clickjacking
     response.headers["X-Frame-Options"] = "DENY"
-
-    # X-Content-Type-Options - prevents MIME type sniffing
     response.headers["X-Content-Type-Options"] = "nosniff"
-
-    # Strict-Transport-Security (HSTS) - enforces HTTPS
     response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains; preload"
-
-    # Cross-Origin-Embedder-Policy - helps mitigate Spectre attacks
     response.headers["Cross-Origin-Embedder-Policy"] = "credentialless"
-
-    # Cross-Origin-Opener-Policy - provides isolation
     response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
-
-    # Permissions Policy - controls browser features
     permissions_policy = "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
     response.headers["Permissions-Policy"] = permissions_policy
-
-    # Referrer Policy - controls referrer information
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
-
-    # Cache control for dynamic content
     if request.url.path.startswith("/api/"):
         response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
         response.headers["Pragma"] = "no-cache"
         response.headers["Expires"] = "0"
-
     return response
 
 
-# Rate limiting
 limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 
-# =================================================================
-# 4. Pydantic Models (Data Contracts & Validation)
-# =================================================================
 class UserBase(BaseModel):
     username: str = Field(..., min_length=3, max_length=50)
 
@@ -231,9 +187,6 @@ class TTSLanguagesResponse(BaseModel):
         populate_by_name = True
 
 
-# Answer comparison models removed - logic moved to @lingua-quiz/core
-
-
 class HealthResponse(BaseModel):
     status: str
     database: str
@@ -261,10 +214,6 @@ class UserLevelUpdateResponse(BaseModel):
     currentLevel: str
 
 
-# =================================================================
-# 5. Database Connection & Utilities
-# =================================================================
-# Database pool
 db_pool = SimpleConnectionPool(
     DB_POOL_MIN_SIZE,
     DB_POOL_MAX_SIZE,
@@ -275,19 +224,15 @@ db_pool = SimpleConnectionPool(
     password=DB_PASSWORD,
 )
 
-# TTS service
 tts_service = TTSService(db_pool)
 
 
-# Helper functions
 def snake_to_camel(snake_str):
-    """Convert snake_case to camelCase"""
     components = snake_str.split("_")
     return components[0] + "".join(x.title() for x in components[1:])
 
 
 def convert_keys_to_camel_case(obj):
-    """Convert all keys in dict/list from snake_case to camelCase"""
     if isinstance(obj, list):
         return [convert_keys_to_camel_case(item) for item in obj]
     if isinstance(obj, dict):
@@ -295,7 +240,6 @@ def convert_keys_to_camel_case(obj):
     return obj
 
 
-# Database helpers
 def get_db():
     return db_pool.getconn()
 
@@ -305,17 +249,6 @@ def put_db(conn):
 
 
 def query_db(query, args=(), one=False):
-    """
-    Execute a READ-ONLY database query and return results.
-
-    WARNING: This function does NOT commit transactions. It should only be used for:
-    - SELECT statements that don't modify data
-    - Functions that only read data
-
-    For any operations that modify data (including PostgreSQL functions that
-    update/insert/delete via SELECT), use execute_write_transaction() instead.
-    """
-    # Guardrail: Check for write operations that would fail silently
     query_upper = query.strip().upper()
     write_keywords = [
         "INSERT",
@@ -341,7 +274,6 @@ def query_db(query, args=(), one=False):
         with conn.cursor(cursor_factory=RealDictCursor) as cur:
             cur.execute(query, args)
             rv = cur.fetchall()
-            # No commit - this is for read-only queries only
             return (rv[0] if rv else None) if one else rv
     except psycopg2.pool.PoolError as e:
         logger.error(f"Connection pool error: {e}")
@@ -372,24 +304,6 @@ def query_db(query, args=(), one=False):
 
 
 def execute_write_transaction(query, args=(), fetch_results=False, one=False):
-    """
-    Execute a database operation that modifies data and commit the transaction.
-
-    Use this function for:
-    - INSERT, UPDATE, DELETE statements
-    - PostgreSQL functions that modify data (even when called via SELECT)
-    - Any operation that needs to be committed to persist changes
-
-    Args:
-        query: SQL query to execute
-        args: Query parameters
-        fetch_results: If True, return query results (useful for RETURNING clauses)
-        one: If True, return only the first result
-
-    Returns:
-        - If fetch_results=True: query results
-        - If fetch_results=False: number of affected rows
-    """
     conn = None
     try:
         conn = get_db()
@@ -428,9 +342,6 @@ def execute_write_transaction(query, args=(), fetch_results=False, one=False):
                     pass
 
 
-# =================================================================
-# 6. Security & Dependencies
-# =================================================================
 security = HTTPBearer()
 
 
@@ -465,17 +376,9 @@ async def get_current_user(
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
 
 
-# =================================================================
-# 7. API Routes
-# =================================================================
-
-
-# Health check
 @app.get("/api/health", response_model=HealthResponse, tags=["Health"])
 async def health_check():
-    """Check API and database connectivity"""
     try:
-        # Test database connection
         query_db("SELECT 1", one=True)
         return HealthResponse(
             status="ok",
@@ -492,11 +395,9 @@ async def health_check():
 
 @app.get("/api/version", response_model=VersionResponse, tags=["Health"])
 async def get_version():
-    """Get API version"""
     return VersionResponse(version="2.0.0")
 
 
-# Authentication routes
 @app.post(
     "/api/auth/register",
     response_model=TokenResponse,
@@ -505,10 +406,8 @@ async def get_version():
 )
 @limiter.limit("100/15minutes")
 async def register_user(request: Request, user_data: UserRegistration):
-    """Register a new user account"""
     logger.info(f"Starting registration for user: {user_data.username}")
     try:
-        # Check if user already exists
         existing_user = query_db("SELECT id FROM users WHERE username = %s", (user_data.username,), one=True)
         if existing_user:
             raise HTTPException(
@@ -516,7 +415,6 @@ async def register_user(request: Request, user_data: UserRegistration):
                 detail="Username already exists",
             )
 
-        # Hash password and create user
         hashed_password = hash_password(user_data.password)
         result = execute_write_transaction(
             "INSERT INTO users (username, password) VALUES (%s, %s) RETURNING id",
@@ -534,7 +432,6 @@ async def register_user(request: Request, user_data: UserRegistration):
         user_id = result["id"]
         logger.info(f"Successfully created user {user_data.username} with id {user_id}")
 
-        # Create access token
         token = create_access_token(data={"userId": user_id, "sub": user_data.username})
 
         return TokenResponse(
@@ -556,10 +453,8 @@ async def register_user(request: Request, user_data: UserRegistration):
 @app.post("/api/auth/login", response_model=TokenResponse, tags=["Authentication"])
 @limiter.limit("100/15minutes")
 async def login_user(request: Request, user_data: UserLogin):
-    """Authenticate user and return access token"""
     logger.info(f"Login attempt for user: {user_data.username}")
     try:
-        # Get user from database
         user = query_db(
             "SELECT id, username, password FROM users WHERE username = %s",
             (user_data.username,),
@@ -573,7 +468,6 @@ async def login_user(request: Request, user_data: UserLogin):
                 detail="Invalid username or password",
             )
 
-        # Create access token
         token = create_access_token(data={"userId": user["id"], "sub": user["username"]})
         logger.info(f"Successful login for user: {user_data.username}")
 
@@ -592,7 +486,6 @@ async def login_user(request: Request, user_data: UserLogin):
 
 @app.delete("/api/auth/delete-account", tags=["Authentication"])
 async def delete_account(current_user: dict = Depends(get_current_user)):
-    """Delete the current user's account"""
     logger.info(f"Account deletion request for user: {current_user['username']}")
     try:
         result = execute_write_transaction("DELETE FROM users WHERE id = %s", (current_user["user_id"],))
@@ -614,10 +507,8 @@ async def delete_account(current_user: dict = Depends(get_current_user)):
         )
 
 
-# User Level routes
 @app.get("/api/user/current-level", response_model=UserLevelResponse, tags=["User"])
 async def get_current_level(current_user: dict = Depends(get_current_user)):
-    """Get the current level for the authenticated user"""
     try:
         user = query_db(
             "SELECT current_level FROM users WHERE id = %s",
@@ -642,9 +533,7 @@ async def get_current_level(current_user: dict = Depends(get_current_user)):
 
 @app.post("/api/user/current-level", response_model=UserLevelUpdateResponse, tags=["User"])
 async def update_current_level(level_data: UserLevelUpdateRequest, current_user: dict = Depends(get_current_user)):
-    """Update the current level for the authenticated user"""
     try:
-        # Validate level value
         valid_levels = ["LEVEL_1", "LEVEL_2", "LEVEL_3", "LEVEL_4"]
         if level_data.currentLevel not in valid_levels:
             raise HTTPException(
@@ -652,7 +541,6 @@ async def update_current_level(level_data: UserLevelUpdateRequest, current_user:
                 detail=f"Invalid level value. Must be one of: {', '.join(valid_levels)}",
             )
 
-        # Update user level
         result = execute_write_transaction(
             "UPDATE users SET current_level = %s::translation_status WHERE id = %s",
             (level_data.currentLevel, current_user["user_id"]),
@@ -678,7 +566,6 @@ async def update_current_level(level_data: UserLevelUpdateRequest, current_user:
 
 @app.get("/api/user/profile", response_model=UserResponse, tags=["User"])
 async def get_user_profile(current_user: dict = Depends(get_current_user)):
-    """Get the current user's profile"""
     try:
         return UserResponse(id=current_user["user_id"], username=current_user["username"])
     except Exception as e:
@@ -689,10 +576,8 @@ async def get_user_profile(current_user: dict = Depends(get_current_user)):
         )
 
 
-# Word Sets routes
 @app.get("/api/word-sets", response_model=list[WordSetResponse], tags=["Word Sets"])
 async def get_word_sets(current_user: dict = Depends(get_current_user)):
-    """Get all available word sets"""
     logger.debug(f"Fetching word sets for user: {current_user['username']}")
     try:
         word_sets = query_db("SELECT * FROM get_word_lists()")
@@ -708,7 +593,6 @@ async def get_word_sets(current_user: dict = Depends(get_current_user)):
 
 @app.get("/api/word-sets/user", response_model=list[UserWordSetResponse], tags=["Word Sets"])
 async def get_user_word_sets(word_list_name: str, current_user: dict = Depends(get_current_user)):
-    """Get user-specific word sets with progress status"""
     try:
         user_word_sets = query_db(
             "SELECT * FROM get_user_word_sets(%s, %s)",
@@ -731,15 +615,12 @@ async def get_user_word_sets(word_list_name: str, current_user: dict = Depends(g
     tags=["Word Sets"],
 )
 async def get_word_set(word_set_id: int, current_user: dict = Depends(get_current_user)):
-    """Get a specific word set with all its words"""
     try:
-        # Get word set info
         word_set = query_db("SELECT * FROM get_word_lists() WHERE id = %s", (word_set_id,), one=True)
 
         if not word_set:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Word set not found")
 
-        # Get words for this set
         words = query_db(
             """SELECT t.id as translation_id, sw.id as source_word_id, tw.id as target_word_id,
                       sw.text as source_word, tw.text as target_word,
@@ -773,9 +654,7 @@ async def get_word_set(word_set_id: int, current_user: dict = Depends(get_curren
 
 @app.post("/api/word-sets/user", tags=["Word Sets"])
 async def update_user_word_sets(update_data: UserWordSetStatusUpdate, current_user: dict = Depends(get_current_user)):
-    """Update status for multiple user word sets"""
     try:
-        # Validate status
         valid_statuses = [
             "LEVEL_0",
             "LEVEL_1",
@@ -790,7 +669,6 @@ async def update_user_word_sets(update_data: UserWordSetStatusUpdate, current_us
                 detail=f"Invalid status. Must be one of: {', '.join(valid_statuses)}",
             )
 
-        # Update word sets
         execute_write_transaction(
             "SELECT update_user_word_set_status(%s, %s, %s)",
             (current_user["user_id"], update_data.word_pair_ids, update_data.status),
@@ -808,7 +686,6 @@ async def update_user_word_sets(update_data: UserWordSetStatusUpdate, current_us
         )
 
 
-# TTS routes
 @app.post("/api/tts/synthesize", response_model=TTSResponse, tags=["Text-to-Speech"])
 @limiter.limit("100/minute")
 async def synthesize_speech(
@@ -816,7 +693,6 @@ async def synthesize_speech(
     tts_data: TTSRequest,
     current_user: dict = Depends(get_current_user),
 ):
-    """Synthesize speech from text"""
     try:
         audio_data = tts_service.synthesize_speech(tts_data.text, tts_data.language)
 
@@ -826,7 +702,6 @@ async def synthesize_speech(
                 detail="Failed to synthesize speech",
             )
 
-        # Convert bytes to base64 string
         audio_data_b64 = base64.b64encode(audio_data).decode("utf-8")
 
         return TTSResponse(
@@ -848,7 +723,6 @@ async def synthesize_speech(
 
 @app.get("/api/tts/languages", response_model=TTSLanguagesResponse, tags=["Text-to-Speech"])
 async def get_tts_languages(current_user: dict = Depends(get_current_user)):
-    """Get available TTS languages"""
     try:
         return TTSLanguagesResponse(
             available=tts_service.is_available(),
@@ -863,12 +737,6 @@ async def get_tts_languages(current_user: dict = Depends(get_current_user)):
         )
 
 
-# Note: Answer comparison logic moved to @lingua-quiz/core package on frontend
-
-
-# =================================================================
-# 8. Exception Handlers
-# =================================================================
 @app.exception_handler(ValidationError)
 async def validation_exception_handler(request: Request, exc: ValidationError):
     return JSONResponse(
@@ -891,9 +759,6 @@ async def internal_server_error_handler(request: Request, exc):
     )
 
 
-# =================================================================
-# 9. Application Entry Point
-# =================================================================
 if __name__ == "__main__":
     import uvicorn
 

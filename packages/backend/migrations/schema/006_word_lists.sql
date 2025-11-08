@@ -1,4 +1,3 @@
--- Word lists table
 CREATE TABLE IF NOT EXISTS word_lists (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL UNIQUE,
@@ -6,7 +5,6 @@ CREATE TABLE IF NOT EXISTS word_lists (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- Word list entries table
 CREATE TABLE IF NOT EXISTS word_list_entries (
     id SERIAL PRIMARY KEY,
     translation_id INTEGER REFERENCES translations (id) ON DELETE CASCADE,
@@ -15,7 +13,6 @@ CREATE TABLE IF NOT EXISTS word_list_entries (
     UNIQUE (translation_id, word_list_id)
 );
 
--- Indexes
 CREATE INDEX IF NOT EXISTS idx_word_lists_name ON word_lists (name);
 CREATE INDEX IF NOT EXISTS idx_word_list_entries_translation
 ON word_list_entries (translation_id);
@@ -25,7 +22,6 @@ CREATE INDEX IF NOT EXISTS idx_word_list_entries_list ON word_list_entries (
 CREATE INDEX IF NOT EXISTS idx_word_list_entries_list_translation
 ON word_list_entries (word_list_id, translation_id);
 
--- Timestamp update trigger function
 CREATE OR REPLACE FUNCTION UPDATE_TIMESTAMP() RETURNS TRIGGER AS $$
 BEGIN
    NEW.updated_at = CURRENT_TIMESTAMP;
@@ -33,7 +29,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Word list table trigger
 DO $$
 BEGIN
   IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'update_word_list_timestamp') THEN
@@ -44,7 +39,6 @@ BEGIN
   END IF;
 END $$;
 
--- Functions
 DROP FUNCTION IF EXISTS get_word_lists();
 
 CREATE OR REPLACE FUNCTION GET_WORD_LISTS() RETURNS TABLE (

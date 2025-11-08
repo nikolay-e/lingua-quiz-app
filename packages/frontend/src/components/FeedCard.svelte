@@ -1,7 +1,7 @@
 <script lang="ts">
   export let title: string | null = null;
   export let subtitle: string | null = null;
-  export let dense: boolean = false; // tighter padding for small elements
+  export let dense: boolean = false;
 </script>
 
 <article class="feed-item {dense ? 'dense' : ''}">

@@ -6,6 +6,28 @@
 # - GITOPS_PAT must have permission to bypass branch protection rules
 # - Alternatively, configure branch protection to allow github-actions[bot] to bypass
 #
+# SECURITY RECOMMENDATIONS for GITOPS_PAT:
+# 1. Use Fine-Grained Personal Access Token (not Classic PAT)
+# 2. Grant MINIMAL permissions:
+#    - Repository access: Only 'nikolay-e/gitops' (not all repositories)
+#    - Permissions: Contents (Read and Write) ONLY
+# 3. Set expiration: 1 year maximum (rotate annually)
+# 4. Enable MFA on the GitHub account owning the token
+# 5. Review token usage logs quarterly via GitHub Audit Log
+# 6. CRITICAL: This token can bypass branch protection - treat as production credential
+# 7. Alternative (more secure): Use GitHub App with repository-scoped credentials
+#    - Create GitHub App with 'Contents: Write' permission
+#    - Install app only on gitops repository
+#    - Use App authentication instead of PAT (app-token action)
+#
+# Migration to GitHub App (recommended):
+# Replace GITOPS_PAT with:
+#   - uses: actions/create-github-app-token@v2
+#     with:
+#       app-id: ${{ secrets.GITOPS_APP_ID }}
+#       private-key: ${{ secrets.GITOPS_APP_PRIVATE_KEY }}
+#       repositories: gitops
+#
 name: Deploy to Production
 
 on:
@@ -120,6 +142,9 @@ jobs:
             ${{ env.REGISTRY }}/lingua-quiz-backend:${{ steps.version.outputs.tag }}
             ${{ env.REGISTRY }}/lingua-quiz-backend:latest
             ${{ env.REGISTRY }}/lingua-quiz-backend:${{ github.sha }}
+          build-args: |
+            APP_VERSION=${{ steps.version.outputs.new }}
+            APP_ENVIRONMENT=production
           labels: |
             org.opencontainers.image.source=${{ github.event.repository.html_url }}
             org.opencontainers.image.revision=${{ github.sha }}
@@ -138,6 +163,9 @@ jobs:
             ${{ env.REGISTRY }}/lingua-quiz-frontend:${{ steps.version.outputs.tag }}
             ${{ env.REGISTRY }}/lingua-quiz-frontend:latest
             ${{ env.REGISTRY }}/lingua-quiz-frontend:${{ github.sha }}
+          build-args: |
+            APP_VERSION=${{ steps.version.outputs.new }}
+            APP_ENVIRONMENT=production
           labels: |
             org.opencontainers.image.source=${{ github.event.repository.html_url }}
             org.opencontainers.image.revision=${{ github.sha }}
@@ -193,71 +221,41 @@ jobs:
 
           echo "Pushed to GitOps repository"
 
-      - name: Delete old production deployment
-        uses: actions/github-script@v8
+      - name: Cleanup old production deployments
+        uses: ./.github/actions/cleanup-deployment
         with:
-          script: |
-            // List all deployments for production environment
-            const deployments = await github.rest.repos.listDeployments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              environment: 'production'
-            });
+          environment: 'production'
+          delete-environment: 'false'
 
-            // Delete all existing production deployments
-            for (const deployment of deployments.data) {
-              console.log(`Deleting deployment ${deployment.id}...`);
-
-              // First, mark deployment as inactive
-              await github.rest.repos.createDeploymentStatus({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                deployment_id: deployment.id,
-                state: 'inactive'
-              });
-
-              // Then delete the deployment
-              try {
-                await github.rest.repos.deleteDeployment({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  deployment_id: deployment.id
-                });
-                console.log(`Deleted deployment ${deployment.id}`);
-              } catch (error) {
-                console.log(`Could not delete deployment ${deployment.id}: ${error.message}`);
-              }
-            }
-
-      - name: Create new production deployment
-        uses: actions/github-script@v8
+      - name: Create production deployment
         id: deployment
+        uses: ./.github/actions/create-deployment
         with:
-          script: |
-            // Create new production deployment
-            const deployment = await github.rest.repos.createDeployment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: '${{ steps.version.outputs.tag }}',
-              environment: 'production',
-              auto_merge: false,
-              required_contexts: [],
-              production_environment: true,
-              description: 'Production deployment v${{ steps.version.outputs.new }}'
-            });
+          environment: 'production'
+          ref: ${{ steps.version.outputs.tag }}
+          is-production: 'true'
+          is-transient: 'false'
+          description: 'Production deployment v${{ steps.version.outputs.new }}'
+          payload: |
+            {
+              "release_version": "${{ steps.version.outputs.new }}",
+              "git_tag": "${{ steps.version.outputs.tag }}",
+              "commit_sha": "${{ github.sha }}",
+              "deployed_by": "github-actions",
+              "deployment_type": "manual"
+            }
+          environment-url: 'https://lingua-quiz.nikolay-eremeev.com'
+          initial-status: 'in_progress'
+          status-description: 'Deploying v${{ steps.version.outputs.new }} to production via ArgoCD'
 
-            // Mark deployment as successful
-            await github.rest.repos.createDeploymentStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              deployment_id: deployment.data.id,
-              state: 'success',
-              environment_url: 'https://lingua-quiz.nikolay-eremeev.com',
-              description: 'Deployed v${{ steps.version.outputs.new }} to production'
-            });
-
-            console.log(`Created deployment ${deployment.data.id}`);
-            return deployment.data.id;
+      - name: Mark deployment as successful
+        uses: ./.github/actions/update-deployment-status
+        with:
+          environment: 'production'
+          deployment-id: ${{ steps.deployment.outputs.deployment-id }}
+          status: 'success'
+          description: '✅ Deployed v${{ steps.version.outputs.new }} to production'
+          environment-url: 'https://lingua-quiz.nikolay-eremeev.com'
 
       - name: Create GitHub Release
         uses: actions/github-script@v8

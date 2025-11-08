@@ -1,28 +1,18 @@
-/**
- * Global window interface extension for environment variables
- */
 declare global {
   interface Window {
     LINGUA_QUIZ_API_URL?: string;
   }
 }
 
-/**
- * Determines the server address based on build-time environment variables
- * @returns The API server address
- */
 const getServerAddress = (): string => {
-  // Build-time environment variable (preferred method)
   if (import.meta.env.VITE_API_URL) {
     return import.meta.env.VITE_API_URL as string;
   }
 
-  // Runtime environment variable override (for Docker and other deployment scenarios)
   if (window.LINGUA_QUIZ_API_URL) {
     return window.LINGUA_QUIZ_API_URL;
   }
 
-  // Simple fallback for same-origin deployment
   return '/api';
 };
 
@@ -37,13 +27,6 @@ import type {
 
 const serverAddress = getServerAddress();
 
-/**
- * Centralized fetch wrapper that handles common API tasks:
- * - Authorization headers
- * - Response status checking
- * - Error parsing and handling
- * - JSON response parsing
- */
 async function fetchWrapper<T = unknown>(url: string, options: RequestInit = {}): Promise<T> {
   const response = await fetch(url, options);
 
@@ -52,11 +35,9 @@ async function fetchWrapper<T = unknown>(url: string, options: RequestInit = {})
     try {
       errorData = await response.json();
     } catch {
-      // If JSON parsing fails, create a generic error
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
 
-    // Handle specific HTTP status codes
     if (response.status === 401) {
       throw new Error('Unauthorized');
     }
@@ -64,29 +45,25 @@ async function fetchWrapper<T = unknown>(url: string, options: RequestInit = {})
       throw new Error('Resource not found');
     }
 
-    // Handle FastAPI validation errors (arrays of error objects)
     if (errorData.detail && Array.isArray(errorData.detail)) {
       const errors = errorData.detail
-        .map((err: { msg?: string; message?: string }) => err.msg || err.message)
+        .map((err: { msg?: string; message?: string }) => err.msg ?? err.message)
         .filter(Boolean)
         .join(', ');
-      throw new Error(errors || `Request failed with status ${response.status}`);
+      const errorMessage = errors.length > 0 ? errors : `Request failed with status ${response.status}`;
+      throw new Error(errorMessage);
     }
 
-    // Handle other error formats
-    const errorMessage = errorData.message || errorData.detail || `Request failed with status ${response.status}`;
+    const errorMessage = errorData.message ?? errorData.detail ?? `Request failed with status ${response.status}`;
     throw new Error(errorMessage);
   }
 
-  // Safely handle empty bodies
   const cl = response.headers.get('content-length');
   if (response.status === 204 || cl === '0' || cl === null) {
-    // Try text first; some servers send empty string without content-length
     const text = await response.text();
     return (text ? JSON.parse(text) : undefined) as unknown as T;
   }
 
-  // Some servers omit content-length; try/catch JSON parse
   try {
     return await response.json();
   } catch {
@@ -94,9 +71,6 @@ async function fetchWrapper<T = unknown>(url: string, options: RequestInit = {})
   }
 }
 
-/**
- * Creates request options with Authorization header
- */
 function withAuth(token: string, options: RequestInit = {}): RequestInit {
   return {
     ...options,
@@ -107,9 +81,6 @@ function withAuth(token: string, options: RequestInit = {}): RequestInit {
   };
 }
 
-/**
- * Factory function for creating API methods
- */
 const createApiMethod = <TResponse, TParams = void>(endpoint: string, method = 'GET', requiresAuth = true) => {
   if (requiresAuth) {
     return async (token: string, params?: TParams): Promise<TResponse> => {
@@ -139,28 +110,20 @@ const createApiMethod = <TResponse, TParams = void>(endpoint: string, method = '
   };
 };
 
-/**
- * API client for communicating with the LinguaQuiz backend
- */
 const api = {
-  // Authentication methods (no auth required)
   login: createApiMethod<AuthResponse, { username: string; password: string }>('/auth/login', 'POST', false),
   register: createApiMethod<AuthResponse, { username: string; password: string }>('/auth/register', 'POST', false),
 
-  // Word sets methods
   fetchWordSets: createApiMethod<WordSet[]>('/word-sets'),
   saveWordStatus: createApiMethod<void, { status: string; wordPairIds: number[] }>('/word-sets/user', 'POST'),
 
-  // TTS methods
   synthesizeSpeech: createApiMethod<TTSResponse, { text: string; language: string }>('/tts/synthesize', 'POST'),
   getTTSLanguages: createApiMethod<TTSLanguagesResponse>('/tts/languages'),
 
-  // User methods
   deleteAccount: createApiMethod<void>('/auth/delete-account', 'DELETE'),
   getCurrentLevel: createApiMethod<{ currentLevel: string }>('/user/current-level'),
   updateCurrentLevel: createApiMethod<void, { currentLevel: string }>('/user/current-level', 'POST'),
 
-  // Custom methods that need special handling
   async fetchUserWordSets(token: string, wordListName: string): Promise<UserWordSet[]> {
     return fetchWrapper(
       `${serverAddress}/word-sets/user?word_list_name=${encodeURIComponent(wordListName)}`,

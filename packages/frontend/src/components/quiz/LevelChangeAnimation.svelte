@@ -9,12 +9,10 @@
   let animationElement: HTMLDivElement;
 
   $: if (isVisible && animationElement) {
-    // Reset animation
     animationElement.style.animation = 'none';
-    animationElement.offsetHeight; // Trigger reflow
+    animationElement.offsetHeight;
     animationElement.style.animation = null;
 
-    // Auto-hide after animation
     setTimeout(() => {
       dispatch('complete');
     }, 1500);

@@ -40,7 +40,6 @@ describe('Core Functionality Tests', () => {
     it('should handle invalid translation IDs in submitAnswer', () => {
       const quizManager = new QuizManager(sampleTranslations);
 
-      // This should not crash but handle gracefully
       expect(() => {
         quizManager.submitAnswer(999, 'any answer');
       }).toThrow('Translation or progress not found');
@@ -49,18 +48,15 @@ describe('Core Functionality Tests', () => {
     it('should maintain consistency during rapid operations', () => {
       const quizManager = new QuizManager(sampleTranslations);
 
-      // Perform rapid operations
       for (let i = 0; i < 20; i++) {
         const result = quizManager.getNextQuestion();
         if (result.question) {
-          // Alternate between correct answers (привет, мир, кот) and wrong ones
           const correctAnswers = ['привет', 'мир', 'кот'];
           const answer = i % 3 === 0 ? 'wrong' : correctAnswers[result.question.translationId - 1];
           quizManager.submitAnswer(result.question.translationId, answer);
         }
       }
 
-      // Should still function
       const finalResult = quizManager.getNextQuestion();
       expect(finalResult.question).toBeTruthy();
     });
@@ -71,7 +67,6 @@ describe('Core Functionality Tests', () => {
       const zeroFocusQuiz = new QuizManager(sampleTranslations, {}, { maxFocusWords: 0 });
       const state = zeroFocusQuiz.getState();
 
-      // With zero focus words, all should remain at LEVEL_0
       const level1Count = state.progress.filter((p) => p.status === 'LEVEL_1').length;
       expect(level1Count).toBe(0);
     });
@@ -83,19 +78,22 @@ describe('Core Functionality Tests', () => {
       if (result.question) {
         const { translationId } = result.question;
 
-        // Answer correctly once (should advance with custom setting)
-        const correctAnswer = translationId === 1 ? 'привет' : translationId === 2 ? 'мир' : 'кот';
+        let correctAnswer: string;
+        if (translationId === 1) {
+          correctAnswer = 'привет';
+        } else if (translationId === 2) {
+          correctAnswer = 'мир';
+        } else {
+          correctAnswer = 'кот';
+        }
         const submissionResult = customQuiz.submitAnswer(translationId, correctAnswer);
 
         const state = customQuiz.getState();
         const progress = state.progress.find((p) => p.translationId === translationId);
 
-        // With correctAnswersToLevelUp = 1, the word should have advanced to next level
         expect(submissionResult.isCorrect).toBe(true);
         expect(submissionResult.levelChange).toBeDefined();
-        // After level promotion, consecutiveCorrect is reset to 0
         expect(progress?.consecutiveCorrect).toBe(0);
-        // Check that it moved from LEVEL_1 to LEVEL_2
         expect(progress?.status).toBe('LEVEL_2');
       }
     });
@@ -112,7 +110,6 @@ describe('Core Functionality Tests', () => {
       const result = largeQuiz.getNextQuestion();
       const endTime = Date.now();
 
-      // Should initialize quickly
       expect(endTime - startTime).toBeLessThan(1000);
       expect(result.question).toBeTruthy();
     });
@@ -122,7 +119,6 @@ describe('Core Functionality Tests', () => {
     it('should restore state correctly', () => {
       const originalQuiz = new QuizManager(sampleTranslations);
 
-      // Perform some operations
       const result = originalQuiz.getNextQuestion();
       if (result.question) {
         originalQuiz.submitAnswer(result.question.translationId, 'привет');
@@ -134,7 +130,6 @@ describe('Core Functionality Tests', () => {
       const originalState = originalQuiz.getState();
       const restoredState = restoredQuiz.getState();
 
-      // Key state should match
       expect(restoredState.currentLevel).toBe(originalState.currentLevel);
       expect(restoredState.progress.length).toBe(originalState.progress.length);
     });
@@ -142,7 +137,6 @@ describe('Core Functionality Tests', () => {
     it('should handle level switching edge cases', () => {
       const quizManager = new QuizManager(sampleTranslations);
 
-      // Try to switch to a level with no words
       const result = quizManager.setLevel('LEVEL_5');
 
       expect(result.success).toBe(false);
@@ -155,14 +149,19 @@ describe('Core Functionality Tests', () => {
     it('should progress words through levels correctly', () => {
       const quizManager = new QuizManager(sampleTranslations);
 
-      // Get a word and answer it correctly multiple times
       const result = quizManager.getNextQuestion();
       if (result.question) {
         const { translationId } = result.question;
-        const correctAnswer = translationId === 1 ? 'привет' : translationId === 2 ? 'мир' : 'кот';
+        let correctAnswer: string;
+        if (translationId === 1) {
+          correctAnswer = 'привет';
+        } else if (translationId === 2) {
+          correctAnswer = 'мир';
+        } else {
+          correctAnswer = 'кот';
+        }
 
         let submissionResult: ReturnType<typeof quizManager.submitAnswer> | undefined;
-        // Answer correctly 3 times (T_PROMO default)
         for (let i = 0; i < 3; i++) {
           submissionResult = quizManager.submitAnswer(translationId, correctAnswer);
         }
@@ -170,12 +169,9 @@ describe('Core Functionality Tests', () => {
         const state = quizManager.getState();
         const progress = state.progress.find((p) => p.translationId === translationId);
 
-        // After 3 correct answers, word should have advanced to next level
         expect(submissionResult?.isCorrect).toBe(true);
         expect(submissionResult?.levelChange).toBeDefined();
-        // After level promotion, consecutiveCorrect is reset to 0
         expect(progress?.consecutiveCorrect).toBe(0);
-        // Check that it moved from LEVEL_1 to LEVEL_2
         expect(progress?.status).toBe('LEVEL_2');
       }
     });
@@ -183,12 +179,18 @@ describe('Core Functionality Tests', () => {
     it('should handle mixed performance patterns', () => {
       const quizManager = new QuizManager(sampleTranslations);
 
-      // Create mixed performance: correct, wrong, correct, wrong pattern
       for (let i = 0; i < 8; i++) {
         const result = quizManager.getNextQuestion();
         if (result.question) {
           const { translationId } = result.question;
-          const correctAnswer = translationId === 1 ? 'привет' : translationId === 2 ? 'мир' : 'кот';
+          let correctAnswer: string;
+          if (translationId === 1) {
+            correctAnswer = 'привет';
+          } else if (translationId === 2) {
+            correctAnswer = 'мир';
+          } else {
+            correctAnswer = 'кот';
+          }
           const answer = i % 2 === 0 ? correctAnswer : 'wrong';
 
           quizManager.submitAnswer(translationId, answer);
@@ -197,7 +199,6 @@ describe('Core Functionality Tests', () => {
 
       const state = quizManager.getState();
 
-      // Should maintain valid state
       expect(state.progress.length).toBe(3);
       state.progress.forEach((p) => {
         expect(['LEVEL_0', 'LEVEL_1', 'LEVEL_2', 'LEVEL_3', 'LEVEL_4', 'LEVEL_5']).toContain(p.status);

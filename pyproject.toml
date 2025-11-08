@@ -75,12 +75,76 @@ ignore = [
     "PLR2004", # Allow magic values in tests
     "PT018",  # Allow complex assertions in tests
     "B007",   # Allow unused loop variables in tests
+    "RUF001", # Allow Cyrillic characters in Russian test data
+    "PLC2401", # Allow non-ASCII in function names (Spanish accents in test names)
 ]
 "**/test_*.py" = [
     "S101",
     "PLR2004",
     "PT018",
     "B007",
+    "RUF001",
+    "PLC2401",
+]
+"**/conftest.py" = [
+    "RUF001",  # Allow Cyrillic in test fixtures
+]
+"**/fill_placeholders.py" = [
+    "RUF001",  # Allow Cyrillic in translation dictionary
+]
+"**/generate_lemmatized_frequencies.py" = [
+    "RUF001",  # Allow Cyrillic in output
+]
+"**/stanza_lemmatizer.py" = [
+    "PLR0915", # Allow many statements in complex lemmatization logic
+    "PLR0912", # Allow many branches in lemmatization logic
+    "PLR2004", # Allow magic values for linguistic rules
+]
+"**/vocabulary_processor.py" = [
+    "PLR0915", # Allow many statements in processing pipeline
+]
+"**/lemmatizer.py" = [
+    "PLR0911", # Allow many return statements in lemmatizer
+    "PLR0912", # Allow many branches in lemmatizer
+]
+"**/migration_validator.py" = [
+    "PLC2701", # Allow private imports for NLP models
+]
+"**/full_report_generator.py" = [
+    "PLR0915", # Allow many statements in report generation
+    "RUF001",  # Allow Cyrillic in Russian markdown output
+]
+"**/collocation_extractor.py" = [
+    "F401",    # Allow unused imports for optional NLTK features
+]
+"**/lemmatization_service.py" = [
+    "PLR0904", # Allow many public methods in service class
+]
+"**/morphynet_loader.py" = [
+    "RUF001",  # Allow Cyrillic in language examples
+    "RUF012",  # Allow mutable class attributes for constants
+]
+"**/morphological_analyzer.py" = [
+    "RUF012",  # Allow mutable class attributes for feature mappings
+]
+"**/interactive_mode.py" = [
+    "RUF012",  # Allow mutable class attributes for UI styles
+]
+"**/vocabulary_analyzer.py" = [
+    "PLR0915", # Allow many statements in analysis logic
+    "RUF001",  # Allow Cyrillic in Russian output
+]
+"**/cli/output/formatters.py" = [
+    "RUF001",  # Allow Cyrillic in Russian output
+    "RUF002",  # Allow mathematical symbols in output
+    "PLR0915", # Allow many statements in formatting logic
+]
+"**/cli/commands/*.py" = [
+    "PLR0915", # Allow many statements in CLI command handlers
+]
+"**/transliteration_detector.py" = [
+    "RUF001",  # Allow Cyrillic in transliteration mappings
+    "RUF012",  # Allow mutable class attributes for transliteration tables
 ]
 
 [tool.ruff.lint.isort]

@@ -1,9 +1,3 @@
-"""
-Database migration file parser for LinguaQuiz vocabulary tools.
-
-Handles extraction and parsing of vocabulary data from JSON vocabulary files.
-"""
-
 from dataclasses import dataclass
 import json
 from pathlib import Path
@@ -11,8 +5,6 @@ from pathlib import Path
 
 @dataclass
 class VocabularyEntry:
-    """Represents a single vocabulary entry from the database."""
-
     translation_id: int
     source_word_id: int
     target_word_id: int
@@ -22,21 +14,14 @@ class VocabularyEntry:
     target_example: str
 
     def __post_init__(self):
-        """Clean up the entry data after initialization."""
-        # No special processing needed for JSON data - strings are already properly formatted
+        pass
 
 
 class VocabularyFileParser:
-    """Parses JSON vocabulary files to extract vocabulary data."""
-
     def __init__(self, migrations_directory: Path | None = None):
         self.migrations_dir = migrations_directory or self._find_migrations_directory()
 
     def _find_migrations_directory(self) -> Path:
-        """
-        Try to auto-detect the project root that contains data/vocabulary.
-        Searches upwards from this file for a .git directory.
-        """
         current_path = Path.cwd()
         while not (current_path / ".git").exists() and current_path != current_path.parent:
             current_path = current_path.parent
@@ -56,7 +41,6 @@ class VocabularyFileParser:
         discovered = {}
         for json_file in vocabulary_dir.glob("*.json"):
             filename = json_file.name
-            # Extract language from filename pattern like "english-russian-a2.json"
             parts = filename.replace(".json", "").split("-")
             if len(parts) >= 2:
                 source_lang = parts[0]
@@ -69,7 +53,6 @@ class VocabularyFileParser:
         return discovered
 
     def parse_migration_file(self, filename: str) -> list[VocabularyEntry]:
-        # Use standardized vocabulary directory location
         file_path = self.migrations_dir / "data" / "vocabulary" / filename
 
         if not file_path.exists():

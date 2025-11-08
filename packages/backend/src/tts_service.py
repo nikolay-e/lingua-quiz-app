@@ -1,8 +1,3 @@
-"""
-Text-to-Speech Service with Google Cloud TTS and Database Caching
-Provides audio synthesis for quiz words with intelligent caching
-"""
-
 import base64
 import hashlib
 import logging
@@ -16,8 +11,6 @@ logger = logging.getLogger(__name__)
 
 
 class TTSService:
-    """Text-to-Speech service with Google Cloud TTS and database caching"""
-
     def __init__(self, db_pool):
         self.client = None
         self.db_pool = db_pool
@@ -30,7 +23,6 @@ class TTSService:
         self._initialize_client()
 
     def _initialize_client(self):
-        """Initialize Google Cloud TTS client with credentials"""
         try:
             credentials_b64 = os.getenv("GOOGLE_CLOUD_CREDENTIALS_B64")
             if credentials_b64:
@@ -42,7 +34,6 @@ class TTSService:
                 self.client = texttospeech.TextToSpeechClient(credentials=credentials)
                 logger.info("TTS client initialized with service account credentials")
             else:
-                # Try default credentials (for local development)
                 self.client = texttospeech.TextToSpeechClient()
                 logger.info("TTS client initialized with default credentials")
         except Exception as e:
@@ -50,15 +41,12 @@ class TTSService:
             self.client = None
 
     def is_available(self) -> bool:
-        """Check if TTS service is available"""
         return self.client is not None
 
     def get_cache_key(self, text: str, language: str) -> str:
-        """Generate MD5 hash for cache key"""
         return hashlib.md5(f"{text}_{language}".encode()).hexdigest()
 
     def _get_from_cache_validated(self, cache_key: str, text: str) -> tuple[bytes | None, bool]:
-        """Retrieve audio data from database cache with text validation"""
         conn = None
         try:
             conn = self.db_pool.getconn()
@@ -75,12 +63,9 @@ class TTSService:
                     audio_data = bytes(result["audio_data"]) if result["audio_data"] else None
 
                     if is_valid and audio_data:
-                        logger.debug(f"TTS cache hit for key: {cache_key}")
                         return audio_data, True
                     if is_valid:
-                        logger.debug(f"TTS cache miss for valid text: {cache_key}")
                         return None, True
-                    logger.debug(f"TTS text not allowed: {text[:30]}...")
                     return None, False
 
         except Exception as e:
@@ -96,7 +81,6 @@ class TTSService:
         return None, False
 
     def _save_to_cache_validated(self, cache_key: str, audio_content: bytes, text: str, language: str) -> bool:
-        """Save audio data to database cache with validation"""
         conn = None
         try:
             conn = self.db_pool.getconn()
@@ -109,9 +93,7 @@ class TTSService:
                 conn.commit()
 
                 if result:
-                    logger.debug(f"TTS cached: {language} - {text[:30]}... (size: {len(audio_content)} bytes)")
                     return True
-                logger.warning(f"TTS cache rejected - text not in database: {text[:30]}...")
                 return False
 
         except Exception as e:
@@ -128,45 +110,29 @@ class TTSService:
         return False
 
     def synthesize_speech(self, text: str, language: str) -> bytes | None:
-        """
-        Synthesize speech for given text and language.
-        Only works with text that exists in database words/phrases.
-        Returns cached audio if available, otherwise generates new audio.
-        """
         if not self.is_available() or not text.strip():
-            logger.warning("TTS service unavailable or empty text provided")
             return None
 
-        # Clean and validate text
         text = text.strip()
         if len(text) > 500:
-            logger.warning(f"Text too long for TTS: {len(text)} characters")
             return None
 
         cache_key = self.get_cache_key(text, language)
 
-        # Check cache first with built-in validation
         audio_content, is_valid_text = self._get_from_cache_validated(cache_key, text)
 
-        # If text is not in database, reject immediately
         if not is_valid_text:
-            logger.warning(f"TTS rejected - text not found in database: {text[:30]}...")
             return None
 
-        # Return cached audio if available
         if audio_content:
             return audio_content
 
-        # Validate language support
         voice_config = self.voice_configs.get(language)
         if not voice_config:
             logger.error(f"Language '{language}' not supported for TTS")
             return None
 
-        # Synthesize new audio (only for valid database text)
         try:
-            logger.info(f"Synthesizing TTS for database text: {language} - {text[:30]}...")
-
             response = self.client.synthesize_speech(
                 input=texttospeech.SynthesisInput(text=text),
                 voice=texttospeech.VoiceSelectionParams(
@@ -175,19 +141,15 @@ class TTSService:
                 ),
                 audio_config=texttospeech.AudioConfig(
                     audio_encoding=texttospeech.AudioEncoding.MP3,
-                    speaking_rate=0.9,  # Slightly slower for language learning
-                    effects_profile_id=["telephony-class-application"],  # Better quality
+                    speaking_rate=0.9,
+                    effects_profile_id=["telephony-class-application"],
                 ),
             )
 
             audio_content = response.audio_content
 
-            # Save to cache (will double-check validation)
-            saved = self._save_to_cache_validated(cache_key, audio_content, text, language)
-            if not saved:
-                logger.error("Failed to cache TTS - validation failed during save")
+            self._save_to_cache_validated(cache_key, audio_content, text, language)
 
-            logger.info(f"TTS synthesis completed: {len(audio_content)} bytes")
             return audio_content
 
         except Exception as e:
@@ -195,11 +157,9 @@ class TTSService:
             return None
 
     def get_supported_languages(self) -> list:
-        """Get list of supported languages"""
         return list(self.voice_configs.keys())
 
     def get_cache_stats(self) -> dict:
-        """Get cache statistics (utility method for monitoring)"""
         conn = None
         try:
             conn = self.db_pool.getconn()

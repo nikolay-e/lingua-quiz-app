@@ -1,0 +1,119 @@
+name: 'Cleanup GitHub Deployment'
+description: 'Deactivates and deletes deployments for an environment'
+
+inputs:
+  environment:
+    description: 'Environment name'
+    required: true
+  delete-environment:
+    description: 'Whether to delete the GitHub Environment itself'
+    required: false
+    default: 'false'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Cleanup deployments
+      uses: actions/github-script@v8
+      env:
+        ENVIRONMENT: ${{ inputs.environment }}
+        DELETE_ENVIRONMENT: ${{ inputs.delete-environment }}
+      with:
+        script: |
+          const environment = process.env.ENVIRONMENT;
+          const deleteEnvironment = process.env.DELETE_ENVIRONMENT === 'true';
+
+          // Validate required inputs
+          if (!environment || environment.trim() === '') {
+            core.setFailed('Environment name is required');
+            throw new Error('Environment name is required');
+          }
+
+          // Validate environment name pattern
+          const envPattern = /^[a-zA-Z0-9_-]+$/;
+          if (!envPattern.test(environment)) {
+            core.setFailed(`Invalid environment name: ${environment}. Must contain only alphanumeric characters, hyphens, and underscores.`);
+            throw new Error('Invalid environment name');
+          }
+
+          // Whitelist: only allow cleanup of preview/staging environments (safety check)
+          const safeEnvPatterns = [
+            /^preview-pr-\d+$/,
+            /^staging$/,
+            /^test-/,
+            /^dev-/
+          ];
+          const isSafeEnv = safeEnvPatterns.some(pattern => pattern.test(environment));
+          if (!isSafeEnv) {
+            core.setFailed(`Environment cleanup not allowed for: ${environment}. Only preview-pr-*, staging, test-*, dev-* environments can be cleaned up automatically.`);
+            throw new Error('Unsafe environment for automatic cleanup');
+          }
+
+          console.log(`Cleaning up deployments for environment: ${environment}`);
+          console.log(`  Delete environment: ${deleteEnvironment}`);
+
+          // List all deployments for this environment
+          let deployments = [];
+          try {
+            const { data } = await github.rest.repos.listDeployments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              environment: environment
+            });
+            deployments = data;
+          } catch (error) {
+            console.log(`⚠️  Failed to list deployments: ${error.message}`);
+            console.log('Skipping cleanup (environment may not exist)');
+            return;
+          }
+
+          console.log(`Found ${deployments.length} deployment(s) to clean up`);
+
+          // Process each deployment
+          for (const deployment of deployments) {
+            console.log(`Processing deployment ${deployment.id}...`);
+
+            // Mark as inactive
+            try {
+              await github.rest.repos.createDeploymentStatus({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                deployment_id: deployment.id,
+                state: 'inactive',
+                description: 'Environment cleaned up'
+              });
+              console.log(`  ✅ Marked as inactive`);
+            } catch (error) {
+              console.log(`  ⚠️  Failed to mark as inactive: ${error.message}`);
+            }
+
+            // Delete deployment
+            try {
+              await github.rest.repos.deleteDeployment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                deployment_id: deployment.id
+              });
+              console.log(`  ✅ Deleted deployment ${deployment.id}`);
+            } catch (error) {
+              console.log(`  ⚠️  Failed to delete: ${error.message}`);
+            }
+          }
+
+          // Delete environment if requested
+          if (deleteEnvironment) {
+            console.log(`Attempting to delete environment: ${environment}`);
+            try {
+              await github.rest.repos.deleteAnEnvironment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                environment_name: environment
+              });
+              console.log(`✅ Environment ${environment} deleted`);
+            } catch (error) {
+              console.log(`⚠️  Failed to delete environment: ${error.message}`);
+              console.log('(This is not critical - environment may have protection rules or not exist)');
+            }
+          }
+
+          console.log(`✅ Cleanup complete for ${environment}`);

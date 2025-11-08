@@ -2,7 +2,6 @@
   import { authStore } from '../stores';
   import { createEventDispatcher } from 'svelte';
 
-  // Import shared components
   import AuthLayout from '../components/AuthLayout.svelte';
   import PasswordInput from '../components/PasswordInput.svelte';
   import AuthMessage from '../components/AuthMessage.svelte';
@@ -20,13 +19,11 @@
 
   const dispatch = createEventDispatcher<{ navigate: { page: 'login' | 'register' } }>();
 
-  // State variables
   let username = '';
   let password = '';
   let message = '';
   let isLoading = false;
 
-  // Password requirements configuration (data-driven)
   const passwordRequirements: PasswordRequirement[] = [
     { id: 'length', label: 'At least 8 characters long', test: (pwd: string) => pwd.length >= 8 },
     { id: 'uppercase', label: 'Contains at least one uppercase letter', test: (pwd: string) => /[A-Z]/.test(pwd) },
@@ -35,7 +32,6 @@
     { id: 'special', label: 'Contains at least one special character', test: (pwd: string) => /[!@#$%^&*()_\-+=[\]{};:'",.<>/?\\|`~]/.test(pwd) },
   ];
 
-  // Reactive password validation (data-driven)
   $: passwordValidation = passwordRequirements.map(req => ({
     ...req,
     valid: req.test(password),
@@ -123,9 +119,6 @@
 </AuthLayout>
 
 <style>
-  /* Form styles now handled by global .form-compact utility class */
-
-  /* Password Requirements Styles */
   .password-requirements {
     background-color: var(--container-bg);
     border-radius: var(--radius-md);

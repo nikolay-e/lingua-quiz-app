@@ -1,7 +1,3 @@
--- Cross-domain functions that span multiple database tables
--- Cleaned to keep only data migration functions
-
--- Word pair management functions (used in data migrations 901, 902)
 CREATE OR REPLACE FUNCTION insert_word_pair_and_add_to_list(
     p_translation_id INTEGER,
     p_source_word_id INTEGER,
@@ -19,20 +15,16 @@ DECLARE
   v_source_language_id INTEGER;
   v_target_language_id INTEGER;
 BEGIN
-  -- Insert or update the source language
   INSERT INTO languages (id, name)
   VALUES (DEFAULT, p_source_language_name)
   ON CONFLICT (name) DO UPDATE SET name = EXCLUDED.name
   RETURNING id INTO v_source_language_id;
 
-  -- Insert or update the target language
   INSERT INTO languages (id, name)
   VALUES (DEFAULT, p_target_language_name)
   ON CONFLICT (name) DO UPDATE SET name = EXCLUDED.name
   RETURNING id INTO v_target_language_id;
 
-  -- Insert or update the source word
-  -- Force update all fields to ensure data is overwritten
   INSERT INTO words (id, text, language_id, usage_example)
   VALUES (p_source_word_id, p_source_word, v_source_language_id, p_source_word_usage_example)
   ON CONFLICT (id) DO UPDATE
@@ -40,8 +32,6 @@ BEGIN
       language_id = EXCLUDED.language_id,
       usage_example = EXCLUDED.usage_example;
 
-  -- Insert or update the target word
-  -- Force update all fields to ensure data is overwritten
   INSERT INTO words (id, text, language_id, usage_example)
   VALUES (p_target_word_id, p_target_word, v_target_language_id, p_target_word_usage_example)
   ON CONFLICT (id) DO UPDATE
@@ -49,20 +39,17 @@ BEGIN
       language_id = EXCLUDED.language_id,
       usage_example = EXCLUDED.usage_example;
 
-  -- Insert or update the translation
   INSERT INTO translations (id, source_word_id, target_word_id)
   VALUES (p_translation_id, p_source_word_id, p_target_word_id)
   ON CONFLICT (id) DO UPDATE
   SET source_word_id = EXCLUDED.source_word_id,
       target_word_id = EXCLUDED.target_word_id;
 
-  -- Insert or update the word list
   INSERT INTO word_lists (id, name)
   VALUES (DEFAULT, p_word_list_name)
   ON CONFLICT (name) DO UPDATE SET name = EXCLUDED.name
   RETURNING id INTO v_word_list_id;
 
-  -- Insert or update the translation in the word list
   INSERT INTO word_list_entries (translation_id, word_list_id)
   VALUES (p_translation_id, v_word_list_id)
   ON CONFLICT (translation_id, word_list_id) DO NOTHING;
@@ -80,34 +67,27 @@ DECLARE
   v_target_language_id INTEGER;
   v_word_list_id INTEGER;
 BEGIN
-  -- Get the source and target word IDs
   SELECT source_word_id, target_word_id
   INTO v_source_word_id, v_target_word_id
   FROM translations
   WHERE id = p_translation_id;
 
-  -- Get the language IDs
   SELECT language_id INTO v_source_language_id FROM words WHERE id = v_source_word_id;
   SELECT language_id INTO v_target_language_id FROM words WHERE id = v_target_word_id;
 
-  -- Get the word list ID
   SELECT word_list_id INTO v_word_list_id
   FROM word_list_entries
   WHERE translation_id = p_translation_id;
 
-  -- Delete user translation progress first (no foreign key dependencies)
   DELETE FROM user_translation_progress
   WHERE word_pair_id = p_translation_id;
 
-  -- Delete the word list entry
   DELETE FROM word_list_entries
   WHERE translation_id = p_translation_id;
 
-  -- Delete the translation
   DELETE FROM translations
   WHERE id = p_translation_id;
 
-  -- Delete the source and target words only if they're not referenced elsewhere
   DELETE FROM words
   WHERE id = v_source_word_id
     AND NOT EXISTS (SELECT 1 FROM translations WHERE source_word_id = v_source_word_id OR target_word_id = v_source_word_id);
@@ -116,12 +96,10 @@ BEGIN
   WHERE id = v_target_word_id
     AND NOT EXISTS (SELECT 1 FROM translations WHERE source_word_id = v_target_word_id OR target_word_id = v_target_word_id);
 
-  -- Remove languages if no words exist for them
   DELETE FROM languages
   WHERE id IN (v_source_language_id, v_target_language_id)
     AND NOT EXISTS (SELECT 1 FROM words WHERE language_id = languages.id);
 
-  -- Remove word list if no entries exist for it
   DELETE FROM word_lists
   WHERE id = v_word_list_id
     AND NOT EXISTS (SELECT 1 FROM word_list_entries WHERE word_list_id = word_lists.id);
@@ -186,12 +164,12 @@ BEGIN
   FROM user_words
   ORDER BY
     CASE
-      WHEN user_words.status = 'LEVEL_1' THEN 1   -- Learning
-      WHEN user_words.status = 'LEVEL_0' THEN 2   -- New
-      WHEN user_words.status = 'LEVEL_2' THEN 3   -- Translation (One Way)
-      WHEN user_words.status = 'LEVEL_3' THEN 4   -- Translation (Both Ways)
-      WHEN user_words.status = 'LEVEL_4' THEN 5   -- Usage (One Way)
-      WHEN user_words.status = 'LEVEL_5' THEN 6   -- Usage (Both Ways)
+      WHEN user_words.status = 'LEVEL_1' THEN 1
+      WHEN user_words.status = 'LEVEL_0' THEN 2
+      WHEN user_words.status = 'LEVEL_2' THEN 3
+      WHEN user_words.status = 'LEVEL_3' THEN 4
+      WHEN user_words.status = 'LEVEL_4' THEN 5
+      WHEN user_words.status = 'LEVEL_5' THEN 6
       ELSE 7
     END,
     user_words.queue_position,

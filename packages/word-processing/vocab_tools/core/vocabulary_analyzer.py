@@ -1,10 +1,3 @@
-"""
-Base vocabulary analyzer for language learning applications.
-
-Provides the foundation for analyzing vocabulary gaps and recommending
-new words based on frequency analysis and NLP classification.
-"""
-
 from abc import ABC, abstractmethod
 from collections import defaultdict
 from dataclasses import dataclass
@@ -13,20 +6,19 @@ from typing import Any
 
 from wordfreq import top_n_list, word_frequency
 
+from ..config.config_loader import get_config_loader
 from ..config.constants import (
     ANALYSIS_SKIP_WORDS,
     DEFAULT_ANALYSIS_CONFIG,
     ESSENTIAL_VOCABULARY_CATEGORIES,
     SUPPORTED_LANGUAGES,
 )
+from .base_normalizer import get_universal_normalizer
 from .database_parser import VocabularyEntry, VocabularyFileParser
-from .word_normalizer import get_normalizer
 
 
 @dataclass
 class WordAnalysis:
-    """Results of analyzing a single word."""
-
     word: str
     frequency: float
     category: str
@@ -37,8 +29,6 @@ class WordAnalysis:
 
 @dataclass
 class VocabularyAnalysisResult:
-    """Complete results of vocabulary analysis."""
-
     language_code: str
     total_existing_words: int
     total_analyzed_words: int
@@ -75,13 +65,6 @@ class VocabularyAnalysisResult:
 
 
 class VocabularyAnalyzer(ABC):
-    """
-    Base class for language-specific vocabulary analyzers.
-
-    Provides common functionality for analyzing vocabulary gaps
-    and generating learning recommendations.
-    """
-
     def __init__(
         self,
         language_code: str,
@@ -89,22 +72,20 @@ class VocabularyAnalyzer(ABC):
         config: dict[str, Any] | None = None,
         silent: bool = False,
     ):
-        """
-        Initialize the vocabulary analyzer.
-
-        Args:
-            language_code: ISO language code (en, de, es)
-            migrations_directory: Path to migrations directory
-            config: Analysis configuration parameters
-        """
         self.language_code = language_code
         self.config = {**DEFAULT_ANALYSIS_CONFIG, **(config or {})}
         self.silent = silent
 
         # Initialize components
         self.db_parser = VocabularyFileParser(migrations_directory)
-        self.normalizer = get_normalizer(language_code)
+        config_loader = get_config_loader()
+        self.normalizer = get_universal_normalizer(language_code, config_loader)
         self._nlp_model: Any | None = None
+
+        # Initialize inflection generator for all languages
+        from ..core.inflection_analyzer import get_inflection_generator
+
+        self.inflection_generator = get_inflection_generator(language_code)
 
         # Supported languages
         if language_code not in SUPPORTED_LANGUAGES:
@@ -112,7 +93,6 @@ class VocabularyAnalyzer(ABC):
 
     @property
     def nlp_model(self) -> Any:
-        """Lazy-load the NLP model."""
         if self._nlp_model is None:
             self._nlp_model = self.load_nlp_model(silent=self.silent)
         return self._nlp_model
@@ -132,6 +112,108 @@ class VocabularyAnalyzer(ABC):
 
         model_preferences = NLP_MODEL_PREFERENCES.get(self.language_code, [])
         return get_nlp_model(self.language_code, model_preferences, silent=silent)
+
+    def _analyze_word_linguistics_base(
+        self, word: str, existing_words: set[str], use_normalization: bool = False
+    ) -> tuple[str, str, str] | dict | None:
+        """
+        Common NLP-based linguistic analysis for all languages.
+
+        This method handles the common workflow:
+        1. NLP model processing
+        2. Named entity filtering
+        3. Inflection detection
+
+        Args:
+            word: Word to analyze
+            existing_words: Set of existing vocabulary words (normalized)
+            use_normalization: Whether to normalize lemma before inflection check
+
+        Returns:
+            - Tuple (category, pos_tag, reason) if analysis is complete
+            - Dict with intermediate data if language-specific processing needed
+            - None should never happen
+        """
+        doc = self.nlp_model(word)
+        if not doc or len(doc) == 0:
+            return "other", "UNKNOWN", "NLP processing failed"
+
+        token = doc[0]
+        lemma = token.lemma_.lower()
+        pos_tag = token.pos_
+        morphology = str(token.morph) if hasattr(token, "morph") else ""
+
+        # Filter out proper nouns (names, places, brands)
+        if token.ent_type_ and token.ent_type_ not in ["ORDINAL", "CARDINAL"]:
+            return (
+                "proper_noun",
+                token.ent_type_,
+                f"Filtered out as named entity: {token.ent_type_}",
+            )
+
+        # Check if this is an inflected form of an existing word
+        if use_normalization:
+            normalized_lemma = self.normalizer.normalize(lemma)
+            normalized_word = self.normalizer.normalize(word)
+            is_inflected = normalized_lemma != normalized_word and normalized_lemma in existing_words
+        else:
+            is_inflected = lemma != word.lower() and lemma in existing_words
+
+        if is_inflected:
+            reason = self.inflection_generator.get_reason(morphology, lemma, pos_tag)
+            return "inflected_forms", pos_tag, reason
+
+        # Return intermediate data for language-specific processing
+        return {
+            "token": token,
+            "lemma": lemma,
+            "pos_tag": pos_tag,
+            "morphology": morphology,
+        }
+
+    def _pre_categorize_hook(self, word: str) -> str | None:
+        """
+        Hook for language-specific pre-categorization checks.
+
+        Override this method in subclasses to add language-specific
+        categorization rules (e.g., article detection) that should
+        be checked before the standard POS mapping.
+
+        Args:
+            word: Word to categorize
+
+        Returns:
+            Category name if matched, None to continue with POS mapping
+        """
+        return None
+
+    def _categorize_by_pos(self, pos_tag: str, word: str) -> str:
+        """
+        Categorize word based on part-of-speech tag.
+
+        Uses standard POS mapping from WORD_CATEGORY_MAPPING.
+        Subclasses can override _pre_categorize_hook() for custom rules.
+
+        Args:
+            pos_tag: Part-of-speech tag from NLP model
+            word: Original word (for language-specific checks)
+
+        Returns:
+            Category name
+        """
+        # Check language-specific rules first
+        pre_category = self._pre_categorize_hook(word)
+        if pre_category:
+            return pre_category
+
+        # Use standard POS mapping
+        from ..config.constants import WORD_CATEGORY_MAPPING
+
+        for category, pos_tags in WORD_CATEGORY_MAPPING.items():
+            if pos_tag in pos_tags:
+                return category
+
+        return "other"
 
     @abstractmethod
     def analyze_word_linguistics(self, word: str, existing_words: set[str], rank: int = None) -> tuple[str, str, str]:
@@ -277,12 +359,12 @@ class VocabularyAnalyzer(ABC):
             Complete analysis results
         """
         if show_progress:
-            print(f"🔍 Analyzing {self.language_code.upper()} vocabulary gaps...")
+            print(f"Analyzing {self.language_code.upper()} vocabulary gaps...")
 
         # Extract existing vocabulary
         existing_words = self.extract_existing_vocabulary()
         if show_progress:
-            print(f"📊 Found {len(existing_words)} existing words")
+            print(f"Found {len(existing_words)} existing words")
 
         # Get missing words to analyze within the specified frequency range
         missing_words = self.get_frequent_missing_words(top_n, start_rank, existing_words)
@@ -292,7 +374,7 @@ class VocabularyAnalyzer(ABC):
                 print(f"⚠️  Limited analysis to first {limit_analysis} words")
 
         if show_progress:
-            print(f"🎯 Analyzing {len(missing_words)} missing words...")
+            print(f"Analyzing {len(missing_words)} missing words...")
 
         # Analyze each missing word with lemma prioritization
         categories = defaultdict(list)
@@ -372,22 +454,22 @@ class VocabularyAnalyzer(ABC):
             show_details: Whether to show detailed category breakdown
         """
         print(f"\n{'=' * 80}")
-        print(f"📊 {result.language_code.upper()} VOCABULARY ANALYSIS RESULTS")
+        print(f"{result.language_code.upper()} VOCABULARY ANALYSIS RESULTS")
         print(f"{'=' * 80}")
 
-        print("📈 Summary:")
+        print(" Summary:")
         print(f"   • Existing vocabulary: {result.total_existing_words:,} words")
         print(f"   • Words analyzed: {result.total_analyzed_words:,} words")
         print(f"   • Recommendations: {result.get_recommendation_count():,} words")
 
         if show_details and result.categories:
-            print("\n📋 Category Breakdown:")
+            print("\nCategory Breakdown:")
             category_summary = result.get_category_summary()
             for category, count in category_summary.items():
                 print(f"   • {category}: {count:,} words")
 
         if result.recommendations:
-            print("\n🎯 Top Recommendations (by frequency):")
+            print("\nTop Recommendations (by frequency):")
             for i, analysis in enumerate(result.recommendations[:20], 1):
                 print(f"   {i:2d}. {analysis.word:<15} ({analysis.frequency:.2e}) - {analysis.reason}")
 

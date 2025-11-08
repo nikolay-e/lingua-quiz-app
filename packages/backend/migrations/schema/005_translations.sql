@@ -1,4 +1,3 @@
--- Translations table
 CREATE TABLE IF NOT EXISTS translations (
     id SERIAL PRIMARY KEY,
     source_word_id INTEGER NOT NULL REFERENCES words (id),
@@ -7,7 +6,6 @@ CREATE TABLE IF NOT EXISTS translations (
     UNIQUE (source_word_id, target_word_id)
 );
 
--- Indexes
 CREATE INDEX IF NOT EXISTS idx_translations_source ON translations (
     source_word_id
 );

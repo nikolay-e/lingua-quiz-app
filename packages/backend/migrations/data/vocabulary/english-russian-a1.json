@@ -2,16 +2,8 @@
   "source_language": "English",
   "target_language": "Russian",
   "word_list_name": "English Russian A1",
+  "level_base_offset": 8000000,
   "word_pairs": [
-    {
-      "translation_id": 8000000,
-      "source_id": 8000001,
-      "target_id": 8000002,
-      "source_word": "a, an",
-      "target_word": "неопределенный артикль",
-      "source_example": "This is a book.",
-      "target_example": "Это книга."
-    },
     {
       "translation_id": 8000001,
       "source_id": 8000003,
@@ -229,15 +221,6 @@
       "target_example": "Вид потрясающий."
     },
     {
-      "translation_id": 8000025,
-      "source_id": 8000051,
-      "target_id": 8000052,
-      "source_word": "and",
-      "target_word": "и",
-      "source_example": "I like tea and coffee.",
-      "target_example": "Я люблю чай и кофе."
-    },
-    {
       "translation_id": 8000026,
       "source_id": 8000053,
       "target_id": 8000054,
@@ -407,15 +390,6 @@
       "target_word": "спрашивать|просить",
       "source_example": "Can I ask a question?",
       "target_example": "Можно задать вопрос?"
-    },
-    {
-      "translation_id": 8000045,
-      "source_id": 8000091,
-      "target_id": 8000092,
-      "source_word": "at",
-      "target_word": "в|у|на",
-      "source_example": "I am at home.",
-      "target_example": "Я дома."
     },
     {
       "translation_id": 8000046,
@@ -1174,15 +1148,6 @@
       "target_example": "У меня есть кошка."
     },
     {
-      "translation_id": 8000130,
-      "source_id": 8000261,
-      "target_id": 8000262,
-      "source_word": "CD",
-      "target_word": "компакт-диск",
-      "source_example": "I have a lot of CDs.",
-      "target_example": "У меня много компакт-дисков."
-    },
-    {
       "translation_id": 8000131,
       "source_id": 8000263,
       "target_id": 8000264,
@@ -1577,15 +1542,6 @@
       "target_word": "корова",
       "source_example": "The cow is in the field.",
       "target_example": "Корова в поле."
-    },
-    {
-      "translation_id": 8000175,
-      "source_id": 8000351,
-      "target_id": 8000352,
-      "source_word": "cream",
-      "target_word": "сливки|крем",
-      "source_example": "I like cream in my coffee.",
-      "target_example": "Я люблю сливки в кофе."
     },
     {
       "translation_id": 8000176,
@@ -3091,31 +3047,13 @@
       "target_example": "Я ненавижу пауков."
     },
     {
-      "translation_id": 8000344,
-      "source_id": 8000689,
-      "target_id": 8000690,
-      "source_word": "have",
-      "target_word": "иметь|обладать",
-      "source_example": "I have a car.",
-      "target_example": "У меня есть машина."
-    },
-    {
       "translation_id": 8000345,
       "source_id": 8000691,
       "target_id": 8000692,
       "source_word": "have to",
-      "target_word": "должен|вынужден",
+      "target_word": "должен|вынужден [verb: иметь]",
       "source_example": "I have to go now.",
       "target_example": "Мне нужно идти."
-    },
-    {
-      "translation_id": 8000346,
-      "source_id": 8000693,
-      "target_id": 8000694,
-      "source_word": "he",
-      "target_word": "он",
-      "source_example": "He is my friend.",
-      "target_example": "Он мой друг."
     },
     {
       "translation_id": 8000347,
@@ -3197,15 +3135,6 @@
       "target_word": "эй|привет",
       "source_example": "Hey, what are you doing?",
       "target_example": "Эй, что ты делаешь?"
-    },
-    {
-      "translation_id": 8000356,
-      "source_id": 8000713,
-      "target_id": 8000714,
-      "source_word": "hi",
-      "target_word": "привет",
-      "source_example": "Hi, how are you?",
-      "target_example": "Привет, как дела?"
     },
     {
       "translation_id": 8000357,
@@ -3379,29 +3308,11 @@
       "target_example": "Он мой муж."
     },
     {
-      "translation_id": 8000376,
-      "source_id": 8000753,
-      "target_id": 8000754,
-      "source_word": "I",
-      "target_word": "я",
-      "source_example": "I am a student.",
-      "target_example": "Я студент."
-    },
-    {
-      "translation_id": 8000377,
-      "source_id": 8000755,
-      "target_id": 8000756,
-      "source_word": "ice",
-      "target_word": "лёд",
-      "source_example": "The ice is cold.",
-      "target_example": "Лед холодный."
-    },
-    {
       "translation_id": 8000378,
       "source_id": 8000757,
       "target_id": 8000758,
       "source_word": "ice cream",
-      "target_word": "мороженое",
+      "target_word": "мороженое [noun: сливки, noun: лёд]",
       "source_example": "I like ice cream.",
       "target_example": "Я люблю мороженое."
     },
@@ -3449,15 +3360,6 @@
       "target_word": "улучшать",
       "source_example": "I want to improve my English.",
       "target_example": "Я хочу улучшить свой английский."
-    },
-    {
-      "translation_id": 8000384,
-      "source_id": 8000769,
-      "target_id": 8000770,
-      "source_word": "in",
-      "target_word": "в",
-      "source_example": "The book is in the bag.",
-      "target_example": "Книга в сумке."
     },
     {
       "translation_id": 8000385,
@@ -3548,15 +3450,6 @@
       "target_word": "остров",
       "source_example": "This is a beautiful island.",
       "target_example": "Это красивый остров."
-    },
-    {
-      "translation_id": 8000395,
-      "source_id": 8000791,
-      "target_id": 8000792,
-      "source_word": "it",
-      "target_word": "оно|это",
-      "source_example": "It is a book.",
-      "target_example": "Это книга."
     },
     {
       "translation_id": 8000396,
@@ -3856,20 +3749,11 @@
       "target_example": "Пожалуйста, включи свет."
     },
     {
-      "translation_id": 8000429,
-      "source_id": 8000859,
-      "target_id": 8000860,
-      "source_word": "like (similar)",
-      "target_word": "как|похожий",
-      "source_example": "She is like her mother.",
-      "target_example": "Она похожа на свою мать."
-    },
-    {
       "translation_id": 8000430,
       "source_id": 8000861,
       "target_id": 8000862,
       "source_word": "like (find pleasant)",
-      "target_word": "нравиться|любить",
+      "target_word": "нравиться|любить [prep: как]",
       "source_example": "I like you.",
       "target_example": "Ты мне нравишься."
     },
@@ -4106,15 +3990,6 @@
       "target_word": "может быть|возможно",
       "source_example": "Maybe I will go.",
       "target_example": "Может быть, я пойду."
-    },
-    {
-      "translation_id": 8000457,
-      "source_id": 8000915,
-      "target_id": 8000916,
-      "source_word": "me",
-      "target_word": "меня|мне",
-      "source_example": "Can you help me?",
-      "target_example": "Можешь мне помочь?"
     },
     {
       "translation_id": 8000458,
@@ -4450,15 +4325,6 @@
       "target_example": "Я должен идти."
     },
     {
-      "translation_id": 8000495,
-      "source_id": 8000991,
-      "target_id": 8000992,
-      "source_word": "my",
-      "target_word": "мой|моя|моё|мои",
-      "source_example": "This is my book.",
-      "target_example": "Это моя книга."
-    },
-    {
       "translation_id": 8000496,
       "source_id": 8000993,
       "target_id": 8000994,
@@ -4558,20 +4424,11 @@
       "target_example": "Я читаю газету каждый день."
     },
     {
-      "translation_id": 8000507,
-      "source_id": 8001015,
-      "target_id": 8001016,
-      "source_word": "next",
-      "target_word": "следующий",
-      "source_example": "I will see you next week.",
-      "target_example": "Увидимся на следующей неделе."
-    },
-    {
       "translation_id": 8000508,
       "source_id": 8001017,
       "target_id": 8001018,
       "source_word": "next to",
-      "target_word": "рядом с",
+      "target_word": "рядом с [adj: следующий]",
       "source_example": "The bank is next to the post office.",
       "target_example": "Банк рядом с почтой."
     },
@@ -4619,24 +4476,6 @@
       "target_word": "девяносто",
       "source_example": "He is ninety years old.",
       "target_example": "Ему девяносто лет."
-    },
-    {
-      "translation_id": 8000514,
-      "source_id": 8001029,
-      "target_id": 8001030,
-      "source_word": "no",
-      "target_word": "нет",
-      "source_example": "No, thank you.",
-      "target_example": "Нет, спасибо."
-    },
-    {
-      "translation_id": 8000515,
-      "source_id": 8001031,
-      "target_id": 8001032,
-      "source_word": "no one",
-      "target_word": "никто",
-      "source_example": "No one is here.",
-      "target_example": "Здесь никого нет."
     },
     {
       "translation_id": 8000516,
@@ -4747,15 +4586,6 @@
       "target_example": "Океан большой."
     },
     {
-      "translation_id": 8000528,
-      "source_id": 8001057,
-      "target_id": 8001058,
-      "source_word": "o'clock",
-      "target_word": "час [на часах]",
-      "source_example": "It is 5 o'clock.",
-      "target_example": "Сейчас 5 часов."
-    },
-    {
       "translation_id": 8000529,
       "source_id": 8001059,
       "target_id": 8001060,
@@ -4763,15 +4593,6 @@
       "target_word": "октябрь",
       "source_example": "My birthday is in October.",
       "target_example": "Мой день рождения в октябре."
-    },
-    {
-      "translation_id": 8000530,
-      "source_id": 8001061,
-      "target_id": 8001062,
-      "source_word": "of",
-      "target_word": "предлог принадлежности",
-      "source_example": "This is a cup of tea.",
-      "target_example": "Это чашка чая."
     },
     {
       "translation_id": 8000531,
@@ -4801,24 +4622,6 @@
       "target_example": "Я часто хожу в кино."
     },
     {
-      "translation_id": 8000534,
-      "source_id": 8001069,
-      "target_id": 8001070,
-      "source_word": "oh",
-      "target_word": "о|ой",
-      "source_example": "Oh, I see.",
-      "target_example": "О, я понимаю."
-    },
-    {
-      "translation_id": 8000535,
-      "source_id": 8001071,
-      "target_id": 8001072,
-      "source_word": "OK",
-      "target_word": "хорошо|ладно",
-      "source_example": "OK, I will do it.",
-      "target_example": "Хорошо, я это сделаю."
-    },
-    {
       "translation_id": 8000536,
       "source_id": 8001073,
       "target_id": 8001074,
@@ -4826,15 +4629,6 @@
       "target_word": "старый",
       "source_example": "This is an old book.",
       "target_example": "Это старая книга."
-    },
-    {
-      "translation_id": 8000537,
-      "source_id": 8001075,
-      "target_id": 8001076,
-      "source_word": "on",
-      "target_word": "на",
-      "source_example": "The book is on the table.",
-      "target_example": "Книга на столе."
     },
     {
       "translation_id": 8000538,
@@ -4850,7 +4644,7 @@
       "source_id": 8001079,
       "target_id": 8001080,
       "source_word": "one",
-      "target_word": "один",
+      "target_word": "один [pron: никто]",
       "source_example": "I have one brother.",
       "target_example": "У меня один брат."
     },
@@ -4907,15 +4701,6 @@
       "target_word": "противоположный|напротив",
       "source_example": "The bank is on the opposite side of the street.",
       "target_example": "Банк на противоположной стороне улицы."
-    },
-    {
-      "translation_id": 8000546,
-      "source_id": 8001093,
-      "target_id": 8001094,
-      "source_word": "or",
-      "target_word": "или",
-      "source_example": "Do you want tea or coffee?",
-      "target_example": "Ты хочешь чай или кофе?"
     },
     {
       "translation_id": 8000547,
@@ -5935,24 +5720,6 @@
       "target_example": "Она известный учёный."
     },
     {
-      "translation_id": 8000660,
-      "source_id": 8001321,
-      "target_id": 8001322,
-      "source_word": "second [next after the first]",
-      "target_word": "второй",
-      "source_example": "This is the second time I call you.",
-      "target_example": "Это второй раз, когда я тебе звоню."
-    },
-    {
-      "translation_id": 8000661,
-      "source_id": 8001323,
-      "target_id": 8001324,
-      "source_word": "second [unit of time]",
-      "target_word": "секунда",
-      "source_example": "Wait a second.",
-      "target_example": "Подожди секунду."
-    },
-    {
       "translation_id": 8000662,
       "source_id": 8001325,
       "target_id": 8001326,
@@ -6293,15 +6060,6 @@
       "target_word": "снег, идти [о снеге]",
       "source_example": "It is starting to snow.",
       "target_example": "Начинается снег."
-    },
-    {
-      "translation_id": 8000700,
-      "source_id": 8001401,
-      "target_id": 8001402,
-      "source_word": "so",
-      "target_word": "так, поэтому",
-      "source_example": "It is so cold!",
-      "target_example": "Так холодно!"
     },
     {
       "translation_id": 8000701,
@@ -6916,15 +6674,6 @@
       "target_example": "Это мой дом."
     },
     {
-      "translation_id": 8000769,
-      "source_id": 8001539,
-      "target_id": 8001540,
-      "source_word": "the",
-      "target_word": "определенный артикль",
-      "source_example": "The sun is shining.",
-      "target_example": "Солнце светит."
-    },
-    {
       "translation_id": 8000770,
       "source_id": 8001541,
       "target_id": 8001542,
@@ -7112,15 +6861,6 @@
       "target_word": "заголовок|название",
       "source_example": "The title of the book is \"War and Peace\".",
       "target_example": "Название книги - \"Война и мир\"."
-    },
-    {
-      "translation_id": 8000791,
-      "source_id": 8001583,
-      "target_id": 8001584,
-      "source_word": "to",
-      "target_word": "к|в",
-      "source_example": "I am going to the store.",
-      "target_example": "Я иду в магазин."
     },
     {
       "translation_id": 8000792,
@@ -7321,15 +7061,6 @@
       "target_example": "Поверните налево здесь."
     },
     {
-      "translation_id": 8000814,
-      "source_id": 8001629,
-      "target_id": 8001630,
-      "source_word": "TV",
-      "target_word": "телевизор",
-      "source_example": "I am watching TV.",
-      "target_example": "Я смотрю телевизор."
-    },
-    {
       "translation_id": 8000815,
       "source_id": 8001631,
       "target_id": 8001632,
@@ -7429,15 +7160,6 @@
       "target_example": "Я подожду, пока ты не придешь."
     },
     {
-      "translation_id": 8000826,
-      "source_id": 8001653,
-      "target_id": 8001654,
-      "source_word": "up",
-      "target_word": "вверх|наверх",
-      "source_example": "Look up!",
-      "target_example": "Посмотри вверх!"
-    },
-    {
       "translation_id": 8000827,
       "source_id": 8001655,
       "target_id": 8001656,
@@ -7445,15 +7167,6 @@
       "target_word": "наверху|на верхнем этаже",
       "source_example": "He is upstairs.",
       "target_example": "Он наверху."
-    },
-    {
-      "translation_id": 8000828,
-      "source_id": 8001657,
-      "target_id": 8001658,
-      "source_word": "us",
-      "target_word": "нас|нам",
-      "source_example": "He is with us.",
-      "target_example": "Он с нами."
     },
     {
       "translation_id": 8000829,
@@ -7634,15 +7347,6 @@
       "target_word": "путь|способ",
       "source_example": "This is the way to the station.",
       "target_example": "Это путь на вокзал."
-    },
-    {
-      "translation_id": 8000849,
-      "source_id": 8001699,
-      "target_id": 8001700,
-      "source_word": "we",
-      "target_word": "мы",
-      "source_example": "We are friends.",
-      "target_example": "Мы друзья."
     },
     {
       "translation_id": 8000850,
@@ -8194,15 +7898,6 @@
       "target_example": "На самом деле, ему нравится дождь."
     },
     {
-      "translation_id": 8000911,
-      "source_id": 8001823,
-      "target_id": 8001824,
-      "source_word": "shit",
-      "target_word": "дерьмо [вульг.], гадить [вульг.]",
-      "source_example": "Oh, shit! I forgot my keys.",
-      "target_example": "О, черт! Я забыл ключи."
-    },
-    {
       "translation_id": 8000912,
       "source_id": 8001825,
       "target_id": 8001826,
@@ -8356,15 +8051,6 @@
       "target_example": "Он начал новую работу."
     },
     {
-      "translation_id": 8000929,
-      "source_id": 8001859,
-      "target_id": 8001860,
-      "source_word": "fuck",
-      "target_word": "черт [вульг.], трахать [вульг.]",
-      "source_example": "What the fuck is going on?",
-      "target_example": "Какого черта происходит?"
-    },
-    {
       "translation_id": 8000930,
       "source_id": 8001861,
       "target_id": 8001862,
@@ -8453,15 +8139,6 @@
       "target_word": "данные",
       "source_example": "We need more data.",
       "target_example": "Нам нужно больше данных."
-    },
-    {
-      "translation_id": 8000940,
-      "source_id": 8001881,
-      "target_id": 8001882,
-      "source_word": "fucking",
-      "target_word": "чертов [вульг.]",
-      "source_example": "This is a fucking disaster!",
-      "target_example": "Это чертова катастрофа!"
     },
     {
       "translation_id": 8000941,
@@ -8795,15 +8472,6 @@
       "target_word": "место|сайт",
       "source_example": "This is the construction site.",
       "target_example": "Это строительная площадка."
-    },
-    {
-      "translation_id": 8000978,
-      "source_id": 8001957,
-      "target_id": 8001958,
-      "source_word": "co",
-      "target_word": "со-|вместе",
-      "source_example": "He is my co-worker.",
-      "target_example": "Он мой коллега."
     },
     {
       "translation_id": 8000979,
@@ -10001,15 +9669,6 @@
       "target_word": "профессиональный",
       "source_example": "He is a professional football player.",
       "target_example": "Он профессиональный футболист."
-    },
-    {
-      "translation_id": 8001112,
-      "source_id": 8002225,
-      "target_id": 8002226,
-      "source_word": "wanna",
-      "target_word": "хотеть [разг.]",
-      "source_example": "I wanna go home.",
-      "target_example": "Я хочу домой."
     },
     {
       "translation_id": 8001113,

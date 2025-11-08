@@ -25,7 +25,6 @@ describe('Algorithm Parameter Validation', () => {
       const quizManager = new QuizManager(sampleTranslations);
       const options = quizManager.getOptions();
 
-      // Verify that options use algorithm constants (without testing the constants themselves)
       expect(options.queuePositionIncrement).toBe(K * F);
       expect(options.maxFocusWords).toBe(MAX_FOCUS_POOL_SIZE);
       expect(options.correctAnswersToLevelUp).toBe(T_PROMO);
@@ -55,7 +54,6 @@ describe('Algorithm Parameter Validation', () => {
     });
 
     it('should handle edge case parameter values', () => {
-      // Test minimum valid values
       const minOptions = {
         maxFocusWords: 1,
         correctAnswersToLevelUp: 1,
@@ -102,7 +100,6 @@ describe('Algorithm Parameter Validation', () => {
       const quizManager = new QuizManager(sampleTranslations);
       const options = quizManager.getOptions();
 
-      // Should use algorithm constants as defaults
       expect(options.maxFocusWords).toBe(MAX_FOCUS_POOL_SIZE);
       expect(options.correctAnswersToLevelUp).toBe(T_PROMO);
       expect(options.queuePositionIncrement).toBe(K * F);
@@ -112,17 +109,14 @@ describe('Algorithm Parameter Validation', () => {
       const partialOptions = {
         maxFocusWords: 40,
         correctAnswersToLevelUp: 4,
-        // Other options should remain at defaults
       };
 
       const quizManager = new QuizManager(sampleTranslations, {}, partialOptions);
       const options = quizManager.getOptions();
 
-      // Custom values
       expect(options.maxFocusWords).toBe(40);
       expect(options.correctAnswersToLevelUp).toBe(4);
 
-      // Default values for non-specified options
       expect(options.queuePositionIncrement).toBe(K * F);
     });
 
@@ -136,20 +130,17 @@ describe('Algorithm Parameter Validation', () => {
       const options1 = quizManager.getOptions();
       const options2 = quizManager.getOptions();
 
-      // Should return consistent values
       expect(options1.maxFocusWords).toBe(options2.maxFocusWords);
       expect(options1.correctAnswersToLevelUp).toBe(options2.correctAnswersToLevelUp);
 
-      // Modifying the original customOptions should not affect QuizManager
       customOptions.maxFocusWords = 100;
       const options3 = quizManager.getOptions();
-      expect(options3.maxFocusWords).toBe(25); // Should remain unchanged
+      expect(options3.maxFocusWords).toBe(25);
     });
   });
 
   describe('Parameter Interdependencies', () => {
     it('should handle relationships between parameters correctly', () => {
-      // Test case where queuePositionIncrement affects queue behavior
       const translations = Array.from({ length: 20 }, (_, i) => ({
         id: i + 1,
         sourceWord: { text: `word${i}`, language: 'en' },
@@ -159,24 +150,21 @@ describe('Algorithm Parameter Validation', () => {
       const smallIncrement = new QuizManager(translations, {}, { queuePositionIncrement: 1 });
       const largeIncrement = new QuizManager(translations, {}, { queuePositionIncrement: 15 });
 
-      // Both should work but behave differently
       expect(smallIncrement.getOptions().queuePositionIncrement).toBe(1);
       expect(largeIncrement.getOptions().queuePositionIncrement).toBe(15);
     });
 
     it('should handle maxFocusWords relative to translation count', () => {
-      const fewTranslations = sampleTranslations; // 3 translations
+      const fewTranslations = sampleTranslations;
       const manyTranslations = Array.from({ length: 100 }, (_, i) => ({
         id: i + 1,
         sourceWord: { text: `word${i}`, language: 'en' },
         targetWord: { text: `слово${i}`, language: 'ru' },
       }));
 
-      // MaxFocusWords larger than available translations
       const quizWithFew = new QuizManager(fewTranslations, {}, { maxFocusWords: 50 });
       expect(quizWithFew.getOptions().maxFocusWords).toBe(50);
 
-      // MaxFocusWords smaller than available translations
       const quizWithMany = new QuizManager(manyTranslations, {}, { maxFocusWords: 10 });
       expect(quizWithMany.getOptions().maxFocusWords).toBe(10);
     });
@@ -193,7 +181,6 @@ describe('Algorithm Parameter Validation', () => {
       const quizManager = new QuizManager(translations);
       const increment = quizManager.getOptions().queuePositionIncrement;
 
-      // The increment should be the calculated value K * F
       expect(increment).toBe(K * F);
     });
 
@@ -201,7 +188,6 @@ describe('Algorithm Parameter Validation', () => {
       const quizManager = new QuizManager(sampleTranslations);
       const maxFocus = quizManager.getOptions().maxFocusWords;
 
-      // Should equal the calculated MAX_FOCUS_POOL_SIZE
       expect(maxFocus).toBe(MAX_FOCUS_POOL_SIZE);
       expect(maxFocus).toBe(K * F * T_PROMO);
     });
@@ -210,7 +196,6 @@ describe('Algorithm Parameter Validation', () => {
       const quizManager = new QuizManager(sampleTranslations);
       const correctAnswersNeeded = quizManager.getOptions().correctAnswersToLevelUp;
 
-      // Should equal T_PROMO from the algorithm
       expect(correctAnswersNeeded).toBe(T_PROMO);
     });
   });

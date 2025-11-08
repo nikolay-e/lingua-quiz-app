@@ -1,0 +1,174 @@
+name: Preview Environment Health Check
+
+on:
+  workflow_run:
+    workflows: ["Deploy Preview Environment"]
+    types: [completed]
+
+permissions:
+  contents: read
+  deployments: write
+  pull-requests: write
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    timeout-minutes: 10
+
+    steps:
+      - name: Extract PR number and deployment info
+        id: pr
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const runId = context.payload.workflow_run.id;
+
+            // Get workflow run details to find PR
+            const pr = context.payload.workflow_run.pull_requests[0];
+            if (!pr) {
+              console.log('No PR found for this workflow run');
+              return;
+            }
+
+            const prNumber = pr.number;
+            const previewUrl = `https://lingua-quiz-pr-${prNumber}.nikolay-eremeev.com`;
+            const environment = `preview-pr-${prNumber}`;
+
+            core.setOutput('pr_number', prNumber);
+            core.setOutput('preview_url', previewUrl);
+            core.setOutput('environment', environment);
+
+            console.log(`PR #${prNumber}, Preview URL: ${previewUrl}`);
+
+      - name: Wait for preview environment
+        id: wait
+        continue-on-error: true
+        env:
+          PREVIEW_URL: ${{ steps.pr.outputs.preview_url }}
+        run: |
+          echo "Waiting for preview environment to become accessible..."
+          echo "URL: ${PREVIEW_URL}"
+
+          MAX_ATTEMPTS=12  # ~5 minutes total with exponential backoff
+          INITIAL_WAIT=2   # Start with 2 seconds
+          MAX_WAIT=30      # Cap at 30 seconds
+
+          WAIT_SECONDS=$INITIAL_WAIT
+
+          for attempt in $(seq 1 "$MAX_ATTEMPTS"); do
+            echo "Attempt ${attempt}/${MAX_ATTEMPTS}: Testing ${PREVIEW_URL}"
+
+            HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+              --max-time 10 \
+              --retry 2 \
+              --retry-delay 2 \
+              "${PREVIEW_URL}" || echo "000")
+
+            echo "HTTP Status: ${HTTP_STATUS}"
+
+            if [ "$HTTP_STATUS" = "200" ] || [ "$HTTP_STATUS" = "301" ] || [ "$HTTP_STATUS" = "302" ]; then
+              echo "SUCCESS: Preview environment is accessible"
+              echo "success=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+
+            if [ "$attempt" -lt "$MAX_ATTEMPTS" ]; then
+              echo "Not ready yet, waiting ${WAIT_SECONDS}s (exponential backoff)..."
+              sleep "$WAIT_SECONDS"
+
+              # Exponential backoff: double wait time, but cap at MAX_WAIT
+              WAIT_SECONDS=$((WAIT_SECONDS * 2))
+              if [ "$WAIT_SECONDS" -gt "$MAX_WAIT" ]; then
+                WAIT_SECONDS=$MAX_WAIT
+              fi
+            fi
+          done
+
+          echo "ERROR: Preview environment did not become accessible within timeout"
+          echo "success=false" >> "$GITHUB_OUTPUT"
+          exit 1
+
+      - name: Update deployment status
+        if: steps.pr.outputs.environment != ''
+        uses: ./.github/actions/update-deployment-status
+        with:
+          environment: ${{ steps.pr.outputs.environment }}
+          status: ${{ steps.wait.outputs.success == 'true' && 'success' || 'failure' }}
+          description: ${{ steps.wait.outputs.success == 'true' && '✅ Preview environment is ready and accessible' || '❌ Preview environment failed to become accessible' }}
+          environment-url: ${{ steps.pr.outputs.preview_url }}
+
+      - name: Update PR comment
+        uses: actions/github-script@v8
+        env:
+          PR_NUMBER: ${{ steps.pr.outputs.pr_number }}
+          PREVIEW_URL: ${{ steps.pr.outputs.preview_url }}
+          SUCCESS: ${{ steps.wait.outputs.success }}
+        with:
+          script: |
+            const prNumber = parseInt(process.env.PR_NUMBER);
+            const previewUrl = process.env.PREVIEW_URL;
+            const success = process.env.SUCCESS === 'true';
+
+            if (!prNumber) {
+              console.log('No PR number found, skipping comment update');
+              return;
+            }
+
+            const environmentUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/deployments`;
+
+            let statusEmoji, statusText, statusColor;
+            if (success) {
+              statusEmoji = '✅';
+              statusText = 'Ready';
+              statusColor = '🟢';
+            } else {
+              statusEmoji = '❌';
+              statusText = 'Failed';
+              statusColor = '🔴';
+            }
+
+            const comment = `## ${statusEmoji} Preview Environment ${statusText}
+
+            Your preview environment is now **${statusText.toLowerCase()}**!
+
+            **Preview URL:** ${previewUrl}
+
+            **Status:** ${statusColor} Deployment ${statusText.toLowerCase()}
+
+            **Deployment:** [View in GitHub](${environmentUrl})
+
+            ${success ? 'The environment is ready to use. Any new commits will automatically update it.' : 'The environment failed to become accessible. Check the workflow logs for details.'}
+            `;
+
+            // Find existing preview comment
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+            });
+
+            const botComment = comments.find(comment =>
+              comment.user.type === 'Bot' &&
+              comment.body.includes('Preview Environment')
+            );
+
+            if (botComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: comment
+              });
+              console.log('Updated existing PR comment');
+            } else {
+              // Create new comment
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body: comment
+              });
+              console.log('Created new PR comment');
+            }
