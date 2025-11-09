@@ -1,6 +1,6 @@
 {
   "name": "@lingua-quiz/core",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Core business logic for Lingua Quiz - portable across all platforms",
   "keywords": [
     "quiz",
