@@ -243,7 +243,7 @@ languages:
       min_word_length: 2
       short_word_whitelist: ["no", "sí", "ya", "me", "mi", "le", "lo", "se", "si", "un", "te", "su", "es", "al", "yo", "él", "tú", "ni", "en", "el", "la", "de", "y", "a", "o"]
       inflection_frequency_ratio: 0.4  # Spanish has medium inflection (balanced filtering)
-      raw_frequency_multiplier: 3.0  # Multiplier for raw subtitle data (compensate lemma deduplication)
+      raw_frequency_multiplier: 3.1  # Multiplier for raw subtitle data (compensate lemma deduplication + B2 shortfall)
       ner_frequency_threshold: 0.0005
       test_whitelist: ["libro", "mesa", "silla", "gato", "perro", "casa", "estar", "comer", "tener"]  # For integration tests only
       exclude_patterns:
