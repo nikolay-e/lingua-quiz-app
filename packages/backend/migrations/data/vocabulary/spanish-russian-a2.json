@@ -5,15 +5,6 @@
   "level_base_offset": 4010000,
   "word_pairs": [
     {
-      "translation_id": 4000167,
-      "source_id": 4000335,
-      "target_id": 4000336,
-      "source_word": "abuelo",
-      "target_word": "дедушка",
-      "source_example": "Mi abuelo vive cerca.",
-      "target_example": "Мой дедушка живёт рядом."
-    },
-    {
       "translation_id": 4000227,
       "source_id": 4000455,
       "target_id": 4000456,
@@ -21,24 +12,6 @@
       "target_word": "железо",
       "source_example": "Esta mesa es de hierro.",
       "target_example": "Этот стол из железа."
-    },
-    {
-      "translation_id": 4000240,
-      "source_id": 4000481,
-      "target_id": 4000482,
-      "source_word": "olvidar",
-      "target_word": "забывать",
-      "source_example": "No olvides las llaves.",
-      "target_example": "Не забудь ключи."
-    },
-    {
-      "translation_id": 4000344,
-      "source_id": 4000689,
-      "target_id": 4000690,
-      "source_word": "raíz",
-      "target_word": "корень",
-      "source_example": "La raíz del problema.",
-      "target_example": "Корень проблемы."
     },
     {
       "translation_id": 4000367,
@@ -77,15 +50,6 @@
       "target_example": "Озеро глубокое."
     },
     {
-      "translation_id": 4000537,
-      "source_id": 4001075,
-      "target_id": 4001076,
-      "source_word": "determinar",
-      "target_word": "определять",
-      "source_example": "Hay que determinar la causa.",
-      "target_example": "Нужно определить причину."
-    },
-    {
       "translation_id": 4000561,
       "source_id": 4001123,
       "target_id": 4001124,
@@ -93,15 +57,6 @@
       "target_word": "различный|другой|иной",
       "source_example": "Son muy distintos.",
       "target_example": "Они очень разные."
-    },
-    {
-      "translation_id": 4000603,
-      "source_id": 4001207,
-      "target_id": 4001208,
-      "source_word": "plano",
-      "target_word": "плоский",
-      "source_example": "La superficie es plana.",
-      "target_example": "Поверхность плоская."
     },
     {
       "translation_id": 4000651,
@@ -131,24 +86,6 @@
       "target_example": "Я предлагаю тебе помощь."
     },
     {
-      "translation_id": 4000681,
-      "source_id": 4001363,
-      "target_id": 4001364,
-      "source_word": "aplicar",
-      "target_word": "применять",
-      "source_example": "Hay que aplicar la ley.",
-      "target_example": "Нужно применять закон."
-    },
-    {
-      "translation_id": 4000747,
-      "source_id": 4001495,
-      "target_id": 4001496,
-      "source_word": "considerar",
-      "target_word": "рассматривать",
-      "source_example": "Vamos a considerar opciones.",
-      "target_example": "Давайте рассмотрим варианты."
-    },
-    {
       "translation_id": 4000750,
       "source_id": 4001501,
       "target_id": 4001502,
@@ -167,33 +104,6 @@
       "target_example": "У меня большие расходы."
     },
     {
-      "translation_id": 4000774,
-      "source_id": 4001549,
-      "target_id": 4001550,
-      "source_word": "brazo",
-      "target_word": "рука",
-      "source_example": "Me duele el brazo.",
-      "target_example": "У меня болит рука."
-    },
-    {
-      "translation_id": 4000778,
-      "source_id": 4001557,
-      "target_id": 4001558,
-      "source_word": "caballero",
-      "target_word": "рыцарь",
-      "source_example": "Un noble caballero.",
-      "target_example": "Благородный рыцарь."
-    },
-    {
-      "translation_id": 4000785,
-      "source_id": 4001571,
-      "target_id": 4001572,
-      "source_word": "azúcar",
-      "target_word": "сахар",
-      "source_example": "Sin azúcar, por favor.",
-      "target_example": "Без сахара, пожалуйста."
-    },
-    {
       "translation_id": 4000845,
       "source_id": 4001691,
       "target_id": 4001692,
@@ -203,15 +113,6 @@
       "target_example": "Мне нравится его смех."
     },
     {
-      "translation_id": 4000859,
-      "source_id": 4001719,
-      "target_id": 4001720,
-      "source_word": "moderno",
-      "target_word": "современный",
-      "source_example": "Arte moderno.",
-      "target_example": "Современное искусство."
-    },
-    {
       "translation_id": 4000877,
       "source_id": 4001755,
       "target_id": 4001756,
@@ -219,24 +120,6 @@
       "target_word": "сосед",
       "source_example": "Mi vecino es amable.",
       "target_example": "Мой сосед приветливый."
-    },
-    {
-      "translation_id": 4000882,
-      "source_id": 4001765,
-      "target_id": 4001766,
-      "source_word": "salvar",
-      "target_word": "спасать",
-      "source_example": "Hay que salvar el planeta.",
-      "target_example": "Нужно спасти планету."
-    },
-    {
-      "translation_id": 4000905,
-      "source_id": 4001811,
-      "target_id": 4001812,
-      "source_word": "pared",
-      "target_word": "стена",
-      "source_example": "La pared es blanca.",
-      "target_example": "Стена белая."
     },
     {
       "translation_id": 4000983,
@@ -257,15 +140,6 @@
       "target_example": "На углу."
     },
     {
-      "translation_id": 4000997,
-      "source_id": 4001995,
-      "target_id": 4001996,
-      "source_word": "sonrisa",
-      "target_word": "улыбка",
-      "source_example": "Una bella sonrisa.",
-      "target_example": "Красивая улыбка."
-    },
-    {
       "translation_id": 4001072,
       "source_id": 4002145,
       "target_id": 4002146,
@@ -273,15 +147,6 @@
       "target_word": "чистый [подлинный]",
       "source_example": "Oro puro.",
       "target_example": "Чистое золото."
-    },
-    {
-      "translation_id": 4001135,
-      "source_id": 4002271,
-      "target_id": 4002272,
-      "source_word": "broma",
-      "target_word": "шутка|розыгрыш",
-      "source_example": "Era solo una broma.",
-      "target_example": "Это была просто шутка."
     },
     {
       "translation_id": 4001270,
@@ -300,33 +165,6 @@
       "target_word": "запах",
       "source_example": "Me gusta el olor del café.",
       "target_example": "Мне нравится запах кофе."
-    },
-    {
-      "translation_id": 4001319,
-      "source_id": 4002639,
-      "target_id": 4002640,
-      "source_word": "potencia",
-      "target_word": "мощность",
-      "source_example": "El coche tiene mucha potencia.",
-      "target_example": "У машины большая мощность."
-    },
-    {
-      "translation_id": 4001327,
-      "source_id": 4002655,
-      "target_id": 4002656,
-      "source_word": "producir",
-      "target_word": "производить",
-      "source_example": "Esta fábrica produce coches.",
-      "target_example": "Этот завод производит автомобили."
-    },
-    {
-      "translation_id": 4000298,
-      "source_id": 4000597,
-      "target_id": 4000598,
-      "source_word": "aprovechar [se]",
-      "target_word": "использовать [воспользоваться]",
-      "source_example": "Aprovecha esta oportunidad.",
-      "target_example": "Воспользуйся этой возможностью."
     },
     {
       "translation_id": 4000899,
