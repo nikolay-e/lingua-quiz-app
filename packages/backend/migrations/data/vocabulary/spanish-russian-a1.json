@@ -1868,15 +1868,6 @@
       "target_example": "Она танцует с изяществом."
     },
     {
-      "translation_id": 4000284,
-      "source_id": 4000569,
-      "target_id": 4000570,
-      "source_word": "haber",
-      "target_word": "иметься",
-      "source_example": "Hay pan en la mesa.",
-      "target_example": "На столе есть хлеб."
-    },
-    {
       "translation_id": 4000285,
       "source_id": 4000571,
       "target_id": 4000572,
@@ -2640,15 +2631,6 @@
       "target_word": "мнение",
       "source_example": "En mi opinión.",
       "target_example": "По моему мнению."
-    },
-    {
-      "translation_id": 4000438,
-      "source_id": 4000877,
-      "target_id": 4000878,
-      "source_word": "mucho",
-      "target_word": "много",
-      "source_example": "Hay mucha gente.",
-      "target_example": "Здесь много людей."
     },
     {
       "translation_id": 4000440,
@@ -5189,15 +5171,6 @@
       "target_example": "Давайте объединимся."
     },
     {
-      "translation_id": 4000865,
-      "source_id": 4001731,
-      "target_id": 4001732,
-      "source_word": "tenido",
-      "target_word": "имевший",
-      "source_example": "He tenido suerte.",
-      "target_example": "Мне повезло."
-    },
-    {
       "translation_id": 4000866,
       "source_id": 4001733,
       "target_id": 4001734,
@@ -5223,15 +5196,6 @@
       "target_word": "солнце",
       "source_example": "El sol brilla.",
       "target_example": "Солнце светит."
-    },
-    {
-      "translation_id": 4000871,
-      "source_id": 4001743,
-      "target_id": 4001744,
-      "source_word": "sal",
-      "target_word": "соль",
-      "source_example": "Pasa la sal.",
-      "target_example": "Передай соль."
     },
     {
       "translation_id": 4000872,
@@ -5268,15 +5232,6 @@
       "target_word": "сообщество",
       "source_example": "Una gran comunidad.",
       "target_example": "Большое сообщество."
-    },
-    {
-      "translation_id": 4000876,
-      "source_id": 4001753,
-      "target_id": 4001754,
-      "source_word": "hacerlo",
-      "target_word": "делать это",
-      "source_example": "Puedo hacerlo mañana.",
-      "target_example": "Я могу сделать это завтра."
     },
     {
       "translation_id": 4000879,
@@ -5601,24 +5556,6 @@
       "target_word": "счастливый",
       "source_example": "Soy feliz contigo.",
       "target_example": "Я счастлив с тобой."
-    },
-    {
-      "translation_id": 4000932,
-      "source_id": 4001865,
-      "target_id": 4001866,
-      "source_word": "cuenta",
-      "target_word": "счёт",
-      "source_example": "Paga la cuenta.",
-      "target_example": "Оплати счёт."
-    },
-    {
-      "translation_id": 4000933,
-      "source_id": 4001867,
-      "target_id": 4001868,
-      "source_word": "contar",
-      "target_word": "считать",
-      "source_example": "Vamos a contar.",
-      "target_example": "Давай посчитаем."
     },
     {
       "translation_id": 4000934,
@@ -6638,15 +6575,6 @@
       "target_example": "Кто-то из вас должен это знать."
     },
     {
-      "translation_id": 4001112,
-      "source_id": 4002225,
-      "target_id": 4002226,
-      "source_word": "algunos",
-      "target_word": "некоторые",
-      "source_example": "Algunos estudiantes llegaron tarde.",
-      "target_example": "Некоторые студенты опоздали."
-    },
-    {
       "translation_id": 4001113,
       "source_id": 4002227,
       "target_id": 4002228,
@@ -6782,15 +6710,6 @@
       "target_example": "У него блестящий ум."
     },
     {
-      "translation_id": 4001137,
-      "source_id": 4002275,
-      "target_id": 4002276,
-      "source_word": "buena",
-      "target_word": "хорошая",
-      "source_example": "Es una buena idea.",
-      "target_example": "Это хорошая идея."
-    },
-    {
       "translation_id": 4001140,
       "source_id": 4002281,
       "target_id": 4002282,
@@ -6872,15 +6791,6 @@
       "target_example": "Я полностью согласен."
     },
     {
-      "translation_id": 4001152,
-      "source_id": 4002305,
-      "target_id": 4002306,
-      "source_word": "conmigo",
-      "target_word": "со мной",
-      "source_example": "Ven conmigo al cine.",
-      "target_example": "Пойдём со мной в кино."
-    },
-    {
       "translation_id": 4001153,
       "source_id": 4002307,
       "target_id": 4002308,
@@ -6897,15 +6807,6 @@
       "target_word": "должен",
       "source_example": "El costo es demasiado alto.",
       "target_example": "Стоимость слишком высока."
-    },
-    {
-      "translation_id": 4001157,
-      "source_id": 4002315,
-      "target_id": 4002316,
-      "source_word": "crees",
-      "target_word": "считаешь",
-      "source_example": "¿Crees que es verdad?",
-      "target_example": "Ты считаешь, что это правда?"
     },
     {
       "translation_id": 4001158,
@@ -6971,24 +6872,6 @@
       "target_example": "Он в тюрьме."
     },
     {
-      "translation_id": 4001171,
-      "source_id": 4002343,
-      "target_id": 4002344,
-      "source_word": "dale",
-      "target_word": "давай ему",
-      "source_example": "Dale mi mensaje.",
-      "target_example": "Передай ему моё сообщение."
-    },
-    {
-      "translation_id": 4001172,
-      "source_id": 4002345,
-      "target_id": 4002346,
-      "source_word": "dame",
-      "target_word": "дай мне",
-      "source_example": "Dame un momento.",
-      "target_example": "Дай мне минутку."
-    },
-    {
       "translation_id": 4001173,
       "source_id": 4002347,
       "target_id": 4002348,
@@ -6996,24 +6879,6 @@
       "target_word": "из, от, о",
       "source_example": "Soy de España.",
       "target_example": "Я из Испании."
-    },
-    {
-      "translation_id": 4001174,
-      "source_id": 4002349,
-      "target_id": 4002350,
-      "source_word": "debería",
-      "target_word": "должен бы",
-      "source_example": "Debería estudiar más.",
-      "target_example": "Я должен бы учиться больше."
-    },
-    {
-      "translation_id": 4001175,
-      "source_id": 4002351,
-      "target_id": 4002352,
-      "source_word": "dejado",
-      "target_word": "оставленный",
-      "source_example": "He dejado las llaves en casa.",
-      "target_example": "Я оставил ключи дома."
     },
     {
       "translation_id": 4001176,
@@ -7041,33 +6906,6 @@
       "target_word": "сказанный",
       "source_example": "Como he dicho antes.",
       "target_example": "Как я сказал ранее."
-    },
-    {
-      "translation_id": 4001180,
-      "source_id": 4002361,
-      "target_id": 4002362,
-      "source_word": "diga",
-      "target_word": "скажите",
-      "source_example": "Diga su nombre, por favor.",
-      "target_example": "Скажите ваше имя, пожалуйста."
-    },
-    {
-      "translation_id": 4001181,
-      "source_id": 4002363,
-      "target_id": 4002364,
-      "source_word": "dijiste",
-      "target_word": "ты сказал",
-      "source_example": "¿Qué dijiste?",
-      "target_example": "Что ты сказал?"
-    },
-    {
-      "translation_id": 4001183,
-      "source_id": 4002367,
-      "target_id": 4002368,
-      "source_word": "dime",
-      "target_word": "скажи мне",
-      "source_example": "Dime la verdad.",
-      "target_example": "Скажи мне правду."
     },
     {
       "translation_id": 4001184,
@@ -7113,15 +6951,6 @@
       "target_word": "из-за",
       "source_example": "Debido a la lluvia.",
       "target_example": "Из-за дождя."
-    },
-    {
-      "translation_id": 4001195,
-      "source_id": 4002391,
-      "target_id": 4002392,
-      "source_word": "él",
-      "target_word": "он",
-      "source_example": "El libro está en la mesa.",
-      "target_example": "Книга на столе."
     },
     {
       "translation_id": 4001197,
@@ -7187,33 +7016,6 @@
       "target_example": "Был прекрасный день."
     },
     {
-      "translation_id": 4001204,
-      "source_id": 4002409,
-      "target_id": 4002410,
-      "source_word": "escrito",
-      "target_word": "написанный",
-      "source_example": "He escrito una carta.",
-      "target_example": "Я написал письмо."
-    },
-    {
-      "translation_id": 4001205,
-      "source_id": 4002411,
-      "target_id": 4002412,
-      "source_word": "escucha",
-      "target_word": "слушай",
-      "source_example": "Escucha esta canción.",
-      "target_example": "Послушай эту песню."
-    },
-    {
-      "translation_id": 4001207,
-      "source_id": 4002415,
-      "target_id": 4002416,
-      "source_word": "ese",
-      "target_word": "тот рядом",
-      "source_example": "Ese libro es interesante.",
-      "target_example": "Та книга интересная."
-    },
-    {
       "translation_id": 4001208,
       "source_id": 4002417,
       "target_id": 4002418,
@@ -7239,15 +7041,6 @@
       "target_word": "этот",
       "source_example": "Este coche es mío.",
       "target_example": "Этот автомобиль - мой."
-    },
-    {
-      "translation_id": 4001211,
-      "source_id": 4002423,
-      "target_id": 4002424,
-      "source_word": "estés",
-      "target_word": "ты будешь",
-      "source_example": "Espero que estés bien.",
-      "target_example": "Надеюсь, ты будешь в порядке."
     },
     {
       "translation_id": 4001212,
@@ -7295,15 +7088,6 @@
       "target_example": "Это смешная шутка."
     },
     {
-      "translation_id": 4001221,
-      "source_id": 4002443,
-      "target_id": 4002444,
-      "source_word": "gran",
-      "target_word": "великий",
-      "source_example": "Es un gran escritor.",
-      "target_example": "Он великий писатель."
-    },
-    {
       "translation_id": 4001223,
       "source_id": 4002447,
       "target_id": 4002448,
@@ -7322,15 +7106,6 @@
       "target_example": "Это его привычный маршрут."
     },
     {
-      "translation_id": 4001225,
-      "source_id": 4002451,
-      "target_id": 4002452,
-      "source_word": "habla",
-      "target_word": "говорит",
-      "source_example": "Él habla tres idiomas.",
-      "target_example": "Он говорит на трёх языках."
-    },
-    {
       "translation_id": 4001226,
       "source_id": 4002453,
       "target_id": 4002454,
@@ -7338,42 +7113,6 @@
       "target_word": "к",
       "source_example": "Camina hacia la escuela.",
       "target_example": "Он идёт к школе."
-    },
-    {
-      "translation_id": 4001227,
-      "source_id": 4002455,
-      "target_id": 4002456,
-      "source_word": "haga",
-      "target_word": "делайте",
-      "source_example": "Haga lo que pueda.",
-      "target_example": "Делайте что можете."
-    },
-    {
-      "translation_id": 4001229,
-      "source_id": 4002459,
-      "target_id": 4002460,
-      "source_word": "haz",
-      "target_word": "делай",
-      "source_example": "Haz tu tarea.",
-      "target_example": "Делай своё задание."
-    },
-    {
-      "translation_id": 4001232,
-      "source_id": 4002465,
-      "target_id": 4002466,
-      "source_word": "hiciste",
-      "target_word": "ты сделал",
-      "source_example": "¿Qué hiciste ayer?",
-      "target_example": "Что ты сделал вчера?"
-    },
-    {
-      "translation_id": 4001234,
-      "source_id": 4002469,
-      "target_id": 4002470,
-      "source_word": "ido",
-      "target_word": "ушедший",
-      "source_example": "Se ha ido a casa.",
-      "target_example": "Он ушёл домой."
     },
     {
       "translation_id": 4001237,
@@ -7437,15 +7176,6 @@
       "target_word": "готовый",
       "source_example": "Ya estoy listo para salir.",
       "target_example": "Я уже готов выходить."
-    },
-    {
-      "translation_id": 4001248,
-      "source_id": 4002497,
-      "target_id": 4002498,
-      "source_word": "llama",
-      "target_word": "зовет",
-      "source_example": "El teléfono llama.",
-      "target_example": "Телефон звонит."
     },
     {
       "translation_id": 4001249,
@@ -7520,15 +7250,6 @@
       "target_example": "Тысяча благодарностей за твою помощь."
     },
     {
-      "translation_id": 4001262,
-      "source_id": 4002525,
-      "target_id": 4002526,
-      "source_word": "vuelto",
-      "target_word": "вернувшийся",
-      "source_example": "He vuelto a casa.",
-      "target_example": "Я вернулся домой."
-    },
-    {
       "translation_id": 4001264,
       "source_id": 4002529,
       "target_id": 4002530,
@@ -7545,15 +7266,6 @@
       "target_word": "мёртвый",
       "source_example": "El pájaro está muerto.",
       "target_example": "Птица мертва."
-    },
-    {
-      "translation_id": 4001267,
-      "source_id": 4002535,
-      "target_id": 4002536,
-      "source_word": "vosotros",
-      "target_word": "вы",
-      "source_example": "Vosotros sois españoles.",
-      "target_example": "Вы испанцы."
     },
     {
       "translation_id": 4001268,
@@ -7644,15 +7356,6 @@
       "target_word": "наш",
       "source_example": "Este es nuestro coche.",
       "target_example": "Это наша машина."
-    },
-    {
-      "translation_id": 4001280,
-      "source_id": 4002561,
-      "target_id": 4002562,
-      "source_word": "visto",
-      "target_word": "увиденный",
-      "source_example": "He visto esa película.",
-      "target_example": "Я видел этот фильм."
     },
     {
       "translation_id": 4001281,
@@ -7781,15 +7484,6 @@
       "target_example": "Это личное дело."
     },
     {
-      "translation_id": 4001309,
-      "source_id": 4002619,
-      "target_id": 4002620,
-      "source_word": "piensa",
-      "target_word": "думает",
-      "source_example": "Él piensa demasiado.",
-      "target_example": "Он слишком много думает."
-    },
-    {
       "translation_id": 4001311,
       "source_id": 4002623,
       "target_id": 4002624,
@@ -7808,15 +7502,6 @@
       "target_example": "Она носит красное платье."
     },
     {
-      "translation_id": 4001314,
-      "source_id": 4002629,
-      "target_id": 4002630,
-      "source_word": "podría",
-      "target_word": "мог бы",
-      "source_example": "Podría ayudarte mañana.",
-      "target_example": "Я мог бы помочь тебе завтра."
-    },
-    {
       "translation_id": 4001316,
       "source_id": 4002633,
       "target_id": 4002634,
@@ -7833,24 +7518,6 @@
       "target_word": "потому что",
       "source_example": "No vine porque estaba enfermo.",
       "target_example": "Я не пришёл, потому что был болен."
-    },
-    {
-      "translation_id": 4001318,
-      "source_id": 4002637,
-      "target_id": 4002638,
-      "source_word": "verte",
-      "target_word": "видеть тебя",
-      "source_example": "Quiero verte pronto.",
-      "target_example": "Хочу скоро тебя увидеть."
-    },
-    {
-      "translation_id": 4001320,
-      "source_id": 4002641,
-      "target_id": 4002642,
-      "source_word": "preguntar",
-      "target_word": "спрашивать",
-      "source_example": "Quiero preguntar algo.",
-      "target_example": "Я хочу что-то спросить."
     },
     {
       "translation_id": 4001321,
@@ -7907,24 +7574,6 @@
       "target_example": "Я, вероятно, приду завтра."
     },
     {
-      "translation_id": 4001328,
-      "source_id": 4002657,
-      "target_id": 4002658,
-      "source_word": "veo",
-      "target_word": "вижу",
-      "source_example": "Te veo mañana.",
-      "target_example": "Увидимся завтра."
-    },
-    {
-      "translation_id": 4001329,
-      "source_id": 4002659,
-      "target_id": 4002660,
-      "source_word": "venido",
-      "target_word": "приехавший",
-      "source_example": "Ha venido de lejos.",
-      "target_example": "Он приехал издалека."
-    },
-    {
       "translation_id": 4001330,
       "source_id": 4002661,
       "target_id": 4002662,
@@ -7932,15 +7581,6 @@
       "target_word": "собственный",
       "source_example": "Es mi propio coche.",
       "target_example": "Это моя собственная машина."
-    },
-    {
-      "translation_id": 4001331,
-      "source_id": 4002663,
-      "target_id": 4002664,
-      "source_word": "vaya",
-      "target_word": "ого|вот это да|ну и ну",
-      "source_example": "¡Vaya sorpresa!",
-      "target_example": "Вот это сюрприз!"
     },
     {
       "translation_id": 4001333,
@@ -7970,15 +7610,6 @@
       "target_example": "Он занимает важную должность."
     },
     {
-      "translation_id": 4001338,
-      "source_id": 4002677,
-      "target_id": 4002678,
-      "source_word": "tú",
-      "target_word": "ты",
-      "source_example": "Tú eres mi amigo.",
-      "target_example": "Ты мой друг."
-    },
-    {
       "translation_id": 4001341,
       "source_id": 4002683,
       "target_id": 4002684,
@@ -7988,15 +7619,6 @@
       "target_example": "Книга, которую я прочитал."
     },
     {
-      "translation_id": 4001342,
-      "source_id": 4002685,
-      "target_id": 4002686,
-      "source_word": "quedarse",
-      "target_word": "оставаться",
-      "source_example": "Decidí quedarme en casa.",
-      "target_example": "Я решил остаться дома."
-    },
-    {
       "translation_id": 4001343,
       "source_id": 4002687,
       "target_id": 4002688,
@@ -8004,15 +7626,6 @@
       "target_word": "дорогой",
       "source_example": "Mi querido amigo.",
       "target_example": "Мой дорогой друг."
-    },
-    {
-      "translation_id": 4001344,
-      "source_id": 4002689,
-      "target_id": 4002690,
-      "source_word": "quería",
-      "target_word": "хотел",
-      "source_example": "Quería hablar contigo.",
-      "target_example": "Я хотел поговорить с тобой."
     },
     {
       "translation_id": 4001345,
@@ -8049,15 +7662,6 @@
       "target_word": "действительно",
       "source_example": "Realmente me gusta este libro.",
       "target_example": "Мне действительно нравится эта книга."
-    },
-    {
-      "translation_id": 4001354,
-      "source_id": 4002709,
-      "target_id": 4002710,
-      "source_word": "recuerda",
-      "target_word": "помни",
-      "source_example": "Recuerda traer tu libro.",
-      "target_example": "Помни, нужно принести книгу."
     },
     {
       "translation_id": 4001356,
@@ -8112,15 +7716,6 @@
       "target_word": "сделать тебе",
       "source_example": "Este libro es tuyo.",
       "target_example": "Эта книга твоя."
-    },
-    {
-      "translation_id": 4001368,
-      "source_id": 4002737,
-      "target_id": 4002738,
-      "source_word": "sea",
-      "target_word": "будь",
-      "source_example": "Sea lo que sea.",
-      "target_example": "Будь что будет."
     },
     {
       "translation_id": 4001370,
@@ -8310,24 +7905,6 @@
       "target_word": "сезон",
       "source_example": "La temporada de lluvias.",
       "target_example": "Сезон дождей."
-    },
-    {
-      "translation_id": 4001399,
-      "source_id": 4002799,
-      "target_id": 4002800,
-      "source_word": "ten",
-      "target_word": "имей",
-      "source_example": "Ten cuidado.",
-      "target_example": "Будь осторожен."
-    },
-    {
-      "translation_id": 4001400,
-      "source_id": 4002801,
-      "target_id": 4002802,
-      "source_word": "tenga",
-      "target_word": "имейте",
-      "source_example": "Tenga paciencia, por favor.",
-      "target_example": "Имейте терпение, пожалуйста."
     },
     {
       "translation_id": 4001401,
@@ -8555,15 +8132,6 @@
       "target_example": "Скачай приложение."
     },
     {
-      "translation_id": 4001433,
-      "source_id": 4002866,
-      "target_id": 4002867,
-      "source_word": "arma",
-      "target_word": "оружие",
-      "source_example": "El arma está aquí.",
-      "target_example": "Оружие здесь."
-    },
-    {
       "translation_id": 4001434,
       "source_id": 4002868,
       "target_id": 4002869,
@@ -8589,15 +8157,6 @@
       "target_word": "убийца",
       "source_example": "El asesino huyó.",
       "target_example": "Убийца сбежал."
-    },
-    {
-      "translation_id": 4001437,
-      "source_id": 4002874,
-      "target_id": 4002875,
-      "source_word": "asi",
-      "target_word": "так, таким образом",
-      "source_example": "",
-      "target_example": ""
     },
     {
       "translation_id": 4001438,
@@ -8643,15 +8202,6 @@
       "target_word": "свадьба",
       "source_example": "La boda fue hermosa.",
       "target_example": "Свадьба была прекрасной."
-    },
-    {
-      "translation_id": 4001443,
-      "source_id": 4002886,
-      "target_id": 4002887,
-      "source_word": "buen",
-      "target_word": "хороший",
-      "source_example": "Es un buen día.",
-      "target_example": "Это хороший день."
     },
     {
       "translation_id": 4001444,
@@ -8906,15 +8456,6 @@
       "target_example": "Это моя судьба."
     },
     {
-      "translation_id": 4001473,
-      "source_id": 4002946,
-      "target_id": 4002947,
-      "source_word": "dio",
-      "target_word": "дал, дала",
-      "source_example": "Me dio un libro.",
-      "target_example": "Он дал мне книгу."
-    },
-    {
       "translation_id": 4001474,
       "source_id": 4002948,
       "target_id": 4002949,
@@ -9149,15 +8690,6 @@
       "target_example": "Я ищу счастье."
     },
     {
-      "translation_id": 4001500,
-      "source_id": 4003000,
-      "target_id": 4003001,
-      "source_word": "gana",
-      "target_word": "желание",
-      "source_example": "Tengo ganas de verte.",
-      "target_example": "Мне хочется тебя увидеть."
-    },
-    {
       "translation_id": 4001501,
       "source_id": 4003002,
       "target_id": 4003003,
@@ -9365,15 +8897,6 @@
       "target_example": "Я уберу дом."
     },
     {
-      "translation_id": 4001525,
-      "source_id": 4003050,
-      "target_id": 4003051,
-      "source_word": "llegado",
-      "target_word": "пришедший, прибывший",
-      "source_example": "Ha llegado tarde.",
-      "target_example": "Он опоздал."
-    },
-    {
       "source_word": "lo",
       "target_word": "это, его",
       "example_source": "",
@@ -9424,15 +8947,6 @@
       "target_word": "управлять, водить",
       "source_example": "Sé manejar un coche.",
       "target_example": "Умею водить машину."
-    },
-    {
-      "translation_id": 4001531,
-      "source_id": 4003062,
-      "target_id": 4003063,
-      "source_word": "mas",
-      "target_word": "но (устаревшее)",
-      "source_example": "",
-      "target_example": ""
     },
     {
       "translation_id": 4001532,
@@ -9908,15 +9422,6 @@
       "target_example": "Это прекрасное чувство."
     },
     {
-      "translation_id": 4001583,
-      "source_id": 4003166,
-      "target_id": 4003167,
-      "source_word": "ser",
-      "target_word": "быть, являться",
-      "source_example": "Quiero ser feliz.",
-      "target_example": "Я хочу быть счастливым."
-    },
-    {
       "translation_id": 4001584,
       "source_id": 4003168,
       "target_id": 4003169,
@@ -9924,15 +9429,6 @@
       "target_word": "серия, сериал",
       "source_example": "Veo una serie en Netflix.",
       "target_example": "Смотрю сериал на Netflix."
-    },
-    {
-      "translation_id": 4001585,
-      "source_id": 4003170,
-      "target_id": 4003171,
-      "source_word": "solo",
-      "target_word": "только, один",
-      "source_example": "",
-      "target_example": ""
     },
     {
       "translation_id": 4001586,
@@ -9978,15 +9474,6 @@
       "target_word": "его|её",
       "source_example": "Este libro es suyo.",
       "target_example": "Эта книга его."
-    },
-    {
-      "translation_id": 4001591,
-      "source_id": 4003182,
-      "target_id": 4003183,
-      "source_word": "tambien",
-      "target_word": "также, тоже",
-      "source_example": "",
-      "target_example": ""
     },
     {
       "translation_id": 4001592,

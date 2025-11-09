@@ -1193,15 +1193,6 @@
       "target_example": "Они очень близкие друзья."
     },
     {
-      "translation_id": 8010133,
-      "source_id": 8010267,
-      "target_id": 8010268,
-      "source_word": "closed",
-      "target_word": "закрытый",
-      "source_example": "The shop is closed on Sundays.",
-      "target_example": "Магазин закрыт по воскресеньям."
-    },
-    {
       "translation_id": 8010134,
       "source_id": 8010269,
       "target_id": 8010270,
@@ -1389,15 +1380,6 @@
       "target_word": "соединять|подключать",
       "source_example": "Can you connect the printer to the computer?",
       "target_example": "Можете подключить принтер к компьютеру?"
-    },
-    {
-      "translation_id": 8010155,
-      "source_id": 8010311,
-      "target_id": 8010312,
-      "source_word": "connected",
-      "target_word": "связанный|подключенный",
-      "source_example": "Are you connected to the internet?",
-      "target_example": "Вы подключены к интернету?"
     },
     {
       "translation_id": 8010156,
@@ -2019,15 +2001,6 @@
       "target_word": "поездка",
       "source_example": "It's a long drive to the beach.",
       "target_example": "До пляжа долгая дорога."
-    },
-    {
-      "translation_id": 8010225,
-      "source_id": 8010451,
-      "target_id": 8010452,
-      "source_word": "driving",
-      "target_word": "вождение",
-      "source_example": "Driving in the city is difficult.",
-      "target_example": "Вождение в городе - это сложно."
     },
     {
       "translation_id": 8010227,
@@ -2714,15 +2687,6 @@
       "target_example": "В моем супе муха."
     },
     {
-      "translation_id": 8010304,
-      "source_id": 8010609,
-      "target_id": 8010610,
-      "source_word": "flying",
-      "target_word": "полёт",
-      "source_example": "I don't like flying.",
-      "target_example": "Я не люблю летать."
-    },
-    {
       "translation_id": 8010305,
       "source_id": 8010611,
       "target_id": 8010612,
@@ -3360,15 +3324,6 @@
       "target_word": "включённый",
       "source_example": "Breakfast is included in the price.",
       "target_example": "Завтрак включен в стоимость."
-    },
-    {
-      "translation_id": 8010377,
-      "source_id": 8010755,
-      "target_id": 8010756,
-      "source_word": "including",
-      "target_word": "включая",
-      "source_example": "There were five people, including me.",
-      "target_example": "Было пять человек, включая меня."
     },
     {
       "translation_id": 8010378,
@@ -6125,15 +6080,6 @@
       "target_example": "Мы катаемся на лыжах каждую зиму."
     },
     {
-      "translation_id": 8010694,
-      "source_id": 8011389,
-      "target_id": 8011390,
-      "source_word": "skiing",
-      "target_word": "лыжный спорт",
-      "source_example": "Skiing is a popular winter sport.",
-      "target_example": "Лыжный спорт - популярный зимний вид спорта."
-    },
-    {
       "translation_id": 8010695,
       "source_id": 8011391,
       "target_id": 8011392,
@@ -6647,15 +6593,6 @@
       "target_example": "Это был большой сюрприз."
     },
     {
-      "translation_id": 8010754,
-      "source_id": 8011509,
-      "target_id": 8011510,
-      "source_word": "surprised",
-      "target_word": "удивлённый",
-      "source_example": "I was surprised to see him.",
-      "target_example": "Я был удивлен, увидев его."
-    },
-    {
       "translation_id": 8010755,
       "source_id": 8011511,
       "target_id": 8011512,
@@ -6852,15 +6789,6 @@
       "target_word": "треть",
       "source_example": "I ate a third of the pizza.",
       "target_example": "Я съел треть пиццы."
-    },
-    {
-      "translation_id": 8010777,
-      "source_id": 8011555,
-      "target_id": 8011556,
-      "source_word": "thought",
-      "target_word": "мысль",
-      "source_example": "I had a strange thought.",
-      "target_example": "У меня была странная мысль."
     },
     {
       "translation_id": 8010779,
@@ -7448,15 +7376,6 @@
       "target_example": "Ситуация ухудшается."
     },
     {
-      "translation_id": 8010846,
-      "source_id": 8011693,
-      "target_id": 8011694,
-      "source_word": "worst",
-      "target_word": "наихудший",
-      "source_example": "This is the worst day of my life.",
-      "target_example": "Это худший день в моей жизни."
-    },
-    {
       "translation_id": 8010847,
       "source_id": 8011695,
       "target_id": 8011696,
@@ -7898,15 +7817,6 @@
       "target_example": "Эта рубашка сделана из мягкого, дышащего хлопка."
     },
     {
-      "translation_id": 8010897,
-      "source_id": 8011795,
-      "target_id": 8011796,
-      "source_word": "covered",
-      "target_word": "покрытый",
-      "source_example": "The ground was covered with a thin layer of snow.",
-      "target_example": "Земля была покрыта тонким слоем снега."
-    },
-    {
       "translation_id": 8010898,
       "source_id": 8011797,
       "target_id": 8011798,
@@ -8240,15 +8150,6 @@
       "target_example": "Внезапного шума было достаточно, чтобы отпугнуть птиц."
     },
     {
-      "translation_id": 8010938,
-      "source_id": 8011877,
-      "target_id": 8011878,
-      "source_word": "frightened",
-      "target_word": "напуганный",
-      "source_example": "The frightened child hid behind his mother.",
-      "target_example": "Испуганный ребенок спрятался за матерью."
-    },
-    {
       "translation_id": 8010939,
       "source_id": 8011879,
       "target_id": 8011880,
@@ -8256,15 +8157,6 @@
       "target_word": "пугающий",
       "source_example": "Watching a horror movie alone can be a frightening experience.",
       "target_example": "Смотреть фильм ужасов в одиночестве может быть пугающим опытом."
-    },
-    {
-      "translation_id": 8010940,
-      "source_id": 8011881,
-      "target_id": 8011882,
-      "source_word": "frozen",
-      "target_word": "замороженный",
-      "source_example": "We used frozen berries to make the smoothie.",
-      "target_example": "Мы использовали замороженные ягоды для приготовления смузи."
     },
     {
       "translation_id": 8010941,

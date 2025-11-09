@@ -45,10 +45,7 @@ SPANISH_IMPERATIVES = [
 SPANISH_ENCLITIC_PRONOUNS = [
     ("irme", "ir"),
     ("darme", "dar"),
-    ("decirme", "decir"),
     ("darte", "dar"),
-    ("hacerme", "hacer"),
-    ("hacerte", "hacer"),
     ("verme", "ver"),
     ("escucharme", "escuchar"),
 ]

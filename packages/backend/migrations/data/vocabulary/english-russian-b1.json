@@ -716,15 +716,6 @@
       "target_example": "Я не могу дышать в этой прокуренной комнате."
     },
     {
-      "translation_id": 9000100,
-      "source_id": 9000201,
-      "target_id": 9000202,
-      "source_word": "breathing",
-      "target_word": "дыхание (процесс)",
-      "source_example": "His breathing was slow and regular.",
-      "target_example": "Его дыхание было медленным и ровным."
-    },
-    {
       "translation_id": 9000101,
       "source_id": 9000203,
       "target_id": 9000204,
@@ -1445,15 +1436,6 @@
       "target_example": "У книги красивая обложка."
     },
     {
-      "translation_id": 9000196,
-      "source_id": 9000393,
-      "target_id": 9000394,
-      "source_word": "covered",
-      "target_word": "покрытый",
-      "source_example": "The ground was covered with snow.",
-      "target_example": "Земля была покрыта снегом."
-    },
-    {
       "translation_id": 9000197,
       "source_id": 9000395,
       "target_id": 9000396,
@@ -1967,15 +1949,6 @@
       "target_example": "Важно просвещать детей по вопросам окружающей среды."
     },
     {
-      "translation_id": 9000263,
-      "source_id": 9000527,
-      "target_id": 9000528,
-      "source_word": "educated",
-      "target_word": "образованный",
-      "source_example": "She is a well-educated woman.",
-      "target_example": "Она хорошо образованная женщина."
-    },
-    {
       "translation_id": 9000264,
       "source_id": 9000529,
       "target_id": 9000530,
@@ -2298,15 +2271,6 @@
       "target_word": "испытывать|переживать",
       "source_example": "He experienced a lot of pain.",
       "target_example": "Он испытал много боли."
-    },
-    {
-      "translation_id": 9000305,
-      "source_id": 9000611,
-      "target_id": 9000612,
-      "source_word": "experienced",
-      "target_word": "опытный",
-      "source_example": "She is an experienced driver.",
-      "target_example": "Она опытный водитель."
     },
     {
       "translation_id": 9000306,
@@ -2651,15 +2615,6 @@
       "target_example": "Не пугайте птиц."
     },
     {
-      "translation_id": 9000354,
-      "source_id": 9000709,
-      "target_id": 9000710,
-      "source_word": "frightened",
-      "target_word": "испуганный",
-      "source_example": "The frightened child ran to his mother.",
-      "target_example": "Испуганный ребенок побежал к своей матери."
-    },
-    {
       "translation_id": 9000355,
       "source_id": 9000711,
       "target_id": 9000712,
@@ -2667,15 +2622,6 @@
       "target_word": "пугающий",
       "source_example": "It was a frightening experience.",
       "target_example": "Это был пугающий опыт."
-    },
-    {
-      "translation_id": 9000356,
-      "source_id": 9000713,
-      "target_id": 9000714,
-      "source_word": "frozen",
-      "target_word": "замороженный",
-      "source_example": "The lake is frozen in winter.",
-      "target_example": "Зимой озеро замерзает."
     },
     {
       "translation_id": 9000357,
@@ -3560,15 +3506,6 @@
       "target_example": "Следуйте моему примеру."
     },
     {
-      "translation_id": 9000478,
-      "source_id": 9000957,
-      "target_id": 9000958,
-      "source_word": "leading",
-      "target_word": "ведущий|лидирующий",
-      "source_example": "He is a leading expert in his field.",
-      "target_example": "Он ведущий эксперт в своей области."
-    },
-    {
       "translation_id": 9000479,
       "source_id": 9000959,
       "target_id": 9000960,
@@ -3686,15 +3623,6 @@
       "target_example": "Шоу транслировалось в прямом эфире."
     },
     {
-      "translation_id": 9000498,
-      "source_id": 9000997,
-      "target_id": 9000998,
-      "source_word": "living",
-      "target_word": "средства к существованию [adj: живой]",
-      "source_example": "He earns his living as a writer.",
-      "target_example": "Он зарабатывает на жизнь писательством."
-    },
-    {
       "translation_id": 9000499,
       "source_id": 9000999,
       "target_id": 9001000,
@@ -3711,15 +3639,6 @@
       "target_word": "находить|определять местоположение",
       "source_example": "We are trying to locate the source of the problem.",
       "target_example": "Мы пытаемся определить источник проблемы."
-    },
-    {
-      "translation_id": 9000501,
-      "source_id": 9001003,
-      "target_id": 9001004,
-      "source_word": "located",
-      "target_word": "расположенный",
-      "source_example": "The office is located in the city center.",
-      "target_example": "Офис расположен в центре города."
     },
     {
       "translation_id": 9000502,
@@ -5351,15 +5270,6 @@
       "target_example": "Повтор программы будет показан завтра."
     },
     {
-      "translation_id": 9000711,
-      "source_id": 9001423,
-      "target_id": 9001424,
-      "source_word": "repeated",
-      "target_word": "повторный",
-      "source_example": "He made repeated attempts to call her.",
-      "target_example": "Он неоднократно пытался ей позвонить."
-    },
-    {
       "translation_id": 9000712,
       "source_id": 9001425,
       "target_id": 9001426,
@@ -5448,15 +5358,6 @@
       "target_word": "уходить на пенсию",
       "source_example": "He is going to retire next year.",
       "target_example": "В следующем году он выходит на пенсию."
-    },
-    {
-      "translation_id": 9000723,
-      "source_id": 9001447,
-      "target_id": 9001448,
-      "source_word": "retired",
-      "target_word": "на пенсии",
-      "source_example": "He is a retired teacher.",
-      "target_example": "Он учитель на пенсии."
     },
     {
       "translation_id": 9000724,
@@ -7646,15 +7547,6 @@
       "target_example": "Я всегда ассоциирую запах выпечки со своим детством."
     },
     {
-      "translation_id": 9001010,
-      "source_id": 9002021,
-      "target_id": 9002022,
-      "source_word": "associated",
-      "target_word": "связанный",
-      "source_example": "There are many risks associated with this plan.",
-      "target_example": "С этим планом связано много рисков."
-    },
-    {
       "translation_id": 9001011,
       "source_id": 9002023,
       "target_id": 9002024,
@@ -8411,15 +8303,6 @@
       "target_example": "Старую фабрику переделали в квартиры."
     },
     {
-      "translation_id": 9001115,
-      "source_id": 9002231,
-      "target_id": 9002232,
-      "source_word": "convinced",
-      "target_word": "убеждённый",
-      "source_example": "I am convinced that he is innocent.",
-      "target_example": "Я убежден, что он невиновен."
-    },
-    {
       "translation_id": 9001116,
       "source_id": 9002233,
       "target_id": 9002234,
@@ -9149,15 +9032,6 @@
       "target_example": "Это была наша первая встреча."
     },
     {
-      "translation_id": 9001213,
-      "source_id": 9002427,
-      "target_id": 9002428,
-      "source_word": "engage",
-      "target_word": "заниматься|вовлекать",
-      "source_example": "He is engaged in many activities.",
-      "target_example": "Он занимается многими видами деятельности."
-    },
-    {
       "translation_id": 9001214,
       "source_id": 9002429,
       "target_id": 9002430,
@@ -9527,15 +9401,6 @@
       "target_example": "Он работает в юридической фирме."
     },
     {
-      "translation_id": 9001261,
-      "source_id": 9002523,
-      "target_id": 9002524,
-      "source_word": "fix",
-      "target_word": "выход из положения|решение",
-      "source_example": "I need a quick fix for this problem.",
-      "target_example": "Мне нужно быстрое решение этой проблемы."
-    },
-    {
       "translation_id": 9001262,
       "source_id": 9002525,
       "target_id": 9002526,
@@ -9572,15 +9437,6 @@
       "target_example": "Лодка плыла по воде."
     },
     {
-      "translation_id": 9001267,
-      "source_id": 9002535,
-      "target_id": 9002536,
-      "source_word": "folding",
-      "target_word": "складной",
-      "source_example": "I have a folding chair.",
-      "target_example": "У меня складной стул."
-    },
-    {
       "translation_id": 9001268,
       "source_id": 9002537,
       "target_id": 9002538,
@@ -9615,15 +9471,6 @@
       "target_word": "передний",
       "source_example": "He sits in the forward part of the bus.",
       "target_example": "Он сидит в передней части автобуса."
-    },
-    {
-      "translation_id": 9001272,
-      "source_id": 9002545,
-      "target_id": 9002546,
-      "source_word": "found",
-      "target_word": "основывать",
-      "source_example": "The city was founded in 1703.",
-      "target_example": "Город был основан в 1703 году."
     },
     {
       "translation_id": 9001273,
@@ -10058,15 +9905,6 @@
       "target_example": "Он впечатлил меня своими знаниями."
     },
     {
-      "translation_id": 9001328,
-      "source_id": 9002657,
-      "target_id": 9002658,
-      "source_word": "impressed",
-      "target_word": "впечатлённый",
-      "source_example": "I was impressed by his performance.",
-      "target_example": "Я был впечатлен его выступлением."
-    },
-    {
       "translation_id": 9001329,
       "source_id": 9002659,
       "target_id": 9002660,
@@ -10245,15 +10083,6 @@
       "target_word": "страхование|страховка",
       "source_example": "Do you have health insurance?",
       "target_example": "У вас есть медицинская страховка?"
-    },
-    {
-      "translation_id": 9001349,
-      "source_id": 9002699,
-      "target_id": 9002700,
-      "source_word": "intended",
-      "target_word": "предназначенный",
-      "source_example": "The book is intended for children.",
-      "target_example": "Книга предназначена для детей."
     },
     {
       "translation_id": 9001350,
@@ -10526,15 +10355,6 @@
       "target_example": "Температура достигла нового минимума."
     },
     {
-      "translation_id": 9001383,
-      "source_id": 9002767,
-      "target_id": 9002768,
-      "source_word": "lower",
-      "target_word": "опускать|снижать",
-      "source_example": "Please lower your voice.",
-      "target_example": "Пожалуйста, говорите тише."
-    },
-    {
       "translation_id": 9001384,
       "source_id": 9002769,
       "target_id": 9002770,
@@ -10740,15 +10560,6 @@
       "target_word": "ошибаться|путать",
       "source_example": "I mistook you for your brother.",
       "target_example": "Я перепутал вас с вашим братом."
-    },
-    {
-      "translation_id": 9001412,
-      "source_id": 9002825,
-      "target_id": 9002826,
-      "source_word": "mixed",
-      "target_word": "смешанный",
-      "source_example": "I have mixed feelings about it.",
-      "target_example": "У меня смешанные чувства по этому поводу."
     },
     {
       "translation_id": 9001413,
@@ -11039,15 +10850,6 @@
       "target_example": "Я против нового закона."
     },
     {
-      "translation_id": 9001449,
-      "source_id": 9002899,
-      "target_id": 9002900,
-      "source_word": "opposed",
-      "target_word": "противоположный|настроенный против",
-      "source_example": "I am opposed to this idea.",
-      "target_example": "Я против этой идеи."
-    },
-    {
       "translation_id": 9001450,
       "source_id": 9002901,
       "target_id": 9002902,
@@ -11280,15 +11082,6 @@
       "target_word": "простой|очевидный",
       "source_example": "The truth is plain to see.",
       "target_example": "Правда очевидна."
-    },
-    {
-      "translation_id": 9001481,
-      "source_id": 9002963,
-      "target_id": 9002964,
-      "source_word": "pointed",
-      "target_word": "острый|заострённый",
-      "source_example": "The pencil has a pointed end.",
-      "target_example": "У карандаша острый конец."
     },
     {
       "translation_id": 9001482,
@@ -12704,15 +12497,6 @@
       "target_example": "Дом окружен деревьями."
     },
     {
-      "translation_id": 9001667,
-      "source_id": 9003335,
-      "target_id": 9003336,
-      "source_word": "surrounding",
-      "target_word": "окружающий",
-      "source_example": "The surrounding area is beautiful.",
-      "target_example": "Окрестности прекрасны."
-    },
-    {
       "translation_id": 9001668,
       "source_id": 9003337,
       "target_id": 9003338,
@@ -13368,15 +13152,6 @@
       "target_word": "худшее [adv: хуже]",
       "source_example": "The worse is yet to come.",
       "target_example": "Худшее еще впереди."
-    },
-    {
-      "translation_id": 9001747,
-      "source_id": 9003495,
-      "target_id": 9003496,
-      "source_word": "worst",
-      "target_word": "самое худшее [adv: хуже всего]",
-      "source_example": "This is the worst that could happen.",
-      "target_example": "Это худшее, что могло случиться."
     },
     {
       "translation_id": 9001748,

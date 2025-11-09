@@ -257,15 +257,6 @@
       "target_example": "Я еще не получил ответа."
     },
     {
-      "translation_id": 3000032,
-      "source_id": 3000065,
-      "target_id": 3000066,
-      "source_word": "antworten",
-      "target_word": "отвечать",
-      "source_example": "Bitte antworte auf meine E-Mail.",
-      "target_example": "Пожалуйста, ответь на мое письмо."
-    },
-    {
       "translation_id": 3000033,
       "source_id": 3000067,
       "target_id": 3000068,
@@ -336,15 +327,6 @@
       "target_word": "работа",
       "source_example": "Sie geht jeden Tag zur Arbeit.",
       "target_example": "Она ходит на работу каждый день."
-    },
-    {
-      "translation_id": 3000041,
-      "source_id": 3000083,
-      "target_id": 3000084,
-      "source_word": "arbeiten",
-      "target_word": "работать|трудиться",
-      "source_example": "Er arbeitet also Ingenieur.",
-      "target_example": "Он работает инженером."
     },
     {
       "translation_id": 3000042,
@@ -579,15 +561,6 @@
       "target_word": "ванная комната, ванна [прибор]",
       "source_example": "Ich nehme jeden Abend in Bad.",
       "target_example": "Я принимаю ванну каждый вечер."
-    },
-    {
-      "translation_id": 3000069,
-      "source_id": 3000139,
-      "target_id": 3000140,
-      "source_word": "baden",
-      "target_word": "купаться",
-      "source_example": "Im Sommer bade ich gerne im See.",
-      "target_example": "Летом я с удовольствием купаюсь в озере."
     },
     {
       "translation_id": 3000070,
@@ -984,15 +957,6 @@
       "target_word": "картина, фотография, изображение",
       "source_example": "Das Bild an der Wand ist schön.",
       "target_example": "Картина на стене красивая."
-    },
-    {
-      "translation_id": 3000114,
-      "source_id": 3000229,
-      "target_id": 3000230,
-      "source_word": "bilden",
-      "target_word": "образовывать, формировать",
-      "source_example": "Diese Erfahrungen bilden dich weiter.",
-      "target_example": "Этот опыт помогает тебе развиваться."
     },
     {
       "translation_id": 3000115,
@@ -1976,15 +1940,6 @@
       "target_example": "Мне только 20 лет."
     },
     {
-      "translation_id": 3000230,
-      "source_id": 3000461,
-      "target_id": 3000462,
-      "source_word": "die erste [ersten]",
-      "target_word": "первая",
-      "source_example": "Sie ist die erste Person, die ich anrufe.",
-      "target_example": "Она первая, кому я звоню."
-    },
-    {
       "translation_id": 3000231,
       "source_id": 3000463,
       "target_id": 3000464,
@@ -2210,15 +2165,6 @@
       "target_example": "После рабочего дня мы идем в кино."
     },
     {
-      "translation_id": 3000257,
-      "source_id": 3000515,
-      "target_id": 3000516,
-      "source_word": "feiern",
-      "target_word": "праздновать",
-      "source_example": "Wir feiern heute meinen Geburtstag.",
-      "target_example": "Сегодня мы празднуем мой день рождения."
-    },
-    {
       "translation_id": 3000258,
       "source_id": 3000517,
       "target_id": 3000518,
@@ -2426,15 +2372,6 @@
       "target_example": "У тебя есть вопрос?"
     },
     {
-      "translation_id": 3000281,
-      "source_id": 3000563,
-      "target_id": 3000564,
-      "source_word": "fragen",
-      "target_word": "спрашивать",
-      "source_example": "Ich möchte dich etwas fragen.",
-      "target_example": "Я хочу тебя кое-что спросить."
-    },
-    {
       "translation_id": 3000282,
       "source_id": 3000565,
       "target_id": 3000566,
@@ -2541,15 +2478,6 @@
       "target_word": "завтрак",
       "source_example": "Zum Frühstück esse ich Brot mit Marmalade.",
       "target_example": "На завтрак я ем хлеб с вареньем."
-    },
-    {
-      "translation_id": 3000294,
-      "source_id": 3000589,
-      "target_id": 3000590,
-      "source_word": "frühstücken",
-      "target_word": "завтракать",
-      "source_example": "Wir frühstücken zusammen jeden Morgen.",
-      "target_example": "Мы завтракаем вместе каждое утро."
     },
     {
       "translation_id": 3000295,
@@ -3695,15 +3623,6 @@
       "target_example": "Могу я вам помочь?"
     },
     {
-      "translation_id": 3000422,
-      "source_id": 3000845,
-      "target_id": 3000846,
-      "source_word": "ihr",
-      "target_word": "её, их",
-      "source_example": "Das ist ihr Haus.",
-      "target_example": "Это их дом."
-    },
-    {
       "translation_id": 3000424,
       "source_id": 3000849,
       "target_id": 3000850,
@@ -4325,15 +4244,6 @@
       "target_example": "Повар готовит вкусное блюдо."
     },
     {
-      "translation_id": 3000494,
-      "source_id": 3000989,
-      "target_id": 3000990,
-      "source_word": "kochen",
-      "target_word": "готовить",
-      "source_example": "Ich koche heute Abend Pasta.",
-      "target_example": "Я готовлю сегодня вечером пасту."
-    },
-    {
       "translation_id": 3000495,
       "source_id": 3000991,
       "target_id": 3000992,
@@ -4683,15 +4593,6 @@
       "target_word": "медленный",
       "source_example": "Bitte fahre langsam.",
       "target_example": "Пожалуйста, едьте медленно."
-    },
-    {
-      "translation_id": 3000534,
-      "source_id": 3001069,
-      "target_id": 3001070,
-      "source_word": "lange",
-      "target_word": "долго",
-      "source_example": "Ich warte schon lange.",
-      "target_example": "Я жду уже долго."
     },
     {
       "translation_id": 3000535,
@@ -5216,15 +5117,6 @@
       "target_example": "Это занимает всего пять минут."
     },
     {
-      "translation_id": 3000593,
-      "source_id": 3001187,
-      "target_id": 3001188,
-      "source_word": "mir",
-      "target_word": "мне",
-      "source_example": "Kannst du mir helfen?",
-      "target_example": "Можешь помочь мне?"
-    },
-    {
       "translation_id": 3000594,
       "source_id": 3001189,
       "target_id": 3001190,
@@ -5349,15 +5241,6 @@
       "target_word": "современный",
       "source_example": "Sie bevorzugt moderne Architektur.",
       "target_example": "Она предпочитает современную архитектуру."
-    },
-    {
-      "translation_id": 3000608,
-      "source_id": 3001217,
-      "target_id": 3001218,
-      "source_word": "mögen",
-      "target_word": "нравиться|любить",
-      "source_example": "Ich mag Schokolade.",
-      "target_example": "Я люблю шоколад."
     },
     {
       "translation_id": 3000609,
@@ -6215,15 +6098,6 @@
       "target_example": "Мне нужно сменить пластырь."
     },
     {
-      "translation_id": 3000706,
-      "source_id": 3001413,
-      "target_id": 3001414,
-      "source_word": "die Pflege",
-      "target_word": "уход",
-      "source_example": "Die Pflege der alten Dame ist wichtig.",
-      "target_example": "Уход за старушкой важен."
-    },
-    {
       "translation_id": 3000707,
       "source_id": 3001415,
       "target_id": 3001416,
@@ -6627,15 +6501,6 @@
       "target_word": "рис",
       "source_example": "Ich koche Reis zum Abendessen.",
       "target_example": "Я готовлю рис на ужин."
-    },
-    {
-      "translation_id": 3000752,
-      "source_id": 3001505,
-      "target_id": 3001506,
-      "source_word": "die Reise [Reisen]",
-      "target_word": "путешествие",
-      "source_example": "Unsere Reise nach Spanien war toll.",
-      "target_example": "Наше путешествие в Испанию было замечательным."
     },
     {
       "translation_id": 3000753,
@@ -7187,15 +7052,6 @@
       "target_example": "Моя сестра живет в Берлине."
     },
     {
-      "translation_id": 3000814,
-      "source_id": 3001629,
-      "target_id": 3001630,
-      "source_word": "meinen",
-      "target_word": "иметь в виду",
-      "source_example": "Was meinst du damit?",
-      "target_example": "Что ты имеешь в виду?"
-    },
-    {
       "translation_id": 3000815,
       "source_id": 3001631,
       "target_id": 3001632,
@@ -7250,15 +7106,6 @@
       "target_example": "Я устал."
     },
     {
-      "translation_id": 3000821,
-      "source_id": 3001643,
-      "target_id": 3001644,
-      "source_word": "sein",
-      "target_word": "его",
-      "source_example": "Das ist sein Buch.",
-      "target_example": "Это его книга."
-    },
-    {
       "translation_id": 3000822,
       "source_id": 3001645,
       "target_id": 3001646,
@@ -7266,15 +7113,6 @@
       "target_word": "страница",
       "source_example": "Lies bitte die nächste Seite.",
       "target_example": "Пожалуйста, прочитай следующую страницу."
-    },
-    {
-      "translation_id": 3000823,
-      "source_id": 3001647,
-      "target_id": 3001648,
-      "source_word": "der Sekt [Sekte]",
-      "target_word": "игристое вино",
-      "source_example": "Zum Fest gibt es Sekt.",
-      "target_example": "На праздник будет игристое вино."
     },
     {
       "translation_id": 3000824,
@@ -7338,24 +7176,6 @@
       "target_word": "уверенный",
       "source_example": "Ich bin sicher, dass es klappt.",
       "target_example": "Я уверен, что получится."
-    },
-    {
-      "translation_id": 3000831,
-      "source_id": 3001663,
-      "target_id": 3001664,
-      "source_word": "Sie",
-      "target_word": "Вы",
-      "source_example": "Wie geht es Ihnen?",
-      "target_example": "Как у вас дела?"
-    },
-    {
-      "translation_id": 3000832,
-      "source_id": 3001665,
-      "target_id": 3001666,
-      "source_word": "sie",
-      "target_word": "они/она",
-      "source_example": "Sie gehen heute ins Kino.",
-      "target_example": "Они идут сегодня в кино."
     },
     {
       "translation_id": 3000833,
@@ -7520,15 +7340,6 @@
       "target_example": "Уже поздно."
     },
     {
-      "translation_id": 3000852,
-      "source_id": 3001705,
-      "target_id": 3001706,
-      "source_word": "später",
-      "target_word": "позже",
-      "source_example": "Wir treffen uns später.",
-      "target_example": "Мы встретимся позже."
-    },
-    {
       "translation_id": 3000853,
       "source_id": 3001707,
       "target_id": 3001708,
@@ -7554,15 +7365,6 @@
       "target_word": "игра",
       "source_example": "Das Spiel war spannend.",
       "target_example": "Игра была захватывающей."
-    },
-    {
-      "translation_id": 3000856,
-      "source_id": 3001713,
-      "target_id": 3001714,
-      "source_word": "spielen",
-      "target_word": "играть",
-      "source_example": "Kinder spielen im Park.",
-      "target_example": "Дети играют в парке."
     },
     {
       "translation_id": 3000857,
@@ -7986,15 +7788,6 @@
       "target_word": "день",
       "source_example": "Heute ist in schöner Tag.",
       "target_example": "Сегодня хороший день."
-    },
-    {
-      "translation_id": 3000904,
-      "source_id": 3001809,
-      "target_id": 3001810,
-      "source_word": "unsere",
-      "target_word": "наша/наши",
-      "source_example": "Unsere Kinder spielen im Garten.",
-      "target_example": "Наши дети играют в саду."
     },
     {
       "translation_id": 3000905,
@@ -8528,15 +8321,6 @@
       "target_example": "Занятие начинается в девять часов."
     },
     {
-      "translation_id": 3000965,
-      "source_id": 3001931,
-      "target_id": 3001932,
-      "source_word": "unterrichten",
-      "target_word": "преподавать",
-      "source_example": "Die Lehrerin unterrichtet Deutsch.",
-      "target_example": "Учительница преподает немецкий."
-    },
-    {
       "translation_id": 3000966,
       "source_id": 3001933,
       "target_id": 3001934,
@@ -8679,15 +8463,6 @@
       "target_word": "понял",
       "source_example": "Ich habe alles verstanden.",
       "target_example": "Я всё понял."
-    },
-    {
-      "translation_id": 3000982,
-      "source_id": 3001965,
-      "target_id": 3001966,
-      "source_word": "verstehen",
-      "target_word": "понимать",
-      "source_example": "Ich verstehe die Frage nicht.",
-      "target_example": "Я не понимаю вопрос."
     },
     {
       "translation_id": 3000983,
@@ -8960,15 +8735,6 @@
       "target_example": "Изменение погоды примечательно."
     },
     {
-      "translation_id": 3001013,
-      "source_id": 3002027,
-      "target_id": 3002028,
-      "source_word": "wechseln",
-      "target_word": "менять",
-      "source_example": "Ich muss meine Schuhe wechseln.",
-      "target_example": "Мне нужно поменять обувь."
-    },
-    {
       "translation_id": 3001014,
       "source_id": 3002029,
       "target_id": 3002030,
@@ -9023,15 +8789,6 @@
       "target_example": "Мой дедушка любит рассказывать истории."
     },
     {
-      "translation_id": 3001020,
-      "source_id": 3002041,
-      "target_id": 3002042,
-      "source_word": "öffnen",
-      "target_word": "открывать",
-      "source_example": "Kannst du bitte das Fenster öffnen?",
-      "target_example": "Можешь, пожалуйста, открыть окно?"
-    },
-    {
       "translation_id": 3001021,
       "source_id": 3002043,
       "target_id": 3002044,
@@ -9059,15 +8816,6 @@
       "target_example": "Иди дальше прямо."
     },
     {
-      "translation_id": 3001024,
-      "source_id": 3002049,
-      "target_id": 3002050,
-      "source_word": "welcher",
-      "target_word": "какой",
-      "source_example": "Welches Buch liest du?",
-      "target_example": "Какую книгу ты читаешь?"
-    },
-    {
       "translation_id": 3001025,
       "source_id": 3002051,
       "target_id": 3002052,
@@ -9093,15 +8841,6 @@
       "target_word": "кто",
       "source_example": "Wer ist das?",
       "target_example": "Кто это?"
-    },
-    {
-      "translation_id": 3001028,
-      "source_id": 3002057,
-      "target_id": 3002058,
-      "source_word": "werden",
-      "target_word": "становиться",
-      "source_example": "Ich möchte Arzt werden.",
-      "target_example": "Я хочу стать врачом."
     },
     {
       "translation_id": 3001029,
@@ -9428,15 +9167,6 @@
       "target_example": "Какое это число?"
     },
     {
-      "translation_id": 3001065,
-      "source_id": 3002131,
-      "target_id": 3002132,
-      "source_word": "zahlen",
-      "target_word": "платить",
-      "source_example": "Ich muss die Rechnung zahlen.",
-      "target_example": "Мне нужно оплатить счет."
-    },
-    {
       "translation_id": 3001066,
       "source_id": 3002133,
       "target_id": 3002134,
@@ -9716,15 +9446,6 @@
       "target_example": "У меня мало времени."
     },
     {
-      "translation_id": 3001098,
-      "source_id": 3002197,
-      "target_id": 3002198,
-      "source_word": "weniger",
-      "target_word": "меньше [по количеству]",
-      "source_example": "Ich möchte weniger Zucker.",
-      "target_example": "Я хочу меньше сахара."
-    },
-    {
       "translation_id": 3001099,
       "source_id": 3002199,
       "target_id": 3002200,
@@ -9741,15 +9462,6 @@
       "target_word": "уже",
       "source_example": "Ich bin bereits fertig.",
       "target_example": "Я уже готов."
-    },
-    {
-      "translation_id": 3001101,
-      "source_id": 3002203,
-      "target_id": 3002204,
-      "source_word": "besser",
-      "target_word": "лучше",
-      "source_example": "Das ist besser.",
-      "target_example": "Это лучше."
     },
     {
       "translation_id": 3001102,
@@ -10238,15 +9950,6 @@
       "target_example": "Заходи!"
     },
     {
-      "translation_id": 3001156,
-      "source_id": 3002313,
-      "target_id": 3002314,
-      "source_word": "größte",
-      "target_word": "самый большой",
-      "source_example": "Das ist die größte Stadt.",
-      "target_example": "Это самый большой город."
-    },
-    {
       "translation_id": 3001157,
       "source_id": 3002315,
       "target_id": 3002316,
@@ -10409,15 +10112,6 @@
       "target_example": "Я попробую снова."
     },
     {
-      "translation_id": 3001176,
-      "source_id": 3002353,
-      "target_id": 3002354,
-      "source_word": "schlechter",
-      "target_word": "хуже",
-      "source_example": "Das Wetter wird schlechter.",
-      "target_example": "Погода становится хуже."
-    },
-    {
       "translation_id": 3001177,
       "source_id": 3002355,
       "target_id": 3002356,
@@ -10427,24 +10121,6 @@
       "target_example": "Такие проблемы я знаю."
     },
     {
-      "translation_id": 3001178,
-      "source_id": 3002357,
-      "target_id": 3002358,
-      "source_word": "wäre",
-      "target_word": "был бы",
-      "source_example": "Das wäre schön.",
-      "target_example": "Это было бы хорошо."
-    },
-    {
-      "translation_id": 3001179,
-      "source_id": 3002359,
-      "target_id": 3002360,
-      "source_word": "würde",
-      "target_word": "бы",
-      "source_example": "Ich würde gerne kommen.",
-      "target_example": "Я бы охотно пришел."
-    },
-    {
       "translation_id": 3001180,
       "source_id": 3002361,
       "target_id": 3002362,
@@ -10452,33 +10128,6 @@
       "target_word": "кто-то",
       "source_example": "Jemand hat angerufen.",
       "target_example": "Кто-то звонил."
-    },
-    {
-      "translation_id": 3001181,
-      "source_id": 3002363,
-      "target_id": 3002364,
-      "source_word": "größer",
-      "target_word": "больше по размеру",
-      "source_example": "Mein Haus ist größer.",
-      "target_example": "Мой дом больше."
-    },
-    {
-      "translation_id": 3001182,
-      "source_id": 3002365,
-      "target_id": 3002366,
-      "source_word": "kleiner",
-      "target_word": "меньше по размеру",
-      "source_example": "Das Auto ist kleiner.",
-      "target_example": "Машина меньше."
-    },
-    {
-      "translation_id": 3001183,
-      "source_id": 3002367,
-      "target_id": 3002368,
-      "source_word": "älter",
-      "target_word": "старше",
-      "source_example": "Er ist älter also ich.",
-      "target_example": "Он старше меня."
     },
     {
       "translation_id": 3001184,
@@ -10553,15 +10202,6 @@
       "target_example": "Мы достигли цели."
     },
     {
-      "translation_id": 3001192,
-      "source_id": 3002385,
-      "target_id": 3002386,
-      "source_word": "jung",
-      "target_word": "молодой",
-      "source_example": "Sie ist noch sehr jung.",
-      "target_example": "Она еще очень молодая."
-    },
-    {
       "translation_id": 3001193,
       "source_id": 3002387,
       "target_id": 3002388,
@@ -10632,15 +10272,6 @@
       "target_word": "вполне",
       "source_example": "Das ist durchaus möglich.",
       "target_example": "Это вполне возможно."
-    },
-    {
-      "translation_id": 3001201,
-      "source_id": 3002403,
-      "target_id": 3002404,
-      "source_word": "alle",
-      "target_word": "все",
-      "source_example": "Alle kommen zur Party.",
-      "target_example": "Все приходят на вечеринку."
     },
     {
       "translation_id": 3001202,
@@ -10940,15 +10571,6 @@
       "target_example": "Каждый имеет право говорить."
     },
     {
-      "translation_id": 3001236,
-      "source_id": 3002473,
-      "target_id": 3002474,
-      "source_word": "der Fall [Fälle]",
-      "target_word": "случай",
-      "source_example": "In diesem Fall hilft das nicht.",
-      "target_example": "В этом случае это не поможет."
-    },
-    {
       "translation_id": 3001237,
       "source_id": 3002475,
       "target_id": 3002476,
@@ -11163,24 +10785,6 @@
       "target_word": "случается",
       "source_example": "Was ist passiert?",
       "target_example": "Что случилось?"
-    },
-    {
-      "translation_id": 3001262,
-      "source_id": 3002525,
-      "target_id": 3002526,
-      "source_word": "folgen",
-      "target_word": "следовать",
-      "source_example": "Folgen Sie mir bitte.",
-      "target_example": "Следуйте за мной, пожалуйста."
-    },
-    {
-      "translation_id": 3001263,
-      "source_id": 3002527,
-      "target_id": 3002528,
-      "source_word": "stimmt",
-      "target_word": "правильно",
-      "source_example": "Das stimmt nicht.",
-      "target_example": "Это неправильно."
     },
     {
       "translation_id": 3001264,
@@ -11552,15 +11156,6 @@
       "target_example": "Сезон скоро начнется."
     },
     {
-      "translation_id": 3001306,
-      "source_id": 3002613,
-      "target_id": 3002614,
-      "source_word": "der Vergleich [Vergleiche]",
-      "target_word": "сравнение",
-      "source_example": "Im Vergleich dazu ist das besser.",
-      "target_example": "По сравнению с этим, это лучше."
-    },
-    {
       "translation_id": 3001307,
       "source_id": 3002615,
       "target_id": 3002616,
@@ -11604,15 +11199,6 @@
       "target_word": "интерес",
       "source_example": "Ich habe Interesse daran.",
       "target_example": "Меня это интересует."
-    },
-    {
-      "translation_id": 3001312,
-      "source_id": 3002625,
-      "target_id": 3002626,
-      "source_word": "die Stimme [Stimmen]",
-      "target_word": "голос",
-      "source_example": "Define Stimme ist sehr schön.",
-      "target_example": "Твой голос очень красивый."
     },
     {
       "translation_id": 3001313,
@@ -11784,15 +11370,6 @@
       "target_word": "третий",
       "source_example": "Das ist der dritte Versuch.",
       "target_example": "Это третья попытка."
-    },
-    {
-      "translation_id": 3001332,
-      "source_id": 3002665,
-      "target_id": 3002666,
-      "source_word": "der Politiker [Politiker]",
-      "target_word": "политик",
-      "source_example": "Der Politiker hielt eine Rede.",
-      "target_example": "Политик произнес речь."
     },
     {
       "translation_id": 3001333,

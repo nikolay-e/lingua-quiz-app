@@ -635,15 +635,6 @@
       "target_example": "Давайте начнем урок."
     },
     {
-      "translation_id": 8000073,
-      "source_id": 8000147,
-      "target_id": 8000148,
-      "source_word": "beginning",
-      "target_word": "начало",
-      "source_example": "This is the beginning of the story.",
-      "target_example": "Это начало истории."
-    },
-    {
       "translation_id": 8000074,
       "source_id": 8000149,
       "target_id": 8000150,
@@ -678,15 +669,6 @@
       "target_word": "лучший|наилучший",
       "source_example": "This is the best day of my life.",
       "target_example": "Это лучший день в моей жизни."
-    },
-    {
-      "translation_id": 8000078,
-      "source_id": 8000157,
-      "target_id": 8000158,
-      "source_word": "better",
-      "target_word": "лучше",
-      "source_example": "I feel better today.",
-      "target_example": "Сегодня я чувствую себя лучше."
     },
     {
       "translation_id": 8000079,
@@ -2426,15 +2408,6 @@
       "target_example": "Как ты себя чувствуешь?"
     },
     {
-      "translation_id": 8000275,
-      "source_id": 8000551,
-      "target_id": 8000552,
-      "source_word": "feeling",
-      "target_word": "чувство|ощущение",
-      "source_example": "I have a strange feeling.",
-      "target_example": "У меня странное чувство."
-    },
-    {
       "translation_id": 8000276,
       "source_id": 8000553,
       "target_id": 8000554,
@@ -2856,15 +2829,6 @@
       "target_word": "идти|ехать",
       "source_example": "I need to go now.",
       "target_example": "Мне нужно идти."
-    },
-    {
-      "translation_id": 8000323,
-      "source_id": 8000647,
-      "target_id": 8000648,
-      "source_word": "good",
-      "target_word": "хороший",
-      "source_example": "This is a good book.",
-      "target_example": "Это хорошая книга."
     },
     {
       "translation_id": 8000324,
@@ -3630,15 +3594,6 @@
       "target_word": "поздний, поздно",
       "source_example": "I am late for work.",
       "target_example": "Я опаздываю на работу."
-    },
-    {
-      "translation_id": 8000416,
-      "source_id": 8000833,
-      "target_id": 8000834,
-      "source_word": "later",
-      "target_word": "позже|потом",
-      "source_example": "I will see you later.",
-      "target_example": "Увидимся позже."
     },
     {
       "translation_id": 8000417,
@@ -4962,15 +4917,6 @@
       "target_word": "период",
       "source_example": "This is a difficult period.",
       "target_example": "Это трудный период."
-    },
-    {
-      "translation_id": 8000576,
-      "source_id": 8001153,
-      "target_id": 8001154,
-      "source_word": "person",
-      "target_word": "человек|личность",
-      "source_example": "He is a nice person.",
-      "target_example": "Он хороший человек."
     },
     {
       "translation_id": 8000577,
@@ -6467,15 +6413,6 @@
       "target_example": "Я люблю плавать в море."
     },
     {
-      "translation_id": 8000746,
-      "source_id": 8001493,
-      "target_id": 8001494,
-      "source_word": "swimming",
-      "target_word": "плавание",
-      "source_example": "Swimming is good exercise.",
-      "target_example": "Плавание - хорошее упражнение."
-    },
-    {
       "translation_id": 8000747,
       "source_id": 8001495,
       "target_id": 8001496,
@@ -6701,15 +6638,6 @@
       "target_example": "Я отдам это им."
     },
     {
-      "translation_id": 8000773,
-      "source_id": 8001547,
-      "target_id": 8001548,
-      "source_word": "then",
-      "target_word": "затем|тогда",
-      "source_example": "First I will eat, then I will sleep.",
-      "target_example": "Сначала я поем, потом буду спать."
-    },
-    {
       "translation_id": 8000774,
       "source_id": 8001549,
       "target_id": 8001550,
@@ -6717,15 +6645,6 @@
       "target_word": "там",
       "source_example": "The book is over there.",
       "target_example": "Книга вон там."
-    },
-    {
-      "translation_id": 8000775,
-      "source_id": 8001551,
-      "target_id": 8001552,
-      "source_word": "they",
-      "target_word": "они",
-      "source_example": "They are my friends.",
-      "target_example": "Они мои друзья."
     },
     {
       "translation_id": 8000776,
@@ -7763,15 +7682,6 @@
       "target_example": "Я не могу найти свои ключи."
     },
     {
-      "translation_id": 8000896,
-      "source_id": 8001793,
-      "target_id": 8001794,
-      "source_word": "found",
-      "target_word": "нашёл|обнаружил",
-      "source_example": "I found my keys.",
-      "target_example": "Я нашёл свои ключи."
-    },
-    {
       "translation_id": 8000897,
       "source_id": 8001795,
       "target_id": 8001796,
@@ -7842,15 +7752,6 @@
       "target_word": "поддерживать, поддержка",
       "source_example": "I support your decision.",
       "target_example": "Я поддерживаю твое решение."
-    },
-    {
-      "translation_id": 8000905,
-      "source_id": 8001811,
-      "target_id": 8001812,
-      "source_word": "states",
-      "target_word": "заявляет|утверждает",
-      "source_example": "The document states the rules.",
-      "target_example": "В документе изложены правила."
     },
     {
       "translation_id": 8000906,
@@ -7934,15 +7835,6 @@
       "target_example": "Война - это ужасная вещь."
     },
     {
-      "translation_id": 8000916,
-      "source_id": 8001833,
-      "target_id": 8001834,
-      "source_word": "games",
-      "target_word": "игры",
-      "source_example": "I like to play video games.",
-      "target_example": "Я люблю играть в видеоигры."
-    },
-    {
       "translation_id": 8000917,
       "source_id": 8001835,
       "target_id": 8001836,
@@ -8024,15 +7916,6 @@
       "target_example": "Смерть - это часть жизни."
     },
     {
-      "translation_id": 8000926,
-      "source_id": 8001853,
-      "target_id": 8001854,
-      "source_word": "guy",
-      "target_word": "парень",
-      "source_example": "He is a nice guy.",
-      "target_example": "Он хороший парень."
-    },
-    {
       "translation_id": 8000927,
       "source_id": 8001855,
       "target_id": 8001856,
@@ -8040,15 +7923,6 @@
       "target_word": "потерянный, проиграл",
       "source_example": "I lost my keys.",
       "target_example": "Я потерял свои ключи."
-    },
-    {
-      "translation_id": 8000928,
-      "source_id": 8001857,
-      "target_id": 8001858,
-      "source_word": "started",
-      "target_word": "начал",
-      "source_example": "He started a new job.",
-      "target_example": "Он начал новую работу."
     },
     {
       "translation_id": 8000930,
@@ -8076,15 +7950,6 @@
       "target_word": "ударять, хит [песня]",
       "source_example": "He hit the ball hard.",
       "target_example": "Он сильно ударил по мячу."
-    },
-    {
-      "translation_id": 8000933,
-      "source_id": 8001867,
-      "target_id": 8001868,
-      "source_word": "playing",
-      "target_word": "играющий",
-      "source_example": "The children are playing outside.",
-      "target_example": "Дети играют на улице."
     },
     {
       "translation_id": 8000934,
@@ -8175,15 +8040,6 @@
       "target_word": "сердце",
       "source_example": "My heart is beating fast.",
       "target_example": "Мое сердце бьется быстро."
-    },
-    {
-      "translation_id": 8000945,
-      "source_id": 8001891,
-      "target_id": 8001892,
-      "source_word": "services",
-      "target_word": "услуги|сервисы",
-      "source_example": "The hotel offers many services.",
-      "target_example": "Отель предлагает множество услуг."
     },
     {
       "translation_id": 8000946,
@@ -8384,15 +8240,6 @@
       "target_example": "Это серьезная проблема."
     },
     {
-      "translation_id": 8000968,
-      "source_id": 8001937,
-      "target_id": 8001938,
-      "source_word": "played",
-      "target_word": "играл",
-      "source_example": "He played football yesterday.",
-      "target_example": "Он вчера играл в футбол."
-    },
-    {
       "translation_id": 8000969,
       "source_id": 8001939,
       "target_id": 8001940,
@@ -8564,15 +8411,6 @@
       "target_example": "Скорее всего, пойдет дождь."
     },
     {
-      "translation_id": 8000989,
-      "source_id": 8001979,
-      "target_id": 8001980,
-      "source_word": "hold",
-      "target_word": "держать|удерживать",
-      "source_example": "Please hold my hand.",
-      "target_example": "Пожалуйста, держи мою руку."
-    },
-    {
       "translation_id": 8000990,
       "source_id": 8001981,
       "target_id": 8001982,
@@ -8607,15 +8445,6 @@
       "target_word": "промышленность|индустрия",
       "source_example": "He works in the car industry.",
       "target_example": "Он работает в автомобильной промышленности."
-    },
-    {
-      "translation_id": 8000994,
-      "source_id": 8001989,
-      "target_id": 8001990,
-      "source_word": "issues",
-      "target_word": "проблемы|вопросы",
-      "source_example": "We have some issues to discuss.",
-      "target_example": "У нас есть некоторые вопросы для обсуждения."
     },
     {
       "translation_id": 8000995,
@@ -9059,15 +8888,6 @@
       "target_example": "Пожалуйста, двигайтесь вперед."
     },
     {
-      "translation_id": 8001044,
-      "source_id": 8002089,
-      "target_id": 8002090,
-      "source_word": "led",
-      "target_word": "вел|возглавлял",
-      "source_example": "He led the team to victory.",
-      "target_example": "Он привел команду к победе."
-    },
-    {
       "translation_id": 8001045,
       "source_id": 8002091,
       "target_id": 8002092,
@@ -9120,15 +8940,6 @@
       "target_word": "качество",
       "source_example": "The quality of this product is good.",
       "target_example": "Качество этого продукта хорошее."
-    },
-    {
-      "translation_id": 8001051,
-      "source_id": 8002103,
-      "target_id": 8002104,
-      "source_word": "lower",
-      "target_word": "нижний, снижать",
-      "source_example": "Please lower your voice.",
-      "target_example": "Пожалуйста, говорите тише."
     },
     {
       "translation_id": 8001052,
@@ -9185,15 +8996,6 @@
       "target_example": "Актеры на сцене."
     },
     {
-      "translation_id": 8001058,
-      "source_id": 8002117,
-      "target_id": 8002118,
-      "source_word": "terms",
-      "target_word": "условия|термины",
-      "source_example": "What are the terms of the contract?",
-      "target_example": "Каковы условия контракта?"
-    },
-    {
       "translation_id": 8001059,
       "source_id": 8002119,
       "target_id": 8002120,
@@ -9210,24 +9012,6 @@
       "target_word": "атака, атаковать",
       "source_example": "The army is under attack.",
       "target_example": "Армия под атакой."
-    },
-    {
-      "translation_id": 8001061,
-      "source_id": 8002123,
-      "target_id": 8002124,
-      "source_word": "decided",
-      "target_word": "решил",
-      "source_example": "I have decided to leave.",
-      "target_example": "Я решил уйти."
-    },
-    {
-      "translation_id": 8001062,
-      "source_id": 8002125,
-      "target_id": 8002126,
-      "source_word": "kill",
-      "target_word": "убивать",
-      "source_example": "Don't kill the spiders.",
-      "target_example": "Не убивай пауков."
     },
     {
       "translation_id": 8001063,
@@ -9300,15 +9084,6 @@
       "target_word": "увеличивать|рост",
       "source_example": "The price has increased.",
       "target_example": "Цена выросла."
-    },
-    {
-      "translation_id": 8001071,
-      "source_id": 8002143,
-      "target_id": 8002144,
-      "source_word": "lose",
-      "target_word": "терять|проигрывать",
-      "source_example": "I don't want to lose the game.",
-      "target_example": "Я не хочу проиграть игру."
     },
     {
       "translation_id": 8001072,
@@ -9437,15 +9212,6 @@
       "target_example": "Это просто невозможно."
     },
     {
-      "translation_id": 8001086,
-      "source_id": 8002173,
-      "target_id": 8002174,
-      "source_word": "began",
-      "target_word": "начал",
-      "source_example": "The movie began at 7.",
-      "target_example": "Фильм начался в 7."
-    },
-    {
       "translation_id": 8001087,
       "source_id": 8002175,
       "target_id": 8002176,
@@ -9453,15 +9219,6 @@
       "target_word": "опубликованный",
       "source_example": "The book was published last year.",
       "target_example": "Книга была опубликована в прошлом году."
-    },
-    {
-      "translation_id": 8001088,
-      "source_id": 8002177,
-      "target_id": 8002178,
-      "source_word": "starting",
-      "target_word": "начиная",
-      "source_example": "I am starting a new job.",
-      "target_example": "Я начинаю новую работу."
     },
     {
       "translation_id": 8001089,
@@ -9480,15 +9237,6 @@
       "target_word": "потеря|убыток",
       "source_example": "This is a big loss.",
       "target_example": "Это большая потеря."
-    },
-    {
-      "translation_id": 8001091,
-      "source_id": 8002183,
-      "target_id": 8002184,
-      "source_word": "systems",
-      "target_word": "системы",
-      "source_example": "We have many different systems.",
-      "target_example": "У нас много разных систем."
     },
     {
       "translation_id": 8001092,
@@ -9608,15 +9356,6 @@
       "target_example": "Пожалуйста, пропустите меня."
     },
     {
-      "translation_id": 8001105,
-      "source_id": 8002211,
-      "target_id": 8002212,
-      "source_word": "released",
-      "target_word": "выпущенный",
-      "source_example": "The new movie was released yesterday.",
-      "target_example": "Новый фильм вышел вчера."
-    },
-    {
       "translation_id": 8001106,
       "source_id": 8002213,
       "target_id": 8002214,
@@ -9624,15 +9363,6 @@
       "target_word": "доступ",
       "source_example": "I have access to the internet.",
       "target_example": "У меня есть доступ в интернет."
-    },
-    {
-      "translation_id": 8001107,
-      "source_id": 8002215,
-      "target_id": 8002216,
-      "source_word": "base",
-      "target_word": "база|основа",
-      "source_example": "This is the base of the mountain.",
-      "target_example": "Это подножие горы."
     },
     {
       "translation_id": 8001108,
@@ -9669,15 +9399,6 @@
       "target_word": "профессиональный",
       "source_example": "He is a professional football player.",
       "target_example": "Он профессиональный футболист."
-    },
-    {
-      "translation_id": 8001113,
-      "source_id": 8002227,
-      "target_id": 8002228,
-      "source_word": "cases",
-      "target_word": "случаи|дела",
-      "source_example": "There are many cases of flu.",
-      "target_example": "Есть много случаев гриппа."
     },
     {
       "translation_id": 8001114,
@@ -9777,15 +9498,6 @@
       "target_word": "ответ|реакция",
       "source_example": "I am waiting for your response.",
       "target_example": "Я жду вашего ответа."
-    },
-    {
-      "translation_id": 8001125,
-      "source_id": 8002251,
-      "target_id": 8002252,
-      "source_word": "word",
-      "target_word": "слово",
-      "source_example": "This is a difficult word.",
-      "target_example": "Это трудное слово."
     }
   ]
 }

@@ -2624,15 +2624,6 @@
       "target_example": "Это курс графического дизайна."
     },
     {
-      "translation_id": 9005308,
-      "source_id": 9005617,
-      "target_id": 9005618,
-      "source_word": "graphics",
-      "target_word": "графика",
-      "source_example": "The computer has excellent graphics.",
-      "target_example": "У компьютера отличная графика."
-    },
-    {
       "translation_id": 9005309,
       "source_id": 9005619,
       "target_id": 9005620,
@@ -4719,15 +4710,6 @@
       "target_word": "облегчать",
       "source_example": "This medicine will relieve your pain.",
       "target_example": "Это лекарство облегчит вашу боль."
-    },
-    {
-      "translation_id": 9005551,
-      "source_id": 9006103,
-      "target_id": 9006104,
-      "source_word": "relieved",
-      "target_word": "облегчённый",
-      "source_example": "I was relieved to hear the news.",
-      "target_example": "Я с облегчением услышал эту новость."
     },
     {
       "translation_id": 9005552,
@@ -7365,15 +7347,6 @@
       "target_word": "напиток",
       "source_example": "What kind of beverages do you have?",
       "target_example": "Какие у вас есть напитки?"
-    },
-    {
-      "translation_id": 9005865,
-      "source_id": 9006731,
-      "target_id": 9006732,
-      "source_word": "bind",
-      "target_word": "связывать",
-      "source_example": "He was bound with ropes.",
-      "target_example": "Он был связан веревками."
     },
     {
       "translation_id": 9005866,
@@ -11939,15 +11912,6 @@
       "target_example": "Он неотъемлемая часть команды."
     },
     {
-      "translation_id": 9006407,
-      "source_id": 9007815,
-      "target_id": 9007816,
-      "source_word": "integrated",
-      "target_word": "интегрированный|объединённый",
-      "source_example": "An integrated system.",
-      "target_example": "Интегрированная система."
-    },
-    {
       "translation_id": 9006408,
       "source_id": 9007817,
       "target_id": 9007818,
@@ -14405,15 +14369,6 @@
       "target_example": "Судебное разбирательство."
     },
     {
-      "translation_id": 9006698,
-      "source_id": 9008397,
-      "target_id": 9008398,
-      "source_word": "proceeds",
-      "target_word": "выручка|доходы",
-      "source_example": "The proceeds of the sale.",
-      "target_example": "Выручка от продажи."
-    },
-    {
       "translation_id": 9006699,
       "source_id": 9008399,
       "target_id": 9008400,
@@ -16014,15 +15969,6 @@
       "target_word": "вызывать|зажигать",
       "source_example": "The speech sparked a debate.",
       "target_example": "Речь вызвала дебаты."
-    },
-    {
-      "translation_id": 9006896,
-      "source_id": 9008793,
-      "target_id": 9008794,
-      "source_word": "specialized",
-      "target_word": "специализированный",
-      "source_example": "A specialized tool.",
-      "target_example": "Специализированный инструмент."
     },
     {
       "translation_id": 9006897,
