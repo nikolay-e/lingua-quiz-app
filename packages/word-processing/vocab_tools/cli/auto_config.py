@@ -124,11 +124,23 @@ def build_migration_path(lang: str, level: str, migrations_dir: Path | None = No
 
     level_lower = level.lower()
 
-    for pattern in MIGRATION_FILE_PATTERNS:
-        filename = pattern.format(language=lang, level=level_lower)
-        file_path = migrations_dir / filename
-        if file_path.exists():
-            return file_path
+    lang_full_names = {
+        "es": "spanish",
+        "de": "german",
+        "en": "english",
+        "ru": "russian",
+    }
+
+    lang_variants = [lang]
+    if lang in lang_full_names:
+        lang_variants.append(lang_full_names[lang])
+
+    for lang_variant in lang_variants:
+        for pattern in MIGRATION_FILE_PATTERNS:
+            filename = pattern.format(language=lang_variant, level=level_lower)
+            file_path = migrations_dir / filename
+            if file_path.exists():
+                return file_path
 
     raise FileNotFoundError(
         f"Could not find migration file for {lang.upper()} {level} in {migrations_dir}. Tried patterns: {', '.join(MIGRATION_FILE_PATTERNS)}"

@@ -1893,6 +1893,24 @@
       "target_word": "эпоха",
       "source_example": "La época medieval.",
       "target_example": "Средневековая эпоха."
+    },
+    {
+      "translation_id": 4001472,
+      "source_id": 4002944,
+      "target_id": 4002945,
+      "source_word": "detective",
+      "target_word": "детектив",
+      "source_example": "El detective investiga.",
+      "target_example": "Детектив расследует."
+    },
+    {
+      "translation_id": 4001518,
+      "source_id": 4003036,
+      "target_id": 4003037,
+      "source_word": "inspector",
+      "target_word": "инспектор",
+      "source_example": "El inspector llegó.",
+      "target_example": "Инспектор прибыл."
     }
   ]
 }

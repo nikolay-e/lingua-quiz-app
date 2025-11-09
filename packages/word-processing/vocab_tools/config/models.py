@@ -20,7 +20,7 @@ class AnalysisDefaults(BaseModel):
 class CEFRLevel(BaseModel):
     """CEFR level configuration."""
 
-    words: int = Field(ge=100)
+    words: int = Field(ge=0)
     rank_range: list[int] = Field(min_length=2, max_length=2)
     zipf_threshold: float = Field(ge=0, le=10)
     coverage_target: str
@@ -72,8 +72,11 @@ class Blacklist(BaseModel):
     profanity: list[str]
     abbreviations: list[str]
     interjections: list[str]
+    anglicisms: list[str] = Field(default_factory=list)
     slang: list[str] = Field(default_factory=list)
     proper_nouns: list[str]
+    technical: list[str] = Field(default_factory=list)
+    lemma_errors: list[str] = Field(default_factory=list)
     too_short: list[str] = Field(default_factory=list)
 
 
@@ -222,8 +225,11 @@ class Config(BaseModel):
         all_words.extend(blacklist.profanity)
         all_words.extend(blacklist.abbreviations)
         all_words.extend(blacklist.interjections)
+        all_words.extend(blacklist.anglicisms)
         all_words.extend(blacklist.slang)
         all_words.extend(blacklist.proper_nouns)
+        all_words.extend(blacklist.technical)
+        all_words.extend(blacklist.lemma_errors)
         all_words.extend(blacklist.too_short)
 
         return all_words

@@ -85,9 +85,6 @@ Migration JSON для бэкенда
 4. **Валидация** - blacklist из `data/blacklists/{lang}.txt`
 5. **Фильтрация Named Entities**
 6. **Фильтрация склонений** - коэффициенты из `config.yaml`:
-   - ES: 0.4 (60% удаляется)
-   - DE: 0.2 (80% удаляется)
-   - RU: 0.15 (85% удаляется)
 7. **Дедупликация** - приоритет базовой формы
 
 **Возможности:**
@@ -100,7 +97,7 @@ Migration JSON для бэкенда
 
 **Мультиязычность:** EN, ES, DE, RU
 
-### 3. Валидация миграций (MigrationValidator: 20 тестов) ✅
+### 3. Валидация миграций
 
 **Поиск дубликатов:**
 
@@ -205,17 +202,6 @@ pytest tests/integration/test_word_source.py -v
 pytest tests/integration/test_vocabulary_processor.py -v
 pytest tests/integration/test_migration_validator.py -v
 ```
-
-## Покрытие тестами
-
-| Модуль                 | Тесты  | Покрытие | Статус |
-| ---------------------- | ------ | -------- | ------ |
-| WordSource (генерация) | 26     | ~80%     | ✅     |
-| VocabularyProcessor    | 16     | ~60%     | ✅     |
-| MigrationValidator     | 20     | ~75%     | ✅     |
-| **Итого**              | **62** | **~72%** | ✅     |
-
-Время: **~10 секунд** (параллельно, 14 workers)
 
 ## Использование CLI
 
@@ -359,9 +345,9 @@ data/
 tests/integration/
 ├── conftest.py                    # Session fixtures (DRY)
 ├── test_data.py                   # Централизованные данные (DRY)
-├── test_word_source.py            # [1] 26 тестов ✅
-├── test_vocabulary_processor.py   # [2] 16 тестов ✅
-└── test_migration_validator.py    # [3] 20 тестов ✅
+├── test_word_source.py            #
+├── test_vocabulary_processor.py   #
+└── test_migration_validator.py    #
 ```
 
 ## TDD Workflow

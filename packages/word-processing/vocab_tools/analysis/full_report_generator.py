@@ -18,13 +18,21 @@ class FullReportGenerator:
         self.analyzer = VocabularyAnalyzer(language_code, migration_file_path)
         self.config_loader = get_config_loader()
 
+        self.level = self._get_level_from_filename()
+        if not self.level:
+            self.level = "a1"
+
         if top_n is None:
-            level = self._get_level_from_filename()
-            if not level:
-                level = "a1"  # Fallback to A1
-            self.top_n = self.config_loader.get_cumulative_total(level)
+            cumulative = self.config_loader.get_cumulative_total(self.level)
+            self.top_n = cumulative if cumulative > 0 else 50000
         else:
             self.top_n = top_n
+
+        level_config = self.config_loader.config.get_cefr_level(self.level)
+        if level_config:
+            self.rank_range = level_config.rank_range
+        else:
+            self.rank_range = [1, 1000]
 
     def _get_level_from_filename(self) -> str:
         filename = self.migration_file_path.stem
@@ -175,26 +183,36 @@ class FullReportGenerator:
         }
 
     def _categorize_by_rank(self, rank: int) -> str:
-        if rank <= 500:
+        range_start, range_end = self.rank_range
+        range_size = range_end - range_start + 1
+
+        if rank < range_start:
+            return "TOO_HIGH_FREQUENCY"
+        if rank <= range_start + (range_size * 0.25):
             return "HIGH_FREQUENCY"
-        if rank <= 1000:
+        if rank <= range_start + (range_size * 0.5):
             return "VERY_COMMON"
-        if rank <= 5000:
+        if rank <= range_end:
             return "LEGITIMATE"
-        if rank <= 10000:
+        if rank <= range_end * 2:
             return "LOW_PRIORITY"
         return "VERY_RARE"
 
     def _get_priority(self, rank: int) -> int:
-        if rank <= 500:
-            return 1  # Critical
-        if rank <= 1000:
-            return 2  # High
-        if rank <= 5000:
-            return 3  # Medium
-        if rank <= 10000:
-            return 4  # Low
-        return 6  # Very low
+        range_start, range_end = self.rank_range
+        range_size = range_end - range_start + 1
+
+        if rank < range_start:
+            return 0
+        if rank <= range_start + (range_size * 0.25):
+            return 1
+        if rank <= range_start + (range_size * 0.5):
+            return 2
+        if rank <= range_end:
+            return 3
+        if rank <= range_end * 2:
+            return 4
+        return 6
 
     def _categorize_all_words(self, vocab_lemma_map: dict[str, list[str]], lemma_to_real_rank: dict[str, int]) -> list[dict[str, Any]]:
         detailed_data = []
@@ -218,21 +236,9 @@ class FullReportGenerator:
             if is_english:
                 category = "ENGLISH"
                 priority = 1
-            elif rank_estimate <= 500:
-                category = "HIGH_FREQUENCY"
-                priority = 1
-            elif rank_estimate <= 1000:
-                category = "VERY_COMMON"
-                priority = 2
-            elif rank_estimate <= 5000:
-                category = "LEGITIMATE"
-                priority = 3
-            elif rank_estimate <= 10000:
-                category = "LOW_PRIORITY"
-                priority = 4
             else:
-                category = "VERY_RARE"
-                priority = 6
+                category = self._categorize_by_rank(rank_estimate)
+                priority = self._get_priority(rank_estimate)
 
             detailed_data.append(
                 {
@@ -260,21 +266,28 @@ class FullReportGenerator:
         validation_result: dict[str, Any],
     ):
         lang_upper = self.language_code.upper()
+        range_start, range_end = self.rank_range
+        range_size = range_end - range_start + 1
+
+        high_freq_threshold = range_start + int(range_size * 0.25)
+        very_rare_threshold = range_end * 2
 
         total_errors = len(validation_result.get("errors", []))
         total_warnings = len(validation_result.get("warnings", []))
 
-        report = f"""# ПОЛНЫЙ ОТЧЁТ: Анализ словаря ({lang_upper})
+        report = f"""# ПОЛНЫЙ ОТЧЁТ: Анализ словаря ({lang_upper} {self.level.upper()})
 
 ## Общая статистика
 
 | Метрика | Значение |
 |---------|----------|
+| Уровень CEFR | {self.level.upper()} |
+| Целевой диапазон рангов | {range_start:,} - {range_end:,} |
 | Всего слов в словаре | {len(vocab_words):,} |
 | Уникальных лемм | {len(vocab_lemma_map):,} |
-| Высокочастотные (ранг < 500) | {len([x for x in detailed_data if x["rank"] <= 500]):,} |
+| Высокочастотные (ранг ≤ {high_freq_threshold:,}) | {len([x for x in detailed_data if x["rank"] <= high_freq_threshold]):,} |
 | Английские слова | {len([x for x in detailed_data if x["category"] == "ENGLISH"]):,} |
-| Очень редкие (ранг > 10,000) | {len([x for x in detailed_data if x["rank"] > 10000]):,} |
+| Очень редкие (ранг > {very_rare_threshold:,}) | {len([x for x in detailed_data if x["rank"] > very_rare_threshold]):,} |
 | **Ошибки валидации** | **{total_errors}** |
 | **Предупреждения валидации** | **{total_warnings}** |
 
@@ -344,15 +357,15 @@ class FullReportGenerator:
             report += f"| {i} | {word['lemma']} | {forms} | {target_zipf:.2f} | {en_zipf:.2f} | +{diff:.1f} | {reason} |\n"
 
         report += f"""
-### 2. Очень редкие слова (ранг > 10,000)
+### 2. Очень редкие слова (ранг > {very_rare_threshold:,})
 
-**Всего: {len([x for x in detailed_data if x["rank"] > 10000])} слов**
+**Всего: {len([x for x in detailed_data if x["rank"] > very_rare_threshold])} слов**
 
 | № | Лемма | Формы | Ранг | Zipf | Рекомендация |
 |---|-------|-------|------|------|--------------|
 """
 
-        rare_words = [x for x in detailed_data if x["rank"] > 10000]
+        rare_words = [x for x in detailed_data if x["rank"] > very_rare_threshold]
         for i, word in enumerate(rare_words, 1):
             forms = ", ".join(word["forms"])
             recommendation = "Слишком редкое"
@@ -385,14 +398,19 @@ class FullReportGenerator:
 |---|-------|------|------|-------------|-----------|
 """
 
+        critical_threshold = range_start + int(range_size * 0.1)
+        high_threshold = range_start + int(range_size * 0.25)
+        medium_threshold = range_start + int(range_size * 0.5)
+
         for i, item in enumerate(result.missing_from_a1, 1):
+            rank = item["rank_estimate"]
             priority = (
                 " КРИТИЧНО"
-                if item["rank_estimate"] <= 100
+                if rank <= critical_threshold
                 else " ВЫСОКИЙ"
-                if item["rank_estimate"] <= 500
+                if rank <= high_threshold
                 else " СРЕДНИЙ"
-                if item["rank_estimate"] <= 1000
+                if rank <= medium_threshold
                 else "⚪ НИЗКИЙ"
             )
             report += f"| {i} | {item['lemma']} | {item['rank_estimate']:,} | {item['zipf']:.2f} | {item['frequency']:.8f} | {priority} |\n"
@@ -402,43 +420,44 @@ class FullReportGenerator:
 
 ## ЛЕГИТИМНЫЕ СЛОВА
 
-### Высокочастотные слова (ранг < 1000)
+### Высокочастотные слова (ранг {range_start:,} - {high_freq_threshold:,})
 
-**Всего: {len([x for x in detailed_data if x["rank"] <= 1000])} слов**
+**Всего: {len([x for x in detailed_data if range_start <= x["rank"] <= high_freq_threshold])} слов**
 
 | № | Лемма | Формы | Ранг | Zipf | Статус |
 |---|-------|-------|------|------|--------|
 """
 
-        legitimate = [x for x in detailed_data if x["rank"] <= 1000]
+        legitimate = [x for x in detailed_data if range_start <= x["rank"] <= high_freq_threshold]
         for i, word in enumerate(legitimate, 1):
             forms = ", ".join(word["forms"])
             report += f"| {i} | {word['lemma']} | {forms} | {word['rank']:,} | {word['zipf']:.2f} | Отлично |\n"
 
+        moderate_threshold = range_start + int(range_size * 0.5)
         report += f"""
-### Умеренно частотные слова (ранг 1000-5000)
+### Умеренно частотные слова (ранг {high_freq_threshold + 1:,} - {moderate_threshold:,})
 
-**Всего: {len([x for x in detailed_data if 1000 < x["rank"] <= 5000])} слов**
+**Всего: {len([x for x in detailed_data if high_freq_threshold < x["rank"] <= moderate_threshold])} слов**
 
 | № | Лемма | Формы | Ранг | Zipf | Статус |
 |---|-------|-------|------|------|--------|
 """
 
-        moderate = [x for x in detailed_data if 1000 < x["rank"] <= 5000]
+        moderate = [x for x in detailed_data if high_freq_threshold < x["rank"] <= moderate_threshold]
         for i, word in enumerate(moderate, 1):
             forms = ", ".join(word["forms"])
             report += f"| {i} | {word['lemma']} | {forms} | {word['rank']:,} | {word['zipf']:.2f} | Приемлемо |\n"
 
         report += f"""
-### Низкоприоритетные слова (ранг 5000-10000)
+### В целевом диапазоне (ранг {moderate_threshold + 1:,} - {range_end:,})
 
-**Всего: {len([x for x in detailed_data if 5000 < x["rank"] <= 10000])} слов**
+**Всего: {len([x for x in detailed_data if moderate_threshold < x["rank"] <= range_end])} слов**
 
 | № | Лемма | Формы | Ранг | Zipf | Статус |
 |---|-------|-------|------|------|--------|
 """
 
-        low_priority = [x for x in detailed_data if 5000 < x["rank"] <= 10000]
+        low_priority = [x for x in detailed_data if moderate_threshold < x["rank"] <= range_end]
         for i, word in enumerate(low_priority, 1):
             forms = ", ".join(word["forms"])
             report += f"| {i} | {word['lemma']} | {forms} | {word['rank']:,} | {word['zipf']:.2f} | ⚪ Низкий приоритет |\n"
@@ -452,11 +471,21 @@ class FullReportGenerator:
         vocab_words: list[str],
         vocab_lemma_map: dict[str, list[str]],
     ) -> dict[str, Any]:
+        range_start, range_end = self.rank_range
+        range_size = range_end - range_start + 1
+        high_freq_threshold = range_start + int(range_size * 0.25)
+        moderate_threshold = range_start + int(range_size * 0.5)
+        very_rare_threshold = range_end * 2
+
+        critical_threshold = range_start + int(range_size * 0.1)
+        high_threshold = range_start + int(range_size * 0.25)
+        medium_threshold = range_start + int(range_size * 0.5)
+
         english_words = [x for x in detailed_data if x["category"] == "ENGLISH"]
-        rare_words = [x for x in detailed_data if x["rank"] > 10000]
-        low_priority = [x for x in detailed_data if 5000 < x["rank"] <= 10000]
-        moderate = [x for x in detailed_data if 1000 < x["rank"] <= 5000]
-        legitimate = [x for x in detailed_data if x["rank"] <= 1000]
+        rare_words = [x for x in detailed_data if x["rank"] > very_rare_threshold]
+        low_priority = [x for x in detailed_data if moderate_threshold < x["rank"] <= range_end]
+        moderate = [x for x in detailed_data if high_freq_threshold < x["rank"] <= moderate_threshold]
+        legitimate = [x for x in detailed_data if range_start <= x["rank"] <= high_freq_threshold]
 
         return {
             "total_words": len(vocab_words),
@@ -470,9 +499,9 @@ class FullReportGenerator:
             },
             "missing": {
                 "total": len(result.missing_from_a1),
-                "critical": len([x for x in result.missing_from_a1 if x["rank_estimate"] <= 100]),
-                "high_priority": len([x for x in result.missing_from_a1 if x["rank_estimate"] <= 500]),
-                "medium_priority": len([x for x in result.missing_from_a1 if x["rank_estimate"] <= 1000]),
-                "low_priority": len([x for x in result.missing_from_a1 if x["rank_estimate"] > 1000]),
+                "critical": len([x for x in result.missing_from_a1 if x["rank_estimate"] <= critical_threshold]),
+                "high_priority": len([x for x in result.missing_from_a1 if x["rank_estimate"] <= high_threshold]),
+                "medium_priority": len([x for x in result.missing_from_a1 if x["rank_estimate"] <= medium_threshold]),
+                "low_priority": len([x for x in result.missing_from_a1 if x["rank_estimate"] > medium_threshold]),
             },
         }

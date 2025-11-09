@@ -24,6 +24,13 @@ cefr_cumulative_totals:
 # - 8000-9000 words → 98% coverage (full fluency)
 # Zipf scale: content words range 1-6, tipping point at 3-4 (low→high frequency)
 cefr_levels:
+  a0:
+    words: 0  # No fixed word count - contains transliterations only
+    rank_range: [1, 999999]  # Any frequency rank - transliterations can appear at any frequency
+    zipf_threshold: 0.0  # No frequency threshold
+    coverage_target: "N/A - transliterated cognates"
+    description: "Transliterated words with identical/similar meaning across languages"
+
   a1:
     words: 1000
     rank_range: [1, 1000]
@@ -222,12 +229,12 @@ languages:
     skip_words: []
 
     blacklist:
-      profanity: ["puta", "mierda", "joder", "carajo", "coño", "cabrón", "pene", "culo", "polla", "boludo", "pendejo", "verga", "chingar"]
-      abbreviations: ["dr", "sr", "st", "of", "pp", "etc", "mr", "sra", "km", "mg", "mm", "cc", "cm", "ex"]
-      interjections: ["oh", "ah", "uh", "hey", "hola", "eh", "ay", "uf", "oye", "ey"]
+      profanity: ["puta", "mierda", "joder", "carajo", "coño", "cabrón", "pene", "culo", "polla", "boludo", "pendejo", "verga", "chingar", "puto", "bastardo"]
+      abbreviations: ["dr", "sr", "st", "of", "pp", "etc", "mr", "sra", "km", "mg", "mm", "cc", "cm", "ex", "tv", "adn", "dna"]
+      interjections: ["oh", "ah", "uh", "hey", "hola", "eh", "ay", "uf", "oye", "ey", "um", "io", "ei"]
       anglicisms: ["of", "and", "in", "new", "post", "show", "the", "internet", "online", "for", "team", "football", "love", "web", "boy", "email", "okay", "twitter", "video", "photo", "blog"]
       slang: ["pa", "po", "che", "tío", "tía", "pibe"]
-      proper_nouns: ["méxico", "españa", "argentina", "chile", "colombia", "venezuela", "perú", "cuba", "brasil", "madrid", "barcelona", "buenos", "aires", "josé", "juan", "maría", "carlos", "luis", "jorge", "pedro", "miguel", "antonio", "argentino", "américo"]
+      proper_nouns: ["méxico", "españa", "argentina", "chile", "colombia", "venezuela", "perú", "cuba", "brasil", "madrid", "barcelona", "buenos", "aires", "josé", "juan", "maría", "carlos", "luis", "jorge", "pedro", "miguel", "antonio", "argentino", "américo", "joe", "max", "tommy", "amy", "pete", "bob", "sam", "tom", "jim", "jack", "mike", "john", "paul", "david", "steve"]
       technical: ["internet", "web", "twitter", "video", "foto", "blog", "ministerio", "congreso"]
       lemma_errors: ["sar", "mierdo", "vo", "quier", "diar", "contiguir"]
       too_short: ["oh", "pa", "po", "ta", "na", "eh"]
