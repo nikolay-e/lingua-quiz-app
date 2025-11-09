@@ -7,8 +7,8 @@
     {
       "source_word": "hierro",
       "target_word": "железо",
-      "source_example": "Esta mesa es de hierro.",
-      "target_example": "Этот стол из железа."
+      "source_example": "La mesa es de hierro.",
+      "target_example": "Стол сделан из железа."
     },
     {
       "source_word": "círculo",
@@ -24,9 +24,9 @@
     },
     {
       "source_word": "asegurar",
-      "target_word": "(обеспечивать|гарантировать), уверять",
+      "target_word": "обеспечивать|гарантировать|уверять",
       "source_example": "Te aseguro que es verdad.",
-      "target_example": "Я тебе гарантирую, что это правда."
+      "target_example": "Я уверяю тебя, это правда."
     },
     {
       "source_word": "lago",
@@ -36,7 +36,7 @@
     },
     {
       "source_word": "distinto",
-      "target_word": "различный|другой|иной",
+      "target_word": "разный|иной|другой",
       "source_example": "Son muy distintos.",
       "target_example": "Они очень разные."
     },
@@ -49,12 +49,12 @@
     {
       "source_word": "celebrar",
       "target_word": "праздновать",
-      "source_example": "Vamos a celebrar.",
-      "target_example": "Давай праздновать."
+      "source_example": "Vamos a celebrar tu cumpleaños.",
+      "target_example": "Давай отпразднуем твой день рождения."
     },
     {
       "source_word": "ofrecer",
-      "target_word": "предлагать [предоставлять]",
+      "target_word": "предлагать|предоставлять",
       "source_example": "Te ofrezco mi ayuda.",
       "target_example": "Я предлагаю тебе помощь."
     },
@@ -62,13 +62,13 @@
       "source_word": "crecer",
       "target_word": "расти",
       "source_example": "Los niños crecen rápido.",
-      "target_example": "Дети растут быстро."
+      "target_example": "Дети быстро растут."
     },
     {
       "source_word": "gasto",
       "target_word": "расход",
-      "source_example": "Tengo muchos gastos.",
-      "target_example": "У меня большие расходы."
+      "source_example": "Tengo muchos gastos este mes.",
+      "target_example": "У меня много расходов в этом месяце."
     },
     {
       "source_word": "risa",
@@ -80,23 +80,23 @@
       "source_word": "vecino",
       "target_word": "сосед",
       "source_example": "Mi vecino es amable.",
-      "target_example": "Мой сосед приветливый."
+      "target_example": "Мой сосед добрый."
     },
     {
       "source_word": "aviso",
-      "target_word": "уведомление",
+      "target_word": "уведомление|предупреждение",
       "source_example": "Te envié un aviso.",
       "target_example": "Я отправил тебе уведомление."
     },
     {
       "source_word": "esquina",
-      "target_word": "угол",
-      "source_example": "En la esquina.",
-      "target_example": "На углу."
+      "target_word": "угол (улицы)",
+      "source_example": "Nos vemos en la esquina.",
+      "target_example": "Встретимся на углу."
     },
     {
       "source_word": "puro",
-      "target_word": "чистый [подлинный]",
+      "target_word": "чистый",
       "source_example": "Oro puro.",
       "target_example": "Чистое золото."
     },
@@ -119,38 +119,38 @@
       "target_example": "Рабочие протестуют."
     },
     {
-      "source_word": "mio",
+      "source_word": "mío",
       "target_word": "мой",
-      "source_example": "Es mio.",
+      "source_example": "Es mío.",
       "target_example": "Это моё."
     },
     {
       "source_word": "grandioso",
       "target_word": "грандиозный|величественный",
       "cefr_level": "A2",
-      "source_example": "Necesito grandioso.",
-      "target_example": "Мне нужно грандиозный."
+      "source_example": "Fue un plan grandioso.",
+      "target_example": "Это был грандиозный план."
     },
     {
       "source_word": "ciento",
       "target_word": "сто",
       "cefr_level": "A2",
-      "source_example": "Necesito ciento.",
-      "target_example": "Мне нужно сто."
+      "source_example": "Ciento dos.",
+      "target_example": "Сто два."
     },
     {
       "source_word": "tormenta",
       "target_word": "буря|гроза",
       "cefr_level": "A2",
-      "source_example": "¿Tienes tormenta?",
-      "target_example": "У тебя есть буря?"
+      "source_example": "Hay tormenta esta noche.",
+      "target_example": "Сегодня ночью будет гроза."
     },
     {
       "source_word": "relájate",
       "target_word": "расслабься",
       "cefr_level": "A2",
-      "source_example": "Esto es relájate.",
-      "target_example": "Это расслабься."
+      "source_example": "Relájate, todo va bien.",
+      "target_example": "Расслабься, всё хорошо."
     },
     {
       "source_word": "chocolate",
@@ -163,8 +163,8 @@
       "source_word": "pedazo",
       "target_word": "кусок|часть",
       "cefr_level": "A2",
-      "source_example": "Mi pedazo es importante.",
-      "target_example": "Мой кусок важен."
+      "source_example": "Quiero un pedazo de pan.",
+      "target_example": "Я хочу кусок хлеба."
     },
     {
       "source_word": "tomo",
@@ -177,43 +177,43 @@
       "source_word": "ciencia",
       "target_word": "наука",
       "cefr_level": "A2",
-      "source_example": "Quiero comprar ciencia.",
-      "target_example": "Я хочу купить наука."
+      "source_example": "La ciencia es interesante.",
+      "target_example": "Наука интересна."
     },
     {
       "source_word": "salón",
-      "target_word": "зал|салон",
+      "target_word": "зал|гостиная",
       "cefr_level": "A2",
-      "source_example": "Me gusta salón.",
-      "target_example": "Мне нравится зал."
+      "source_example": "Nos vemos en el salón.",
+      "target_example": "Встретимся в зале."
     },
     {
       "source_word": "sucio",
       "target_word": "грязный",
       "cefr_level": "A2",
-      "source_example": "Esto es sucio.",
-      "target_example": "Это грязный."
+      "source_example": "El piso está sucio.",
+      "target_example": "Пол грязный."
     },
     {
       "source_word": "firma",
-      "target_word": "подпись|компания",
+      "target_word": "подпись|фирма",
       "cefr_level": "A2",
-      "source_example": "El firma está aquí.",
-      "target_example": "Объект подпись здесь."
+      "source_example": "Tu firma aquí, por favor.",
+      "target_example": "Ваша подпись здесь, пожалуйста."
     },
     {
       "source_word": "bebida",
       "target_word": "напиток",
       "cefr_level": "A2",
-      "source_example": "El bebida está aquí.",
-      "target_example": "Объект напиток здесь."
+      "source_example": "¿Quieres una bebida fría?",
+      "target_example": "Хочешь холодный напиток?"
     },
     {
       "source_word": "lluvia",
       "target_word": "дождь",
       "cefr_level": "A2",
-      "source_example": "Mi lluvia es importante.",
-      "target_example": "Мой дождь важен."
+      "source_example": "Me gusta la lluvia.",
+      "target_example": "Мне нравится дождь."
     },
     {
       "source_word": "recién",
@@ -226,15 +226,15 @@
       "source_word": "complicado",
       "target_word": "сложный|запутанный",
       "cefr_level": "A2",
-      "source_example": "El complicado está aquí.",
-      "target_example": "Объект сложный здесь."
+      "source_example": "El tema es complicado.",
+      "target_example": "Тема сложная."
     },
     {
       "source_word": "visión",
       "target_word": "зрение|видение",
       "cefr_level": "A2",
-      "source_example": "¿Tienes visión?",
-      "target_example": "У тебя есть зрение?"
+      "source_example": "Tengo mala visión de lejos.",
+      "target_example": "У меня плохое зрение вдаль."
     },
     {
       "source_word": "llego",
@@ -247,15 +247,15 @@
       "source_word": "americano",
       "target_word": "американский|американец",
       "cefr_level": "A2",
-      "source_example": "¿Dónde está americano?",
-      "target_example": "Где американский?"
+      "source_example": "Soy estadounidense.",
+      "target_example": "Я американец."
     },
     {
       "source_word": "diversión",
       "target_word": "развлечение|веселье",
       "cefr_level": "A2",
-      "source_example": "Voy a usar diversión.",
-      "target_example": "Я буду использовать развлечение."
+      "source_example": "La película fue pura diversión.",
+      "target_example": "Фильм был чистым весельем."
     },
     {
       "source_word": "libra",
@@ -303,15 +303,15 @@
       "source_word": "efectivo",
       "target_word": "наличные|эффективный",
       "cefr_level": "A2",
-      "source_example": "Quiero comprar efectivo.",
-      "target_example": "Я хочу купить наличные."
+      "source_example": "¿Puedo pagar en efectivo?",
+      "target_example": "Можно заплатить наличными?"
     },
     {
       "source_word": "cura",
       "target_word": "священник|лечение",
       "cefr_level": "A2",
-      "source_example": "Mi cura es importante.",
-      "target_example": "Мой священник важен."
+      "source_example": "El cura vive cerca.",
+      "target_example": "Священник живёт рядом."
     },
     {
       "source_word": "cáncer",
@@ -394,15 +394,15 @@
       "source_word": "helado",
       "target_word": "мороженое|замороженный",
       "cefr_level": "A2",
-      "source_example": "Mi helado es importante.",
-      "target_example": "Мой мороженое важен."
+      "source_example": "Quiero un helado de vainilla.",
+      "target_example": "Я хочу ванильное мороженое."
     },
     {
       "source_word": "camioneta",
-      "target_word": "грузовик|фургон",
+      "target_word": "пикап|фургон",
       "cefr_level": "A2",
-      "source_example": "Este camioneta es bueno.",
-      "target_example": "Этот грузовик хороший."
+      "source_example": "Compramos una camioneta usada.",
+      "target_example": "Мы купили подержанный пикап."
     },
     {
       "source_word": "aparte",
@@ -427,17 +427,17 @@
     },
     {
       "source_word": "tarea",
-      "target_word": "задание|работа",
+      "target_word": "задание|домашняя работа",
       "cefr_level": "A2",
-      "source_example": "Necesito tarea.",
-      "target_example": "Мне нужно задание."
+      "source_example": "Tengo mucha tarea hoy.",
+      "target_example": "У меня много домашнего задания."
     },
     {
       "source_word": "móvil",
       "target_word": "мобильный телефон",
       "cefr_level": "A2",
-      "source_example": "Necesito móvil.",
-      "target_example": "Мне нужно мобильный телефон."
+      "source_example": "Perdí mi móvil.",
+      "target_example": "Я потерял мобильный телефон."
     },
     {
       "source_word": "responder",
