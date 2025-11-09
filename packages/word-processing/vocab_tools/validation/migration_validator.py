@@ -113,49 +113,46 @@ class MigrationValidator:
 
         result = ValidationResult(total_checked=len(entries))
         normalizer = self.normalizers[language]
+        lemmatizer = self.lemmatizers[language]
 
-        # Track exact source_word duplicates (case-insensitive)
-        seen_exact_words: dict[str, list[str]] = defaultdict(list)
+        # Track duplicates by lemma+POS, but exclude pronouns and functional words
+        seen_words: dict[str, list[tuple[str, str]]] = defaultdict(list)
 
         for entry in entries:
             entry_issues = self._validate_entry(entry, filename, normalizer)
             result.issues.extend(entry_issues)
 
-            # Track by exact source_word (normalized for case-insensitive comparison)
-            normalized_word = entry.source_word.lower().strip()
-            seen_exact_words[normalized_word].append(entry.source_word)
+            # Use lemmatization + POS for duplicate detection
+            normalized_word = normalizer.normalize(entry.source_word)
+            lemma_with_pos = lemmatizer.lemmatize_with_pos(normalized_word)
 
-        # Check for exact duplicates only (same source_word, ignoring case)
-        # This avoids false positives for:
-        # - Pronouns with same lemma but different functions (él, ella, lo, se)
-        # - Important verb forms (ver, verás)
-        # - Possessive pronouns in different contexts (mío)
-        duplicates = {word: variants for word, variants in seen_exact_words.items() if len(variants) > 1}
+            # Store lemma+POS as key
+            for lemma, pos in lemma_with_pos:
+                key = f"{lemma}:{pos}"
+                seen_words[key].append((entry.source_word, pos))
+
+        # Check for duplicates (same lemma AND same POS)
+        # Exclude pronouns (PRON) - they often have same lemma but different functions
+        # (él, ella, lo, se should NOT be considered duplicates)
+        duplicates = {key: words for key, words in seen_words.items() if len(words) > 1}
         if duplicates:
-            for _normalized_word, variant_list in duplicates.items():
-                # Only report if they're truly identical (not just same lemma)
-                unique_variants = set(variant_list)
-                if len(unique_variants) == 1:
-                    # All variants are identical - true duplicate
-                    result.issues.append(
-                        ValidationIssue(
-                            severity="error",
-                            category="duplicates",
-                            message=f'Duplicate word "{variant_list[0]}" appears {len(variant_list)} times',
-                            file_name=filename,
-                        )
+            for key, word_pos_pairs in duplicates.items():
+                lemma, pos = key.split(":", 1)
+
+                # Skip pronouns and determiners - they're intentionally different despite same lemma
+                if pos in ["PRON", "DET"]:
+                    continue
+
+                original_variants = [word for word, _ in word_pos_pairs]
+                variants_str = ", ".join(f"'{v}'" for v in set(original_variants))
+                result.issues.append(
+                    ValidationIssue(
+                        severity="error",
+                        category="duplicates",
+                        message=f"Duplicate word (lemma: '{lemma}', POS: {pos}, variants: {variants_str}) found {len(word_pos_pairs)} times",
+                        file_name=filename,
                     )
-                else:
-                    # Multiple case variants (e.g., "word", "Word") - less severe
-                    variants_str = ", ".join(f"'{v}'" for v in unique_variants)
-                    result.issues.append(
-                        ValidationIssue(
-                            severity="warning",
-                            category="duplicates",
-                            message=f"Word appears with different capitalization: {variants_str}",
-                            file_name=filename,
-                        )
-                    )
+                )
 
         return result
 
