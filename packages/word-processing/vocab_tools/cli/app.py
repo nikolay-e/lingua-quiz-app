@@ -1,10 +1,11 @@
 import sys
 
-from rich.console import Console
 import typer
+from rich.console import Console
 
 from .commands import analyze as analyze_cmd
 from .commands import fill as fill_cmd
+from .commands import fill_missing_cmd
 from .commands import generate as generate_cmd
 
 app = typer.Typer(
@@ -17,9 +18,12 @@ app = typer.Typer(
 
 console = Console()
 
-app.command(name="analyze", help="Analyze vocabulary and generate comprehensive report with validation")(analyze_cmd.analyze)
+app.command(name="analyze", help="Analyze vocabulary and generate comprehensive report with validation")(
+    analyze_cmd.analyze
+)
 app.command(name="generate", help="Generate frequency word lists from subtitle data")(generate_cmd.generate)
 app.command(name="fill", help="Fill placeholder entries with missing words")(fill_cmd.fill)
+app.command(name="fill-missing", help="Fill missing high-frequency words from analysis")(fill_missing_cmd.fill_missing)
 
 
 def main():

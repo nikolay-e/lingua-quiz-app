@@ -7311,6 +7311,1886 @@
       "target_word": "ответ|реакция",
       "source_example": "I am waiting for your response.",
       "target_example": "Я жду вашего ответа."
+    },
+    {
+      "translation_id": 8001125,
+      "source_word_id": 8001126,
+      "target_word_id": 8001127,
+      "source_word": "the",
+      "target_word": "[translation needed for: the]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001128,
+      "source_word_id": 8001129,
+      "target_word_id": 8001130,
+      "source_word": "to",
+      "target_word": "[translation needed for: to]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001131,
+      "source_word_id": 8001132,
+      "target_word_id": 8001133,
+      "source_word": "it",
+      "target_word": "[translation needed for: it]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001134,
+      "source_word_id": 8001135,
+      "target_word_id": 8001136,
+      "source_word": "and",
+      "target_word": "[translation needed for: and]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001137,
+      "source_word_id": 8001138,
+      "target_word_id": 8001139,
+      "source_word": "'t",
+      "target_word": "[translation needed for: 't]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001140,
+      "source_word_id": 8001141,
+      "target_word_id": 8001142,
+      "source_word": "of",
+      "target_word": "[translation needed for: of]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001143,
+      "source_word_id": 8001144,
+      "target_word_id": 8001145,
+      "source_word": "in",
+      "target_word": "[translation needed for: in]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001146,
+      "source_word_id": 8001147,
+      "target_word_id": 8001148,
+      "source_word": "we",
+      "target_word": "[translation needed for: we]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001149,
+      "source_word_id": 8001150,
+      "target_word_id": 8001151,
+      "source_word": "my",
+      "target_word": "[translation needed for: my]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001152,
+      "source_word_id": 8001153,
+      "target_word_id": 8001154,
+      "source_word": "on",
+      "target_word": "[translation needed for: on]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001155,
+      "source_word_id": 8001156,
+      "target_word_id": 8001157,
+      "source_word": "have",
+      "target_word": "[translation needed for: have]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001158,
+      "source_word_id": 8001159,
+      "target_word_id": 8001160,
+      "source_word": "no",
+      "target_word": "[translation needed for: no]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001161,
+      "source_word_id": 8001162,
+      "target_word_id": 8001163,
+      "source_word": "so",
+      "target_word": "[translation needed for: so]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001164,
+      "source_word_id": 8001165,
+      "target_word_id": 8001166,
+      "source_word": "like",
+      "target_word": "[translation needed for: like]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001167,
+      "source_word_id": 8001168,
+      "target_word_id": 8001169,
+      "source_word": "up",
+      "target_word": "[translation needed for: up]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001170,
+      "source_word_id": 8001171,
+      "target_word_id": 8001172,
+      "source_word": "at",
+      "target_word": "[translation needed for: at]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001173,
+      "source_word_id": 8001174,
+      "target_word_id": 8001175,
+      "source_word": "okay",
+      "target_word": "[translation needed for: okay]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001176,
+      "source_word_id": 8001177,
+      "target_word_id": 8001178,
+      "source_word": "or",
+      "target_word": "[translation needed for: or]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001179,
+      "source_word_id": 8001180,
+      "target_word_id": 8001181,
+      "source_word": "last",
+      "target_word": "[translation needed for: last]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001182,
+      "source_word_id": 8001183,
+      "target_word_id": 8001184,
+      "source_word": "kind",
+      "target_word": "[translation needed for: kind]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001185,
+      "source_word_id": 8001186,
+      "target_word_id": 8001187,
+      "source_word": "ok",
+      "target_word": "[translation needed for: ok]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001188,
+      "source_word_id": 8001189,
+      "target_word_id": 8001190,
+      "source_word": "might",
+      "target_word": "[translation needed for: might]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001191,
+      "source_word_id": 8001192,
+      "target_word_id": 8001193,
+      "source_word": "next",
+      "target_word": "[translation needed for: next]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001194,
+      "source_word_id": 8001195,
+      "target_word_id": 8001196,
+      "source_word": "hi",
+      "target_word": "[translation needed for: hi]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001197,
+      "source_word_id": 8001198,
+      "target_word_id": 8001199,
+      "source_word": "wasn",
+      "target_word": "[translation needed for: wasn]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001200,
+      "source_word_id": 8001201,
+      "target_word_id": 8001202,
+      "source_word": "wouldn",
+      "target_word": "[translation needed for: wouldn]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001203,
+      "source_word_id": 8001204,
+      "target_word_id": 8001205,
+      "source_word": "already",
+      "target_word": "[translation needed for: already]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001206,
+      "source_word_id": 8001207,
+      "target_word_id": 8001208,
+      "source_word": "such",
+      "target_word": "[translation needed for: such]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001209,
+      "source_word_id": 8001210,
+      "target_word_id": 8001211,
+      "source_word": "haven",
+      "target_word": "[translation needed for: haven]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001212,
+      "source_word_id": 8001213,
+      "target_word_id": 8001214,
+      "source_word": "yet",
+      "target_word": "[translation needed for: yet]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001215,
+      "source_word_id": 8001216,
+      "target_word_id": 8001217,
+      "source_word": "whole",
+      "target_word": "[translation needed for: whole]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001218,
+      "source_word_id": 8001219,
+      "target_word_id": 8001220,
+      "source_word": "while",
+      "target_word": "[translation needed for: while]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001221,
+      "source_word_id": 8001222,
+      "target_word_id": 8001223,
+      "source_word": "since",
+      "target_word": "[translation needed for: since]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001224,
+      "source_word_id": 8001225,
+      "target_word_id": 8001226,
+      "source_word": "alone",
+      "target_word": "[translation needed for: alone]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001227,
+      "source_word_id": 8001228,
+      "target_word_id": 8001229,
+      "source_word": "myself",
+      "target_word": "[translation needed for: myself]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001230,
+      "source_word_id": 8001231,
+      "target_word_id": 8001232,
+      "source_word": "excuse",
+      "target_word": "[translation needed for: excuse]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001233,
+      "source_word_id": 8001234,
+      "target_word_id": 8001235,
+      "source_word": "worry",
+      "target_word": "[translation needed for: worry]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001236,
+      "source_word_id": 8001237,
+      "target_word_id": 8001238,
+      "source_word": "second",
+      "target_word": "[translation needed for: second]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001239,
+      "source_word_id": 8001240,
+      "target_word_id": 8001241,
+      "source_word": "whatever",
+      "target_word": "[translation needed for: whatever]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001242,
+      "source_word_id": 8001243,
+      "target_word_id": 8001244,
+      "source_word": "shut",
+      "target_word": "[translation needed for: shut]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001245,
+      "source_word_id": 8001246,
+      "target_word_id": 8001247,
+      "source_word": "aren",
+      "target_word": "[translation needed for: aren]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001248,
+      "source_word_id": 8001249,
+      "target_word_id": 8001250,
+      "source_word": "means",
+      "target_word": "[translation needed for: means]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001251,
+      "source_word_id": 8001252,
+      "target_word_id": 8001253,
+      "source_word": "anyway",
+      "target_word": "[translation needed for: anyway]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001254,
+      "source_word_id": 8001255,
+      "target_word_id": 8001256,
+      "source_word": "ain",
+      "target_word": "[translation needed for: ain]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001257,
+      "source_word_id": 8001258,
+      "target_word_id": 8001259,
+      "source_word": "against",
+      "target_word": "[translation needed for: against]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001260,
+      "source_word_id": 8001261,
+      "target_word_id": 8001262,
+      "source_word": "shall",
+      "target_word": "[translation needed for: shall]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001263,
+      "source_word_id": 8001264,
+      "target_word_id": 8001265,
+      "source_word": "least",
+      "target_word": "[translation needed for: least]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001266,
+      "source_word_id": 8001267,
+      "target_word_id": 8001268,
+      "source_word": "waiting",
+      "target_word": "[translation needed for: waiting]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001269,
+      "source_word_id": 8001270,
+      "target_word_id": 8001271,
+      "source_word": "hurt",
+      "target_word": "[translation needed for: hurt]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001272,
+      "source_word_id": 8001273,
+      "target_word_id": 8001274,
+      "source_word": "side",
+      "target_word": "[translation needed for: side]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001275,
+      "source_word_id": 8001276,
+      "target_word_id": 8001277,
+      "source_word": "though",
+      "target_word": "[translation needed for: though]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001278,
+      "source_word_id": 8001279,
+      "target_word_id": 8001280,
+      "source_word": "suppose",
+      "target_word": "[translation needed for: suppose]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001281,
+      "source_word_id": 8001282,
+      "target_word_id": 8001283,
+      "source_word": "almost",
+      "target_word": "[translation needed for: almost]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001284,
+      "source_word_id": 8001285,
+      "target_word_id": 8001286,
+      "source_word": "anymore",
+      "target_word": "[translation needed for: anymore]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001287,
+      "source_word_id": 8001288,
+      "target_word_id": 8001289,
+      "source_word": "trouble",
+      "target_word": "[translation needed for: trouble]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001290,
+      "source_word_id": 8001291,
+      "target_word_id": 8001292,
+      "source_word": "wow",
+      "target_word": "[translation needed for: wow]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001293,
+      "source_word_id": 8001294,
+      "target_word_id": 8001295,
+      "source_word": "either",
+      "target_word": "[translation needed for: either]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001296,
+      "source_word_id": 8001297,
+      "target_word_id": 8001298,
+      "source_word": "seem",
+      "target_word": "[translation needed for: seem]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001299,
+      "source_word_id": 8001300,
+      "target_word_id": 8001301,
+      "source_word": "whoa",
+      "target_word": "[translation needed for: whoa]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001302,
+      "source_word_id": 8001303,
+      "target_word_id": 8001304,
+      "source_word": "honey",
+      "target_word": "[translation needed for: honey]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001305,
+      "source_word_id": 8001306,
+      "target_word_id": 8001307,
+      "source_word": "stupid",
+      "target_word": "[translation needed for: stupid]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001308,
+      "source_word_id": 8001309,
+      "target_word_id": 8001310,
+      "source_word": "hurry",
+      "target_word": "[translation needed for: hurry]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001311,
+      "source_word_id": 8001312,
+      "target_word_id": 8001313,
+      "source_word": "along",
+      "target_word": "[translation needed for: along]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001314,
+      "source_word_id": 8001315,
+      "target_word_id": 8001316,
+      "source_word": "captain",
+      "target_word": "[translation needed for: captain]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001317,
+      "source_word_id": 8001318,
+      "target_word_id": 8001319,
+      "source_word": "alive",
+      "target_word": "[translation needed for: alive]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001320,
+      "source_word_id": 8001321,
+      "target_word_id": 8001322,
+      "source_word": "ahead",
+      "target_word": "[translation needed for: ahead]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001323,
+      "source_word_id": 8001324,
+      "target_word_id": 8001325,
+      "source_word": "sigh",
+      "target_word": "[translation needed for: sigh]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001326,
+      "source_word_id": 8001327,
+      "target_word_id": 8001328,
+      "source_word": "sort",
+      "target_word": "[translation needed for: sort]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001329,
+      "source_word_id": 8001330,
+      "target_word_id": 8001331,
+      "source_word": "shouldn",
+      "target_word": "[translation needed for: shouldn]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001332,
+      "source_word_id": 8001333,
+      "target_word_id": 8001334,
+      "source_word": "running",
+      "target_word": "[translation needed for: running]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001335,
+      "source_word_id": 8001336,
+      "target_word_id": 8001337,
+      "source_word": "boss",
+      "target_word": "[translation needed for: boss]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001338,
+      "source_word_id": 8001339,
+      "target_word_id": 8001340,
+      "source_word": "alright",
+      "target_word": "[translation needed for: alright]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001341,
+      "source_word_id": 8001342,
+      "target_word_id": 8001343,
+      "source_word": "promise",
+      "target_word": "[translation needed for: promise]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001344,
+      "source_word_id": 8001345,
+      "target_word_id": 8001346,
+      "source_word": "anybody",
+      "target_word": "[translation needed for: anybody]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001347,
+      "source_word_id": 8001348,
+      "target_word_id": 8001349,
+      "source_word": "'cause",
+      "target_word": "[translation needed for: 'cause]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001350,
+      "source_word_id": 8001351,
+      "target_word_id": 8001352,
+      "source_word": "himself",
+      "target_word": "[translation needed for: himself]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001353,
+      "source_word_id": 8001354,
+      "target_word_id": 8001355,
+      "source_word": "perhaps",
+      "target_word": "[translation needed for: perhaps]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001356,
+      "source_word_id": 8001357,
+      "target_word_id": 8001358,
+      "source_word": "serious",
+      "target_word": "[translation needed for: serious]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001359,
+      "source_word_id": 8001360,
+      "target_word_id": 8001361,
+      "source_word": "scared",
+      "target_word": "[translation needed for: scared]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001362,
+      "source_word_id": 8001363,
+      "target_word_id": 8001364,
+      "source_word": "shoot",
+      "target_word": "[translation needed for: shoot]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001365,
+      "source_word_id": 8001366,
+      "target_word_id": 8001367,
+      "source_word": "touch",
+      "target_word": "[translation needed for: touch]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001368,
+      "source_word_id": 8001369,
+      "target_word_id": 8001370,
+      "source_word": "top",
+      "target_word": "[translation needed for: top]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001371,
+      "source_word_id": 8001372,
+      "target_word_id": 8001373,
+      "source_word": "glad",
+      "target_word": "[translation needed for: glad]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001374,
+      "source_word_id": 8001375,
+      "target_word_id": 8001376,
+      "source_word": "luck",
+      "target_word": "[translation needed for: luck]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001377,
+      "source_word_id": 8001378,
+      "target_word_id": 8001379,
+      "source_word": "murder",
+      "target_word": "[translation needed for: murder]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001380,
+      "source_word_id": 8001381,
+      "target_word_id": 8001382,
+      "source_word": "daddy",
+      "target_word": "[translation needed for: daddy]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001383,
+      "source_word_id": 8001384,
+      "target_word_id": 8001385,
+      "source_word": "chuckle",
+      "target_word": "[translation needed for: chuckle]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001386,
+      "source_word_id": 8001387,
+      "target_word_id": 8001388,
+      "source_word": "hang",
+      "target_word": "[translation needed for: hang]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001389,
+      "source_word_id": 8001390,
+      "target_word_id": 8001391,
+      "source_word": "till",
+      "target_word": "[translation needed for: till]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001392,
+      "source_word_id": 8001393,
+      "target_word_id": 8001394,
+      "source_word": "catch",
+      "target_word": "[translation needed for: catch]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001395,
+      "source_word_id": 8001396,
+      "target_word_id": 8001397,
+      "source_word": "master",
+      "target_word": "[translation needed for: master]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001398,
+      "source_word_id": 8001399,
+      "target_word_id": 8001400,
+      "source_word": "dream",
+      "target_word": "[translation needed for: dream]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001401,
+      "source_word_id": 8001402,
+      "target_word_id": 8001403,
+      "source_word": "sweet",
+      "target_word": "[translation needed for: sweet]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001404,
+      "source_word_id": 8001405,
+      "target_word_id": 8001406,
+      "source_word": "rather",
+      "target_word": "[translation needed for: rather]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001407,
+      "source_word_id": 8001408,
+      "target_word_id": 8001409,
+      "source_word": "lucky",
+      "target_word": "[translation needed for: lucky]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001410,
+      "source_word_id": 8001411,
+      "target_word_id": 8001412,
+      "source_word": "somewhere",
+      "target_word": "[translation needed for: somewhere]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001413,
+      "source_word_id": 8001414,
+      "target_word_id": 8001415,
+      "source_word": "calling",
+      "target_word": "[translation needed for: calling]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001416,
+      "source_word_id": 8001417,
+      "target_word_id": 8001418,
+      "source_word": "less",
+      "target_word": "[translation needed for: less]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001419,
+      "source_word_id": 8001420,
+      "target_word_id": 8001421,
+      "source_word": "pull",
+      "target_word": "[translation needed for: pull]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001422,
+      "source_word_id": 8001423,
+      "target_word_id": 8001424,
+      "source_word": "beat",
+      "target_word": "[translation needed for: beat]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001425,
+      "source_word_id": 8001426,
+      "target_word_id": 8001427,
+      "source_word": "careful",
+      "target_word": "[translation needed for: careful]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001428,
+      "source_word_id": 8001429,
+      "target_word_id": 8001430,
+      "source_word": "secret",
+      "target_word": "[translation needed for: secret]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001431,
+      "source_word_id": 8001432,
+      "target_word_id": 8001433,
+      "source_word": "ooh",
+      "target_word": "[translation needed for: ooh]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001434,
+      "source_word_id": 8001435,
+      "target_word_id": 8001436,
+      "source_word": "gentleman",
+      "target_word": "[translation needed for: gentleman]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001437,
+      "source_word_id": 8001438,
+      "target_word_id": 8001439,
+      "source_word": "calm",
+      "target_word": "[translation needed for: calm]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001440,
+      "source_word_id": 8001441,
+      "target_word_id": 8001442,
+      "source_word": "mad",
+      "target_word": "[translation needed for: mad]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001443,
+      "source_word_id": 8001444,
+      "target_word_id": 8001445,
+      "source_word": "drop",
+      "target_word": "[translation needed for: drop]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001446,
+      "source_word_id": 8001447,
+      "target_word_id": 8001448,
+      "source_word": "absolutely",
+      "target_word": "[translation needed for: absolutely]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001449,
+      "source_word_id": 8001450,
+      "target_word_id": 8001451,
+      "source_word": "throw",
+      "target_word": "[translation needed for: throw]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001452,
+      "source_word_id": 8001453,
+      "target_word_id": 8001454,
+      "source_word": "wonder",
+      "target_word": "[translation needed for: wonder]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001455,
+      "source_word_id": 8001456,
+      "target_word_id": 8001457,
+      "source_word": "darling",
+      "target_word": "[translation needed for: darling]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001458,
+      "source_word_id": 8001459,
+      "target_word_id": 8001460,
+      "source_word": "president",
+      "target_word": "[translation needed for: president]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001461,
+      "source_word_id": 8001462,
+      "target_word_id": 8001463,
+      "source_word": "none",
+      "target_word": "[translation needed for: none]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001464,
+      "source_word_id": 8001465,
+      "target_word_id": 8001466,
+      "source_word": "weird",
+      "target_word": "[translation needed for: weird]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001467,
+      "source_word_id": 8001468,
+      "target_word_id": 8001469,
+      "source_word": "worried",
+      "target_word": "[translation needed for: worried]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001470,
+      "source_word_id": 8001471,
+      "target_word_id": 8001472,
+      "source_word": "missing",
+      "target_word": "[translation needed for: missing]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001473,
+      "source_word_id": 8001474,
+      "target_word_id": 8001475,
+      "source_word": "wedding",
+      "target_word": "[translation needed for: wedding]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001476,
+      "source_word_id": 8001477,
+      "target_word_id": 8001478,
+      "source_word": "strange",
+      "target_word": "[translation needed for: strange]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001479,
+      "source_word_id": 8001480,
+      "target_word_id": 8001481,
+      "source_word": "'am",
+      "target_word": "[translation needed for: 'am]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001482,
+      "source_word_id": 8001483,
+      "target_word_id": 8001484,
+      "source_word": "kiss",
+      "target_word": "[translation needed for: kiss]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001485,
+      "source_word_id": 8001486,
+      "target_word_id": 8001487,
+      "source_word": "ship",
+      "target_word": "[translation needed for: ship]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001488,
+      "source_word_id": 8001489,
+      "target_word_id": 8001490,
+      "source_word": "completely",
+      "target_word": "[translation needed for: completely]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001491,
+      "source_word_id": 8001492,
+      "target_word_id": 8001493,
+      "source_word": "totally",
+      "target_word": "[translation needed for: totally]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001494,
+      "source_word_id": 8001495,
+      "target_word_id": 8001496,
+      "source_word": "forgive",
+      "target_word": "[translation needed for: forgive]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001497,
+      "source_word_id": 8001498,
+      "target_word_id": 8001499,
+      "source_word": "definitely",
+      "target_word": "[translation needed for: definitely]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001500,
+      "source_word_id": 8001501,
+      "target_word_id": 8001502,
+      "source_word": "certainly",
+      "target_word": "[translation needed for: certainly]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001503,
+      "source_word_id": 8001504,
+      "target_word_id": 8001505,
+      "source_word": "unless",
+      "target_word": "[translation needed for: unless]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001506,
+      "source_word_id": 8001507,
+      "target_word_id": 8001508,
+      "source_word": "hasn",
+      "target_word": "[translation needed for: hasn]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001509,
+      "source_word_id": 8001510,
+      "target_word_id": 8001511,
+      "source_word": "expect",
+      "target_word": "[translation needed for: expect]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001512,
+      "source_word_id": 8001513,
+      "target_word_id": 8001514,
+      "source_word": "seriously",
+      "target_word": "[translation needed for: seriously]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001515,
+      "source_word_id": 8001516,
+      "target_word_id": 8001517,
+      "source_word": "forever",
+      "target_word": "[translation needed for: forever]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001518,
+      "source_word_id": 8001519,
+      "target_word_id": 8001520,
+      "source_word": "except",
+      "target_word": "[translation needed for: except]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001521,
+      "source_word_id": 8001522,
+      "target_word_id": 8001523,
+      "source_word": "rock",
+      "target_word": "[translation needed for: rock]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001524,
+      "source_word_id": 8001525,
+      "target_word_id": 8001526,
+      "source_word": "lovely",
+      "target_word": "[translation needed for: lovely]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001527,
+      "source_word_id": 8001528,
+      "target_word_id": 8001529,
+      "source_word": "handle",
+      "target_word": "[translation needed for: handle]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001530,
+      "source_word_id": 8001531,
+      "target_word_id": 8001532,
+      "source_word": "protect",
+      "target_word": "[translation needed for: protect]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001533,
+      "source_word_id": 8001534,
+      "target_word_id": 8001535,
+      "source_word": "swear",
+      "target_word": "[translation needed for: swear]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001536,
+      "source_word_id": 8001537,
+      "target_word_id": 8001538,
+      "source_word": "ring",
+      "target_word": "[translation needed for: ring]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001539,
+      "source_word_id": 8001540,
+      "target_word_id": 8001541,
+      "source_word": "anywhere",
+      "target_word": "[translation needed for: anywhere]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001542,
+      "source_word_id": 8001543,
+      "target_word_id": 8001544,
+      "source_word": "fair",
+      "target_word": "[translation needed for: fair]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001545,
+      "source_word_id": 8001546,
+      "target_word_id": 8001547,
+      "source_word": "fool",
+      "target_word": "[translation needed for: fool]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001548,
+      "source_word_id": 8001549,
+      "target_word_id": 8001550,
+      "source_word": "marriage",
+      "target_word": "[translation needed for: marriage]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001551,
+      "source_word_id": 8001552,
+      "target_word_id": 8001553,
+      "source_word": "fear",
+      "target_word": "[translation needed for: fear]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001554,
+      "source_word_id": 8001555,
+      "target_word_id": 8001556,
+      "source_word": "peace",
+      "target_word": "[translation needed for: peace]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001557,
+      "source_word_id": 8001558,
+      "target_word_id": 8001559,
+      "source_word": "normal",
+      "target_word": "[translation needed for: normal]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001560,
+      "source_word_id": 8001561,
+      "target_word_id": 8001562,
+      "source_word": "crime",
+      "target_word": "[translation needed for: crime]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001563,
+      "source_word_id": 8001564,
+      "target_word_id": 8001565,
+      "source_word": "count",
+      "target_word": "[translation needed for: count]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001566,
+      "source_word_id": 8001567,
+      "target_word_id": 8001568,
+      "source_word": "charge",
+      "target_word": "[translation needed for: charge]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001569,
+      "source_word_id": 8001570,
+      "target_word_id": 8001571,
+      "source_word": "honor",
+      "target_word": "[translation needed for: honor]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001572,
+      "source_word_id": 8001573,
+      "target_word_id": 8001574,
+      "source_word": "idiot",
+      "target_word": "[translation needed for: idiot]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001575,
+      "source_word_id": 8001576,
+      "target_word_id": 8001577,
+      "source_word": "surprise",
+      "target_word": "[translation needed for: surprise]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001578,
+      "source_word_id": 8001579,
+      "target_word_id": 8001580,
+      "source_word": "tom",
+      "target_word": "[translation needed for: tom]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001581,
+      "source_word_id": 8001582,
+      "target_word_id": 8001583,
+      "source_word": "accident",
+      "target_word": "[translation needed for: accident]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001584,
+      "source_word_id": 8001585,
+      "target_word_id": 8001586,
+      "source_word": "detective",
+      "target_word": "[translation needed for: detective]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001587,
+      "source_word_id": 8001588,
+      "target_word_id": 8001589,
+      "source_word": "prison",
+      "target_word": "[translation needed for: prison]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001590,
+      "source_word_id": 8001591,
+      "target_word_id": 8001592,
+      "source_word": "hide",
+      "target_word": "[translation needed for: hide]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001593,
+      "source_word_id": 8001594,
+      "target_word_id": 8001595,
+      "source_word": "whether",
+      "target_word": "[translation needed for: whether]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001596,
+      "source_word_id": 8001597,
+      "target_word_id": 8001598,
+      "source_word": "brain",
+      "target_word": "[translation needed for: brain]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001599,
+      "source_word_id": 8001600,
+      "target_word_id": 8001601,
+      "source_word": "fix",
+      "target_word": "[translation needed for: fix]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001602,
+      "source_word_id": 8001603,
+      "target_word_id": 8001604,
+      "source_word": "proud",
+      "target_word": "[translation needed for: proud]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001605,
+      "source_word_id": 8001606,
+      "target_word_id": 8001607,
+      "source_word": "scream",
+      "target_word": "[translation needed for: scream]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001608,
+      "source_word_id": 8001609,
+      "target_word_id": 8001610,
+      "source_word": "soul",
+      "target_word": "[translation needed for: soul]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001611,
+      "source_word_id": 8001612,
+      "target_word_id": 8001613,
+      "source_word": "fighting",
+      "target_word": "[translation needed for: fighting]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001614,
+      "source_word_id": 8001615,
+      "target_word_id": 8001616,
+      "source_word": "agent",
+      "target_word": "[translation needed for: agent]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001617,
+      "source_word_id": 8001618,
+      "target_word_id": 8001619,
+      "source_word": "blow",
+      "target_word": "[translation needed for: blow]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001620,
+      "source_word_id": 8001621,
+      "target_word_id": 8001622,
+      "source_word": "scene",
+      "target_word": "[translation needed for: scene]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001623,
+      "source_word_id": 8001624,
+      "target_word_id": 8001625,
+      "source_word": "standing",
+      "target_word": "[translation needed for: standing]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001626,
+      "source_word_id": 8001627,
+      "target_word_id": 8001628,
+      "source_word": "killer",
+      "target_word": "[translation needed for: killer]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001629,
+      "source_word_id": 8001630,
+      "target_word_id": 8001631,
+      "source_word": "ice",
+      "target_word": "[translation needed for: ice]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001632,
+      "source_word_id": 8001633,
+      "target_word_id": 8001634,
+      "source_word": "mess",
+      "target_word": "[translation needed for: mess]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001635,
+      "source_word_id": 8001636,
+      "target_word_id": 8001637,
+      "source_word": "tough",
+      "target_word": "[translation needed for: tough]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001638,
+      "source_word_id": 8001639,
+      "target_word_id": 8001640,
+      "source_word": "cell",
+      "target_word": "[translation needed for: cell]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001641,
+      "source_word_id": 8001642,
+      "target_word_id": 8001643,
+      "source_word": "drunk",
+      "target_word": "[translation needed for: drunk]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001644,
+      "source_word_id": 8001645,
+      "target_word_id": 8001646,
+      "source_word": "within",
+      "target_word": "[translation needed for: within]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001647,
+      "source_word_id": 8001648,
+      "target_word_id": 8001649,
+      "source_word": "smell",
+      "target_word": "[translation needed for: smell]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001650,
+      "source_word_id": 8001651,
+      "target_word_id": 8001652,
+      "source_word": "mum",
+      "target_word": "[translation needed for: mum]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001653,
+      "source_word_id": 8001654,
+      "target_word_id": 8001655,
+      "source_word": "honest",
+      "target_word": "[translation needed for: honest]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001656,
+      "source_word_id": 8001657,
+      "target_word_id": 8001658,
+      "source_word": "judge",
+      "target_word": "[translation needed for: judge]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001659,
+      "source_word_id": 8001660,
+      "target_word_id": 8001661,
+      "source_word": "dare",
+      "target_word": "[translation needed for: dare]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001662,
+      "source_word_id": 8001663,
+      "target_word_id": 8001664,
+      "source_word": "prove",
+      "target_word": "[translation needed for: prove]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001665,
+      "source_word_id": 8001666,
+      "target_word_id": 8001667,
+      "source_word": "seat",
+      "target_word": "[translation needed for: seat]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001668,
+      "source_word_id": 8001669,
+      "target_word_id": 8001670,
+      "source_word": "i-i",
+      "target_word": "[translation needed for: i-i]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001671,
+      "source_word_id": 8001672,
+      "target_word_id": 8001673,
+      "source_word": "lieutenant",
+      "target_word": "[translation needed for: lieutenant]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001674,
+      "source_word_id": 8001675,
+      "target_word_id": 8001676,
+      "source_word": "realize",
+      "target_word": "[translation needed for: realize]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001677,
+      "source_word_id": 8001678,
+      "target_word_id": 8001679,
+      "source_word": "lt",
+      "target_word": "[translation needed for: lt]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001680,
+      "source_word_id": 8001681,
+      "target_word_id": 8001682,
+      "source_word": "walking",
+      "target_word": "[translation needed for: walking]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001683,
+      "source_word_id": 8001684,
+      "target_word_id": 8001685,
+      "source_word": "pleasure",
+      "target_word": "[translation needed for: pleasure]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "translation_id": 8001686,
+      "source_word_id": 8001687,
+      "target_word_id": 8001688,
+      "source_word": "bloody",
+      "target_word": "[translation needed for: bloody]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     }
   ]
 }
