@@ -41,33 +41,6 @@
       "target_example": "Действие начинается сейчас."
     },
     {
-      "translation_id": 8000005,
-      "source_id": 8000011,
-      "target_id": 8000012,
-      "source_word": "activity",
-      "target_word": "деятельность|занятие",
-      "source_example": "What is your favorite activity?",
-      "target_example": "Какое твое любимое занятие?"
-    },
-    {
-      "translation_id": 8000006,
-      "source_id": 8000013,
-      "target_id": 8000014,
-      "source_word": "actor",
-      "target_word": "актёр|артист",
-      "source_example": "He is a famous actor.",
-      "target_example": "Он известный актёр."
-    },
-    {
-      "translation_id": 8000007,
-      "source_id": 8000015,
-      "target_id": 8000016,
-      "source_word": "actress",
-      "target_word": "актриса|артистка",
-      "source_example": "She is a talented actress.",
-      "target_example": "Она талантливая актриса."
-    },
-    {
       "translation_id": 8000008,
       "source_id": 8000017,
       "target_id": 8000018,
@@ -86,24 +59,6 @@
       "target_example": "Какой у вас адрес?"
     },
     {
-      "translation_id": 8000010,
-      "source_id": 8000021,
-      "target_id": 8000022,
-      "source_word": "adult",
-      "target_word": "взрослый",
-      "source_example": "This movie is for adults only.",
-      "target_example": "Этот фильм только для взрослых."
-    },
-    {
-      "translation_id": 8000011,
-      "source_id": 8000023,
-      "target_id": 8000024,
-      "source_word": "advice",
-      "target_word": "совет",
-      "source_example": "Can you give me some advice?",
-      "target_example": "Можешь дать мне совет?"
-    },
-    {
       "translation_id": 8000012,
       "source_id": 8000025,
       "target_id": 8000026,
@@ -120,15 +75,6 @@
       "target_word": "после",
       "source_example": "We will go after lunch.",
       "target_example": "Мы пойдем после обеда."
-    },
-    {
-      "translation_id": 8000014,
-      "source_id": 8000029,
-      "target_id": 8000030,
-      "source_word": "afternoon",
-      "target_word": "день [после полудня]",
-      "source_example": "Good afternoon!",
-      "target_example": "Добрый день!"
     },
     {
       "translation_id": 8000015,
@@ -174,15 +120,6 @@
       "target_word": "воздух",
       "source_example": "The air is fresh here.",
       "target_example": "Здесь свежий воздух."
-    },
-    {
-      "translation_id": 8000020,
-      "source_id": 8000041,
-      "target_id": 8000042,
-      "source_word": "airport",
-      "target_word": "аэропорт",
-      "source_example": "We are going to the airport.",
-      "target_example": "Мы едем в аэропорт."
     },
     {
       "translation_id": 8000021,
@@ -293,15 +230,6 @@
       "target_example": "Я живу в квартире."
     },
     {
-      "translation_id": 8000034,
-      "source_id": 8000069,
-      "target_id": 8000070,
-      "source_word": "apple",
-      "target_word": "яблоко",
-      "source_example": "I ate an apple.",
-      "target_example": "Я съел яблоко."
-    },
-    {
       "translation_id": 8000035,
       "source_id": 8000071,
       "target_id": 8000072,
@@ -363,15 +291,6 @@
       "target_word": "статья, артикль [грамматика]",
       "source_example": "I read an interesting article.",
       "target_example": "Я прочитал интересную статью."
-    },
-    {
-      "translation_id": 8000042,
-      "source_id": 8000085,
-      "target_id": 8000086,
-      "source_word": "artist",
-      "target_word": "художник|артист",
-      "source_example": "He is a great artist.",
-      "target_example": "Он великий художник."
     },
     {
       "translation_id": 8000043,
@@ -473,15 +392,6 @@
       "target_example": "Давай поиграем с мячом."
     },
     {
-      "translation_id": 8000055,
-      "source_id": 8000111,
-      "target_id": 8000112,
-      "source_word": "banana",
-      "target_word": "банан",
-      "source_example": "I like bananas.",
-      "target_example": "Я люблю бананы."
-    },
-    {
       "translation_id": 8000056,
       "source_id": 8000113,
       "target_id": 8000114,
@@ -509,33 +419,6 @@
       "target_example": "Пойдем в бар."
     },
     {
-      "translation_id": 8000059,
-      "source_id": 8000119,
-      "target_id": 8000120,
-      "source_word": "baseball",
-      "target_word": "бейсбол",
-      "source_example": "He likes to play baseball.",
-      "target_example": "Он любит играть в бейсбол."
-    },
-    {
-      "translation_id": 8000060,
-      "source_id": 8000121,
-      "target_id": 8000122,
-      "source_word": "basketball",
-      "target_word": "баскетбол",
-      "source_example": "I play basketball with my friends.",
-      "target_example": "Я играю в баскетбол с друзьями."
-    },
-    {
-      "translation_id": 8000061,
-      "source_id": 8000123,
-      "target_id": 8000124,
-      "source_word": "bath",
-      "target_word": "ванна",
-      "source_example": "I will take a bath.",
-      "target_example": "Я приму ванну."
-    },
-    {
       "translation_id": 8000062,
       "source_id": 8000125,
       "target_id": 8000126,
@@ -552,15 +435,6 @@
       "target_word": "быть|являться",
       "source_example": "I want to be a doctor.",
       "target_example": "Я хочу быть врачом."
-    },
-    {
-      "translation_id": 8000064,
-      "source_id": 8000129,
-      "target_id": 8000130,
-      "source_word": "beach",
-      "target_word": "пляж",
-      "source_example": "Let's go to the beach.",
-      "target_example": "Пойдем на пляж."
     },
     {
       "translation_id": 8000065,
@@ -597,15 +471,6 @@
       "target_word": "кровать|постель",
       "source_example": "I am going to bed.",
       "target_example": "Я иду спать."
-    },
-    {
-      "translation_id": 8000069,
-      "source_id": 8000139,
-      "target_id": 8000140,
-      "source_word": "bedroom",
-      "target_word": "спальня",
-      "source_example": "My bedroom is small.",
-      "target_example": "Моя спальня маленькая."
     },
     {
       "translation_id": 8000070,
@@ -680,15 +545,6 @@
       "target_example": "Магазин находится между банком и библиотекой."
     },
     {
-      "translation_id": 8000080,
-      "source_id": 8000161,
-      "target_id": 8000162,
-      "source_word": "bicycle",
-      "target_word": "велосипед",
-      "source_example": "I have a new bicycle.",
-      "target_example": "У меня новый велосипед."
-    },
-    {
       "translation_id": 8000081,
       "source_id": 8000163,
       "target_id": 8000164,
@@ -696,15 +552,6 @@
       "target_word": "большой|крупный",
       "source_example": "This is a big house.",
       "target_example": "Это большой дом."
-    },
-    {
-      "translation_id": 8000082,
-      "source_id": 8000165,
-      "target_id": 8000166,
-      "source_word": "bike",
-      "target_word": "велосипед|велик",
-      "source_example": "I ride my bike to school.",
-      "target_example": "Я езжу в школу на велосипеде."
     },
     {
       "translation_id": 8000083,
@@ -743,24 +590,6 @@
       "target_example": "У меня черная кошка."
     },
     {
-      "translation_id": 8000087,
-      "source_id": 8000175,
-      "target_id": 8000176,
-      "source_word": "blog",
-      "target_word": "блог",
-      "source_example": "She writes a blog about food.",
-      "target_example": "Она ведет блог о еде."
-    },
-    {
-      "translation_id": 8000088,
-      "source_id": 8000177,
-      "target_id": 8000178,
-      "source_word": "blond",
-      "target_word": "блондин|светлый",
-      "source_example": "He has blond hair.",
-      "target_example": "У него светлые волосы."
-    },
-    {
       "translation_id": 8000089,
       "source_id": 8000179,
       "target_id": 8000180,
@@ -795,42 +624,6 @@
       "target_word": "книга",
       "source_example": "I am reading a book.",
       "target_example": "Я читаю книгу."
-    },
-    {
-      "translation_id": 8000093,
-      "source_id": 8000187,
-      "target_id": 8000188,
-      "source_word": "boot",
-      "target_word": "ботинок|сапог",
-      "source_example": "I need new boots for the winter.",
-      "target_example": "Мне нужны новые ботинки на зиму."
-    },
-    {
-      "translation_id": 8000094,
-      "source_id": 8000189,
-      "target_id": 8000190,
-      "source_word": "bored",
-      "target_word": "скучающий",
-      "source_example": "I am bored.",
-      "target_example": "Мне скучно."
-    },
-    {
-      "translation_id": 8000095,
-      "source_id": 8000191,
-      "target_id": 8000192,
-      "source_word": "boring",
-      "target_word": "скучный",
-      "source_example": "This movie is boring.",
-      "target_example": "Этот фильм скучный."
-    },
-    {
-      "translation_id": 8000096,
-      "source_id": 8000193,
-      "target_id": 8000194,
-      "source_word": "born",
-      "target_word": "рождённый",
-      "source_example": "I was born in 1990.",
-      "target_example": "Я родился в 1990 году."
     },
     {
       "translation_id": 8000097,
@@ -876,15 +669,6 @@
       "target_word": "парень",
       "source_example": "She has a new boyfriend.",
       "target_example": "У нее новый парень."
-    },
-    {
-      "translation_id": 8000102,
-      "source_id": 8000205,
-      "target_id": 8000206,
-      "source_word": "bread",
-      "target_word": "хлеб",
-      "source_example": "I eat bread for breakfast.",
-      "target_example": "Я ем хлеб на завтрак."
     },
     {
       "translation_id": 8000103,
@@ -977,15 +761,6 @@
       "target_example": "Я хочу пойти, но не могу."
     },
     {
-      "translation_id": 8000113,
-      "source_id": 8000227,
-      "target_id": 8000228,
-      "source_word": "butter",
-      "target_word": "масло [сливочное]",
-      "source_example": "I like butter on my bread.",
-      "target_example": "Я люблю масло на хлебе."
-    },
-    {
       "translation_id": 8000114,
       "source_id": 8000229,
       "target_id": 8000230,
@@ -1011,24 +786,6 @@
       "target_word": "пока",
       "source_example": "Bye! See you tomorrow.",
       "target_example": "Пока! Увидимся завтра."
-    },
-    {
-      "translation_id": 8000117,
-      "source_id": 8000235,
-      "target_id": 8000236,
-      "source_word": "cafe",
-      "target_word": "кафе",
-      "source_example": "Let's meet at the cafe.",
-      "target_example": "Давай встретимся в кафе."
-    },
-    {
-      "translation_id": 8000118,
-      "source_id": 8000237,
-      "target_id": 8000238,
-      "source_word": "cake",
-      "target_word": "торт|пирожное",
-      "source_example": "This cake is delicious.",
-      "target_example": "Этот торт очень вкусный."
     },
     {
       "translation_id": 8000119,
@@ -1103,15 +860,6 @@
       "target_example": "У нее успешная карьера."
     },
     {
-      "translation_id": 8000127,
-      "source_id": 8000255,
-      "target_id": 8000256,
-      "source_word": "carrot",
-      "target_word": "морковь",
-      "source_example": "I like carrots.",
-      "target_example": "Я люблю морковь."
-    },
-    {
       "translation_id": 8000128,
       "source_id": 8000257,
       "target_id": 8000258,
@@ -1130,15 +878,6 @@
       "target_example": "У меня есть кошка."
     },
     {
-      "translation_id": 8000131,
-      "source_id": 8000263,
-      "target_id": 8000264,
-      "source_word": "cent",
-      "target_word": "цент",
-      "source_example": "This costs 50 cents.",
-      "target_example": "Это стоит 50 центов."
-    },
-    {
       "translation_id": 8000132,
       "source_id": 8000265,
       "target_id": 8000266,
@@ -1146,15 +885,6 @@
       "target_word": "центр",
       "source_example": "The shop is in the city center.",
       "target_example": "Магазин в центре города."
-    },
-    {
-      "translation_id": 8000133,
-      "source_id": 8000267,
-      "target_id": 8000268,
-      "source_word": "chair",
-      "target_word": "стул",
-      "source_example": "Please take a chair.",
-      "target_example": "Пожалуйста, возьмите стул."
     },
     {
       "translation_id": 8000134,
@@ -1166,24 +896,6 @@
       "target_example": "Я хочу поменять туфли."
     },
     {
-      "translation_id": 8000135,
-      "source_id": 8000271,
-      "target_id": 8000272,
-      "source_word": "chart",
-      "target_word": "диаграмма|график",
-      "source_example": "Look at this chart.",
-      "target_example": "Посмотрите на эту диаграмму."
-    },
-    {
-      "translation_id": 8000136,
-      "source_id": 8000273,
-      "target_id": 8000274,
-      "source_word": "cheap",
-      "target_word": "дешёвый",
-      "source_example": "This is a cheap T-shirt.",
-      "target_example": "Это дешевая футболка."
-    },
-    {
       "translation_id": 8000137,
       "source_id": 8000275,
       "target_id": 8000276,
@@ -1191,15 +903,6 @@
       "target_word": "проверять, счёт",
       "source_example": "Can you check this for me?",
       "target_example": "Можешь проверить это для меня?"
-    },
-    {
-      "translation_id": 8000138,
-      "source_id": 8000277,
-      "target_id": 8000278,
-      "source_word": "cheese",
-      "target_word": "сыр",
-      "source_example": "I like cheese.",
-      "target_example": "Я люблю сыр."
     },
     {
       "translation_id": 8000139,
@@ -1218,15 +921,6 @@
       "target_word": "ребёнок",
       "source_example": "He is a happy child.",
       "target_example": "Он счастливый ребенок."
-    },
-    {
-      "translation_id": 8000141,
-      "source_id": 8000283,
-      "target_id": 8000284,
-      "source_word": "chocolate",
-      "target_word": "шоколад",
-      "source_example": "I love chocolate.",
-      "target_example": "Я люблю шоколад."
     },
     {
       "translation_id": 8000142,
@@ -1256,15 +950,6 @@
       "target_example": "У меня занятие в 9."
     },
     {
-      "translation_id": 8000145,
-      "source_id": 8000291,
-      "target_id": 8000292,
-      "source_word": "classroom",
-      "target_word": "классная комната|аудитория",
-      "source_example": "The classroom is big.",
-      "target_example": "Классная комната большая."
-    },
-    {
       "translation_id": 8000146,
       "source_id": 8000293,
       "target_id": 8000294,
@@ -1272,24 +957,6 @@
       "target_word": "чистый, убирать|чистить",
       "source_example": "My room is clean.",
       "target_example": "Моя комната чистая."
-    },
-    {
-      "translation_id": 8000147,
-      "source_id": 8000295,
-      "target_id": 8000296,
-      "source_word": "climb",
-      "target_word": "лезть|взбираться",
-      "source_example": "I like to climb mountains.",
-      "target_example": "Я люблю лазить по горам."
-    },
-    {
-      "translation_id": 8000148,
-      "source_id": 8000297,
-      "target_id": 8000298,
-      "source_word": "clock",
-      "target_word": "часы [настенные]",
-      "source_example": "The clock is on the wall.",
-      "target_example": "Часы на стене."
     },
     {
       "translation_id": 8000149,
@@ -1319,15 +986,6 @@
       "target_example": "Я иду в клуб сегодня вечером."
     },
     {
-      "translation_id": 8000152,
-      "source_id": 8000305,
-      "target_id": 8000306,
-      "source_word": "coat",
-      "target_word": "пальто",
-      "source_example": "I need a new coat.",
-      "target_example": "Мне нужно новое пальто."
-    },
-    {
       "translation_id": 8000153,
       "source_id": 8000307,
       "target_id": 8000308,
@@ -1353,15 +1011,6 @@
       "target_word": "колледж",
       "source_example": "She goes to college.",
       "target_example": "Она учится в колледже."
-    },
-    {
-      "translation_id": 8000156,
-      "source_id": 8000313,
-      "target_id": 8000314,
-      "source_word": "color",
-      "target_word": "цвет",
-      "source_example": "What is your favorite color?",
-      "target_example": "Какой твой любимый цвет?"
     },
     {
       "translation_id": 8000157,
@@ -1391,15 +1040,6 @@
       "target_example": "Я работаю в большой компании."
     },
     {
-      "translation_id": 8000160,
-      "source_id": 8000321,
-      "target_id": 8000322,
-      "source_word": "compare",
-      "target_word": "сравнивать",
-      "source_example": "Let's compare the prices.",
-      "target_example": "Давайте сравним цены."
-    },
-    {
       "translation_id": 8000161,
       "source_id": 8000323,
       "target_id": 8000324,
@@ -1418,24 +1058,6 @@
       "target_example": "У меня новый компьютер."
     },
     {
-      "translation_id": 8000163,
-      "source_id": 8000327,
-      "target_id": 8000328,
-      "source_word": "concert",
-      "target_word": "концерт",
-      "source_example": "I am going to a concert tonight.",
-      "target_example": "Я иду на концерт сегодня вечером."
-    },
-    {
-      "translation_id": 8000164,
-      "source_id": 8000329,
-      "target_id": 8000330,
-      "source_word": "conversation",
-      "target_word": "разговор|беседа",
-      "source_example": "We had a long conversation.",
-      "target_example": "У нас был долгий разговор."
-    },
-    {
       "translation_id": 8000165,
       "source_id": 8000331,
       "target_id": 8000332,
@@ -1443,15 +1065,6 @@
       "target_word": "готовить, повар",
       "source_example": "I like to cook.",
       "target_example": "Я люблю готовить."
-    },
-    {
-      "translation_id": 8000166,
-      "source_id": 8000333,
-      "target_id": 8000334,
-      "source_word": "cooking",
-      "target_word": "готовка|кулинария",
-      "source_example": "She is good at cooking.",
-      "target_example": "Она хорошо готовит."
     },
     {
       "translation_id": 8000167,
@@ -1508,24 +1121,6 @@
       "target_example": "Я прохожу курс английского языка."
     },
     {
-      "translation_id": 8000173,
-      "source_id": 8000347,
-      "target_id": 8000348,
-      "source_word": "cousin",
-      "target_word": "двоюродный брат|двоюродная сестра",
-      "source_example": "He is my cousin.",
-      "target_example": "Он мой двоюродный брат."
-    },
-    {
-      "translation_id": 8000174,
-      "source_id": 8000349,
-      "target_id": 8000350,
-      "source_word": "cow",
-      "target_word": "корова",
-      "source_example": "The cow is in the field.",
-      "target_example": "Корова в поле."
-    },
-    {
       "translation_id": 8000176,
       "source_id": 8000353,
       "target_id": 8000354,
@@ -1553,15 +1148,6 @@
       "target_example": "Можно мне чашку чая?"
     },
     {
-      "translation_id": 8000179,
-      "source_id": 8000359,
-      "target_id": 8000360,
-      "source_word": "customer",
-      "target_word": "клиент|покупатель",
-      "source_example": "The customer is always right.",
-      "target_example": "Клиент всегда прав."
-    },
-    {
       "translation_id": 8000180,
       "source_id": 8000361,
       "target_id": 8000362,
@@ -1587,24 +1173,6 @@
       "target_word": "танец, танцевать",
       "source_example": "I like to dance.",
       "target_example": "Я люблю танцевать."
-    },
-    {
-      "translation_id": 8000183,
-      "source_id": 8000367,
-      "target_id": 8000368,
-      "source_word": "dancer",
-      "target_word": "танцор|танцовщица",
-      "source_example": "She is a good dancer.",
-      "target_example": "Она хорошая танцовщица."
-    },
-    {
-      "translation_id": 8000184,
-      "source_id": 8000369,
-      "target_id": 8000370,
-      "source_word": "dancing",
-      "target_word": "танцы",
-      "source_example": "I am going dancing tonight.",
-      "target_example": "Я иду танцевать сегодня вечером."
     },
     {
       "translation_id": 8000185,
@@ -1679,33 +1247,6 @@
       "target_example": "Я не могу решить, что делать."
     },
     {
-      "translation_id": 8000193,
-      "source_id": 8000387,
-      "target_id": 8000388,
-      "source_word": "delicious",
-      "target_word": "вкусный",
-      "source_example": "This food is delicious.",
-      "target_example": "Эта еда очень вкусная."
-    },
-    {
-      "translation_id": 8000194,
-      "source_id": 8000389,
-      "target_id": 8000390,
-      "source_word": "describe",
-      "target_word": "описывать",
-      "source_example": "Can you describe him?",
-      "target_example": "Можешь его описать?"
-    },
-    {
-      "translation_id": 8000195,
-      "source_id": 8000391,
-      "target_id": 8000392,
-      "source_word": "description",
-      "target_word": "описание",
-      "source_example": "This is a good description.",
-      "target_example": "Это хорошее описание."
-    },
-    {
       "translation_id": 8000196,
       "source_id": 8000393,
       "target_id": 8000394,
@@ -1715,42 +1256,6 @@
       "target_example": "Мне нравится дизайн этой машины."
     },
     {
-      "translation_id": 8000197,
-      "source_id": 8000395,
-      "target_id": 8000396,
-      "source_word": "desk",
-      "target_word": "письменный стол|парта",
-      "source_example": "My books are on the desk.",
-      "target_example": "Мои книги на столе."
-    },
-    {
-      "translation_id": 8000198,
-      "source_id": 8000397,
-      "target_id": 8000398,
-      "source_word": "detail",
-      "target_word": "деталь|подробность",
-      "source_example": "I need more details.",
-      "target_example": "Мне нужно больше деталей."
-    },
-    {
-      "translation_id": 8000199,
-      "source_id": 8000399,
-      "target_id": 8000400,
-      "source_word": "dialogue",
-      "target_word": "диалог",
-      "source_example": "Let's have a dialogue.",
-      "target_example": "Давайте проведем диалог."
-    },
-    {
-      "translation_id": 8000200,
-      "source_id": 8000401,
-      "target_id": 8000402,
-      "source_word": "dictionary",
-      "target_word": "словарь",
-      "source_example": "I need a dictionary.",
-      "target_example": "Мне нужен словарь."
-    },
-    {
       "translation_id": 8000201,
       "source_id": 8000403,
       "target_id": 8000404,
@@ -1758,15 +1263,6 @@
       "target_word": "умирать",
       "source_example": "My grandfather died last year.",
       "target_example": "Мой дедушка умер в прошлом году."
-    },
-    {
-      "translation_id": 8000202,
-      "source_id": 8000405,
-      "target_id": 8000406,
-      "source_word": "diet",
-      "target_word": "диета",
-      "source_example": "I am on a diet.",
-      "target_example": "Я на диете."
     },
     {
       "translation_id": 8000203,
@@ -1812,24 +1308,6 @@
       "target_word": "грязный",
       "source_example": "My shoes are dirty.",
       "target_example": "Мои ботинки грязные."
-    },
-    {
-      "translation_id": 8000208,
-      "source_id": 8000417,
-      "target_id": 8000418,
-      "source_word": "discuss",
-      "target_word": "обсуждать",
-      "source_example": "Let's discuss this later.",
-      "target_example": "Давайте обсудим это позже."
-    },
-    {
-      "translation_id": 8000209,
-      "source_id": 8000419,
-      "target_id": 8000420,
-      "source_word": "dish",
-      "target_word": "блюдо, тарелка",
-      "source_example": "This is my favorite dish.",
-      "target_example": "Это мое любимое блюдо."
     },
     {
       "translation_id": 8000210,
@@ -1886,24 +1364,6 @@
       "target_example": "Он спускается."
     },
     {
-      "translation_id": 8000216,
-      "source_id": 8000433,
-      "target_id": 8000434,
-      "source_word": "downstairs",
-      "target_word": "внизу [на нижнем этаже]",
-      "source_example": "She is downstairs.",
-      "target_example": "Она внизу."
-    },
-    {
-      "translation_id": 8000217,
-      "source_id": 8000435,
-      "target_id": 8000436,
-      "source_word": "draw",
-      "target_word": "рисовать, тащить|тянуть",
-      "source_example": "I like to draw.",
-      "target_example": "Я люблю рисовать."
-    },
-    {
       "translation_id": 8000218,
       "source_id": 8000437,
       "target_id": 8000438,
@@ -1958,15 +1418,6 @@
       "target_example": "У каждого студента есть книга."
     },
     {
-      "translation_id": 8000225,
-      "source_id": 8000451,
-      "target_id": 8000452,
-      "source_word": "ear",
-      "target_word": "ухо",
-      "source_example": "My ear hurts.",
-      "target_example": "У меня болит ухо."
-    },
-    {
       "translation_id": 8000226,
       "source_id": 8000453,
       "target_id": 8000454,
@@ -2003,15 +1454,6 @@
       "target_example": "Я голоден, давай поедим."
     },
     {
-      "translation_id": 8000230,
-      "source_id": 8000461,
-      "target_id": 8000462,
-      "source_word": "egg",
-      "target_word": "яйцо",
-      "source_example": "I like eggs for breakfast.",
-      "target_example": "Я люблю яйца на завтрак."
-    },
-    {
       "translation_id": 8000231,
       "source_id": 8000463,
       "target_id": 8000464,
@@ -2021,42 +1463,6 @@
       "target_example": "У меня восемь книг."
     },
     {
-      "translation_id": 8000232,
-      "source_id": 8000465,
-      "target_id": 8000466,
-      "source_word": "eighteen",
-      "target_word": "восемнадцать",
-      "source_example": "She is eighteen years old.",
-      "target_example": "Ей восемнадцать лет."
-    },
-    {
-      "translation_id": 8000233,
-      "source_id": 8000467,
-      "target_id": 8000468,
-      "source_word": "eighty",
-      "target_word": "восемьдесят",
-      "source_example": "My grandfather is eighty years old.",
-      "target_example": "Моему дедушке восемьдесят лет."
-    },
-    {
-      "translation_id": 8000234,
-      "source_id": 8000469,
-      "target_id": 8000470,
-      "source_word": "elephant",
-      "target_word": "слон",
-      "source_example": "The elephant is a big animal.",
-      "target_example": "Слон - большое животное."
-    },
-    {
-      "translation_id": 8000235,
-      "source_id": 8000471,
-      "target_id": 8000472,
-      "source_word": "eleven",
-      "target_word": "одиннадцать",
-      "source_example": "I have eleven apples.",
-      "target_example": "У меня одиннадцать яблок."
-    },
-    {
       "translation_id": 8000236,
       "source_id": 8000473,
       "target_id": 8000474,
@@ -2064,15 +1470,6 @@
       "target_word": "ещё",
       "source_example": "What else do you need?",
       "target_example": "Что еще тебе нужно?"
-    },
-    {
-      "translation_id": 8000237,
-      "source_id": 8000475,
-      "target_id": 8000476,
-      "source_word": "email",
-      "target_word": "электронная почта|имейл",
-      "source_example": "I will send you an email.",
-      "target_example": "Я отправлю тебе письмо."
     },
     {
       "translation_id": 8000238,
@@ -2102,15 +1499,6 @@
       "target_example": "У меня достаточно денег."
     },
     {
-      "translation_id": 8000241,
-      "source_id": 8000483,
-      "target_id": 8000484,
-      "source_word": "euro",
-      "target_word": "евро",
-      "source_example": "This costs ten euros.",
-      "target_example": "Это стоит десять евро."
-    },
-    {
       "translation_id": 8000242,
       "source_id": 8000485,
       "target_id": 8000486,
@@ -2118,15 +1506,6 @@
       "target_word": "даже",
       "source_example": "Even a child can do it.",
       "target_example": "Даже ребенок может это сделать."
-    },
-    {
-      "translation_id": 8000243,
-      "source_id": 8000487,
-      "target_id": 8000488,
-      "source_word": "evening",
-      "target_word": "вечер",
-      "source_example": "I will see you in the evening.",
-      "target_example": "Увидимся вечером."
     },
     {
       "translation_id": 8000244,
@@ -2183,15 +1562,6 @@
       "target_example": "Все готово."
     },
     {
-      "translation_id": 8000250,
-      "source_id": 8000501,
-      "target_id": 8000502,
-      "source_word": "exam",
-      "target_word": "экзамен",
-      "source_example": "I have an exam tomorrow.",
-      "target_example": "У меня завтра экзамен."
-    },
-    {
       "translation_id": 8000251,
       "source_id": 8000503,
       "target_id": 8000504,
@@ -2208,33 +1578,6 @@
       "target_word": "взволнованный|возбужденный",
       "source_example": "I am excited about the trip.",
       "target_example": "Я взволнован поездкой."
-    },
-    {
-      "translation_id": 8000253,
-      "source_id": 8000507,
-      "target_id": 8000508,
-      "source_word": "exciting",
-      "target_word": "увлекательный|волнующий",
-      "source_example": "This is an exciting book.",
-      "target_example": "Это увлекательная книга."
-    },
-    {
-      "translation_id": 8000254,
-      "source_id": 8000509,
-      "target_id": 8000510,
-      "source_word": "exercise",
-      "target_word": "упражнение, упражняться",
-      "source_example": "I do exercises every morning.",
-      "target_example": "Я делаю упражнения каждое утро."
-    },
-    {
-      "translation_id": 8000255,
-      "source_id": 8000511,
-      "target_id": 8000512,
-      "source_word": "expensive",
-      "target_word": "дорогой",
-      "source_example": "This car is expensive.",
-      "target_example": "Эта машина дорогая."
     },
     {
       "translation_id": 8000256,
@@ -2291,15 +1634,6 @@
       "target_example": "Листья падают осенью."
     },
     {
-      "translation_id": 8000262,
-      "source_id": 8000525,
-      "target_id": 8000526,
-      "source_word": "false",
-      "target_word": "ложный|неверный",
-      "source_example": "This is a false statement.",
-      "target_example": "Это ложное утверждение."
-    },
-    {
       "translation_id": 8000263,
       "source_id": 8000527,
       "target_id": 8000528,
@@ -2318,15 +1652,6 @@
       "target_example": "Он известный актер."
     },
     {
-      "translation_id": 8000265,
-      "source_id": 8000531,
-      "target_id": 8000532,
-      "source_word": "fantastic",
-      "target_word": "фантастический|потрясающий",
-      "source_example": "This is a fantastic movie.",
-      "target_example": "Это фантастический фильм."
-    },
-    {
       "translation_id": 8000266,
       "source_id": 8000533,
       "target_id": 8000534,
@@ -2334,24 +1659,6 @@
       "target_word": "далеко|дальний",
       "source_example": "How far is it?",
       "target_example": "Как далеко это?"
-    },
-    {
-      "translation_id": 8000267,
-      "source_id": 8000535,
-      "target_id": 8000536,
-      "source_word": "farm",
-      "target_word": "ферма",
-      "source_example": "My grandparents have a farm.",
-      "target_example": "У моих дедушки и бабушки есть ферма."
-    },
-    {
-      "translation_id": 8000268,
-      "source_id": 8000537,
-      "target_id": 8000538,
-      "source_word": "farmer",
-      "target_word": "фермер",
-      "source_example": "He is a farmer.",
-      "target_example": "Он фермер."
     },
     {
       "translation_id": 8000269,
@@ -2408,15 +1715,6 @@
       "target_example": "Как ты себя чувствуешь?"
     },
     {
-      "translation_id": 8000276,
-      "source_id": 8000553,
-      "target_id": 8000554,
-      "source_word": "festival",
-      "target_word": "фестиваль",
-      "source_example": "I am going to a music festival.",
-      "target_example": "Я иду на музыкальный фестиваль."
-    },
-    {
       "translation_id": 8000277,
       "source_id": 8000555,
       "target_id": 8000556,
@@ -2424,42 +1722,6 @@
       "target_word": "несколько|немного",
       "source_example": "I have a few books.",
       "target_example": "У меня несколько книг."
-    },
-    {
-      "translation_id": 8000278,
-      "source_id": 8000557,
-      "target_id": 8000558,
-      "source_word": "fifteen",
-      "target_word": "пятнадцать",
-      "source_example": "She is fifteen years old.",
-      "target_example": "Ей пятнадцать лет."
-    },
-    {
-      "translation_id": 8000279,
-      "source_id": 8000559,
-      "target_id": 8000560,
-      "source_word": "fifth",
-      "target_word": "пятый",
-      "source_example": "This is the fifth time.",
-      "target_example": "Это пятый раз."
-    },
-    {
-      "translation_id": 8000280,
-      "source_id": 8000561,
-      "target_id": 8000562,
-      "source_word": "fifty",
-      "target_word": "пятьдесят",
-      "source_example": "He is fifty years old.",
-      "target_example": "Ему пятьдесят лет."
-    },
-    {
-      "translation_id": 8000281,
-      "source_id": 8000563,
-      "target_id": 8000564,
-      "source_word": "fill",
-      "target_word": "наполнять|заполнять",
-      "source_example": "Please fill the glass with water.",
-      "target_example": "Пожалуйста, наполни стакан водой."
     },
     {
       "translation_id": 8000282,
@@ -2615,15 +1877,6 @@
       "target_example": "Пожалуйста, заполните эту форму."
     },
     {
-      "translation_id": 8000299,
-      "source_id": 8000599,
-      "target_id": 8000600,
-      "source_word": "forty",
-      "target_word": "сорок",
-      "source_example": "She is forty years old.",
-      "target_example": "Ей сорок лет."
-    },
-    {
       "translation_id": 8000300,
       "source_id": 8000601,
       "target_id": 8000602,
@@ -2631,24 +1884,6 @@
       "target_word": "четыре",
       "source_example": "I have four books.",
       "target_example": "У меня четыре книги."
-    },
-    {
-      "translation_id": 8000301,
-      "source_id": 8000603,
-      "target_id": 8000604,
-      "source_word": "fourteen",
-      "target_word": "четырнадцать",
-      "source_example": "He is fourteen years old.",
-      "target_example": "Ему четырнадцать лет."
-    },
-    {
-      "translation_id": 8000302,
-      "source_id": 8000605,
-      "target_id": 8000606,
-      "source_word": "fourth",
-      "target_word": "четвёртый",
-      "source_example": "This is the fourth time.",
-      "target_example": "Это четвертый раз."
     },
     {
       "translation_id": 8000303,
@@ -2660,15 +1895,6 @@
       "target_example": "Ты свободен завтра?"
     },
     {
-      "translation_id": 8000304,
-      "source_id": 8000609,
-      "target_id": 8000610,
-      "source_word": "Friday",
-      "target_word": "пятница",
-      "source_example": "I will see you on Friday.",
-      "target_example": "Увидимся в пятницу."
-    },
-    {
       "translation_id": 8000305,
       "source_id": 8000611,
       "target_id": 8000612,
@@ -2676,15 +1902,6 @@
       "target_word": "друг|подруга",
       "source_example": "He is my best friend.",
       "target_example": "Он мой лучший друг."
-    },
-    {
-      "translation_id": 8000306,
-      "source_id": 8000613,
-      "target_id": 8000614,
-      "source_word": "friendly",
-      "target_word": "дружелюбный",
-      "source_example": "She is very friendly.",
-      "target_example": "Она очень дружелюбная."
     },
     {
       "translation_id": 8000307,
@@ -2703,15 +1920,6 @@
       "target_word": "перед|передняя часть",
       "source_example": "The car is in front of the house.",
       "target_example": "Машина перед домом."
-    },
-    {
-      "translation_id": 8000309,
-      "source_id": 8000619,
-      "target_id": 8000620,
-      "source_word": "fruit",
-      "target_word": "фрукт|фрукты",
-      "source_example": "I like to eat fruit.",
-      "target_example": "Я люблю есть фрукты."
     },
     {
       "translation_id": 8000310,
@@ -2757,24 +1965,6 @@
       "target_word": "игра",
       "source_example": "Let's play a game.",
       "target_example": "Давай сыграем в игру."
-    },
-    {
-      "translation_id": 8000315,
-      "source_id": 8000631,
-      "target_id": 8000632,
-      "source_word": "garden",
-      "target_word": "сад",
-      "source_example": "I have a beautiful garden.",
-      "target_example": "У меня красивый сад."
-    },
-    {
-      "translation_id": 8000316,
-      "source_id": 8000633,
-      "target_id": 8000634,
-      "source_word": "geography",
-      "target_word": "география",
-      "source_example": "I like geography.",
-      "target_example": "Мне нравится география."
     },
     {
       "translation_id": 8000317,
@@ -2840,42 +2030,6 @@
       "target_example": "До свидания! Увидимся позже."
     },
     {
-      "translation_id": 8000325,
-      "source_id": 8000651,
-      "target_id": 8000652,
-      "source_word": "grandfather",
-      "target_word": "дедушка",
-      "source_example": "My grandfather is old.",
-      "target_example": "Мой дедушка старый."
-    },
-    {
-      "translation_id": 8000326,
-      "source_id": 8000653,
-      "target_id": 8000654,
-      "source_word": "grandmother",
-      "target_word": "бабушка",
-      "source_example": "My grandmother is very kind.",
-      "target_example": "Моя бабушка очень добрая."
-    },
-    {
-      "translation_id": 8000327,
-      "source_id": 8000655,
-      "target_id": 8000656,
-      "source_word": "grandparent",
-      "target_word": "дедушка|бабушка",
-      "source_example": "My grandparents live in the countryside.",
-      "target_example": "Мои дедушка и бабушка живут в деревне."
-    },
-    {
-      "translation_id": 8000328,
-      "source_id": 8000657,
-      "target_id": 8000658,
-      "source_word": "gray",
-      "target_word": "серый",
-      "source_example": "The sky is gray.",
-      "target_example": "Небо серое."
-    },
-    {
       "translation_id": 8000329,
       "source_id": 8000659,
       "target_id": 8000660,
@@ -2919,24 +2073,6 @@
       "target_word": "(угадывать|догадываться), догадка",
       "source_example": "Can you guess the answer?",
       "target_example": "Можешь угадать ответ?"
-    },
-    {
-      "translation_id": 8000334,
-      "source_id": 8000669,
-      "target_id": 8000670,
-      "source_word": "guitar",
-      "target_word": "гитара",
-      "source_example": "I can play the guitar.",
-      "target_example": "Я умею играть на гитаре."
-    },
-    {
-      "translation_id": 8000335,
-      "source_id": 8000671,
-      "target_id": 8000672,
-      "source_word": "gym",
-      "target_word": "спортзал|тренажерный зал",
-      "source_example": "I go to the gym every day.",
-      "target_example": "Я хожу в спортзал каждый день."
     },
     {
       "translation_id": 8000336,
@@ -3038,15 +2174,6 @@
       "target_example": "Здоровье - это важно."
     },
     {
-      "translation_id": 8000349,
-      "source_id": 8000699,
-      "target_id": 8000700,
-      "source_word": "healthy",
-      "target_word": "здоровый",
-      "source_example": "I eat healthy food.",
-      "target_example": "Я ем здоровую пищу."
-    },
-    {
       "translation_id": 8000350,
       "source_id": 8000701,
       "target_id": 8000702,
@@ -3137,15 +2264,6 @@
       "target_example": "Мне нравится история."
     },
     {
-      "translation_id": 8000361,
-      "source_id": 8000723,
-      "target_id": 8000724,
-      "source_word": "hobby",
-      "target_word": "хобби|увлечение",
-      "source_example": "What is your hobby?",
-      "target_example": "Какое у тебя хобби?"
-    },
-    {
       "translation_id": 8000362,
       "source_id": 8000725,
       "target_id": 8000726,
@@ -3153,15 +2271,6 @@
       "target_word": "дом [жилище], домой",
       "source_example": "I am going home.",
       "target_example": "Я иду домой."
-    },
-    {
-      "translation_id": 8000363,
-      "source_id": 8000727,
-      "target_id": 8000728,
-      "source_word": "homework",
-      "target_word": "домашнее задание",
-      "source_example": "I have to do my homework.",
-      "target_example": "Мне нужно сделать домашнее задание."
     },
     {
       "translation_id": 8000364,
@@ -3198,15 +2307,6 @@
       "target_word": "горячий|жаркий",
       "source_example": "The coffee is hot.",
       "target_example": "Кофе горячий."
-    },
-    {
-      "translation_id": 8000368,
-      "source_id": 8000737,
-      "target_id": 8000738,
-      "source_word": "hotel",
-      "target_word": "отель|гостиница",
-      "source_example": "We are staying at a hotel.",
-      "target_example": "Мы остановились в отеле."
     },
     {
       "translation_id": 8000369,
@@ -3272,15 +2372,6 @@
       "target_example": "Он мой муж."
     },
     {
-      "translation_id": 8000378,
-      "source_id": 8000757,
-      "target_id": 8000758,
-      "source_word": "ice cream",
-      "target_word": "мороженое [noun: сливки, noun: лёд]",
-      "source_example": "I like ice cream.",
-      "target_example": "Я люблю мороженое."
-    },
-    {
       "translation_id": 8000379,
       "source_id": 8000759,
       "target_id": 8000760,
@@ -3315,15 +2406,6 @@
       "target_word": "важный",
       "source_example": "This is an important meeting.",
       "target_example": "Это важная встреча."
-    },
-    {
-      "translation_id": 8000383,
-      "source_id": 8000767,
-      "target_id": 8000768,
-      "source_word": "improve",
-      "target_word": "улучшать",
-      "source_example": "I want to improve my English.",
-      "target_example": "Я хочу улучшить свой английский."
     },
     {
       "translation_id": 8000385,
@@ -3380,15 +2462,6 @@
       "target_example": "Я пользуюсь интернетом каждый день."
     },
     {
-      "translation_id": 8000391,
-      "source_id": 8000783,
-      "target_id": 8000784,
-      "source_word": "interview",
-      "target_word": "интервью|собеседование",
-      "source_example": "I have an interview tomorrow.",
-      "target_example": "У меня завтра собеседование."
-    },
-    {
       "translation_id": 8000392,
       "source_id": 8000785,
       "target_id": 8000786,
@@ -3396,15 +2469,6 @@
       "target_word": "в [внутрь]",
       "source_example": "He went into the house.",
       "target_example": "Он вошел в дом."
-    },
-    {
-      "translation_id": 8000393,
-      "source_id": 8000787,
-      "target_id": 8000788,
-      "source_word": "introduce",
-      "target_word": "представлять",
-      "source_example": "Let me introduce my friend.",
-      "target_example": "Позвольте мне представить моего друга."
     },
     {
       "translation_id": 8000394,
@@ -3425,15 +2489,6 @@
       "target_example": "Собака виляет хвостом."
     },
     {
-      "translation_id": 8000397,
-      "source_id": 8000795,
-      "target_id": 8000796,
-      "source_word": "jacket",
-      "target_word": "куртка|пиджак",
-      "source_example": "I am wearing a jacket.",
-      "target_example": "На мне куртка."
-    },
-    {
       "translation_id": 8000398,
       "source_id": 8000797,
       "target_id": 8000798,
@@ -3441,15 +2496,6 @@
       "target_word": "январь",
       "source_example": "My birthday is in January.",
       "target_example": "Мой день рождения в январе."
-    },
-    {
-      "translation_id": 8000399,
-      "source_id": 8000799,
-      "target_id": 8000800,
-      "source_word": "jeans",
-      "target_word": "джинсы",
-      "source_example": "I am wearing jeans.",
-      "target_example": "На мне джинсы."
     },
     {
       "translation_id": 8000400,
@@ -3468,15 +2514,6 @@
       "target_word": "присоединяться",
       "source_example": "Can I join you?",
       "target_example": "Могу я к вам присоединиться?"
-    },
-    {
-      "translation_id": 8000402,
-      "source_id": 8000805,
-      "target_id": 8000806,
-      "source_word": "juice",
-      "target_word": "сок",
-      "source_example": "I would like some juice.",
-      "target_example": "Я бы хотел сока."
     },
     {
       "translation_id": 8000403,
@@ -3632,24 +2669,6 @@
       "target_example": "Поверните налево."
     },
     {
-      "translation_id": 8000421,
-      "source_id": 8000843,
-      "target_id": 8000844,
-      "source_word": "leg",
-      "target_word": "нога",
-      "source_example": "My leg hurts.",
-      "target_example": "У меня болит нога."
-    },
-    {
-      "translation_id": 8000422,
-      "source_id": 8000845,
-      "target_id": 8000846,
-      "source_word": "lesson",
-      "target_word": "урок|занятие",
-      "source_example": "I have a lesson at 10.",
-      "target_example": "У меня урок в 10."
-    },
-    {
       "translation_id": 8000423,
       "source_id": 8000847,
       "target_id": 8000848,
@@ -3666,15 +2685,6 @@
       "target_word": "письмо, буква",
       "source_example": "I wrote a letter.",
       "target_example": "Я написал письмо."
-    },
-    {
-      "translation_id": 8000425,
-      "source_id": 8000851,
-      "target_id": 8000852,
-      "source_word": "library",
-      "target_word": "библиотека",
-      "source_example": "I am going to the library.",
-      "target_example": "Я иду в библиотеку."
     },
     {
       "translation_id": 8000426,
@@ -3704,15 +2714,6 @@
       "target_example": "Пожалуйста, включи свет."
     },
     {
-      "translation_id": 8000430,
-      "source_id": 8000861,
-      "target_id": 8000862,
-      "source_word": "like (find pleasant)",
-      "target_word": "нравиться|любить [prep: как]",
-      "source_example": "I like you.",
-      "target_example": "Ты мне нравишься."
-    },
-    {
       "translation_id": 8000431,
       "source_id": 8000863,
       "target_id": 8000864,
@@ -3720,15 +2721,6 @@
       "target_word": "линия|очередь",
       "source_example": "Please stand in line.",
       "target_example": "Пожалуйста, встаньте в очередь."
-    },
-    {
-      "translation_id": 8000432,
-      "source_id": 8000865,
-      "target_id": 8000866,
-      "source_word": "lion",
-      "target_word": "лев",
-      "source_example": "The lion is the king of the jungle.",
-      "target_example": "Лев - царь джунглей."
     },
     {
       "translation_id": 8000433,
@@ -3830,15 +2822,6 @@
       "target_example": "Это стиральная машина."
     },
     {
-      "translation_id": 8000444,
-      "source_id": 8000889,
-      "target_id": 8000890,
-      "source_word": "magazine",
-      "target_word": "журнал",
-      "source_example": "I am reading a magazine.",
-      "target_example": "Я читаю журнал."
-    },
-    {
       "translation_id": 8000445,
       "source_id": 8000891,
       "target_id": 8000892,
@@ -3855,15 +2838,6 @@
       "target_word": "делать|создавать|производить",
       "source_example": "I will make a cake.",
       "target_example": "Я испеку торт."
-    },
-    {
-      "translation_id": 8000447,
-      "source_id": 8000895,
-      "target_id": 8000896,
-      "source_word": "mall",
-      "target_word": "торговый центр",
-      "source_example": "Let's go to the mall.",
-      "target_example": "Пойдем в торговый центр."
     },
     {
       "translation_id": 8000448,
@@ -3884,15 +2858,6 @@
       "target_example": "У меня много книг."
     },
     {
-      "translation_id": 8000450,
-      "source_id": 8000901,
-      "target_id": 8000902,
-      "source_word": "map",
-      "target_word": "карта",
-      "source_example": "I need a map.",
-      "target_example": "Мне нужна карта."
-    },
-    {
       "translation_id": 8000451,
       "source_id": 8000903,
       "target_id": 8000904,
@@ -3909,15 +2874,6 @@
       "target_word": "рынок",
       "source_example": "I am going to the market.",
       "target_example": "Я иду на рынок."
-    },
-    {
-      "translation_id": 8000453,
-      "source_id": 8000907,
-      "target_id": 8000908,
-      "source_word": "married",
-      "target_word": "женатый|замужняя",
-      "source_example": "Are you married?",
-      "target_example": "Ты женат/замужем?"
     },
     {
       "translation_id": 8000454,
@@ -3947,15 +2903,6 @@
       "target_example": "Может быть, я пойду."
     },
     {
-      "translation_id": 8000458,
-      "source_id": 8000917,
-      "target_id": 8000918,
-      "source_word": "meal",
-      "target_word": "еда|приём пищи",
-      "source_example": "This is a delicious meal.",
-      "target_example": "Это вкусная еда."
-    },
-    {
       "translation_id": 8000459,
       "source_id": 8000919,
       "target_id": 8000920,
@@ -3963,24 +2910,6 @@
       "target_word": "(значить|означать), иметь в виду",
       "source_example": "What do you mean?",
       "target_example": "Что ты имеешь в виду?"
-    },
-    {
-      "translation_id": 8000460,
-      "source_id": 8000921,
-      "target_id": 8000922,
-      "source_word": "meaning",
-      "target_word": "значение|смысл",
-      "source_example": "What is the meaning of this word?",
-      "target_example": "Какое значение этого слова?"
-    },
-    {
-      "translation_id": 8000461,
-      "source_id": 8000923,
-      "target_id": 8000924,
-      "source_word": "meat",
-      "target_word": "мясо",
-      "source_example": "I don't eat meat.",
-      "target_example": "Я не ем мясо."
     },
     {
       "translation_id": 8000462,
@@ -4010,15 +2939,6 @@
       "target_example": "Я член этого клуба."
     },
     {
-      "translation_id": 8000465,
-      "source_id": 8000931,
-      "target_id": 8000932,
-      "source_word": "menu",
-      "target_word": "меню",
-      "source_example": "Can I see the menu, please?",
-      "target_example": "Можно мне меню, пожалуйста?"
-    },
-    {
       "translation_id": 8000466,
       "source_id": 8000933,
       "target_id": 8000934,
@@ -4028,24 +2948,6 @@
       "target_example": "У меня для тебя сообщение."
     },
     {
-      "translation_id": 8000467,
-      "source_id": 8000935,
-      "target_id": 8000936,
-      "source_word": "meter",
-      "target_word": "метр",
-      "source_example": "The room is 5 meters long.",
-      "target_example": "Комната 5 метров в длину."
-    },
-    {
-      "translation_id": 8000468,
-      "source_id": 8000937,
-      "target_id": 8000938,
-      "source_word": "midnight",
-      "target_word": "полночь",
-      "source_example": "It is midnight.",
-      "target_example": "Сейчас полночь."
-    },
-    {
       "translation_id": 8000469,
       "source_id": 8000939,
       "target_id": 8000940,
@@ -4053,15 +2955,6 @@
       "target_word": "миля",
       "source_example": "It is a long mile.",
       "target_example": "Это длинная миля."
-    },
-    {
-      "translation_id": 8000470,
-      "source_id": 8000941,
-      "target_id": 8000942,
-      "source_word": "milk",
-      "target_word": "молоко",
-      "source_example": "I drink milk every day.",
-      "target_example": "Я пью молоко каждый день."
     },
     {
       "translation_id": 8000471,
@@ -4136,15 +3029,6 @@
       "target_example": "Пожалуйста, подождите минутку."
     },
     {
-      "translation_id": 8000479,
-      "source_id": 8000959,
-      "target_id": 8000960,
-      "source_word": "Monday",
-      "target_word": "понедельник",
-      "source_example": "I will see you on Monday.",
-      "target_example": "Увидимся в понедельник."
-    },
-    {
       "translation_id": 8000480,
       "source_id": 8000961,
       "target_id": 8000962,
@@ -4199,24 +3083,6 @@
       "target_example": "Она хорошая мать."
     },
     {
-      "translation_id": 8000486,
-      "source_id": 8000973,
-      "target_id": 8000974,
-      "source_word": "mountain",
-      "target_word": "гора",
-      "source_example": "This is a high mountain.",
-      "target_example": "Это высокая гора."
-    },
-    {
-      "translation_id": 8000487,
-      "source_id": 8000975,
-      "target_id": 8000976,
-      "source_word": "mouse",
-      "target_word": "мышь",
-      "source_example": "I saw a mouse.",
-      "target_example": "Я видел мышь."
-    },
-    {
       "translation_id": 8000488,
       "source_id": 8000977,
       "target_id": 8000978,
@@ -4251,15 +3117,6 @@
       "target_word": "много",
       "source_example": "I don't have much time.",
       "target_example": "У меня немного времени."
-    },
-    {
-      "translation_id": 8000492,
-      "source_id": 8000985,
-      "target_id": 8000986,
-      "source_word": "museum",
-      "target_word": "музей",
-      "source_example": "Let's go to the museum.",
-      "target_example": "Пойдем в музей."
     },
     {
       "translation_id": 8000493,
@@ -4316,33 +3173,6 @@
       "target_example": "Мне нужна твоя помощь."
     },
     {
-      "translation_id": 8000500,
-      "source_id": 8001001,
-      "target_id": 8001002,
-      "source_word": "negative",
-      "target_word": "отрицательный",
-      "source_example": "This is a negative answer.",
-      "target_example": "Это отрицательный ответ."
-    },
-    {
-      "translation_id": 8000501,
-      "source_id": 8001003,
-      "target_id": 8001004,
-      "source_word": "neighbor",
-      "target_word": "сосед|соседка",
-      "source_example": "He is my neighbor.",
-      "target_example": "Он мой сосед."
-    },
-    {
-      "translation_id": 8000502,
-      "source_id": 8001005,
-      "target_id": 8001006,
-      "source_word": "neighborhood",
-      "target_word": "район|окрестности",
-      "source_example": "This is a quiet neighborhood.",
-      "target_example": "Это тихий район."
-    },
-    {
       "translation_id": 8000503,
       "source_id": 8001007,
       "target_id": 8001008,
@@ -4368,15 +3198,6 @@
       "target_word": "новости",
       "source_example": "What is the news?",
       "target_example": "Какие новости?"
-    },
-    {
-      "translation_id": 8000506,
-      "source_id": 8001013,
-      "target_id": 8001014,
-      "source_word": "newspaper",
-      "target_word": "газета",
-      "source_example": "I read the newspaper every day.",
-      "target_example": "Я читаю газету каждый день."
     },
     {
       "translation_id": 8000508,
@@ -4413,24 +3234,6 @@
       "target_word": "девять",
       "source_example": "I have nine books.",
       "target_example": "У меня девять книг."
-    },
-    {
-      "translation_id": 8000512,
-      "source_id": 8001025,
-      "target_id": 8001026,
-      "source_word": "nineteen",
-      "target_word": "девятнадцать",
-      "source_example": "She is nineteen years old.",
-      "target_example": "Ей девятнадцать лет."
-    },
-    {
-      "translation_id": 8000513,
-      "source_id": 8001027,
-      "target_id": 8001028,
-      "source_word": "ninety",
-      "target_word": "девяносто",
-      "source_example": "He is ninety years old.",
-      "target_example": "Ему девяносто лет."
     },
     {
       "translation_id": 8000516,
@@ -4514,33 +3317,6 @@
       "target_example": "Какой у тебя номер телефона?"
     },
     {
-      "translation_id": 8000525,
-      "source_id": 8001051,
-      "target_id": 8001052,
-      "source_word": "nurse",
-      "target_word": "медсестра|медбрат",
-      "source_example": "She is a nurse.",
-      "target_example": "Она медсестра."
-    },
-    {
-      "translation_id": 8000526,
-      "source_id": 8001053,
-      "target_id": 8001054,
-      "source_word": "object",
-      "target_word": "(объект|предмет), возражать",
-      "source_example": "What is this object?",
-      "target_example": "Что это за объект?"
-    },
-    {
-      "translation_id": 8000527,
-      "source_id": 8001055,
-      "target_id": 8001056,
-      "source_word": "ocean",
-      "target_word": "океан",
-      "source_example": "The ocean is big.",
-      "target_example": "Океан большой."
-    },
-    {
       "translation_id": 8000529,
       "source_id": 8001059,
       "target_id": 8001060,
@@ -4604,15 +3380,6 @@
       "target_example": "У меня один брат."
     },
     {
-      "translation_id": 8000540,
-      "source_id": 8001081,
-      "target_id": 8001082,
-      "source_word": "onion",
-      "target_word": "лук",
-      "source_example": "I don't like onions.",
-      "target_example": "Я не люблю лук."
-    },
-    {
       "translation_id": 8000541,
       "source_id": 8001083,
       "target_id": 8001084,
@@ -4638,33 +3405,6 @@
       "target_word": "открывать, открытый",
       "source_example": "Please open the door.",
       "target_example": "Пожалуйста, открой дверь."
-    },
-    {
-      "translation_id": 8000544,
-      "source_id": 8001089,
-      "target_id": 8001090,
-      "source_word": "opinion",
-      "target_word": "мнение",
-      "source_example": "What is your opinion?",
-      "target_example": "Какое твое мнение?"
-    },
-    {
-      "translation_id": 8000545,
-      "source_id": 8001091,
-      "target_id": 8001092,
-      "source_word": "opposite",
-      "target_word": "противоположный|напротив",
-      "source_example": "The bank is on the opposite side of the street.",
-      "target_example": "Банк на противоположной стороне улицы."
-    },
-    {
-      "translation_id": 8000547,
-      "source_id": 8001095,
-      "target_id": 8001096,
-      "source_word": "orange",
-      "target_word": "апельсин, оранжевый",
-      "source_example": "I would like an orange.",
-      "target_example": "Я бы хотел апельсин."
     },
     {
       "translation_id": 8000548,
@@ -4739,33 +3479,6 @@
       "target_example": "Пожалуйста, откройте страницу 10."
     },
     {
-      "translation_id": 8000556,
-      "source_id": 8001113,
-      "target_id": 8001114,
-      "source_word": "paint",
-      "target_word": "краска, рисовать",
-      "source_example": "I need to paint the wall.",
-      "target_example": "Мне нужно покрасить стену."
-    },
-    {
-      "translation_id": 8000557,
-      "source_id": 8001115,
-      "target_id": 8001116,
-      "source_word": "painting",
-      "target_word": "картина|живопись",
-      "source_example": "This is a beautiful painting.",
-      "target_example": "Это красивая картина."
-    },
-    {
-      "translation_id": 8000558,
-      "source_id": 8001117,
-      "target_id": 8001118,
-      "source_word": "pair",
-      "target_word": "пара",
-      "source_example": "I need a new pair of shoes.",
-      "target_example": "Мне нужна новая пара туфель."
-    },
-    {
       "translation_id": 8000559,
       "source_id": 8001119,
       "target_id": 8001120,
@@ -4782,15 +3495,6 @@
       "target_word": "бумага",
       "source_example": "I need a piece of paper.",
       "target_example": "Мне нужен лист бумаги."
-    },
-    {
-      "translation_id": 8000561,
-      "source_id": 8001123,
-      "target_id": 8001124,
-      "source_word": "paragraph",
-      "target_word": "абзац",
-      "source_example": "Please read the first paragraph.",
-      "target_example": "Пожалуйста, прочитайте первый абзац."
     },
     {
       "translation_id": 8000562,
@@ -4838,15 +3542,6 @@
       "target_example": "Я иду на вечеринку сегодня вечером."
     },
     {
-      "translation_id": 8000567,
-      "source_id": 8001135,
-      "target_id": 8001136,
-      "source_word": "passport",
-      "target_word": "паспорт",
-      "source_example": "I need my passport.",
-      "target_example": "Мне нужен мой паспорт."
-    },
-    {
       "translation_id": 8000568,
       "source_id": 8001137,
       "target_id": 8001138,
@@ -4865,24 +3560,6 @@
       "target_example": "Я заплачу за ужин."
     },
     {
-      "translation_id": 8000570,
-      "source_id": 8001141,
-      "target_id": 8001142,
-      "source_word": "pen",
-      "target_word": "ручка",
-      "source_example": "I need a pen.",
-      "target_example": "Мне нужна ручка."
-    },
-    {
-      "translation_id": 8000571,
-      "source_id": 8001143,
-      "target_id": 8001144,
-      "source_word": "pencil",
-      "target_word": "карандаш",
-      "source_example": "I need a pencil.",
-      "target_example": "Мне нужен карандаш."
-    },
-    {
       "translation_id": 8000572,
       "source_id": 8001145,
       "target_id": 8001146,
@@ -4890,15 +3567,6 @@
       "target_word": "люди|народ",
       "source_example": "There are a lot of people here.",
       "target_example": "Здесь много людей."
-    },
-    {
-      "translation_id": 8000573,
-      "source_id": 8001147,
-      "target_id": 8001148,
-      "source_word": "pepper",
-      "target_word": "перец",
-      "source_example": "I like pepper.",
-      "target_example": "Я люблю перец."
     },
     {
       "translation_id": 8000574,
@@ -4937,42 +3605,6 @@
       "target_example": "Мне нужно зарядить телефон."
     },
     {
-      "translation_id": 8000579,
-      "source_id": 8001159,
-      "target_id": 8001160,
-      "source_word": "photo",
-      "target_word": "фото|фотография|снимок",
-      "source_example": "This is a nice photo.",
-      "target_example": "Это хорошее фото."
-    },
-    {
-      "translation_id": 8000580,
-      "source_id": 8001161,
-      "target_id": 8001162,
-      "source_word": "photograph",
-      "target_word": "фотография|снимок",
-      "source_example": "I took a photograph of the sunset.",
-      "target_example": "Я сфотографировал закат."
-    },
-    {
-      "translation_id": 8000581,
-      "source_id": 8001163,
-      "target_id": 8001164,
-      "source_word": "phrase",
-      "target_word": "фраза",
-      "source_example": "This is a useful phrase.",
-      "target_example": "Это полезная фраза."
-    },
-    {
-      "translation_id": 8000582,
-      "source_id": 8001165,
-      "target_id": 8001166,
-      "source_word": "piano",
-      "target_word": "пианино|фортепиано",
-      "source_example": "I can play the piano.",
-      "target_example": "Я умею играть на пианино."
-    },
-    {
       "translation_id": 8000583,
       "source_id": 8001167,
       "target_id": 8001168,
@@ -4989,24 +3621,6 @@
       "target_word": "кусок|часть",
       "source_example": "Can I have a piece of cake?",
       "target_example": "Можно мне кусок торта?"
-    },
-    {
-      "translation_id": 8000585,
-      "source_id": 8001171,
-      "target_id": 8001172,
-      "source_word": "pig",
-      "target_word": "свинья",
-      "source_example": "The pig is pink.",
-      "target_example": "Свинья розовая."
-    },
-    {
-      "translation_id": 8000586,
-      "source_id": 8001173,
-      "target_id": 8001174,
-      "source_word": "pink",
-      "target_word": "розовый",
-      "source_example": "I like the color pink.",
-      "target_example": "Мне нравится розовый цвет."
     },
     {
       "translation_id": 8000587,
@@ -5034,15 +3648,6 @@
       "target_word": "самолёт",
       "source_example": "The plane is flying high.",
       "target_example": "Самолет летит высоко."
-    },
-    {
-      "translation_id": 8000590,
-      "source_id": 8001181,
-      "target_id": 8001182,
-      "source_word": "plant",
-      "target_word": "растение, (сажать|садить)",
-      "source_example": "I have a lot of plants.",
-      "target_example": "У меня много растений."
     },
     {
       "translation_id": 8000591,
@@ -5081,24 +3686,6 @@
       "target_example": "Полиция едет."
     },
     {
-      "translation_id": 8000595,
-      "source_id": 8001191,
-      "target_id": 8001192,
-      "source_word": "policeman",
-      "target_word": "полицейский",
-      "source_example": "He is a policeman.",
-      "target_example": "Он полицейский."
-    },
-    {
-      "translation_id": 8000596,
-      "source_id": 8001193,
-      "target_id": 8001194,
-      "source_word": "pool",
-      "target_word": "бассейн",
-      "source_example": "Let's go to the pool.",
-      "target_example": "Пойдем в бассейн."
-    },
-    {
       "translation_id": 8000597,
       "source_id": 8001195,
       "target_id": 8001196,
@@ -5115,15 +3702,6 @@
       "target_word": "популярный",
       "source_example": "This is a popular song.",
       "target_example": "Это популярная песня."
-    },
-    {
-      "translation_id": 8000599,
-      "source_id": 8001199,
-      "target_id": 8001200,
-      "source_word": "positive",
-      "target_word": "положительный",
-      "source_example": "This is a positive result.",
-      "target_example": "Это положительный результат."
     },
     {
       "translation_id": 8000600,
@@ -5144,24 +3722,6 @@
       "target_example": "Мне нужно сходить на почту."
     },
     {
-      "translation_id": 8000602,
-      "source_id": 8001205,
-      "target_id": 8001206,
-      "source_word": "potato",
-      "target_word": "картофель|картошка",
-      "source_example": "I like potatoes.",
-      "target_example": "Я люблю картошку."
-    },
-    {
-      "translation_id": 8000603,
-      "source_id": 8001207,
-      "target_id": 8001208,
-      "source_word": "pound",
-      "target_word": "фунт",
-      "source_example": "It costs five pounds.",
-      "target_example": "Это стоит пять фунтов."
-    },
-    {
       "translation_id": 8000604,
       "source_id": 8001209,
       "target_id": 8001210,
@@ -5169,24 +3729,6 @@
       "target_word": "практика, практиковаться",
       "source_example": "I need more practice.",
       "target_example": "Мне нужно больше практики."
-    },
-    {
-      "translation_id": 8000605,
-      "source_id": 8001211,
-      "target_id": 8001212,
-      "source_word": "prefer",
-      "target_word": "предпочитать",
-      "source_example": "I prefer tea to coffee.",
-      "target_example": "Я предпочитаю чай кофе."
-    },
-    {
-      "translation_id": 8000606,
-      "source_id": 8001213,
-      "target_id": 8001214,
-      "source_word": "prepare",
-      "target_word": "готовить|подготавливать",
-      "source_example": "I need to prepare for the exam.",
-      "target_example": "Мне нужно подготовиться к экзамену."
     },
     {
       "translation_id": 8000607,
@@ -5234,15 +3776,6 @@
       "target_example": "У меня проблема."
     },
     {
-      "translation_id": 8000612,
-      "source_id": 8001225,
-      "target_id": 8001226,
-      "source_word": "product",
-      "target_word": "продукт|товар",
-      "source_example": "This is a new product.",
-      "target_example": "Это новый продукт."
-    },
-    {
       "translation_id": 8000613,
       "source_id": 8001227,
       "target_id": 8001228,
@@ -5261,15 +3794,6 @@
       "target_example": "Я работаю над новым проектом."
     },
     {
-      "translation_id": 8000615,
-      "source_id": 8001231,
-      "target_id": 8001232,
-      "source_word": "purple",
-      "target_word": "фиолетовый",
-      "source_example": "I like the color purple.",
-      "target_example": "Мне нравится фиолетовый цвет."
-    },
-    {
       "translation_id": 8000616,
       "source_id": 8001233,
       "target_id": 8001234,
@@ -5277,15 +3801,6 @@
       "target_word": "класть|ставить|положить",
       "source_example": "Please put the book on the table.",
       "target_example": "Пожалуйста, положи книгу на стол."
-    },
-    {
-      "translation_id": 8000617,
-      "source_id": 8001235,
-      "target_id": 8001236,
-      "source_word": "quarter",
-      "target_word": "четверть",
-      "source_example": "It's a quarter to five.",
-      "target_example": "Сейчас без четверти пять."
     },
     {
       "translation_id": 8000618,
@@ -5360,15 +3875,6 @@
       "target_example": "Я люблю читать книги."
     },
     {
-      "translation_id": 8000626,
-      "source_id": 8001253,
-      "target_id": 8001254,
-      "source_word": "reader",
-      "target_word": "читатель",
-      "source_example": "She is a fast reader.",
-      "target_example": "Она быстро читает."
-    },
-    {
       "translation_id": 8000627,
       "source_id": 8001255,
       "target_id": 8001256,
@@ -5441,15 +3947,6 @@
       "target_example": "Я помню его имя."
     },
     {
-      "translation_id": 8000635,
-      "source_id": 8001271,
-      "target_id": 8001272,
-      "source_word": "repeat",
-      "target_word": "повторять",
-      "source_example": "Can you repeat the question?",
-      "target_example": "Можете повторить вопрос?"
-    },
-    {
       "translation_id": 8000636,
       "source_id": 8001273,
       "target_id": 8001274,
@@ -5457,15 +3954,6 @@
       "target_word": "отчёт, сообщать",
       "source_example": "He wrote a report about the meeting.",
       "target_example": "Он написал отчёт о встрече."
-    },
-    {
-      "translation_id": 8000637,
-      "source_id": 8001275,
-      "target_id": 8001276,
-      "source_word": "restaurant",
-      "target_word": "ресторан",
-      "source_example": "Let's go to a restaurant for dinner.",
-      "target_example": "Пойдем в ресторан на ужин."
     },
     {
       "translation_id": 8000638,
@@ -5484,15 +3972,6 @@
       "target_word": "возвращаться, возврат",
       "source_example": "When will you return?",
       "target_example": "Когда ты вернешься?"
-    },
-    {
-      "translation_id": 8000640,
-      "source_id": 8001281,
-      "target_id": 8001282,
-      "source_word": "rice",
-      "target_word": "рис",
-      "source_example": "I like to eat rice with chicken.",
-      "target_example": "Я люблю есть рис с курицей."
     },
     {
       "translation_id": 8000641,
@@ -5549,15 +4028,6 @@
       "target_example": "Моя комната очень маленькая."
     },
     {
-      "translation_id": 8000647,
-      "source_id": 8001295,
-      "target_id": 8001296,
-      "source_word": "routine",
-      "target_word": "рутина|распорядок дня",
-      "source_example": "My morning routine is always the same.",
-      "target_example": "Моя утренняя рутина всегда одинакова."
-    },
-    {
       "translation_id": 8000648,
       "source_id": 8001297,
       "target_id": 8001298,
@@ -5585,24 +4055,6 @@
       "target_example": "Ей грустно, потому что ее кот болен."
     },
     {
-      "translation_id": 8000651,
-      "source_id": 8001303,
-      "target_id": 8001304,
-      "source_word": "salad",
-      "target_word": "салат",
-      "source_example": "I would like a green salad.",
-      "target_example": "Я бы хотел зеленый салат."
-    },
-    {
-      "translation_id": 8000652,
-      "source_id": 8001305,
-      "target_id": 8001306,
-      "source_word": "salt",
-      "target_word": "соль",
-      "source_example": "Please pass the salt.",
-      "target_example": "Пожалуйста, передайте соль."
-    },
-    {
       "translation_id": 8000653,
       "source_id": 8001307,
       "target_id": 8001308,
@@ -5610,24 +4062,6 @@
       "target_word": "тот же самый|одинаковый",
       "source_example": "We have the same car.",
       "target_example": "У нас одинаковые машины."
-    },
-    {
-      "translation_id": 8000654,
-      "source_id": 8001309,
-      "target_id": 8001310,
-      "source_word": "sandwich",
-      "target_word": "сэндвич|бутерброд",
-      "source_example": "I will have a cheese sandwich.",
-      "target_example": "Я буду сэндвич с сыром."
-    },
-    {
-      "translation_id": 8000655,
-      "source_id": 8001311,
-      "target_id": 8001312,
-      "source_word": "Saturday",
-      "target_word": "суббота",
-      "source_example": "I will see you on Saturday.",
-      "target_example": "Увидимся в субботу."
     },
     {
       "translation_id": 8000656,
@@ -5655,15 +4089,6 @@
       "target_word": "наука",
       "source_example": "Science is my favorite subject.",
       "target_example": "Наука - мой любимый предмет."
-    },
-    {
-      "translation_id": 8000659,
-      "source_id": 8001319,
-      "target_id": 8001320,
-      "source_word": "scientist",
-      "target_word": "учёный",
-      "source_example": "She is a famous scientist.",
-      "target_example": "Она известный учёный."
     },
     {
       "translation_id": 8000662,
@@ -5702,15 +4127,6 @@
       "target_example": "Я отправлю тебе письмо."
     },
     {
-      "translation_id": 8000666,
-      "source_id": 8001333,
-      "target_id": 8001334,
-      "source_word": "sentence",
-      "target_word": "предложение",
-      "source_example": "Please write a full sentence.",
-      "target_example": "Пожалуйста, напишите полное предложение."
-    },
-    {
       "translation_id": 8000667,
       "source_id": 8001335,
       "target_id": 8001336,
@@ -5727,24 +4143,6 @@
       "target_word": "семь",
       "source_example": "There are seven days in a week.",
       "target_example": "В неделе семь дней."
-    },
-    {
-      "translation_id": 8000669,
-      "source_id": 8001339,
-      "target_id": 8001340,
-      "source_word": "seventeen",
-      "target_word": "семнадцать",
-      "source_example": "She is seventeen years old.",
-      "target_example": "Ей семнадцать лет."
-    },
-    {
-      "translation_id": 8000670,
-      "source_id": 8001341,
-      "target_id": 8001342,
-      "source_word": "seventy",
-      "target_word": "семьдесят",
-      "source_example": "My grandmother is seventy years old.",
-      "target_example": "Моей бабушке семьдесят лет."
     },
     {
       "translation_id": 8000671,
@@ -5765,24 +4163,6 @@
       "target_example": "Она моя сестра."
     },
     {
-      "translation_id": 8000673,
-      "source_id": 8001347,
-      "target_id": 8001348,
-      "source_word": "sheep",
-      "target_word": "овца",
-      "source_example": "The sheep are in the field.",
-      "target_example": "Овцы в поле."
-    },
-    {
-      "translation_id": 8000674,
-      "source_id": 8001349,
-      "target_id": 8001350,
-      "source_word": "shirt",
-      "target_word": "рубашка",
-      "source_example": "This is my favorite shirt.",
-      "target_example": "Это моя любимая рубашка."
-    },
-    {
       "translation_id": 8000675,
       "source_id": 8001351,
       "target_id": 8001352,
@@ -5799,15 +4179,6 @@
       "target_word": "магазин, делать покупки",
       "source_example": "I need to go to the shop.",
       "target_example": "Мне нужно сходить в магазин."
-    },
-    {
-      "translation_id": 8000677,
-      "source_id": 8001355,
-      "target_id": 8001356,
-      "source_word": "shopping",
-      "target_word": "шоппинг|покупки",
-      "source_example": "We go shopping every Saturday.",
-      "target_example": "Мы ходим по магазинам каждую субботу."
     },
     {
       "translation_id": 8000678,
@@ -5837,15 +4208,6 @@
       "target_example": "Можешь показать мне дорогу?"
     },
     {
-      "translation_id": 8000681,
-      "source_id": 8001363,
-      "target_id": 8001364,
-      "source_word": "shower",
-      "target_word": "душ",
-      "source_example": "I take a shower in the morning.",
-      "target_example": "Я принимаю душ утром."
-    },
-    {
       "translation_id": 8000682,
       "source_id": 8001365,
       "target_id": 8001366,
@@ -5871,15 +4233,6 @@
       "target_word": "петь",
       "source_example": "She likes to sing.",
       "target_example": "Она любит петь."
-    },
-    {
-      "translation_id": 8000685,
-      "source_id": 8001371,
-      "target_id": 8001372,
-      "source_word": "singer",
-      "target_word": "певец|певица",
-      "source_example": "He is a famous singer.",
-      "target_example": "Он известный певец."
     },
     {
       "translation_id": 8000686,
@@ -5918,42 +4271,6 @@
       "target_example": "У меня шесть книг."
     },
     {
-      "translation_id": 8000690,
-      "source_id": 8001381,
-      "target_id": 8001382,
-      "source_word": "sixteen",
-      "target_word": "шестнадцать",
-      "source_example": "He is sixteen years old.",
-      "target_example": "Ему шестнадцать лет."
-    },
-    {
-      "translation_id": 8000691,
-      "source_id": 8001383,
-      "target_id": 8001384,
-      "source_word": "sixty",
-      "target_word": "шестьдесят",
-      "source_example": "There are sixty minutes in an hour.",
-      "target_example": "В часе шестьдесят минут."
-    },
-    {
-      "translation_id": 8000692,
-      "source_id": 8001385,
-      "target_id": 8001386,
-      "source_word": "skill",
-      "target_word": "навык|умение",
-      "source_example": "She has many skills.",
-      "target_example": "У нее много навыков."
-    },
-    {
-      "translation_id": 8000693,
-      "source_id": 8001387,
-      "target_id": 8001388,
-      "source_word": "skirt",
-      "target_word": "юбка",
-      "source_example": "She is wearing a blue skirt.",
-      "target_example": "Она в синей юбке."
-    },
-    {
       "translation_id": 8000694,
       "source_id": 8001389,
       "target_id": 8001390,
@@ -5988,24 +4305,6 @@
       "target_word": "умный",
       "source_example": "She is very smart.",
       "target_example": "Она очень умная."
-    },
-    {
-      "translation_id": 8000698,
-      "source_id": 8001397,
-      "target_id": 8001398,
-      "source_word": "snake",
-      "target_word": "змея",
-      "source_example": "I am afraid of snakes.",
-      "target_example": "Я боюсь змей."
-    },
-    {
-      "translation_id": 8000699,
-      "source_id": 8001399,
-      "target_id": 8001400,
-      "source_word": "snow",
-      "target_word": "снег, идти [о снеге]",
-      "source_example": "It is starting to snow.",
-      "target_example": "Начинается снег."
     },
     {
       "translation_id": 8000701,
@@ -6098,15 +4397,6 @@
       "target_example": "Я услышал странный звук."
     },
     {
-      "translation_id": 8000711,
-      "source_id": 8001423,
-      "target_id": 8001424,
-      "source_word": "soup",
-      "target_word": "суп",
-      "source_example": "I would like some soup.",
-      "target_example": "Я бы хотел немного супа."
-    },
-    {
       "translation_id": 8000712,
       "source_id": 8001425,
       "target_id": 8001426,
@@ -6143,24 +4433,6 @@
       "target_example": "Это особый случай."
     },
     {
-      "translation_id": 8000716,
-      "source_id": 8001433,
-      "target_id": 8001434,
-      "source_word": "spell",
-      "target_word": "произносить по буквам",
-      "source_example": "Can you spell your name?",
-      "target_example": "Можешь произнести свое имя по буквам?"
-    },
-    {
-      "translation_id": 8000717,
-      "source_id": 8001435,
-      "target_id": 8001436,
-      "source_word": "spelling",
-      "target_word": "правописание|орфография",
-      "source_example": "My spelling is not very good.",
-      "target_example": "Мое правописание не очень хорошее."
-    },
-    {
       "translation_id": 8000718,
       "source_id": 8001437,
       "target_id": 8001438,
@@ -6168,24 +4440,6 @@
       "target_word": "тратить|проводить",
       "source_example": "How much money did you spend?",
       "target_example": "Сколько денег ты потратил?"
-    },
-    {
-      "translation_id": 8000719,
-      "source_id": 8001439,
-      "target_id": 8001440,
-      "source_word": "sport",
-      "target_word": "спорт",
-      "source_example": "What is your favorite sport?",
-      "target_example": "Какой твой любимый вид спорта?"
-    },
-    {
-      "translation_id": 8000720,
-      "source_id": 8001441,
-      "target_id": 8001442,
-      "source_word": "spring",
-      "target_word": "весна",
-      "source_example": "I love the spring.",
-      "target_example": "Я люблю весну."
     },
     {
       "translation_id": 8000721,
@@ -6213,15 +4467,6 @@
       "target_word": "(начинать|начинаться), начало",
       "source_example": "Let's start the lesson.",
       "target_example": "Давайте начнем урок."
-    },
-    {
-      "translation_id": 8000724,
-      "source_id": 8001449,
-      "target_id": 8001450,
-      "source_word": "statement",
-      "target_word": "утверждение|заявление",
-      "source_example": "He made a false statement.",
-      "target_example": "Он сделал ложное заявление."
     },
     {
       "translation_id": 8000725,
@@ -6323,15 +4568,6 @@
       "target_example": "Мне нравится твой стиль."
     },
     {
-      "translation_id": 8000736,
-      "source_id": 8001473,
-      "target_id": 8001474,
-      "source_word": "subject",
-      "target_word": "предмет [школьный]|тема",
-      "source_example": "What is your favorite subject?",
-      "target_example": "Какой твой любимый предмет?"
-    },
-    {
       "translation_id": 8000737,
       "source_id": 8001475,
       "target_id": 8001476,
@@ -6339,15 +4575,6 @@
       "target_word": "успех",
       "source_example": "I wish you success.",
       "target_example": "Желаю тебе успеха."
-    },
-    {
-      "translation_id": 8000738,
-      "source_id": 8001477,
-      "target_id": 8001478,
-      "source_word": "sugar",
-      "target_word": "сахар",
-      "source_example": "I need some sugar for my coffee.",
-      "target_example": "Мне нужен сахар для кофе."
     },
     {
       "translation_id": 8000739,
@@ -6359,33 +4586,6 @@
       "target_example": "Я люблю лето."
     },
     {
-      "translation_id": 8000740,
-      "source_id": 8001481,
-      "target_id": 8001482,
-      "source_word": "sun",
-      "target_word": "солнце",
-      "source_example": "The sun is shining.",
-      "target_example": "Солнце светит."
-    },
-    {
-      "translation_id": 8000741,
-      "source_id": 8001483,
-      "target_id": 8001484,
-      "source_word": "Sunday",
-      "target_word": "воскресенье",
-      "source_example": "I will see you on Sunday.",
-      "target_example": "Увидимся в воскресенье."
-    },
-    {
-      "translation_id": 8000742,
-      "source_id": 8001485,
-      "target_id": 8001486,
-      "source_word": "supermarket",
-      "target_word": "супермаркет",
-      "source_example": "I need to go to the supermarket.",
-      "target_example": "Мне нужно сходить в супермаркет."
-    },
-    {
       "translation_id": 8000743,
       "source_id": 8001487,
       "target_id": 8001488,
@@ -6393,24 +4593,6 @@
       "target_word": "уверенный",
       "source_example": "Are you sure?",
       "target_example": "Ты уверен?"
-    },
-    {
-      "translation_id": 8000744,
-      "source_id": 8001489,
-      "target_id": 8001490,
-      "source_word": "sweater",
-      "target_word": "свитер",
-      "source_example": "I am wearing a warm sweater.",
-      "target_example": "На мне теплый свитер."
-    },
-    {
-      "translation_id": 8000745,
-      "source_id": 8001491,
-      "target_id": 8001492,
-      "source_word": "swim",
-      "target_word": "плавать",
-      "source_example": "I like to swim in the sea.",
-      "target_example": "Я люблю плавать в море."
     },
     {
       "translation_id": 8000747,
@@ -6438,24 +4620,6 @@
       "target_word": "разговаривать|говорить",
       "source_example": "I need to talk to you.",
       "target_example": "Мне нужно с тобой поговорить."
-    },
-    {
-      "translation_id": 8000750,
-      "source_id": 8001501,
-      "target_id": 8001502,
-      "source_word": "tall",
-      "target_word": "высокий",
-      "source_example": "He is very tall.",
-      "target_example": "Он очень высокий."
-    },
-    {
-      "translation_id": 8000751,
-      "source_id": 8001503,
-      "target_id": 8001504,
-      "source_word": "taxi",
-      "target_word": "такси",
-      "source_example": "Let's take a taxi.",
-      "target_example": "Давай возьмем такси."
     },
     {
       "translation_id": 8000752,
@@ -6494,33 +4658,6 @@
       "target_example": "Мы хорошая команда."
     },
     {
-      "translation_id": 8000756,
-      "source_id": 8001513,
-      "target_id": 8001514,
-      "source_word": "teenager",
-      "target_word": "подросток",
-      "source_example": "He is a teenager.",
-      "target_example": "Он подросток."
-    },
-    {
-      "translation_id": 8000757,
-      "source_id": 8001515,
-      "target_id": 8001516,
-      "source_word": "telephone",
-      "target_word": "телефон",
-      "source_example": "What is your telephone number?",
-      "target_example": "Какой у тебя номер телефона?"
-    },
-    {
-      "translation_id": 8000758,
-      "source_id": 8001517,
-      "target_id": 8001518,
-      "source_word": "television",
-      "target_word": "телевизор|телевидение",
-      "source_example": "I like to watch television.",
-      "target_example": "Я люблю смотреть телевизор."
-    },
-    {
       "translation_id": 8000759,
       "source_id": 8001519,
       "target_id": 8001520,
@@ -6537,15 +4674,6 @@
       "target_word": "десять",
       "source_example": "I have ten fingers.",
       "target_example": "У меня десять пальцев."
-    },
-    {
-      "translation_id": 8000761,
-      "source_id": 8001523,
-      "target_id": 8001524,
-      "source_word": "tennis",
-      "target_word": "теннис",
-      "source_example": "I like to play tennis.",
-      "target_example": "Я люблю играть в теннис."
     },
     {
       "translation_id": 8000762,
@@ -6611,15 +4739,6 @@
       "target_example": "Это мой дом."
     },
     {
-      "translation_id": 8000770,
-      "source_id": 8001541,
-      "target_id": 8001542,
-      "source_word": "theater",
-      "target_word": "театр",
-      "source_example": "Let's go to the theater.",
-      "target_example": "Пойдем в театр."
-    },
-    {
       "translation_id": 8000771,
       "source_id": 8001543,
       "target_id": 8001544,
@@ -6674,33 +4793,6 @@
       "target_example": "Это третий раз."
     },
     {
-      "translation_id": 8000779,
-      "source_id": 8001559,
-      "target_id": 8001560,
-      "source_word": "thirsty",
-      "target_word": "жаждущий",
-      "source_example": "I am thirsty.",
-      "target_example": "Я хочу пить."
-    },
-    {
-      "translation_id": 8000780,
-      "source_id": 8001561,
-      "target_id": 8001562,
-      "source_word": "thirteen",
-      "target_word": "тринадцать",
-      "source_example": "She is thirteen years old.",
-      "target_example": "Ей тринадцать лет."
-    },
-    {
-      "translation_id": 8000781,
-      "source_id": 8001563,
-      "target_id": 8001564,
-      "source_word": "thirty",
-      "target_word": "тридцать",
-      "source_example": "He is thirty years old.",
-      "target_example": "Ему тридцать лет."
-    },
-    {
       "translation_id": 8000782,
       "source_id": 8001565,
       "target_id": 8001566,
@@ -6735,24 +4827,6 @@
       "target_word": "через|сквозь",
       "source_example": "We walked through the park.",
       "target_example": "Мы прошли через парк."
-    },
-    {
-      "translation_id": 8000786,
-      "source_id": 8001573,
-      "target_id": 8001574,
-      "source_word": "Thursday",
-      "target_word": "четверг",
-      "source_example": "I will see you on Thursday.",
-      "target_example": "Увидимся в четверг."
-    },
-    {
-      "translation_id": 8000787,
-      "source_id": 8001575,
-      "target_id": 8001576,
-      "source_word": "ticket",
-      "target_word": "билет",
-      "source_example": "I need a ticket to London.",
-      "target_example": "Мне нужен билет в Лондон."
     },
     {
       "translation_id": 8000788,
@@ -6800,24 +4874,6 @@
       "target_example": "Пойдем вместе."
     },
     {
-      "translation_id": 8000794,
-      "source_id": 8001589,
-      "target_id": 8001590,
-      "source_word": "toilet",
-      "target_word": "туалет",
-      "source_example": "Where is the toilet?",
-      "target_example": "Где туалет?"
-    },
-    {
-      "translation_id": 8000795,
-      "source_id": 8001591,
-      "target_id": 8001592,
-      "source_word": "tomato",
-      "target_word": "помидор|томат",
-      "source_example": "I like tomatoes.",
-      "target_example": "Я люблю помидоры."
-    },
-    {
       "translation_id": 8000796,
       "source_id": 8001593,
       "target_id": 8001594,
@@ -6845,33 +4901,6 @@
       "target_example": "Мне это тоже нравится."
     },
     {
-      "translation_id": 8000799,
-      "source_id": 8001599,
-      "target_id": 8001600,
-      "source_word": "tooth",
-      "target_word": "зуб",
-      "source_example": "I have a toothache.",
-      "target_example": "У меня болит зуб."
-    },
-    {
-      "translation_id": 8000800,
-      "source_id": 8001601,
-      "target_id": 8001602,
-      "source_word": "topic",
-      "target_word": "тема",
-      "source_example": "What is the topic of your presentation?",
-      "target_example": "Какая тема вашей презентации?"
-    },
-    {
-      "translation_id": 8000801,
-      "source_id": 8001603,
-      "target_id": 8001604,
-      "source_word": "tourist",
-      "target_word": "турист",
-      "source_example": "I am a tourist.",
-      "target_example": "Я турист."
-    },
-    {
       "translation_id": 8000802,
       "source_id": 8001605,
       "target_id": 8001606,
@@ -6879,15 +4908,6 @@
       "target_word": "город [небольшой]",
       "source_example": "This is a small town.",
       "target_example": "Это маленький город."
-    },
-    {
-      "translation_id": 8000803,
-      "source_id": 8001607,
-      "target_id": 8001608,
-      "source_word": "traffic",
-      "target_word": "движение [дорожное]",
-      "source_example": "The traffic is bad today.",
-      "target_example": "Сегодня плохое движение."
     },
     {
       "translation_id": 8000804,
@@ -6953,24 +4973,6 @@
       "target_example": "Я постараюсь."
     },
     {
-      "translation_id": 8000811,
-      "source_id": 8001623,
-      "target_id": 8001624,
-      "source_word": "T-shirt",
-      "target_word": "футболка",
-      "source_example": "I am wearing a T-shirt.",
-      "target_example": "На мне футболка."
-    },
-    {
-      "translation_id": 8000812,
-      "source_id": 8001625,
-      "target_id": 8001626,
-      "source_word": "Tuesday",
-      "target_word": "вторник",
-      "source_example": "I have a meeting on Tuesday.",
-      "target_example": "У меня встреча во вторник."
-    },
-    {
       "translation_id": 8000813,
       "source_id": 8001627,
       "target_id": 8001628,
@@ -6978,24 +4980,6 @@
       "target_word": "поворачивать, очередь",
       "source_example": "Turn left here.",
       "target_example": "Поверните налево здесь."
-    },
-    {
-      "translation_id": 8000815,
-      "source_id": 8001631,
-      "target_id": 8001632,
-      "source_word": "twelve",
-      "target_word": "двенадцать",
-      "source_example": "There are twelve months in a year.",
-      "target_example": "В году двенадцать месяцев."
-    },
-    {
-      "translation_id": 8000816,
-      "source_id": 8001633,
-      "target_id": 8001634,
-      "source_word": "twenty",
-      "target_word": "двадцать",
-      "source_example": "She is twenty years old.",
-      "target_example": "Ей двадцать лет."
     },
     {
       "translation_id": 8000817,
@@ -7023,15 +5007,6 @@
       "target_word": "(тип|вид), печатать",
       "source_example": "What type of music do you like?",
       "target_example": "Какую музыку ты любишь?"
-    },
-    {
-      "translation_id": 8000820,
-      "source_id": 8001641,
-      "target_id": 8001642,
-      "source_word": "umbrella",
-      "target_word": "зонт",
-      "source_example": "I need an umbrella.",
-      "target_example": "Мне нужен зонт."
     },
     {
       "translation_id": 8000821,
@@ -7097,15 +5072,6 @@
       "target_example": "Могу я воспользоваться твоим телефоном?"
     },
     {
-      "translation_id": 8000830,
-      "source_id": 8001661,
-      "target_id": 8001662,
-      "source_word": "useful",
-      "target_word": "полезный",
-      "source_example": "This is a useful tool.",
-      "target_example": "Это полезный инструмент."
-    },
-    {
       "translation_id": 8000831,
       "source_id": 8001663,
       "target_id": 8001664,
@@ -7113,24 +5079,6 @@
       "target_word": "обычно",
       "source_example": "I usually wake up at 7.",
       "target_example": "Я обычно просыпаюсь в 7."
-    },
-    {
-      "translation_id": 8000832,
-      "source_id": 8001665,
-      "target_id": 8001666,
-      "source_word": "vacation",
-      "target_word": "отпуск|каникулы",
-      "source_example": "I am going on vacation.",
-      "target_example": "Я еду в отпуск."
-    },
-    {
-      "translation_id": 8000833,
-      "source_id": 8001667,
-      "target_id": 8001668,
-      "source_word": "vegetable",
-      "target_word": "овощ",
-      "source_example": "I like vegetables.",
-      "target_example": "Я люблю овощи."
     },
     {
       "translation_id": 8000834,
@@ -7160,15 +5108,6 @@
       "target_example": "Я навещу свою бабушку."
     },
     {
-      "translation_id": 8000837,
-      "source_id": 8001675,
-      "target_id": 8001676,
-      "source_word": "visitor",
-      "target_word": "посетитель|гость",
-      "source_example": "We have a visitor.",
-      "target_example": "У нас гость."
-    },
-    {
       "translation_id": 8000838,
       "source_id": 8001677,
       "target_id": 8001678,
@@ -7176,15 +5115,6 @@
       "target_word": "ждать",
       "source_example": "Please wait for me.",
       "target_example": "Пожалуйста, подожди меня."
-    },
-    {
-      "translation_id": 8000839,
-      "source_id": 8001679,
-      "target_id": 8001680,
-      "source_word": "waiter",
-      "target_word": "официант",
-      "source_example": "The waiter is coming.",
-      "target_example": "Официант идет."
     },
     {
       "translation_id": 8000840,
@@ -7232,15 +5162,6 @@
       "target_example": "Сегодня тепло."
     },
     {
-      "translation_id": 8000845,
-      "source_id": 8001691,
-      "target_id": 8001692,
-      "source_word": "wash",
-      "target_word": "мыть|стирать",
-      "source_example": "I need to wash my hands.",
-      "target_example": "Мне нужно помыть руки."
-    },
-    {
       "translation_id": 8000846,
       "source_id": 8001693,
       "target_id": 8001694,
@@ -7277,15 +5198,6 @@
       "target_example": "Что на тебе надето?"
     },
     {
-      "translation_id": 8000851,
-      "source_id": 8001703,
-      "target_id": 8001704,
-      "source_word": "weather",
-      "target_word": "погода",
-      "source_example": "The weather is nice today.",
-      "target_example": "Сегодня хорошая погода."
-    },
-    {
       "translation_id": 8000852,
       "source_id": 8001705,
       "target_id": 8001706,
@@ -7293,15 +5205,6 @@
       "target_word": "веб-сайт|сайт",
       "source_example": "This is a useful website.",
       "target_example": "Это полезный веб-сайт."
-    },
-    {
-      "translation_id": 8000853,
-      "source_id": 8001707,
-      "target_id": 8001708,
-      "source_word": "Wednesday",
-      "target_word": "среда",
-      "source_example": "I will see you on Wednesday.",
-      "target_example": "Увидимся в среду."
     },
     {
       "translation_id": 8000854,
@@ -7457,15 +5360,6 @@
       "target_example": "Я бы хотел бокал вина."
     },
     {
-      "translation_id": 8000871,
-      "source_id": 8001743,
-      "target_id": 8001744,
-      "source_word": "winter",
-      "target_word": "зима",
-      "source_example": "I like winter.",
-      "target_example": "Я люблю зиму."
-    },
-    {
       "translation_id": 8000872,
       "source_id": 8001745,
       "target_id": 8001746,
@@ -7511,15 +5405,6 @@
       "target_example": "Мне сегодня нужно работать."
     },
     {
-      "translation_id": 8000877,
-      "source_id": 8001755,
-      "target_id": 8001756,
-      "source_word": "worker",
-      "target_word": "рабочий|работник",
-      "source_example": "He is a hard worker.",
-      "target_example": "Он трудолюбивый."
-    },
-    {
       "translation_id": 8000878,
       "source_id": 8001757,
       "target_id": 8001758,
@@ -7547,15 +5432,6 @@
       "target_example": "Мне нужно написать письмо."
     },
     {
-      "translation_id": 8000881,
-      "source_id": 8001763,
-      "target_id": 8001764,
-      "source_word": "writer",
-      "target_word": "писатель",
-      "source_example": "He is a famous writer.",
-      "target_example": "Он известный писатель."
-    },
-    {
       "translation_id": 8000882,
       "source_id": 8001765,
       "target_id": 8001766,
@@ -7572,15 +5448,6 @@
       "target_word": "неправильный|неверный",
       "source_example": "This is the wrong answer.",
       "target_example": "Это неправильный ответ."
-    },
-    {
-      "translation_id": 8000884,
-      "source_id": 8001769,
-      "target_id": 8001770,
-      "source_word": "yard",
-      "target_word": "двор",
-      "source_example": "The children are playing in the yard.",
-      "target_example": "Дети играют во дворе."
     },
     {
       "translation_id": 8000885,
@@ -7601,15 +5468,6 @@
       "target_example": "Увидимся в следующем году."
     },
     {
-      "translation_id": 8000887,
-      "source_id": 8001775,
-      "target_id": 8001776,
-      "source_word": "yellow",
-      "target_word": "желтый",
-      "source_example": "The sun is yellow.",
-      "target_example": "Солнце желтое."
-    },
-    {
       "translation_id": 8000888,
       "source_id": 8001777,
       "target_id": 8001778,
@@ -7617,15 +5475,6 @@
       "target_word": "да",
       "source_example": "Yes, I can help you.",
       "target_example": "Да, я могу тебе помочь."
-    },
-    {
-      "translation_id": 8000889,
-      "source_id": 8001779,
-      "target_id": 8001780,
-      "source_word": "yesterday",
-      "target_word": "вчера",
-      "source_example": "I saw him yesterday.",
-      "target_example": "Я видел его вчера."
     },
     {
       "translation_id": 8000890,
@@ -8105,15 +5954,6 @@
       "target_example": "Образование очень важно."
     },
     {
-      "translation_id": 8000953,
-      "source_id": 8001907,
-      "target_id": 8001908,
-      "source_word": "kids",
-      "target_word": "дети|ребята",
-      "source_example": "The kids are playing in the yard.",
-      "target_example": "Дети играют во дворе."
-    },
-    {
       "translation_id": 8000954,
       "source_id": 8001909,
       "target_id": 8001910,
@@ -8571,15 +6411,6 @@
       "target_word": "наконец",
       "source_example": "Finally, we are here.",
       "target_example": "Наконец, мы здесь."
-    },
-    {
-      "translation_id": 8001009,
-      "source_id": 8002019,
-      "target_id": 8002020,
-      "source_word": "received",
-      "target_word": "получил",
-      "source_example": "I received your letter.",
-      "target_example": "Я получил твое письмо."
     },
     {
       "translation_id": 8001010,
@@ -9212,15 +7043,6 @@
       "target_example": "Это просто невозможно."
     },
     {
-      "translation_id": 8001087,
-      "source_id": 8002175,
-      "target_id": 8002176,
-      "source_word": "published",
-      "target_word": "опубликованный",
-      "source_example": "The book was published last year.",
-      "target_example": "Книга была опубликована в прошлом году."
-    },
-    {
       "translation_id": 8001089,
       "source_id": 8002179,
       "target_id": 8002180,
@@ -9444,15 +7266,6 @@
       "target_word": "разрешено",
       "source_example": "Smoking is not allowed here.",
       "target_example": "Здесь курить запрещено."
-    },
-    {
-      "translation_id": 8001119,
-      "source_id": 8002239,
-      "target_id": 8002240,
-      "source_word": "fans",
-      "target_word": "фанаты|болельщики",
-      "source_example": "The singer has many fans.",
-      "target_example": "У певицы много поклонников."
     },
     {
       "translation_id": 8001120,

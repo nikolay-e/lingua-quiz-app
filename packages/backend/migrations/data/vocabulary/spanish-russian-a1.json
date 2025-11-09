@@ -41,15 +41,6 @@
       "target_example": "Мой брат служит в армии."
     },
     {
-      "translation_id": 4000011,
-      "source_id": 4000023,
-      "target_id": 4000024,
-      "source_word": "lunes",
-      "target_word": "понедельник",
-      "source_example": "El lunes voy al trabajo.",
-      "target_example": "В понедельник я иду на работу."
-    },
-    {
       "translation_id": 4000014,
       "source_id": 4000029,
       "target_id": 4000030,
@@ -147,15 +138,6 @@
       "target_word": "бог",
       "source_example": "Que Dios te bendiga.",
       "target_example": "Да благословит тебя Бог."
-    },
-    {
-      "translation_id": 4000029,
-      "source_id": 4000059,
-      "target_id": 4000060,
-      "source_word": "rico",
-      "target_word": "богатый",
-      "source_example": "Es un hombre muy rico.",
-      "target_example": "Он очень богатый человек."
     },
     {
       "translation_id": 4000030,
@@ -302,15 +284,6 @@
       "target_example": "Я дома."
     },
     {
-      "translation_id": 4000052,
-      "source_id": 4000105,
-      "target_id": 4000106,
-      "source_word": "baño",
-      "target_word": "ванная",
-      "source_example": "El baño está ocupado.",
-      "target_example": "Ванная занята."
-    },
-    {
       "translation_id": 4000053,
       "source_id": 4000107,
       "target_id": 4000108,
@@ -444,24 +417,6 @@
       "target_word": "вина",
       "source_example": "No es mi culpa.",
       "target_example": "Это не моя вина."
-    },
-    {
-      "translation_id": 4000076,
-      "source_id": 4000153,
-      "target_id": 4000154,
-      "source_word": "autoridad",
-      "target_word": "власть",
-      "source_example": "Las autoridades tomaron medidas.",
-      "target_example": "Власти приняли меры."
-    },
-    {
-      "translation_id": 4000077,
-      "source_id": 4000155,
-      "target_id": 4000156,
-      "source_word": "influencia",
-      "target_word": "влияние",
-      "source_example": "Su influencia es muy grande.",
-      "target_example": "Его влияние очень велико."
     },
     {
       "translation_id": 4000079,
@@ -689,15 +644,6 @@
       "target_example": "Врач меня осмотрел."
     },
     {
-      "translation_id": 4000108,
-      "source_id": 4000217,
-      "target_id": 4000218,
-      "source_word": "daño",
-      "target_word": "вред",
-      "source_example": "Fumar have daño a la salud.",
-      "target_example": "Курение наносит вред здоровью."
-    },
-    {
       "translation_id": 4000109,
       "source_id": 4000219,
       "target_id": 4000220,
@@ -786,15 +732,6 @@
       "target_word": "выигрывать",
       "source_example": "Nuestro equipo ganó el partido.",
       "target_example": "Наша команда выиграла матч."
-    },
-    {
-      "translation_id": 4000120,
-      "source_id": 4000241,
-      "target_id": 4000242,
-      "source_word": "cumplir",
-      "target_word": "(выполнять|исполнять), исполняться [о возрасте]",
-      "source_example": "Necesito cumplir esta tarea.",
-      "target_example": "Мне нужно выполнить это задание."
     },
     {
       "translation_id": 4000122,
@@ -1067,15 +1004,6 @@
       "target_example": "Мне нужно два билета."
     },
     {
-      "translation_id": 4000160,
-      "source_id": 4000321,
-      "target_id": 4000322,
-      "source_word": "veinte",
-      "target_word": "двадцать",
-      "source_example": "Tengo veinte años.",
-      "target_example": "Мне двадцать лет."
-    },
-    {
       "translation_id": 4000161,
       "source_id": 4000323,
       "target_id": 4000324,
@@ -1337,15 +1265,6 @@
       "target_example": "Я хочу добиться хороших результатов."
     },
     {
-      "translation_id": 4000205,
-      "source_id": 4000411,
-      "target_id": 4000412,
-      "source_word": "lograr",
-      "target_word": "достичь",
-      "source_example": "Logró su objetivo.",
-      "target_example": "Он достиг своей цели."
-    },
-    {
       "translation_id": 4000206,
       "source_id": 4000413,
       "target_id": 4000414,
@@ -1380,15 +1299,6 @@
       "target_word": "думать",
       "source_example": "¿Qué piensas de esto?",
       "target_example": "Что ты думаешь об этом?"
-    },
-    {
-      "translation_id": 4000213,
-      "source_id": 4000427,
-      "target_id": 4000428,
-      "source_word": "doce",
-      "target_word": "двенадцать",
-      "source_example": "Hay doce meses en un año.",
-      "target_example": "В году двенадцать месяцев."
     },
     {
       "translation_id": 4000214,
@@ -1535,15 +1445,6 @@
       "target_example": "Я живу в Мадриде."
     },
     {
-      "translation_id": 4000238,
-      "source_id": 4000477,
-      "target_id": 4000478,
-      "source_word": "revista",
-      "target_word": "журнал",
-      "source_example": "Leo una revista interesante.",
-      "target_example": "Я читаю интересный журнал."
-    },
-    {
       "translation_id": 4000239,
       "source_id": 4000479,
       "target_id": 4000480,
@@ -1569,15 +1470,6 @@
       "target_word": "очень",
       "source_example": "Es muy important.",
       "target_example": "Это очень важно."
-    },
-    {
-      "translation_id": 4000244,
-      "source_id": 4000489,
-      "target_id": 4000490,
-      "source_word": "tarea",
-      "target_word": "задание",
-      "source_example": "Tengo mucha tarea.",
-      "target_example": "У меня много заданий."
     },
     {
       "translation_id": 4000245,
@@ -1841,15 +1733,6 @@
       "target_example": "Прошу прощения."
     },
     {
-      "translation_id": 4000280,
-      "source_id": 4000561,
-      "target_id": 4000562,
-      "source_word": "sacar",
-      "target_word": "вынимать|вытаскивать|доставать|извлекать",
-      "source_example": "Voy a sacar dinero del banco.",
-      "target_example": "Я собираюсь снять деньги в банке."
-    },
-    {
       "translation_id": 4000281,
       "source_id": 4000563,
       "target_id": 4000564,
@@ -2039,15 +1922,6 @@
       "target_example": "Это хорошего качества."
     },
     {
-      "translation_id": 4000317,
-      "source_id": 4000635,
-      "target_id": 4000636,
-      "source_word": "utilizar",
-      "target_word": "использовать",
-      "source_example": "Utilizar el ordenador.",
-      "target_example": "Использовать компьютер."
-    },
-    {
       "translation_id": 4000320,
       "source_id": 4000641,
       "target_id": 4000642,
@@ -2064,15 +1938,6 @@
       "target_word": "ключ",
       "source_example": "He perdido las llaves.",
       "target_example": "Я потерял ключи."
-    },
-    {
-      "translation_id": 4000323,
-      "source_id": 4000647,
-      "target_id": 4000648,
-      "source_word": "clave",
-      "target_word": "ключ",
-      "source_example": "¿Cuál es la clave?",
-      "target_example": "Какой пароль?"
     },
     {
       "translation_id": 4000325,
@@ -2165,15 +2030,6 @@
       "target_example": "Король живёт во дворце."
     },
     {
-      "translation_id": 4000348,
-      "source_id": 4000697,
-      "target_id": 4000698,
-      "source_word": "corto",
-      "target_word": "короткий",
-      "source_example": "El camino es corto.",
-      "target_example": "Путь короткий."
-    },
-    {
       "translation_id": 4000349,
       "source_id": 4000699,
       "target_id": 4000700,
@@ -2235,15 +2091,6 @@
       "target_word": "милый|симпатичный|красивый",
       "source_example": "Que vestido tan lindo.",
       "target_example": "Какое красивое платье."
-    },
-    {
-      "translation_id": 4000359,
-      "source_id": 4000719,
-      "target_id": 4000720,
-      "source_word": "rojo",
-      "target_word": "красный",
-      "source_example": "Me gusta el color rojo.",
-      "target_example": "Мне нравится красный цвет."
     },
     {
       "translation_id": 4000360,
@@ -2615,15 +2462,6 @@
       "target_example": "Мы хотим мира."
     },
     {
-      "translation_id": 4000436,
-      "source_id": 4000873,
-      "target_id": 4000874,
-      "source_word": "bebé",
-      "target_word": "младенец",
-      "source_example": "El bebé llora.",
-      "target_example": "Младенец плачет."
-    },
-    {
       "translation_id": 4000437,
       "source_id": 4000875,
       "target_id": 4000876,
@@ -2759,15 +2597,6 @@
       "target_example": "Я люблю наблюдать за звёздами."
     },
     {
-      "translation_id": 4000459,
-      "source_id": 4000919,
-      "target_id": 4000920,
-      "source_word": "conjunto",
-      "target_word": "набор",
-      "source_example": "Un conjunto de herramientas.",
-      "target_example": "Набор инструментов."
-    },
-    {
       "translation_id": 4000461,
       "source_id": 4000923,
       "target_id": 4000924,
@@ -2820,15 +2649,6 @@
       "target_word": "груз",
       "source_example": "Disfruta el momento.",
       "target_example": "Наслаждайся моментом."
-    },
-    {
-      "translation_id": 4000470,
-      "source_id": 4000941,
-      "target_id": 4000942,
-      "source_word": "ciencia",
-      "target_word": "наука",
-      "source_example": "Me interesa la ciencia.",
-      "target_example": "Меня интересует наука."
     },
     {
       "translation_id": 4000471,
@@ -2946,15 +2766,6 @@
       "target_word": "никакой",
       "source_example": "No hay ningún problema.",
       "target_example": "Нет никаких проблем."
-    },
-    {
-      "translation_id": 4000490,
-      "source_id": 4000981,
-      "target_id": 4000982,
-      "source_word": "jamás",
-      "target_word": "никогда [ни за что]",
-      "source_example": "Jamás lo haré.",
-      "target_example": "Я никогда этого не сделаю."
     },
     {
       "translation_id": 4000491,
@@ -3155,15 +2966,6 @@
       "target_example": "Это огромное здание."
     },
     {
-      "translation_id": 4000525,
-      "source_id": 4001051,
-      "target_id": 4001052,
-      "source_word": "ropa",
-      "target_word": "одежда",
-      "source_example": "Necesito ropa nueva.",
-      "target_example": "Мне нужна новая одежда."
-    },
-    {
       "translation_id": 4000526,
       "source_id": 4001053,
       "target_id": 4001054,
@@ -3207,15 +3009,6 @@
       "target_word": "около",
       "source_example": "Está acerca del parque.",
       "target_example": "Это около парка."
-    },
-    {
-      "translation_id": 4000534,
-      "source_id": 4001069,
-      "target_id": 4001070,
-      "source_word": "ambiente",
-      "target_word": "окружение",
-      "source_example": "Buen ambiente de trabajo.",
-      "target_example": "Хорошее рабочее окружение."
     },
     {
       "translation_id": 4000535,
@@ -3326,15 +3119,6 @@
       "target_example": "Я живу на острове."
     },
     {
-      "translation_id": 4000552,
-      "source_id": 4001105,
-      "target_id": 4001106,
-      "source_word": "realizar",
-      "target_word": "осуществлять",
-      "source_example": "Vamos a realizar el plan.",
-      "target_example": "Мы осуществим план."
-    },
-    {
       "translation_id": 4000553,
       "source_id": 4001107,
       "target_id": 4001108,
@@ -3396,15 +3180,6 @@
       "target_word": "отличный [превосходный]",
       "source_example": "Un trabajo excelente.",
       "target_example": "Отличная работа."
-    },
-    {
-      "translation_id": 4000563,
-      "source_id": 4001127,
-      "target_id": 4001128,
-      "source_word": "actitud",
-      "target_word": "отношение [позиция]",
-      "source_example": "Tiene buena actitud.",
-      "target_example": "У него хорошее отношение."
     },
     {
       "translation_id": 4000564,
@@ -3470,15 +3245,6 @@
       "target_example": "Я совершил ошибку."
     },
     {
-      "translation_id": 4000575,
-      "source_id": 4001151,
-      "target_id": 4001152,
-      "source_word": "caer",
-      "target_word": "падать",
-      "source_example": "Ten cuidado, no te caigas.",
-      "target_example": "Осторожно, не упади."
-    },
-    {
       "translation_id": 4000576,
       "source_id": 4001153,
       "target_id": 4001154,
@@ -3486,15 +3252,6 @@
       "target_word": "палец",
       "source_example": "Me corté el dedo.",
       "target_example": "Я порезал палец."
-    },
-    {
-      "translation_id": 4000577,
-      "source_id": 4001155,
-      "target_id": 4001156,
-      "source_word": "jueves",
-      "target_word": "четверг",
-      "source_example": "El jueves vamos al cine.",
-      "target_example": "В четверг мы идём в кино."
     },
     {
       "translation_id": 4000579,
@@ -3938,15 +3695,6 @@
       "target_example": "Ты меня понимаешь?"
     },
     {
-      "translation_id": 4000645,
-      "source_id": 4001291,
-      "target_id": 4001292,
-      "source_word": "concepto",
-      "target_word": "понятие",
-      "source_example": "Es un concepto básico.",
-      "target_example": "Это базовое понятие."
-    },
-    {
       "translation_id": 4000649,
       "source_id": 4001299,
       "target_id": 4001300,
@@ -4226,15 +3974,6 @@
       "target_example": "Произошёл несчастный случай."
     },
     {
-      "translation_id": 4000702,
-      "source_id": 4001405,
-      "target_id": 4001406,
-      "source_word": "industria",
-      "target_word": "промышленность",
-      "source_example": "La industria crece.",
-      "target_example": "Промышленность растёт."
-    },
-    {
       "translation_id": 4000703,
       "source_id": 4001407,
       "target_id": 4001408,
@@ -4314,15 +4053,6 @@
       "target_word": "дорога",
       "source_example": "Es un largo camino.",
       "target_example": "Это длинная дорога."
-    },
-    {
-      "translation_id": 4000720,
-      "source_id": 4001441,
-      "target_id": 4001442,
-      "source_word": "vía",
-      "target_word": "путь",
-      "source_example": "Busca otra vía.",
-      "target_example": "Ищи другой путь."
     },
     {
       "translation_id": 4000721,
@@ -4415,15 +4145,6 @@
       "target_example": "Интересный разговор."
     },
     {
-      "translation_id": 4000735,
-      "source_id": 4001471,
-      "target_id": 4001472,
-      "source_word": "sección",
-      "target_word": "раздел",
-      "source_example": "En la sección de deportes.",
-      "target_example": "В спортивном разделе."
-    },
-    {
       "translation_id": 4000737,
       "source_id": 4001475,
       "target_id": 4001476,
@@ -4469,15 +4190,6 @@
       "target_example": "У него блестящий ум."
     },
     {
-      "translation_id": 4000743,
-      "source_id": 4001487,
-      "target_id": 4001488,
-      "source_word": "barrio",
-      "target_word": "район",
-      "source_example": "Vivo en este barrio.",
-      "target_example": "Я живу в этом районе."
-    },
-    {
       "translation_id": 4000744,
       "source_id": 4001489,
       "target_id": 4001490,
@@ -4505,15 +4217,6 @@
       "target_example": "Расстояние большое."
     },
     {
-      "translation_id": 4000749,
-      "source_id": 4001499,
-      "target_id": 4001500,
-      "source_word": "planta",
-      "target_word": "растение",
-      "source_example": "Es una planta verde.",
-      "target_example": "Это зелёное растение."
-    },
-    {
       "translation_id": 4000754,
       "source_id": 4001509,
       "target_id": 4001510,
@@ -4523,15 +4226,6 @@
       "target_example": "Ребёнок играет."
     },
     {
-      "translation_id": 4000756,
-      "source_id": 4001513,
-      "target_id": 4001514,
-      "source_word": "raro",
-      "target_word": "редкий",
-      "source_example": "Es un caso raro.",
-      "target_example": "Это редкий случай."
-    },
-    {
       "translation_id": 4000759,
       "source_id": 4001519,
       "target_id": 4001520,
@@ -4539,15 +4233,6 @@
       "target_word": "река",
       "source_example": "El río es profundo.",
       "target_example": "Река глубокая."
-    },
-    {
-      "translation_id": 4000762,
-      "source_id": 4001525,
-      "target_id": 4001526,
-      "source_word": "discurso",
-      "target_word": "речь",
-      "source_example": "Un buen discurso.",
-      "target_example": "Хорошая речь."
     },
     {
       "translation_id": 4000763,
@@ -4575,24 +4260,6 @@
       "target_word": "решение",
       "source_example": "Es tu decisión.",
       "target_example": "Это твоё решение."
-    },
-    {
-      "translation_id": 4000766,
-      "source_id": 4001533,
-      "target_id": 4001534,
-      "source_word": "solución",
-      "target_word": "решение [ответ]",
-      "source_example": "No hay solución.",
-      "target_example": "Нет решения."
-    },
-    {
-      "translation_id": 4000772,
-      "source_id": 4001545,
-      "target_id": 4001546,
-      "source_word": "novela",
-      "target_word": "роман",
-      "source_example": "Leo una novela.",
-      "target_example": "Я читаю роман."
     },
     {
       "translation_id": 4000773,
@@ -4910,15 +4577,6 @@
       "target_example": "Высокая скорость."
     },
     {
-      "translation_id": 4000826,
-      "source_id": 4001653,
-      "target_id": 4001654,
-      "source_word": "dulce",
-      "target_word": "сладкий",
-      "source_example": "Me gusta lo dulce.",
-      "target_example": "Я люблю сладкое."
-    },
-    {
       "translation_id": 4000827,
       "source_id": 4001655,
       "target_id": 4001656,
@@ -4935,15 +4593,6 @@
       "target_word": "следовать",
       "source_example": "Sigue adelante.",
       "target_example": "Продолжай идти."
-    },
-    {
-      "translation_id": 4000829,
-      "source_id": 4001659,
-      "target_id": 4001660,
-      "source_word": "consecuencia",
-      "target_word": "следствие",
-      "source_example": "Es la consecuencia.",
-      "target_example": "Это следствие."
     },
     {
       "translation_id": 4000830,
@@ -5090,24 +4739,6 @@
       "target_example": "Пойдём наружу."
     },
     {
-      "translation_id": 4000852,
-      "source_id": 4001705,
-      "target_id": 4001706,
-      "source_word": "perro",
-      "target_word": "собака",
-      "source_example": "El perro ladra.",
-      "target_example": "Собака лает."
-    },
-    {
-      "translation_id": 4000854,
-      "source_id": 4001709,
-      "target_id": 4001710,
-      "source_word": "reunión",
-      "target_word": "собрание",
-      "source_example": "La reunión empieza.",
-      "target_example": "Собрание начинается."
-    },
-    {
       "translation_id": 4000855,
       "source_id": 4001711,
       "target_id": 4001712,
@@ -5115,15 +4746,6 @@
       "target_word": "собственность",
       "source_example": "Es mi propiedad.",
       "target_example": "Это моя собственность."
-    },
-    {
-      "translation_id": 4000856,
-      "source_id": 4001713,
-      "target_id": 4001714,
-      "source_word": "evento",
-      "target_word": "событие",
-      "source_example": "Un evento important.",
-      "target_example": "Важное событие."
     },
     {
       "translation_id": 4000857,
@@ -5250,15 +4872,6 @@
       "target_word": "нравится",
       "source_example": "Mi celular no funciona.",
       "target_example": "Мой сотовый не работает."
-    },
-    {
-      "translation_id": 4000883,
-      "source_id": 4001767,
-      "target_id": 4001768,
-      "source_word": "dormir",
-      "target_word": "спать",
-      "source_example": "Quiero dormir.",
-      "target_example": "Я хочу спать."
     },
     {
       "translation_id": 4000884,
@@ -5396,15 +5009,6 @@
       "target_example": "Прочитай эту статью."
     },
     {
-      "translation_id": 4000906,
-      "source_id": 4001813,
-      "target_id": 4001814,
-      "source_word": "grado",
-      "target_word": "степень",
-      "source_example": "En cierto grado.",
-      "target_example": "В определённой степени."
-    },
-    {
       "translation_id": 4000909,
       "source_id": 4001819,
       "target_id": 4001820,
@@ -5412,15 +5016,6 @@
       "target_word": "сто",
       "source_example": "Cien años.",
       "target_example": "Сто лет."
-    },
-    {
-      "translation_id": 4000912,
-      "source_id": 4001825,
-      "target_id": 4001826,
-      "source_word": "mesa",
-      "target_word": "стол",
-      "source_example": "La mesa está lista.",
-      "target_example": "Стол готов."
     },
     {
       "translation_id": 4000913,
@@ -5468,15 +5063,6 @@
       "target_example": "На первой странице."
     },
     {
-      "translation_id": 4000918,
-      "source_id": 4001837,
-      "target_id": 4001838,
-      "source_word": "extraño",
-      "target_word": "странный",
-      "source_example": "Qué extraño.",
-      "target_example": "Как странно."
-    },
-    {
       "translation_id": 4000919,
       "source_id": 4001839,
       "target_id": 4001840,
@@ -5495,15 +5081,6 @@
       "target_example": "Строительство продвигается."
     },
     {
-      "translation_id": 4000921,
-      "source_id": 4001843,
-      "target_id": 4001844,
-      "source_word": "construir",
-      "target_word": "строить",
-      "source_example": "Vamos a construir una casa.",
-      "target_example": "Давай построим дом."
-    },
-    {
       "translation_id": 4000924,
       "source_id": 4001849,
       "target_id": 4001850,
@@ -5520,15 +5097,6 @@
       "target_word": "необходимость",
       "source_example": "Es una necesidad.",
       "target_example": "Это необходимость."
-    },
-    {
-      "translation_id": 4000927,
-      "source_id": 4001855,
-      "target_id": 4001856,
-      "source_word": "loco",
-      "target_word": "сумасшедший",
-      "source_example": "Está loco.",
-      "target_example": "Он сумасшедший."
     },
     {
       "translation_id": 4000928,
@@ -5729,15 +5297,6 @@
       "target_example": "Тогда что?"
     },
     {
-      "translation_id": 4000968,
-      "source_id": 4001937,
-      "target_id": 4001938,
-      "source_word": "comercio",
-      "target_word": "торговля",
-      "source_example": "El comercio local.",
-      "target_example": "Местная торговля."
-    },
-    {
       "translation_id": 4000969,
       "source_id": 4001939,
       "target_id": 4001940,
@@ -5808,15 +5367,6 @@
       "target_word": "убивать",
       "source_example": "No mates el tiempo.",
       "target_example": "Не убивай время."
-    },
-    {
-      "translation_id": 4000981,
-      "source_id": 4001963,
-      "target_id": 4001964,
-      "source_word": "lo siento",
-      "target_word": "сожалею|простите",
-      "source_example": "Lo siento mucho.",
-      "target_example": "Мне очень жаль."
     },
     {
       "translation_id": 4000984,
@@ -5927,15 +5477,6 @@
       "target_example": "Растения умирают."
     },
     {
-      "translation_id": 4001004,
-      "source_id": 4002009,
-      "target_id": 4002010,
-      "source_word": "ejercicio",
-      "target_word": "упражнение",
-      "source_example": "Haz este ejercicio.",
-      "target_example": "Сделай это упражнение."
-    },
-    {
       "translation_id": 4001005,
       "source_id": 4002011,
       "target_id": 4002012,
@@ -5943,15 +5484,6 @@
       "target_word": "уровень",
       "source_example": "Alto nivel.",
       "target_example": "Высокий уровень."
-    },
-    {
-      "translation_id": 4001006,
-      "source_id": 4002013,
-      "target_id": 4002014,
-      "source_word": "esfuerzo",
-      "target_word": "усилие",
-      "source_example": "Con mucho esfuerzo.",
-      "target_example": "С большим усилием."
     },
     {
       "translation_id": 4001007,
@@ -5990,24 +5522,6 @@
       "target_example": "Доброе утро."
     },
     {
-      "translation_id": 4001012,
-      "source_id": 4002025,
-      "target_id": 4002026,
-      "source_word": "participar",
-      "target_word": "участвовать",
-      "source_example": "Quiero participar.",
-      "target_example": "Я хочу участвовать."
-    },
-    {
-      "translation_id": 4001014,
-      "source_id": 4002029,
-      "target_id": 4002030,
-      "source_word": "maestro",
-      "target_word": "учитель",
-      "source_example": "El maestro explica.",
-      "target_example": "Учитель объясняет."
-    },
-    {
       "translation_id": 4001016,
       "source_id": 4002033,
       "target_id": 4002034,
@@ -6015,15 +5529,6 @@
       "target_word": "учиться",
       "source_example": "Quiero aprender.",
       "target_example": "Я хочу учиться."
-    },
-    {
-      "translation_id": 4001017,
-      "source_id": 4002035,
-      "target_id": 4002036,
-      "source_word": "estudiar",
-      "target_word": "изучать",
-      "source_example": "Estudia el problema.",
-      "target_example": "Исследуй проблему."
     },
     {
       "translation_id": 4001018,
@@ -6098,15 +5603,6 @@
       "target_example": "По воскресеньям мы едим курицу."
     },
     {
-      "translation_id": 4001042,
-      "source_id": 4002085,
-      "target_id": 4002086,
-      "source_word": "frío",
-      "target_word": "холодный",
-      "source_example": "Have frío hoy.",
-      "target_example": "Сегодня холодно."
-    },
-    {
       "translation_id": 4001043,
       "source_id": 4002087,
       "target_id": 4002088,
@@ -6141,15 +5637,6 @@
       "target_word": "хотя",
       "source_example": "Iré aunque llueva.",
       "target_example": "Пойду, хотя идёт дождь."
-    },
-    {
-      "translation_id": 4001048,
-      "source_id": 4002097,
-      "target_id": 4002098,
-      "source_word": "artista",
-      "target_word": "художник",
-      "source_example": "Es un gran artista.",
-      "target_example": "Он великий художник."
     },
     {
       "translation_id": 4001049,
@@ -6204,15 +5691,6 @@
       "target_word": "ценность",
       "source_example": "Tiene mucho valor.",
       "target_example": "Имеет большую ценность."
-    },
-    {
-      "translation_id": 4001057,
-      "source_id": 4002115,
-      "target_id": 4002116,
-      "source_word": "cadena",
-      "target_word": "цепь",
-      "source_example": "Una cadena de oro.",
-      "target_example": "Золотая цепь."
     },
     {
       "translation_id": 4001058,
@@ -6404,15 +5882,6 @@
       "target_example": "У меня болит шея."
     },
     {
-      "translation_id": 4001082,
-      "source_id": 4002165,
-      "target_id": 4002166,
-      "source_word": "colegio",
-      "target_word": "училище",
-      "source_example": "Ir al colegio.",
-      "target_example": "Идти в училище."
-    },
-    {
       "translation_id": 4001083,
       "source_id": 4002167,
       "target_id": 4002168,
@@ -6476,15 +5945,6 @@
       "target_example": ""
     },
     {
-      "translation_id": 4001097,
-      "source_id": 4002195,
-      "target_id": 4002196,
-      "source_word": "idioma",
-      "target_word": "язык",
-      "source_example": "Habla varios idiomas.",
-      "target_example": "Говорит на нескольких языках."
-    },
-    {
       "translation_id": 4001098,
       "source_id": 4002197,
       "target_id": 4002198,
@@ -6510,15 +5970,6 @@
       "target_word": "ясный",
       "source_example": "El cielo está claro.",
       "target_example": "Небо ясное."
-    },
-    {
-      "translation_id": 4001101,
-      "source_id": 4002203,
-      "target_id": 4002204,
-      "source_word": "caja",
-      "target_word": "коробка",
-      "source_example": "Una caja grande.",
-      "target_example": "Большая коробка."
     },
     {
       "translation_id": 4001102,
@@ -6764,15 +6215,6 @@
       "target_example": "Девушка изучает медицину."
     },
     {
-      "translation_id": 4001148,
-      "source_id": 4002297,
-      "target_id": 4002298,
-      "source_word": "ciento ...",
-      "target_word": "сто ...",
-      "source_example": "Hay ciento veinte páginas.",
-      "target_example": "Здесь сто двадцать страниц."
-    },
-    {
       "translation_id": 4001149,
       "source_id": 4002299,
       "target_id": 4002300,
@@ -6843,24 +6285,6 @@
       "target_word": "какой",
       "source_example": "¿Cuál es tu color favorito?",
       "target_example": "Какой твой любимый цвет?"
-    },
-    {
-      "translation_id": 4001165,
-      "source_id": 4002331,
-      "target_id": 4002332,
-      "source_word": "cuándo?",
-      "target_word": "когда?",
-      "source_example": "¿Cuándo llegarás?",
-      "target_example": "Когда ты приедешь?"
-    },
-    {
-      "translation_id": 4001166,
-      "source_id": 4002333,
-      "target_id": 4002334,
-      "source_word": "cuánto?",
-      "target_word": "сколько?",
-      "source_example": "¿Cuánto cuesta esto?",
-      "target_example": "Сколько это стоит?"
     },
     {
       "translation_id": 4001168,
@@ -7133,15 +6557,6 @@
       "target_example": "Это был адский день."
     },
     {
-      "translation_id": 4001239,
-      "source_id": 4002479,
-      "target_id": 4002480,
-      "source_word": "inicio",
-      "target_word": "начало",
-      "source_example": "El inicio del partido.",
-      "target_example": "Начало матча."
-    },
-    {
       "translation_id": 4001243,
       "source_id": 4002487,
       "target_id": 4002488,
@@ -7277,15 +6692,6 @@
       "target_example": "Врач меня осмотрел."
     },
     {
-      "translation_id": 4001269,
-      "source_id": 4002539,
-      "target_id": 4002540,
-      "source_word": "mío",
-      "target_word": "мой",
-      "source_example": "Este libro es mío.",
-      "target_example": "Эта книга моя."
-    },
-    {
       "translation_id": 4001271,
       "source_id": 4002543,
       "target_id": 4002544,
@@ -7403,15 +6809,6 @@
       "target_example": ""
     },
     {
-      "translation_id": 4001296,
-      "source_id": 4002593,
-      "target_id": 4002594,
-      "source_word": "particular",
-      "target_word": "особенный",
-      "source_example": "Es un caso muy particular.",
-      "target_example": "Это очень особенный случай."
-    },
-    {
       "translation_id": 4001297,
       "source_id": 4002595,
       "target_id": 4002596,
@@ -7457,15 +6854,6 @@
       "target_example": "Я потерял свои ключи."
     },
     {
-      "translation_id": 4001305,
-      "source_id": 4002611,
-      "target_id": 4002612,
-      "source_word": "perdón",
-      "target_word": "прощение",
-      "source_example": "Te pido perdón.",
-      "target_example": "Я прошу у тебя прощения."
-    },
-    {
       "translation_id": 4001306,
       "source_id": 4002613,
       "target_id": 4002614,
@@ -7482,15 +6870,6 @@
       "target_word": "личный",
       "source_example": "Es un asunto personal.",
       "target_example": "Это личное дело."
-    },
-    {
-      "translation_id": 4001311,
-      "source_id": 4002623,
-      "target_id": 4002624,
-      "source_word": "plazo",
-      "target_word": "срок",
-      "source_example": "El plazo vence mañana.",
-      "target_example": "Срок истекает завтра."
     },
     {
       "translation_id": 4001313,
@@ -7790,15 +7169,6 @@
       "target_example": "Какое значение у этого слова?"
     },
     {
-      "translation_id": 4001380,
-      "source_id": 4002761,
-      "target_id": 4002762,
-      "source_word": "similar",
-      "target_word": "похожий",
-      "source_example": "Es similar a lo que vi ayer.",
-      "target_example": "Это похоже на то, что я видел вчера."
-    },
-    {
       "translation_id": 4001381,
       "source_id": 4002763,
       "target_id": 4002764,
@@ -7961,24 +7331,6 @@
       "target_example": "Я не терплю насилие."
     },
     {
-      "translation_id": 4001409,
-      "source_id": 4002819,
-      "target_id": 4002820,
-      "source_word": "contenido",
-      "target_word": "содержание|содержимое",
-      "source_example": "El contenido del libro es interesante.",
-      "target_example": "Содержание книги интересное."
-    },
-    {
-      "translation_id": 4001413,
-      "source_id": 4002827,
-      "target_id": 4002828,
-      "source_word": "presencia",
-      "target_word": "присутствие",
-      "source_example": "Su presencia es necesaria.",
-      "target_example": "Его присутствие необходимо."
-    },
-    {
       "translation_id": 4001415,
       "source_id": 4002831,
       "target_id": 4002832,
@@ -7986,24 +7338,6 @@
       "target_word": "может быть|возможно",
       "source_example": "Quizás venga mañana.",
       "target_example": "Может быть, он придёт завтра."
-    },
-    {
-      "translation_id": 4001416,
-      "source_id": 4002833,
-      "target_id": 4002834,
-      "source_word": "importancia",
-      "target_word": "важность|значение",
-      "source_example": "No entiendes la importancia de esto.",
-      "target_example": "Ты не понимаешь важность этого."
-    },
-    {
-      "translation_id": 4001417,
-      "source_id": 4002835,
-      "target_id": 4002836,
-      "source_word": "origen",
-      "target_word": "происхождение|источник",
-      "source_example": "¿Cuál es el origen de esta palabra?",
-      "target_example": "Каково происхождение этого слова?"
     },
     {
       "translation_id": 4001419,
@@ -8121,15 +7455,6 @@
       "target_word": "квартира",
       "source_example": "Vivo en un apartamento.",
       "target_example": "Я живу в квартире."
-    },
-    {
-      "translation_id": 4001432,
-      "source_id": 4002864,
-      "target_id": 4002865,
-      "source_word": "aplicación",
-      "target_word": "приложение",
-      "source_example": "Descarga la aplicación.",
-      "target_example": "Скачай приложение."
     },
     {
       "translation_id": 4001434,
@@ -8294,15 +7619,6 @@
       "target_example": "Я доверяю тебе."
     },
     {
-      "translation_id": 4001454,
-      "source_id": 4002908,
-      "target_id": 4002909,
-      "source_word": "conocimiento",
-      "target_word": "знание",
-      "source_example": "Tiene mucho conocimiento.",
-      "target_example": "У него много знаний."
-    },
-    {
       "translation_id": 4001455,
       "source_id": 4002910,
       "target_id": 4002911,
@@ -8328,15 +7644,6 @@
       "target_word": "суд, разрез",
       "source_example": "",
       "target_example": ""
-    },
-    {
-      "translation_id": 4001458,
-      "source_id": 4002916,
-      "target_id": 4002917,
-      "source_word": "creación",
-      "target_word": "создание, творение",
-      "source_example": "Es una gran creación.",
-      "target_example": "Это великое творение."
     },
     {
       "translation_id": 4001459,
@@ -8510,15 +7817,6 @@
       "target_example": "Где находится банк?"
     },
     {
-      "translation_id": 4001480,
-      "source_id": 4002960,
-      "target_id": 4002961,
-      "source_word": "edición",
-      "target_word": "издание, выпуск",
-      "source_example": "Es la nueva edición.",
-      "target_example": "Это новое издание."
-    },
-    {
       "translation_id": 4001481,
       "source_id": 4002962,
       "target_id": 4002963,
@@ -8672,15 +7970,6 @@
       "target_example": "У меня есть вера в тебя."
     },
     {
-      "translation_id": 4001498,
-      "source_id": 4002996,
-      "target_id": 4002997,
-      "source_word": "federal",
-      "target_word": "федеральный",
-      "source_example": "Gobierno federal.",
-      "target_example": "Федеральное правительство."
-    },
-    {
       "translation_id": 4001499,
       "source_id": 4002998,
       "target_id": 4002999,
@@ -8724,15 +8013,6 @@
       "target_word": "охранник",
       "source_example": "El guardia está en la puerta.",
       "target_example": "Охранник стоит у двери."
-    },
-    {
-      "translation_id": 4001505,
-      "source_id": 4003010,
-      "target_id": 4003011,
-      "source_word": "género",
-      "target_word": "род, жанр",
-      "source_example": "Me gusta este género.",
-      "target_example": "Мне нравится этот жанр."
     },
     {
       "translation_id": 4001506,
@@ -9192,24 +8472,6 @@
       "target_example": "Попробуй это блюдо."
     },
     {
-      "translation_id": 4001559,
-      "source_id": 4003118,
-      "target_id": 4003119,
-      "source_word": "producto",
-      "target_word": "продукт, товар",
-      "source_example": "Es un buen producto.",
-      "target_example": "Это хороший продукт."
-    },
-    {
-      "translation_id": 4001560,
-      "source_id": 4003120,
-      "target_id": 4003121,
-      "source_word": "propuesta",
-      "target_word": "предложение",
-      "source_example": "Tengo una propuesta.",
-      "target_example": "У меня есть предложение."
-    },
-    {
       "translation_id": 4001561,
       "source_id": 4003122,
       "target_id": 4003123,
@@ -9386,15 +8648,6 @@
       "target_example": "Его зовут Хуан."
     },
     {
-      "translation_id": 4001579,
-      "source_id": 4003158,
-      "target_id": 4003159,
-      "source_word": "selección",
-      "target_word": "выбор, отбор",
-      "source_example": "Buena selección.",
-      "target_example": "Хороший выбор."
-    },
-    {
       "translation_id": 4001580,
       "source_id": 4003160,
       "target_id": 4003161,
@@ -9474,15 +8727,6 @@
       "target_word": "его|её",
       "source_example": "Este libro es suyo.",
       "target_example": "Эта книга его."
-    },
-    {
-      "translation_id": 4001592,
-      "source_id": 4003184,
-      "target_id": 4003185,
-      "source_word": "tecnología",
-      "target_word": "технология",
-      "source_example": "Nueva tecnología.",
-      "target_example": "Новая технология."
     },
     {
       "translation_id": 4001593,
