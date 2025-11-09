@@ -108,15 +108,21 @@ def sample_words_russian():
 
 
 @pytest.fixture(scope="session")
-def project_root():
+def word_processing_root():
     """Root directory of the word-processing package."""
     return Path(__file__).parent.parent.parent
 
 
 @pytest.fixture(scope="session")
-def backend_migrations_dir(project_root):
+def lingua_quiz_root(word_processing_root):
+    """Root directory of the lingua-quiz workspace."""
+    return word_processing_root.parent.parent
+
+
+@pytest.fixture(scope="session")
+def backend_migrations_dir(lingua_quiz_root):
     """Directory containing backend migration vocabulary files."""
-    migrations_path = project_root.parent.parent / "backend" / "migrations" / "data" / "vocabulary"
+    migrations_path = lingua_quiz_root / "packages" / "backend" / "migrations" / "data" / "vocabulary"
     if not migrations_path.exists():
         pytest.skip(f"Backend migrations directory not found: {migrations_path}")
     return migrations_path
@@ -128,6 +134,15 @@ def spanish_a1_migration_file(backend_migrations_dir):
     file_path = backend_migrations_dir / "spanish-russian-a1.json"
     if not file_path.exists():
         pytest.skip(f"Spanish A1 migration file not found: {file_path}")
+    return file_path
+
+
+@pytest.fixture(scope="session")
+def spanish_a0_migration_file(backend_migrations_dir):
+    """Path to Spanish A0 migration file."""
+    file_path = backend_migrations_dir / "spanish-russian-a0.json"
+    if not file_path.exists():
+        pytest.skip(f"Spanish A0 migration file not found: {file_path}")
     return file_path
 
 

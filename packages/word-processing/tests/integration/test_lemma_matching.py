@@ -4,8 +4,6 @@ Fast unit tests for lemma matching between A1 and frequency lists.
 Tests the root cause of false positives without running full analysis.
 """
 
-from pathlib import Path
-
 import pytest
 
 
@@ -13,13 +11,10 @@ class TestLemmaMatching:
     """Test that lemmas match correctly between A1 and frequency list."""
 
     @pytest.fixture(scope="class")
-    def analyzer(self):
+    def analyzer(self, spanish_a1_migration_file):
         from vocab_tools.analysis.migration_analyzer import MigrationAnalyzer
 
-        migration_file = Path(
-            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json"
-        )
-        return MigrationAnalyzer("es", migration_file)
+        return MigrationAnalyzer("es", spanish_a1_migration_file)
 
     @pytest.fixture(scope="class")
     def subtitle_index(self):

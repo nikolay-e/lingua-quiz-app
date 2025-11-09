@@ -5,8 +5,6 @@ If A1 has "dónde" (interrogative), "donde" (relative) should not be reported
 as critically missing, since the concept is covered.
 """
 
-from pathlib import Path
-
 import pytest
 
 
@@ -14,13 +12,10 @@ class TestAccentFiltering:
     """Test that accent variants are properly filtered in analysis."""
 
     @pytest.fixture(scope="class")
-    def analyzer(self):
+    def analyzer(self, spanish_a1_migration_file):
         from vocab_tools.analysis.migration_analyzer import MigrationAnalyzer
 
-        migration_file = Path(
-            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json"
-        )
-        return MigrationAnalyzer("es", migration_file)
+        return MigrationAnalyzer("es", spanish_a1_migration_file)
 
     def test_remove_accents_function(self, analyzer):
         """Test accent removal utility function."""

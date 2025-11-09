@@ -6,8 +6,6 @@ Two distinct problems:
 2. FALSE POSITIVES: Words reported as missing when they actually exist in vocabulary
 """
 
-from pathlib import Path
-
 import pytest
 
 
@@ -25,10 +23,8 @@ class TestAccentDuplicates:
     """
 
     @pytest.fixture(scope="class")
-    def migration_file(self):
-        return Path(
-            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json"
-        )
+    def migration_file(self, spanish_a1_migration_file):
+        return spanish_a1_migration_file
 
     def test_detect_interrogative_relative_pairs_in_a1(self, migration_file):
         """
@@ -76,13 +72,10 @@ class TestFalsePositiveMissing:
     """
 
     @pytest.fixture(scope="class")
-    def analyzer(self):
+    def analyzer(self, spanish_a1_migration_file):
         from vocab_tools.analysis.migration_analyzer import MigrationAnalyzer
 
-        migration_file = Path(
-            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json"
-        )
-        return MigrationAnalyzer("es", migration_file)
+        return MigrationAnalyzer("es", spanish_a1_migration_file)
 
     def test_words_in_a1_not_reported_as_missing(self, analyzer):
         """

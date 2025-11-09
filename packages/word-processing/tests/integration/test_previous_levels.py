@@ -10,8 +10,6 @@ etc.
 This prevents reporting words as "missing" when they already exist in earlier levels.
 """
 
-from pathlib import Path
-
 import pytest
 
 from vocab_tools.analysis.migration_analyzer import MigrationAnalyzer
@@ -21,18 +19,12 @@ class TestPreviousLevelMethods:
     """Test helper methods for previous level handling."""
 
     @pytest.fixture(scope="class")
-    def a1_analyzer(self):
-        migration_file = Path(
-            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json"
-        )
-        return MigrationAnalyzer("es", migration_file)
+    def a1_analyzer(self, spanish_a1_migration_file):
+        return MigrationAnalyzer("es", spanish_a1_migration_file)
 
     @pytest.fixture(scope="class")
-    def a2_analyzer(self):
-        migration_file = Path(
-            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a2.json"
-        )
-        return MigrationAnalyzer("es", migration_file)
+    def a2_analyzer(self, spanish_a2_migration_file):
+        return MigrationAnalyzer("es", spanish_a2_migration_file)
 
     def test_get_level_from_filename_a1(self, a1_analyzer):
         """Test level extraction from A1 filename."""
@@ -113,20 +105,14 @@ class TestPreviousLevelsIntegration:
     """Integration tests for analyze() with previous level filtering."""
 
     @pytest.fixture(scope="class")
-    def a1_analyzer(self):
-        migration_file = Path(
-            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json"
-        )
-        return MigrationAnalyzer("es", migration_file)
+    def a1_analyzer(self, spanish_a1_migration_file):
+        return MigrationAnalyzer("es", spanish_a1_migration_file)
 
     @pytest.fixture(scope="class")
-    def a2_analyzer(self):
-        migration_file = Path(
-            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a2.json"
-        )
-        return MigrationAnalyzer("es", migration_file)
+    def a2_analyzer(self, spanish_a2_migration_file):
+        return MigrationAnalyzer("es", spanish_a2_migration_file)
 
-    def test_a1_analysis_excludes_a0_words(self, a1_analyzer):
+    def test_a1_analysis_excludes_a0_words(self, a1_analyzer, spanish_a0_migration_file):
         """
         A1 analysis should NOT report A0 words as missing.
 
@@ -135,9 +121,7 @@ class TestPreviousLevelsIntegration:
         result = a1_analyzer.analyze(top_n=1500)
 
         # Get A0 vocabulary
-        a0_file = Path(
-            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a0.json"
-        )
+        a0_file = spanish_a0_migration_file
         a0_words = a1_analyzer._load_vocabulary_from_file(a0_file)
         a0_lemmas = {a1_analyzer.lemmatization_service.lemmatize(w) for w in a0_words}
 
@@ -153,7 +137,9 @@ class TestPreviousLevelsIntegration:
             f"These words exist in A0 and should not be reported as missing."
         )
 
-    def test_a2_analysis_excludes_a0_and_a1_words(self, a2_analyzer):
+    def test_a2_analysis_excludes_a0_and_a1_words(
+        self, a2_analyzer, spanish_a0_migration_file, spanish_a1_migration_file
+    ):
         """
         A2 analysis should NOT report A0 or A1 words as missing.
 
@@ -162,17 +148,11 @@ class TestPreviousLevelsIntegration:
         result = a2_analyzer.analyze(top_n=1500)
 
         # Get A0 vocabulary
-        a0_file = Path(
-            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a0.json"
-        )
-        a0_words = a2_analyzer._load_vocabulary_from_file(a0_file)
+        a0_words = a2_analyzer._load_vocabulary_from_file(spanish_a0_migration_file)
         a0_lemmas = {a2_analyzer.lemmatization_service.lemmatize(w) for w in a0_words}
 
         # Get A1 vocabulary
-        a1_file = Path(
-            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json"
-        )
-        a1_words = a2_analyzer._load_vocabulary_from_file(a1_file)
+        a1_words = a2_analyzer._load_vocabulary_from_file(spanish_a1_migration_file)
         a1_lemmas = {a2_analyzer.lemmatization_service.lemmatize(w) for w in a1_words}
 
         combined_previous = a0_lemmas | a1_lemmas
@@ -209,7 +189,7 @@ class TestPreviousLevelsIntegration:
         print(f"   Missing from A2: {missing_count}")
         print("   (After filtering A0 + A1)")
 
-    def test_accent_variants_filtered_across_levels(self, a2_analyzer):
+    def test_accent_variants_filtered_across_levels(self, a2_analyzer, spanish_a1_migration_file):
         """
         Accent variants should be filtered across all levels.
 
@@ -218,10 +198,7 @@ class TestPreviousLevelsIntegration:
         result = a2_analyzer.analyze(top_n=1500)
 
         # Load A1 to check for accent variants
-        a1_file = Path(
-            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json"
-        )
-        a1_words = a2_analyzer._load_vocabulary_from_file(a1_file)
+        a1_words = a2_analyzer._load_vocabulary_from_file(spanish_a1_migration_file)
 
         missing_lemmas = {item["lemma"] for item in result.missing_from_a1}
 
