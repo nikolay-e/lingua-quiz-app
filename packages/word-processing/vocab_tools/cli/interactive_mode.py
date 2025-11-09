@@ -220,16 +220,9 @@ def run_interactive_mode():
                 lang_level = prompt_language_level("analyze")
                 if lang_level:
                     console.print()
-                    import sys
+                    from .commands.analyze import analyze
 
-                    from .app import app
-
-                    old_argv = sys.argv
-                    try:
-                        sys.argv = ["vocab-tools", "analyze", lang_level]
-                        app()
-                    finally:
-                        sys.argv = old_argv
+                    analyze(language_level=lang_level)
 
             elif command == "generate":
                 language = prompt_language("generate")
@@ -240,16 +233,9 @@ def run_interactive_mode():
                 lang_level = prompt_language_level("fill")
                 if lang_level:
                     console.print()
-                    import sys
+                    from .commands.fill import fill
 
-                    from .app import app
-
-                    old_argv = sys.argv
-                    try:
-                        sys.argv = ["vocab-tools", "fill", lang_level]
-                        app()
-                    finally:
-                        sys.argv = old_argv
+                    fill(language_level=lang_level)
 
             else:
                 console.print(f"\n[yellow]Unknown command: {command}[/yellow]")
