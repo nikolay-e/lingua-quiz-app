@@ -136,6 +136,9 @@ export default [
       '**/.turbo/',
       '**/package-lock.json',
       '**/pnpm-lock.yaml',
+      '**/venv/',
+      '**/.venv/',
+      '**/packages/word-processing/venv/',
     ],
   },
 

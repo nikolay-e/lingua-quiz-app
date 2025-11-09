@@ -16,7 +16,7 @@ const getServerAddress = (): string => {
   return '/api';
 };
 
-import type { AuthResponse, WordList, WordPair, UserProgress, TTSResponse, TTSLanguagesResponse } from './api-types';
+import type { AuthResponse, WordList, Translation, UserProgress, TTSResponse, TTSLanguagesResponse } from './api-types';
 
 const serverAddress = getServerAddress();
 
@@ -111,7 +111,15 @@ const api = {
 
   saveProgress: createApiMethod<
     void,
-    { sourceText: string; sourceLang: string; level: number; correctCount: number; errorCount: number }
+    {
+      sourceText: string;
+      sourceLanguage: string;
+      targetLanguage: string;
+      level: number;
+      queuePosition: number;
+      correctCount: number;
+      incorrectCount: number;
+    }
   >('/user/progress', 'POST'),
 
   synthesizeSpeech: createApiMethod<TTSResponse, { text: string; language: string }>('/tts/synthesize', 'POST'),
@@ -119,9 +127,9 @@ const api = {
 
   deleteAccount: createApiMethod<void>('/auth/delete-account', 'DELETE'),
 
-  async fetchWordPairs(token: string, listName: string): Promise<WordPair[]> {
+  async fetchTranslations(token: string, listName: string): Promise<Translation[]> {
     return fetchWrapper(
-      `${serverAddress}/word-pairs?list_name=${encodeURIComponent(listName)}`,
+      `${serverAddress}/translations?list_name=${encodeURIComponent(listName)}`,
       withAuth(token, { method: 'GET' }),
     );
   },

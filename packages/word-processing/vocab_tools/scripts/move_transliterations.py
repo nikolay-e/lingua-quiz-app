@@ -1,4 +1,5 @@
 """Move transliterations from A1/A2 to A0."""
+
 import json
 from pathlib import Path
 
@@ -11,10 +12,10 @@ def is_transliteration(source, target, lang_code="en"):
 
     # Handle multiple translations (split by | or ,)
     target_variants = []
-    if '|' in target:
-        target_variants = [v.strip() for v in target.split('|')]
-    elif ',' in target:
-        target_variants = [v.strip() for v in target.split(',')]
+    if "|" in target:
+        target_variants = [v.strip() for v in target.split("|")]
+    elif "," in target:
+        target_variants = [v.strip() for v in target.split(",")]
     else:
         target_variants = [target.strip()]
 
@@ -79,7 +80,7 @@ def move_transliterations(lang_name, from_level="a1"):
             "source_language": source_data.get("source_language", lang_name.capitalize()),
             "target_language": "Russian",
             "word_list_name": f"{lang_name.capitalize()} Russian A0",
-            "word_pairs": []
+            "word_pairs": [],
         }
         a0_entries = []
 

@@ -67,7 +67,7 @@ class TestRunner:
         self.test("Reject malformed JWT token", self.test_malformed_token)
 
         self.test("Get word lists (authenticated)", self.test_get_word_lists)
-        self.test("Get word pairs from list", self.test_get_word_pairs)
+        self.test("Get translations from list", self.test_get_translations)
         self.test("Get user progress", self.test_get_user_progress)
         self.test("Update user progress", self.test_update_user_progress)
         self.test("Access denied without token", self.test_unauthorized)
@@ -168,12 +168,12 @@ class TestRunner:
         data = r.json()
         self.assert_true(isinstance(data, list))
 
-    def test_get_word_pairs(self):
+    def test_get_translations(self):
         headers = {"Authorization": f"Bearer {self.token}"}
         r = requests.get(f"{API_URL}/word-lists", headers=headers, timeout=TIMEOUT)
         if r.status_code == 200 and r.json():
             list_name = r.json()[0]["listName"]
-            r = requests.get(f"{API_URL}/word-pairs?list_name={list_name}", headers=headers, timeout=TIMEOUT)
+            r = requests.get(f"{API_URL}/translations?list_name={list_name}", headers=headers, timeout=TIMEOUT)
             self.assert_equal(r.status_code, 200)
             data = r.json()
             self.assert_true(isinstance(data, list))
@@ -181,8 +181,8 @@ class TestRunner:
                 first_word = data[0]
                 self.assert_in("sourceText", first_word)
                 self.assert_in("targetText", first_word)
-                self.assert_in("sourceLang", first_word)
-                self.assert_in("targetLang", first_word)
+                self.assert_in("sourceLanguage", first_word)
+                self.assert_in("targetLanguage", first_word)
 
     def test_get_user_progress(self):
         headers = {"Authorization": f"Bearer {self.token}"}
@@ -195,10 +195,12 @@ class TestRunner:
         headers = {"Authorization": f"Bearer {self.token}"}
         progress_data = {
             "sourceText": "hello",
-            "sourceLang": "en",
+            "sourceLanguage": "en",
+            "targetLanguage": "ru",
             "level": 1,
+            "queuePosition": 0,
             "correctCount": 5,
-            "errorCount": 2,
+            "incorrectCount": 2,
         }
         r = requests.post(f"{API_URL}/user/progress", json=progress_data, headers=headers, timeout=TIMEOUT)
         self.assert_equal(r.status_code, 200)

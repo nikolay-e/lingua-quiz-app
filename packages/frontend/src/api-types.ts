@@ -15,22 +15,24 @@ export interface WordList {
   wordCount: number;
 }
 
-export interface WordPair {
+export interface Translation {
   sourceText: string;
-  sourceLang: string;
+  sourceLanguage: string;
   targetText: string;
-  targetLang: string;
+  targetLanguage: string;
   listName: string;
-  sourceExample?: string;
-  targetExample?: string;
+  sourceUsageExample?: string;
+  targetUsageExample?: string;
 }
 
 export interface UserProgress {
   sourceText: string;
-  sourceLang: string;
+  sourceLanguage: string;
+  targetLanguage: string;
   level: number;
+  queuePosition: number;
   correctCount: number;
-  errorCount: number;
+  incorrectCount: number;
   lastPracticed?: string;
 }
 

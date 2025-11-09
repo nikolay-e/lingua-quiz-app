@@ -504,8 +504,18 @@ The system is built on a decoupled architecture that separates business logic fr
 1. **Start Session:** The client fetches word data and the user's latest saved progress from the backend.
 2. **In-Memory Learning:** The `quiz-core` module builds the learning queues in the client's memory. The entire
    session (answering questions, updating queues, leveling up) runs locally.
-3. **Asynchronous Persistence:** To maintain UI responsiveness, progress is saved to the backend **only when a
-   word's level changes**. The session's detailed state (like queue positions) is ephemeral and not saved.
+3. **Asynchronous Persistence:** Progress is saved to the backend when answer is submitted, including:
+   - **level**: Current mastery level (0-5)
+   - **queue_position**: Position in learning queue for session continuity
+   - **correct_count**: Total correct answers
+   - **incorrect_count**: Total incorrect answers
+
+   Persistence occurs via debounced bulk save (1000ms delay) with Map-based batching to minimize network requests.
+
+#### Initial Queue Order
+
+- **New users** (no saved progress): Translations are randomly shuffled to provide varied learning experience
+- **Existing users**: Queue order restored from saved `queue_position` values
 
 ### Learning Algorithm
 

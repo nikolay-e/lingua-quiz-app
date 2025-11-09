@@ -155,7 +155,9 @@ class TransliterationDetector:
     def calculate_similarity(self, str1: str, str2: str) -> float:
         return SequenceMatcher(None, str1.lower(), str2.lower()).ratio()
 
-    def is_transliteration(self, source_word: str, target_word: str, source_lang: str = "es", target_lang: str = "ru") -> tuple[bool, float]:
+    def is_transliteration(
+        self, source_word: str, target_word: str, source_lang: str = "es", target_lang: str = "ru"
+    ) -> tuple[bool, float]:
         source_word = source_word.lower().strip()
         target_word = target_word.lower().strip()
 
@@ -178,7 +180,9 @@ class TransliterationDetector:
 
         return is_match, similarity
 
-    def find_transliterations(self, word_pairs: list[tuple[str, str]], source_lang: str = "es", target_lang: str = "ru") -> list[dict]:
+    def find_transliterations(
+        self, word_pairs: list[tuple[str, str]], source_lang: str = "es", target_lang: str = "ru"
+    ) -> list[dict]:
         matches = []
 
         for source_word, target_word in word_pairs:

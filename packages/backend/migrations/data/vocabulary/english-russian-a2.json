@@ -2914,94 +2914,94 @@
     },
     {
       "source_word": "towards",
-      "target_word": "[translation needed for: towards]",
+      "target_word": "к|по направлению к",
       "cefr_level": "A2",
       "source_example": "I saw a towards yesterday.",
-      "target_example": ""
+      "target_example": "Я видел к вчера."
     },
     {
       "source_word": "aw",
-      "target_word": "[translation needed for: aw]",
+      "target_word": "ой|ах",
       "cefr_level": "A2",
       "source_example": "Do you have a aw?",
-      "target_example": ""
+      "target_example": "Мне нравится ой."
     },
     {
       "source_word": "honestly",
-      "target_word": "[translation needed for: honestly]",
+      "target_word": "честно говоря|по правде",
       "cefr_level": "A2",
       "source_example": "This shows honestly.",
-      "target_example": ""
+      "target_example": "честно говоря здесь."
     },
     {
       "source_word": "nurse",
-      "target_word": "[translation needed for: nurse]",
+      "target_word": "медсестра|няня",
       "cefr_level": "A2",
       "source_example": "We need a new nurse.",
-      "target_example": ""
+      "target_example": "медсестра здесь."
     },
     {
       "source_word": "papa",
-      "target_word": "[translation needed for: papa]",
+      "target_word": "папа",
       "cefr_level": "A2",
       "source_example": "We need a new papa.",
-      "target_example": ""
+      "target_example": "Это папа."
     },
     {
       "source_word": "discuss",
-      "target_word": "[translation needed for: discuss]",
+      "target_word": "обсуждать",
       "cefr_level": "A2",
       "source_example": "Do you have a discuss?",
-      "target_example": ""
+      "target_example": "Мне нравится обсуждать."
     },
     {
       "source_word": "fill",
-      "target_word": "[translation needed for: fill]",
+      "target_word": "заполнять|наполнять",
       "cefr_level": "A2",
       "source_example": "Do you have a fill?",
-      "target_example": ""
+      "target_example": "Я видел заполнять вчера."
     },
     {
       "source_word": "mountain",
-      "target_word": "[translation needed for: mountain]",
+      "target_word": "гора",
       "cefr_level": "A2",
       "source_example": "Do you have a mountain?",
-      "target_example": ""
+      "target_example": "гора здесь."
     },
     {
       "source_word": "jealous",
-      "target_word": "[translation needed for: jealous]",
+      "target_word": "ревнивый|завистливый",
       "cefr_level": "A2",
       "source_example": "I feel jealous.",
-      "target_example": ""
+      "target_example": "Я видел ревнивый вчера."
     },
     {
       "source_word": "shirt",
-      "target_word": "[translation needed for: shirt]",
+      "target_word": "рубашка",
       "cefr_level": "A2",
       "source_example": "I saw a shirt yesterday.",
-      "target_example": ""
+      "target_example": "рубашка здесь."
     },
     {
       "source_word": "meaning",
-      "target_word": "[translation needed for: meaning]",
+      "target_word": "значение|смысл",
       "cefr_level": "A2",
       "source_example": "They meaning often.",
-      "target_example": ""
+      "target_example": "Я видел значение вчера."
     },
     {
       "source_word": "aye",
-      "target_word": "[translation needed for: aye]",
+      "target_word": "да|так точно",
       "cefr_level": "A2",
       "source_example": "The aye is very interesting.",
-      "target_example": ""
+      "target_example": "да здесь."
     },
     {
       "source_word": "opinion",
-      "target_word": "[translation needed for: opinion]",
+      "target_word": "мнение",
       "cefr_level": "A2",
       "source_example": "I saw a opinion yesterday.",
-      "target_example": ""
+      "target_example": "Мне нравится мнение."
     },
     {
       "source_word": "ticket",
@@ -3012,17 +3012,17 @@
     },
     {
       "source_word": "prefer",
-      "target_word": "[translation needed for: prefer]",
+      "target_word": "предпочитать",
       "cefr_level": "A2",
       "source_example": "Do you have a prefer?",
-      "target_example": ""
+      "target_example": "Мне нравится предпочитать."
     },
     {
       "source_word": "whenever",
-      "target_word": "[translation needed for: whenever]",
+      "target_word": "когда бы ни|всякий раз когда",
       "cefr_level": "A2",
       "source_example": "I saw a whenever yesterday.",
-      "target_example": ""
+      "target_example": "Я видел когда бы ни вчера."
     },
     {
       "source_word": "shower",
@@ -3040,38 +3040,38 @@
     },
     {
       "source_word": "pool",
-      "target_word": "[translation needed for: pool]",
+      "target_word": "бассейн|лужа",
       "cefr_level": "A2",
       "source_example": "We need a new pool.",
-      "target_example": ""
+      "target_example": "бассейн здесь."
     },
     {
       "source_word": "interview",
-      "target_word": "[translation needed for: interview]",
+      "target_word": "интервью|собеседование",
       "cefr_level": "A2",
       "source_example": "The interview is very interesting.",
-      "target_example": ""
+      "target_example": "интервью здесь."
     },
     {
       "source_word": "babe",
-      "target_word": "[translation needed for: babe]",
+      "target_word": "малыш|детка",
       "cefr_level": "A2",
       "source_example": "She bought a babe.",
-      "target_example": ""
+      "target_example": "Мне нравится малыш."
     },
     {
       "source_word": "handsome",
-      "target_word": "[translation needed for: handsome]",
+      "target_word": "красивый|привлекательный",
       "cefr_level": "A2",
       "source_example": "The handsome is very interesting.",
-      "target_example": ""
+      "target_example": "Это красивый."
     },
     {
       "source_word": "introduce",
-      "target_word": "[translation needed for: introduce]",
+      "target_word": "представлять|знакомить",
       "cefr_level": "A2",
       "source_example": "She bought a introduce.",
-      "target_example": ""
+      "target_example": "Ты можешь представлять?"
     },
     {
       "source_word": "garden",
@@ -3082,17 +3082,17 @@
     },
     {
       "source_word": "pig",
-      "target_word": "[translation needed for: pig]",
+      "target_word": "свинья",
       "cefr_level": "A2",
       "source_example": "I saw a pig yesterday.",
-      "target_example": ""
+      "target_example": "Мне нравится свинья."
     },
     {
       "source_word": "insane",
-      "target_word": "[translation needed for: insane]",
+      "target_word": "безумный|сумасшедший",
       "cefr_level": "A2",
       "source_example": "She bought a insane.",
-      "target_example": ""
+      "target_example": "безумный здесь."
     },
     {
       "source_word": "weather",
@@ -3110,10 +3110,10 @@
     },
     {
       "source_word": "paint",
-      "target_word": "[translation needed for: paint]",
+      "target_word": "краска|красить",
       "cefr_level": "A2",
       "source_example": "The paint is very interesting.",
-      "target_example": ""
+      "target_example": "Я видел краска вчера."
     },
     {
       "source_word": "sugar",
@@ -3124,38 +3124,38 @@
     },
     {
       "source_word": "pete",
-      "target_word": "[translation needed for: pete]",
+      "target_word": "Пит (имя)",
       "cefr_level": "A2",
       "source_example": "I saw a pete yesterday.",
-      "target_example": ""
+      "target_example": "Ты можешь Пит имя?"
     },
     {
       "source_word": "kate",
-      "target_word": "[translation needed for: kate]",
+      "target_word": "Кейт (имя)",
       "cefr_level": "A2",
       "source_example": "She bought a kate.",
-      "target_example": ""
+      "target_example": "Кейт имя здесь."
     },
     {
       "source_word": "good-bye",
-      "target_word": "[translation needed for: good-bye]",
+      "target_word": "до свидания",
       "cefr_level": "A2",
       "source_example": "We need a new good-bye.",
-      "target_example": ""
+      "target_example": "Мне нравится до свидания."
     },
     {
       "source_word": "gosh",
-      "target_word": "[translation needed for: gosh]",
+      "target_word": "боже мой|ого",
       "cefr_level": "A2",
       "source_example": "She bought a gosh.",
-      "target_example": ""
+      "target_example": "боже мой здесь."
     },
     {
       "source_word": "coat",
-      "target_word": "[translation needed for: coat]",
+      "target_word": "пальто|куртка",
       "cefr_level": "A2",
       "source_example": "The coat is very interesting.",
-      "target_example": ""
+      "target_example": "Ты можешь пальто?"
     },
     {
       "source_word": "artist",
@@ -3166,24 +3166,24 @@
     },
     {
       "source_word": "exciting",
-      "target_word": "[translation needed for: exciting]",
+      "target_word": "волнующий|захватывающий",
       "cefr_level": "A2",
       "source_example": "She likes to exciting.",
-      "target_example": ""
+      "target_example": "Ты можешь волнующий?"
     },
     {
       "source_word": "expensive",
-      "target_word": "[translation needed for: expensive]",
+      "target_word": "дорогой",
       "cefr_level": "A2",
       "source_example": "The weather is expensive today.",
-      "target_example": ""
+      "target_example": "Я видел дорогой вчера."
     },
     {
       "source_word": "goin",
-      "target_word": "[translation needed for: goin]",
+      "target_word": "идёт (разг.)",
       "cefr_level": "A2",
       "source_example": "I saw a goin yesterday.",
-      "target_example": ""
+      "target_example": "идёт разг. здесь."
     },
     {
       "source_word": "bread",
@@ -3194,17 +3194,17 @@
     },
     {
       "source_word": "beep",
-      "target_word": "[translation needed for: beep]",
+      "target_word": "гудок|сигнал",
       "cefr_level": "A2",
       "source_example": "We need a new beep.",
-      "target_example": ""
+      "target_example": "Это гудок."
     },
     {
       "source_word": "dating",
-      "target_word": "[translation needed for: dating]",
+      "target_word": "свидания|встречи",
       "cefr_level": "A2",
       "source_example": "We should dating now.",
-      "target_example": ""
+      "target_example": "Мне нравится свидания."
     },
     {
       "source_word": "painting",
@@ -3215,24 +3215,24 @@
     },
     {
       "source_word": "murderer",
-      "target_word": "[translation needed for: murderer]",
+      "target_word": "убийца",
       "cefr_level": "A2",
       "source_example": "We need a new murderer.",
-      "target_example": ""
+      "target_example": "убийца здесь."
     },
     {
       "source_word": "pair",
-      "target_word": "[translation needed for: pair]",
+      "target_word": "пара",
       "cefr_level": "A2",
       "source_example": "I saw a pair yesterday.",
-      "target_example": ""
+      "target_example": "Ты можешь пара?"
     },
     {
       "source_word": "bike",
-      "target_word": "[translation needed for: bike]",
+      "target_word": "велосипед",
       "cefr_level": "A2",
       "source_example": "We need a new bike.",
-      "target_example": ""
+      "target_example": "Это велосипед."
     },
     {
       "source_word": "grandfather",
@@ -3243,52 +3243,52 @@
     },
     {
       "source_word": "da",
-      "target_word": "[translation needed for: da]",
+      "target_word": "да",
       "cefr_level": "A2",
       "source_example": "The da is very interesting.",
-      "target_example": ""
+      "target_example": "да здесь."
     },
     {
       "source_word": "clock",
-      "target_word": "[translation needed for: clock]",
+      "target_word": "часы",
       "cefr_level": "A2",
       "source_example": "She bought a clock.",
-      "target_example": ""
+      "target_example": "Это часы."
     },
     {
       "source_word": "liar",
-      "target_word": "[translation needed for: liar]",
+      "target_word": "лжец|врун",
       "cefr_level": "A2",
       "source_example": "She bought a liar.",
-      "target_example": ""
+      "target_example": "лжец здесь."
     },
     {
       "source_word": "bleep",
-      "target_word": "[translation needed for: bleep]",
+      "target_word": "писк (цензура)",
       "cefr_level": "A2",
       "source_example": "The bleep is very interesting.",
-      "target_example": ""
+      "target_example": "писк цензура здесь."
     },
     {
       "source_word": "emily",
-      "target_word": "[translation needed for: emily]",
+      "target_word": "Эмили (имя)",
       "cefr_level": "A2",
       "source_example": "Here is an example with emily.",
-      "target_example": ""
+      "target_example": "Эмили имя здесь."
     },
     {
       "source_word": "boring",
-      "target_word": "[translation needed for: boring]",
+      "target_word": "скучный",
       "cefr_level": "A2",
       "source_example": "They boring often.",
-      "target_example": ""
+      "target_example": "скучный здесь."
     },
     {
       "source_word": "re",
-      "target_word": "[translation needed for: re]",
+      "target_word": "относительно",
       "cefr_level": "A2",
       "source_example": "She bought a re.",
-      "target_example": ""
+      "target_example": "Мне нравится относительно."
     },
     {
       "source_word": "bedroom",
@@ -3299,10 +3299,10 @@
     },
     {
       "source_word": "madame",
-      "target_word": "[translation needed for: madame]",
+      "target_word": "мадам|госпожа",
       "cefr_level": "A2",
       "source_example": "I saw a madame yesterday.",
-      "target_example": ""
+      "target_example": "мадам здесь."
     },
     {
       "source_word": "toilet",
@@ -3313,38 +3313,38 @@
     },
     {
       "source_word": "downstairs",
-      "target_word": "[translation needed for: downstairs]",
+      "target_word": "внизу|вниз",
       "cefr_level": "A2",
       "source_example": "Do you have a downstairs?",
-      "target_example": ""
+      "target_example": "Это внизу."
     },
     {
       "source_word": "telephone",
-      "target_word": "[translation needed for: telephone]",
+      "target_word": "телефон",
       "cefr_level": "A2",
       "source_example": "She bought a telephone.",
-      "target_example": ""
+      "target_example": "Мне нравится телефон."
     },
     {
       "source_word": "burning",
-      "target_word": "[translation needed for: burning]",
+      "target_word": "горящий|горение",
       "cefr_level": "A2",
       "source_example": "Can you burning?",
-      "target_example": ""
+      "target_example": "Это горящий."
     },
     {
       "source_word": "walter",
-      "target_word": "[translation needed for: walter]",
+      "target_word": "Уолтер (имя)",
       "cefr_level": "A2",
       "source_example": "She bought a walter.",
-      "target_example": ""
+      "target_example": "Я видел Уолтер имя вчера."
     },
     {
       "source_word": "statement",
-      "target_word": "[translation needed for: statement]",
+      "target_word": "заявление|утверждение",
       "cefr_level": "A2",
       "source_example": "She bought a statement.",
-      "target_example": ""
+      "target_example": "Мне нравится заявление."
     },
     {
       "source_word": "bath",
@@ -3355,24 +3355,24 @@
     },
     {
       "source_word": "glasses",
-      "target_word": "[translation needed for: glasses]",
+      "target_word": "очки",
       "cefr_level": "A2",
       "source_example": "I saw a glasses yesterday.",
-      "target_example": ""
+      "target_example": "Мне нравится очки."
     },
     {
       "source_word": "pound",
-      "target_word": "[translation needed for: pound]",
+      "target_word": "фунт",
       "cefr_level": "A2",
       "source_example": "The pound is very interesting.",
-      "target_example": ""
+      "target_example": "фунт здесь."
     },
     {
       "source_word": "doin",
-      "target_word": "[translation needed for: doin]",
+      "target_word": "делать (разг.)",
       "cefr_level": "A2",
       "source_example": "I saw a doin yesterday.",
-      "target_example": ""
+      "target_example": "Ты можешь делать разг.?"
     },
     {
       "source_word": "meal",
@@ -3383,45 +3383,45 @@
     },
     {
       "source_word": "jacket",
-      "target_word": "[translation needed for: jacket]",
+      "target_word": "куртка|пиджак",
       "cefr_level": "A2",
       "source_example": "We need a new jacket.",
-      "target_example": ""
+      "target_example": "куртка здесь."
     },
     {
       "source_word": "tall",
-      "target_word": "[translation needed for: tall]",
+      "target_word": "высокий",
       "cefr_level": "A2",
       "source_example": "I saw a tall yesterday.",
-      "target_example": ""
+      "target_example": "Это высокий."
     },
     {
       "source_word": "television",
-      "target_word": "[translation needed for: television]",
+      "target_word": "телевидение|телевизор",
       "cefr_level": "A2",
       "source_example": "Do you have a television?",
-      "target_example": ""
+      "target_example": "Я видел телевидение вчера."
     },
     {
       "source_word": "pant",
-      "target_word": "[translation needed for: pant]",
+      "target_word": "штанина|задыхаться",
       "cefr_level": "A2",
       "source_example": "We need a new pant.",
-      "target_example": ""
+      "target_example": "штанина здесь."
     },
     {
       "source_word": "wherever",
-      "target_word": "[translation needed for: wherever]",
+      "target_word": "где бы ни|куда бы ни",
       "cefr_level": "A2",
       "source_example": "We need a new wherever.",
-      "target_example": ""
+      "target_example": "Мне нравится где бы ни."
     },
     {
       "source_word": "chocolate",
-      "target_word": "[translation needed for: chocolate]",
+      "target_word": "шоколад",
       "cefr_level": "A2",
       "source_example": "We need a new chocolate.",
-      "target_example": ""
+      "target_example": "Мне нравится шоколад."
     },
     {
       "source_word": "hm",
@@ -3432,52 +3432,52 @@
     },
     {
       "source_word": "yourselves",
-      "target_word": "[translation needed for: yourselves]",
+      "target_word": "вы сами|себя",
       "cefr_level": "A2",
       "source_example": "We need a new yourselves.",
-      "target_example": ""
+      "target_example": "вы сами здесь."
     },
     {
       "source_word": "headed",
-      "target_word": "[translation needed for: headed]",
+      "target_word": "направляющийся",
       "cefr_level": "A2",
       "source_example": "She bought a headed.",
-      "target_example": ""
+      "target_example": "Я видел направляющийся вчера."
     },
     {
       "source_word": "yellow",
-      "target_word": "[translation needed for: yellow]",
+      "target_word": "жёлтый",
       "cefr_level": "A2",
       "source_example": "The yellow is very interesting.",
-      "target_example": ""
+      "target_example": "Ты можешь жёлтый?"
     },
     {
       "source_word": "traffic",
-      "target_word": "[translation needed for: traffic]",
+      "target_word": "дорожное движение|трафик",
       "cefr_level": "A2",
       "source_example": "She bought a traffic.",
-      "target_example": ""
+      "target_example": "дорожное движение здесь."
     },
     {
       "source_word": "healthy",
-      "target_word": "[translation needed for: healthy]",
+      "target_word": "здоровый",
       "cefr_level": "A2",
       "source_example": "We need a new healthy.",
-      "target_example": ""
+      "target_example": "Мне нравится здоровый."
     },
     {
       "source_word": "disgusting",
-      "target_word": "[translation needed for: disgusting]",
+      "target_word": "отвратительный",
       "cefr_level": "A2",
       "source_example": "Can you disgusting?",
-      "target_example": ""
+      "target_example": "Ты можешь отвратительный?"
     },
     {
       "source_word": "shopping",
-      "target_word": "[translation needed for: shopping]",
+      "target_word": "покупки|шоппинг",
       "cefr_level": "A2",
       "source_example": "She likes to shopping.",
-      "target_example": ""
+      "target_example": "Ты можешь покупки?"
     },
     {
       "source_word": "neighborhood",
@@ -3488,17 +3488,17 @@
     },
     {
       "source_word": "freak",
-      "target_word": "[translation needed for: freak]",
+      "target_word": "псих|урод",
       "cefr_level": "A2",
       "source_example": "She bought a freak.",
-      "target_example": ""
+      "target_example": "Мне нравится псих."
     },
     {
       "source_word": "awake",
-      "target_word": "[translation needed for: awake]",
+      "target_word": "проснувшийся|не спящий",
       "cefr_level": "A2",
       "source_example": "We need a new awake.",
-      "target_example": ""
+      "target_example": "Ты можешь проснувшийся?"
     },
     {
       "source_word": "vacation",
@@ -3509,24 +3509,24 @@
     },
     {
       "source_word": "grandmother",
-      "target_word": "[translation needed for: grandmother]",
+      "target_word": "бабушка",
       "cefr_level": "A2",
       "source_example": "The grandmother is very interesting.",
-      "target_example": ""
+      "target_example": "бабушка здесь."
     },
     {
       "source_word": "whore",
-      "target_word": "[translation needed for: whore]",
+      "target_word": "[profanity]",
       "cefr_level": "A2",
       "source_example": "The whore is very interesting.",
       "target_example": ""
     },
     {
       "source_word": "piano",
-      "target_word": "[translation needed for: piano]",
+      "target_word": "пианино|фортепиано",
       "cefr_level": "A2",
       "source_example": "I saw a piano yesterday.",
-      "target_example": ""
+      "target_example": "Ты можешь пианино?"
     },
     {
       "source_word": "cooking",
@@ -3537,157 +3537,157 @@
     },
     {
       "source_word": "honour",
-      "target_word": "[translation needed for: honour]",
+      "target_word": "честь|почёт",
       "cefr_level": "A2",
       "source_example": "The honour is very interesting.",
-      "target_example": ""
+      "target_example": "Я видел честь вчера."
     },
     {
       "source_word": "taxi",
-      "target_word": "[translation needed for: taxi]",
+      "target_word": "такси",
       "cefr_level": "A2",
       "source_example": "Do you have a taxi?",
-      "target_example": ""
+      "target_example": "Ты можешь такси?"
     },
     {
       "source_word": "bleeding",
-      "target_word": "[translation needed for: bleeding]",
+      "target_word": "кровотечение|кровоточащий",
       "cefr_level": "A2",
       "source_example": "I bleeding every day.",
-      "target_example": ""
+      "target_example": "Это кровотечение."
     },
     {
       "source_word": "ear",
-      "target_word": "[translation needed for: ear]",
+      "target_word": "ухо",
       "cefr_level": "A2",
       "source_example": "She bought a ear.",
-      "target_example": ""
+      "target_example": "Ты можешь ухо?"
     },
     {
       "source_word": "unbelievable",
-      "target_word": "[translation needed for: unbelievable]",
+      "target_word": "невероятный",
       "cefr_level": "A2",
       "source_example": "The weather is unbelievable today.",
-      "target_example": ""
+      "target_example": "невероятный здесь."
     },
     {
       "source_word": "ted",
-      "target_word": "[translation needed for: ted]",
+      "target_word": "Тед (имя)",
       "cefr_level": "A2",
       "source_example": "She bought a ted.",
-      "target_example": ""
+      "target_example": "Тед имя здесь."
     },
     {
       "source_word": "sean",
-      "target_word": "[translation needed for: sean]",
+      "target_word": "Шон (имя)",
       "cefr_level": "A2",
       "source_example": "I saw a sean yesterday.",
-      "target_example": ""
+      "target_example": "Мне нравится Шон имя."
     },
     {
       "source_word": "riding",
-      "target_word": "[translation needed for: riding]",
+      "target_word": "езда|верховая езда",
       "cefr_level": "A2",
       "source_example": "I riding every day.",
-      "target_example": ""
+      "target_example": "Это езда."
     },
     {
       "source_word": "scoff",
-      "target_word": "[translation needed for: scoff]",
+      "target_word": "насмехаться|высмеивать",
       "cefr_level": "A2",
       "source_example": "The scoff is very interesting.",
-      "target_example": ""
+      "target_example": "насмехаться здесь."
     },
     {
       "source_word": "motherfucker",
-      "target_word": "[translation needed for: motherfucker]",
+      "target_word": "[profanity]",
       "cefr_level": "A2",
       "source_example": "She bought a motherfucker.",
       "target_example": ""
     },
     {
       "source_word": "loving",
-      "target_word": "[translation needed for: loving]",
+      "target_word": "любящий|ласковый",
       "cefr_level": "A2",
       "source_example": "We should loving now.",
-      "target_example": ""
+      "target_example": "Ты можешь любящий?"
     },
     {
       "source_word": "false",
-      "target_word": "[translation needed for: false]",
+      "target_word": "ложный|неверный",
       "cefr_level": "A2",
       "source_example": "Do you have a false?",
-      "target_example": ""
+      "target_example": "Ты можешь ложный?"
     },
     {
       "source_word": "egg",
-      "target_word": "[translation needed for: egg]",
+      "target_word": "яйцо",
       "cefr_level": "A2",
       "source_example": "I saw a egg yesterday.",
-      "target_example": ""
+      "target_example": "Ты можешь яйцо?"
     },
     {
       "source_word": "announcer",
-      "target_word": "[translation needed for: announcer]",
+      "target_word": "диктор|ведущий",
       "cefr_level": "A2",
       "source_example": "She bought a announcer.",
-      "target_example": ""
+      "target_example": "Это диктор."
     },
     {
       "source_word": "someday",
-      "target_word": "[translation needed for: someday]",
+      "target_word": "когда-нибудь",
       "cefr_level": "A2",
       "source_example": "I saw a someday yesterday.",
-      "target_example": ""
+      "target_example": "Это когда-нибудь."
     },
     {
       "source_word": "monsieur",
-      "target_word": "[translation needed for: monsieur]",
+      "target_word": "месье|господин",
       "cefr_level": "A2",
       "source_example": "We need a new monsieur.",
-      "target_example": ""
+      "target_example": "месье здесь."
     },
     {
       "source_word": "toast",
-      "target_word": "[translation needed for: toast]",
+      "target_word": "тост|гренка",
       "cefr_level": "A2",
       "source_example": "We need a new toast.",
-      "target_example": ""
+      "target_example": "Я видел тост вчера."
     },
     {
       "source_word": "rice",
-      "target_word": "[translation needed for: rice]",
+      "target_word": "рис",
       "cefr_level": "A2",
       "source_example": "I saw a rice yesterday.",
-      "target_example": ""
+      "target_example": "Мне нравится рис."
     },
     {
       "source_word": "cow",
-      "target_word": "[translation needed for: cow]",
+      "target_word": "корова",
       "cefr_level": "A2",
       "source_example": "Do you have a cow?",
-      "target_example": ""
+      "target_example": "Ты можешь корова?"
     },
     {
       "source_word": "cab",
-      "target_word": "[translation needed for: cab]",
+      "target_word": "такси|кабина",
       "cefr_level": "A2",
       "source_example": "We need a new cab.",
-      "target_example": ""
+      "target_example": "Это такси."
     },
     {
       "source_word": "fourth",
-      "target_word": "[translation needed for: fourth]",
+      "target_word": "четвёртый",
       "cefr_level": "A2",
       "source_example": "I saw a fourth yesterday.",
-      "target_example": ""
+      "target_example": "Это четвёртый."
     },
     {
       "source_word": "cleaning",
-      "target_word": "[translation needed for: cleaning]",
+      "target_word": "уборка|чистка",
       "cefr_level": "A2",
       "source_example": "They cleaning often.",
-      "target_example": ""
+      "target_example": "Мне нравится уборка."
     },
     {
       "source_word": "lf",
@@ -3698,17 +3698,17 @@
     },
     {
       "source_word": "twenty",
-      "target_word": "[translation needed for: twenty]",
+      "target_word": "двадцать",
       "cefr_level": "A2",
       "source_example": "She bought a twenty.",
-      "target_example": ""
+      "target_example": "Мне нравится двадцать."
     },
     {
       "source_word": "destiny",
-      "target_word": "[translation needed for: destiny]",
+      "target_word": "судьба|предназначение",
       "cefr_level": "A2",
       "source_example": "The destiny is very interesting.",
-      "target_example": ""
+      "target_example": "Ты можешь судьба?"
     },
     {
       "source_word": "fruit",
@@ -3719,66 +3719,66 @@
     },
     {
       "source_word": "victor",
-      "target_word": "[translation needed for: victor]",
+      "target_word": "Виктор (имя)",
       "cefr_level": "A2",
       "source_example": "The victor is very interesting.",
-      "target_example": ""
+      "target_example": "Мне нравится Виктор имя."
     },
     {
       "source_word": "pie",
-      "target_word": "[translation needed for: pie]",
+      "target_word": "пирог",
       "cefr_level": "A2",
       "source_example": "I saw a pie yesterday.",
-      "target_example": ""
+      "target_example": "пирог здесь."
     },
     {
       "source_word": "magazine",
-      "target_word": "[translation needed for: magazine]",
+      "target_word": "журнал",
       "cefr_level": "A2",
       "source_example": "She bought a magazine.",
-      "target_example": ""
+      "target_example": "Я видел журнал вчера."
     },
     {
       "source_word": "amen",
-      "target_word": "[translation needed for: amen]",
+      "target_word": "аминь",
       "cefr_level": "A2",
       "source_example": "The amen is very interesting.",
-      "target_example": ""
+      "target_example": "Я видел аминь вчера."
     },
     {
       "source_word": "merry",
-      "target_word": "[translation needed for: merry]",
+      "target_word": "весёлый",
       "cefr_level": "A2",
       "source_example": "She bought a merry.",
-      "target_example": ""
+      "target_example": "Ты можешь весёлый?"
     },
     {
       "source_word": "closing",
-      "target_word": "[translation needed for: closing]",
+      "target_word": "закрытие",
       "cefr_level": "A2",
       "source_example": "Can you closing?",
-      "target_example": ""
+      "target_example": "Это закрытие."
     },
     {
       "source_word": "emperor",
-      "target_word": "[translation needed for: emperor]",
+      "target_word": "император",
       "cefr_level": "A2",
       "source_example": "I saw a emperor yesterday.",
-      "target_example": ""
+      "target_example": "Я видел император вчера."
     },
     {
       "source_word": "snake",
-      "target_word": "[translation needed for: snake]",
+      "target_word": "змея",
       "cefr_level": "A2",
       "source_example": "Do you have a snake?",
-      "target_example": ""
+      "target_example": "Ты можешь змея?"
     },
     {
       "source_word": "lily",
-      "target_word": "[translation needed for: lily]",
+      "target_word": "Лилия|Лили (имя)",
       "cefr_level": "A2",
       "source_example": "I use lily often.",
-      "target_example": ""
+      "target_example": "Лилия здесь."
     },
     {
       "source_word": "actor",
@@ -3789,66 +3789,66 @@
     },
     {
       "source_word": "newspaper",
-      "target_word": "[translation needed for: newspaper]",
+      "target_word": "газета",
       "cefr_level": "A2",
       "source_example": "She bought a newspaper.",
-      "target_example": ""
+      "target_example": "Ты можешь газета?"
     },
     {
       "source_word": "friendly",
-      "target_word": "[translation needed for: friendly]",
+      "target_word": "дружелюбный",
       "cefr_level": "A2",
       "source_example": "I use friendly often.",
-      "target_example": ""
+      "target_example": "Ты можешь дружелюбный?"
     },
     {
       "source_word": "mustn",
-      "target_word": "[translation needed for: mustn]",
+      "target_word": "не должен (разг.)",
       "cefr_level": "A2",
       "source_example": "She bought a mustn.",
-      "target_example": ""
+      "target_example": "Я видел не должен разг. вчера."
     },
     {
       "source_word": "ricky",
-      "target_word": "[translation needed for: ricky]",
+      "target_word": "Рикки (имя)",
       "cefr_level": "A2",
       "source_example": "She bought a ricky.",
-      "target_example": ""
+      "target_example": "Это Рикки имя."
     },
     {
       "source_word": "highness",
-      "target_word": "[translation needed for: highness]",
+      "target_word": "высочество",
       "cefr_level": "A2",
       "source_example": "We need a new highness.",
-      "target_example": ""
+      "target_example": "Ты можешь высочество?"
     },
     {
       "source_word": "worker",
-      "target_word": "[translation needed for: worker]",
+      "target_word": "рабочий|работник",
       "cefr_level": "A2",
       "source_example": "The worker is very interesting.",
-      "target_example": ""
+      "target_example": "Мне нравится рабочий."
     },
     {
       "source_word": "bored",
-      "target_word": "[translation needed for: bored]",
+      "target_word": "скучающий",
       "cefr_level": "A2",
       "source_example": "I saw a bored yesterday.",
-      "target_example": ""
+      "target_example": "Ты можешь скучающий?"
     },
     {
       "source_word": "writer",
-      "target_word": "[translation needed for: writer]",
+      "target_word": "писатель",
       "cefr_level": "A2",
       "source_example": "We need a new writer.",
-      "target_example": ""
+      "target_example": "писатель здесь."
     },
     {
       "source_word": "curse",
-      "target_word": "[translation needed for: curse]",
+      "target_word": "проклятие|ругательство",
       "cefr_level": "A2",
       "source_example": "Do you have a curse?",
-      "target_example": ""
+      "target_example": "Это проклятие."
     },
     {
       "source_word": "id",
@@ -3859,17 +3859,17 @@
     },
     {
       "source_word": "customer",
-      "target_word": "[translation needed for: customer]",
+      "target_word": "покупатель|клиент",
       "cefr_level": "A2",
       "source_example": "I saw a customer yesterday.",
-      "target_example": ""
+      "target_example": "Ты можешь покупатель?"
     },
     {
       "source_word": "gunshot",
-      "target_word": "[translation needed for: gunshot]",
+      "target_word": "выстрел",
       "cefr_level": "A2",
       "source_example": "Do you have a gunshot?",
-      "target_example": ""
+      "target_example": "Это выстрел."
     },
     {
       "source_word": "i-",
@@ -3880,59 +3880,59 @@
     },
     {
       "source_word": "troops",
-      "target_word": "[translation needed for: troops]",
+      "target_word": "войска",
       "cefr_level": "A2",
       "source_example": "I saw a troops yesterday.",
-      "target_example": ""
+      "target_example": "Мне нравится войска."
     },
     {
       "source_word": "thunder",
-      "target_word": "[translation needed for: thunder]",
+      "target_word": "гром|греметь",
       "cefr_level": "A2",
       "source_example": "We need a new thunder.",
-      "target_example": ""
+      "target_example": "Мне нравится гром."
     },
     {
       "source_word": "loser",
-      "target_word": "[translation needed for: loser]",
+      "target_word": "неудачник|проигравший",
       "cefr_level": "A2",
       "source_example": "Do you have a loser?",
-      "target_example": ""
+      "target_example": "Ты можешь неудачник?"
     },
     {
       "source_word": "pen",
-      "target_word": "[translation needed for: pen]",
+      "target_word": "ручка",
       "cefr_level": "A2",
       "source_example": "We need a new pen.",
-      "target_example": ""
+      "target_example": "ручка здесь."
     },
     {
       "source_word": "despite",
-      "target_word": "[translation needed for: despite]",
+      "target_word": "несмотря на",
       "cefr_level": "A2",
       "source_example": "She bought a despite.",
-      "target_example": ""
+      "target_example": "Это несмотря на."
     },
     {
       "source_word": "howard",
-      "target_word": "[translation needed for: howard]",
+      "target_word": "Ховард (имя)",
       "cefr_level": "A2",
       "source_example": "We need a new howard.",
-      "target_example": ""
+      "target_example": "Ты можешь Ховард имя?"
     },
     {
       "source_word": "sport",
-      "target_word": "[translation needed for: sport]",
+      "target_word": "спорт",
       "cefr_level": "A2",
       "source_example": "She bought a sport.",
-      "target_example": ""
+      "target_example": "Я видел спорт вчера."
     },
     {
       "source_word": "thee",
-      "target_word": "[translation needed for: thee]",
+      "target_word": "тебе|тебя (арх.)",
       "cefr_level": "A2",
       "source_example": "She bought a thee.",
-      "target_example": ""
+      "target_example": "тебе здесь."
     },
     {
       "source_word": "library",
@@ -3943,17 +3943,17 @@
     },
     {
       "source_word": "exhale",
-      "target_word": "[translation needed for: exhale]",
+      "target_word": "выдыхать",
       "cefr_level": "A2",
       "source_example": "The exhale is very interesting.",
-      "target_example": ""
+      "target_example": "Мне нравится выдыхать."
     },
     {
       "source_word": "duck",
-      "target_word": "[translation needed for: duck]",
+      "target_word": "утка",
       "cefr_level": "A2",
       "source_example": "We need a new duck.",
-      "target_example": ""
+      "target_example": "Мне нравится утка."
     },
     {
       "source_word": "yard",
@@ -3964,10 +3964,10 @@
     },
     {
       "source_word": "skill",
-      "target_word": "[translation needed for: skill]",
+      "target_word": "навык|умение",
       "cefr_level": "A2",
       "source_example": "Do you have a skill?",
-      "target_example": ""
+      "target_example": "Я видел навык вчера."
     },
     {
       "source_word": "salt",
@@ -3978,10 +3978,10 @@
     },
     {
       "source_word": "nothin",
-      "target_word": "[translation needed for: nothin]",
+      "target_word": "ничего (разг.)",
       "cefr_level": "A2",
       "source_example": "We need a new nothin.",
-      "target_example": ""
+      "target_example": "Мне нравится ничего разг.."
     },
     {
       "source_word": "theater",
@@ -3992,129 +3992,129 @@
     },
     {
       "source_word": "opposite",
-      "target_word": "[translation needed for: opposite]",
+      "target_word": "противоположный|напротив",
       "cefr_level": "A2",
       "source_example": "Do you have a opposite?",
-      "target_example": ""
+      "target_example": "Ты можешь противоположный?"
     },
     {
       "source_word": "pink",
-      "target_word": "[translation needed for: pink]",
+      "target_word": "розовый",
       "cefr_level": "A2",
       "source_example": "I saw a pink yesterday.",
-      "target_example": ""
+      "target_example": "Я видел розовый вчера."
     },
     {
       "source_word": "fellas",
-      "target_word": "[translation needed for: fellas]",
+      "target_word": "парни|ребята",
       "cefr_level": "A2",
       "source_example": "She bought a fellas.",
-      "target_example": ""
+      "target_example": "Я видел парни вчера."
     },
     {
       "source_word": "hollywood",
-      "target_word": "[translation needed for: hollywood]",
+      "target_word": "Голливуд",
       "cefr_level": "A2",
       "source_example": "I saw a hollywood yesterday.",
-      "target_example": ""
+      "target_example": "Голливуд здесь."
     },
     {
       "source_word": "tiger",
-      "target_word": "[translation needed for: tiger]",
+      "target_word": "тигр",
       "cefr_level": "A2",
       "source_example": "I saw a tiger yesterday.",
-      "target_example": ""
+      "target_example": "Это тигр."
     },
     {
       "source_word": "doll",
-      "target_word": "[translation needed for: doll]",
+      "target_word": "кукла",
       "cefr_level": "A2",
       "source_example": "The doll is very interesting.",
-      "target_example": ""
+      "target_example": "Это кукла."
     },
     {
       "source_word": "gee",
-      "target_word": "[translation needed for: gee]",
+      "target_word": "ого|надо же",
       "cefr_level": "A2",
       "source_example": "The gee is very interesting.",
-      "target_example": ""
+      "target_example": "Ты можешь ого?"
     },
     {
       "source_word": "useful",
-      "target_word": "[translation needed for: useful]",
+      "target_word": "полезный",
       "cefr_level": "A2",
       "source_example": "I feel useful.",
-      "target_example": ""
+      "target_example": "Это полезный."
     },
     {
       "source_word": "barking",
-      "target_word": "[translation needed for: barking]",
+      "target_word": "лай|лающий",
       "cefr_level": "A2",
       "source_example": "She likes to barking.",
-      "target_example": ""
+      "target_example": "Я видел лай вчера."
     },
     {
       "source_word": "maid",
-      "target_word": "[translation needed for: maid]",
+      "target_word": "горничная|служанка",
       "cefr_level": "A2",
       "source_example": "We need a new maid.",
-      "target_example": ""
+      "target_example": "горничная здесь."
     },
     {
       "source_word": "chick",
-      "target_word": "[translation needed for: chick]",
+      "target_word": "цыплёнок|девчонка",
       "cefr_level": "A2",
       "source_example": "She bought a chick.",
-      "target_example": ""
+      "target_example": "Мне нравится цыплёнок."
     },
     {
       "source_word": "hunter",
-      "target_word": "[translation needed for: hunter]",
+      "target_word": "охотник",
       "cefr_level": "A2",
       "source_example": "I saw a hunter yesterday.",
-      "target_example": ""
+      "target_example": "Мне нравится охотник."
     },
     {
       "source_word": "counting",
-      "target_word": "[translation needed for: counting]",
+      "target_word": "счёт|подсчёт",
       "cefr_level": "A2",
       "source_example": "Can you counting?",
-      "target_example": ""
+      "target_example": "Это счёт."
     },
     {
       "source_word": "whistle",
-      "target_word": "[translation needed for: whistle]",
+      "target_word": "свисток|свистеть",
       "cefr_level": "A2",
       "source_example": "I saw a whistle yesterday.",
-      "target_example": ""
+      "target_example": "Это свисток."
     },
     {
       "source_word": "molly",
-      "target_word": "[translation needed for: molly]",
+      "target_word": "Молли (имя)",
       "cefr_level": "A2",
       "source_example": "Here is an example with molly.",
-      "target_example": ""
+      "target_example": "Мне нравится Молли имя."
     },
     {
       "source_word": "subtitle",
-      "target_word": "[translation needed for: subtitle]",
+      "target_word": "субтитр",
       "cefr_level": "A2",
       "source_example": "We need a new subtitle.",
-      "target_example": ""
+      "target_example": "Я видел субтитр вчера."
     },
     {
       "source_word": "duke",
-      "target_word": "[translation needed for: duke]",
+      "target_word": "герцог",
       "cefr_level": "A2",
       "source_example": "She bought a duke.",
-      "target_example": ""
+      "target_example": "герцог здесь."
     },
     {
       "source_word": "pathetic",
-      "target_word": "[translation needed for: pathetic]",
+      "target_word": "жалкий|патетический",
       "cefr_level": "A2",
       "source_example": "I saw a pathetic yesterday.",
-      "target_example": ""
+      "target_example": "Это жалкий."
     },
     {
       "source_word": "dish",
@@ -4125,31 +4125,31 @@
     },
     {
       "source_word": "quarter",
-      "target_word": "[translation needed for: quarter]",
+      "target_word": "четверть|квартал",
       "cefr_level": "A2",
       "source_example": "Do you have a quarter?",
-      "target_example": ""
+      "target_example": "четверть здесь."
     },
     {
       "source_word": "erm",
-      "target_word": "[translation needed for: erm]",
+      "target_word": "э-э|эм",
       "cefr_level": "A2",
       "source_example": "The erm is very interesting.",
-      "target_example": ""
+      "target_example": "Мне нравится э-э."
     },
     {
       "source_word": "roman",
-      "target_word": "[translation needed for: roman]",
+      "target_word": "римский|Роман (имя)",
       "cefr_level": "A2",
       "source_example": "We need a new roman.",
-      "target_example": ""
+      "target_example": "Ты можешь римский?"
     },
     {
       "source_word": "damned",
-      "target_word": "[translation needed for: damned]",
+      "target_word": "проклятый",
       "cefr_level": "A2",
       "source_example": "She bought a damned.",
-      "target_example": ""
+      "target_example": "Я видел проклятый вчера."
     },
     {
       "source_word": "couch",
@@ -4160,10 +4160,10 @@
     },
     {
       "source_word": "coward",
-      "target_word": "[translation needed for: coward]",
+      "target_word": "трус",
       "cefr_level": "A2",
       "source_example": "Do you have a coward?",
-      "target_example": ""
+      "target_example": "Это трус."
     },
     {
       "source_word": "'i",
@@ -4174,38 +4174,38 @@
     },
     {
       "source_word": "cheating",
-      "target_word": "[translation needed for: cheating]",
+      "target_word": "обман|мошенничество",
       "cefr_level": "A2",
       "source_example": "They cheating often.",
-      "target_example": ""
+      "target_example": "обман здесь."
     },
     {
       "source_word": "sandwich",
-      "target_word": "[translation needed for: sandwich]",
+      "target_word": "бутерброд|сэндвич",
       "cefr_level": "A2",
       "source_example": "She bought a sandwich.",
-      "target_example": ""
+      "target_example": "Я видел бутерброд вчера."
     },
     {
       "source_word": "boot",
-      "target_word": "[translation needed for: boot]",
+      "target_word": "ботинок|сапог",
       "cefr_level": "A2",
       "source_example": "She bought a boot.",
-      "target_example": ""
+      "target_example": "Я видел ботинок вчера."
     },
     {
       "source_word": "baseball",
-      "target_word": "[translation needed for: baseball]",
+      "target_word": "бейсбол",
       "cefr_level": "A2",
       "source_example": "Do you have a baseball?",
-      "target_example": ""
+      "target_example": "Ты можешь бейсбол?"
     },
     {
       "source_word": "lion",
-      "target_word": "[translation needed for: lion]",
+      "target_word": "лев",
       "cefr_level": "A2",
       "source_example": "Do you have a lion?",
-      "target_example": ""
+      "target_example": "Ты можешь лев?"
     },
     {
       "source_word": "you-",
@@ -4216,31 +4216,31 @@
     },
     {
       "source_word": "trail",
-      "target_word": "[translation needed for: trail]",
+      "target_word": "след|тропа",
       "cefr_level": "A2",
       "source_example": "The trail is very interesting.",
-      "target_example": ""
+      "target_example": "Я видел след вчера."
     },
     {
       "source_word": "mighty",
-      "target_word": "[translation needed for: mighty]",
+      "target_word": "могучий|сильный",
       "cefr_level": "A2",
       "source_example": "She bought a mighty.",
-      "target_example": ""
+      "target_example": "могучий здесь."
     },
     {
       "source_word": "oliver",
-      "target_word": "[translation needed for: oliver]",
+      "target_word": "Оливер (имя)",
       "cefr_level": "A2",
       "source_example": "We need a new oliver.",
-      "target_example": ""
+      "target_example": "Оливер имя здесь."
     },
     {
       "source_word": "wallet",
-      "target_word": "[translation needed for: wallet]",
+      "target_word": "бумажник|кошелёк",
       "cefr_level": "A2",
       "source_example": "The wallet is very interesting.",
-      "target_example": ""
+      "target_example": "Я видел бумажник вчера."
     },
     {
       "source_word": "concert",
@@ -4258,59 +4258,59 @@
     },
     {
       "source_word": "anytime",
-      "target_word": "[translation needed for: anytime]",
+      "target_word": "в любое время",
       "cefr_level": "A2",
       "source_example": "I saw a anytime yesterday.",
-      "target_example": ""
+      "target_example": "Я видел в любое время вчера."
     },
     {
       "source_word": "fifth",
-      "target_word": "[translation needed for: fifth]",
+      "target_word": "пятый",
       "cefr_level": "A2",
       "source_example": "I saw a fifth yesterday.",
-      "target_example": ""
+      "target_example": "пятый здесь."
     },
     {
       "source_word": "bud",
-      "target_word": "[translation needed for: bud]",
+      "target_word": "приятель|почка",
       "cefr_level": "A2",
       "source_example": "Do you have a bud?",
-      "target_example": ""
+      "target_example": "Ты можешь приятель?"
     },
     {
       "source_word": "aboard",
-      "target_word": "[translation needed for: aboard]",
+      "target_word": "на борту",
       "cefr_level": "A2",
       "source_example": "She bought a aboard.",
-      "target_example": ""
+      "target_example": "Я видел на борту вчера."
     },
     {
       "source_word": "sweat",
-      "target_word": "[translation needed for: sweat]",
+      "target_word": "пот|потеть",
       "cefr_level": "A2",
       "source_example": "She bought a sweat.",
-      "target_example": ""
+      "target_example": "Мне нравится пот."
     },
     {
       "source_word": "dreaming",
-      "target_word": "[translation needed for: dreaming]",
+      "target_word": "мечтающий|сновидение",
       "cefr_level": "A2",
       "source_example": "Can you dreaming?",
-      "target_example": ""
+      "target_example": "Ты можешь мечтающий?"
     },
     {
       "source_word": "afterwards",
-      "target_word": "[translation needed for: afterwards]",
+      "target_word": "после|потом",
       "cefr_level": "A2",
       "source_example": "Do you have a afterwards?",
-      "target_example": ""
+      "target_example": "Ты можешь после?"
     },
     {
       "source_word": "comrade",
-      "target_word": "[translation needed for: comrade]",
+      "target_word": "товарищ",
       "cefr_level": "A2",
       "source_example": "The comrade is very interesting.",
-      "target_example": ""
+      "target_example": "Ты можешь товарищ?"
     },
     {
       "source_word": "butter",
@@ -4321,185 +4321,185 @@
     },
     {
       "source_word": "selfish",
-      "target_word": "[translation needed for: selfish]",
+      "target_word": "эгоистичный",
       "cefr_level": "A2",
       "source_example": "We need a new selfish.",
-      "target_example": ""
+      "target_example": "Ты можешь эгоистичный?"
     },
     {
       "source_word": "a.m.",
-      "target_word": "[translation needed for: a.m.]",
+      "target_word": "до полудня",
       "cefr_level": "A2",
       "source_example": "I saw a a.m. yesterday.",
-      "target_example": ""
+      "target_example": "Я видел до полудня вчера."
     },
     {
       "source_word": "toward",
-      "target_word": "[translation needed for: toward]",
+      "target_word": "к|по направлению к",
       "cefr_level": "A2",
       "source_example": "I saw a toward yesterday.",
-      "target_example": ""
+      "target_example": "Это к."
     },
     {
       "source_word": "describe",
-      "target_word": "[translation needed for: describe]",
+      "target_word": "описывать",
       "cefr_level": "A2",
       "source_example": "The describe is very interesting.",
-      "target_example": ""
+      "target_example": "Мне нравится описывать."
     },
     {
       "source_word": "practically",
-      "target_word": "[translation needed for: practically]",
+      "target_word": "практически",
       "cefr_level": "A2",
       "source_example": "I use practically often.",
-      "target_example": ""
+      "target_example": "практически здесь."
     },
     {
       "source_word": "sheep",
-      "target_word": "[translation needed for: sheep]",
+      "target_word": "овца|овцы",
       "cefr_level": "A2",
       "source_example": "I saw a sheep yesterday.",
-      "target_example": ""
+      "target_example": "Я видел овца вчера."
     },
     {
       "source_word": "heck",
-      "target_word": "[translation needed for: heck]",
+      "target_word": "чёрт",
       "cefr_level": "A2",
       "source_example": "She bought a heck.",
-      "target_example": ""
+      "target_example": "чёрт здесь."
     },
     {
       "source_word": "stephen",
-      "target_word": "[translation needed for: stephen]",
+      "target_word": "Стивен (имя)",
       "cefr_level": "A2",
       "source_example": "Do you have a stephen?",
-      "target_example": ""
+      "target_example": "Мне нравится Стивен имя."
     },
     {
       "source_word": "rabbit",
-      "target_word": "[translation needed for: rabbit]",
+      "target_word": "кролик",
       "cefr_level": "A2",
       "source_example": "Do you have a rabbit?",
-      "target_example": ""
+      "target_example": "Ты можешь кролик?"
     },
     {
       "source_word": "exercise",
-      "target_word": "[translation needed for: exercise]",
+      "target_word": "упражнение|тренировка",
       "cefr_level": "A2",
       "source_example": "She bought a exercise.",
-      "target_example": ""
+      "target_example": "Ты можешь упражнение?"
     },
     {
       "source_word": "realise",
-      "target_word": "[translation needed for: realise]",
+      "target_word": "осознавать|понимать",
       "cefr_level": "A2",
       "source_example": "We need a new realise.",
-      "target_example": ""
+      "target_example": "осознавать здесь."
     },
     {
       "source_word": "torture",
-      "target_word": "[translation needed for: torture]",
+      "target_word": "пытка|мучение|пытать",
       "cefr_level": "A2",
       "source_example": "We need a new torture.",
-      "target_example": ""
+      "target_example": "Это пытка."
     },
     {
       "source_word": "rebecca",
-      "target_word": "[translation needed for: rebecca]",
+      "target_word": "Ребекка (имя)",
       "cefr_level": "A2",
       "source_example": "We need a new rebecca.",
-      "target_example": ""
+      "target_example": "Ребекка имя здесь."
     },
     {
       "source_word": "footsteps",
-      "target_word": "[translation needed for: footsteps]",
+      "target_word": "шаги",
       "cefr_level": "A2",
       "source_example": "She bought a footsteps.",
-      "target_example": ""
+      "target_example": "Ты можешь шаги?"
     },
     {
       "source_word": "goodnight",
-      "target_word": "[translation needed for: goodnight]",
+      "target_word": "спокойной ночи",
       "cefr_level": "A2",
       "source_example": "The goodnight is very interesting.",
-      "target_example": ""
+      "target_example": "Ты можешь спокойной ночи?"
     },
     {
       "source_word": "jeremy",
-      "target_word": "[translation needed for: jeremy]",
+      "target_word": "Джереми (имя)",
       "cefr_level": "A2",
       "source_example": "Do you have a jeremy?",
-      "target_example": ""
+      "target_example": "Это Джереми имя."
     },
     {
       "source_word": "ellen",
-      "target_word": "[translation needed for: ellen]",
+      "target_word": "Эллен (имя)",
       "cefr_level": "A2",
       "source_example": "Do you have a ellen?",
-      "target_example": ""
+      "target_example": "Это Эллен имя."
     },
     {
       "source_word": "purse",
-      "target_word": "[translation needed for: purse]",
+      "target_word": "кошелёк|сумочка",
       "cefr_level": "A2",
       "source_example": "The purse is very interesting.",
-      "target_example": ""
+      "target_example": "Я видел кошелёк вчера."
     },
     {
       "source_word": "greeting",
-      "target_word": "[translation needed for: greeting]",
+      "target_word": "приветствие",
       "cefr_level": "A2",
       "source_example": "Can you greeting?",
-      "target_example": ""
+      "target_example": "Ты можешь приветствие?"
     },
     {
       "source_word": "vice",
-      "target_word": "[translation needed for: vice]",
+      "target_word": "порок|заместитель",
       "cefr_level": "A2",
       "source_example": "The vice is very interesting.",
-      "target_example": ""
+      "target_example": "Это порок."
     },
     {
       "source_word": "holly",
-      "target_word": "[translation needed for: holly]",
+      "target_word": "Холли (имя)",
       "cefr_level": "A2",
       "source_example": "This shows holly.",
-      "target_example": ""
+      "target_example": "Это Холли имя."
     },
     {
       "source_word": "mistress",
-      "target_word": "[translation needed for: mistress]",
+      "target_word": "любовница|хозяйка",
       "cefr_level": "A2",
       "source_example": "Do you have a mistress?",
-      "target_example": ""
+      "target_example": "Мне нравится любовница."
     },
     {
       "source_word": "product",
-      "target_word": "[translation needed for: product]",
+      "target_word": "продукт|изделие",
       "cefr_level": "A2",
       "source_example": "I saw a product yesterday.",
-      "target_example": ""
+      "target_example": "Это продукт."
     },
     {
       "source_word": "vampire",
-      "target_word": "[translation needed for: vampire]",
+      "target_word": "вампир",
       "cefr_level": "A2",
       "source_example": "She bought a vampire.",
-      "target_example": ""
+      "target_example": "Я видел вампир вчера."
     },
     {
       "source_word": "underneath",
-      "target_word": "[translation needed for: underneath]",
+      "target_word": "под|внизу",
       "cefr_level": "A2",
       "source_example": "I saw a underneath yesterday.",
-      "target_example": ""
+      "target_example": "под здесь."
     },
     {
       "source_word": "brad",
-      "target_word": "[translation needed for: brad]",
+      "target_word": "гвоздь",
       "cefr_level": "A2",
       "source_example": "Do you have a brad?",
-      "target_example": ""
+      "target_example": "Мне нравится гвоздь."
     }
   ]
 }

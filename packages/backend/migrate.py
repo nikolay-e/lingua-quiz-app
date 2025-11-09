@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 
+import json
 import os
 from pathlib import Path
 import sys
 
 import psycopg2
+from psycopg2.extras import Json
 from pydantic import BaseModel, Field, field_validator
 
 
@@ -128,6 +130,55 @@ def run_migration(conn, migration_file: MigrationFile) -> bool:
         return False
 
 
+def load_vocabulary_files(conn, migration_config: MigrationConfig) -> bool:
+    vocabulary_dir = migration_config.migrations_dir / "data" / "vocabulary"
+
+    if not vocabulary_dir.exists():
+        print(f"{YELLOW}⚠ Vocabulary directory not found: {vocabulary_dir}{RESET}")
+        print(f"{YELLOW}⚠ Skipping vocabulary loading{RESET}")
+        return True
+
+    json_files = sorted(vocabulary_dir.glob("*.json"))
+
+    if not json_files:
+        print(f"{YELLOW}⚠ No vocabulary JSON files found{RESET}")
+        return True
+
+    print(f"\n{GREEN}Loading vocabulary from {len(json_files)} JSON files{RESET}\n")
+
+    total_inserted = 0
+    total_skipped = 0
+
+    for json_file in json_files:
+        try:
+            with open(json_file, encoding="utf-8") as f:
+                vocabulary_data = json.load(f)
+
+            print(f"Loading {json_file.name}...", end=" ", flush=True)
+
+            with conn.cursor() as cur:
+                cur.execute("SELECT inserted_count, skipped_count FROM load_vocabulary_from_json(%s)", (Json(vocabulary_data),))
+                result = cur.fetchone()
+                if result:
+                    inserted, skipped = result
+                    total_inserted += inserted
+                    total_skipped += skipped
+                    print(f"{GREEN}✓ ({inserted} inserted, {skipped} skipped){RESET}")
+                else:
+                    print(f"{RED}✗ No result returned{RESET}")
+                    return False
+
+            conn.commit()
+
+        except Exception as e:
+            conn.rollback()
+            print(f"{RED}✗ Error loading {json_file.name}: {e}{RESET}")
+            return False
+
+    print(f"\n{GREEN}✓ Vocabulary loading complete: {total_inserted} words inserted, {total_skipped} skipped{RESET}")
+    return True
+
+
 def main():
     print(f"{GREEN}LinguaQuiz Migration Runner{RESET}")
 
@@ -173,6 +224,11 @@ def main():
                 sys.exit(1)
 
         print(f"\n{GREEN}✓ Completed: {success_count}/{len(migration_files)} migrations successful{RESET}")
+
+        # Load vocabulary data
+        if not load_vocabulary_files(conn, migration_config):
+            print(f"{RED}✗ VOCABULARY LOADING FAILED. ABORTING.{RESET}")
+            sys.exit(1)
 
     finally:
         conn.close()

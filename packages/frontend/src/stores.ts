@@ -238,7 +238,10 @@ function createQuizStore(): QuizStore {
   const DEBOUNCE_DELAY = 1000;
   let debounceTimer: NodeJS.Timeout | null = null;
 
-  const progressMap = new Map<string, { level: number; correctCount: number; errorCount: number }>();
+  const progressMap = new Map<
+    string,
+    { level: number; queuePosition: number; correctCount: number; incorrectCount: number; targetLanguage: string }
+  >();
 
   const bulkSaveProgress = async (token: string): Promise<void> => {
     const state = get(store);
@@ -253,15 +256,17 @@ function createQuizStore(): QuizStore {
       const persistencePromises: Promise<void>[] = [];
 
       for (const [key, progress] of progressMap.entries()) {
-        const [sourceText, sourceLang] = key.split('::');
+        const [sourceText, sourceLanguage] = key.split('::');
         persistencePromises.push(
           api
             .saveProgress(token, {
               sourceText,
-              sourceLang,
+              sourceLanguage,
+              targetLanguage: progress.targetLanguage,
               level: progress.level,
+              queuePosition: progress.queuePosition,
               correctCount: progress.correctCount,
-              errorCount: progress.errorCount,
+              incorrectCount: progress.incorrectCount,
             })
             .catch((err) => {
               console.error(`Progress save failed for ${sourceText}:`, err);
@@ -337,41 +342,56 @@ function createQuizStore(): QuizStore {
 
       const result = await withAuth401Handling(
         async () => {
-          const [wordPairs, userProgress] = await Promise.all([
-            api.fetchWordPairs(token, quizName),
+          const [translations, userProgress] = await Promise.all([
+            api.fetchTranslations(token, quizName),
             api.fetchUserProgress(token, quizName),
           ]);
 
           const progressLookup = new Map(
             userProgress.map((p) => [
-              `${p.sourceText}::${p.sourceLang}`,
-              { level: p.level, correctCount: p.correctCount, errorCount: p.errorCount },
+              `${p.sourceText}::${p.sourceLanguage}::${p.targetLanguage}`,
+              {
+                level: p.level,
+                queuePosition: p.queuePosition,
+                correctCount: p.correctCount,
+                incorrectCount: p.incorrectCount,
+              },
             ]),
           );
 
-          const translations = wordPairs.map((word, index) => ({
+          // Check if user has any saved progress with initialized queue positions
+          const hasInitializedProgress = userProgress.some((p) => p.queuePosition > 0);
+
+          // Shuffle translations only for new users (no saved progress)
+          let orderedTranslations = translations;
+          if (!hasInitializedProgress && translations.length > 0) {
+            orderedTranslations = [...translations].sort(() => Math.random() - 0.5);
+          }
+
+          const translationData = orderedTranslations.map((word, index) => ({
             id: index + 1,
             sourceWord: {
               text: word.sourceText,
-              language: word.sourceLang,
-              usageExample: word.sourceExample ?? '',
+              language: word.sourceLanguage,
+              usageExample: word.sourceUsageExample ?? '',
             },
             targetWord: {
               text: word.targetText,
-              language: word.targetLang,
-              usageExample: word.targetExample ?? '',
+              language: word.targetLanguage,
+              usageExample: word.targetUsageExample ?? '',
             },
           }));
 
-          const progress = wordPairs.map((word, index) => {
-            const key = `${word.sourceText}::${word.sourceLang}`;
+          const progress = orderedTranslations.map((word, index) => {
+            const key = `${word.sourceText}::${word.sourceLanguage}::${word.targetLanguage}`;
             const userProg = progressLookup.get(key);
             const level = userProg?.level ?? 0;
+            const queuePosition = userProg?.queuePosition ?? index;
 
             return {
               translationId: index + 1,
               status: `LEVEL_${level}` as 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5',
-              queuePosition: 0,
+              queuePosition,
               consecutiveCorrect: 0,
               recentHistory: [] as boolean[],
             };
@@ -379,7 +399,7 @@ function createQuizStore(): QuizStore {
 
           progressMap.clear();
 
-          const manager = new QuizManager(translations, {
+          const manager = new QuizManager(translationData, {
             progress,
             currentLevel: 'LEVEL_1',
           });
@@ -431,8 +451,10 @@ function createQuizStore(): QuizStore {
             const level = parseInt(currentProgress.status.replace('LEVEL_', ''));
             progressMap.set(key, {
               level,
+              queuePosition: currentProgress.queuePosition,
               correctCount: currentProgress.consecutiveCorrect,
-              errorCount: 0,
+              incorrectCount: 0,
+              targetLanguage: translation.targetWord.language,
             });
           }
         }

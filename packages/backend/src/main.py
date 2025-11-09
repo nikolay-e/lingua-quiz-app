@@ -106,14 +106,14 @@ class TokenResponse(BaseModel):
     user: UserResponse
 
 
-class WordPairResponse(BaseModel):
+class TranslationResponse(BaseModel):
     source_text: str = Field(alias="sourceText")
-    source_lang: str = Field(alias="sourceLang")
+    source_language: str = Field(alias="sourceLanguage")
     target_text: str = Field(alias="targetText")
-    target_lang: str = Field(alias="targetLang")
+    target_language: str = Field(alias="targetLanguage")
     list_name: str = Field(alias="listName")
-    source_example: str | None = Field(alias="sourceExample")
-    target_example: str | None = Field(alias="targetExample")
+    source_usage_example: str | None = Field(alias="sourceUsageExample")
+    target_usage_example: str | None = Field(alias="targetUsageExample")
 
     class Config:
         populate_by_name = True
@@ -129,10 +129,12 @@ class WordListResponse(BaseModel):
 
 class UserProgressResponse(BaseModel):
     source_text: str = Field(alias="sourceText")
-    source_lang: str = Field(alias="sourceLang")
+    source_language: str = Field(alias="sourceLanguage")
+    target_language: str = Field(alias="targetLanguage")
     level: int
+    queue_position: int = Field(alias="queuePosition")
     correct_count: int = Field(alias="correctCount")
-    error_count: int = Field(alias="errorCount")
+    incorrect_count: int = Field(alias="incorrectCount")
     last_practiced: str | None = Field(alias="lastPracticed")
 
     class Config:
@@ -141,10 +143,12 @@ class UserProgressResponse(BaseModel):
 
 class ProgressUpdateRequest(BaseModel):
     source_text: str = Field(alias="sourceText")
-    source_lang: str = Field(alias="sourceLang")
+    source_language: str = Field(alias="sourceLanguage")
+    target_language: str = Field(alias="targetLanguage")
     level: int = Field(..., ge=0, le=5)
+    queue_position: int = Field(alias="queuePosition", ge=0)
     correct_count: int = Field(alias="correctCount", ge=0)
-    error_count: int = Field(alias="errorCount", ge=0)
+    incorrect_count: int = Field(alias="incorrectCount", ge=0)
 
     class Config:
         populate_by_name = True
@@ -498,7 +502,7 @@ async def get_word_lists(current_user: dict = Depends(get_current_user)):
     try:
         lists = query_db(
             """SELECT list_name, COUNT(*) as word_count
-               FROM word_pairs
+               FROM translations
                GROUP BY list_name
                ORDER BY list_name"""
         )
@@ -512,19 +516,19 @@ async def get_word_lists(current_user: dict = Depends(get_current_user)):
         )
 
 
-@app.get("/api/word-pairs", response_model=list[WordPairResponse], tags=["Word Pairs"])
-async def get_word_pairs(list_name: str, current_user: dict = Depends(get_current_user)):
+@app.get("/api/translations", response_model=list[TranslationResponse], tags=["Translations"])
+async def get_translations(list_name: str, current_user: dict = Depends(get_current_user)):
     try:
-        word_pairs = query_db(
-            """SELECT source_text, source_lang, target_text, target_lang,
-                      list_name, source_example, target_example
-               FROM word_pairs
+        translations = query_db(
+            """SELECT source_text, source_language, target_text, target_language,
+                      list_name, source_usage_example, target_usage_example
+               FROM translations
                WHERE list_name = %s
                ORDER BY source_text""",
             (list_name,),
         )
 
-        return [convert_keys_to_camel_case(dict(wp)) for wp in word_pairs]
+        return [convert_keys_to_camel_case(dict(t)) for t in translations]
 
     except Exception as e:
         logger.error(f"Error fetching word pairs for list {list_name}: {e}")
@@ -539,19 +543,20 @@ async def get_user_progress(list_name: str | None = None, current_user: dict = D
     try:
         if list_name:
             progress = query_db(
-                """SELECT up.source_text, up.source_lang, up.level,
-                          up.correct_count, up.error_count, up.last_practiced
+                """SELECT up.source_text, up.source_language, up.target_language, up.level, up.queue_position,
+                          up.correct_count, up.incorrect_count, up.last_practiced
                    FROM user_progress up
-                   JOIN word_pairs wp ON up.source_text = wp.source_text
-                                      AND up.source_lang = wp.source_lang
-                   WHERE up.user_id = %s AND wp.list_name = %s
+                   JOIN translations t ON up.source_text = t.source_text
+                                      AND up.source_language = t.source_language
+                                      AND up.target_language = t.target_language
+                   WHERE up.user_id = %s AND t.list_name = %s
                    ORDER BY up.last_practiced DESC""",
                 (current_user["user_id"], list_name),
             )
         else:
             progress = query_db(
-                """SELECT source_text, source_lang, level,
-                          correct_count, error_count, last_practiced
+                """SELECT source_text, source_language, target_language, level, queue_position,
+                          correct_count, incorrect_count, last_practiced
                    FROM user_progress
                    WHERE user_id = %s
                    ORDER BY last_practiced DESC""",
@@ -573,21 +578,24 @@ async def update_user_progress(progress_data: ProgressUpdateRequest, current_use
     try:
         execute_write_transaction(
             """INSERT INTO user_progress
-               (user_id, source_text, source_lang, level, correct_count, error_count, last_practiced)
-               VALUES (%s, %s, %s, %s, %s, %s, NOW())
-               ON CONFLICT (user_id, source_text, source_lang)
+               (user_id, source_text, source_language, target_language, level, queue_position, correct_count, incorrect_count, last_practiced)
+               VALUES (%s, %s, %s, %s, %s, %s, %s, %s, NOW())
+               ON CONFLICT (user_id, source_text, source_language, target_language)
                DO UPDATE SET
                    level = EXCLUDED.level,
+                   queue_position = EXCLUDED.queue_position,
                    correct_count = EXCLUDED.correct_count,
-                   error_count = EXCLUDED.error_count,
+                   incorrect_count = EXCLUDED.incorrect_count,
                    last_practiced = EXCLUDED.last_practiced""",
             (
                 current_user["user_id"],
                 progress_data.source_text,
-                progress_data.source_lang,
+                progress_data.source_language,
+                progress_data.target_language,
                 progress_data.level,
+                progress_data.queue_position,
                 progress_data.correct_count,
-                progress_data.error_count,
+                progress_data.incorrect_count,
             ),
         )
 
