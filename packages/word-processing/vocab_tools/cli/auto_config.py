@@ -29,7 +29,6 @@ MIGRATION_FILE_PATTERNS = [
     "v3_{language}_{level}.json",
     "{language}-russian-{level}.json",
     "{language}_{level}.json",
-    "spanish-russian-{level}.json",
 ]
 
 SMART_OUTPUT_DIRS = {
