@@ -1,11 +1,12 @@
+import json
 from collections import defaultdict
 from dataclasses import dataclass
-import json
 from pathlib import Path
 
 from ..config.config_loader import get_config_loader
 from ..core.base_normalizer import get_universal_normalizer
 from ..core.database_parser import VocabularyEntry, VocabularyFileParser
+from ..core.lemmatization_service import get_lemmatization_service
 from .base_validation import BaseValidationIssue, BaseValidationResult
 
 
@@ -37,10 +38,11 @@ class ValidationResult(BaseValidationResult):
 class MigrationValidator:
     def __init__(self, migrations_directory: Path | None = None):
         self.db_parser = VocabularyFileParser(migrations_directory)
-        # Initialize normalizers for supported languages
+        # Initialize normalizers and lemmatizers for supported languages
         supported_languages = ["en", "de", "es"]
         config_loader = get_config_loader()
         self.normalizers = {lang: get_universal_normalizer(lang, config_loader) for lang in supported_languages}
+        self.lemmatizers = {lang: get_lemmatization_service(lang) for lang in supported_languages}
 
     def validate_single_file(self, file_path: Path, silent: bool = False) -> ValidationResult:
         filename = file_path.name
@@ -111,6 +113,7 @@ class MigrationValidator:
 
         result = ValidationResult(total_checked=len(entries))
         normalizer = self.normalizers[language]
+        lemmatizer = self.lemmatizers[language]
 
         seen_words: dict[str, list[int]] = defaultdict(list)
         seen_words_original: dict[str, list[str]] = defaultdict(list)
@@ -121,9 +124,11 @@ class MigrationValidator:
             entry_issues = self._validate_entry(entry, filename, normalizer)
             result.issues.extend(entry_issues)
 
+            # Use lemmatization for duplicate detection (same as frequency generation)
             normalized_word = normalizer.normalize(entry.source_word)
-            seen_words[normalized_word].append(entry.translation_id)
-            seen_words_original[normalized_word].append(entry.source_word)
+            lemmatized_word = lemmatizer.lemmatize(normalized_word)
+            seen_words[lemmatized_word].append(entry.translation_id)
+            seen_words_original[lemmatized_word].append(entry.source_word)
 
             seen_ids["translation"].add(entry.translation_id)
             seen_ids["source_word"].add(entry.source_word_id)
@@ -134,14 +139,14 @@ class MigrationValidator:
 
         duplicates = {word: ids for word, ids in seen_words.items() if len(ids) > 1}
         if duplicates:
-            for normalized_word, ids in duplicates.items():
-                original_variants = seen_words_original[normalized_word]
+            for lemmatized_word, ids in duplicates.items():
+                original_variants = seen_words_original[lemmatized_word]
                 variants_str = ", ".join(f"'{v}'" for v in set(original_variants))
                 result.issues.append(
                     ValidationIssue(
                         severity="error",
                         category="duplicates",
-                        message=f"Duplicate word (normalized: '{normalized_word}', variants: {variants_str}) found in entries: {ids}",
+                        message=f"Duplicate word (lemma: '{lemmatized_word}', variants: {variants_str}) found in entries: {ids}",
                         file_name=filename,
                     )
                 )
@@ -255,7 +260,9 @@ class MigrationValidator:
 
         return issues
 
-    def _validate_id_sequences(self, language: str, filename: str, seen_ids: dict[str, set[int]]) -> list[ValidationIssue]:
+    def _validate_id_sequences(
+        self, language: str, filename: str, seen_ids: dict[str, set[int]]
+    ) -> list[ValidationIssue]:
         issues = []
 
         for id_type, id_set in seen_ids.items():
@@ -298,18 +305,21 @@ class MigrationValidator:
                 continue
 
             normalizer = self.normalizers[language]
+            lemmatizer = self.lemmatizers[language]
             global_seen_words: dict[str, list[tuple[str, int, str]]] = defaultdict(list)
 
             for filename in filenames:
                 try:
                     entries = self.db_parser.parse_migration_file(filename)
                     for entry in entries:
+                        # Use lemmatization for cross-file duplicate detection
                         normalized = normalizer.normalize(entry.source_word)
-                        global_seen_words[normalized].append((filename, entry.translation_id, entry.source_word))
+                        lemmatized = lemmatizer.lemmatize(normalized)
+                        global_seen_words[lemmatized].append((filename, entry.translation_id, entry.source_word))
                 except (FileNotFoundError, json.JSONDecodeError, ValueError):
                     continue
 
-            for normalized_word, occurrences in global_seen_words.items():
+            for lemmatized_word, occurrences in global_seen_words.items():
                 if len(occurrences) <= 1:
                     continue
 
@@ -326,7 +336,7 @@ class MigrationValidator:
                         ValidationIssue(
                             severity="error",
                             category="cross_file_duplicates",
-                            message=f"Word '{normalized_word}' (variants: {variants_str}) appears in multiple files: {file_list}",
+                            message=f"Word '{lemmatized_word}' (variants: {variants_str}) appears in multiple files: {file_list}",
                             file_name=", ".join(files_with_word.keys()),
                         )
                     )

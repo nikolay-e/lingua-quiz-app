@@ -6314,15 +6314,6 @@
       "target_example": "Часть целого."
     },
     {
-      "translation_id": 4001062,
-      "source_id": 4002125,
-      "target_id": 4002126,
-      "source_word": "ocurrido",
-      "target_word": "произошедшее",
-      "source_example": "Mira el reloj.",
-      "target_example": "Посмотри на часы."
-    },
-    {
       "translation_id": 4001063,
       "source_id": 4002127,
       "target_id": 4002128,
@@ -7410,15 +7401,6 @@
       "target_word": "начало",
       "source_example": "El inicio del partido.",
       "target_example": "Начало матча."
-    },
-    {
-      "translation_id": 4001242,
-      "source_id": 4002485,
-      "target_id": 4002486,
-      "source_word": "dispuesto",
-      "target_word": "расположенный",
-      "source_example": "Vamos a investigar el caso.",
-      "target_example": "Давай исследуем дело."
     },
     {
       "translation_id": 4001243,

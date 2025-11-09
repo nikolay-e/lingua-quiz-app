@@ -3704,15 +3704,6 @@
       "target_example": "Это их дом."
     },
     {
-      "translation_id": 3000423,
-      "source_id": 3000847,
-      "target_id": 3000848,
-      "source_word": "Ihr",
-      "target_word": "Ваш",
-      "source_example": "Ihr Auto ist sehr schön.",
-      "target_example": "Ваш автомобиль очень красивый."
-    },
-    {
       "translation_id": 3000424,
       "source_id": 3000849,
       "target_id": 3000850,
@@ -5961,15 +5952,6 @@
       "target_word": "апельсин",
       "source_example": "Eine Orange am Tag hält den Doktor fern.",
       "target_example": "Апельсин в день держит доктора подальше."
-    },
-    {
-      "translation_id": 3000676,
-      "source_id": 3001353,
-      "target_id": 3001354,
-      "source_word": "orange",
-      "target_word": "оранжевый",
-      "source_example": "Sie trägt in orangefarbenes Kleid.",
-      "target_example": "Она носит оранжевое платье."
     },
     {
       "translation_id": 3000677,
@@ -10686,15 +10668,6 @@
       "target_word": "около",
       "source_example": "Etwa zehn Minuten.",
       "target_example": "Около десяти минут."
-    },
-    {
-      "translation_id": 3001205,
-      "source_id": 3002411,
-      "target_id": 3002412,
-      "source_word": "andere",
-      "target_word": "другие",
-      "source_example": "Die anderen kommen später.",
-      "target_example": "Другие придут позже."
     },
     {
       "translation_id": 3001206,
