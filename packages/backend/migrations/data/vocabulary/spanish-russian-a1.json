@@ -73,14 +73,14 @@
     {
       "source_word": "desarrollo",
       "target_word": "развитие",
-      "source_example": "El desarrollo es important.",
+      "source_example": "El desarrollo es importante.",
       "target_example": "Развитие важно."
     },
     {
       "source_word": "disparar",
       "target_word": "стрелять",
-      "source_example": "Son las once de la noche.",
-      "target_example": "Сейчас одиннадцать часов ночи."
+      "source_example": "El policía disparó al aire.",
+      "target_example": "Полицейский выстрелил в воздух."
     },
     {
       "source_word": "cerca",
@@ -199,8 +199,8 @@
     {
       "source_word": "cierto",
       "target_word": "верный",
-      "source_example": "Es un amigo muy cierto.",
-      "target_example": "Он верный друг."
+      "source_example": "Es cierto.",
+      "target_example": "Это верно."
     },
     {
       "source_word": "peso",
@@ -229,7 +229,7 @@
     {
       "source_word": "viento",
       "target_word": "ветер",
-      "source_example": "Have mucho viento hoy.",
+      "source_example": "Hace mucho viento hoy.",
       "target_example": "Сегодня сильный ветер."
     },
     {
@@ -277,8 +277,8 @@
     {
       "source_word": "junto",
       "target_word": "вместе",
-      "source_example": "Trabajemos juntos en este proyecto.",
-      "target_example": "Давайте работать вместе над этим проектом."
+      "source_example": "La estación está junto al parque.",
+      "target_example": "Станция рядом с парком."
     },
     {
       "source_word": "abajo",
@@ -350,7 +350,7 @@
       "source_word": "edad",
       "target_word": "возраст",
       "source_example": "¿Cuál es tu edad?",
-      "target_example": "Какой твой возраст?"
+      "target_example": "Сколько тебе лет?"
     },
     {
       "source_word": "guerra",
@@ -366,20 +366,14 @@
     },
     {
       "source_word": "pelo",
-      "target_word": "волос",
+      "target_word": "волосы",
       "source_example": "Tiene el pelo largo y negro.",
       "target_example": "У неё длинные чёрные волосы."
     },
     {
-      "source_word": "fueras",
-      "target_word": "был бы",
-      "source_example": "No puedo imaginar mi vida sin música.",
-      "target_example": "Я не могу представить свою жизнь без музыки."
-    },
-    {
       "source_word": "cuestión",
       "target_word": "вопрос [дело]",
-      "source_example": "Es una cuestión important.",
+      "source_example": "Es una cuestión importante.",
       "target_example": "Это важный вопрос."
     },
     {
@@ -565,8 +559,8 @@
     {
       "source_word": "venganza",
       "target_word": "месть",
-      "source_example": "Subimos a la montaña.",
-      "target_example": "Мы поднялись на гору."
+      "source_example": "La venganza no es buena.",
+      "target_example": "Месть — это плохо."
     },
     {
       "source_word": "ciudad",
@@ -595,8 +589,8 @@
     {
       "source_word": "encanta",
       "target_word": "очень нравится",
-      "source_example": "Es un buen ciudadano.",
-      "target_example": "Он хороший гражданин."
+      "source_example": "Me encanta la música.",
+      "target_example": "Мне очень нравится музыка."
     },
     {
       "source_word": "civil",
@@ -673,8 +667,8 @@
     {
       "source_word": "asustado",
       "target_word": "испуганный",
-      "source_example": "Los niños juegan en el patio.",
-      "target_example": "Дети играют во дворе."
+      "source_example": "Estoy asustado.",
+      "target_example": "Я испуган."
     },
     {
       "source_word": "nueve",
@@ -697,8 +691,8 @@
     {
       "source_word": "adónde",
       "target_word": "куда",
-      "source_example": "La división de la empresa.",
-      "target_example": "Разделение компании."
+      "source_example": "¿Adónde vas?",
+      "target_example": "Куда ты идёшь?"
     },
     {
       "source_word": "compartir",
@@ -739,14 +733,14 @@
     {
       "source_word": "vale",
       "target_word": "окей",
-      "source_example": "La mesa es de madera.",
-      "target_example": "Стол сделан из дерева."
+      "source_example": "— ¿Vamos? — Vale.",
+      "target_example": "— Пойдём? — Окей."
     },
     {
       "source_word": "seguramente",
       "target_word": "наверняка",
-      "source_example": "Ha pasado una década.",
-      "target_example": "Прошло десятилетие."
+      "source_example": "Seguramente vendrá.",
+      "target_example": "Наверняка он придёт."
     },
     {
       "source_word": "diez",
@@ -757,8 +751,8 @@
     {
       "source_word": "camisa",
       "target_word": "рубашка",
-      "source_example": "Falta una pieza important.",
-      "target_example": "Не хватает важной детали."
+      "source_example": "La camisa es azul.",
+      "target_example": "Рубашка синяя."
     },
     {
       "source_word": "actividad",
@@ -781,8 +775,8 @@
     {
       "source_word": "merece",
       "target_word": "заслуживает",
-      "source_example": "¡Adiós, hasta mañana!",
-      "target_example": "До свидания, до завтра!"
+      "source_example": "Él merece respeto.",
+      "target_example": "Он заслуживает уважения."
     },
     {
       "source_word": "hasta",
@@ -799,8 +793,8 @@
     {
       "source_word": "universo",
       "target_word": "вселенная",
-      "source_example": "Está cayendo lluvia.",
-      "target_example": "Идёт дождь."
+      "source_example": "El universo es infinito.",
+      "target_example": "Вселенная бесконечна."
     },
     {
       "source_word": "deber",
@@ -817,8 +811,8 @@
     {
       "source_word": "alegra",
       "target_word": "радует",
-      "source_example": "El valle es muy hermoso.",
-      "target_example": "Долина очень красивая."
+      "source_example": "Me alegra verte.",
+      "target_example": "Я рад(а) тебя видеть."
     },
     {
       "source_word": "casa",
@@ -955,8 +949,8 @@
     {
       "source_word": "recuperar",
       "target_word": "восстанавливать",
-      "source_example": "Cuida bien de ti mismo.",
-      "target_example": "Хорошо заботься о себе."
+      "source_example": "Necesito recuperar fuerzas.",
+      "target_example": "Мне нужно восстановить силы."
     },
     {
       "source_word": "título",
@@ -1135,8 +1129,8 @@
     {
       "source_word": "evidencia",
       "target_word": "доказательство",
-      "source_example": "Es un actor famoso.",
-      "target_example": "Это известный актёр."
+      "source_example": "Hay evidencia suficiente.",
+      "target_example": "Есть достаточные доказательства."
     },
     {
       "source_word": "disculpa",
@@ -1147,8 +1141,8 @@
     {
       "source_word": "decirme",
       "target_word": "сказать мне",
-      "source_example": "Alcanzar el objetivo.",
-      "target_example": "Достигать цели."
+      "source_example": "¿Puedes decirme la hora?",
+      "target_example": "Можешь сказать мне, который час?"
     },
     {
       "source_word": "gracia",
@@ -1171,14 +1165,14 @@
     {
       "source_word": "significa",
       "target_word": "означает",
-      "source_example": "Habla un idioma extranjero.",
-      "target_example": "Он говорит на иностранном языке."
+      "source_example": "¿Qué significa esta palabra?",
+      "target_example": "Что означает это слово?"
     },
     {
       "source_word": "doctora",
       "target_word": "врач (женщина)",
-      "source_example": "Necesito una herramienta nueva.",
-      "target_example": "Мне нужен новый инструмент."
+      "source_example": "Mi doctora es muy amable.",
+      "target_example": "Моя врач очень добрая."
     },
     {
       "source_word": "buscar",
@@ -1226,7 +1220,7 @@
       "source_word": "fuente",
       "target_word": "источник, фонтан",
       "source_example": "Es una fuente confiable.",
-      "target_example": "Это надёжныйcomo источник."
+      "target_example": "Это надёжный источник."
     },
     {
       "source_word": "a",
@@ -1244,7 +1238,7 @@
       "source_word": "parecer",
       "target_word": "казаться",
       "source_example": "Me parece bien.",
-      "target_example": "Мне кажется хорошим."
+      "target_example": "Мне кажется, это хорошо."
     },
     {
       "source_word": "como",
@@ -1285,8 +1279,8 @@
     {
       "source_word": "cuando",
       "target_word": "когда",
-      "source_example": "¿Cuando vuelves?",
-      "target_example": "Когда ты вернёшься?"
+      "source_example": "Te llamaré cuando llegue.",
+      "target_example": "Я позвоню, когда приеду."
     },
     {
       "source_word": "piel",
@@ -1307,10 +1301,10 @@
       "target_example": "Да, мне очень нравится."
     },
     {
-      "source_word": "veras",
+      "source_word": "verás",
       "target_word": "увидишь",
-      "source_example": "Mi habitación es grande.",
-      "target_example": "Моя комната большая."
+      "source_example": "Ya verás.",
+      "target_example": "Вот увидишь."
     },
     {
       "source_word": "fin",
@@ -1351,8 +1345,8 @@
     {
       "source_word": "conocerte",
       "target_word": "познакомиться с тобой",
-      "source_example": "El gato duerme.",
-      "target_example": "Кот спит."
+      "source_example": "Quiero conocerte.",
+      "target_example": "Хочу познакомиться с тобой."
     },
     {
       "source_word": "cual",
@@ -1375,7 +1369,7 @@
     {
       "source_word": "lindo",
       "target_word": "милый|симпатичный|красивый",
-      "source_example": "Que vestido tan lindo.",
+      "source_example": "Qué vestido tan lindo.",
       "target_example": "Какое красивое платье."
     },
     {
@@ -1435,8 +1429,8 @@
     {
       "source_word": "acordar",
       "target_word": "договориться",
-      "source_example": "Me gusta pasear por el bosque.",
-      "target_example": "Я люблю гулять по лесу."
+      "source_example": "Acordamos vernos mañana.",
+      "target_example": "Мы договорились встретиться завтра."
     },
     {
       "source_word": "volar",
@@ -1459,8 +1453,8 @@
     {
       "source_word": "desaparecido",
       "target_word": "исчезнувший",
-      "source_example": "Su rostro muestra tristeza.",
-      "target_example": "Его лицо выражает грусть."
+      "source_example": "El niño está desaparecido.",
+      "target_example": "Ребёнок пропал."
     },
     {
       "source_word": "frente",
@@ -1471,8 +1465,8 @@
     {
       "source_word": "calmar",
       "target_word": "успокаивать",
-      "source_example": "Eso es una mentira.",
-      "target_example": "Это ложь."
+      "source_example": "Quiero calmarte.",
+      "target_example": "Хочу тебя успокоить."
     },
     {
       "source_word": "romper",
@@ -1627,8 +1621,8 @@
     {
       "source_word": "preocupa",
       "target_word": "беспокоит",
-      "source_example": "El martes tengo clase.",
-      "target_example": "Во вторник у меня урок."
+      "source_example": "Me preocupa el dinero.",
+      "target_example": "Меня беспокоят деньги."
     },
     {
       "source_word": "joven",
@@ -1777,8 +1771,8 @@
     {
       "source_word": "criminal",
       "target_word": "преступник",
-      "source_example": "Estudio alemán.",
-      "target_example": "Я изучаю немецкий."
+      "source_example": "El criminal fue detenido.",
+      "target_example": "Преступник был задержан."
     },
     {
       "source_word": "necesario",
@@ -1795,8 +1789,8 @@
     {
       "source_word": "recoger",
       "target_word": "собирать",
-      "source_example": "En el piso inferior.",
-      "target_example": "На нижнем этаже."
+      "source_example": "Recoge tus cosas.",
+      "target_example": "Собери свои вещи."
     },
     {
       "source_word": "bajo",
@@ -2251,8 +2245,8 @@
     {
       "source_word": "encantado",
       "target_word": "рад",
-      "source_example": "Te voy a apoyar.",
-      "target_example": "Я тебя поддержу."
+      "source_example": "Encantado de conocerte.",
+      "target_example": "Рад познакомиться."
     },
     {
       "source_word": "mantener",
@@ -2323,8 +2317,8 @@
     {
       "source_word": "pago",
       "target_word": "оплата",
-      "source_example": "La naive cubre todo.",
-      "target_example": "Снег покрывает всё."
+      "source_example": "El pago se realiza al final.",
+      "target_example": "Оплата производится в конце."
     },
     {
       "source_word": "comprar",
@@ -2503,8 +2497,8 @@
     {
       "source_word": "basta",
       "target_word": "хватит",
-      "source_example": "Te presento a mi amigo.",
-      "target_example": "Представляю тебе моего друга."
+      "source_example": "¡Basta!",
+      "target_example": "Хватит!"
     },
     {
       "source_word": "llegar",
@@ -2515,8 +2509,8 @@
     {
       "source_word": "gratis",
       "target_word": "бесплатно",
-      "source_example": "No me mandes.",
-      "target_example": "Не приказывай мне."
+      "source_example": "La entrada es gratis.",
+      "target_example": "Вход бесплатный."
     },
     {
       "source_word": "ejemplo",
@@ -2557,8 +2551,8 @@
     {
       "source_word": "detente",
       "target_word": "остановись",
-      "source_example": "El miércoles es mi día favorito.",
-      "target_example": "Среда - мой любимый день."
+      "source_example": "¡Detente!",
+      "target_example": "Остановись!"
     },
     {
       "source_word": "vender",
@@ -2960,13 +2954,13 @@
       "source_word": "cuento",
       "target_word": "сказка",
       "source_example": "Lee un cuento.",
-      "target_example": "Читает сказку."
+      "target_example": "Прочитай сказку."
     },
     {
       "source_word": "intentarlo",
       "target_word": "попробовать это",
-      "source_example": "Una gran roca.",
-      "target_example": "Большая скала."
+      "source_example": "Voy a intentarlo.",
+      "target_example": "Я попробую это."
     },
     {
       "source_word": "cuanto",
@@ -3098,7 +3092,7 @@
       "source_word": "perfecto",
       "target_word": "совершенный",
       "source_example": "Es perfecto.",
-      "target_example": "Это совершенно."
+      "target_example": "Это идеально."
     },
     {
       "source_word": "consejo",
@@ -3415,14 +3409,14 @@
     {
       "source_word": "robado",
       "target_word": "украденный",
-      "source_example": "En la sombra.",
-      "target_example": "В тени."
+      "source_example": "El coche robado.",
+      "target_example": "Украденный автомобиль."
     },
     {
       "source_word": "calor",
       "target_word": "тепло",
-      "source_example": "Have calor.",
-      "target_example": "Тепло."
+      "source_example": "Hace calor.",
+      "target_example": "Жарко."
     },
     {
       "source_word": "perder",
@@ -3433,8 +3427,8 @@
     {
       "source_word": "casar",
       "target_word": "жениться",
-      "source_example": "La corriente del río.",
-      "target_example": "Течение реки."
+      "source_example": "Quiero casarme contigo.",
+      "target_example": "Я хочу жениться на тебе."
     },
     {
       "source_word": "silencio",
@@ -3505,8 +3499,8 @@
     {
       "source_word": "tiro",
       "target_word": "выстрел",
-      "source_example": "Hay que aumentar el precio.",
-      "target_example": "Нужно увеличить цену."
+      "source_example": "Se oyó un tiro.",
+      "target_example": "Раздался выстрел."
     },
     {
       "source_word": "seguro",
@@ -3547,8 +3541,8 @@
     {
       "source_word": "ocurrido",
       "target_word": "случившееся",
-      "source_example": "La cena está lista.",
-      "target_example": "Ужин готов."
+      "source_example": "Lo ocurrido fue un error.",
+      "target_example": "Произошедшее было ошибкой."
     },
     {
       "source_word": "calle",
@@ -3565,8 +3559,8 @@
     {
       "source_word": "agradecer",
       "target_word": "благодарить",
-      "source_example": "Hay que reducir gastos.",
-      "target_example": "Нужно уменьшить расходы."
+      "source_example": "Quiero agradecer tu ayuda.",
+      "target_example": "Хочу поблагодарить за твою помощь."
     },
     {
       "source_word": "morir",
@@ -4249,8 +4243,8 @@
     {
       "source_word": "gusto",
       "target_word": "вкус",
-      "source_example": "Es un placer conocerte.",
-      "target_example": "Приятно познакомиться."
+      "source_example": "Tiene buen gusto.",
+      "target_example": "У него хороший вкус."
     },
     {
       "source_word": "pérdida",
@@ -4753,7 +4747,7 @@
     {
       "source_word": "tercero",
       "target_word": "третий",
-      "source_example": "Vivo en el tercero piso.",
+      "source_example": "Vivo en el tercer piso.",
       "target_example": "Я живу на третьем этаже."
     },
     {
@@ -4771,14 +4765,14 @@
     {
       "source_word": "participación",
       "target_word": "участие",
-      "source_example": "Tu participación es important.",
+      "source_example": "Tu participación es importante.",
       "target_example": "Твоё участие важно."
     },
     {
       "source_word": "violencia",
       "target_word": "насилие",
       "source_example": "No tolero la violencia.",
-      "target_example": "Я не терплю насилие."
+      "target_example": "Я не терплю насилия."
     },
     {
       "source_word": "quizás",
@@ -5366,8 +5360,8 @@
     {
       "source_word": "enviado",
       "target_word": "отправленный",
-      "source_example": "Cae la nieve.",
-      "target_example": "Падает снег."
+      "source_example": "Mensaje enviado.",
+      "target_example": "Сообщение отправлено."
     },
     {
       "source_word": "novia",
@@ -5571,8 +5565,8 @@
     {
       "source_word": "deprisa",
       "target_word": "быстро",
-      "source_example": "Pongo papas en un saco.",
-      "target_example": "Кладу картошку в мешок."
+      "source_example": "Camina deprisa.",
+      "target_example": "Иди быстро."
     },
     {
       "source_word": "salida",
@@ -5734,31 +5728,27 @@
     },
     {
       "source_word": "te",
-      "target_word": "[translation needed for: te]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "тебя; тебе",
+      "source_example": "Te quiero.",
+      "target_example": "Я тебя люблю."
     },
     {
       "source_word": "donde",
-      "target_word": "[translation needed for: donde]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "где (в придаточных)",
+      "source_example": "La casa donde vivo está cerca.",
+      "target_example": "Дом, где я живу, находится рядом."
     },
     {
       "source_word": "cuándo",
-      "target_word": "[translation needed for: cuándo]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "когда (вопросительное)",
+      "source_example": "¿Cuándo llegas?",
+      "target_example": "Когда ты приедешь?"
     },
     {
       "source_word": "papa",
-      "target_word": "[translation needed for: papa]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "картофель",
+      "source_example": "Me gusta la papa.",
+      "target_example": "Мне нравится картофель."
     }
   ]
 }
