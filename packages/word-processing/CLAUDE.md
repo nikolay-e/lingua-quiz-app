@@ -45,6 +45,47 @@ Migration JSON для бэкенда
 - ✅ Структурированные данные - категории blacklist (profanity, abbreviations, etc.)
 - ✅ Никаких внешних TXT файлов - всё централизовано
 
+**✅ Architectural Patterns:**
+
+- **Pipeline Pattern** (`VocabularyProcessor`): 7-стадийная обработка слов с early exit при фильтрации
+  - `ProcessingContext` - shared state между стадиями
+  - `ProcessingStage` - абстрактный базовый класс для стадий
+  - Стадии: Normalization → Validation → Lemmatization → NLP Analysis → Inflection Filtering → Categorization
+    → Statistics
+
+- **Template Method Pattern** (`FrequencyBasedSource`): Устранение дублирования в word sources
+  - Общая логика: lemmatization, junk filtering, deduplication
+  - Абстрактные методы: `_fetch_raw_words()`, `_get_source_prefix()`, `_get_metadata_source()`
+  - FrequencySource: 120→14 lines (91% reduction)
+  - SubtitleFrequencySource: 115→30 lines (74% reduction)
+
+## Text Normalization Strategy
+
+Стратегия нормализации различается между валидацией ответов пользователя и анализом словарей для баланса между
+удобством и лингвистической точностью.
+
+### Answer Validation (quiz-core)
+
+Для проверки ответов в реальном времени нормализация агрессивная, чтобы прощать мелкие опечатки. Перед сравнением
+весь ввод (ответ пользователя и правильный ответ) нормализуется:
+
+- **Case-insensitive** (`Word` → `word`)
+- **Whitespace removed** (`my answer` → `myanswer`)
+- **Diacritics stripped** (`José` → `jose`)
+- **German characters converted** (`ä` → `a`, `ö` → `o`, `ü` → `u`, `ß` → `ss`)
+- **Cyrillic characters normalized** (`ё` → `е`, Latin lookalikes converted `p` → `р`)
+
+### Vocabulary Analysis (word-processing)
+
+Для точного лингвистического анализа (поиск дубликатов, лемматизация) Python-скрипты более консервативны:
+
+- **Diacritics Preserved:** Немецкие умлауты и испанские акценты сохраняются, так как лингвистически значимы
+  (например, `schon` vs `schön`)
+- **Language-Specific Rules:** Каждый язык использует персонализированную стратегию нормализации (только английский
+  текст имеет акценты по умолчанию удалёнными)
+
+**Конфигурация:** все правила нормализации определены в `config.yaml` → `languages.{lang}.normalization`
+
 ## Протестированная функциональность (только интеграционные тесты)
 
 ### 1. Генерация частотных списков (WordSource: 26 тестов) ✅
@@ -349,6 +390,114 @@ tests/integration/
 ├── test_vocabulary_processor.py   #
 └── test_migration_validator.py    #
 ```
+
+## Vocabulary Generation Pipeline (Detailed)
+
+Пакет генерирует CEFR-уровневые словарные списки из частотных данных субтитров через многоступенчатый pipeline:
+
+```mermaid
+flowchart TB
+    subgraph Sources["🗂️ DATA SOURCES"]
+        S1["📊 Subtitle Frequencies<br/>(50k words per language)<br/>data/subtitle_frequencies/"]
+        S2["📚 WordFreq Library<br/>(optional corpus)"]
+        S3["📄 Existing Migrations<br/>(JSON files)"]
+    end
+
+    subgraph Processing["⚙️ VOCABULARY PROCESSOR"]
+        direction TB
+        P1["1️⃣ Normalization<br/>(Unicode, diacritics, whitespace)"]
+        P2["2️⃣ Lemmatization<br/>(Stanza 95.5% accuracy)<br/>comiendo → comer"]
+        P3["3️⃣ NLP Analysis<br/>(POS tags, NER, morphology)"]
+        P4["4️⃣ Validation<br/>(blacklist, length, patterns)"]
+        P5["5️⃣ Inflection Filtering<br/>(remove verb conjugations)<br/>ratio: ES=0.4, DE=0.2, RU=0.15"]
+        P6["6️⃣ Deduplication<br/>(by lemma, prioritize base forms)"]
+
+        P1 --> P2 --> P3 --> P4 --> P5 --> P6
+    end
+
+    subgraph Analysis["📊 ANALYSIS & VALIDATION"]
+        direction TB
+        A1["A1Analyzer<br/>Compare vocabulary vs<br/>frequency top-N"]
+        A2["FullReportGenerator<br/>Categorize ALL words:<br/>• ENGLISH (delete)<br/>• HIGH_FREQ (<500)<br/>• LEGITIMATE (<5k)<br/>• VERY_RARE (>10k)"]
+        A3["MigrationValidator<br/>• Check duplicates<br/>• Validate ID schema<br/>• Cross-file validation"]
+
+        A1 --> A2
+        A2 --> A3
+    end
+
+    subgraph Output["📤 OUTPUT"]
+        O1["📄 Markdown Report<br/>(human-readable)"]
+        O2["📊 JSON Data<br/>(detailed metadata)"]
+        O3["📋 CSV Export<br/>(for Excel)"]
+        O4["🗄️ Migration JSON<br/>(backend database)"]
+    end
+
+    subgraph Iteration["🔄 ITERATIVE REFINEMENT"]
+        I1["Placeholder Filling<br/>fill_placeholders.py<br/>Auto-fill missing words"]
+        I2["Manual Review<br/>Add examples & translations"]
+        I3["Re-validation<br/>Check quality & coverage"]
+
+        I1 --> I2 --> I3
+    end
+
+    Sources --> Processing
+    Processing --> Analysis
+    Analysis --> Output
+    Output --> Iteration
+    Iteration -.re-analyze.-> Analysis
+
+    style Sources fill:#e1f5ff
+    style Processing fill:#fff4e1
+    style Analysis fill:#f0e1ff
+    style Output fill:#e1ffe1
+    style Iteration fill:#ffe1e1
+
+    classDef processBox fill:#fff,stroke:#333,stroke-width:2px
+    class P1,P2,P3,P4,P5,P6 processBox
+```
+
+### Key Components
+
+**1. Data Sources:**
+
+- **Subtitle Frequencies:** 50k most frequent words from movie/TV subtitles (conversational language)
+- **WordFreq Library:** Optional fallback for frequency data from web corpora
+- **Existing Migrations:** JSON files for vocabulary already in the database
+
+**2. Processing Pipeline (`VocabularyProcessor`):**
+
+- **Normalization:** Language-specific Unicode handling (preserves Spanish `ñ`, German `ß`)
+- **Lemmatization:** Stanza (95.5% accuracy) converts all forms to base: `estabas → estar`
+- **NLP Analysis:** Part-of-speech tagging, Named Entity Recognition, morphological features
+- **Validation:** Filters profanity, abbreviations, proper nouns, and invalid patterns
+- **Inflection Filtering:** Removes verb conjugations/noun plurals based on language-specific ratios
+- **Deduplication:** Keeps only one form per lemma (prioritizes base form over inflection)
+
+**3. Analysis Tools:**
+
+- **A1Analyzer:** Compares vocabulary against top-N frequency list to find gaps
+- **FullReportGenerator:** Categorizes every word by frequency rank and quality
+- **MigrationValidator:** Checks for duplicates, ID consistency, and structural issues
+
+**4. Output Formats:**
+
+- **Markdown:** Human-readable reports with statistics and recommendations
+- **JSON:** Detailed word data (lemma, POS, frequency, rank, morphology)
+- **CSV:** Simple lists for spreadsheet analysis
+- **Migration JSON:** Backend-ready format with deterministic ID schema
+
+**5. Iterative Refinement:**
+
+- **Placeholder Filling:** Automatically fills gaps with missing high-frequency words
+- **Manual Review:** Add usage examples and verify translations
+- **Re-validation:** Check quality after changes, repeat until valid
+
+### Quality Metrics
+
+- **Lemmatization:** Stanza 95.5% vs spaCy 84.7% (Spanish)
+- **Coverage:** A1 (1000 words) should cover top-1000 frequency words
+- **Filtering:** Language-specific inflection ratios (ES: 0.4, DE: 0.2, RU: 0.15)
+- **Validation:** 62 integration tests ensure accuracy
 
 ## TDD Workflow
 
