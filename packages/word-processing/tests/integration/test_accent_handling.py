@@ -90,7 +90,7 @@ class TestFalsePositiveMissing:
         a1_words = analyzer._load_vocabulary()
 
         # Words we KNOW are in A1
-        test_words = ["gracias", "solo"]
+        test_words = ["gracias", "sólo"]
 
         # Verify they're actually in A1
         for word in test_words:
