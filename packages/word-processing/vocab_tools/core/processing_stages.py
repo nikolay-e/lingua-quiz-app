@@ -1,3 +1,5 @@
+from typing import Any
+
 from wordfreq import word_frequency
 
 from .base_normalizer import UniversalNormalizer
@@ -62,7 +64,7 @@ class LemmatizationStage(ProcessingStage):
 class NLPAnalysisStage(ProcessingStage):
     """Stage 4: POS tagging, morphology, frequency, NER filtering."""
 
-    def __init__(self, nlp_model, language_code: str, ner_frequency_threshold: float):
+    def __init__(self, nlp_model: Any, language_code: str, ner_frequency_threshold: float):
         self.nlp_model = nlp_model
         self.language_code = language_code
         self.ner_frequency_threshold = ner_frequency_threshold
@@ -95,8 +97,8 @@ class NLPAnalysisStage(ProcessingStage):
 
         return context
 
-    def _extract_morphology(self, token) -> dict:
-        morphology = {}
+    def _extract_morphology(self, token: Any) -> dict[str, Any]:
+        morphology: dict[str, Any] = {}
         if hasattr(token, "morph") and token.morph:
             for feat in token.morph:
                 key, value = feat.split("=") if "=" in feat else (feat, True)
@@ -115,7 +117,7 @@ class InflectionFilteringStage(ProcessingStage):
         self,
         language_code: str,
         inflection_frequency_ratio: float,
-        inflection_patterns: dict,
+        inflection_patterns: dict[str, list[str]],
         existing_words: set[str],
         filter_inflections: bool,
     ):
@@ -135,21 +137,29 @@ class InflectionFilteringStage(ProcessingStage):
         lemma_freq = word_frequency(context.lemma, self.language_code)
 
         if context.lemma != context.word.lower() and context.lemma in self.existing_words:
-            if lemma_freq > 0 and context.frequency < lemma_freq * self.inflection_frequency_ratio:
+            if (
+                context.frequency is not None
+                and lemma_freq > 0
+                and context.frequency < lemma_freq * self.inflection_frequency_ratio
+            ):
                 freq_ratio = context.frequency / lemma_freq if lemma_freq > 0 else 0
                 context.should_filter = True
                 context.filter_reason = f"inflection:existing_lemma:{context.lemma}:freq_ratio={freq_ratio:.2f}"
                 return context
 
         if self._is_likely_inflected(context.word, context.lemma, context.morphology):
-            if lemma_freq > 0 and context.frequency < lemma_freq * self.inflection_frequency_ratio:
+            if (
+                context.frequency is not None
+                and lemma_freq > 0
+                and context.frequency < lemma_freq * self.inflection_frequency_ratio
+            ):
                 freq_ratio = context.frequency / lemma_freq if lemma_freq > 0 else 0
                 context.should_filter = True
                 context.filter_reason = f"inflection:pattern_match:{context.lemma}:freq_ratio={freq_ratio:.2f}"
 
         return context
 
-    def _is_likely_inflected(self, word: str, lemma: str, morphology: dict) -> bool:
+    def _is_likely_inflected(self, word: str, lemma: str, morphology: dict[str, Any]) -> bool:
         if word.lower() == lemma:
             return False
 
@@ -167,7 +177,7 @@ class InflectionFilteringStage(ProcessingStage):
 class CategorizationStage(ProcessingStage):
     """Stage 6: Assign category by POS tag."""
 
-    def __init__(self, pos_categories: dict):
+    def __init__(self, pos_categories: dict[str, list[str]]):
         self.pos_categories = pos_categories
 
     def process(self, context: ProcessingContext) -> ProcessingContext:
@@ -213,7 +223,7 @@ class FilteringStatsCollector:
         self.examples: dict[str, list[str]] = {}
         self.total_filtered = 0
 
-    def add_filtered(self, word: str, category: str):
+    def add_filtered(self, word: str, category: str) -> None:
         self.total_filtered += 1
         self.by_category[category] = self.by_category.get(category, 0) + 1
 
