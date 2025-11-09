@@ -45,5 +45,5 @@ Thumbs.db
 
 # Project specific
 analysis_history.json
-frequency_lists/*.json
+frequency_lists/
 *.log
