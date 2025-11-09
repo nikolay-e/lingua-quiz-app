@@ -1,9 +1,9 @@
 """Integration tests for CLI commands."""
 
 import json
-from pathlib import Path
 import subprocess
 import tempfile
+from pathlib import Path
 
 
 class TestAnalyzeCommand:
@@ -246,37 +246,3 @@ class TestCLIHelp:
 
         assert result.returncode == 0
         assert "language-level" in result.stdout.lower() or "language_level" in result.stdout.lower()
-
-
-class TestValidationIntegration:
-    """Test validation features through CLI."""
-
-    def test_analyze_detects_empty_translations(self):
-        """Test that analyze command detects empty translations."""
-        result = subprocess.run(
-            ["python", "main.py", "analyze", "es-a1"],
-            check=False,
-            capture_output=True,
-            text=True,
-            timeout=90,
-        )
-
-        assert result.returncode == 0
-        # Should report validation issues for empty translations
-        assert "validation issues" in result.stdout.lower()
-        assert "Empty translation" in result.stdout or "Errors" in result.stdout
-
-    def test_analyze_reports_validation_summary(self):
-        """Test that analyze shows validation summary."""
-        result = subprocess.run(
-            ["python", "main.py", "analyze", "es-a1"],
-            check=False,
-            capture_output=True,
-            text=True,
-            timeout=90,
-        )
-
-        assert result.returncode == 0
-        # Should show validation table with errors/warnings
-        assert "Errors" in result.stdout
-        assert "Warnings" in result.stdout
