@@ -11,6 +11,7 @@ Tests verify all WordSource implementations:
 import json
 
 import pytest
+
 from vocab_tools.core.word_source import (
     CustomListSource,
     FrequencySource,
@@ -41,18 +42,12 @@ def sample_migration_file(temp_migrations_dir):
     data = {
         "word_pairs": [
             {
-                "translation_id": 4000000,
-                "source_id": 4000001,
-                "target_id": 4000002,
                 "source_word": "casa",
                 "target_word": "дом",
                 "source_example": "Mi casa es bonita.",
                 "target_example": "Мой дом красивый.",
             },
             {
-                "translation_id": 4000003,
-                "source_id": 4000004,
-                "target_id": 4000005,
                 "source_word": "libro",
                 "target_word": "книга",
                 "source_example": "Leo un libro.",
@@ -92,7 +87,6 @@ class TestMigrationFileSource:
         words = list(source.get_words())
 
         assert words[0].metadata is not None
-        assert "translation_id" in words[0].metadata
         assert "target_word" in words[0].metadata
         assert words[0].metadata["target_word"] == "дом"
 

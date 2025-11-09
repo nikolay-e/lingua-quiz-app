@@ -2,1897 +2,1440 @@
   "source_language": "Spanish",
   "target_language": "Russian",
   "word_list_name": "Spanish Russian A0",
-  "level_base_offset": 4020000,
   "word_pairs": [
     {
-      "translation_id": 4000211,
-      "source_id": 4000423,
-      "target_id": 4000424,
       "source_word": "playa",
       "target_word": "пляж",
       "source_example": "Vamos a la playa.",
       "target_example": "Пойдём на пляж."
     },
     {
-      "translation_id": 4000280,
-      "source_id": 4000561,
-      "target_id": 4000562,
       "source_word": "carrera",
       "target_word": "карьера",
       "source_example": "Tiene una buena carrera.",
       "target_example": "У него хорошая карьера."
     },
     {
-      "translation_id": 4000340,
-      "source_id": 4000681,
-      "target_id": 4000682,
       "source_word": "luna",
       "target_word": "луна",
       "source_example": "La luna brilla.",
       "target_example": "Луна светит."
     },
     {
-      "translation_id": 4000362,
-      "source_id": 4000725,
-      "target_id": 4000726,
       "source_word": "mes",
       "target_word": "месяц",
       "source_example": "El próximo mes.",
       "target_example": "Следующий месяц."
     },
     {
-      "translation_id": 4000426,
-      "source_id": 4000853,
-      "target_id": 4000854,
       "source_word": "noche",
       "target_word": "ночь",
       "source_example": "Buenas noches.",
       "target_example": "Спокойной ночи."
     },
     {
-      "translation_id": 4000440,
-      "source_id": 4000881,
-      "target_id": 4000882,
       "source_word": "bar",
       "target_word": "бар",
       "source_example": "Vamos al bar.",
       "target_example": "Пойдём в бар."
     },
     {
-      "translation_id": 4000457,
-      "source_id": 4000915,
-      "target_id": 4000916,
       "source_word": "restaurante",
       "target_word": "ресторан",
       "source_example": "Vamos al restaurante.",
       "target_example": "Пойдём в ресторан."
     },
     {
-      "translation_id": 4000495,
-      "source_id": 4000991,
-      "target_id": 4000992,
       "source_word": "escena",
       "target_word": "сцена",
       "source_example": "La escena fue muy dramática.",
       "target_example": "Сцена была очень драматичной."
     },
     {
-      "translation_id": 4000505,
-      "source_id": 4001011,
-      "target_id": 4001012,
       "source_word": "período",
       "target_word": "период",
       "source_example": "Durante este período.",
       "target_example": "В течение этого периода."
     },
     {
-      "translation_id": 4000582,
-      "source_id": 4001165,
-      "target_id": 4001166,
       "source_word": "tribunal",
       "target_word": "суд, трибунал",
       "source_example": "El caso va al tribunal.",
       "target_example": "Дело идёт в суд."
     },
     {
-      "translation_id": 4000585,
-      "source_id": 4001171,
-      "target_id": 4001172,
       "source_word": "cliente",
       "target_word": "клиент",
       "source_example": "El cliente está satisfecho.",
       "target_example": "Клиент доволен."
     },
     {
-      "translation_id": 4000635,
-      "source_id": 4001271,
-      "target_id": 4001272,
       "source_word": "operación",
       "target_word": "операция",
       "source_example": "La operación fue exitosa.",
       "target_example": "Операция прошла успешно."
     },
     {
-      "translation_id": 4000780,
-      "source_id": 4001561,
-      "target_id": 4001562,
       "source_word": "medicina",
       "target_word": "медицина",
       "source_example": "Estudia medicina.",
       "target_example": "Он изучает медицину."
     },
     {
-      "translation_id": 4000832,
-      "source_id": 4001665,
-      "target_id": 4001666,
       "source_word": "colega",
       "target_word": "коллега",
       "source_example": "Mi colega es muy amable.",
       "target_example": "Мой коллега очень добрый."
     },
     {
-      "translation_id": 4000878,
-      "source_id": 4001757,
-      "target_id": 4001758,
       "source_word": "bomba",
       "target_word": "бомба",
       "source_example": "La bomba explotó.",
       "target_example": "Бомба взорвалась."
     },
     {
-      "translation_id": 4000937,
-      "source_id": 4001875,
-      "target_id": 4001876,
       "source_word": "laboratorio",
       "target_word": "лаборатория",
       "source_example": "Trabajo en un laboratorio.",
       "target_example": "Я работаю в лаборатории."
     },
     {
-      "translation_id": 4000968,
-      "source_id": 4001937,
-      "target_id": 4001938,
       "source_word": "paciente",
       "target_word": "пациент",
       "source_example": "El paciente está mejor.",
       "target_example": "Пациенту лучше."
     },
     {
-      "translation_id": 4001173,
-      "source_id": 4002347,
-      "target_id": 4002348,
       "source_word": "dama",
       "target_word": "дама",
       "source_example": "Es una gran dama.",
       "target_example": "Она великая дама."
     },
     {
-      "translation_id": 4020000,
-      "source_id": 4020001,
-      "target_id": 4020002,
       "source_word": "abogado",
       "target_word": "адвокат",
       "source_example": "Necesito hablar con mi abogado.",
       "target_example": "Мне нужно поговорить с моим адвокатом."
     },
     {
-      "translation_id": 4020001,
-      "source_id": 4020003,
-      "target_id": 4020004,
       "source_word": "abril",
       "target_word": "апрель",
       "source_example": "En abril llueve mucho.",
       "target_example": "В апреле много дождей."
     },
     {
-      "translation_id": 4020002,
-      "source_id": 4020005,
-      "target_id": 4020006,
       "source_word": "acto",
       "target_word": "акт",
       "source_example": "El primer acto.",
       "target_example": "Первый акт."
     },
     {
-      "translation_id": 4020003,
-      "source_id": 4020007,
-      "target_id": 4020008,
       "source_word": "actor",
       "target_word": "актёр",
       "source_example": "Él es un actor famoso.",
       "target_example": "Он известный актёр."
     },
     {
-      "translation_id": 4020004,
-      "source_id": 4020009,
-      "target_id": 4020010,
       "source_word": "administración",
       "target_word": "администрация",
       "source_example": "La administración decide.",
       "target_example": "Администрация решает."
     },
     {
-      "translation_id": 4020005,
-      "source_id": 4020011,
-      "target_id": 4020012,
       "source_word": "agente",
       "target_word": "агент",
       "source_example": "El agente de viajes reservó el hotel.",
       "target_example": "Туристический агент забронировал отель."
     },
     {
-      "translation_id": 4020006,
-      "source_id": 4020013,
-      "target_id": 4020014,
       "source_word": "agosto",
       "target_word": "август",
       "source_example": "El festival se celebra en agosto.",
       "target_example": "Фестиваль проходит в августе."
     },
     {
-      "translation_id": 4020007,
-      "source_id": 4020015,
-      "target_id": 4020016,
       "source_word": "análisis",
       "target_word": "анализ",
       "source_example": "Necesitamos un análisis detallado.",
       "target_example": "Нам нужен подробный анализ."
     },
     {
-      "translation_id": 4020008,
-      "source_id": 4020017,
-      "target_id": 4020018,
       "source_word": "ascensor",
       "target_word": "лифт",
       "source_example": "El ascensor está roto.",
       "target_example": "Лифт сломан."
     },
     {
-      "translation_id": 4020009,
-      "source_id": 4020019,
-      "target_id": 4020020,
       "source_word": "auto",
       "target_word": "автомобиль",
       "source_example": "Necesito reparar mi auto.",
       "target_example": "Мне нужно починить мой автомобиль."
     },
     {
-      "translation_id": 4020010,
-      "source_id": 4020021,
-      "target_id": 4020022,
       "source_word": "autor",
       "target_word": "автор",
       "source_example": "El autor del libro es famoso.",
       "target_example": "Автор книги известен."
     },
     {
-      "translation_id": 4020011,
-      "source_id": 4020023,
-      "target_id": 4020024,
       "source_word": "banco",
       "target_word": "банк",
       "source_example": "Voy al banco.",
       "target_example": "Я иду в банк."
     },
     {
-      "translation_id": 4020012,
-      "source_id": 4020025,
-      "target_id": 4020026,
       "source_word": "blog",
       "target_word": "блог",
       "source_example": "Leo su blog todos los días.",
       "target_example": "Я читаю её блог каждый день."
     },
     {
-      "translation_id": 4020013,
-      "source_id": 4020027,
-      "target_id": 4020028,
       "source_word": "bloque",
       "target_word": "блок",
       "source_example": "Un bloque de apartamentos.",
       "target_example": "Многоквартирный дом."
     },
     {
-      "translation_id": 4020014,
-      "source_id": 4020029,
-      "target_id": 4020030,
       "source_word": "básico",
       "target_word": "базовый",
       "source_example": "Es un conocimiento básico.",
       "target_example": "Это базовые знания."
     },
     {
-      "translation_id": 4020015,
-      "source_id": 4020031,
-      "target_id": 4020032,
       "source_word": "café",
       "target_word": "кофе",
       "source_example": "Me gusta el café.",
       "target_example": "Мне нравится кофе."
     },
     {
-      "translation_id": 4020016,
-      "source_id": 4020033,
-      "target_id": 4020034,
       "source_word": "campaña",
       "target_word": "кампания",
       "source_example": "La campaña electoral comienza hoy.",
       "target_example": "Избирательная кампания начинается сегодня."
     },
     {
-      "translation_id": 4020017,
-      "source_id": 4020035,
-      "target_id": 4020036,
       "source_word": "canal",
       "target_word": "канал",
       "source_example": "Este canal transmite noticias.",
       "target_example": "Этот канал передаёт новости."
     },
     {
-      "translation_id": 4020018,
-      "source_id": 4020037,
-      "target_id": 4020038,
       "source_word": "capitán",
       "target_word": "капитан",
       "source_example": "El capitán del barco es joven.",
       "target_example": "Капитан корабля молод."
     },
     {
-      "translation_id": 4020019,
-      "source_id": 4020039,
-      "target_id": 4020040,
       "source_word": "carácter",
       "target_word": "характер",
       "source_example": "Tiene un carácter fuerte.",
       "target_example": "У него сильный характер."
     },
     {
-      "translation_id": 4020020,
-      "source_id": 4020041,
-      "target_id": 4020042,
       "source_word": "central",
       "target_word": "центральный",
       "source_example": "La estación central.",
       "target_example": "Центральный вокзал."
     },
     {
-      "translation_id": 4020021,
-      "source_id": 4020043,
-      "target_id": 4020044,
       "source_word": "centro",
       "target_word": "центр",
       "source_example": "En el centro.",
       "target_example": "В центре."
     },
     {
-      "translation_id": 4020022,
-      "source_id": 4020045,
-      "target_id": 4020046,
       "source_word": "cine",
       "target_word": "кино",
       "source_example": "Vamos al cine.",
       "target_example": "Пойдём в кино."
     },
     {
-      "translation_id": 4020023,
-      "source_id": 4020047,
-      "target_id": 4020048,
       "source_word": "clase",
       "target_word": "класс",
       "source_example": "La clase de español.",
       "target_example": "Урок испанского языка."
     },
     {
-      "translation_id": 4020024,
-      "source_id": 4020049,
-      "target_id": 4020050,
       "source_word": "club",
       "target_word": "клуб",
       "source_example": "El club de fútbol.",
       "target_example": "Футбольный клуб."
     },
     {
-      "translation_id": 4020025,
-      "source_id": 4020051,
-      "target_id": 4020052,
       "source_word": "colonia",
       "target_word": "колония",
       "source_example": "Una colonia española.",
       "target_example": "Испанская колония."
     },
     {
-      "translation_id": 4020026,
-      "source_id": 4020053,
-      "target_id": 4020054,
       "source_word": "comentarios",
       "target_word": "комментарии",
       "source_example": "Lee los comentarios del artículo.",
       "target_example": "Прочитай комментарии к статье."
     },
     {
-      "translation_id": 4020027,
-      "source_id": 4020055,
-      "target_id": 4020056,
       "source_word": "comisión",
       "target_word": "комиссия",
       "source_example": "La comisión investigará el caso.",
       "target_example": "Комиссия расследует дело."
     },
     {
-      "translation_id": 4020028,
-      "source_id": 4020057,
-      "target_id": 4020058,
       "source_word": "compañía",
       "target_word": "компания",
       "source_example": "Trabajo en una compañía internacional.",
       "target_example": "Я работаю в международной компании."
     },
     {
-      "translation_id": 4020029,
-      "source_id": 4020059,
-      "target_id": 4020060,
       "source_word": "contacto",
       "target_word": "контакт",
       "source_example": "Mantén el contacto.",
       "target_example": "Поддерживай контакт."
     },
     {
-      "translation_id": 4020030,
-      "source_id": 4020061,
-      "target_id": 4020062,
       "source_word": "continente",
       "target_word": "континент",
       "source_example": "Europa es un continente.",
       "target_example": "Европа — это континент."
     },
     {
-      "translation_id": 4020031,
-      "source_id": 4020063,
-      "target_id": 4020064,
       "source_word": "control",
       "target_word": "контроль",
       "source_example": "El control de pasaportes.",
       "target_example": "Паспортный контроль."
     },
     {
-      "translation_id": 4020032,
-      "source_id": 4020065,
-      "target_id": 4020066,
       "source_word": "copia",
       "target_word": "копия",
       "source_example": "Haz una copia del documento.",
       "target_example": "Сделай копию документа."
     },
     {
-      "translation_id": 4020033,
-      "source_id": 4020067,
-      "target_id": 4020068,
       "source_word": "crisis",
       "target_word": "кризис",
       "source_example": "Una crisis económica.",
       "target_example": "Экономический кризис."
     },
     {
-      "translation_id": 4020034,
-      "source_id": 4020069,
-      "target_id": 4020070,
       "source_word": "cultura",
       "target_word": "культура",
       "source_example": "La cultura española.",
       "target_example": "Испанская культура."
     },
     {
-      "translation_id": 4020035,
-      "source_id": 4020071,
-      "target_id": 4020072,
       "source_word": "cultural",
       "target_word": "культурный",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 4020036,
-      "source_id": 4020073,
-      "target_id": 4020074,
       "source_word": "curso",
       "target_word": "курс",
       "source_example": "Un curso de idiomas.",
       "target_example": "Языковой курс."
     },
     {
-      "translation_id": 4020037,
-      "source_id": 4020075,
-      "target_id": 4020076,
       "source_word": "cámara",
       "target_word": "камера",
       "source_example": "Una cámara de fotos.",
       "target_example": "Фотокамера."
     },
     {
-      "translation_id": 4020038,
-      "source_id": 4020077,
-      "target_id": 4020078,
       "source_word": "democracia",
       "target_word": "демократия",
       "source_example": "La democracia es importante.",
       "target_example": "Демократия важна."
     },
     {
-      "translation_id": 4020039,
-      "source_id": 4020079,
-      "target_id": 4020080,
       "source_word": "detalle",
       "target_word": "деталь [подробность]",
       "source_example": "Cuéntame los detalles.",
       "target_example": "Расскажи мне подробности."
     },
     {
-      "translation_id": 4020040,
-      "source_id": 4020081,
-      "target_id": 4020082,
       "source_word": "diciembre",
       "target_word": "декабрь",
       "source_example": "La Navidad es en diciembre.",
       "target_example": "Рождество в декабре."
     },
     {
-      "translation_id": 4020041,
-      "source_id": 4020083,
-      "target_id": 4020084,
       "source_word": "director",
       "target_word": "директор",
       "source_example": "El director está en una reunión.",
       "target_example": "Директор на совещании."
     },
     {
-      "translation_id": 4020042,
-      "source_id": 4020085,
-      "target_id": 4020086,
       "source_word": "diseño",
       "target_word": "дизайн",
       "source_example": "Me gusta el diseño moderno.",
       "target_example": "Мне нравится современный дизайн."
     },
     {
-      "translation_id": 4020043,
-      "source_id": 4020087,
-      "target_id": 4020088,
       "source_word": "documento",
       "target_word": "документ",
       "source_example": "Necesito un documento.",
       "target_example": "Мне нужен документ."
     },
     {
-      "translation_id": 4020044,
-      "source_id": 4020089,
-      "target_id": 4020090,
       "source_word": "dólar",
       "target_word": "доллар",
       "source_example": "Cuesta cien dólares.",
       "target_example": "Это стоит сто долларов."
     },
     {
-      "translation_id": 4020046,
-      "source_id": 4020093,
-      "target_id": 4020094,
       "source_word": "economía",
       "target_word": "экономика",
       "source_example": "La economía mundial.",
       "target_example": "Мировая экономика."
     },
     {
-      "translation_id": 4020047,
-      "source_id": 4020095,
-      "target_id": 4020096,
       "source_word": "económico",
       "target_word": "экономический",
       "source_example": "Crisis económica.",
       "target_example": "Экономический кризис."
     },
     {
-      "translation_id": 4020048,
-      "source_id": 4020097,
-      "target_id": 4020098,
       "source_word": "efecto",
       "target_word": "эффект",
       "source_example": "Un efecto especial.",
       "target_example": "Спецэффект."
     },
     {
-      "translation_id": 4020049,
-      "source_id": 4020099,
-      "target_id": 4020100,
       "source_word": "elemento",
       "target_word": "элемент",
       "source_example": "Un elemento importante.",
       "target_example": "Важный элемент."
     },
     {
-      "translation_id": 4020050,
-      "source_id": 4020101,
-      "target_id": 4020102,
       "source_word": "eléctrico",
       "target_word": "электрический",
       "source_example": "Un coche eléctrico.",
       "target_example": "Электромобиль."
     },
     {
-      "translation_id": 4020051,
-      "source_id": 4020103,
-      "target_id": 4020104,
       "source_word": "energía",
       "target_word": "энергия",
       "source_example": "Energía solar.",
       "target_example": "Солнечная энергия."
     },
     {
-      "translation_id": 4020052,
-      "source_id": 4020105,
-      "target_id": 4020106,
       "source_word": "enero",
       "target_word": "январь",
       "source_example": "Año Nuevo es en enero.",
       "target_example": "Новый год в январе."
     },
     {
-      "translation_id": 4020053,
-      "source_id": 4020107,
-      "target_id": 4020108,
       "source_word": "estación",
       "target_word": "станция",
       "source_example": "La estación de tren.",
       "target_example": "Железнодорожная станция."
     },
     {
-      "translation_id": 4020054,
-      "source_id": 4020109,
-      "target_id": 4020110,
       "source_word": "estilo",
       "target_word": "стиль",
       "source_example": "Un estilo moderno.",
       "target_example": "Современный стиль."
     },
     {
-      "translation_id": 4020055,
-      "source_id": 4020111,
-      "target_id": 4020112,
       "source_word": "estructura",
       "target_word": "структура",
       "source_example": "La estructura del edificio.",
       "target_example": "Структура здания."
     },
     {
-      "translation_id": 4020056,
-      "source_id": 4020113,
-      "target_id": 4020114,
       "source_word": "estudiante",
       "target_word": "студент",
       "source_example": "Soy estudiante.",
       "target_example": "Я студент."
     },
     {
-      "translation_id": 4020057,
-      "source_id": 4020115,
-      "target_id": 4020116,
       "source_word": "europeo",
       "target_word": "европейский",
       "source_example": "Es un país europeo.",
       "target_example": "Это европейская страна."
     },
     {
-      "translation_id": 4020058,
-      "source_id": 4020117,
-      "target_id": 4020118,
       "source_word": "factor",
       "target_word": "фактор",
       "source_example": "Un factor importante.",
       "target_example": "Важный фактор."
     },
     {
-      "translation_id": 4020059,
-      "source_id": 4020119,
-      "target_id": 4020120,
       "source_word": "febrero",
       "target_word": "февраль",
       "source_example": "San Valentín es en febrero.",
       "target_example": "День святого Валентина в феврале."
     },
     {
-      "translation_id": 4020060,
-      "source_id": 4020121,
-      "target_id": 4020122,
       "source_word": "figura",
       "target_word": "фигура",
       "source_example": "Una figura geométrica.",
       "target_example": "Геометрическая фигура."
     },
     {
-      "translation_id": 4020061,
-      "source_id": 4020123,
-      "target_id": 4020124,
       "source_word": "forma",
       "target_word": "форма",
       "source_example": "La forma del objeto.",
       "target_example": "Форма объекта."
     },
     {
-      "translation_id": 4020062,
-      "source_id": 4020125,
-      "target_id": 4020126,
       "source_word": "formación",
       "target_word": "образование, формирование",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 4020063,
-      "source_id": 4020127,
-      "target_id": 4020128,
       "source_word": "foto",
       "target_word": "фотография",
       "source_example": "Una bonita foto.",
       "target_example": "Красивая фотография."
     },
     {
-      "translation_id": 4020064,
-      "source_id": 4020129,
-      "target_id": 4020130,
       "source_word": "francés",
       "target_word": "французский",
       "source_example": "Hablo francés.",
       "target_example": "Я говорю по-французски."
     },
     {
-      "translation_id": 4020065,
-      "source_id": 4020131,
-      "target_id": 4020132,
       "source_word": "frase",
       "target_word": "фраза",
       "source_example": "Una frase corta.",
       "target_example": "Короткая фраза."
     },
     {
-      "translation_id": 4020066,
-      "source_id": 4020133,
-      "target_id": 4020134,
       "source_word": "fruta",
       "target_word": "фрукт",
       "source_example": "Me gusta la fruta.",
       "target_example": "Мне нравятся фрукты."
     },
     {
-      "translation_id": 4020067,
-      "source_id": 4020135,
-      "target_id": 4020136,
       "source_word": "funcionar",
       "target_word": "функционировать",
       "source_example": "La máquina no funciona.",
       "target_example": "Машина не работает."
     },
     {
-      "translation_id": 4020068,
-      "source_id": 4020137,
-      "target_id": 4020138,
       "source_word": "función",
       "target_word": "функция",
       "source_example": "La función del corazón.",
       "target_example": "Функция сердца."
     },
     {
-      "translation_id": 4020069,
-      "source_id": 4020139,
-      "target_id": 4020140,
       "source_word": "fundamental",
       "target_word": "фундаментальный",
       "source_example": "Un derecho fundamental.",
       "target_example": "Фундаментальное право."
     },
     {
-      "translation_id": 4020070,
-      "source_id": 4020141,
-      "target_id": 4020142,
       "source_word": "físico",
       "target_word": "физический",
       "source_example": "El ejercicio físico.",
       "target_example": "Физические упражнения."
     },
     {
-      "translation_id": 4020071,
-      "source_id": 4020143,
-      "target_id": 4020144,
       "source_word": "fútbol",
       "target_word": "футбол",
       "source_example": "Juego al fútbol.",
       "target_example": "Я играю в футбол."
     },
     {
-      "translation_id": 4020072,
-      "source_id": 4020145,
-      "target_id": 4020146,
       "source_word": "gas",
       "target_word": "газ",
       "source_example": "La cocina de gas.",
       "target_example": "Газовая плита."
     },
     {
-      "translation_id": 4020073,
-      "source_id": 4020147,
-      "target_id": 4020148,
       "source_word": "grupo",
       "target_word": "группа",
       "source_example": "Un grupo de estudiantes.",
       "target_example": "Группа студентов."
     },
     {
-      "translation_id": 4020074,
-      "source_id": 4020149,
-      "target_id": 4020150,
       "source_word": "historia",
       "target_word": "история",
       "source_example": "Me gusta la historia.",
       "target_example": "Мне нравится история."
     },
     {
-      "translation_id": 4020075,
-      "source_id": 4020151,
-      "target_id": 4020152,
       "source_word": "hotel",
       "target_word": "отель",
       "source_example": "El hotel está completo.",
       "target_example": "Отель полностью занят."
     },
     {
-      "translation_id": 4020076,
-      "source_id": 4020153,
-      "target_id": 4020154,
       "source_word": "idea",
       "target_word": "идея",
       "source_example": "Buena idea.",
       "target_example": "Хорошая идея."
     },
     {
-      "translation_id": 4020077,
-      "source_id": 4020155,
-      "target_id": 4020156,
       "source_word": "idiota",
       "target_word": "идиот",
       "source_example": "No seas idiota.",
       "target_example": "Не будь идиотом."
     },
     {
-      "translation_id": 4020078,
-      "source_id": 4020157,
-      "target_id": 4020158,
       "source_word": "importar",
       "target_word": "импортировать",
       "source_example": "Importamos products de España.",
       "target_example": "Мы импортируем продукты из Испании."
     },
     {
-      "translation_id": 4020079,
-      "source_id": 4020159,
-      "target_id": 4020160,
       "source_word": "información",
       "target_word": "информация",
       "source_example": "Necesito más información.",
       "target_example": "Мне нужна дополнительная информация."
     },
     {
-      "translation_id": 4020080,
-      "source_id": 4020161,
-      "target_id": 4020162,
       "source_word": "interesante",
       "target_word": "интересный",
       "source_example": "Es un libro interesante.",
       "target_example": "Это интересная книга."
     },
     {
-      "translation_id": 4020081,
-      "source_id": 4020163,
-      "target_id": 4020164,
       "source_word": "internacional",
       "target_word": "международный",
       "source_example": "Es un vuelo internacional.",
       "target_example": "Это международный рейс."
     },
     {
-      "translation_id": 4020082,
-      "source_id": 4020165,
-      "target_id": 4020166,
       "source_word": "interés",
       "target_word": "интерес",
       "source_example": "Tengo interés en el arte.",
       "target_example": "Меня интересует искусство."
     },
     {
-      "translation_id": 4020083,
-      "source_id": 4020167,
-      "target_id": 4020168,
       "source_word": "julio",
       "target_word": "июль",
       "source_example": "Mis vacaciones son en julio.",
       "target_example": "Мой отпуск в июле."
     },
     {
-      "translation_id": 4020084,
-      "source_id": 4020169,
-      "target_id": 4020170,
       "source_word": "junio",
       "target_word": "июнь",
       "source_example": "El verano empieza en junio.",
       "target_example": "Лето начинается в июне."
     },
     {
-      "translation_id": 4020085,
-      "source_id": 4020171,
-      "target_id": 4020172,
       "source_word": "literatura",
       "target_word": "литература",
       "source_example": "Estudio literatura española.",
       "target_example": "Я изучаю испанскую литературу."
     },
     {
-      "translation_id": 4020086,
-      "source_id": 4020173,
-      "target_id": 4020174,
       "source_word": "línea",
       "target_word": "линия",
       "source_example": "Una línea recta.",
       "target_example": "Прямая линия."
     },
     {
-      "translation_id": 4020087,
-      "source_id": 4020175,
-      "target_id": 4020176,
       "source_word": "mamá",
       "target_word": "мама",
       "source_example": "¿Dónde está mamá?",
       "target_example": "Где мама?"
     },
     {
-      "translation_id": 4020088,
-      "source_id": 4020177,
-      "target_id": 4020178,
       "source_word": "manera",
       "target_word": "манера",
       "source_example": "De esta manera.",
       "target_example": "Таким способом."
     },
     {
-      "translation_id": 4020089,
-      "source_id": 4020179,
-      "target_id": 4020180,
       "source_word": "mapa",
       "target_word": "карта",
       "source_example": "Mira el mapa.",
       "target_example": "Посмотри на карту."
     },
     {
-      "translation_id": 4020090,
-      "source_id": 4020181,
-      "target_id": 4020182,
       "source_word": "marca",
       "target_word": "марка",
       "source_example": "Es una buena marca.",
       "target_example": "Это хорошая марка."
     },
     {
-      "translation_id": 4020091,
-      "source_id": 4020183,
-      "target_id": 4020184,
       "source_word": "marzo",
       "target_word": "март",
       "source_example": "La primavera llega en marzo.",
       "target_example": "Весна приходит в марте."
     },
     {
-      "translation_id": 4020092,
-      "source_id": 4020185,
-      "target_id": 4020186,
       "source_word": "masa",
       "target_word": "масса",
       "source_example": "La masa del objeto.",
       "target_example": "Масса объекта."
     },
     {
-      "translation_id": 4020093,
-      "source_id": 4020187,
-      "target_id": 4020188,
       "source_word": "materia",
       "target_word": "материя",
       "source_example": "La materia y energía.",
       "target_example": "Материя и энергия."
     },
     {
-      "translation_id": 4020094,
-      "source_id": 4020189,
-      "target_id": 4020190,
       "source_word": "material",
       "target_word": "материал",
       "source_example": "Es un buen material.",
       "target_example": "Это хороший материал."
     },
     {
-      "translation_id": 4020095,
-      "source_id": 4020191,
-      "target_id": 4020192,
       "source_word": "mayo",
       "target_word": "май",
       "source_example": "El primero de mayo.",
       "target_example": "Первое мая."
     },
     {
-      "translation_id": 4020096,
-      "source_id": 4020193,
-      "target_id": 4020194,
       "source_word": "melodía",
       "target_word": "мелодия",
       "source_example": "Una melodía hermosa.",
       "target_example": "Красивая мелодия."
     },
     {
-      "translation_id": 4020097,
-      "source_id": 4020195,
-      "target_id": 4020196,
       "source_word": "metro",
       "target_word": "метр",
       "source_example": "Mide un metro.",
       "target_example": "Длиной в один метр."
     },
     {
-      "translation_id": 4020098,
-      "source_id": 4020197,
-      "target_id": 4020198,
       "source_word": "mexicano",
       "target_word": "мексиканский",
       "source_example": "Me gusta la comida mexicana.",
       "target_example": "Мне нравится мексиканская еда."
     },
     {
-      "translation_id": 4020099,
-      "source_id": 4020199,
-      "target_id": 4020200,
       "source_word": "millón",
       "target_word": "миллион",
       "source_example": "Un millón de euros.",
       "target_example": "Миллион евро."
     },
     {
-      "translation_id": 4020100,
-      "source_id": 4020201,
-      "target_id": 4020202,
       "source_word": "ministro",
       "target_word": "министр",
       "source_example": "El ministro de educación.",
       "target_example": "Министр образования."
     },
     {
-      "translation_id": 4020101,
-      "source_id": 4020203,
-      "target_id": 4020204,
       "source_word": "minuto",
       "target_word": "минута",
       "source_example": "Espera un minuto.",
       "target_example": "Подожди минуту."
     },
     {
-      "translation_id": 4020102,
-      "source_id": 4020205,
-      "target_id": 4020206,
       "source_word": "misión",
       "target_word": "миссия",
       "source_example": "Una misión importante.",
       "target_example": "Важная миссия."
     },
     {
-      "translation_id": 4020103,
-      "source_id": 4020207,
-      "target_id": 4020208,
       "source_word": "modelo",
       "target_word": "модель",
       "source_example": "El nuevo modelo de coche.",
       "target_example": "Новая модель автомобиля."
     },
     {
-      "translation_id": 4020104,
-      "source_id": 4020209,
-      "target_id": 4020210,
       "source_word": "momento",
       "target_word": "момент [мгновение]",
       "source_example": "En este momento.",
       "target_example": "В этот момент."
     },
     {
-      "translation_id": 4020105,
-      "source_id": 4020211,
-      "target_id": 4020212,
       "source_word": "motivo",
       "target_word": "мотив",
       "source_example": "¿Cuál es el motivo?",
       "target_example": "Какой мотив?"
     },
     {
-      "translation_id": 4020106,
-      "source_id": 4020213,
-      "target_id": 4020214,
       "source_word": "máquina",
       "target_word": "машина [механизм]",
       "source_example": "La máquina no funciona.",
       "target_example": "Механизм не работает."
     },
     {
-      "translation_id": 4020107,
-      "source_id": 4020215,
-      "target_id": 4020216,
       "source_word": "máximo",
       "target_word": "максимальный",
       "source_example": "Es el precio máximo.",
       "target_example": "Это максимальная цена."
     },
     {
-      "translation_id": 4020108,
-      "source_id": 4020217,
-      "target_id": 4020218,
       "source_word": "método",
       "target_word": "метод",
       "source_example": "Un método efectivo.",
       "target_example": "Эффективный метод."
     },
     {
-      "translation_id": 4020109,
-      "source_id": 4020219,
-      "target_id": 4020220,
       "source_word": "música",
       "target_word": "музыка",
       "source_example": "Me gusta la música.",
       "target_example": "Мне нравится музыка."
     },
     {
-      "translation_id": 4020110,
-      "source_id": 4020221,
-      "target_id": 4020222,
       "source_word": "nacional",
       "target_word": "национальный",
       "source_example": "El parque nacional.",
       "target_example": "Национальный парк."
     },
     {
-      "translation_id": 4020111,
-      "source_id": 4020223,
-      "target_id": 4020224,
       "source_word": "nación",
       "target_word": "нация",
       "source_example": "La nación española.",
       "target_example": "Испанская нация."
     },
     {
-      "translation_id": 4020112,
-      "source_id": 4020225,
-      "target_id": 4020226,
       "source_word": "normal",
       "target_word": "нормальный",
       "source_example": "Es normal estar nervioso.",
       "target_example": "Нормально нервничать."
     },
     {
-      "translation_id": 4020113,
-      "source_id": 4020227,
-      "target_id": 4020228,
       "source_word": "noviembre",
       "target_word": "ноябрь",
       "source_example": "Hace frío en noviembre.",
       "target_example": "В ноябре холодно."
     },
     {
-      "translation_id": 4020114,
-      "source_id": 4020229,
-      "target_id": 4020230,
       "source_word": "objeto",
       "target_word": "объект",
       "source_example": "Un objeto extraño.",
       "target_example": "Странный объект."
     },
     {
-      "translation_id": 4020115,
-      "source_id": 4020231,
-      "target_id": 4020232,
       "source_word": "octubre",
       "target_word": "октябрь",
       "source_example": "El otoño en octubre.",
       "target_example": "Осень в октябре."
     },
     {
-      "translation_id": 4020116,
-      "source_id": 4020233,
-      "target_id": 4020234,
       "source_word": "océano",
       "target_word": "океан",
       "source_example": "El océano Atlántico.",
       "target_example": "Атлантический океан."
     },
     {
-      "translation_id": 4020117,
-      "source_id": 4020235,
-      "target_id": 4020236,
       "source_word": "oficial",
       "target_word": "официальный",
       "source_example": "Es un documento oficial.",
       "target_example": "Это официальный документ."
     },
     {
-      "translation_id": 4020118,
-      "source_id": 4020237,
-      "target_id": 4020238,
       "source_word": "oficina",
       "target_word": "офис",
       "source_example": "Trabajo en una oficina.",
       "target_example": "Я работаю в офисе."
     },
     {
-      "translation_id": 4020119,
-      "source_id": 4020239,
-      "target_id": 4020240,
       "source_word": "organización",
       "target_word": "организация",
       "source_example": "Una organización internacional.",
       "target_example": "Международная организация."
     },
     {
-      "translation_id": 4020120,
-      "source_id": 4020241,
-      "target_id": 4020242,
       "source_word": "organizar",
       "target_word": "организовывать",
       "source_example": "Vamos a organizar una fiesta.",
       "target_example": "Давай организуем вечеринку."
     },
     {
-      "translation_id": 4020121,
-      "source_id": 4020243,
-      "target_id": 4020244,
       "source_word": "original",
       "target_word": "оригинальный",
       "source_example": "Una idea original.",
       "target_example": "Оригинальная идея."
     },
     {
-      "translation_id": 4020122,
-      "source_id": 4020245,
-      "target_id": 4020246,
       "source_word": "papá",
       "target_word": "папа",
       "source_example": "Mi papá trabaja mucho.",
       "target_example": "Мой папа много работает."
     },
     {
-      "translation_id": 4020123,
-      "source_id": 4020247,
-      "target_id": 4020248,
       "source_word": "pistola",
       "target_word": "пистолет",
       "source_example": "La pistola está descargada.",
       "target_example": "Пистолет разряжен."
     },
     {
-      "translation_id": 4020124,
-      "source_id": 4020249,
-      "target_id": 4020250,
       "source_word": "plan",
       "target_word": "план",
       "source_example": "Tengo un plan.",
       "target_example": "У меня есть план."
     },
     {
-      "translation_id": 4020125,
-      "source_id": 4020251,
-      "target_id": 4020252,
       "source_word": "planeta",
       "target_word": "планета",
       "source_example": "El planeta Tierra.",
       "target_example": "Планета Земля."
     },
     {
-      "translation_id": 4020126,
-      "source_id": 4020253,
-      "target_id": 4020254,
       "source_word": "policía",
       "target_word": "полиция",
       "source_example": "Llamar a la policía.",
       "target_example": "Вызвать полицию."
     },
     {
-      "translation_id": 4020128,
-      "source_id": 4020257,
-      "target_id": 4020258,
       "source_word": "político",
       "target_word": "политический|политик",
       "source_example": "El sistema político.",
       "target_example": "Политическая система."
     },
     {
-      "translation_id": 4020129,
-      "source_id": 4020259,
-      "target_id": 4020260,
       "source_word": "popular",
       "target_word": "популярный",
       "source_example": "Es una canción popular.",
       "target_example": "Это популярная песня."
     },
     {
-      "translation_id": 4020130,
-      "source_id": 4020261,
-      "target_id": 4020262,
       "source_word": "portal",
       "target_word": "портал",
       "source_example": "El portal de Internet.",
       "target_example": "Интернет-портал."
     },
     {
-      "translation_id": 4020131,
-      "source_id": 4020263,
-      "target_id": 4020264,
       "source_word": "posición",
       "target_word": "позиция",
       "source_example": "Una posición cómoda.",
       "target_example": "Удобная позиция."
     },
     {
-      "translation_id": 4020132,
-      "source_id": 4020265,
-      "target_id": 4020266,
       "source_word": "prensa",
       "target_word": "пресса",
       "source_example": "La libertad de prensa.",
       "target_example": "Свобода прессы."
     },
     {
-      "translation_id": 4020133,
-      "source_id": 4020267,
-      "target_id": 4020268,
       "source_word": "presidente",
       "target_word": "президент",
       "source_example": "El presidente del país.",
       "target_example": "Президент страны."
     },
     {
-      "translation_id": 4020134,
-      "source_id": 4020269,
-      "target_id": 4020270,
       "source_word": "principio",
       "target_word": "начало, принцип",
       "source_example": "Al principio fue difícil.",
       "target_example": "В начале было трудно."
     },
     {
-      "translation_id": 4020135,
-      "source_id": 4020271,
-      "target_id": 4020272,
       "source_word": "problema",
       "target_word": "проблема",
       "source_example": "No hay problema.",
       "target_example": "Нет проблем."
     },
     {
-      "translation_id": 4020136,
-      "source_id": 4020273,
-      "target_id": 4020274,
       "source_word": "proceso",
       "target_word": "процесс",
       "source_example": "Un proceso largo.",
       "target_example": "Длительный процесс."
     },
     {
-      "translation_id": 4020137,
-      "source_id": 4020275,
-      "target_id": 4020276,
       "source_word": "profesional",
       "target_word": "профессиональный",
       "source_example": "Es muy profesional.",
       "target_example": "Он очень профессиональный."
     },
     {
-      "translation_id": 4020138,
-      "source_id": 4020277,
-      "target_id": 4020278,
       "source_word": "profesor",
       "target_word": "профессор",
       "source_example": "Mi profesor de matemáticas.",
       "target_example": "Мой профессор математики."
     },
     {
-      "translation_id": 4020139,
-      "source_id": 4020279,
-      "target_id": 4020280,
       "source_word": "provincia",
       "target_word": "провинция",
       "source_example": "Una provincia española.",
       "target_example": "Испанская провинция."
     },
     {
-      "translation_id": 4020140,
-      "source_id": 4020281,
-      "target_id": 4020282,
       "source_word": "proyecto",
       "target_word": "проект",
       "source_example": "Un proyecto nuevo.",
       "target_example": "Новый проект."
     },
     {
-      "translation_id": 4020141,
-      "source_id": 4020283,
-      "target_id": 4020284,
       "source_word": "prueba",
       "target_word": "проба",
       "source_example": "Es solo una prueba.",
       "target_example": "Это только проба."
     },
     {
-      "translation_id": 4020142,
-      "source_id": 4020285,
-      "target_id": 4020286,
       "source_word": "práctico",
       "target_word": "практичный",
       "source_example": "Es un método muy práctico.",
       "target_example": "Это очень практичный метод."
     },
     {
-      "translation_id": 4020143,
-      "source_id": 4020287,
-      "target_id": 4020288,
       "source_word": "publicar",
       "target_word": "публиковать",
       "source_example": "Van a publicar mi libro.",
       "target_example": "Мою книгу опубликуют."
     },
     {
-      "translation_id": 4020144,
-      "source_id": 4020289,
-      "target_id": 4020290,
       "source_word": "puerto",
       "target_word": "порт",
       "source_example": "El barco está en el puerto.",
       "target_example": "Корабль в порту."
     },
     {
-      "translation_id": 4020145,
-      "source_id": 4020291,
-      "target_id": 4020292,
       "source_word": "párrafo",
       "target_word": "абзац|параграф",
       "source_example": "Lee el primer párrafo.",
       "target_example": "Прочитай первый параграф."
     },
     {
-      "translation_id": 4020146,
-      "source_id": 4020293,
-      "target_id": 4020294,
       "source_word": "público",
       "target_word": "публичный",
       "source_example": "Es un evento público.",
       "target_example": "Это публичное мероприятие."
     },
     {
-      "translation_id": 4020147,
-      "source_id": 4020295,
-      "target_id": 4020296,
       "source_word": "radio",
       "target_word": "радио",
       "source_example": "Escucho la radio.",
       "target_example": "Я слушаю радио."
     },
     {
-      "translation_id": 4020148,
-      "source_id": 4020297,
-      "target_id": 4020298,
       "source_word": "re",
       "target_word": "ре (нота), король (в карточных играх)",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 4020149,
-      "source_id": 4020299,
-      "target_id": 4020300,
       "source_word": "real",
       "target_word": "реальный",
       "source_example": "Es un problema real.",
       "target_example": "Это реальная проблема."
     },
     {
-      "translation_id": 4020150,
-      "source_id": 4020301,
-      "target_id": 4020302,
       "source_word": "realidad",
       "target_word": "реальность",
       "source_example": "La realidad supera la ficción.",
       "target_example": "Реальность превосходит вымысел."
     },
     {
-      "translation_id": 4020151,
-      "source_id": 4020303,
-      "target_id": 4020304,
       "source_word": "recursos",
       "target_word": "ресурсы",
       "source_example": "Necesitamos más recursos.",
       "target_example": "Нам нужно больше ресурсов."
     },
     {
-      "translation_id": 4020152,
-      "source_id": 4020305,
-      "target_id": 4020306,
       "source_word": "registro",
       "target_word": "регистрация",
       "source_example": "Completa el registro, por favor.",
       "target_example": "Заверши регистрацию, пожалуйста."
     },
     {
-      "translation_id": 4020153,
-      "source_id": 4020307,
-      "target_id": 4020308,
       "source_word": "región",
       "target_word": "регион",
       "source_example": "Una región montañosa.",
       "target_example": "Горный регион."
     },
     {
-      "translation_id": 4020154,
-      "source_id": 4020309,
-      "target_id": 4020310,
       "source_word": "religión",
       "target_word": "религия",
       "source_example": "Respeto su religión.",
       "target_example": "Я уважаю его религию."
     },
     {
-      "translation_id": 4020155,
-      "source_id": 4020311,
-      "target_id": 4020312,
       "source_word": "república",
       "target_word": "республика",
       "source_example": "La República Dominicana.",
       "target_example": "Доминиканская Республика."
     },
     {
-      "translation_id": 4020156,
-      "source_id": 4020313,
-      "target_id": 4020314,
       "source_word": "resultado",
       "target_word": "результат",
       "source_example": "Buenos resultados.",
       "target_example": "Хорошие результаты."
     },
     {
-      "translation_id": 4020157,
-      "source_id": 4020315,
-      "target_id": 4020316,
       "source_word": "revolución",
       "target_word": "революция",
       "source_example": "La revolución francesa.",
       "target_example": "Французская революция."
     },
     {
-      "translation_id": 4020158,
-      "source_id": 4020317,
-      "target_id": 4020318,
       "source_word": "riesgo",
       "target_word": "риск",
       "source_example": "Es un gran riesgo.",
       "target_example": "Это большой риск."
     },
     {
-      "translation_id": 4020159,
-      "source_id": 4020319,
-      "target_id": 4020320,
       "source_word": "rosa",
       "target_word": "роза",
       "source_example": "Una rosa roja.",
       "target_example": "Красная роза."
     },
     {
-      "translation_id": 4020160,
-      "source_id": 4020321,
-      "target_id": 4020322,
       "source_word": "secreto",
       "target_word": "секрет",
       "source_example": "Es un secreto.",
       "target_example": "Это секрет."
     },
     {
-      "translation_id": 4020161,
-      "source_id": 4020323,
-      "target_id": 4020324,
       "source_word": "sector",
       "target_word": "сектор",
       "source_example": "El sector público.",
       "target_example": "Государственный сектор."
     },
     {
-      "translation_id": 4020162,
-      "source_id": 4020325,
-      "target_id": 4020326,
       "source_word": "segundo",
       "target_word": "секунда",
       "source_example": "Espera un segundo.",
       "target_example": "Подожди секунду."
     },
     {
-      "translation_id": 4020163,
-      "source_id": 4020327,
-      "target_id": 4020328,
       "source_word": "septiembre",
       "target_word": "сентябрь",
       "source_example": "El curso empieza en septiembre.",
       "target_example": "Курс начинается в сентябре."
     },
     {
-      "translation_id": 4020164,
-      "source_id": 4020329,
-      "target_id": 4020330,
       "source_word": "series",
       "target_word": "серия",
       "source_example": "Una serie de televisión.",
       "target_example": "Телевизионный сериал."
     },
     {
-      "translation_id": 4020165,
-      "source_id": 4020331,
-      "target_id": 4020332,
       "source_word": "señal",
       "target_word": "сигнал",
       "source_example": "Da la señal.",
       "target_example": "Дай сигнал."
     },
     {
-      "translation_id": 4020166,
-      "source_id": 4020333,
-      "target_id": 4020334,
       "source_word": "sistema",
       "target_word": "система",
       "source_example": "El sistema funciona bien.",
       "target_example": "Система работает хорошо."
     },
     {
-      "translation_id": 4020167,
-      "source_id": 4020335,
-      "target_id": 4020336,
       "source_word": "situación",
       "target_word": "ситуация",
       "source_example": "La situación es complicada.",
       "target_example": "Ситуация сложная."
     },
     {
-      "translation_id": 4020168,
-      "source_id": 4020337,
-      "target_id": 4020338,
       "source_word": "social",
       "target_word": "социальный",
       "source_example": "Un problema social.",
       "target_example": "Социальная проблема."
     },
     {
-      "translation_id": 4020169,
-      "source_id": 4020339,
-      "target_id": 4020340,
       "source_word": "soldado",
       "target_word": "солдат",
       "source_example": "Un soldado valiente.",
       "target_example": "Храбрый солдат."
     },
     {
-      "translation_id": 4020170,
-      "source_id": 4020341,
-      "target_id": 4020342,
       "source_word": "símbolo",
       "target_word": "символ",
       "source_example": "El símbolo de la paz.",
       "target_example": "Символ мира."
     },
     {
-      "translation_id": 4020171,
-      "source_id": 4020343,
-      "target_id": 4020344,
       "source_word": "tabla",
       "target_word": "таблица, доска",
       "source_example": "La tabla de multiplicar.",
       "target_example": "Таблица умножения."
     },
     {
-      "translation_id": 4020172,
-      "source_id": 4020345,
-      "target_id": 4020346,
       "source_word": "tarjeta",
       "target_word": "карточка",
       "source_example": "Pago con tarjeta.",
       "target_example": "Я плачу картой."
     },
     {
-      "translation_id": 4020173,
-      "source_id": 4020347,
-      "target_id": 4020348,
       "source_word": "teatro",
       "target_word": "театр",
       "source_example": "Vamos al teatro.",
       "target_example": "Пойдём в театр."
     },
     {
-      "translation_id": 4020174,
-      "source_id": 4020349,
-      "target_id": 4020350,
       "source_word": "televisión",
       "target_word": "телевидение|телевизор",
       "source_example": "Veo la televisión.",
       "target_example": "Я смотрю телевизор."
     },
     {
-      "translation_id": 4020175,
-      "source_id": 4020351,
-      "target_id": 4020352,
       "source_word": "teléfono",
       "target_word": "телефон",
       "source_example": "Mi teléfono suena.",
       "target_example": "Мой телефон звонит."
     },
     {
-      "translation_id": 4020176,
-      "source_id": 4020353,
-      "target_id": 4020354,
       "source_word": "tema",
       "target_word": "тема",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 4020177,
-      "source_id": 4020355,
-      "target_id": 4020356,
       "source_word": "temperatura",
       "target_word": "температура",
       "source_example": "La temperatura es alta.",
       "target_example": "Температура высокая."
     },
     {
-      "translation_id": 4020178,
-      "source_id": 4020357,
-      "target_id": 4020358,
       "source_word": "teoría",
       "target_word": "теория",
       "source_example": "La teoría de la relatividad.",
       "target_example": "Теория относительности."
     },
     {
-      "translation_id": 4020179,
-      "source_id": 4020359,
-      "target_id": 4020360,
       "source_word": "territorio",
       "target_word": "территория",
       "source_example": "El territorio nacional.",
       "target_example": "Национальная территория."
     },
     {
-      "translation_id": 4020180,
-      "source_id": 4020361,
-      "target_id": 4020362,
       "source_word": "texto",
       "target_word": "текст",
       "source_example": "Lee el texto.",
       "target_example": "Прочитай текст."
     },
     {
-      "translation_id": 4020181,
-      "source_id": 4020363,
-      "target_id": 4020364,
       "source_word": "tipo",
       "target_word": "тип",
       "source_example": "¿Qué tipo de música?",
       "target_example": "Какой тип музыки?"
     },
     {
-      "translation_id": 4020182,
-      "source_id": 4020365,
-      "target_id": 4020366,
       "source_word": "tono",
       "target_word": "тон",
       "source_example": "Un tono de voz agradable.",
       "target_example": "Приятный тон голоса."
     },
     {
-      "translation_id": 4020183,
-      "source_id": 4020367,
-      "target_id": 4020368,
       "source_word": "transporte",
       "target_word": "транспорт",
       "source_example": "El transporte público.",
       "target_example": "Общественный транспорт."
     },
     {
-      "translation_id": 4020184,
-      "source_id": 4020369,
-      "target_id": 4020370,
       "source_word": "técnica",
       "target_word": "техника",
       "source_example": "Una técnica nueva.",
       "target_example": "Новая техника."
     },
     {
-      "translation_id": 4020185,
-      "source_id": 4020371,
-      "target_id": 4020372,
       "source_word": "universidad",
       "target_word": "университет",
       "source_example": "Estudio en la universidad.",
       "target_example": "Я учусь в университете."
     },
     {
-      "translation_id": 4020186,
-      "source_id": 4020373,
-      "target_id": 4020374,
       "source_word": "versión",
       "target_word": "версия",
       "source_example": "La última versión del programa.",
       "target_example": "Последняя версия программы."
     },
     {
-      "translation_id": 4020187,
-      "source_id": 4020375,
-      "target_id": 4020376,
       "source_word": "vino",
       "target_word": "вино",
       "source_example": "Este vino es excelente.",
       "target_example": "Это вино превосходное."
     },
     {
-      "translation_id": 4020188,
-      "source_id": 4020377,
-      "target_id": 4020378,
       "source_word": "visita",
       "target_word": "визит",
       "source_example": "Una visita al museo.",
       "target_example": "Визит в музей."
     },
     {
-      "translation_id": 4020189,
-      "source_id": 4020379,
-      "target_id": 4020380,
       "source_word": "vídeo",
       "target_word": "видео",
       "source_example": "Mira este vídeo.",
       "target_example": "Посмотри это видео."
     },
     {
-      "translation_id": 4020190,
-      "source_id": 4020381,
-      "target_id": 4020382,
       "source_word": "zona",
       "target_word": "зона",
       "source_example": "Una zona peligrosa.",
       "target_example": "Опасная зона."
     },
     {
-      "translation_id": 4020191,
-      "source_id": 4020383,
-      "target_id": 4020384,
       "source_word": "época",
       "target_word": "эпоха",
       "source_example": "La época medieval.",
       "target_example": "Средневековая эпоха."
     },
     {
-      "translation_id": 4001472,
-      "source_id": 4002944,
-      "target_id": 4002945,
       "source_word": "detective",
       "target_word": "детектив",
       "source_example": "El detective investiga.",
       "target_example": "Детектив расследует."
     },
     {
-      "translation_id": 4001518,
-      "source_id": 4003036,
-      "target_id": 4003037,
       "source_word": "inspector",
       "target_word": "инспектор",
       "source_example": "El inspector llegó.",
       "target_example": "Инспектор прибыл."
+    },
+    {
+      "source_word": "ni",
+      "target_word": "ни",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "contrato",
+      "target_word": "контракт",
+      "source_example": "Trata al gato con cariño.",
+      "target_example": "Обращайся с котом ласково."
+    },
+    {
+      "source_word": "américa",
+      "target_word": "Америка",
+      "source_example": "Establecer reglas.",
+      "target_example": "Устанавливать правила."
+    },
+    {
+      "source_word": "monstruo",
+      "target_word": "монстр",
+      "source_example": "El perro mueve la cola.",
+      "target_example": "Собака виляет хвостом."
+    },
+    {
+      "source_word": "magia",
+      "target_word": "магия",
+      "source_example": "El niño aprende las letras.",
+      "target_example": "Ребёнок учит буквы."
+    },
+    {
+      "source_word": "vivo",
+      "target_word": "живой",
+      "source_example": "¡Está vivo!",
+      "target_example": "Он живой!"
+    },
+    {
+      "source_word": "líder",
+      "target_word": "лидер",
+      "source_example": "Reconocer el error.",
+      "target_example": "Признавать ошибку."
+    },
+    {
+      "source_word": "interesa",
+      "target_word": "интересует",
+      "source_example": "A gran escala.",
+      "target_example": "В большом масштабе."
+    },
+    {
+      "source_word": "talento",
+      "target_word": "талант",
+      "source_example": "Hay que iniciar el proyecto.",
+      "target_example": "Нужно начать проект."
+    },
+    {
+      "source_word": "fiscal",
+      "target_word": "фискальный",
+      "source_example": "Es una costumbre antigua.",
+      "target_example": "Это древний обычай."
+    },
+    {
+      "source_word": "genio",
+      "target_word": "гений",
+      "source_example": "Me gusta la caza.",
+      "target_example": "Мне нравится охота."
+    },
+    {
+      "source_word": "truco",
+      "target_word": "трюк",
+      "source_example": "La arena está caliente.",
+      "target_example": "Песок горячий."
+    },
+    {
+      "source_word": "declaración",
+      "target_word": "декларация",
+      "source_example": "Va a aparecer pronto.",
+      "target_example": "Он скоро появится."
+    },
+    {
+      "source_word": "temprano",
+      "target_word": "рано",
+      "source_example": "Llegué temprano.",
+      "target_example": "Я пришёл рано."
+    },
+    {
+      "source_word": "muerte",
+      "target_word": "смерть",
+      "source_example": "La muerte es inevitable.",
+      "target_example": "Смерть неизбежна."
+    },
+    {
+      "source_word": "sol",
+      "target_word": "солнце",
+      "source_example": "El sol brilla.",
+      "target_example": "Солнце светит."
+    },
+    {
+      "source_word": "fondo",
+      "target_word": "фон",
+      "source_example": "El fondo es azul.",
+      "target_example": "Фон синий."
+    },
+    {
+      "source_word": "puesto",
+      "target_word": "место",
+      "source_example": "Ocupa un puesto important.",
+      "target_example": "Он занимает важную должность."
+    },
+    {
+      "source_word": "absoluto",
+      "target_word": "абсолютный",
+      "source_example": "Silencio absoluto.",
+      "target_example": "Абсолютная тишина."
+    },
+    {
+      "source_word": "aeropuerto",
+      "target_word": "аэропорт",
+      "source_example": "Vamos al aeropuerto.",
+      "target_example": "Едем в аэропорт."
+    },
+    {
+      "source_word": "alcohol",
+      "target_word": "алкоголь",
+      "source_example": "No bebo alcohol.",
+      "target_example": "Я не пью алкоголь."
+    },
+    {
+      "source_word": "comandante",
+      "target_word": "командир",
+      "source_example": "El comandante dio la orden.",
+      "target_example": "Командир отдал приказ."
+    },
+    {
+      "source_word": "escenario",
+      "target_word": "сцена, сценарий",
+      "source_example": "El actor sube al escenario.",
+      "target_example": "Актёр поднимается на сцену."
+    },
+    {
+      "source_word": "genial",
+      "target_word": "гениальный, классный",
+      "source_example": "¡Qué genial!",
+      "target_example": "Как классно!"
+    },
+    {
+      "source_word": "humor",
+      "target_word": "настроение, юмор",
+      "source_example": "Estoy de buen humor.",
+      "target_example": "У меня хорошее настроение."
+    },
+    {
+      "source_word": "kilómetro",
+      "target_word": "километр",
+      "source_example": "Está a tres kilómetros.",
+      "target_example": "Это в трёх километрах."
+    },
+    {
+      "source_word": "normalmente",
+      "target_word": "обычно, нормально",
+      "source_example": "Normalmente me levanto a las 7.",
+      "target_example": "Обычно встаю в 7."
+    },
+    {
+      "source_word": "probar",
+      "target_word": "пробовать",
+      "source_example": "Prueba este plato.",
+      "target_example": "Попробуй это блюдо."
+    },
+    {
+      "source_word": "serie",
+      "target_word": "серия, сериал",
+      "source_example": "Veo una serie en Netflix.",
+      "target_example": "Смотрю сериал на Netflix."
     }
   ]
 }

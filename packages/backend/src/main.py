@@ -46,7 +46,7 @@ DB_POOL_MAX_SIZE = int(os.getenv("DB_POOL_MAX_SIZE", "10"))
 app = FastAPI(
     title="LinguaQuiz API",
     description="Language learning quiz backend with automated spaced repetition",
-    version="2.0.0",
+    version="3.0.0",
     docs_url="/docs",
     redoc_url="/redoc",
 )
@@ -106,24 +106,12 @@ class TokenResponse(BaseModel):
     user: UserResponse
 
 
-class WordSetResponse(BaseModel):
-    id: int
-    name: str
-    created_at: str = Field(alias="createdAt")
-    updated_at: str = Field(alias="updatedAt")
-
-    class Config:
-        populate_by_name = True
-
-
-class WordResponse(BaseModel):
-    translation_id: int = Field(alias="translationId")
-    source_word_id: int = Field(alias="sourceWordId")
-    target_word_id: int = Field(alias="targetWordId")
-    source_word: str = Field(alias="sourceWord")
-    target_word: str = Field(alias="targetWord")
-    source_language: str = Field(alias="sourceLanguage")
-    target_language: str = Field(alias="targetLanguage")
+class WordPairResponse(BaseModel):
+    source_text: str = Field(alias="sourceText")
+    source_lang: str = Field(alias="sourceLang")
+    target_text: str = Field(alias="targetText")
+    target_lang: str = Field(alias="targetLang")
+    list_name: str = Field(alias="listName")
     source_example: str | None = Field(alias="sourceExample")
     target_example: str | None = Field(alias="targetExample")
 
@@ -131,34 +119,32 @@ class WordResponse(BaseModel):
         populate_by_name = True
 
 
-class WordSetWithWordsResponse(WordSetResponse):
-    words: list[WordResponse]
-
-
-class UserWordSetRequest(BaseModel):
-    word_list_name: str = Field(alias="wordListName")
+class WordListResponse(BaseModel):
+    list_name: str = Field(alias="listName")
+    word_count: int = Field(alias="wordCount")
 
     class Config:
         populate_by_name = True
 
 
-class UserWordSetResponse(BaseModel):
-    word_pair_id: int = Field(alias="wordPairId")
-    source_word: str = Field(alias="sourceWord")
-    target_word: str = Field(alias="targetWord")
-    source_language: str = Field(alias="sourceLanguage")
-    target_language: str = Field(alias="targetLanguage")
-    source_word_usage_example: str | None = Field(alias="sourceWordUsageExample")
-    target_word_usage_example: str | None = Field(alias="targetWordUsageExample")
-    status: str | None = None
+class UserProgressResponse(BaseModel):
+    source_text: str = Field(alias="sourceText")
+    source_lang: str = Field(alias="sourceLang")
+    level: int
+    correct_count: int = Field(alias="correctCount")
+    error_count: int = Field(alias="errorCount")
+    last_practiced: str | None = Field(alias="lastPracticed")
 
     class Config:
         populate_by_name = True
 
 
-class UserWordSetStatusUpdate(BaseModel):
-    status: str = Field(..., pattern="^(LEVEL_0|LEVEL_1|LEVEL_2|LEVEL_3|LEVEL_4|LEVEL_5)$")
-    word_pair_ids: list[int] = Field(alias="wordPairIds")
+class ProgressUpdateRequest(BaseModel):
+    source_text: str = Field(alias="sourceText")
+    source_lang: str = Field(alias="sourceLang")
+    level: int = Field(..., ge=0, le=5)
+    correct_count: int = Field(alias="correctCount", ge=0)
+    error_count: int = Field(alias="errorCount", ge=0)
 
     class Config:
         populate_by_name = True
@@ -166,7 +152,7 @@ class UserWordSetStatusUpdate(BaseModel):
 
 class TTSRequest(BaseModel):
     text: str = Field(..., min_length=1, max_length=500)
-    language: str = Field(..., pattern="^(English|German|Russian|Spanish)$")
+    language: str = Field(..., pattern="^(en|de|ru|es)$")
 
 
 class TTSResponse(BaseModel):
@@ -199,19 +185,6 @@ class VersionResponse(BaseModel):
 
 class ErrorResponse(BaseModel):
     error: str
-
-
-class UserLevelResponse(BaseModel):
-    currentLevel: str
-
-
-class UserLevelUpdateRequest(BaseModel):
-    currentLevel: str
-
-
-class UserLevelUpdateResponse(BaseModel):
-    message: str
-    currentLevel: str
 
 
 db_pool = SimpleConnectionPool(
@@ -395,7 +368,7 @@ async def health_check():
 
 @app.get("/api/version", response_model=VersionResponse, tags=["Health"])
 async def get_version():
-    return VersionResponse(version="2.0.0")
+    return VersionResponse(version="3.0.0")
 
 
 @app.post(
@@ -507,63 +480,6 @@ async def delete_account(current_user: dict = Depends(get_current_user)):
         )
 
 
-@app.get("/api/user/current-level", response_model=UserLevelResponse, tags=["User"])
-async def get_current_level(current_user: dict = Depends(get_current_user)):
-    try:
-        user = query_db(
-            "SELECT current_level FROM users WHERE id = %s",
-            (current_user["user_id"],),
-            one=True,
-        )
-
-        if not user:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
-
-        return UserLevelResponse(currentLevel=user["current_level"])
-
-    except HTTPException:
-        raise
-    except Exception as e:
-        logger.error(f"Error fetching current level: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to fetch current level",
-        )
-
-
-@app.post("/api/user/current-level", response_model=UserLevelUpdateResponse, tags=["User"])
-async def update_current_level(level_data: UserLevelUpdateRequest, current_user: dict = Depends(get_current_user)):
-    try:
-        valid_levels = ["LEVEL_1", "LEVEL_2", "LEVEL_3", "LEVEL_4"]
-        if level_data.currentLevel not in valid_levels:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"Invalid level value. Must be one of: {', '.join(valid_levels)}",
-            )
-
-        result = execute_write_transaction(
-            "UPDATE users SET current_level = %s::translation_status WHERE id = %s",
-            (level_data.currentLevel, current_user["user_id"]),
-        )
-
-        if result == 0:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
-
-        return UserLevelUpdateResponse(
-            message="Current level updated successfully",
-            currentLevel=level_data.currentLevel,
-        )
-
-    except HTTPException:
-        raise
-    except Exception as e:
-        logger.error(f"Error updating current level: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to update current level",
-        )
-
-
 @app.get("/api/user/profile", response_model=UserResponse, tags=["User"])
 async def get_user_profile(current_user: dict = Depends(get_current_user)):
     try:
@@ -576,113 +492,112 @@ async def get_user_profile(current_user: dict = Depends(get_current_user)):
         )
 
 
-@app.get("/api/word-sets", response_model=list[WordSetResponse], tags=["Word Sets"])
-async def get_word_sets(current_user: dict = Depends(get_current_user)):
-    logger.debug(f"Fetching word sets for user: {current_user['username']}")
+@app.get("/api/word-lists", response_model=list[WordListResponse], tags=["Word Lists"])
+async def get_word_lists(current_user: dict = Depends(get_current_user)):
+    logger.debug(f"Fetching word lists for user: {current_user['username']}")
     try:
-        word_sets = query_db("SELECT * FROM get_word_lists()")
-        return [convert_keys_to_camel_case(dict(ws)) for ws in word_sets]
+        lists = query_db(
+            """SELECT list_name, COUNT(*) as word_count
+               FROM word_pairs
+               GROUP BY list_name
+               ORDER BY list_name"""
+        )
+        return [convert_keys_to_camel_case(dict(item)) for item in lists]
 
     except Exception as e:
-        logger.error(f"Error fetching word sets: {e}")
+        logger.error(f"Error fetching word lists: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to fetch word sets",
+            detail="Failed to fetch word lists",
         )
 
 
-@app.get("/api/word-sets/user", response_model=list[UserWordSetResponse], tags=["Word Sets"])
-async def get_user_word_sets(word_list_name: str, current_user: dict = Depends(get_current_user)):
+@app.get("/api/word-pairs", response_model=list[WordPairResponse], tags=["Word Pairs"])
+async def get_word_pairs(list_name: str, current_user: dict = Depends(get_current_user)):
     try:
-        user_word_sets = query_db(
-            "SELECT * FROM get_user_word_sets(%s, %s)",
-            (current_user["user_id"], word_list_name),
+        word_pairs = query_db(
+            """SELECT source_text, source_lang, target_text, target_lang,
+                      list_name, source_example, target_example
+               FROM word_pairs
+               WHERE list_name = %s
+               ORDER BY source_text""",
+            (list_name,),
         )
 
-        return [convert_keys_to_camel_case(dict(uws)) for uws in user_word_sets]
+        return [convert_keys_to_camel_case(dict(wp)) for wp in word_pairs]
 
     except Exception as e:
-        logger.error(f"Error fetching user word sets: {e}")
+        logger.error(f"Error fetching word pairs for list {list_name}: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to fetch user word sets",
+            detail="Failed to fetch word pairs",
         )
 
 
-@app.get(
-    "/api/word-sets/{word_set_id}",
-    response_model=WordSetWithWordsResponse,
-    tags=["Word Sets"],
-)
-async def get_word_set(word_set_id: int, current_user: dict = Depends(get_current_user)):
+@app.get("/api/user/progress", response_model=list[UserProgressResponse], tags=["Progress"])
+async def get_user_progress(list_name: str | None = None, current_user: dict = Depends(get_current_user)):
     try:
-        word_set = query_db("SELECT * FROM get_word_lists() WHERE id = %s", (word_set_id,), one=True)
-
-        if not word_set:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Word set not found")
-
-        words = query_db(
-            """SELECT t.id as translation_id, sw.id as source_word_id, tw.id as target_word_id,
-                      sw.text as source_word, tw.text as target_word,
-                      sl.name as source_language, tl.name as target_language,
-                      sw.usage_example as source_example, tw.usage_example as target_example
-               FROM word_list_entries wle
-               JOIN translations t ON wle.translation_id = t.id
-               JOIN words sw ON t.source_word_id = sw.id
-               JOIN words tw ON t.target_word_id = tw.id
-               JOIN languages sl ON sw.language_id = sl.id
-               JOIN languages tl ON tw.language_id = tl.id
-               WHERE wle.word_list_id = %s
-               ORDER BY t.id""",
-            (word_set_id,),
-        )
-
-        result = convert_keys_to_camel_case(dict(word_set))
-        result["words"] = [convert_keys_to_camel_case(dict(word)) for word in words]
-
-        return result
-
-    except HTTPException:
-        raise
-    except Exception as e:
-        logger.error(f"Error fetching word set {word_set_id}: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to fetch word set",
-        )
-
-
-@app.post("/api/word-sets/user", tags=["Word Sets"])
-async def update_user_word_sets(update_data: UserWordSetStatusUpdate, current_user: dict = Depends(get_current_user)):
-    try:
-        valid_statuses = [
-            "LEVEL_0",
-            "LEVEL_1",
-            "LEVEL_2",
-            "LEVEL_3",
-            "LEVEL_4",
-            "LEVEL_5",
-        ]
-        if update_data.status not in valid_statuses:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"Invalid status. Must be one of: {', '.join(valid_statuses)}",
+        if list_name:
+            progress = query_db(
+                """SELECT up.source_text, up.source_lang, up.level,
+                          up.correct_count, up.error_count, up.last_practiced
+                   FROM user_progress up
+                   JOIN word_pairs wp ON up.source_text = wp.source_text
+                                      AND up.source_lang = wp.source_lang
+                   WHERE up.user_id = %s AND wp.list_name = %s
+                   ORDER BY up.last_practiced DESC""",
+                (current_user["user_id"], list_name),
+            )
+        else:
+            progress = query_db(
+                """SELECT source_text, source_lang, level,
+                          correct_count, error_count, last_practiced
+                   FROM user_progress
+                   WHERE user_id = %s
+                   ORDER BY last_practiced DESC""",
+                (current_user["user_id"],),
             )
 
-        execute_write_transaction(
-            "SELECT update_user_word_set_status(%s, %s, %s)",
-            (current_user["user_id"], update_data.word_pair_ids, update_data.status),
-        )
+        return [convert_keys_to_camel_case(dict(p)) for p in progress]
 
-        return {"message": f"Updated {len(update_data.word_pair_ids)} word sets to {update_data.status}"}
-
-    except HTTPException:
-        raise
     except Exception as e:
-        logger.error(f"Error updating user word sets: {e}")
+        logger.error(f"Error fetching user progress: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to update word sets",
+            detail="Failed to fetch progress",
+        )
+
+
+@app.post("/api/user/progress", tags=["Progress"])
+async def update_user_progress(progress_data: ProgressUpdateRequest, current_user: dict = Depends(get_current_user)):
+    try:
+        execute_write_transaction(
+            """INSERT INTO user_progress
+               (user_id, source_text, source_lang, level, correct_count, error_count, last_practiced)
+               VALUES (%s, %s, %s, %s, %s, %s, NOW())
+               ON CONFLICT (user_id, source_text, source_lang)
+               DO UPDATE SET
+                   level = EXCLUDED.level,
+                   correct_count = EXCLUDED.correct_count,
+                   error_count = EXCLUDED.error_count,
+                   last_practiced = EXCLUDED.last_practiced""",
+            (
+                current_user["user_id"],
+                progress_data.source_text,
+                progress_data.source_lang,
+                progress_data.level,
+                progress_data.correct_count,
+                progress_data.error_count,
+            ),
+        )
+
+        return {"message": "Progress updated successfully"}
+
+    except Exception as e:
+        logger.error(f"Error updating progress: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to update progress",
         )
 
 

@@ -1,10 +1,10 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import type { WordSet } from '../../api-types';
+  import type { WordList } from '../../api-types';
 
   const dispatch = createEventDispatcher<{ select: { quiz: string }; backToMenu: void }>();
 
-  export let wordSets: WordSet[] = [];
+  export let wordLists: WordList[] = [];
   export let selectedQuiz: string | null = null;
   export let loading: boolean = false;
 
@@ -33,8 +33,8 @@
         <option value="" disabled>
           {loading ? 'Loading quizzes...' : '🎯 Select a quiz to start learning'}
         </option>
-        {#each wordSets as set (set.name)}
-          <option value={set.name}>{set.name}</option>
+        {#each wordLists as list (list.listName)}
+          <option value={list.listName}>{list.listName}</option>
         {/each}
       </select>
     </div>

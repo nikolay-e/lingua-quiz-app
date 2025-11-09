@@ -1,5 +1,5 @@
-from datetime import UTC, datetime
 import json
+from datetime import UTC, datetime
 from pathlib import Path
 
 from ..config.config_loader import get_config_loader
@@ -67,15 +67,12 @@ class VocabularyExporter:
             "word_list_name": f"{language_name} Frequency List",
             "word_pairs": [
                 {
-                    "translation_id": 10000000 + i,
-                    "source_id": 10000001 + (i * 2),
-                    "target_id": 10000002 + (i * 2),
                     "source_word": w.word,
                     "target_word": "[NEEDS TRANSLATION]",
                     "source_example": "",
                     "target_example": "",
                 }
-                for i, w in enumerate(vocab.words)
+                for w in vocab.words
             ],
         }
 

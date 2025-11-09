@@ -115,10 +115,8 @@ class MigrationValidator:
         normalizer = self.normalizers[language]
         lemmatizer = self.lemmatizers[language]
 
-        seen_words: dict[str, list[int]] = defaultdict(list)
+        seen_words: dict[str, list[str]] = defaultdict(list)
         seen_words_original: dict[str, list[str]] = defaultdict(list)
-        seen_ids: dict[str, set[int]] = defaultdict(set)
-        duplicate_id_pairs: dict[tuple[int, int], list[int]] = defaultdict(list)
 
         for entry in entries:
             entry_issues = self._validate_entry(entry, filename, normalizer)
@@ -127,44 +125,22 @@ class MigrationValidator:
             # Use lemmatization for duplicate detection (same as frequency generation)
             normalized_word = normalizer.normalize(entry.source_word)
             lemmatized_word = lemmatizer.lemmatize(normalized_word)
-            seen_words[lemmatized_word].append(entry.translation_id)
+            seen_words[lemmatized_word].append(entry.source_word)
             seen_words_original[lemmatized_word].append(entry.source_word)
 
-            seen_ids["translation"].add(entry.translation_id)
-            seen_ids["source_word"].add(entry.source_word_id)
-            seen_ids["target_word"].add(entry.target_word_id)
-
-            id_pair = (entry.source_word_id, entry.target_word_id)
-            duplicate_id_pairs[id_pair].append(entry.translation_id)
-
-        duplicates = {word: ids for word, ids in seen_words.items() if len(ids) > 1}
+        duplicates = {word: words for word, words in seen_words.items() if len(words) > 1}
         if duplicates:
-            for lemmatized_word, ids in duplicates.items():
+            for lemmatized_word, words in duplicates.items():
                 original_variants = seen_words_original[lemmatized_word]
                 variants_str = ", ".join(f"'{v}'" for v in set(original_variants))
                 result.issues.append(
                     ValidationIssue(
                         severity="error",
                         category="duplicates",
-                        message=f"Duplicate word (lemma: '{lemmatized_word}', variants: {variants_str}) found in entries: {ids}",
+                        message=f"Duplicate word (lemma: '{lemmatized_word}', variants: {variants_str}) found {len(words)} times",
                         file_name=filename,
                     )
                 )
-
-        duplicate_pairs = {pair: ids for pair, ids in duplicate_id_pairs.items() if len(ids) > 1}
-        if duplicate_pairs:
-            for (source_id, target_id), translation_ids in duplicate_pairs.items():
-                result.issues.append(
-                    ValidationIssue(
-                        severity="error",
-                        category="duplicate_ids",
-                        message=f"Duplicate source/target ID pair ({source_id}, {target_id}) found in translations: {translation_ids}",
-                        file_name=filename,
-                    )
-                )
-
-        id_issues = self._validate_id_sequences(language, filename, seen_ids)
-        result.issues.extend(id_issues)
 
         return result
 
@@ -178,7 +154,6 @@ class MigrationValidator:
                     category="data_integrity",
                     message="Empty source word",
                     file_name=filename,
-                    entry_id=entry.translation_id,
                 )
             )
 
@@ -189,7 +164,6 @@ class MigrationValidator:
                     category="data_integrity",
                     message="Empty translation",
                     file_name=filename,
-                    entry_id=entry.translation_id,
                 )
             )
 
@@ -200,7 +174,6 @@ class MigrationValidator:
                     category="data_quality",
                     message=f"Source word and translation are identical: '{entry.source_word}'",
                     file_name=filename,
-                    entry_id=entry.translation_id,
                 )
             )
 
@@ -211,7 +184,6 @@ class MigrationValidator:
                     category="data_quality",
                     message="Placeholder entry detected",
                     file_name=filename,
-                    entry_id=entry.translation_id,
                 )
             )
 
@@ -222,16 +194,15 @@ class MigrationValidator:
                     category="data_quality",
                     message=f"Unusually long word: '{entry.source_word[:50]}...'",
                     file_name=filename,
-                    entry_id=entry.translation_id,
                 )
             )
 
-        syntax_issues = self._validate_answer_syntax(entry.target_word, filename, entry.translation_id)
+        syntax_issues = self._validate_answer_syntax(entry.target_word, filename)
         issues.extend(syntax_issues)
 
         return issues
 
-    def _validate_answer_syntax(self, target_word: str, filename: str, entry_id: int) -> list[ValidationIssue]:
+    def _validate_answer_syntax(self, target_word: str, filename: str) -> list[ValidationIssue]:
         issues = []
 
         bracket_count = target_word.count("[") - target_word.count("]")
@@ -242,7 +213,6 @@ class MigrationValidator:
                     category="answer_syntax",
                     message=f"Unbalanced brackets in target_word: '{target_word}'",
                     file_name=filename,
-                    entry_id=entry_id,
                 )
             )
 
@@ -254,46 +224,8 @@ class MigrationValidator:
                     category="answer_syntax",
                     message=f"Unbalanced parentheses in target_word: '{target_word}'",
                     file_name=filename,
-                    entry_id=entry_id,
                 )
             )
-
-        return issues
-
-    def _validate_id_sequences(
-        self, language: str, filename: str, seen_ids: dict[str, set[int]]
-    ) -> list[ValidationIssue]:
-        issues = []
-
-        for id_type, id_set in seen_ids.items():
-            if not id_set or len(id_set) < 2:
-                continue
-
-            sorted_ids = sorted(id_set)
-            max_gap = 0
-            gap_count = 0
-
-            for i in range(len(sorted_ids) - 1):
-                current_id = sorted_ids[i]
-                next_id = sorted_ids[i + 1]
-                gap = next_id - current_id - 1
-
-                if gap > 0:
-                    gap_count += 1
-                    max_gap = max(max_gap, gap)
-
-            config_loader = get_config_loader()
-            gap_threshold = config_loader.get_analysis_defaults().get("id_gap_threshold", 100)
-
-            if max_gap > gap_threshold:
-                issues.append(
-                    ValidationIssue(
-                        severity="warning",
-                        category="id_sequence",
-                        message=f"{id_type} IDs have large gaps (max gap: {max_gap}), check for missing data",
-                        file_name=filename,
-                    )
-                )
 
         return issues
 
@@ -306,7 +238,7 @@ class MigrationValidator:
 
             normalizer = self.normalizers[language]
             lemmatizer = self.lemmatizers[language]
-            global_seen_words: dict[str, list[tuple[str, int, str]]] = defaultdict(list)
+            global_seen_words: dict[str, list[tuple[str, str]]] = defaultdict(list)
 
             for filename in filenames:
                 try:
@@ -315,7 +247,7 @@ class MigrationValidator:
                         # Use lemmatization for cross-file duplicate detection
                         normalized = normalizer.normalize(entry.source_word)
                         lemmatized = lemmatizer.lemmatize(normalized)
-                        global_seen_words[lemmatized].append((filename, entry.translation_id, entry.source_word))
+                        global_seen_words[lemmatized].append((filename, entry.source_word))
                 except (FileNotFoundError, json.JSONDecodeError, ValueError):
                     continue
 
@@ -323,14 +255,14 @@ class MigrationValidator:
                 if len(occurrences) <= 1:
                     continue
 
-                files_with_word = defaultdict(list)
+                files_with_word = defaultdict(int)
                 original_variants = set()
-                for filename, translation_id, original_word in occurrences:
-                    files_with_word[filename].append(translation_id)
+                for filename, original_word in occurrences:
+                    files_with_word[filename] += 1
                     original_variants.add(original_word)
 
                 if len(files_with_word) > 1:
-                    file_list = ", ".join(f"{fname}:{ids}" for fname, ids in files_with_word.items())
+                    file_list = ", ".join(f"{fname}({count}x)" for fname, count in files_with_word.items())
                     variants_str = ", ".join(f"'{v}'" for v in original_variants)
                     issues.append(
                         ValidationIssue(

@@ -38,27 +38,6 @@ def load_analysis(lang_code: str, level: str, output_dir: Path) -> list | None:
         return json.load(f)
 
 
-def get_next_id(existing_entries: list, base_offset: int) -> int:
-    """Get next available ID for new entries."""
-    if not existing_entries:
-        return base_offset + 1
-
-    # Find max translation_id
-    max_id = max(e["translation_id"] for e in existing_entries)
-    return max_id + 1
-
-
-def get_id_base_offset(lang_code: str, level: str) -> int:
-    """Get ID base offset for language/level."""
-    id_bases = {
-        "en": {"a1": 8000000, "a2": 8010000, "b1": 9000000, "b2": 9005000},
-        "es": {"a1": 4000000, "a2": 4010000, "b1": 4020000, "b2": 4030000},
-        "de": {"a1": 3000000, "a2": 3010000, "b1": 3020000, "b2": 3030000},
-        "ru": {"a1": 5000000, "a2": 5010000, "b1": 5020000, "b2": 5030000},
-    }
-    return id_bases.get(lang_code, {}).get(level, 1000000)
-
-
 def get_rank_range(level: str) -> tuple[int, int]:
     """Get expected rank range for CEFR level."""
     rank_ranges = {"a1": (1, 1000), "a2": (1001, 2000), "b1": (2001, 4000), "b2": (4001, 6000), "c1": (6001, 12000)}
@@ -85,7 +64,6 @@ def fill_missing_words(
         output_dir = Path("/tmp") / f"analysis_{lang_code}_{level}"
 
     min_rank, max_rank = get_rank_range(level)
-    base_offset = get_id_base_offset(lang_code, level)
 
     # Load analysis
     analysis = load_analysis(lang_code, level, output_dir)
@@ -145,18 +123,12 @@ def fill_missing_words(
         stats["words_added"] = [w["lemma"] for w in missing_words_sorted[:to_add_count]]
         return stats
 
-    # Get next ID
-    next_id = get_next_id(entries, base_offset)
-
     # Create new entries
     new_entries = []
     for word_info in missing_words_sorted[:to_add_count]:
         lemma = word_info["lemma"]
 
         new_entry = {
-            "translation_id": next_id,
-            "source_id": next_id + 1,
-            "target_id": next_id + 2,
             "source_word": lemma,
             "target_word": f"[translation needed for: {lemma}]",
             "cefr_level": level.upper(),
@@ -166,7 +138,6 @@ def fill_missing_words(
 
         new_entries.append(new_entry)
         stats["words_added"].append(lemma)
-        next_id += 3
 
     # Combine entries
     all_entries = entries + new_entries
@@ -181,8 +152,6 @@ def fill_missing_words(
     with open(migration_file, "w", encoding="utf-8") as f:
         json.dump(data_to_write, f, ensure_ascii=False, indent=2)
 
-    stats["id_range_start"] = new_entries[0]["translation_id"] if new_entries else None
-    stats["id_range_end"] = new_entries[-1]["translation_id"] if new_entries else None
     stats["file_path"] = str(migration_file)
 
     return stats

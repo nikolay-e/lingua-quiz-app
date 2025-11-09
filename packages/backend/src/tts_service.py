@@ -15,10 +15,10 @@ class TTSService:
         self.client = None
         self.db_pool = db_pool
         self.voice_configs = {
-            "English": {"language_code": "en-US", "name": "en-US-Standard-A"},
-            "German": {"language_code": "de-DE", "name": "de-DE-Standard-A"},
-            "Russian": {"language_code": "ru-RU", "name": "ru-RU-Standard-A"},
-            "Spanish": {"language_code": "es-ES", "name": "es-ES-Standard-A"},
+            "en": {"language_code": "en-US", "name": "en-US-Standard-A"},
+            "de": {"language_code": "de-DE", "name": "de-DE-Standard-A"},
+            "ru": {"language_code": "ru-RU", "name": "ru-RU-Standard-A"},
+            "es": {"language_code": "es-ES", "name": "es-ES-Standard-A"},
         }
         self._initialize_client()
 
@@ -46,55 +46,42 @@ class TTSService:
     def get_cache_key(self, text: str, language: str) -> str:
         return hashlib.md5(f"{text}_{language}".encode()).hexdigest()
 
-    def _get_from_cache_validated(self, cache_key: str, text: str) -> tuple[bytes | None, bool]:
+    def _get_from_cache(self, text: str, language: str) -> bytes | None:
         conn = None
         try:
             conn = self.db_pool.getconn()
             with conn.cursor(cursor_factory=RealDictCursor) as cur:
                 cur.execute(
-                    "SELECT * FROM get_tts_cache_entry_validated(%s, %s)",
-                    (cache_key, text),
+                    "SELECT audio_data FROM tts_cache WHERE text = %s AND language = %s",
+                    (text, language),
                 )
                 result = cur.fetchone()
 
                 if result:
-                    conn.commit()
-                    is_valid = result["is_valid_text"]
-                    audio_data = bytes(result["audio_data"]) if result["audio_data"] else None
-
-                    if is_valid and audio_data:
-                        return audio_data, True
-                    if is_valid:
-                        return None, True
-                    return None, False
+                    return bytes(result["audio_data"])
 
         except Exception as e:
             logger.error(f"Cache read error: {e}")
-            if conn:
-                try:
-                    conn.rollback()
-                except Exception:
-                    pass
         finally:
             if conn:
                 self.db_pool.putconn(conn)
-        return None, False
+        return None
 
-    def _save_to_cache_validated(self, cache_key: str, audio_content: bytes, text: str, language: str) -> bool:
+    def _save_to_cache(self, text: str, language: str, audio_content: bytes) -> bool:
         conn = None
         try:
             conn = self.db_pool.getconn()
             with conn.cursor() as cur:
                 cur.execute(
-                    "SELECT save_tts_cache_entry_validated(%s, %s, %s, %s, %s)",
-                    (cache_key, text, language, audio_content, len(audio_content)),
+                    """INSERT INTO tts_cache (text, language, audio_data)
+                       VALUES (%s, %s, %s)
+                       ON CONFLICT (text, language)
+                       DO UPDATE SET audio_data = EXCLUDED.audio_data,
+                                     created_at = CURRENT_TIMESTAMP""",
+                    (text, language, audio_content),
                 )
-                result = cur.fetchone()[0]
                 conn.commit()
-
-                if result:
-                    return True
-                return False
+                return True
 
         except Exception as e:
             logger.error(f"Cache save error: {e}")
@@ -117,13 +104,7 @@ class TTSService:
         if len(text) > 500:
             return None
 
-        cache_key = self.get_cache_key(text, language)
-
-        audio_content, is_valid_text = self._get_from_cache_validated(cache_key, text)
-
-        if not is_valid_text:
-            return None
-
+        audio_content = self._get_from_cache(text, language)
         if audio_content:
             return audio_content
 
@@ -148,7 +129,7 @@ class TTSService:
 
             audio_content = response.audio_content
 
-            self._save_to_cache_validated(cache_key, audio_content, text, language)
+            self._save_to_cache(text, language, audio_content)
 
             return audio_content
 
@@ -158,18 +139,3 @@ class TTSService:
 
     def get_supported_languages(self) -> list:
         return list(self.voice_configs.keys())
-
-    def get_cache_stats(self) -> dict:
-        conn = None
-        try:
-            conn = self.db_pool.getconn()
-            with conn.cursor(cursor_factory=RealDictCursor) as cur:
-                cur.execute("SELECT * FROM get_tts_cache_stats()")
-                stats = cur.fetchone()
-                return dict(stats) if stats else {}
-        except Exception as e:
-            logger.error(f"Cache stats error: {e}")
-            return {}
-        finally:
-            if conn:
-                self.db_pool.putconn(conn)

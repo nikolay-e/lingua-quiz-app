@@ -124,7 +124,6 @@ class WordQualityValidator:
                     normalized=normalized,
                     processor=processor,
                     filename=filename,
-                    entry_id=entry.translation_id,
                 )
 
                 if validation_result:
@@ -140,7 +139,6 @@ class WordQualityValidator:
         normalized: str,
         processor: VocabularyProcessor,
         filename: str,
-        entry_id: int,
     ) -> WordQualityIssue | None:
         if not processor.validator.is_valid(word, normalized):
             issue_category, reason = processor.validator.get_rejection_reason(word, normalized)
@@ -151,7 +149,6 @@ class WordQualityValidator:
                 word=word,
                 reason=reason,
                 file_name=filename,
-                entry_id=entry_id,
             )
 
         return None

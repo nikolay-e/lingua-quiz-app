@@ -46,7 +46,6 @@ class MigrationFileSource(WordSource):
                     text=entry.source_word,
                     source=f"migration:{filename}",
                     metadata={
-                        "translation_id": entry.translation_id,
                         "target_word": entry.target_word,
                         "source_example": entry.source_example,
                         "target_example": entry.target_example,

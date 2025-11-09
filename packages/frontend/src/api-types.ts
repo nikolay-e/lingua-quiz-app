@@ -1,4 +1,3 @@
-import type { LevelStatus, Translation, ProgressEntry } from '@lingua-quiz/core';
 import type { LevelConfigItem } from './lib/config/levelConfig';
 
 export interface User {
@@ -11,64 +10,28 @@ export interface AuthResponse {
   user: User;
 }
 
-export interface WordSet {
-  id: number;
-  name: string;
-  description?: string;
+export interface WordList {
+  listName: string;
+  wordCount: number;
 }
 
-export interface WordSetWithWords extends WordSet {
-  words: {
-    id: number;
-    sourceWord: string;
-    targetWord: string;
-    sourceLanguage: string;
-    targetLanguage: string;
-  }[];
+export interface WordPair {
+  sourceText: string;
+  sourceLang: string;
+  targetText: string;
+  targetLang: string;
+  listName: string;
+  sourceExample?: string;
+  targetExample?: string;
 }
 
-export interface UserWordSet {
-  wordPairId: number;
-  sourceWord: string;
-  targetWord: string;
-  sourceLanguage: string;
-  targetLanguage: string;
-  sourceWordUsageExample?: string;
-  targetWordUsageExample?: string;
-  status?: LevelStatus;
-}
-
-export interface InitialQuizStateResponse {
-  translations: Translation[];
-  progress: ProgressEntry[];
-  session: {
-    id: string;
-    direction?: string;
-    lastAsked?: number[];
-  };
-}
-
-export interface SubmissionData {
-  sessionId: string;
-  translationId: number;
-  direction: string;
-  userAnswer: string;
-  correctAnswer: string;
-  isCorrect: boolean;
-  levelAtTime: string;
-  questionWord: string;
-  responseTimeMs?: number;
-}
-
-export interface ProgressData {
-  translationId: number;
-  newStatus: string;
-}
-
-export interface SessionData {
-  sessionId: string;
-  currentLevel?: Exclude<LevelStatus, 'LEVEL_0' | 'LEVEL_5'>;
-  lastAsked?: number[];
+export interface UserProgress {
+  sourceText: string;
+  sourceLang: string;
+  level: number;
+  correctCount: number;
+  errorCount: number;
+  lastPracticed?: string;
 }
 
 export interface TTSResponse {

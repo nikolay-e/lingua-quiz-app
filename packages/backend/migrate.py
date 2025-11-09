@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import json
 import os
 from pathlib import Path
 import sys
@@ -103,198 +102,30 @@ def get_migration_files(migration_config: MigrationConfig) -> list[MigrationFile
         print(f"{RED}Migration directory not found: {migration_config.migrations_dir}{RESET}")
         sys.exit(1)
 
-    files = []
+    init_sql_path = migration_config.migrations_dir / "init.sql"
+    if not init_sql_path.exists():
+        print(f"{RED}init.sql not found in migrations directory{RESET}")
+        sys.exit(1)
 
-    schema_dir = migration_config.migrations_dir / "schema"
-    if schema_dir.exists():
-        for filepath in sorted(schema_dir.glob("*.sql")):
-            try:
-                content = filepath.read_text(encoding="utf-8")
-                migration_file = MigrationFile(filename=filepath.name, filepath=filepath, content=content)
-                files.append(migration_file)
-            except Exception as e:
-                print(f"{RED}Error reading schema migration file {filepath}: {e}{RESET}")
-                sys.exit(1)
-
-    data_dir = migration_config.migrations_dir / "data"
-    if data_dir.exists():
-        for filepath in sorted(data_dir.glob("*.sql")):
-            try:
-                content = filepath.read_text(encoding="utf-8")
-                migration_file = MigrationFile(filename=filepath.name, filepath=filepath, content=content)
-                files.append(migration_file)
-            except Exception as e:
-                print(f"{RED}Error reading data migration file {filepath}: {e}{RESET}")
-                sys.exit(1)
-
-    for filepath in migration_config.migrations_dir.glob("*.sql"):
-        if filepath.name == "000_schema_migrations_table.sql":
-            continue
-
-        try:
-            content = filepath.read_text(encoding="utf-8")
-            migration_file = MigrationFile(filename=filepath.name, filepath=filepath, content=content)
-            files.append(migration_file)
-        except Exception as e:
-            print(f"{RED}Error reading migration file {filepath}: {e}{RESET}")
-            sys.exit(1)
-
-    return sorted(files, key=lambda x: int(x.filename.split("_")[0]))
-
-
-def load_json_vocabulary_data(json_file_path: Path) -> dict:
     try:
-        with open(json_file_path, encoding="utf-8") as f:
-            return json.load(f)
+        content = init_sql_path.read_text(encoding="utf-8")
+        migration_file = MigrationFile(filename="init.sql", filepath=init_sql_path, content=content)
+        return [migration_file]
     except Exception as e:
-        print(f"{RED}Error loading JSON file {json_file_path}: {e}{RESET}")
-        return None
+        print(f"{RED}Error reading init.sql: {e}{RESET}")
+        sys.exit(1)
 
 
 def run_migration(conn, migration_file: MigrationFile) -> bool:
     try:
-        json_file_pattern = "migrations/data/vocabulary/"
-        requires_json = json_file_pattern in migration_file.content
-
-        if requires_json:
-            lines = migration_file.content.split("\n")
-            json_file_line = next((line for line in lines if json_file_pattern in line), None)
-
-            if json_file_line:
-                json_filename = json_file_line.split(json_file_pattern)[1].strip("\"';")
-                json_file_path = migration_file.filepath.parent / "vocabulary" / json_filename
-
-                print(f"{YELLOW}Loading JSON data from: {json_file_path}{RESET}")
-
-                vocab_data = load_json_vocabulary_data(json_file_path)
-                if not vocab_data:
-                    return False
-
-                with conn.cursor() as cur:
-                    source_lang = vocab_data["source_language"]
-                    target_lang = vocab_data["target_language"]
-                    word_list = vocab_data["word_list_name"]
-
-                    print(f"{YELLOW}Processing {len(vocab_data['word_pairs'])} word pairs...{RESET}")
-
-                    for word_pair in vocab_data["word_pairs"]:
-                        cur.execute(
-                            """
-                            SELECT insert_word_pair_and_add_to_list(
-                                p_translation_id := %s,
-                                p_source_word_id := %s,
-                                p_target_word_id := %s,
-                                p_source_word := %s,
-                                p_target_word := %s,
-                                p_source_language_name := %s,
-                                p_target_language_name := %s,
-                                p_word_list_name := %s,
-                                p_source_word_usage_example := %s,
-                                p_target_word_usage_example := %s
-                            )
-                        """,
-                            (
-                                word_pair["translation_id"],
-                                word_pair["source_id"],
-                                word_pair["target_id"],
-                                word_pair["source_word"],
-                                word_pair["target_word"],
-                                source_lang,
-                                target_lang,
-                                word_list,
-                                word_pair["source_example"],
-                                word_pair["target_example"],
-                            ),
-                        )
-
-                    conn.commit()
-                    print(f"{GREEN}Successfully loaded {len(vocab_data['word_pairs'])} word pairs{RESET}")
-            else:
-                with conn.cursor() as cur:
-                    cur.execute(migration_file.content)
-                    conn.commit()
-        else:
-            with conn.cursor() as cur:
-                cur.execute(migration_file.content)
-                conn.commit()
-
+        with conn.cursor() as cur:
+            cur.execute(migration_file.content)
+            conn.commit()
         return True
     except Exception as e:
         conn.rollback()
         print(f"{RED}Error in {migration_file.filename}: {e}{RESET}")
         return False
-
-
-def analyze_vocabulary_ranges(
-    migration_config: MigrationConfig,
-) -> dict[str, list[int]]:
-    vocab_ranges = {}
-    vocab_dir = migration_config.migrations_dir / "data" / "vocabulary"
-
-    if not vocab_dir.exists():
-        return vocab_ranges
-
-    for json_file in vocab_dir.glob("*.json"):
-        try:
-            with open(json_file, encoding="utf-8") as f:
-                data = json.load(f)
-
-            if "word_pairs" in data:
-                translation_ids = [pair["translation_id"] for pair in data["word_pairs"]]
-                vocab_ranges[json_file.name] = sorted(translation_ids)
-                print(f"  {json_file.name}: {len(translation_ids)} valid IDs ({min(translation_ids)}-{max(translation_ids)})")
-        except Exception as e:
-            print(f"{RED}Warning: Could not analyze {json_file.name}: {e}{RESET}")
-
-    return vocab_ranges
-
-
-def cleanup_inconsistent_vocabulary_data(conn, migration_config: MigrationConfig) -> int:
-    print("  Analyzing vocabulary file ranges...")
-    vocab_ranges = analyze_vocabulary_ranges(migration_config)
-
-    if not vocab_ranges:
-        print("  No vocabulary files found for cleanup")
-        return 0
-
-    all_valid_ids = set()
-    for translation_ids in vocab_ranges.values():
-        all_valid_ids.update(translation_ids)
-
-    print(f"  Found {len(all_valid_ids)} valid translation IDs across all vocabulary files")
-
-    cleanup_count = 0
-
-    try:
-        with conn.cursor() as cur:
-            cur.execute(
-                "SELECT id FROM translations WHERE id >= 3000000 AND id NOT IN %s",
-                (tuple(all_valid_ids),) if all_valid_ids else ((),),
-            )
-
-            invalid_translation_ids = [row[0] for row in cur.fetchall()]
-
-            if invalid_translation_ids:
-                print(f"  Found {len(invalid_translation_ids)} invalid translation entries to remove")
-
-                for translation_id in invalid_translation_ids:
-                    cur.execute(
-                        "SELECT remove_word_pair_and_list_entry(%s)",
-                        (translation_id,),
-                    )
-                    cleanup_count += 1
-
-                conn.commit()
-                print(f"  Removed {cleanup_count} inconsistent vocabulary entries")
-            else:
-                print("  All translation entries are consistent with vocabulary files")
-
-    except Exception as e:
-        conn.rollback()
-        print(f"{RED}Error during cleanup: {e}{RESET}")
-        return 0
-
-    return cleanup_count
 
 
 def main():

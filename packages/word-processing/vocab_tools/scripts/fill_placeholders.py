@@ -2,8 +2,8 @@
 
 import argparse
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
 
 BASIC_TRANSLATIONS = {
     "el": "определённый артикль (мужской род)",
@@ -277,14 +277,14 @@ def fill_placeholders(migration_file: Path, missing_words_json: Path, output_fil
     print()
 
     filled_count = 0
-    for (idx, placeholder), missing in zip(placeholders, missing_words, strict=False):
+    for (idx, _placeholder), missing in zip(placeholders, missing_words, strict=False):
         spanish_word = missing["lemma"]
         russian_translation = get_translation(spanish_word)
 
         data["word_pairs"][idx]["source_word"] = spanish_word
         data["word_pairs"][idx]["target_word"] = russian_translation
 
-        print(f"✓ ID {placeholder['translation_id']}: {spanish_word} → {russian_translation} (ранг {missing['rank']:,})")
+        print(f"✓ {spanish_word} → {russian_translation} (ранг {missing['rank']:,})")
         filled_count += 1
 
     if output_file is None:

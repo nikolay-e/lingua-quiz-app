@@ -1,0 +1,61 @@
+{
+  "source_language": "German",
+  "target_language": "Russian",
+  "word_list_name": "German Russian A0",
+  "word_pairs": [
+    {
+      "source_word": "super",
+      "target_word": "супер",
+      "source_example": "Das Konzert war super.",
+      "target_example": "Концерт был супер."
+    },
+    {
+      "source_word": "Europa",
+      "target_word": "Европа",
+      "source_example": "Deutschland liegt in Europa.",
+      "target_example": "Германия находится в Европе."
+    },
+    {
+      "source_word": "das Internet",
+      "target_word": "интернет",
+      "source_example": "Ich suche Informationen im Internet.",
+      "target_example": "Я ищу информацию в интернете."
+    },
+    {
+      "source_word": "interessant",
+      "target_word": "интересно|интересный|интересная",
+      "source_example": "Das Buch ist sehr interessant.",
+      "target_example": "Книга очень интересная."
+    },
+    {
+      "source_word": "klasse",
+      "target_word": "классный",
+      "source_example": "Das Konzert war klasse!",
+      "target_example": "Концерт был классный!"
+    },
+    {
+      "source_word": "online",
+      "target_word": "онлайн",
+      "source_example": "Ich kaufe meine Bücher online.",
+      "target_example": "Я покупаю книги онлайн."
+    },
+    {
+      "source_word": "die Polizei",
+      "target_word": "полиция",
+      "source_example": "Die Polizei hilft in Notfällen.",
+      "target_example": "Полиция помогает в чрезвычайных ситуациях."
+    },
+    {
+      "source_word": "tanzen",
+      "target_word": "танцевать",
+      "source_example": "Wir tanzen gerne auf Partys.",
+      "target_example": "Мы любим танцевать на вечеринках."
+    },
+    {
+      "source_word": "die Politik",
+      "target_word": "политика",
+      "source_example": "Politik ist kompliziert.",
+      "target_example": "Политика сложна."
+    }
+  ]
+}

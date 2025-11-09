@@ -1,0 +1,1117 @@
+{
+  "source_language": "English",
+  "target_language": "Russian",
+  "word_list_name": "English Russian A0",
+  "word_pairs": [
+    {
+      "source_word": "bank",
+      "target_word": "банк",
+      "source_example": "I need to go to the bank.",
+      "target_example": "Мне нужно сходить в банк."
+    },
+    {
+      "source_word": "bar",
+      "target_word": "бар",
+      "source_example": "Let's go to the bar.",
+      "target_example": "Пойдем в бар."
+    },
+    {
+      "source_word": "dollar",
+      "target_word": "доллар",
+      "source_example": "It costs ten dollars.",
+      "target_example": "Это стоит десять долларов."
+    },
+    {
+      "source_word": "internet",
+      "target_word": "интернет",
+      "source_example": "I use the internet every day.",
+      "target_example": "Я пользуюсь интернетом каждый день."
+    },
+    {
+      "source_word": "May",
+      "target_word": "май",
+      "source_example": "My birthday is in May.",
+      "target_example": "Мой день рождения в мае."
+    },
+    {
+      "source_word": "million",
+      "target_word": "миллион",
+      "source_example": "He won a million dollars.",
+      "target_example": "Он выиграл миллион долларов."
+    },
+    {
+      "source_word": "model",
+      "target_word": "модель",
+      "source_example": "She is a model.",
+      "target_example": "Она модель."
+    },
+    {
+      "source_word": "period",
+      "target_word": "период",
+      "source_example": "This is a difficult period.",
+      "target_example": "Это трудный период."
+    },
+    {
+      "source_word": "radio",
+      "target_word": "радио",
+      "source_example": "I listen to the radio in the car.",
+      "target_example": "Я слушаю радио в машине."
+    },
+    {
+      "source_word": "video",
+      "target_word": "видео",
+      "source_example": "I am watching a video.",
+      "target_example": "Я смотрю видео."
+    },
+    {
+      "source_word": "risk",
+      "target_word": "риск",
+      "source_example": "There is a risk of rain.",
+      "target_example": "Есть риск дождя."
+    },
+    {
+      "source_word": "drama",
+      "target_word": "драма",
+      "source_example": "She is studying drama at college.",
+      "target_example": "Она изучает драму в колледже."
+    },
+    {
+      "source_word": "golf",
+      "target_word": "гольф",
+      "source_example": "I like to play golf on weekends.",
+      "target_example": "Мне нравится играть в гольф по выходным."
+    },
+    {
+      "source_word": "material",
+      "target_word": "материал",
+      "source_example": "What material is this shirt made of?",
+      "target_example": "Из какого материала сделана эта рубашка?"
+    },
+    {
+      "source_word": "pilot",
+      "target_word": "пилот",
+      "source_example": "The pilot landed the plane safely.",
+      "target_example": "Пилот благополучно посадил самолет."
+    },
+    {
+      "source_word": "professor",
+      "target_word": "профессор",
+      "source_example": "She is a professor of history.",
+      "target_example": "Она профессор истории."
+    },
+    {
+      "source_word": "progress",
+      "target_word": "прогресс",
+      "source_example": "I am making good progress in my English.",
+      "target_example": "Я делаю хорошие успехи в английском."
+    },
+    {
+      "source_word": "flag",
+      "target_word": "флаг",
+      "source_example": "The country's flag was raised at the ceremony.",
+      "target_example": "На церемонии был поднят флаг страны."
+    },
+    {
+      "source_word": "moment",
+      "target_word": "момент|мгновение",
+      "source_example": "Please wait a moment.",
+      "target_example": "Пожалуйста, подождите минутку."
+    },
+    {
+      "source_word": "park",
+      "target_word": "парк, парковаться",
+      "source_example": "Let's go to the park.",
+      "target_example": "Пойдем в парк."
+    },
+    {
+      "source_word": "plan",
+      "target_word": "план, планировать",
+      "source_example": "What is your plan?",
+      "target_example": "Какой у тебя план?"
+    },
+    {
+      "source_word": "student",
+      "target_word": "студент|ученик",
+      "source_example": "I am a student.",
+      "target_example": "Я студент."
+    },
+    {
+      "source_word": "test",
+      "target_word": "тест, проверять",
+      "source_example": "I have a test tomorrow.",
+      "target_example": "У меня завтра тест."
+    },
+    {
+      "source_word": "general",
+      "target_word": "общий, генерал",
+      "source_example": "This is a general rule.",
+      "target_example": "Это общее правило."
+    },
+    {
+      "source_word": "media",
+      "target_word": "СМИ|медиа",
+      "source_example": "The story was in the media.",
+      "target_example": "История была в СМИ."
+    },
+    {
+      "source_word": "film",
+      "target_word": "фильм|пленка",
+      "source_example": "I saw a good film yesterday.",
+      "target_example": "Я вчера видел хороший фильм."
+    },
+    {
+      "source_word": "address",
+      "target_word": "адрес",
+      "source_example": "What is your address?",
+      "target_example": "Какой у вас адрес?"
+    },
+    {
+      "source_word": "April",
+      "target_word": "апрель",
+      "source_example": "My birthday is in April.",
+      "target_example": "Мой день рождения в апреле."
+    },
+    {
+      "source_word": "August",
+      "target_word": "август",
+      "source_example": "We are going on vacation in August.",
+      "target_example": "Мы едем в отпуск в августе."
+    },
+    {
+      "source_word": "business",
+      "target_word": "бизнес|дело",
+      "source_example": "He has his own business.",
+      "target_example": "У него свой бизнес."
+    },
+    {
+      "source_word": "camera",
+      "target_word": "камера|фотоаппарат",
+      "source_example": "I have a new camera.",
+      "target_example": "У меня новая камера."
+    },
+    {
+      "source_word": "capital",
+      "target_word": "столица, капитал",
+      "source_example": "Moscow is the capital of Russia.",
+      "target_example": "Москва - столица России."
+    },
+    {
+      "source_word": "card",
+      "target_word": "карта|карточка",
+      "source_example": "I will pay by card.",
+      "target_example": "Я заплачу картой."
+    },
+    {
+      "source_word": "career",
+      "target_word": "карьера",
+      "source_example": "She has a successful career.",
+      "target_example": "У нее успешная карьера."
+    },
+    {
+      "source_word": "cat",
+      "target_word": "кошка|кот",
+      "source_example": "I have a cat.",
+      "target_example": "У меня есть кошка."
+    },
+    {
+      "source_word": "center",
+      "target_word": "центр",
+      "source_example": "The shop is in the city center.",
+      "target_example": "Магазин в центре города."
+    },
+    {
+      "source_word": "club",
+      "target_word": "клуб",
+      "source_example": "I am going to the club tonight.",
+      "target_example": "Я иду в клуб сегодня вечером."
+    },
+    {
+      "source_word": "coffee",
+      "target_word": "кофе",
+      "source_example": "I drink coffee every morning.",
+      "target_example": "Я пью кофе каждое утро."
+    },
+    {
+      "source_word": "college",
+      "target_word": "колледж",
+      "source_example": "She goes to college.",
+      "target_example": "Она учится в колледже."
+    },
+    {
+      "source_word": "company",
+      "target_word": "компания|фирма",
+      "source_example": "I work for a big company.",
+      "target_example": "Я работаю в большой компании."
+    },
+    {
+      "source_word": "computer",
+      "target_word": "компьютер",
+      "source_example": "I have a new computer.",
+      "target_example": "У меня новый компьютер."
+    },
+    {
+      "source_word": "course",
+      "target_word": "курс, блюдо",
+      "source_example": "I am taking a course in English.",
+      "target_example": "Я прохожу курс английского языка."
+    },
+    {
+      "source_word": "culture",
+      "target_word": "культура",
+      "source_example": "I am interested in other cultures.",
+      "target_example": "Меня интересуют другие культуры."
+    },
+    {
+      "source_word": "date",
+      "target_word": "дата, свидание",
+      "source_example": "What is the date today?",
+      "target_example": "Какое сегодня число?"
+    },
+    {
+      "source_word": "December",
+      "target_word": "декабрь",
+      "source_example": "Christmas is in December.",
+      "target_example": "Рождество в декабре."
+    },
+    {
+      "source_word": "doctor",
+      "target_word": "врач|доктор",
+      "source_example": "I need to see a doctor.",
+      "target_example": "Мне нужно к врачу."
+    },
+    {
+      "source_word": "fact",
+      "target_word": "факт",
+      "source_example": "This is a fact.",
+      "target_example": "Это факт."
+    },
+    {
+      "source_word": "final",
+      "target_word": "финальный|окончательный",
+      "source_example": "This is the final exam.",
+      "target_example": "Это финальный экзамен."
+    },
+    {
+      "source_word": "football",
+      "target_word": "футбол",
+      "source_example": "I like to play football.",
+      "target_example": "Я люблю играть в футбол."
+    },
+    {
+      "source_word": "form",
+      "target_word": "(форма|бланк), (формировать|создавать)",
+      "source_example": "Please fill out this form.",
+      "target_example": "Пожалуйста, заполните эту форму."
+    },
+    {
+      "source_word": "group",
+      "target_word": "группа",
+      "source_example": "We are a small group.",
+      "target_example": "Мы небольшая группа."
+    },
+    {
+      "source_word": "history",
+      "target_word": "история",
+      "source_example": "I like history.",
+      "target_example": "Мне нравится история."
+    },
+    {
+      "source_word": "idea",
+      "target_word": "идея|мысль",
+      "source_example": "This is a good idea.",
+      "target_example": "Это хорошая идея."
+    },
+    {
+      "source_word": "information",
+      "target_word": "информация|сведения",
+      "source_example": "I need more information.",
+      "target_example": "Мне нужно больше информации."
+    },
+    {
+      "source_word": "interest",
+      "target_word": "интерес, процент [доход]",
+      "source_example": "I have an interest in history.",
+      "target_example": "У меня есть интерес к истории."
+    },
+    {
+      "source_word": "interesting",
+      "target_word": "интересный",
+      "source_example": "This is an interesting movie.",
+      "target_example": "Это интересный фильм."
+    },
+    {
+      "source_word": "line",
+      "target_word": "линия|очередь",
+      "source_example": "Please stand in line.",
+      "target_example": "Пожалуйста, встаньте в очередь."
+    },
+    {
+      "source_word": "lunch",
+      "target_word": "обед|ланч",
+      "source_example": "I am having lunch.",
+      "target_example": "Я обедаю."
+    },
+    {
+      "source_word": "machine",
+      "target_word": "машина|механизм",
+      "source_example": "This is a washing machine.",
+      "target_example": "Это стиральная машина."
+    },
+    {
+      "source_word": "March",
+      "target_word": "март",
+      "source_example": "My birthday is in March.",
+      "target_example": "Мой день рождения в марте."
+    },
+    {
+      "source_word": "match",
+      "target_word": "(матч|соревнование), спичка, (подходить|соответствовать)",
+      "source_example": "I am watching a football match.",
+      "target_example": "Я смотрю футбольный матч."
+    },
+    {
+      "source_word": "mile",
+      "target_word": "миля",
+      "source_example": "It is a long mile.",
+      "target_example": "Это длинная миля."
+    },
+    {
+      "source_word": "minute",
+      "target_word": "минута",
+      "source_example": "I will be back in a minute.",
+      "target_example": "Я вернусь через минуту."
+    },
+    {
+      "source_word": "nose",
+      "target_word": "нос",
+      "source_example": "My nose is cold.",
+      "target_example": "У меня холодный нос."
+    },
+    {
+      "source_word": "number",
+      "target_word": "число|номер",
+      "source_example": "What is your phone number?",
+      "target_example": "Какой у тебя номер телефона?"
+    },
+    {
+      "source_word": "October",
+      "target_word": "октябрь",
+      "source_example": "My birthday is in October.",
+      "target_example": "Мой день рождения в октябре."
+    },
+    {
+      "source_word": "online",
+      "target_word": "онлайн",
+      "source_example": "I am online now.",
+      "target_example": "Я сейчас онлайн."
+    },
+    {
+      "source_word": "partner",
+      "target_word": "партнёр",
+      "source_example": "He is my business partner.",
+      "target_example": "Он мой деловой партнер."
+    },
+    {
+      "source_word": "personal",
+      "target_word": "личный|персональный",
+      "source_example": "This is my personal opinion.",
+      "target_example": "Это мое личное мнение."
+    },
+    {
+      "source_word": "popular",
+      "target_word": "популярный",
+      "source_example": "This is a popular song.",
+      "target_example": "Это популярная песня."
+    },
+    {
+      "source_word": "post",
+      "target_word": "почта, должность, публиковать",
+      "source_example": "I need to go to the post office.",
+      "target_example": "Мне нужно сходить на почту."
+    },
+    {
+      "source_word": "practice",
+      "target_word": "практика, практиковаться",
+      "source_example": "I need more practice.",
+      "target_example": "Мне нужно больше практики."
+    },
+    {
+      "source_word": "problem",
+      "target_word": "проблема",
+      "source_example": "I have a problem.",
+      "target_example": "У меня проблема."
+    },
+    {
+      "source_word": "program",
+      "target_word": "программа",
+      "source_example": "I am watching a TV program.",
+      "target_example": "Я смотрю телепрограмму."
+    },
+    {
+      "source_word": "project",
+      "target_word": "проект",
+      "source_example": "I am working on a new project.",
+      "target_example": "Я работаю над новым проектом."
+    },
+    {
+      "source_word": "real",
+      "target_word": "настоящий|реальный",
+      "source_example": "Is this a real diamond?",
+      "target_example": "Это настоящий бриллиант?"
+    },
+    {
+      "source_word": "result",
+      "target_word": "результат",
+      "source_example": "The result of the exam was good.",
+      "target_example": "Результат экзамена был хорошим."
+    },
+    {
+      "source_word": "show",
+      "target_word": "показывать, шоу",
+      "source_example": "Can you show me the way?",
+      "target_example": "Можешь показать мне дорогу?"
+    },
+    {
+      "source_word": "sister",
+      "target_word": "сестра",
+      "source_example": "My sister is older than me.",
+      "target_example": "Моя сестра старше меня."
+    },
+    {
+      "source_word": "sit",
+      "target_word": "сидеть",
+      "source_example": "Please sit down.",
+      "target_example": "Пожалуйста, садитесь."
+    },
+    {
+      "source_word": "situation",
+      "target_word": "ситуация|положение",
+      "source_example": "This is a difficult situation.",
+      "target_example": "Это сложная ситуация."
+    },
+    {
+      "source_word": "son",
+      "target_word": "сын",
+      "source_example": "He is my son.",
+      "target_example": "Он мой сын."
+    },
+    {
+      "source_word": "special",
+      "target_word": "особенный|специальный",
+      "source_example": "This is a special occasion.",
+      "target_example": "Это особый случай."
+    },
+    {
+      "source_word": "story",
+      "target_word": "история|рассказ",
+      "source_example": "Tell me a story.",
+      "target_example": "Расскажи мне историю."
+    },
+    {
+      "source_word": "style",
+      "target_word": "стиль",
+      "source_example": "I like your style.",
+      "target_example": "Мне нравится твой стиль."
+    },
+    {
+      "source_word": "text",
+      "target_word": "текст",
+      "source_example": "Please read the text.",
+      "target_example": "Пожалуйста, прочитайте текст."
+    },
+    {
+      "source_word": "that",
+      "target_word": "тот|та|то",
+      "source_example": "That is my house.",
+      "target_example": "Это мой дом."
+    },
+    {
+      "source_word": "three",
+      "target_word": "три",
+      "source_example": "I have three cats.",
+      "target_example": "У меня три кошки."
+    },
+    {
+      "source_word": "type",
+      "target_word": "(тип|вид), печатать",
+      "source_example": "What type of music do you like?",
+      "target_example": "Какую музыку ты любишь?"
+    },
+    {
+      "source_word": "university",
+      "target_word": "университет",
+      "source_example": "She goes to university.",
+      "target_example": "Она учится в университете."
+    },
+    {
+      "source_word": "visit",
+      "target_word": "посещать, визит",
+      "source_example": "I will visit my grandmother.",
+      "target_example": "Я навещу свою бабушку."
+    },
+    {
+      "source_word": "website",
+      "target_word": "веб-сайт|сайт",
+      "source_example": "This is a useful website.",
+      "target_example": "Это полезный веб-сайт."
+    },
+    {
+      "source_word": "wine",
+      "target_word": "вино",
+      "source_example": "I would like a glass of wine.",
+      "target_example": "Я бы хотел бокал вина."
+    },
+    {
+      "source_word": "state",
+      "target_word": "состояние, государство|штат",
+      "source_example": "The state of the economy is good.",
+      "target_example": "Состояние экономики хорошее."
+    },
+    {
+      "source_word": "public",
+      "target_word": "общественный|публичный",
+      "source_example": "This is a public park.",
+      "target_example": "Это общественный парк."
+    },
+    {
+      "source_word": "system",
+      "target_word": "система",
+      "source_example": "This is a new computer system.",
+      "target_example": "Это новая компьютерная система."
+    },
+    {
+      "source_word": "national",
+      "target_word": "национальный|государственный",
+      "source_example": "This is a national holiday.",
+      "target_example": "Это национальный праздник."
+    },
+    {
+      "source_word": "service",
+      "target_word": "услуга|сервис|служба",
+      "source_example": "The service at this hotel is excellent.",
+      "target_example": "Обслуживание в этом отеле отличное."
+    },
+    {
+      "source_word": "season",
+      "target_word": "сезон|время года",
+      "source_example": "My favorite season is summer.",
+      "target_example": "Моё любимое время года - лето."
+    },
+    {
+      "source_word": "control",
+      "target_word": "контроль, контролировать",
+      "source_example": "You need to control your emotions.",
+      "target_example": "Тебе нужно контролировать свои эмоции."
+    },
+    {
+      "source_word": "act",
+      "target_word": "акт|действие, действовать",
+      "source_example": "It was a kind act.",
+      "target_example": "Это был добрый поступок."
+    },
+    {
+      "source_word": "political",
+      "target_word": "политический",
+      "source_example": "This is a political issue.",
+      "target_example": "Это политический вопрос."
+    },
+    {
+      "source_word": "process",
+      "target_word": "процесс",
+      "source_example": "This is a long process.",
+      "target_example": "Это долгий процесс."
+    },
+    {
+      "source_word": "department",
+      "target_word": "отдел|департамент",
+      "source_example": "I work in the sales department.",
+      "target_example": "Я работаю в отделе продаж."
+    },
+    {
+      "source_word": "energy",
+      "target_word": "энергия",
+      "source_example": "I have no energy today.",
+      "target_example": "У меня сегодня нет энергии."
+    },
+    {
+      "source_word": "term",
+      "target_word": "термин, семестр",
+      "source_example": "This is a difficult term.",
+      "target_example": "Это трудный термин."
+    },
+    {
+      "source_word": "sex",
+      "target_word": "пол, секс",
+      "source_example": "What is the sex of the baby?",
+      "target_example": "Какой пол у ребенка?"
+    },
+    {
+      "source_word": "account",
+      "target_word": "счёт [в банке], аккаунт",
+      "source_example": "I have a bank account.",
+      "target_example": "У меня есть банковский счет."
+    },
+    {
+      "source_word": "industry",
+      "target_word": "промышленность|индустрия",
+      "source_example": "He works in the car industry.",
+      "target_example": "Он работает в автомобильной промышленности."
+    },
+    {
+      "source_word": "press",
+      "target_word": "пресса, нажимать",
+      "source_example": "The press is here.",
+      "target_example": "Пресса здесь."
+    },
+    {
+      "source_word": "role",
+      "target_word": "роль",
+      "source_example": "She has a big role in the movie.",
+      "target_example": "У нее большая роль в фильме."
+    },
+    {
+      "source_word": "original",
+      "target_word": "оригинальный|первоначальный",
+      "source_example": "This is the original painting.",
+      "target_example": "Это оригинальная картина."
+    },
+    {
+      "source_word": "director",
+      "target_word": "директор|режиссёр",
+      "source_example": "He is the director of the company.",
+      "target_example": "Он директор компании."
+    },
+    {
+      "source_word": "round",
+      "target_word": "круглый, раунд",
+      "source_example": "The table is round.",
+      "target_example": "Стол круглый."
+    },
+    {
+      "source_word": "production",
+      "target_word": "производство|продукция",
+      "source_example": "The production of cars has increased.",
+      "target_example": "Производство автомобилей увеличилось."
+    },
+    {
+      "source_word": "central",
+      "target_word": "центральный",
+      "source_example": "This is the central station.",
+      "target_example": "Это центральный вокзал."
+    },
+    {
+      "source_word": "character",
+      "target_word": "персонаж|характер",
+      "source_example": "He is a character in a book.",
+      "target_example": "Он персонаж книги."
+    },
+    {
+      "source_word": "economic",
+      "target_word": "экономический",
+      "source_example": "This is an economic crisis.",
+      "target_example": "Это экономический кризис."
+    },
+    {
+      "source_word": "attack",
+      "target_word": "атака, атаковать",
+      "source_example": "The army is under attack.",
+      "target_example": "Армия под атакой."
+    },
+    {
+      "source_word": "technology",
+      "target_word": "технология",
+      "source_example": "I like new technology.",
+      "target_example": "Мне нравятся новые технологии."
+    },
+    {
+      "source_word": "legal",
+      "target_word": "законный|легальный",
+      "source_example": "This is not legal.",
+      "target_example": "Это незаконно."
+    },
+    {
+      "source_word": "version",
+      "target_word": "версия",
+      "source_example": "This is the new version of the software.",
+      "target_example": "Это новая версия программного обеспечения."
+    },
+    {
+      "source_word": "army",
+      "target_word": "армия",
+      "source_example": "He is in the army.",
+      "target_example": "Он в армии."
+    },
+    {
+      "source_word": "sir",
+      "target_word": "сэр",
+      "source_example": "Yes, sir.",
+      "target_example": "Да, сэр."
+    },
+    {
+      "source_word": "professional",
+      "target_word": "профессиональный",
+      "source_example": "He is a professional football player.",
+      "target_example": "Он профессиональный футболист."
+    },
+    {
+      "source_word": "percent",
+      "target_word": "процент",
+      "source_example": "I agree 100 percent.",
+      "target_example": "Я согласен на 100 процентов."
+    },
+    {
+      "source_word": "growth",
+      "target_word": "рост|развитие",
+      "source_example": "The company has seen a lot of growth.",
+      "target_example": "Компания значительно выросла."
+    },
+    {
+      "source_word": "officer",
+      "target_word": "офицер|чиновник",
+      "source_example": "He is a police officer.",
+      "target_example": "Он полицейский."
+    },
+    {
+      "source_word": "active",
+      "target_word": "активный",
+      "source_example": "It's important to stay active for good health.",
+      "target_example": "Важно оставаться активным для хорошего здоровья."
+    },
+    {
+      "source_word": "alternative",
+      "target_word": "альтернатива",
+      "source_example": "Is there an alternative to this plan?",
+      "target_example": "Есть ли альтернатива этому плану?"
+    },
+    {
+      "source_word": "argument",
+      "target_word": "спор|аргумент",
+      "source_example": "We had an argument about where to go.",
+      "target_example": "У нас был спор о том, куда пойти."
+    },
+    {
+      "source_word": "assistant",
+      "target_word": "помощник|ассистент",
+      "source_example": "I work as a personal assistant.",
+      "target_example": "Я работаю личным помощником."
+    },
+    {
+      "source_word": "author",
+      "target_word": "автор",
+      "source_example": "Who is the author of this book?",
+      "target_example": "Кто автор этой книги?"
+    },
+    {
+      "source_word": "block",
+      "target_word": "квартал|блок",
+      "source_example": "The post office is just two blocks away.",
+      "target_example": "Почта всего в двух кварталах отсюда."
+    },
+    {
+      "source_word": "character",
+      "target_word": "персонаж|характер",
+      "source_example": "He is the main character in the story.",
+      "target_example": "Он главный герой рассказа."
+    },
+    {
+      "source_word": "chat",
+      "target_word": "болтать|чат",
+      "source_example": "I like to chat with my friends online.",
+      "target_example": "Мне нравится общаться с друзьями в Интернете."
+    },
+    {
+      "source_word": "chip",
+      "target_word": "чип|фишка|чипсы",
+      "source_example": "I like to eat potato chips.",
+      "target_example": "Я люблю есть картофельные чипсы."
+    },
+    {
+      "source_word": "climate",
+      "target_word": "климат",
+      "source_example": "The climate in this region is very dry.",
+      "target_example": "Климат в этом регионе очень сухой."
+    },
+    {
+      "source_word": "comfortable",
+      "target_word": "удобный|комфортный",
+      "source_example": "This chair is very comfortable.",
+      "target_example": "Этот стул очень удобный."
+    },
+    {
+      "source_word": "comment",
+      "target_word": "комментарий",
+      "source_example": "He left a comment on my photo.",
+      "target_example": "Он оставил комментарий к моей фотографии."
+    },
+    {
+      "source_word": "conference",
+      "target_word": "конференция",
+      "source_example": "I am attending a conference next week.",
+      "target_example": "На следующей неделе я участвую в конференции."
+    },
+    {
+      "source_word": "copy",
+      "target_word": "копия",
+      "source_example": "Can you make a copy of this document?",
+      "target_example": "Можете сделать копию этого документа?"
+    },
+    {
+      "source_word": "credit",
+      "target_word": "кредит",
+      "source_example": "I paid for the tickets with my credit card.",
+      "target_example": "Я оплатил билеты кредитной картой."
+    },
+    {
+      "source_word": "discussion",
+      "target_word": "обсуждение|дискуссия",
+      "source_example": "We had a long discussion about the problem.",
+      "target_example": "У нас было долгое обсуждение проблемы."
+    },
+    {
+      "source_word": "effect",
+      "target_word": "эффект|влияние",
+      "source_example": "The new law had a positive effect.",
+      "target_example": "Новый закон оказал положительное влияние."
+    },
+    {
+      "source_word": "electric",
+      "target_word": "электрический",
+      "source_example": "I have an electric guitar.",
+      "target_example": "У меня есть электрогитара."
+    },
+    {
+      "source_word": "experiment",
+      "target_word": "эксперимент",
+      "source_example": "We did an experiment in the science class.",
+      "target_example": "Мы провели эксперимент на уроке науки."
+    },
+    {
+      "source_word": "expert",
+      "target_word": "эксперт|специалист",
+      "source_example": "She is an expert in her field.",
+      "target_example": "Она эксперт в своей области."
+    },
+    {
+      "source_word": "fan",
+      "target_word": "фанат|вентилятор",
+      "source_example": "I am a big fan of this singer.",
+      "target_example": "Я большой поклонник этого певца."
+    },
+    {
+      "source_word": "guide",
+      "target_word": "гид|руководство",
+      "source_example": "The guide showed us around the city.",
+      "target_example": "Гид показал нам город."
+    },
+    {
+      "source_word": "identify",
+      "target_word": "опознавать|идентифицировать",
+      "source_example": "Can you identify the man in the photo?",
+      "target_example": "Можете опознать мужчину на фотографии?"
+    },
+    {
+      "source_word": "industry",
+      "target_word": "промышленность|индустрия",
+      "source_example": "He works in the tourist industry.",
+      "target_example": "Он работает в туристической индустрии."
+    },
+    {
+      "source_word": "lady",
+      "target_word": "леди|дама",
+      "source_example": "An old lady was sitting on the bench.",
+      "target_example": "На скамейке сидела пожилая дама."
+    },
+    {
+      "source_word": "leader",
+      "target_word": "лидер",
+      "source_example": "He is a great leader.",
+      "target_example": "Он великий лидер."
+    },
+    {
+      "source_word": "medicine",
+      "target_word": "медицина|лекарство",
+      "source_example": "Have you taken your medicine?",
+      "target_example": "Вы приняли лекарство?"
+    },
+    {
+      "source_word": "metal",
+      "target_word": "металл",
+      "source_example": "The bridge is made of metal.",
+      "target_example": "Мост сделан из металла."
+    },
+    {
+      "source_word": "method",
+      "target_word": "метод|способ",
+      "source_example": "This is a new method of teaching.",
+      "target_example": "Это новый метод преподавания."
+    },
+    {
+      "source_word": "organization",
+      "target_word": "организация",
+      "source_example": "She works for a charitable organization.",
+      "target_example": "Она работает в благотворительной организации."
+    },
+    {
+      "source_word": "original",
+      "target_word": "оригинальный",
+      "source_example": "This is the original painting.",
+      "target_example": "Это оригинальная картина."
+    },
+    {
+      "source_word": "penny",
+      "target_word": "пенни",
+      "source_example": "This costs one penny.",
+      "target_example": "Это стоит один пенни."
+    },
+    {
+      "source_word": "percent",
+      "target_word": "процент",
+      "source_example": "I agree with you 100 percent.",
+      "target_example": "Я согласен с вами на 100 процентов."
+    },
+    {
+      "source_word": "plastic",
+      "target_word": "пластик|пластмасса",
+      "source_example": "The toy is made of plastic.",
+      "target_example": "Игрушка сделана из пластика."
+    },
+    {
+      "source_word": "prize",
+      "target_word": "приз",
+      "source_example": "She won the first prize.",
+      "target_example": "Она выиграла первый приз."
+    },
+    {
+      "source_word": "process",
+      "target_word": "процесс",
+      "source_example": "Learning a language is a long process.",
+      "target_example": "Изучение языка - это долгий процесс."
+    },
+    {
+      "source_word": "professional",
+      "target_word": "профессиональный",
+      "source_example": "He is a professional photographer.",
+      "target_example": "Он профессиональный фотограф."
+    },
+    {
+      "source_word": "profile",
+      "target_word": "профиль",
+      "source_example": "I need to update my online profile.",
+      "target_example": "Мне нужно обновить свой онлайн-профиль."
+    },
+    {
+      "source_word": "regular",
+      "target_word": "регулярный",
+      "source_example": "I have regular meetings with my boss.",
+      "target_example": "У меня регулярные встречи с моим начальником."
+    },
+    {
+      "source_word": "reporter",
+      "target_word": "репортёр|корреспондент",
+      "source_example": "A reporter from the local newspaper interviewed me.",
+      "target_example": "Меня проинтервьюировал репортер из местной газеты."
+    },
+    {
+      "source_word": "role",
+      "target_word": "роль",
+      "source_example": "She played the main role in the movie.",
+      "target_example": "Она сыграла главную роль в фильме."
+    },
+    {
+      "source_word": "season",
+      "target_word": "сезон|время года",
+      "source_example": "My favorite season is autumn.",
+      "target_example": "Мое любимое время года - осень."
+    },
+    {
+      "source_word": "secretary",
+      "target_word": "секретарь",
+      "source_example": "My secretary will call you to arrange a meeting.",
+      "target_example": "Мой секретарь позвонит вам, чтобы договориться о встрече."
+    },
+    {
+      "source_word": "storm",
+      "target_word": "буря|шторм",
+      "source_example": "A big storm is coming.",
+      "target_example": "Приближается сильная буря."
+    },
+    {
+      "source_word": "strategy",
+      "target_word": "стратегия",
+      "source_example": "We need a new strategy.",
+      "target_example": "Нам нужна новая стратегия."
+    },
+    {
+      "source_word": "stress",
+      "target_word": "стресс|напряжение",
+      "source_example": "I am under a lot of stress.",
+      "target_example": "Я в большом стрессе."
+    },
+    {
+      "source_word": "structure",
+      "target_word": "структура|строение",
+      "source_example": "The structure of the building is very solid.",
+      "target_example": "Конструкция здания очень прочная."
+    },
+    {
+      "source_word": "technology",
+      "target_word": "технология",
+      "source_example": "New technology is changing our lives.",
+      "target_example": "Новые технологии меняют нашу жизнь."
+    },
+    {
+      "source_word": "temperature",
+      "target_word": "температура",
+      "source_example": "The temperature is high today.",
+      "target_example": "Сегодня высокая температура."
+    },
+    {
+      "source_word": "term",
+      "target_word": "термин|семестр",
+      "source_example": "What does this term mean?",
+      "target_example": "Что означает этот термин?"
+    },
+    {
+      "source_word": "tour",
+      "target_word": "тур|экскурсия",
+      "source_example": "We went on a tour of the city.",
+      "target_example": "Мы отправились на экскурсию по городу."
+    },
+    {
+      "source_word": "traditional",
+      "target_word": "традиционный",
+      "source_example": "We had a traditional meal.",
+      "target_example": "У нас была традиционная еда."
+    },
+    {
+      "source_word": "uniform",
+      "target_word": "форма",
+      "source_example": "The students wear a school uniform.",
+      "target_example": "Ученики носят школьную форму."
+    },
+    {
+      "source_word": "balance",
+      "target_word": "баланс|равновесие",
+      "source_example": "Maintaining a work-life balance is very important.",
+      "target_example": "Поддерживать баланс между работой и личной жизнью очень важно."
+    },
+    {
+      "source_word": "collection",
+      "target_word": "коллекция",
+      "source_example": "She has an impressive collection of antique dolls.",
+      "target_example": "У нее впечатляющая коллекция антикварных кукол."
+    },
+    {
+      "source_word": "garage",
+      "target_word": "гараж",
+      "source_example": "He keeps his classic car in the garage.",
+      "target_example": "Он держит свою классическую машину в гараже."
+    },
+    {
+      "source_word": "personally",
+      "target_word": "лично|персонально",
+      "source_example": "Personally, I think the plan is a mistake.",
+      "target_example": "Лично я считаю, что этот план — ошибка."
+    }
+  ]
+}

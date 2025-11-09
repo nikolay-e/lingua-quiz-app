@@ -95,10 +95,6 @@ def fill_missing(
             console.print(f"[green]✅ Added {stats['to_add_count']:,} words[/green]")
             console.print(f"   New total: [cyan]{stats['new_total']:,}/{target:,}[/cyan]")
             console.print(f"   Saved to: [dim]{stats['file_path']}[/dim]")
-
-            if stats["id_range_start"] and stats["id_range_end"]:
-                console.print(f"   ID range: {stats['id_range_start']:,} - {stats['id_range_end']:,}")
-
             console.print()
             console.print("[green]FILL COMPLETE[/green]")
 

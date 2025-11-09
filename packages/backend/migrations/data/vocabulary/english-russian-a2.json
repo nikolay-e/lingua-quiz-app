@@ -2,4986 +2,2836 @@
   "source_language": "English",
   "target_language": "Russian",
   "word_list_name": "English Russian A2",
-  "level_base_offset": 8010000,
   "word_pairs": [
     {
-      "translation_id": 8010000,
-      "source_id": 8010001,
-      "target_id": 8010002,
       "source_word": "ability",
       "target_word": "способность",
       "source_example": "He has a strong ability to solve problems.",
       "target_example": "У него есть сильная способность решать проблемы."
     },
     {
-      "translation_id": 8010007,
-      "source_id": 8010015,
-      "target_id": 8010016,
-      "source_word": "active",
-      "target_word": "активный",
-      "source_example": "It's important to stay active for good health.",
-      "target_example": "Важно оставаться активным для хорошего здоровья."
-    },
-    {
-      "translation_id": 8010009,
-      "source_id": 8010019,
-      "target_id": 8010020,
       "source_word": "advantage",
       "target_word": "преимущество",
       "source_example": "Her height is an advantage in basketball.",
       "target_example": "Ее рост - преимущество в баскетболе."
     },
     {
-      "translation_id": 8010023,
-      "source_id": 8010047,
-      "target_id": 8010048,
-      "source_word": "alternative",
-      "target_word": "альтернатива",
-      "source_example": "Is there an alternative to this plan?",
-      "target_example": "Есть ли альтернатива этому плану?"
-    },
-    {
-      "translation_id": 8010025,
-      "source_id": 8010051,
-      "target_id": 8010052,
       "source_word": "among",
       "target_word": "среди|между",
       "source_example": "He is popular among his friends.",
       "target_example": "Он популярен среди своих друзей."
     },
     {
-      "translation_id": 8010026,
-      "source_id": 8010053,
-      "target_id": 8010054,
       "source_word": "amount",
       "target_word": "количество",
       "source_example": "A large amount of money was stolen.",
       "target_example": "Была украдена большая сумма денег."
     },
     {
-      "translation_id": 8010028,
-      "source_id": 8010057,
-      "target_id": 8010058,
       "source_word": "ancient",
       "target_word": "древний",
       "source_example": "We visited the ancient ruins in Greece.",
       "target_example": "Мы посетили древние руины в Греции."
     },
     {
-      "translation_id": 8010034,
-      "source_id": 8010069,
-      "target_id": 8010070,
       "source_word": "app",
       "target_word": "приложение",
       "source_example": "I downloaded a new app for my phone.",
       "target_example": "Я скачал новое приложение для своего телефона."
     },
     {
-      "translation_id": 8010035,
-      "source_id": 8010071,
-      "target_id": 8010072,
       "source_word": "appear",
       "target_word": "появляться",
       "source_example": "A ship appeared on the horizon.",
       "target_example": "На горизонте появился корабль."
     },
     {
-      "translation_id": 8010037,
-      "source_id": 8010075,
-      "target_id": 8010076,
       "source_word": "apply",
       "target_word": "подавать заявление",
       "source_example": "I want to apply for this job.",
       "target_example": "Я хочу подать заявление на эту работу."
     },
     {
-      "translation_id": 8010040,
-      "source_id": 8010081,
-      "target_id": 8010082,
       "source_word": "argue",
       "target_word": "спорить|ссориться",
       "source_example": "They always argue about money.",
       "target_example": "Они всегда спорят из-за денег."
     },
     {
-      "translation_id": 8010041,
-      "source_id": 8010083,
-      "target_id": 8010084,
-      "source_word": "argument",
-      "target_word": "спор|аргумент",
-      "source_example": "We had an argument about where to go.",
-      "target_example": "У нас был спор о том, куда пойти."
-    },
-    {
-      "translation_id": 8010043,
-      "source_id": 8010087,
-      "target_id": 8010088,
       "source_word": "arrange",
       "target_word": "организовывать|устраивать",
       "source_example": "Can you arrange a meeting for tomorrow?",
       "target_example": "Можете организовать встречу на завтра?"
     },
     {
-      "translation_id": 8010046,
-      "source_id": 8010093,
-      "target_id": 8010094,
-      "source_word": "assistant",
-      "target_word": "помощник|ассистент",
-      "source_example": "I work as a personal assistant.",
-      "target_example": "Я работаю личным помощником."
-    },
-    {
-      "translation_id": 8010049,
-      "source_id": 8010099,
-      "target_id": 8010100,
       "source_word": "attend",
       "target_word": "посещать|присутствовать",
       "source_example": "How many people will attend the conference?",
       "target_example": "Сколько человек будет присутствовать на конференции?"
     },
     {
-      "translation_id": 8010051,
-      "source_id": 8010103,
-      "target_id": 8010104,
       "source_word": "attractive",
       "target_word": "привлекательный",
       "source_example": "She is a very attractive woman.",
       "target_example": "Она очень привлекательная женщина."
     },
     {
-      "translation_id": 8010052,
-      "source_id": 8010105,
-      "target_id": 8010106,
       "source_word": "audience",
       "target_word": "аудитория|публика",
       "source_example": "The audience enjoyed the show.",
       "target_example": "Публике понравилось шоу."
     },
     {
-      "translation_id": 8010053,
-      "source_id": 8010107,
-      "target_id": 8010108,
-      "source_word": "author",
-      "target_word": "автор",
-      "source_example": "Who is the author of this book?",
-      "target_example": "Кто автор этой книги?"
-    },
-    {
-      "translation_id": 8010055,
-      "source_id": 8010111,
-      "target_id": 8010112,
       "source_word": "avoid",
       "target_word": "избегать",
       "source_example": "You should avoid eating junk food.",
       "target_example": "Вам следует избегать нездоровой пищи."
     },
     {
-      "translation_id": 8010058,
-      "source_id": 8010117,
-      "target_id": 8010118,
       "source_word": "background",
       "target_word": "фон",
       "source_example": "The photo has a beautiful background.",
       "target_example": "У фотографии красивый фон."
     },
     {
-      "translation_id": 8010059,
-      "source_id": 8010119,
-      "target_id": 8010120,
       "source_word": "badly",
       "target_word": "плохо",
       "source_example": "He plays the piano badly.",
       "target_example": "Он плохо играет на пианино."
     },
     {
-      "translation_id": 8010060,
-      "source_id": 8010121,
-      "target_id": 8010122,
       "source_word": "based",
       "target_word": "основанный",
       "source_example": "The film is based on a true story.",
       "target_example": "Фильм основан на реальных событиях."
     },
     {
-      "translation_id": 8010064,
-      "source_id": 8010129,
-      "target_id": 8010130,
       "source_word": "beef",
       "target_word": "говядина",
       "source_example": "I would like to order a beef steak.",
       "target_example": "Я бы хотел заказать говяжий стейк."
     },
     {
-      "translation_id": 8010065,
-      "source_id": 8010131,
-      "target_id": 8010132,
       "source_word": "behave",
       "target_word": "вести себя",
       "source_example": "You should behave well at school.",
       "target_example": "В школе нужно вести себя хорошо."
     },
     {
-      "translation_id": 8010066,
-      "source_id": 8010133,
-      "target_id": 8010134,
       "source_word": "behavior",
       "target_word": "поведение",
       "source_example": "His behavior was very strange.",
       "target_example": "Его поведение было очень странным."
     },
     {
-      "translation_id": 8010067,
-      "source_id": 8010135,
-      "target_id": 8010136,
       "source_word": "belong",
       "target_word": "принадлежать",
       "source_example": "This book belongs to me.",
       "target_example": "Эта книга принадлежит мне."
     },
     {
-      "translation_id": 8010069,
-      "source_id": 8010139,
-      "target_id": 8010140,
       "source_word": "benefit",
       "target_word": "выгода|польза",
       "source_example": "What is the benefit of this exercise?",
       "target_example": "Какая польза от этого упражнения?"
     },
     {
-      "translation_id": 8010070,
-      "source_id": 8010141,
-      "target_id": 8010142,
       "source_word": "billion",
       "target_word": "миллиард",
       "source_example": "The company is worth a billion dollars.",
       "target_example": "Компания стоит миллиард долларов."
     },
     {
-      "translation_id": 8010072,
-      "source_id": 8010145,
-      "target_id": 8010146,
       "source_word": "birth",
       "target_word": "рождение",
       "source_example": "What is your date of birth?",
       "target_example": "Какая у вас дата рождения?"
     },
     {
-      "translation_id": 8010075,
-      "source_id": 8010151,
-      "target_id": 8010152,
-      "source_word": "block",
-      "target_word": "квартал|блок",
-      "source_example": "The post office is just two blocks away.",
-      "target_example": "Почта всего в двух кварталах отсюда."
-    },
-    {
-      "translation_id": 8010080,
-      "source_id": 8010161,
-      "target_id": 8010162,
       "source_word": "bone",
       "target_word": "кость",
       "source_example": "The dog is chewing a bone.",
       "target_example": "Собака грызет кость."
     },
     {
-      "translation_id": 8010082,
-      "source_id": 8010165,
-      "target_id": 8010166,
       "source_word": "borrow",
       "target_word": "одалживать|брать взаймы",
       "source_example": "Can I borrow your pen?",
       "target_example": "Можно одолжить твою ручку?"
     },
     {
-      "translation_id": 8010087,
-      "source_id": 8010175,
-      "target_id": 8010176,
       "source_word": "bridge",
       "target_word": "мост",
       "source_example": "We crossed the bridge over the river.",
       "target_example": "Мы перешли мост через реку."
     },
     {
-      "translation_id": 8010088,
-      "source_id": 8010177,
-      "target_id": 8010178,
       "source_word": "bright",
       "target_word": "яркий",
       "source_example": "The sun is very bright today.",
       "target_example": "Сегодня очень яркое солнце."
     },
     {
-      "translation_id": 8010099,
-      "source_id": 8010199,
-      "target_id": 8010200,
       "source_word": "candy",
       "target_word": "конфета|леденец",
       "source_example": "Children love candy.",
       "target_example": "Дети любят конфеты."
     },
     {
-      "translation_id": 8010102,
-      "source_id": 8010205,
-      "target_id": 8010206,
       "source_word": "carefully",
       "target_word": "осторожно|внимательно",
       "source_example": "Please drive carefully.",
       "target_example": "Пожалуйста, ведите машину осторожно."
     },
     {
-      "translation_id": 8010109,
-      "source_id": 8010219,
-      "target_id": 8010220,
       "source_word": "celebrate",
       "target_word": "праздновать",
       "source_example": "How do you celebrate your birthday?",
       "target_example": "Как вы празднуете свой день рождения?"
     },
     {
-      "translation_id": 8010112,
-      "source_id": 8010225,
-      "target_id": 8010226,
       "source_word": "century",
       "target_word": "век|столетие",
       "source_example": "We are living in the 21st century.",
       "target_example": "Мы живем в 21 веке."
     },
     {
-      "translation_id": 8010116,
-      "source_id": 8010233,
-      "target_id": 8010234,
-      "source_word": "character",
-      "target_word": "персонаж|характер",
-      "source_example": "He is the main character in the story.",
-      "target_example": "Он главный герой рассказа."
-    },
-    {
-      "translation_id": 8010117,
-      "source_id": 8010235,
-      "target_id": 8010236,
       "source_word": "charity",
       "target_word": "благотворительность",
       "source_example": "She donates money to charity every year.",
       "target_example": "Она каждый год жертвует деньги на благотворительность."
     },
     {
-      "translation_id": 8010118,
-      "source_id": 8010237,
-      "target_id": 8010238,
-      "source_word": "chat",
-      "target_word": "болтать|чат",
-      "source_example": "I like to chat with my friends online.",
-      "target_example": "Мне нравится общаться с друзьями в Интернете."
-    },
-    {
-      "translation_id": 8010120,
-      "source_id": 8010241,
-      "target_id": 8010242,
       "source_word": "chef",
       "target_word": "шеф-повар",
       "source_example": "The chef prepared a delicious meal.",
       "target_example": "Шеф-повар приготовил вкусное блюдо."
     },
     {
-      "translation_id": 8010122,
-      "source_id": 8010245,
-      "target_id": 8010246,
-      "source_word": "chip",
-      "target_word": "чип|фишка|чипсы",
-      "source_example": "I like to eat potato chips.",
-      "target_example": "Я люблю есть картофельные чипсы."
-    },
-    {
-      "translation_id": 8010131,
-      "source_id": 8010263,
-      "target_id": 8010264,
-      "source_word": "climate",
-      "target_word": "климат",
-      "source_example": "The climate in this region is very dry.",
-      "target_example": "Климат в этом регионе очень сухой."
-    },
-    {
-      "translation_id": 8010134,
-      "source_id": 8010269,
-      "target_id": 8010270,
       "source_word": "closet",
       "target_word": "шкаф|кладовка",
       "source_example": "I hung my coat in the closet.",
       "target_example": "Я повесил пальто в шкаф."
     },
     {
-      "translation_id": 8010137,
-      "source_id": 8010275,
-      "target_id": 8010276,
       "source_word": "coach",
       "target_word": "тренер",
       "source_example": "Our football coach is very strict.",
       "target_example": "Наш футбольный тренер очень строгий."
     },
     {
-      "translation_id": 8010138,
-      "source_id": 8010277,
-      "target_id": 8010278,
       "source_word": "coast",
       "target_word": "побережье",
       "source_example": "We drove along the coast.",
       "target_example": "Мы ехали вдоль побережья."
     },
     {
-      "translation_id": 8010141,
-      "source_id": 8010283,
-      "target_id": 8010284,
       "source_word": "collect",
       "target_word": "собирать|коллекционировать",
       "source_example": "He likes to collect old coins.",
       "target_example": "Он любит коллекционировать старые монеты."
     },
     {
-      "translation_id": 8010144,
-      "source_id": 8010289,
-      "target_id": 8010290,
-      "source_word": "comfortable",
-      "target_word": "удобный|комфортный",
-      "source_example": "This chair is very comfortable.",
-      "target_example": "Этот стул очень удобный."
-    },
-    {
-      "translation_id": 8010145,
-      "source_id": 8010291,
-      "target_id": 8010292,
-      "source_word": "comment",
-      "target_word": "комментарий",
-      "source_example": "He left a comment on my photo.",
-      "target_example": "Он оставил комментарий к моей фотографии."
-    },
-    {
-      "translation_id": 8010147,
-      "source_id": 8010295,
-      "target_id": 8010296,
       "source_word": "community",
       "target_word": "сообщество|община",
       "source_example": "There is a strong sense of community in our neighborhood.",
       "target_example": "В нашем районе сильное чувство общности."
     },
     {
-      "translation_id": 8010149,
-      "source_id": 8010299,
-      "target_id": 8010300,
       "source_word": "competition",
       "target_word": "соревнование|конкурс",
       "source_example": "She won the swimming competition.",
       "target_example": "Она выиграла соревнование по плаванию."
     },
     {
-      "translation_id": 8010152,
-      "source_id": 8010305,
-      "target_id": 8010306,
       "source_word": "condition",
       "target_word": "состояние|условие",
       "source_example": "The car is in good condition.",
       "target_example": "Машина в хорошем состоянии."
     },
     {
-      "translation_id": 8010153,
-      "source_id": 8010307,
-      "target_id": 8010308,
-      "source_word": "conference",
-      "target_word": "конференция",
-      "source_example": "I am attending a conference next week.",
-      "target_example": "На следующей неделе я участвую в конференции."
-    },
-    {
-      "translation_id": 8010154,
-      "source_id": 8010309,
-      "target_id": 8010310,
       "source_word": "connect",
       "target_word": "соединять|подключать",
       "source_example": "Can you connect the printer to the computer?",
       "target_example": "Можете подключить принтер к компьютеру?"
     },
     {
-      "translation_id": 8010164,
-      "source_id": 8010329,
-      "target_id": 8010330,
-      "source_word": "copy",
-      "target_word": "копия",
-      "source_example": "Can you make a copy of this document?",
-      "target_example": "Можете сделать копию этого документа?"
-    },
-    {
-      "translation_id": 8010172,
-      "source_id": 8010345,
-      "target_id": 8010346,
-      "source_word": "credit",
-      "target_word": "кредит",
-      "source_example": "I paid for the tickets with my credit card.",
-      "target_example": "Я оплатил билеты кредитной картой."
-    },
-    {
-      "translation_id": 8010174,
-      "source_id": 8010349,
-      "target_id": 8010350,
       "source_word": "criminal",
       "target_word": "преступник",
       "source_example": "The criminal was sent to prison.",
       "target_example": "Преступника отправили в тюрьму."
     },
     {
-      "translation_id": 8010184,
-      "source_id": 8010369,
-      "target_id": 8010370,
       "source_word": "data",
       "target_word": "данные",
       "source_example": "We need to collect more data.",
       "target_example": "Нам нужно собрать больше данных."
     },
     {
-      "translation_id": 8010191,
-      "source_id": 8010383,
-      "target_id": 8010384,
       "source_word": "degree",
       "target_word": "градус|степень",
       "source_example": "The temperature is 30 degrees Celsius.",
       "target_example": "Температура 30 градусов по Цельсию."
     },
     {
-      "translation_id": 8010194,
-      "source_id": 8010389,
-      "target_id": 8010390,
       "source_word": "depend",
       "target_word": "зависеть",
       "source_example": "It depends on the weather.",
       "target_example": "Это зависит от погоды."
     },
     {
-      "translation_id": 8010200,
-      "source_id": 8010401,
-      "target_id": 8010402,
       "source_word": "develop",
       "target_word": "развивать|разрабатывать",
       "source_example": "The company is trying to develop new products.",
       "target_example": "Компания пытается разрабатывать новые продукты."
     },
     {
-      "translation_id": 8010201,
-      "source_id": 8010403,
-      "target_id": 8010404,
       "source_word": "device",
       "target_word": "устройство|прибор",
       "source_example": "A smartphone is a very useful device.",
       "target_example": "Смартфон - очень полезное устройство."
     },
     {
-      "translation_id": 8010204,
-      "source_id": 8010409,
-      "target_id": 8010410,
       "source_word": "digital",
       "target_word": "цифровой",
       "source_example": "I have a digital camera.",
       "target_example": "У меня есть цифровая камера."
     },
     {
-      "translation_id": 8010205,
-      "source_id": 8010411,
-      "target_id": 8010412,
       "source_word": "direct",
       "target_word": "прямой",
       "source_example": "Is there a direct train to London?",
       "target_example": "Есть ли прямой поезд до Лондона?"
     },
     {
-      "translation_id": 8010206,
-      "source_id": 8010413,
-      "target_id": 8010414,
       "source_word": "direction",
       "target_word": "направление",
       "source_example": "Which direction is the station?",
       "target_example": "В каком направлении находится станция?"
     },
     {
-      "translation_id": 8010209,
-      "source_id": 8010419,
-      "target_id": 8010420,
       "source_word": "disappear",
       "target_word": "исчезать",
       "source_example": "The sun disappeared behind the clouds.",
       "target_example": "Солнце скрылось за облаками."
     },
     {
-      "translation_id": 8010210,
-      "source_id": 8010421,
-      "target_id": 8010422,
       "source_word": "disaster",
       "target_word": "катастрофа|бедствие",
       "source_example": "The earthquake was a terrible disaster.",
       "target_example": "Землетрясение было ужасной катастрофой."
     },
     {
-      "translation_id": 8010211,
-      "source_id": 8010423,
-      "target_id": 8010424,
       "source_word": "discover",
       "target_word": "открывать|обнаруживать",
       "source_example": "They discovered a new island.",
       "target_example": "Они открыли новый остров."
     },
     {
-      "translation_id": 8010213,
-      "source_id": 8010427,
-      "target_id": 8010428,
-      "source_word": "discussion",
-      "target_word": "обсуждение|дискуссия",
-      "source_example": "We had a long discussion about the problem.",
-      "target_example": "У нас было долгое обсуждение проблемы."
-    },
-    {
-      "translation_id": 8010214,
-      "source_id": 8010429,
-      "target_id": 8010430,
       "source_word": "disease",
       "target_word": "болезнь|заболевание",
       "source_example": "He suffers from a rare disease.",
       "target_example": "Он страдает редким заболеванием."
     },
     {
-      "translation_id": 8010215,
-      "source_id": 8010431,
-      "target_id": 8010432,
       "source_word": "distance",
       "target_word": "расстояние",
       "source_example": "What is the distance to the nearest city?",
       "target_example": "Какое расстояние до ближайшего города?"
     },
     {
-      "translation_id": 8010216,
-      "source_id": 8010433,
-      "target_id": 8010434,
       "source_word": "divorced",
       "target_word": "разведённый",
       "source_example": "My parents are divorced.",
       "target_example": "Мои родители разведены."
     },
     {
-      "translation_id": 8010221,
-      "source_id": 8010443,
-      "target_id": 8010444,
-      "source_word": "drama",
-      "target_word": "драма",
-      "source_example": "She is studying drama at college.",
-      "target_example": "Она изучает драму в колледже."
-    },
-    {
-      "translation_id": 8010222,
-      "source_id": 8010445,
-      "target_id": 8010446,
       "source_word": "drawing",
       "target_word": "рисунок",
       "source_example": "This is a drawing of my house.",
       "target_example": "Это рисунок моего дома."
     },
     {
-      "translation_id": 8010228,
-      "source_id": 8010457,
-      "target_id": 8010458,
       "source_word": "dry",
       "target_word": "сухой",
       "source_example": "My clothes are not dry yet.",
       "target_example": "Моя одежда еще не высохла."
     },
     {
-      "translation_id": 8010229,
-      "source_id": 8010459,
-      "target_id": 8010460,
       "source_word": "earn",
       "target_word": "зарабатывать",
       "source_example": "How much do you earn per month?",
       "target_example": "Сколько вы зарабатываете в месяц?"
     },
     {
-      "translation_id": 8010231,
-      "source_id": 8010463,
-      "target_id": 8010464,
       "source_word": "easily",
       "target_word": "легко",
       "source_example": "He can solve the problem easily.",
       "target_example": "Он может легко решить проблему."
     },
     {
-      "translation_id": 8010232,
-      "source_id": 8010465,
-      "target_id": 8010466,
       "source_word": "education",
       "target_word": "образование",
       "source_example": "Education is very important for the future.",
       "target_example": "Образование очень важно для будущего."
     },
     {
-      "translation_id": 8010233,
-      "source_id": 8010467,
-      "target_id": 8010468,
-      "source_word": "effect",
-      "target_word": "эффект|влияние",
-      "source_example": "The new law had a positive effect.",
-      "target_example": "Новый закон оказал положительное влияние."
-    },
-    {
-      "translation_id": 8010235,
-      "source_id": 8010471,
-      "target_id": 8010472,
-      "source_word": "electric",
-      "target_word": "электрический",
-      "source_example": "I have an electric guitar.",
-      "target_example": "У меня есть электрогитара."
-    },
-    {
-      "translation_id": 8010237,
-      "source_id": 8010475,
-      "target_id": 8010476,
       "source_word": "electricity",
       "target_word": "электричество",
       "source_example": "The storm cut off the electricity.",
       "target_example": "Шторм отключил электричество."
     },
     {
-      "translation_id": 8010239,
-      "source_id": 8010479,
-      "target_id": 8010480,
       "source_word": "elevator",
       "target_word": "лифт",
       "source_example": "Let's take the elevator to the fifth floor.",
       "target_example": "Давайте поднимемся на лифте на пятый этаж."
     },
     {
-      "translation_id": 8010249,
-      "source_id": 8010499,
-      "target_id": 8010500,
       "source_word": "enter",
       "target_word": "входить|вводить",
       "source_example": "Please enter your password.",
       "target_example": "Пожалуйста, введите ваш пароль."
     },
     {
-      "translation_id": 8010250,
-      "source_id": 8010501,
-      "target_id": 8010502,
       "source_word": "environment",
       "target_word": "окружающая среда",
       "source_example": "We need to protect the environment.",
       "target_example": "Нам нужно защищать окружающую среду."
     },
     {
-      "translation_id": 8010251,
-      "source_id": 8010503,
-      "target_id": 8010504,
       "source_word": "equipment",
       "target_word": "оборудование",
       "source_example": "The gym has a lot of new equipment.",
       "target_example": "В спортзале много нового оборудования."
     },
     {
-      "translation_id": 8010255,
-      "source_id": 8010511,
-      "target_id": 8010512,
       "source_word": "everyday",
       "target_word": "повседневный",
       "source_example": "These are my everyday shoes.",
       "target_example": "Это моя повседневная обувь."
     },
     {
-      "translation_id": 8010258,
-      "source_id": 8010517,
-      "target_id": 8010518,
       "source_word": "exact",
       "target_word": "точный",
       "source_example": "What is the exact time?",
       "target_example": "Какое точное время?"
     },
     {
-      "translation_id": 8010262,
-      "source_id": 8010525,
-      "target_id": 8010526,
       "source_word": "exist",
       "target_word": "существовать",
       "source_example": "Do you believe that ghosts exist?",
       "target_example": "Вы верите, что призраки существуют?"
     },
     {
-      "translation_id": 8010265,
-      "source_id": 8010531,
-      "target_id": 8010532,
-      "source_word": "experiment",
-      "target_word": "эксперимент",
-      "source_example": "We did an experiment in the science class.",
-      "target_example": "Мы провели эксперимент на уроке науки."
-    },
-    {
-      "translation_id": 8010266,
-      "source_id": 8010533,
-      "target_id": 8010534,
-      "source_word": "expert",
-      "target_word": "эксперт|специалист",
-      "source_example": "She is an expert in her field.",
-      "target_example": "Она эксперт в своей области."
-    },
-    {
-      "translation_id": 8010267,
-      "source_id": 8010535,
-      "target_id": 8010536,
       "source_word": "explanation",
       "target_word": "объяснение",
       "source_example": "Can you give me an explanation?",
       "target_example": "Можете дать мне объяснение?"
     },
     {
-      "translation_id": 8010268,
-      "source_id": 8010537,
-      "target_id": 8010538,
       "source_word": "express",
       "target_word": "выражать",
       "source_example": "It's hard to express my feelings in words.",
       "target_example": "Трудно выразить свои чувства словами."
     },
     {
-      "translation_id": 8010273,
-      "source_id": 8010547,
-      "target_id": 8010548,
       "source_word": "factory",
       "target_word": "фабрика|завод",
       "source_example": "He works in a car factory.",
       "target_example": "Он работает на автомобильном заводе."
     },
     {
-      "translation_id": 8010274,
-      "source_id": 8010549,
-      "target_id": 8010550,
       "source_word": "fail",
       "target_word": "терпеть неудачу|провалиться",
       "source_example": "I hope I don't fail the exam.",
       "target_example": "Надеюсь, я не провалю экзамен."
     },
     {
-      "translation_id": 8010276,
-      "source_id": 8010553,
-      "target_id": 8010554,
-      "source_word": "fan",
-      "target_word": "фанат|вентилятор",
-      "source_example": "I am a big fan of this singer.",
-      "target_example": "Я большой поклонник этого певца."
-    },
-    {
-      "translation_id": 8010277,
-      "source_id": 8010555,
-      "target_id": 8010556,
       "source_word": "farm",
       "target_word": "обрабатывать землю",
       "source_example": "His family farms the land.",
       "target_example": "Его семья обрабатывает землю."
     },
     {
-      "translation_id": 8010279,
-      "source_id": 8010559,
-      "target_id": 8010560,
       "source_word": "fashion",
       "target_word": "мода",
       "source_example": "She is very interested in fashion.",
       "target_example": "Она очень интересуется модой."
     },
     {
-      "translation_id": 8010282,
-      "source_id": 8010565,
-      "target_id": 8010566,
       "source_word": "feature",
       "target_word": "особенность|черта",
       "source_example": "The new phone has many interesting features.",
       "target_example": "У нового телефона много интересных функций."
     },
     {
-      "translation_id": 8010283,
-      "source_id": 8010567,
-      "target_id": 8010568,
       "source_word": "feed",
       "target_word": "кормить",
       "source_example": "It's time to feed the dog.",
       "target_example": "Пора кормить собаку."
     },
     {
-      "translation_id": 8010284,
-      "source_id": 8010569,
-      "target_id": 8010570,
       "source_word": "female",
       "target_word": "женский|самка",
       "source_example": "This is a female cat.",
       "target_example": "Это кошка."
     },
     {
-      "translation_id": 8010285,
-      "source_id": 8010571,
-      "target_id": 8010572,
       "source_word": "fever",
       "target_word": "жар|лихорадка",
       "source_example": "I have a high fever.",
       "target_example": "У меня высокая температура."
     },
     {
-      "translation_id": 8010293,
-      "source_id": 8010587,
-      "target_id": 8010588,
       "source_word": "finger",
       "target_word": "палец (на руке)",
       "source_example": "She wears a ring on her finger.",
       "target_example": "Она носит кольцо на пальце."
     },
     {
-      "translation_id": 8010298,
-      "source_id": 8010597,
-      "target_id": 8010598,
       "source_word": "fishing",
       "target_word": "рыбалка",
       "source_example": "We are going fishing tomorrow.",
       "target_example": "Завтра мы идем на рыбалку."
     },
     {
-      "translation_id": 8010301,
-      "source_id": 8010603,
-      "target_id": 8010604,
       "source_word": "flat",
       "target_word": "плоский|ровный",
       "source_example": "The ground is very flat here.",
       "target_example": "Здесь очень ровная земля."
     },
     {
-      "translation_id": 8010305,
-      "source_id": 8010611,
-      "target_id": 8010612,
       "source_word": "focus",
       "target_word": "фокусироваться|сосредоточиться",
       "source_example": "Please focus on your work.",
       "target_example": "Пожалуйста, сосредоточьтесь на своей работе."
     },
     {
-      "translation_id": 8010307,
-      "source_id": 8010615,
-      "target_id": 8010616,
       "source_word": "foreign",
       "target_word": "иностранный",
       "source_example": "I am learning a foreign language.",
       "target_example": "Я изучаю иностранный язык."
     },
     {
-      "translation_id": 8010308,
-      "source_id": 8010617,
-      "target_id": 8010618,
       "source_word": "forest",
       "target_word": "лес",
       "source_example": "We went for a walk in the forest.",
       "target_example": "Мы пошли гулять в лес."
     },
     {
-      "translation_id": 8010322,
-      "source_id": 8010645,
-      "target_id": 8010646,
       "source_word": "garbage",
       "target_word": "мусор",
       "source_example": "Please take out the garbage.",
       "target_example": "Пожалуйста, вынеси мусор."
     },
     {
-      "translation_id": 8010327,
-      "source_id": 8010655,
-      "target_id": 8010656,
       "source_word": "goal",
       "target_word": "цель",
       "source_example": "My goal is to learn Spanish.",
       "target_example": "Моя цель - выучить испанский."
     },
     {
-      "translation_id": 8010330,
-      "source_id": 8010661,
-      "target_id": 8010662,
-      "source_word": "golf",
-      "target_word": "гольф",
-      "source_example": "I like to play golf on weekends.",
-      "target_example": "Мне нравится играть в гольф по выходным."
-    },
-    {
-      "translation_id": 8010333,
-      "source_id": 8010667,
-      "target_id": 8010668,
       "source_word": "grass",
       "target_word": "трава",
       "source_example": "The grass is green in the spring.",
       "target_example": "Весной трава зеленая."
     },
     {
-      "translation_id": 8010337,
-      "source_id": 8010675,
-      "target_id": 8010676,
       "source_word": "guest",
       "target_word": "гость",
       "source_example": "We have a guest for dinner tonight.",
       "target_example": "У нас сегодня гость на ужин."
     },
     {
-      "translation_id": 8010338,
-      "source_id": 8010677,
-      "target_id": 8010678,
-      "source_word": "guide",
-      "target_word": "гид|руководство",
-      "source_example": "The guide showed us around the city.",
-      "target_example": "Гид показал нам город."
-    },
-    {
-      "translation_id": 8010339,
-      "source_id": 8010679,
-      "target_id": 8010680,
       "source_word": "gun",
       "target_word": "пистолет|оружие",
       "source_example": "The police officer had a gun.",
       "target_example": "У полицейского был пистолет."
     },
     {
-      "translation_id": 8010343,
-      "source_id": 8010687,
-      "target_id": 8010688,
       "source_word": "hall",
       "target_word": "зал|коридор",
       "source_example": "The concert was in a large hall.",
       "target_example": "Концерт проходил в большом зале."
     },
     {
-      "translation_id": 8010347,
-      "source_id": 8010695,
-      "target_id": 8010696,
       "source_word": "heat",
       "target_word": "жара|тепло",
       "source_example": "I can't stand the heat in summer.",
       "target_example": "Я не выношу летнюю жару."
     },
     {
-      "translation_id": 8010356,
-      "source_id": 8010713,
-      "target_id": 8010714,
       "source_word": "hill",
       "target_word": "холм",
       "source_example": "Our house is on a hill.",
       "target_example": "Наш дом стоит на холме."
     },
     {
-      "translation_id": 8010363,
-      "source_id": 8010727,
-      "target_id": 8010728,
       "source_word": "holiday",
       "target_word": "праздник|отпуск",
       "source_example": "We are going on holiday next week.",
       "target_example": "На следующей неделе мы едем в отпуск."
     },
     {
-      "translation_id": 8010370,
-      "source_id": 8010741,
-      "target_id": 8010742,
-      "source_word": "identify",
-      "target_word": "опознавать|идентифицировать",
-      "source_example": "Can you identify the man in the photo?",
-      "target_example": "Можете опознать мужчину на фотографии?"
-    },
-    {
-      "translation_id": 8010371,
-      "source_id": 8010743,
-      "target_id": 8010744,
       "source_word": "ill",
       "target_word": "больной",
       "source_example": "She is ill in bed.",
       "target_example": "Она больна и лежит в постели."
     },
     {
-      "translation_id": 8010373,
-      "source_id": 8010747,
-      "target_id": 8010748,
       "source_word": "image",
       "target_word": "изображение|образ",
       "source_example": "The book has many beautiful images.",
       "target_example": "В книге много красивых изображений."
     },
     {
-      "translation_id": 8010376,
-      "source_id": 8010753,
-      "target_id": 8010754,
       "source_word": "included",
       "target_word": "включённый",
       "source_example": "Breakfast is included in the price.",
       "target_example": "Завтрак включен в стоимость."
     },
     {
-      "translation_id": 8010379,
-      "source_id": 8010759,
-      "target_id": 8010760,
       "source_word": "incredible",
       "target_word": "невероятный",
       "source_example": "The view from the top was incredible.",
       "target_example": "Вид с вершины был невероятным."
     },
     {
-      "translation_id": 8010380,
-      "source_id": 8010761,
-      "target_id": 8010762,
       "source_word": "independent",
       "target_word": "независимый",
       "source_example": "She is a very independent woman.",
       "target_example": "Она очень независимая женщина."
     },
     {
-      "translation_id": 8010382,
-      "source_id": 8010765,
-      "target_id": 8010766,
-      "source_word": "industry",
-      "target_word": "промышленность|индустрия",
-      "source_example": "He works in the tourist industry.",
-      "target_example": "Он работает в туристической индустрии."
-    },
-    {
-      "translation_id": 8010384,
-      "source_id": 8010769,
-      "target_id": 8010770,
       "source_word": "injury",
       "target_word": "травма|повреждение",
       "source_example": "He had a serious injury in the accident.",
       "target_example": "В аварии он получил серьезную травму."
     },
     {
-      "translation_id": 8010397,
-      "source_id": 8010795,
-      "target_id": 8010796,
       "source_word": "invite",
       "target_word": "приглашать",
       "source_example": "I want to invite you to my party.",
       "target_example": "Я хочу пригласить тебя на свою вечеринку."
     },
     {
-      "translation_id": 8010407,
-      "source_id": 8010815,
-      "target_id": 8010816,
       "source_word": "kid",
       "target_word": "ребёнок",
       "source_example": "The kids are playing in the park.",
       "target_example": "Дети играют в парке."
     },
     {
-      "translation_id": 8010411,
-      "source_id": 8010823,
-      "target_id": 8010824,
       "source_word": "knee",
       "target_word": "колено",
       "source_example": "I hurt my knee when I fell.",
       "target_example": "Я повредил колено, когда упал."
     },
     {
-      "translation_id": 8010414,
-      "source_id": 8010829,
-      "target_id": 8010830,
       "source_word": "knowledge",
       "target_word": "знание",
       "source_example": "He has a good knowledge of history.",
       "target_example": "У него хорошие знания истории."
     },
     {
-      "translation_id": 8010415,
-      "source_id": 8010831,
-      "target_id": 8010832,
       "source_word": "lab",
       "target_word": "лаборатория",
       "source_example": "We have a science lab at school.",
       "target_example": "У нас в школе есть научная лаборатория."
     },
     {
-      "translation_id": 8010416,
-      "source_id": 8010833,
-      "target_id": 8010834,
-      "source_word": "lady",
-      "target_word": "леди|дама",
-      "source_example": "An old lady was sitting on the bench.",
-      "target_example": "На скамейке сидела пожилая дама."
-    },
-    {
-      "translation_id": 8010417,
-      "source_id": 8010835,
-      "target_id": 8010836,
       "source_word": "lake",
       "target_word": "озеро",
       "source_example": "We went for a swim in the lake.",
       "target_example": "Мы пошли купаться в озере."
     },
     {
-      "translation_id": 8010429,
-      "source_id": 8010859,
-      "target_id": 8010860,
-      "source_word": "leader",
-      "target_word": "лидер",
-      "source_example": "He is a great leader.",
-      "target_example": "Он великий лидер."
-    },
-    {
-      "translation_id": 8010430,
-      "source_id": 8010861,
-      "target_id": 8010862,
       "source_word": "learning",
       "target_word": "обучение|изучение",
       "source_example": "Learning a new language is fun.",
       "target_example": "Изучение нового языка - это весело."
     },
     {
-      "translation_id": 8010438,
-      "source_id": 8010877,
-      "target_id": 8010878,
       "source_word": "lift",
       "target_word": "поднимать",
       "source_example": "Can you help me lift this box?",
       "target_example": "Можешь помочь мне поднять эту коробку?"
     },
     {
-      "translation_id": 8010441,
-      "source_id": 8010883,
-      "target_id": 8010884,
       "source_word": "likely",
       "target_word": "вероятный",
       "source_example": "It is likely to rain tomorrow.",
       "target_example": "Вероятно, завтра будет дождь."
     },
     {
-      "translation_id": 8010442,
-      "source_id": 8010885,
-      "target_id": 8010886,
       "source_word": "link",
       "target_word": "ссылка",
       "source_example": "Click on the link to open the website.",
       "target_example": "Нажмите на ссылку, чтобы открыть веб-сайт."
     },
     {
-      "translation_id": 8010448,
-      "source_id": 8010897,
-      "target_id": 8010898,
       "source_word": "loud",
       "target_word": "громкий",
       "source_example": "The music is too loud.",
       "target_example": "Музыка слишком громкая."
     },
     {
-      "translation_id": 8010453,
-      "source_id": 8010907,
-      "target_id": 8010908,
       "source_word": "mail",
       "target_word": "почта",
       "source_example": "I will send the letter by mail.",
       "target_example": "Я отправлю письмо по почте."
     },
     {
-      "translation_id": 8010455,
-      "source_id": 8010911,
-      "target_id": 8010912,
       "source_word": "male",
       "target_word": "мужской|самец",
       "source_example": "The male lion is bigger than the female.",
       "target_example": "Самец льва крупнее самки."
     },
     {
-      "translation_id": 8010456,
-      "source_id": 8010913,
-      "target_id": 8010914,
       "source_word": "manage",
       "target_word": "управлять|справляться",
       "source_example": "How do you manage to do so much work?",
       "target_example": "Как вам удается делать так много работы?"
     },
     {
-      "translation_id": 8010457,
-      "source_id": 8010915,
-      "target_id": 8010916,
       "source_word": "manager",
       "target_word": "менеджер|управляющий",
       "source_example": "I need to talk to the manager.",
       "target_example": "Мне нужно поговорить с менеджером."
     },
     {
-      "translation_id": 8010461,
-      "source_id": 8010923,
-      "target_id": 8010924,
-      "source_word": "material",
-      "target_word": "материал",
-      "source_example": "What material is this shirt made of?",
-      "target_example": "Из какого материала сделана эта рубашка?"
-    },
-    {
-      "translation_id": 8010466,
-      "source_id": 8010933,
-      "target_id": 8010934,
       "source_word": "mayor",
       "target_word": "мэр",
       "source_example": "The mayor of the city gave a speech.",
       "target_example": "Мэр города выступил с речью."
     },
     {
-      "translation_id": 8010467,
-      "source_id": 8010935,
-      "target_id": 8010936,
       "source_word": "media",
       "target_word": "СМИ",
       "source_example": "The story was all over the media.",
       "target_example": "История была во всех СМИ."
     },
     {
-      "translation_id": 8010469,
-      "source_id": 8010939,
-      "target_id": 8010940,
-      "source_word": "medicine",
-      "target_word": "медицина|лекарство",
-      "source_example": "Have you taken your medicine?",
-      "target_example": "Вы приняли лекарство?"
-    },
-    {
-      "translation_id": 8010472,
-      "source_id": 8010945,
-      "target_id": 8010946,
-      "source_word": "metal",
-      "target_word": "металл",
-      "source_example": "The bridge is made of metal.",
-      "target_example": "Мост сделан из металла."
-    },
-    {
-      "translation_id": 8010473,
-      "source_id": 8010947,
-      "target_id": 8010948,
-      "source_word": "method",
-      "target_word": "метод|способ",
-      "source_example": "This is a new method of teaching.",
-      "target_example": "Это новый метод преподавания."
-    },
-    {
-      "translation_id": 8010478,
-      "source_id": 8010957,
-      "target_id": 8010958,
       "source_word": "mirror",
       "target_word": "зеркало",
       "source_example": "She looked at herself in the mirror.",
       "target_example": "Она посмотрела на себя в зеркало."
     },
     {
-      "translation_id": 8010482,
-      "source_id": 8010965,
-      "target_id": 8010966,
       "source_word": "mostly",
       "target_word": "в основном|главным образом",
       "source_example": "The audience was mostly young people.",
       "target_example": "Аудитория состояла в основном из молодых людей."
     },
     {
-      "translation_id": 8010484,
-      "source_id": 8010969,
-      "target_id": 8010970,
       "source_word": "movement",
       "target_word": "движение",
       "source_example": "I saw a movement in the bushes.",
       "target_example": "Я увидел движение в кустах."
     },
     {
-      "translation_id": 8010491,
-      "source_id": 8010983,
-      "target_id": 8010984,
       "source_word": "nearly",
       "target_word": "почти",
       "source_example": "It's nearly lunchtime.",
       "target_example": "Уже почти обед."
     },
     {
-      "translation_id": 8010497,
-      "source_id": 8010995,
-      "target_id": 8010996,
       "source_word": "network",
       "target_word": "сеть",
       "source_example": "I have a large network of friends.",
       "target_example": "У меня большая сеть друзей."
     },
     {
-      "translation_id": 8010501,
-      "source_id": 8011003,
-      "target_id": 8011004,
       "source_word": "normally",
       "target_word": "обычно",
       "source_example": "I normally go to bed at 11 PM.",
       "target_example": "Обычно я ложусь спать в 11 вечера."
     },
     {
-      "translation_id": 8010504,
-      "source_id": 8011009,
-      "target_id": 8011010,
       "source_word": "nowhere",
       "target_word": "нигде|никуда",
       "source_example": "I have nowhere to go.",
       "target_example": "Мне некуда идти."
     },
     {
-      "translation_id": 8010509,
-      "source_id": 8011019,
-      "target_id": 8011020,
       "source_word": "oil",
       "target_word": "масло|нефть",
       "source_example": "I need to change the oil in my car.",
       "target_example": "Мне нужно поменять масло в машине."
     },
     {
-      "translation_id": 8010510,
-      "source_id": 8011021,
-      "target_id": 8011022,
       "source_word": "onto",
       "target_word": "на (на поверхность)",
       "source_example": "The cat jumped onto the roof.",
       "target_example": "Кошка запрыгнула на крышу."
     },
     {
-      "translation_id": 8010512,
-      "source_id": 8011025,
-      "target_id": 8011026,
       "source_word": "option",
       "target_word": "вариант|опция",
       "source_example": "You have two options.",
       "target_example": "У вас есть два варианта."
     },
     {
-      "translation_id": 8010513,
-      "source_id": 8011027,
-      "target_id": 8011028,
       "source_word": "ordinary",
       "target_word": "обычный",
       "source_example": "It was just an ordinary day.",
       "target_example": "Это был просто обычный день."
     },
     {
-      "translation_id": 8010514,
-      "source_id": 8011029,
-      "target_id": 8011030,
-      "source_word": "organization",
-      "target_word": "организация",
-      "source_example": "She works for a charitable organization.",
-      "target_example": "Она работает в благотворительной организации."
-    },
-    {
-      "translation_id": 8010516,
-      "source_id": 8011033,
-      "target_id": 8011034,
-      "source_word": "original",
-      "target_word": "оригинальный",
-      "source_example": "This is the original painting.",
-      "target_example": "Это оригинальная картина."
-    },
-    {
-      "translation_id": 8010522,
-      "source_id": 8011045,
-      "target_id": 8011046,
       "source_word": "owner",
       "target_word": "владелец",
       "source_example": "Who is the owner of this dog?",
       "target_example": "Кто владелец этой собаки?"
     },
     {
-      "translation_id": 8010523,
-      "source_id": 8011047,
-      "target_id": 8011048,
       "source_word": "pack",
       "target_word": "паковать",
       "source_example": "I need to pack my suitcase.",
       "target_example": "Мне нужно упаковать чемодан."
     },
     {
-      "translation_id": 8010526,
-      "source_id": 8011053,
-      "target_id": 8011054,
       "source_word": "palace",
       "target_word": "дворец",
       "source_example": "The queen lives in a palace.",
       "target_example": "Королева живет во дворце."
     },
     {
-      "translation_id": 8010527,
-      "source_id": 8011055,
-      "target_id": 8011056,
       "source_word": "parking",
       "target_word": "парковка",
       "source_example": "I couldn't find a parking space.",
       "target_example": "Я не смог найти парковочное место."
     },
     {
-      "translation_id": 8010528,
-      "source_id": 8011057,
-      "target_id": 8011058,
       "source_word": "particular",
       "target_word": "конкретный|особый",
       "source_example": "Is there any particular reason?",
       "target_example": "Есть какая-то особая причина?"
     },
     {
-      "translation_id": 8010536,
-      "source_id": 8011073,
-      "target_id": 8011074,
-      "source_word": "penny",
-      "target_word": "пенни",
-      "source_example": "This costs one penny.",
-      "target_example": "Это стоит один пенни."
-    },
-    {
-      "translation_id": 8010537,
-      "source_id": 8011075,
-      "target_id": 8011076,
       "source_word": "per",
       "target_word": "за|в",
       "source_example": "The car was going 100 kilometers per hour.",
       "target_example": "Машина ехала со скоростью 100 километров в час."
     },
     {
-      "translation_id": 8010538,
-      "source_id": 8011077,
-      "target_id": 8011078,
-      "source_word": "percent",
-      "target_word": "процент",
-      "source_example": "I agree with you 100 percent.",
-      "target_example": "Я согласен с вами на 100 процентов."
-    },
-    {
-      "translation_id": 8010539,
-      "source_id": 8011079,
-      "target_id": 8011080,
       "source_word": "perform",
       "target_word": "выступать|исполнять",
       "source_example": "The band will perform live tonight.",
       "target_example": "Группа выступит вживую сегодня вечером."
     },
     {
-      "translation_id": 8010541,
-      "source_id": 8011083,
-      "target_id": 8011084,
       "source_word": "permission",
       "target_word": "разрешение",
       "source_example": "Do I have your permission to leave?",
       "target_example": "У меня есть ваше разрешение уйти?"
     },
     {
-      "translation_id": 8010545,
-      "source_id": 8011091,
-      "target_id": 8011092,
       "source_word": "physical",
       "target_word": "физический",
       "source_example": "Running is a good physical exercise.",
       "target_example": "Бег - хорошее физическое упражнение."
     },
     {
-      "translation_id": 8010548,
-      "source_id": 8011097,
-      "target_id": 8011098,
-      "source_word": "pilot",
-      "target_word": "пилот",
-      "source_example": "The pilot landed the plane safely.",
-      "target_example": "Пилот благополучно посадил самолет."
-    },
-    {
-      "translation_id": 8010550,
-      "source_id": 8011101,
-      "target_id": 8011102,
       "source_word": "plant",
       "target_word": "сажать",
       "source_example": "I am going to plant some flowers.",
       "target_example": "Я собираюсь посадить цветы."
     },
     {
-      "translation_id": 8010551,
-      "source_id": 8011103,
-      "target_id": 8011104,
-      "source_word": "plastic",
-      "target_word": "пластик|пластмасса",
-      "source_example": "The toy is made of plastic.",
-      "target_example": "Игрушка сделана из пластика."
-    },
-    {
-      "translation_id": 8010552,
-      "source_id": 8011105,
-      "target_id": 8011106,
       "source_word": "plate",
       "target_word": "тарелка",
       "source_example": "Can I have a clean plate, please?",
       "target_example": "Можно мне чистую тарелку, пожалуйста?"
     },
     {
-      "translation_id": 8010555,
-      "source_id": 8011111,
-      "target_id": 8011112,
       "source_word": "pleased",
       "target_word": "довольный",
       "source_example": "I am very pleased with the result.",
       "target_example": "Я очень доволен результатом."
     },
     {
-      "translation_id": 8010556,
-      "source_id": 8011113,
-      "target_id": 8011114,
       "source_word": "pocket",
       "target_word": "карман",
       "source_example": "I have my keys in my pocket.",
       "target_example": "Мои ключи в кармане."
     },
     {
-      "translation_id": 8010563,
-      "source_id": 8011127,
-      "target_id": 8011128,
       "source_word": "possibility",
       "target_word": "возможность",
       "source_example": "There is a possibility of rain tomorrow.",
       "target_example": "Завтра есть вероятность дождя."
     },
     {
-      "translation_id": 8010569,
-      "source_id": 8011139,
-      "target_id": 8011140,
       "source_word": "prevent",
       "target_word": "предотвращать",
       "source_example": "How can we prevent accidents?",
       "target_example": "Как мы можем предотвратить несчастные случаи?"
     },
     {
-      "translation_id": 8010570,
-      "source_id": 8011141,
-      "target_id": 8011142,
       "source_word": "print",
       "target_word": "печатать",
       "source_example": "I need to print this document.",
       "target_example": "Мне нужно распечатать этот документ."
     },
     {
-      "translation_id": 8010573,
-      "source_id": 8011147,
-      "target_id": 8011148,
-      "source_word": "prize",
-      "target_word": "приз",
-      "source_example": "She won the first prize.",
-      "target_example": "Она выиграла первый приз."
-    },
-    {
-      "translation_id": 8010574,
-      "source_id": 8011149,
-      "target_id": 8011150,
-      "source_word": "process",
-      "target_word": "процесс",
-      "source_example": "Learning a language is a long process.",
-      "target_example": "Изучение языка - это долгий процесс."
-    },
-    {
-      "translation_id": 8010575,
-      "source_id": 8011151,
-      "target_id": 8011152,
       "source_word": "produce",
       "target_word": "производить",
       "source_example": "This factory produces cars.",
       "target_example": "Этот завод производит автомобили."
     },
     {
-      "translation_id": 8010576,
-      "source_id": 8011153,
-      "target_id": 8011154,
-      "source_word": "professional",
-      "target_word": "профессиональный",
-      "source_example": "He is a professional photographer.",
-      "target_example": "Он профессиональный фотограф."
-    },
-    {
-      "translation_id": 8010577,
-      "source_id": 8011155,
-      "target_id": 8011156,
-      "source_word": "professor",
-      "target_word": "профессор",
-      "source_example": "She is a professor of history.",
-      "target_example": "Она профессор истории."
-    },
-    {
-      "translation_id": 8010578,
-      "source_id": 8011157,
-      "target_id": 8011158,
-      "source_word": "profile",
-      "target_word": "профиль",
-      "source_example": "I need to update my online profile.",
-      "target_example": "Мне нужно обновить свой онлайн-профиль."
-    },
-    {
-      "translation_id": 8010579,
-      "source_id": 8011159,
-      "target_id": 8011160,
-      "source_word": "progress",
-      "target_word": "прогресс",
-      "source_example": "I am making good progress in my English.",
-      "target_example": "Я делаю хорошие успехи в английском."
-    },
-    {
-      "translation_id": 8010583,
-      "source_id": 8011167,
-      "target_id": 8011168,
       "source_word": "provide",
       "target_word": "предоставлять|обеспечивать",
       "source_example": "The hotel provides free breakfast.",
       "target_example": "Отель предоставляет бесплатный завтрак."
     },
     {
-      "translation_id": 8010587,
-      "source_id": 8011175,
-      "target_id": 8011176,
       "source_word": "purpose",
       "target_word": "цель",
       "source_example": "What is the purpose of your visit?",
       "target_example": "Какова цель вашего визита?"
     },
     {
-      "translation_id": 8010589,
-      "source_id": 8011179,
-      "target_id": 8011180,
       "source_word": "quality",
       "target_word": "качество",
       "source_example": "The quality of this product is very good.",
       "target_example": "Качество этого продукта очень хорошее."
     },
     {
-      "translation_id": 8010591,
-      "source_id": 8011183,
-      "target_id": 8011184,
       "source_word": "queen",
       "target_word": "королева",
       "source_example": "The queen is the head of the country.",
       "target_example": "Королева - глава страны."
     },
     {
-      "translation_id": 8010593,
-      "source_id": 8011187,
-      "target_id": 8011188,
       "source_word": "quietly",
       "target_word": "тихо",
       "source_example": "She spoke quietly.",
       "target_example": "Она говорила тихо."
     },
     {
-      "translation_id": 8010597,
-      "source_id": 8011195,
-      "target_id": 8011196,
       "source_word": "rate",
       "target_word": "тариф|ставка",
       "source_example": "The hotel has a special rate for weekends.",
       "target_example": "В отеле действует специальный тариф на выходные."
     },
     {
-      "translation_id": 8010602,
-      "source_id": 8011205,
-      "target_id": 8011206,
       "source_word": "receive",
       "target_word": "получать",
       "source_example": "Did you receive my email?",
       "target_example": "Вы получили мое письмо?"
     },
     {
-      "translation_id": 8010603,
-      "source_id": 8011207,
-      "target_id": 8011208,
       "source_word": "recent",
       "target_word": "недавний",
       "source_example": "This is a recent photo of me.",
       "target_example": "Это моя недавняя фотография."
     },
     {
-      "translation_id": 8010604,
-      "source_id": 8011209,
-      "target_id": 8011210,
       "source_word": "recently",
       "target_word": "недавно",
       "source_example": "I saw him recently.",
       "target_example": "Я видел его недавно."
     },
     {
-      "translation_id": 8010607,
-      "source_id": 8011215,
-      "target_id": 8011216,
       "source_word": "recognize",
       "target_word": "узнавать",
       "source_example": "I didn't recognize you with your new haircut.",
       "target_example": "Я не узнал тебя с твоей новой стрижкой."
     },
     {
-      "translation_id": 8010612,
-      "source_id": 8011225,
-      "target_id": 8011226,
       "source_word": "reduce",
       "target_word": "уменьшать|сокращать",
       "source_example": "We need to reduce our expenses.",
       "target_example": "Нам нужно сократить наши расходы."
     },
     {
-      "translation_id": 8010615,
-      "source_id": 8011231,
-      "target_id": 8011232,
       "source_word": "refuse",
       "target_word": "отказываться",
       "source_example": "He refused to help me.",
       "target_example": "Он отказался мне помочь."
     },
     {
-      "translation_id": 8010617,
-      "source_id": 8011235,
-      "target_id": 8011236,
-      "source_word": "regular",
-      "target_word": "регулярный",
-      "source_example": "I have regular meetings with my boss.",
-      "target_example": "У меня регулярные встречи с моим начальником."
-    },
-    {
-      "translation_id": 8010619,
-      "source_id": 8011239,
-      "target_id": 8011240,
       "source_word": "remove",
       "target_word": "удалять|убирать",
       "source_example": "Please remove your shoes before entering.",
       "target_example": "Пожалуйста, снимите обувь перед входом."
     },
     {
-      "translation_id": 8010624,
-      "source_id": 8011249,
-      "target_id": 8011250,
-      "source_word": "reporter",
-      "target_word": "репортёр|корреспондент",
-      "source_example": "A reporter from the local newspaper interviewed me.",
-      "target_example": "Меня проинтервьюировал репортер из местной газеты."
-    },
-    {
-      "translation_id": 8010625,
-      "source_id": 8011251,
-      "target_id": 8011252,
       "source_word": "request",
       "target_word": "просьба|запрос",
       "source_example": "I have a special request.",
       "target_example": "У меня есть особая просьба."
     },
     {
-      "translation_id": 8010626,
-      "source_id": 8011253,
-      "target_id": 8011254,
       "source_word": "research",
       "target_word": "исследование",
       "source_example": "They are doing research on a new drug.",
       "target_example": "Они проводят исследования нового лекарства."
     },
     {
-      "translation_id": 8010629,
-      "source_id": 8011259,
-      "target_id": 8011260,
       "source_word": "response",
       "target_word": "ответ|реакция",
       "source_example": "I am still waiting for a response.",
       "target_example": "Я все еще жду ответа."
     },
     {
-      "translation_id": 8010636,
-      "source_id": 8011273,
-      "target_id": 8011274,
       "source_word": "rise",
       "target_word": "подниматься|восход",
       "source_example": "The sun will rise at 6 AM.",
       "target_example": "Солнце взойдет в 6 утра."
     },
     {
-      "translation_id": 8010639,
-      "source_id": 8011279,
-      "target_id": 8011280,
-      "source_word": "role",
-      "target_word": "роль",
-      "source_example": "She played the main role in the movie.",
-      "target_example": "Она сыграла главную роль в фильме."
-    },
-    {
-      "translation_id": 8010640,
-      "source_id": 8011281,
-      "target_id": 8011282,
       "source_word": "roof",
       "target_word": "крыша",
       "source_example": "There is a cat on the roof.",
       "target_example": "На крыше сидит кошка."
     },
     {
-      "translation_id": 8010642,
-      "source_id": 8011285,
-      "target_id": 8011286,
       "source_word": "route",
       "target_word": "маршрут",
       "source_example": "What is the best route to the airport?",
       "target_example": "Какой лучший маршрут до аэропорта?"
     },
     {
-      "translation_id": 8010643,
-      "source_id": 8011287,
-      "target_id": 8011288,
       "source_word": "rude",
       "target_word": "грубый",
       "source_example": "It's rude to interrupt people.",
       "target_example": "Грубо перебивать людей."
     },
     {
-      "translation_id": 8010652,
-      "source_id": 8011305,
-      "target_id": 8011306,
       "source_word": "sale",
       "target_word": "распродажа|продажа",
       "source_example": "The house is for sale.",
       "target_example": "Дом продается."
     },
     {
-      "translation_id": 8010653,
-      "source_id": 8011307,
-      "target_id": 8011308,
       "source_word": "sauce",
       "target_word": "соус",
       "source_example": "I like tomato sauce on my pasta.",
       "target_example": "Я люблю томатный соус к макаронам."
     },
     {
-      "translation_id": 8010656,
-      "source_id": 8011313,
-      "target_id": 8011314,
       "source_word": "scary",
       "target_word": "страшный|пугающий",
       "source_example": "It was a scary movie.",
       "target_example": "Это был страшный фильм."
     },
     {
-      "translation_id": 8010658,
-      "source_id": 8011317,
-      "target_id": 8011318,
       "source_word": "schedule",
       "target_word": "расписание|график",
       "source_example": "What is your schedule for tomorrow?",
       "target_example": "Какое у тебя расписание на завтра?"
     },
     {
-      "translation_id": 8010659,
-      "source_id": 8011319,
-      "target_id": 8011320,
       "source_word": "score",
       "target_word": "счёт|очко",
       "source_example": "What's the final score?",
       "target_example": "Какой окончательный счет?"
     },
     {
-      "translation_id": 8010660,
-      "source_id": 8011321,
-      "target_id": 8011322,
       "source_word": "screen",
       "target_word": "экран",
       "source_example": "My computer screen is broken.",
       "target_example": "Экран моего компьютера разбит."
     },
     {
-      "translation_id": 8010663,
-      "source_id": 8011327,
-      "target_id": 8011328,
-      "source_word": "season",
-      "target_word": "сезон|время года",
-      "source_example": "My favorite season is autumn.",
-      "target_example": "Мое любимое время года - осень."
-    },
-    {
-      "translation_id": 8010667,
-      "source_id": 8011335,
-      "target_id": 8011336,
-      "source_word": "secretary",
-      "target_word": "секретарь",
-      "source_example": "My secretary will call you to arrange a meeting.",
-      "target_example": "Мой секретарь позвонит вам, чтобы договориться о встрече."
-    },
-    {
-      "translation_id": 8010670,
-      "source_id": 8011341,
-      "target_id": 8011342,
       "source_word": "separate",
       "target_word": "отдельный",
       "source_example": "We have separate rooms.",
       "target_example": "У нас отдельные комнаты."
     },
     {
-      "translation_id": 8010673,
-      "source_id": 8011347,
-      "target_id": 8011348,
       "source_word": "serve",
       "target_word": "служить|подавать",
       "source_example": "They serve good food here.",
       "target_example": "Здесь хорошо кормят."
     },
     {
-      "translation_id": 8010675,
-      "source_id": 8011351,
-      "target_id": 8011352,
       "source_word": "several",
       "target_word": "несколько",
       "source_example": "I have several books on this topic.",
       "target_example": "У меня есть несколько книг на эту тему."
     },
     {
-      "translation_id": 8010677,
-      "source_id": 8011355,
-      "target_id": 8011356,
       "source_word": "shape",
       "target_word": "форма",
       "source_example": "The box is a square shape.",
       "target_example": "Коробка квадратной формы."
     },
     {
-      "translation_id": 8010680,
-      "source_id": 8011361,
-      "target_id": 8011362,
       "source_word": "shoulder",
       "target_word": "плечо",
       "source_example": "He tapped me on the shoulder.",
       "target_example": "Он похлопал меня по плечу."
     },
     {
-      "translation_id": 8010681,
-      "source_id": 8011363,
-      "target_id": 8011364,
       "source_word": "shout",
       "target_word": "кричать",
       "source_example": "There is no need to shout.",
       "target_example": "Не нужно кричать."
     },
     {
-      "translation_id": 8010685,
-      "source_id": 8011371,
-      "target_id": 8011372,
       "source_word": "silver",
       "target_word": "серебро|серебряный",
       "source_example": "She wore a silver necklace.",
       "target_example": "На ней было серебряное ожерелье."
     },
     {
-      "translation_id": 8010691,
-      "source_id": 8011383,
-      "target_id": 8011384,
       "source_word": "site",
       "target_word": "место|сайт",
       "source_example": "This is a historical site.",
       "target_example": "Это историческое место."
     },
     {
-      "translation_id": 8010692,
-      "source_id": 8011385,
-      "target_id": 8011386,
       "source_word": "size",
       "target_word": "размер",
       "source_example": "What size do you wear?",
       "target_example": "Какой размер вы носите?"
     },
     {
-      "translation_id": 8010698,
-      "source_id": 8011397,
-      "target_id": 8011398,
       "source_word": "slowly",
       "target_word": "медленно",
       "source_example": "Please speak more slowly.",
       "target_example": "Пожалуйста, говорите медленнее."
     },
     {
-      "translation_id": 8010703,
-      "source_id": 8011407,
-      "target_id": 8011408,
       "source_word": "smoking",
       "target_word": "курение",
       "source_example": "Smoking is bad for your health.",
       "target_example": "Курение вредно для вашего здоровья."
     },
     {
-      "translation_id": 8010707,
-      "source_id": 8011415,
-      "target_id": 8011416,
       "source_word": "social",
       "target_word": "социальный|общественный",
       "source_example": "Humans are social beings.",
       "target_example": "Люди - социальные существа."
     },
     {
-      "translation_id": 8010708,
-      "source_id": 8011417,
-      "target_id": 8011418,
       "source_word": "society",
       "target_word": "общество",
       "source_example": "We live in a complex society.",
       "target_example": "Мы живем в сложном обществе."
     },
     {
-      "translation_id": 8010710,
-      "source_id": 8011421,
-      "target_id": 8011422,
       "source_word": "soft",
       "target_word": "мягкий",
       "source_example": "The pillow is very soft.",
       "target_example": "Подушка очень мягкая."
     },
     {
-      "translation_id": 8010711,
-      "source_id": 8011423,
-      "target_id": 8011424,
       "source_word": "soldier",
       "target_word": "солдат",
       "source_example": "He is a brave soldier.",
       "target_example": "Он храбрый солдат."
     },
     {
-      "translation_id": 8010712,
-      "source_id": 8011425,
-      "target_id": 8011426,
       "source_word": "solution",
       "target_word": "решение",
       "source_example": "I found a solution to the problem.",
       "target_example": "Я нашел решение проблемы."
     },
     {
-      "translation_id": 8010713,
-      "source_id": 8011427,
-      "target_id": 8011428,
       "source_word": "solve",
       "target_word": "решать",
       "source_example": "I need to solve this puzzle.",
       "target_example": "Мне нужно решить эту головоломку."
     },
     {
-      "translation_id": 8010716,
-      "source_id": 8011433,
-      "target_id": 8011434,
       "source_word": "source",
       "target_word": "источник",
       "source_example": "What is the source of this information?",
       "target_example": "Каков источник этой информации?"
     },
     {
-      "translation_id": 8010718,
-      "source_id": 8011437,
-      "target_id": 8011438,
       "source_word": "specific",
       "target_word": "конкретный|определенный",
       "source_example": "I have a specific question.",
       "target_example": "У меня есть конкретный вопрос."
     },
     {
-      "translation_id": 8010719,
-      "source_id": 8011439,
-      "target_id": 8011440,
       "source_word": "speech",
       "target_word": "речь",
       "source_example": "He gave a long speech.",
       "target_example": "Он произнес длинную речь."
     },
     {
-      "translation_id": 8010720,
-      "source_id": 8011441,
-      "target_id": 8011442,
       "source_word": "speed",
       "target_word": "скорость",
       "source_example": "The car was traveling at high speed.",
       "target_example": "Машина ехала на высокой скорости."
     },
     {
-      "translation_id": 8010723,
-      "source_id": 8011447,
-      "target_id": 8011448,
       "source_word": "square",
       "target_word": "квадрат|площадь",
       "source_example": "The park is a large square.",
       "target_example": "Парк представляет собой большую площадь."
     },
     {
-      "translation_id": 8010725,
-      "source_id": 8011451,
-      "target_id": 8011452,
       "source_word": "stair",
       "target_word": "ступенька",
       "source_example": "Be careful on the stairs.",
       "target_example": "Будьте осторожны на лестнице."
     },
     {
-      "translation_id": 8010733,
-      "source_id": 8011467,
-      "target_id": 8011468,
       "source_word": "stomach",
       "target_word": "живот|желудок",
       "source_example": "I have a pain in my stomach.",
       "target_example": "У меня боль в животе."
     },
     {
-      "translation_id": 8010735,
-      "source_id": 8011471,
-      "target_id": 8011472,
-      "source_word": "storm",
-      "target_word": "буря|шторм",
-      "source_example": "A big storm is coming.",
-      "target_example": "Приближается сильная буря."
-    },
-    {
-      "translation_id": 8010738,
-      "source_id": 8011477,
-      "target_id": 8011478,
-      "source_word": "strategy",
-      "target_word": "стратегия",
-      "source_example": "We need a new strategy.",
-      "target_example": "Нам нужна новая стратегия."
-    },
-    {
-      "translation_id": 8010739,
-      "source_id": 8011479,
-      "target_id": 8011480,
-      "source_word": "stress",
-      "target_word": "стресс|напряжение",
-      "source_example": "I am under a lot of stress.",
-      "target_example": "Я в большом стрессе."
-    },
-    {
-      "translation_id": 8010740,
-      "source_id": 8011481,
-      "target_id": 8011482,
-      "source_word": "structure",
-      "target_word": "структура|строение",
-      "source_example": "The structure of the building is very solid.",
-      "target_example": "Конструкция здания очень прочная."
-    },
-    {
-      "translation_id": 8010744,
-      "source_id": 8011489,
-      "target_id": 8011490,
       "source_word": "successful",
       "target_word": "успешный",
       "source_example": "She is a successful businesswoman.",
       "target_example": "Она успешная бизнес-леди."
     },
     {
-      "translation_id": 8010747,
-      "source_id": 8011495,
-      "target_id": 8011496,
       "source_word": "suggest",
       "target_word": "предлагать",
       "source_example": "I suggest we go to the cinema.",
       "target_example": "Я предлагаю пойти в кино."
     },
     {
-      "translation_id": 8010762,
-      "source_id": 8011525,
-      "target_id": 8011526,
       "source_word": "target",
       "target_word": "цель|мишень",
       "source_example": "He hit the target.",
       "target_example": "Он попал в цель."
     },
     {
-      "translation_id": 8010763,
-      "source_id": 8011527,
-      "target_id": 8011528,
       "source_word": "task",
       "target_word": "задача",
       "source_example": "This is a difficult task.",
       "target_example": "Это сложная задача."
     },
     {
-      "translation_id": 8010765,
-      "source_id": 8011531,
-      "target_id": 8011532,
       "source_word": "teaching",
       "target_word": "преподавание",
       "source_example": "She loves teaching.",
       "target_example": "Она любит преподавание."
     },
     {
-      "translation_id": 8010766,
-      "source_id": 8011533,
-      "target_id": 8011534,
-      "source_word": "technology",
-      "target_word": "технология",
-      "source_example": "New technology is changing our lives.",
-      "target_example": "Новые технологии меняют нашу жизнь."
-    },
-    {
-      "translation_id": 8010768,
-      "source_id": 8011537,
-      "target_id": 8011538,
-      "source_word": "temperature",
-      "target_word": "температура",
-      "source_example": "The temperature is high today.",
-      "target_example": "Сегодня высокая температура."
-    },
-    {
-      "translation_id": 8010769,
-      "source_id": 8011539,
-      "target_id": 8011540,
-      "source_word": "term",
-      "target_word": "термин|семестр",
-      "source_example": "What does this term mean?",
-      "target_example": "Что означает этот термин?"
-    },
-    {
-      "translation_id": 8010770,
-      "source_id": 8011541,
-      "target_id": 8011542,
       "source_word": "text",
       "target_word": "отправлять сообщение",
       "source_example": "I'll text you later.",
       "target_example": "Я напишу тебе позже."
     },
     {
-      "translation_id": 8010773,
-      "source_id": 8011547,
-      "target_id": 8011548,
       "source_word": "thief",
       "target_word": "вор",
       "source_example": "The thief was caught by the police.",
       "target_example": "Вор был пойман полицией."
     },
     {
-      "translation_id": 8010774,
-      "source_id": 8011549,
-      "target_id": 8011550,
       "source_word": "thin",
       "target_word": "тонкий|худой",
       "source_example": "The ice is very thin.",
       "target_example": "Лед очень тонкий."
     },
     {
-      "translation_id": 8010779,
-      "source_id": 8011559,
-      "target_id": 8011560,
       "source_word": "tie",
       "target_word": "галстук, завязывать",
       "source_example": "He is wearing a tie.",
       "target_example": "На нем галстук."
     },
     {
-      "translation_id": 8010780,
-      "source_id": 8011561,
-      "target_id": 8011562,
       "source_word": "tip",
       "target_word": "совет|чаевые",
       "source_example": "He gave me a useful tip.",
       "target_example": "Он дал мне полезный совет."
     },
     {
-      "translation_id": 8010784,
-      "source_id": 8011569,
-      "target_id": 8011570,
-      "source_word": "tour",
-      "target_word": "тур|экскурсия",
-      "source_example": "We went on a tour of the city.",
-      "target_example": "Мы отправились на экскурсию по городу."
-    },
-    {
-      "translation_id": 8010788,
-      "source_id": 8011577,
-      "target_id": 8011578,
       "source_word": "toy",
       "target_word": "игрушка",
       "source_example": "The child is playing with a toy.",
       "target_example": "Ребенок играет с игрушкой."
     },
     {
-      "translation_id": 8010791,
-      "source_id": 8011583,
-      "target_id": 8011584,
-      "source_word": "traditional",
-      "target_word": "традиционный",
-      "source_example": "We had a traditional meal.",
-      "target_example": "У нас была традиционная еда."
-    },
-    {
-      "translation_id": 8010793,
-      "source_id": 8011587,
-      "target_id": 8011588,
       "source_word": "training",
       "target_word": "тренировка|обучение",
       "source_example": "I have a training session tomorrow.",
       "target_example": "У меня завтра тренировка."
     },
     {
-      "translation_id": 8010795,
-      "source_id": 8011591,
-      "target_id": 8011592,
       "source_word": "trash",
       "target_word": "мусор",
       "source_example": "Please take out the trash.",
       "target_example": "Пожалуйста, вынеси мусор."
     },
     {
-      "translation_id": 8010800,
-      "source_id": 8011601,
-      "target_id": 8011602,
       "source_word": "underground",
       "target_word": "подземный",
       "source_example": "The subway is an underground train.",
       "target_example": "Метро - это подземный поезд."
     },
     {
-      "translation_id": 8010802,
-      "source_id": 8011605,
-      "target_id": 8011606,
       "source_word": "unfortunately",
       "target_word": "к сожалению",
       "source_example": "Unfortunately, I can't come.",
       "target_example": "К сожалению, я не могу прийти."
     },
     {
-      "translation_id": 8010804,
-      "source_id": 8011609,
-      "target_id": 8011610,
-      "source_word": "uniform",
-      "target_word": "форма",
-      "source_example": "The students wear a school uniform.",
-      "target_example": "Ученики носят школьную форму."
-    },
-    {
-      "translation_id": 8010805,
-      "source_id": 8011611,
-      "target_id": 8011612,
       "source_word": "unit",
       "target_word": "единица|раздел",
       "source_example": "The book is divided into ten units.",
       "target_example": "Книга разделена на десять разделов."
     },
     {
-      "translation_id": 8010806,
-      "source_id": 8011613,
-      "target_id": 8011614,
       "source_word": "united",
       "target_word": "объединённый",
       "source_example": "They are united in their decision.",
       "target_example": "Они едины в своем решении."
     },
     {
-      "translation_id": 8010807,
-      "source_id": 8011615,
-      "target_id": 8011616,
       "source_word": "unusual",
       "target_word": "необычный",
       "source_example": "This is a very unusual situation.",
       "target_example": "Это очень необычная ситуация."
     },
     {
-      "translation_id": 8010812,
-      "source_id": 8011625,
-      "target_id": 8011626,
       "source_word": "usual",
       "target_word": "обычный",
       "source_example": "This is my usual route to work.",
       "target_example": "Это мой обычный маршрут на работу."
     },
     {
-      "translation_id": 8010813,
-      "source_id": 8011627,
-      "target_id": 8011628,
       "source_word": "valley",
       "target_word": "долина",
       "source_example": "The village is in a beautiful valley.",
       "target_example": "Деревня находится в красивой долине."
     },
     {
-      "translation_id": 8010814,
-      "source_id": 8011629,
-      "target_id": 8011630,
       "source_word": "variety",
       "target_word": "разнообразие",
       "source_example": "There is a wide variety of food.",
       "target_example": "Здесь большое разнообразие еды."
     },
     {
-      "translation_id": 8010815,
-      "source_id": 8011631,
-      "target_id": 8011632,
       "source_word": "vehicle",
       "target_word": "транспортное средство",
       "source_example": "A car is a type of vehicle.",
       "target_example": "Автомобиль - это вид транспортного средства."
     },
     {
-      "translation_id": 8010816,
-      "source_id": 8011633,
-      "target_id": 8011634,
       "source_word": "view",
       "target_word": "вид|мнение",
       "source_example": "The view from the top is amazing.",
       "target_example": "Вид с вершины потрясающий."
     },
     {
-      "translation_id": 8010822,
-      "source_id": 8011645,
-      "target_id": 8011646,
       "source_word": "wash",
       "target_word": "стирка|мытьё",
       "source_example": "I need to do the wash.",
       "target_example": "Мне нужно постирать."
     },
     {
-      "translation_id": 8010825,
-      "source_id": 8011651,
-      "target_id": 8011652,
       "source_word": "weak",
       "target_word": "слабый",
       "source_example": "I feel weak after the illness.",
       "target_example": "Я чувствую себя слабым после болезни."
     },
     {
-      "translation_id": 8010826,
-      "source_id": 8011653,
-      "target_id": 8011654,
       "source_word": "web",
       "target_word": "сеть|паутина",
       "source_example": "The spider is spinning a web.",
       "target_example": "Паук плетет паутину."
     },
     {
-      "translation_id": 8010828,
-      "source_id": 8011657,
-      "target_id": 8011658,
       "source_word": "weight",
       "target_word": "вес",
       "source_example": "What is your weight?",
       "target_example": "Какой у тебя вес?"
     },
     {
-      "translation_id": 8010831,
-      "source_id": 8011663,
-      "target_id": 8011664,
       "source_word": "wheel",
       "target_word": "колесо",
       "source_example": "The car has four wheels.",
       "target_example": "У машины четыре колеса."
     },
     {
-      "translation_id": 8010835,
-      "source_id": 8011671,
-      "target_id": 8011672,
       "source_word": "wide",
       "target_word": "широкий",
       "source_example": "The river is very wide.",
       "target_example": "Река очень широкая."
     },
     {
-      "translation_id": 8010838,
-      "source_id": 8011677,
-      "target_id": 8011678,
       "source_word": "winner",
       "target_word": "победитель",
       "source_example": "And the winner is... John!",
       "target_example": "И победитель... Джон!"
     },
     {
-      "translation_id": 8010840,
-      "source_id": 8011681,
-      "target_id": 8011682,
       "source_word": "wood",
       "target_word": "дерево|древесина",
       "source_example": "The table is made of wood.",
       "target_example": "Стол сделан из дерева."
     },
     {
-      "translation_id": 8010850,
-      "source_id": 8011701,
-      "target_id": 8011702,
       "source_word": "zero",
       "target_word": "ноль",
       "source_example": "The temperature is zero degrees.",
       "target_example": "Температура ноль градусов."
     },
     {
-      "translation_id": 8010853,
-      "source_id": 8011707,
-      "target_id": 8011708,
       "source_word": "alarm",
       "target_word": "сигнализация|тревога",
       "source_example": "He set the alarm for 6:30 AM.",
       "target_example": "Он поставил будильник на 6:30 утра."
     },
     {
-      "translation_id": 8010860,
-      "source_id": 8011721,
-      "target_id": 8011722,
       "source_word": "award",
       "target_word": "награждать, награда",
       "source_example": "The committee will award the prize to the best student.",
       "target_example": "Комитет наградит призом лучшего студента."
     },
     {
-      "translation_id": 8010861,
-      "source_id": 8011723,
-      "target_id": 8011724,
       "source_word": "aware",
       "target_word": "осведомлённый|в курсе",
       "source_example": "He was not aware of the potential danger.",
       "target_example": "Он не был в курсе потенциальной опасности."
     },
     {
-      "translation_id": 8010863,
-      "source_id": 8011727,
-      "target_id": 8011728,
-      "source_word": "balance",
-      "target_word": "баланс|равновесие",
-      "source_example": "Maintaining a work-life balance is very important.",
-      "target_example": "Поддерживать баланс между работой и личной жизнью очень важно."
-    },
-    {
-      "translation_id": 8010864,
-      "source_id": 8011729,
-      "target_id": 8011730,
       "source_word": "basic",
       "target_word": "базовый|основной",
       "source_example": "The book provides a basic introduction to chemistry.",
       "target_example": "Книга дает базовое введение в химию."
     },
     {
-      "translation_id": 8010868,
-      "source_id": 8011737,
-      "target_id": 8011738,
       "source_word": "bite",
       "target_word": "кусать",
       "source_example": "Be careful, that dog might bite you.",
       "target_example": "Осторожно, эта собака может тебя укусить."
     },
     {
-      "translation_id": 8010869,
-      "source_id": 8011739,
-      "target_id": 8011740,
       "source_word": "border",
       "target_word": "граница",
       "source_example": "We crossed the border from Mexico into the United States.",
       "target_example": "Мы пересекли границу из Мексики в США."
     },
     {
-      "translation_id": 8010872,
-      "source_id": 8011745,
-      "target_id": 8011746,
       "source_word": "brave",
       "target_word": "смелый|храбрый",
       "source_example": "It was brave of you to speak up.",
       "target_example": "Было смело с твоей стороны высказаться."
     },
     {
-      "translation_id": 8010874,
-      "source_id": 8011749,
-      "target_id": 8011750,
       "source_word": "breathe",
       "target_word": "дышать",
       "source_example": "It's wonderful to breathe the fresh mountain air.",
       "target_example": "Замечательно дышать свежим горным воздухом."
     },
     {
-      "translation_id": 8010875,
-      "source_id": 8011751,
-      "target_id": 8011752,
       "source_word": "bride",
       "target_word": "невеста",
       "source_example": "The bride wore a beautiful white gown.",
       "target_example": "Невеста была в красивом белом платье."
     },
     {
-      "translation_id": 8010879,
-      "source_id": 8011759,
-      "target_id": 8011760,
       "source_word": "cap",
       "target_word": "кепка",
       "source_example": "He put on a baseball cap to shade his eyes from the sun.",
       "target_example": "Он надел бейсболку, чтобы защитить глаза от солнца."
     },
     {
-      "translation_id": 8010882,
-      "source_id": 8011765,
-      "target_id": 8011766,
       "source_word": "chain",
       "target_word": "цепь",
       "source_example": "She wore a silver chain around her neck.",
       "target_example": "Она носила на шее серебряную цепочку."
     },
     {
-      "translation_id": 8010884,
-      "source_id": 8011769,
-      "target_id": 8011770,
       "source_word": "childhood",
       "target_word": "детство",
       "source_example": "She had a happy and carefree childhood.",
       "target_example": "У нее было счастливое и беззаботное детство."
     },
     {
-      "translation_id": 8010885,
-      "source_id": 8011771,
-      "target_id": 8011772,
       "source_word": "clever",
       "target_word": "умный|сообразительный",
       "source_example": "That was a clever solution to a difficult problem.",
       "target_example": "Это было умное решение сложной проблемы."
     },
     {
-      "translation_id": 8010886,
-      "source_id": 8011773,
-      "target_id": 8011774,
       "source_word": "click",
       "target_word": "щёлкать|нажимать",
       "source_example": "To open the file, just click on the icon.",
       "target_example": "Чтобы открыть файл, просто щелкните по иконке."
     },
     {
-      "translation_id": 8010887,
-      "source_id": 8011775,
-      "target_id": 8011776,
       "source_word": "climb",
       "target_word": "взбираться|подниматься",
       "source_example": "They plan to climb the mountain next summer.",
       "target_example": "Они планируют взобраться на гору следующим летом."
     },
     {
-      "translation_id": 8010889,
-      "source_id": 8011779,
-      "target_id": 8011780,
       "source_word": "clue",
       "target_word": "улика|подсказка",
       "source_example": "The detective found an important clue at the crime scene.",
       "target_example": "Детектив нашел важную улику на месте преступления."
     },
     {
-      "translation_id": 8010891,
-      "source_id": 8011783,
-      "target_id": 8011784,
-      "source_word": "collection",
-      "target_word": "коллекция",
-      "source_example": "She has an impressive collection of antique dolls.",
-      "target_example": "У нее впечатляющая коллекция антикварных кукол."
-    },
-    {
-      "translation_id": 8010893,
-      "source_id": 8011787,
-      "target_id": 8011788,
       "source_word": "confused",
       "target_word": "сбитый с толку|запутавшийся",
       "source_example": "The complex instructions left him feeling confused.",
       "target_example": "Сложные инструкции заставили его растеряться."
     },
     {
-      "translation_id": 8010901,
-      "source_id": 8011803,
-      "target_id": 8011804,
       "source_word": "damage",
       "target_word": "ущерб|повреждение, повреждать",
       "source_example": "The earthquake caused serious damage to the city.",
       "target_example": "Землетрясение нанесло серьезный ущерб городу."
     },
     {
-      "translation_id": 8010902,
-      "source_id": 8011805,
-      "target_id": 8011806,
       "source_word": "directly",
       "target_word": "напрямую",
       "source_example": "The new policy will directly affect our department.",
       "target_example": "Новая политика напрямую затронет наш отдел."
     },
     {
-      "translation_id": 8010903,
-      "source_id": 8011807,
-      "target_id": 8011808,
       "source_word": "dirt",
       "target_word": "грязь",
       "source_example": "He wiped the dirt off his shoes.",
       "target_example": "Он стер грязь со своей обуви."
     },
     {
-      "translation_id": 8010904,
-      "source_id": 8011809,
-      "target_id": 8011810,
       "source_word": "disappointed",
       "target_word": "разочарованный",
       "source_example": "She was disappointed by the low grade on her exam.",
       "target_example": "Она была разочарована низкой оценкой за экзамен."
     },
     {
-      "translation_id": 8010909,
-      "source_id": 8011819,
-      "target_id": 8011820,
       "source_word": "dust",
       "target_word": "пыль",
       "source_example": "The old furniture was covered in a thick layer of dust.",
       "target_example": "Старая мебель была покрыта толстым слоем пыли."
     },
     {
-      "translation_id": 8010910,
-      "source_id": 8011821,
-      "target_id": 8011822,
       "source_word": "edge",
       "target_word": "край|грань",
       "source_example": "He stood on the edge of the cliff, looking down.",
       "target_example": "Он стоял на краю утеса и смотрел вниз."
     },
     {
-      "translation_id": 8010912,
-      "source_id": 8011825,
-      "target_id": 8011826,
       "source_word": "embarrassing",
       "target_word": "неловкий|стыдный",
       "source_example": "Forgetting someone's name can be an embarrassing experience.",
       "target_example": "Забыть чье-то имя может быть неловким опытом."
     },
     {
-      "translation_id": 8010913,
-      "source_id": 8011827,
-      "target_id": 8011828,
       "source_word": "emergency",
       "target_word": "чрезвычайная ситуация",
       "source_example": "In case of an emergency, please call this number.",
       "target_example": "В случае чрезвычайной ситуации, пожалуйста, позвоните по этому номеру."
     },
     {
-      "translation_id": 8010916,
-      "source_id": 8011833,
-      "target_id": 8011834,
       "source_word": "entrance",
       "target_word": "вход",
       "source_example": "The main entrance to the building is on the other side.",
       "target_example": "Главный вход в здание находится с другой стороны."
     },
     {
-      "translation_id": 8010918,
-      "source_id": 8011837,
-      "target_id": 8011838,
       "source_word": "eventually",
       "target_word": "в конце концов|в итоге",
       "source_example": "After many attempts, he eventually succeeded.",
       "target_example": "После многих попыток он в конце концов добился успеха."
     },
     {
-      "translation_id": 8010920,
-      "source_id": 8011841,
-      "target_id": 8011842,
       "source_word": "exchange",
       "target_word": "обменивать(ся)",
       "source_example": "They agreed to exchange gifts during the holidays.",
       "target_example": "Они договорились обменяться подарками на праздники."
     },
     {
-      "translation_id": 8010921,
-      "source_id": 8011843,
-      "target_id": 8011844,
       "source_word": "exit",
       "target_word": "выход",
       "source_example": "Please use the rear exit in case of a fire.",
       "target_example": "В случае пожара, пожалуйста, воспользуйтесь задним выходом."
     },
     {
-      "translation_id": 8010923,
-      "source_id": 8011847,
-      "target_id": 8011848,
       "source_word": "extremely",
       "target_word": "чрезвычайно|крайне|очень",
       "source_example": "The weather in the Arctic is extremely cold.",
       "target_example": "Погода в Арктике чрезвычайно холодная."
     },
     {
-      "translation_id": 8010926,
-      "source_id": 8011853,
-      "target_id": 8011854,
       "source_word": "familiar",
       "target_word": "знакомый",
       "source_example": "Her name sounded familiar, but I couldn't remember where I had heard it.",
       "target_example": "Ее имя показалось знакомым, но я не мог вспомнить, где я его слышал."
     },
     {
-      "translation_id": 8010929,
-      "source_id": 8011859,
-      "target_id": 8011860,
-      "source_word": "flag",
-      "target_word": "флаг",
-      "source_example": "The country's flag was raised at the ceremony.",
-      "target_example": "На церемонии был поднят флаг страны."
-    },
-    {
-      "translation_id": 8010934,
-      "source_id": 8011869,
-      "target_id": 8011870,
       "source_word": "freeze",
       "target_word": "замерзать|замораживать",
       "source_example": "You can freeze the leftover soup for later.",
       "target_example": "Остатки супа можно заморозить на потом."
     },
     {
-      "translation_id": 8010936,
-      "source_id": 8011873,
-      "target_id": 8011874,
       "source_word": "friendship",
       "target_word": "дружба",
       "source_example": "Their friendship is based on trust and mutual respect.",
       "target_example": "Их дружба основана на доверии и взаимном уважении."
     },
     {
-      "translation_id": 8010937,
-      "source_id": 8011875,
-      "target_id": 8011876,
       "source_word": "frighten",
       "target_word": "пугать",
       "source_example": "The sudden noise was enough to frighten the birds away.",
       "target_example": "Внезапного шума было достаточно, чтобы отпугнуть птиц."
     },
     {
-      "translation_id": 8010943,
-      "source_id": 8011887,
-      "target_id": 8011888,
-      "source_word": "garage",
-      "target_word": "гараж",
-      "source_example": "He keeps his classic car in the garage.",
-      "target_example": "Он держит свою классическую машину в гараже."
-    },
-    {
-      "translation_id": 8010944,
-      "source_id": 8011889,
-      "target_id": 8011890,
       "source_word": "gather",
       "target_word": "собирать(ся)",
       "source_example": "A crowd began to gather to see what had happened.",
       "target_example": "Толпа начала собираться, чтобы посмотреть, что произошло."
     },
     {
-      "translation_id": 8010945,
-      "source_id": 8011891,
-      "target_id": 8011892,
       "source_word": "generally",
       "target_word": "в общем|обычно",
       "source_example": "Generally, the summers here are warm and sunny.",
       "target_example": "В общем, лето здесь теплое и солнечное."
     },
     {
-      "translation_id": 8010946,
-      "source_id": 8011893,
-      "target_id": 8011894,
       "source_word": "gentle",
       "target_word": "нежный|мягкий",
       "source_example": "He has a gentle voice that is very calming.",
       "target_example": "У него нежный голос, который очень успокаивает."
     },
     {
-      "translation_id": 8010947,
-      "source_id": 8011895,
-      "target_id": 8011896,
       "source_word": "ghost",
       "target_word": "призрак|привидение",
       "source_example": "The old hotel is said to be haunted by a ghost.",
       "target_example": "Говорят, что в старом отеле обитает привидение."
     },
     {
-      "translation_id": 8010950,
-      "source_id": 8011901,
-      "target_id": 8011902,
       "source_word": "grade",
       "target_word": "оценка|класс",
       "source_example": "He received the highest grade in his math class.",
       "target_example": "Он получил высшую оценку в своем классе по математике."
     },
     {
-      "translation_id": 8010954,
-      "source_id": 8011909,
-      "target_id": 8011910,
       "source_word": "happiness",
       "target_word": "счастье",
       "source_example": "Her greatest happiness is spending time with her family.",
       "target_example": "Ее величайшее счастье — проводить время с семьей."
     },
     {
-      "translation_id": 8010955,
-      "source_id": 8011911,
-      "target_id": 8011912,
       "source_word": "hardly",
       "target_word": "едва|почти не",
       "source_example": "I could hardly hear him over the noise of the traffic.",
       "target_example": "Я едва мог расслышать его из-за шума транспорта."
     },
     {
-      "translation_id": 8010957,
-      "source_id": 8011915,
-      "target_id": 8011916,
       "source_word": "heavily",
       "target_word": "сильно|тяжело",
       "source_example": "It was raining heavily when we left.",
       "target_example": "Когда мы уходили, шел сильный дождь."
     },
     {
-      "translation_id": 8010960,
-      "source_id": 8011921,
-      "target_id": 8011922,
       "source_word": "highly",
       "target_word": "весьма|очень",
       "source_example": "She is a highly intelligent and capable person.",
       "target_example": "Она очень умный и способный человек."
     },
     {
-      "translation_id": 8010962,
-      "source_id": 8011925,
-      "target_id": 8011926,
       "source_word": "horrible",
       "target_word": "ужасный",
       "source_example": "There was a horrible accident on the motorway.",
       "target_example": "На автомагистрали произошла ужасная авария."
     },
     {
-      "translation_id": 8010964,
-      "source_id": 8011929,
-      "target_id": 8011930,
       "source_word": "ignore",
       "target_word": "игнорировать",
       "source_example": "She chose to ignore his rude comments.",
       "target_example": "Она предпочла проигнорировать его грубые комментарии."
     },
     {
-      "translation_id": 8010969,
-      "source_id": 8011939,
-      "target_id": 8011940,
       "source_word": "iron",
       "target_word": "железо|утюг [verb: гладить]",
       "source_example": "She used an iron to press her clothes.",
       "target_example": "Она использовала утюг, чтобы погладить свою одежду."
     },
     {
-      "translation_id": 8010970,
-      "source_id": 8011941,
-      "target_id": 8011942,
       "source_word": "journey",
       "target_word": "путешествие|поездка",
       "source_example": "The journey from London to Paris takes about two hours by train.",
       "target_example": "Путешествие из Лондона в Париж на поезде занимает около двух часов."
     },
     {
-      "translation_id": 8010977,
-      "source_id": 8011955,
-      "target_id": 8011956,
       "source_word": "length",
       "target_word": "длина",
       "source_example": "The swimming pool has a length of 25 meters.",
       "target_example": "Длина бассейна составляет 25 метров."
     },
     {
-      "translation_id": 8010981,
-      "source_id": 8011963,
-      "target_id": 8011964,
       "source_word": "lonely",
       "target_word": "одинокий",
       "source_example": "He felt lonely after all his friends had gone home.",
       "target_example": "Он почувствовал себя одиноким после того, как все его друзья разошлись по домам."
     },
     {
-      "translation_id": 8010985,
-      "source_id": 8011971,
-      "target_id": 8011972,
       "source_word": "mix",
       "target_word": "смешивать",
       "source_example": "First, mix the dry ingredients together in a large bowl.",
       "target_example": "Сначала смешайте сухие ингредиенты в большой миске."
     },
     {
-      "translation_id": 8010991,
-      "source_id": 8011983,
-      "target_id": 8011984,
       "source_word": "net",
       "target_word": "сеть",
       "source_example": "Fishermen use a net to catch fish in the sea.",
       "target_example": "Рыбаки используют сеть для ловли рыбы в море."
     },
     {
-      "translation_id": 8010993,
-      "source_id": 8011987,
-      "target_id": 8011988,
       "source_word": "painful",
       "target_word": "болезненный",
       "source_example": "The memory of the accident was still painful for him.",
       "target_example": "Воспоминание об аварии все еще было для него болезненным."
     },
     {
-      "translation_id": 8010995,
-      "source_id": 8011991,
-      "target_id": 8011992,
       "source_word": "particularly",
       "target_word": "особенно|в частности",
       "source_example": "I enjoyed the concert, particularly the final song.",
       "target_example": "Мне понравился концерт, особенно последняя песня."
     },
     {
-      "translation_id": 8010996,
-      "source_id": 8011993,
-      "target_id": 8011994,
       "source_word": "path",
       "target_word": "тропа|дорожка",
       "source_example": "A narrow path led through the woods to the river.",
       "target_example": "Узкая тропинка вела через лес к реке."
     },
     {
-      "translation_id": 8010999,
-      "source_id": 8011999,
-      "target_id": 8012000,
       "source_word": "perfectly",
       "target_word": "идеально|совершенно",
       "source_example": "The new dress fits her perfectly.",
       "target_example": "Новое платье сидит на ней идеально."
     },
     {
-      "translation_id": 8011000,
-      "source_id": 8012001,
-      "target_id": 8012002,
-      "source_word": "personally",
-      "target_word": "лично|персонально",
-      "source_example": "Personally, I think the plan is a mistake.",
-      "target_example": "Лично я считаю, что этот план — ошибка."
-    },
-    {
-      "translation_id": 8011005,
-      "source_id": 8012011,
-      "target_id": 8012012,
       "source_word": "possibly",
       "target_word": "возможно",
       "source_example": "This is possibly the worst decision you could make.",
       "target_example": "Это, возможно, худшее решение, которое вы могли бы принять."
     },
     {
-      "translation_id": 8011006,
-      "source_id": 8012013,
-      "target_id": 8012014,
       "source_word": "pot",
       "target_word": "кастрюля|горшок",
       "source_example": "She planted the flowers in a large ceramic pot.",
       "target_example": "Она посадила цветы в большой керамический горшок."
     },
     {
-      "translation_id": 8011009,
-      "source_id": 8012019,
-      "target_id": 8012020,
       "source_word": "properly",
       "target_word": "должным образом|правильно",
       "source_example": "The machine is not working properly.",
       "target_example": "Машина не работает должным образом."
     },
     {
-      "translation_id": 8011018,
-      "source_id": 8012037,
-      "target_id": 8012038,
       "source_word": "remind",
       "target_word": "напоминать",
       "source_example": "Could you remind me to buy milk?",
       "target_example": "Не мог бы ты напомнить мне купить молоко?"
     },
     {
-      "translation_id": 8011019,
-      "source_id": 8012039,
-      "target_id": 8012040,
       "source_word": "rent",
       "target_word": "арендовать|снимать",
       "source_example": "They decided to rent an apartment in the city center.",
       "target_example": "Они решили снять квартиру в центре города."
     },
     {
-      "translation_id": 8011023,
-      "source_id": 8012047,
-      "target_id": 8012048,
       "source_word": "rope",
       "target_word": "верёвка|канат",
       "source_example": "The climbers used a rope for safety.",
       "target_example": "Альпинисты использовали веревку для безопасности."
     },
     {
-      "translation_id": 8011024,
-      "source_id": 8012049,
-      "target_id": 8012050,
       "source_word": "row",
       "target_word": "ряд",
       "source_example": "Their house is the third one in the row.",
       "target_example": "Их дом — третий в ряду."
     },
     {
-      "translation_id": 8011025,
-      "source_id": 8012051,
-      "target_id": 8012052,
       "source_word": "sand",
       "target_word": "песок",
       "source_example": "The children built a castle out of sand.",
       "target_example": "Дети построили замок из песка."
     },
     {
-      "translation_id": 8011029,
-      "source_id": 8012059,
-      "target_id": 8012060,
       "source_word": "shadow",
       "target_word": "тень",
       "source_example": "The tall building cast a long shadow over the street.",
       "target_example": "Высокое здание отбрасывало длинную тень на улицу."
     },
     {
-      "translation_id": 8011030,
-      "source_id": 8012061,
-      "target_id": 8012062,
       "source_word": "shake",
       "target_word": "трясти|встряхивать",
       "source_example": "Shake the bottle well before opening it.",
       "target_example": "Хорошо встряхните бутылку перед открытием."
     },
     {
-      "translation_id": 8011033,
-      "source_id": 8012067,
-      "target_id": 8012068,
       "source_word": "shine",
       "target_word": "светить|сиять",
       "source_example": "The sun was shining brightly in the clear blue sky.",
       "target_example": "Солнце ярко сияло на чистом голубом небе."
     },
     {
-      "translation_id": 8011035,
-      "source_id": 8012071,
-      "target_id": 8012072,
       "source_word": "shy",
       "target_word": "застенчивый",
       "source_example": "The little girl was shy and hid behind her father.",
       "target_example": "Маленькая девочка была застенчивой и пряталась за своего отца."
     },
     {
-      "translation_id": 8011036,
-      "source_id": 8012073,
-      "target_id": 8012074,
       "source_word": "sight",
       "target_word": "вид|зрелище",
       "source_example": "The Grand Canyon is an incredible sight.",
       "target_example": "Гранд-Каньон — это невероятное зрелище."
     },
     {
-      "translation_id": 8011041,
-      "source_id": 8012083,
-      "target_id": 8012084,
       "source_word": "slightly",
       "target_word": "слегка|немного",
       "source_example": "The new model is slightly more expensive.",
       "target_example": "Новая модель немного дороже."
     },
     {
-      "translation_id": 8011045,
-      "source_id": 8012091,
-      "target_id": 8012092,
       "source_word": "spot",
       "target_word": "место|пятно",
       "source_example": "We found a quiet spot for our picnic.",
       "target_example": "Мы нашли тихое место для нашего пикника."
     },
     {
-      "translation_id": 8011046,
-      "source_id": 8012093,
-      "target_id": 8012094,
       "source_word": "spread",
       "target_word": "распространять(ся)|намазывать",
       "source_example": "The news of his success spread quickly.",
       "target_example": "Новость о его успехе быстро распространилась."
     },
     {
-      "translation_id": 8011048,
-      "source_id": 8012097,
-      "target_id": 8012098,
       "source_word": "stick",
       "target_word": "приклеивать|держаться",
       "source_example": "Use glue to stick the two pieces of paper together.",
       "target_example": "Используйте клей, чтобы склеить два листа бумаги."
     },
     {
-      "translation_id": 8011054,
-      "source_id": 8012109,
-      "target_id": 8012110,
       "source_word": "sudden",
       "target_word": "внезапный|неожиданный",
       "source_example": "His sudden departure surprised everyone.",
       "target_example": "Его внезапный отъезд всех удивил."
     },
     {
-      "translation_id": 8011055,
-      "source_id": 8012111,
-      "target_id": 8012112,
       "source_word": "suffer",
       "target_word": "страдать",
       "source_example": "Many people in the world suffer from hunger.",
       "target_example": "Многие люди в мире страдают от голода."
     },
     {
-      "translation_id": 8011056,
-      "source_id": 8012113,
-      "target_id": 8012114,
       "source_word": "surely",
       "target_word": "несомненно|конечно",
       "source_example": "Surely you don't expect me to believe that?",
       "target_example": "Неужели ты ожидаешь, что я в это поверю?"
     },
     {
-      "translation_id": 8011057,
-      "source_id": 8012115,
-      "target_id": 8012116,
       "source_word": "surface",
       "target_word": "поверхность",
       "source_example": "The moon has a rocky surface.",
       "target_example": "У Луны каменистая поверхность."
     },
     {
-      "translation_id": 8011058,
-      "source_id": 8012117,
-      "target_id": 8012118,
       "source_word": "switch",
       "target_word": "переключатель [verb: переключать]",
       "source_example": "He flicked a switch and the lights came on.",
       "target_example": "Он щелкнул выключателем, и зажегся свет."
     },
     {
-      "translation_id": 8011059,
-      "source_id": 8012119,
-      "target_id": 8012120,
       "source_word": "tail",
       "target_word": "хвост",
       "source_example": "The dog wagged its tail in excitement.",
       "target_example": "Собака взволнованно виляла хвостом."
     },
     {
-      "translation_id": 8011064,
-      "source_id": 8012129,
-      "target_id": 8012130,
       "source_word": "tight",
       "target_word": "тугой|тесный",
       "source_example": "My new shoes are a bit tight.",
       "target_example": "Мои новые туфли немного тесноваты."
     },
     {
-      "translation_id": 8011065,
-      "source_id": 8012131,
-      "target_id": 8012132,
       "source_word": "tiny",
       "target_word": "крошечный",
       "source_example": "The baby has tiny fingers and toes.",
       "target_example": "У младенца крошечные пальчики на руках и ногах."
     },
     {
-      "translation_id": 8011066,
-      "source_id": 8012133,
-      "target_id": 8012134,
       "source_word": "tire",
       "target_word": "шина",
       "source_example": "The mechanic is changing a flat tire.",
       "target_example": "Механик меняет спущенное колесо."
     },
     {
-      "translation_id": 8011068,
-      "source_id": 8012137,
-      "target_id": 8012138,
       "source_word": "tongue",
       "target_word": "язык",
       "source_example": "The doctor asked the patient to stick out his tongue.",
       "target_example": "Врач попросил пациента высунуть язык."
     },
     {
-      "translation_id": 8011076,
-      "source_id": 8012153,
-      "target_id": 8012154,
       "source_word": "ugly",
       "target_word": "уродливый|некрасивый",
       "source_example": "He wore an ugly yellow tie.",
       "target_example": "Он носил уродливый желтый галстук."
     },
     {
-      "translation_id": 8011082,
-      "source_id": 8012165,
-      "target_id": 8012166,
       "source_word": "valuable",
       "target_word": "ценный",
       "source_example": "The museum contains many valuable works of art.",
       "target_example": "В музее хранится много ценных произведений искусства."
     },
     {
-      "translation_id": 8011083,
-      "source_id": 8012167,
-      "target_id": 8012168,
       "source_word": "warn",
       "target_word": "предупреждать",
       "source_example": "The sign was intended to warn drivers about the danger.",
       "target_example": "Знак был предназначен для предупреждения водителей об опасности."
     },
     {
-      "translation_id": 8011085,
-      "source_id": 8012171,
-      "target_id": 8012172,
       "source_word": "wave",
       "target_word": "волна, махать",
       "source_example": "He waved to us from the car.",
       "target_example": "Он помахал нам из машины."
     },
     {
-      "translation_id": 8011088,
-      "source_id": 8012177,
-      "target_id": 8012178,
       "source_word": "wing",
       "target_word": "крыло",
       "source_example": "The bird spread its wings and flew away.",
       "target_example": "Птица расправила крылья и улетела."
     },
     {
-      "translation_id": 8011089,
-      "source_id": 8011090,
-      "target_id": 8011091,
       "source_word": "cry",
       "target_word": "[translation needed for: cry]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011092,
-      "source_id": 8011093,
-      "target_id": 8011094,
       "source_word": "impossible",
       "target_word": "[translation needed for: impossible]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011095,
-      "source_id": 8011096,
-      "target_id": 8011097,
       "source_word": "obviously",
       "target_word": "[translation needed for: obviously]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011098,
-      "source_id": 8011099,
-      "target_id": 8011100,
       "source_word": "neither",
       "target_word": "[translation needed for: neither]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011101,
-      "source_id": 8011102,
-      "target_id": 8011103,
       "source_word": "accept",
       "target_word": "[translation needed for: accept]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011104,
-      "source_id": 8011105,
-      "target_id": 8011106,
       "source_word": "besides",
       "target_word": "[translation needed for: besides]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011107,
-      "source_id": 8011108,
-      "target_id": 8011109,
       "source_word": "sake",
       "target_word": "[translation needed for: sake]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011110,
-      "source_id": 8011111,
-      "target_id": 8011112,
       "source_word": "upset",
       "target_word": "[translation needed for: upset]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011113,
-      "source_id": 8011114,
-      "target_id": 8011115,
       "source_word": "cute",
       "target_word": "[translation needed for: cute]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011116,
-      "source_id": 8011117,
-      "target_id": 8011118,
       "source_word": "evil",
       "target_word": "[translation needed for: evil]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011119,
-      "source_id": 8011120,
-      "target_id": 8011121,
       "source_word": "contact",
       "target_word": "[translation needed for: contact]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011122,
-      "source_id": 8011123,
-      "target_id": 8011124,
       "source_word": "cop",
       "target_word": "[translation needed for: cop]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011125,
-      "source_id": 8011126,
-      "target_id": 8011127,
       "source_word": "jail",
       "target_word": "[translation needed for: jail]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011128,
-      "source_id": 8011129,
-      "target_id": 8011130,
       "source_word": "lawyer",
       "target_word": "[translation needed for: lawyer]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011131,
-      "source_id": 8011132,
-      "target_id": 8011133,
       "source_word": "doubt",
       "target_word": "[translation needed for: doubt]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011134,
-      "source_id": 8011135,
-      "target_id": 8011136,
       "source_word": "appreciate",
       "target_word": "[translation needed for: appreciate]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011137,
-      "source_id": 8011138,
-      "target_id": 8011139,
       "source_word": "congratulations",
       "target_word": "[translation needed for: congratulations]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011140,
-      "source_id": 8011141,
-      "target_id": 8011142,
       "source_word": "village",
       "target_word": "[translation needed for: village]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011143,
-      "source_id": 8011144,
-      "target_id": 8011145,
       "source_word": "quit",
       "target_word": "[translation needed for: quit]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011146,
-      "source_id": 8011147,
-      "target_id": 8011148,
       "source_word": "sleeping",
       "target_word": "[translation needed for: sleeping]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011149,
-      "source_id": 8011150,
-      "target_id": 8011151,
       "source_word": "laughter",
       "target_word": "[translation needed for: laughter]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011152,
-      "source_id": 8011153,
-      "target_id": 8011154,
       "source_word": "cash",
       "target_word": "[translation needed for: cash]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011155,
-      "source_id": 8011156,
-      "target_id": 8011157,
       "source_word": "whose",
       "target_word": "[translation needed for: whose]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011158,
-      "source_id": 8011159,
-      "target_id": 8011160,
       "source_word": "push",
-      "target_word": "[translation needed for: push]",
-      "cefr_level": "A2",
+      "target_word": "толкать",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011161,
-      "source_id": 8011162,
-      "target_id": 8011163,
       "source_word": "gift",
       "target_word": "[translation needed for: gift]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011164,
-      "source_id": 8011165,
-      "target_id": 8011166,
       "source_word": "grab",
       "target_word": "[translation needed for: grab]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011167,
-      "source_id": 8011168,
-      "target_id": 8011169,
       "source_word": "stuck",
       "target_word": "[translation needed for: stuck]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011170,
-      "source_id": 8011171,
-      "target_id": 8011172,
       "source_word": "magic",
       "target_word": "[translation needed for: magic]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011173,
-      "source_id": 8011174,
-      "target_id": 8011175,
       "source_word": "grunt",
       "target_word": "[translation needed for: grunt]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011176,
-      "source_id": 8011177,
-      "target_id": 8011178,
       "source_word": "reach",
-      "target_word": "[translation needed for: reach]",
-      "cefr_level": "A2",
+      "target_word": "достигать",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011179,
-      "source_id": 8011180,
-      "target_id": 8011181,
       "source_word": "wind",
       "target_word": "[translation needed for: wind]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011182,
-      "source_id": 8011183,
-      "target_id": 8011184,
       "source_word": "colonel",
       "target_word": "[translation needed for: colonel]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011185,
-      "source_id": 8011186,
-      "target_id": 8011187,
       "source_word": "immediately",
       "target_word": "[translation needed for: immediately]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011188,
-      "source_id": 8011189,
-      "target_id": 8011190,
       "source_word": "cheer",
       "target_word": "[translation needed for: cheer]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011191,
-      "source_id": 8011192,
-      "target_id": 8011193,
       "source_word": "victim",
       "target_word": "[translation needed for: victim]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011194,
-      "source_id": 8011195,
-      "target_id": 8011196,
       "source_word": "upon",
       "target_word": "[translation needed for: upon]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011197,
-      "source_id": 8011198,
-      "target_id": 8011199,
       "source_word": "planet",
       "target_word": "[translation needed for: planet]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011200,
-      "source_id": 8011201,
-      "target_id": 8011202,
       "source_word": "search",
       "target_word": "[translation needed for: search]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011203,
-      "source_id": 8011204,
-      "target_id": 8011205,
       "source_word": "arrest",
       "target_word": "[translation needed for: arrest]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011206,
-      "source_id": 8011207,
-      "target_id": 8011208,
       "source_word": "suddenly",
       "target_word": "[translation needed for: suddenly]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011209,
-      "source_id": 8011210,
-      "target_id": 8011211,
       "source_word": "er",
       "target_word": "[translation needed for: er]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011212,
-      "source_id": 8011213,
-      "target_id": 8011214,
       "source_word": "jump",
       "target_word": "[translation needed for: jump]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011215,
-      "source_id": 8011216,
-      "target_id": 8011217,
       "source_word": "rid",
       "target_word": "[translation needed for: rid]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011218,
-      "source_id": 8011219,
-      "target_id": 8011220,
       "source_word": "knock",
       "target_word": "[translation needed for: knock]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011221,
-      "source_id": 8011222,
-      "target_id": 8011223,
       "source_word": "patient",
       "target_word": "[translation needed for: patient]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011224,
-      "source_id": 8011225,
-      "target_id": 8011226,
       "source_word": "escape",
       "target_word": "[translation needed for: escape]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011227,
-      "source_id": 8011228,
-      "target_id": 8011229,
       "source_word": "everywhere",
       "target_word": "[translation needed for: everywhere]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011230,
-      "source_id": 8011231,
-      "target_id": 8011232,
       "source_word": "moon",
       "target_word": "[translation needed for: moon]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011233,
-      "source_id": 8011234,
-      "target_id": 8011235,
       "source_word": "ow",
       "target_word": "[translation needed for: ow]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011236,
-      "source_id": 8011237,
-      "target_id": 8011238,
       "source_word": "gasp",
       "target_word": "[translation needed for: gasp]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011239,
-      "source_id": 8011240,
-      "target_id": 8011241,
       "source_word": "nervous",
       "target_word": "[translation needed for: nervous]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011242,
-      "source_id": 8011243,
-      "target_id": 8011244,
       "source_word": "de",
       "target_word": "[translation needed for: de]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011245,
-      "source_id": 8011246,
-      "target_id": 8011247,
       "source_word": "themselves",
       "target_word": "[translation needed for: themselves]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011248,
-      "source_id": 8011249,
-      "target_id": 8011250,
       "source_word": "mate",
       "target_word": "[translation needed for: mate]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011251,
-      "source_id": 8011252,
-      "target_id": 8011253,
       "source_word": "drinking",
       "target_word": "[translation needed for: drinking]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011254,
-      "source_id": 8011255,
-      "target_id": 8011256,
       "source_word": "bother",
       "target_word": "[translation needed for: bother]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011257,
-      "source_id": 8011258,
-      "target_id": 8011259,
       "source_word": "blame",
       "target_word": "[translation needed for: blame]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011260,
-      "source_id": 8011261,
-      "target_id": 8011262,
       "source_word": "drug",
       "target_word": "[translation needed for: drug]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011263,
-      "source_id": 8011264,
-      "target_id": 8011265,
       "source_word": "mission",
       "target_word": "[translation needed for: mission]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011266,
-      "source_id": 8011267,
-      "target_id": 8011268,
       "source_word": "'ii",
       "target_word": "[translation needed for: 'ii]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011269,
-      "source_id": 8011270,
-      "target_id": 8011271,
       "source_word": "otherwise",
       "target_word": "[translation needed for: otherwise]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011272,
-      "source_id": 8011273,
-      "target_id": 8011274,
       "source_word": "fit",
       "target_word": "[translation needed for: fit]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011275,
-      "source_id": 8011276,
-      "target_id": 8011277,
       "source_word": "smoke",
       "target_word": "[translation needed for: smoke]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011278,
-      "source_id": 8011279,
-      "target_id": 8011280,
       "source_word": "favor",
       "target_word": "[translation needed for: favor]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011281,
-      "source_id": 8011282,
-      "target_id": 8011283,
       "source_word": "notice",
-      "target_word": "[translation needed for: notice]",
-      "cefr_level": "A2",
+      "target_word": "замечать",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011284,
-      "source_id": 8011285,
-      "target_id": 8011286,
       "source_word": "smile",
       "target_word": "[translation needed for: smile]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011287,
-      "source_id": 8011288,
-      "target_id": 8011289,
       "source_word": "guard",
       "target_word": "[translation needed for: guard]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011290,
-      "source_id": 8011291,
-      "target_id": 8011292,
       "source_word": "innocent",
       "target_word": "[translation needed for: innocent]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011293,
-      "source_id": 8011294,
-      "target_id": 8011295,
       "source_word": "narrator",
       "target_word": "[translation needed for: narrator]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011296,
-      "source_id": 8011297,
-      "target_id": 8011298,
       "source_word": "herself",
       "target_word": "[translation needed for: herself]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011299,
-      "source_id": 8011300,
-      "target_id": 8011301,
       "source_word": "enemy",
       "target_word": "[translation needed for: enemy]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011302,
-      "source_id": 8011303,
-      "target_id": 8011304,
       "source_word": "battle",
       "target_word": "[translation needed for: battle]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011305,
-      "source_id": 8011306,
-      "target_id": 8011307,
       "source_word": "ourselves",
       "target_word": "[translation needed for: ourselves]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011308,
-      "source_id": 8011309,
-      "target_id": 8011310,
       "source_word": "gay",
       "target_word": "[translation needed for: gay]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011311,
-      "source_id": 8011312,
-      "target_id": 8011313,
       "source_word": "guilty",
       "target_word": "[translation needed for: guilty]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011314,
-      "source_id": 8011315,
-      "target_id": 8011316,
       "source_word": "apart",
       "target_word": "[translation needed for: apart]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011317,
-      "source_id": 8011318,
-      "target_id": 8011319,
       "source_word": "duty",
       "target_word": "[translation needed for: duty]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011320,
-      "source_id": 8011321,
-      "target_id": 8011322,
       "source_word": "suit",
       "target_word": "[translation needed for: suit]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011323,
-      "source_id": 8011324,
-      "target_id": 8011325,
       "source_word": "hero",
       "target_word": "[translation needed for: hero]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011326,
-      "source_id": 8011327,
-      "target_id": 8011328,
       "source_word": "destroy",
       "target_word": "[translation needed for: destroy]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011329,
-      "source_id": 8011330,
-      "target_id": 8011331,
       "source_word": "bunch",
       "target_word": "[translation needed for: bunch]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011332,
-      "source_id": 8011333,
-      "target_id": 8011334,
       "source_word": "admit",
       "target_word": "[translation needed for: admit]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011335,
-      "source_id": 8011336,
-      "target_id": 8011337,
       "source_word": "witness",
       "target_word": "[translation needed for: witness]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011338,
-      "source_id": 8011339,
-      "target_id": 8011340,
       "source_word": "steal",
       "target_word": "[translation needed for: steal]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011341,
-      "source_id": 8011342,
-      "target_id": 8011343,
       "source_word": "kick",
       "target_word": "[translation needed for: kick]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011344,
-      "source_id": 8011345,
-      "target_id": 8011346,
       "source_word": "cross",
       "target_word": "[translation needed for: cross]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011347,
-      "source_id": 8011348,
-      "target_id": 8011349,
       "source_word": "sergeant",
       "target_word": "[translation needed for: sergeant]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011350,
-      "source_id": 8011351,
-      "target_id": 8011352,
       "source_word": "indeed",
       "target_word": "[translation needed for: indeed]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011353,
-      "source_id": 8011354,
-      "target_id": 8011355,
       "source_word": "gas",
       "target_word": "[translation needed for: gas]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011356,
-      "source_id": 8011357,
-      "target_id": 8011358,
       "source_word": "pregnant",
       "target_word": "[translation needed for: pregnant]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011359,
-      "source_id": 8011360,
-      "target_id": 8011361,
       "source_word": "waste",
       "target_word": "[translation needed for: waste]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011362,
-      "source_id": 8011363,
-      "target_id": 8011364,
       "source_word": "taste",
       "target_word": "[translation needed for: taste]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011365,
-      "source_id": 8011366,
-      "target_id": 8011367,
       "source_word": "lock",
       "target_word": "[translation needed for: lock]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011368,
-      "source_id": 8011369,
-      "target_id": 8011370,
       "source_word": "silly",
       "target_word": "[translation needed for: silly]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011371,
-      "source_id": 8011372,
-      "target_id": 8011373,
       "source_word": "mention",
       "target_word": "[translation needed for: mention]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011374,
-      "source_id": 8011375,
-      "target_id": 8011376,
       "source_word": "throat",
       "target_word": "[translation needed for: throat]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011377,
-      "source_id": 8011378,
-      "target_id": 8011379,
       "source_word": "hole",
       "target_word": "[translation needed for: hole]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011380,
-      "source_id": 8011381,
-      "target_id": 8011382,
       "source_word": "track",
       "target_word": "[translation needed for: track]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011383,
-      "source_id": 8011384,
-      "target_id": 8011385,
       "source_word": "engine",
       "target_word": "[translation needed for: engine]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011386,
-      "source_id": 8011387,
-      "target_id": 8011388,
       "source_word": "applause",
       "target_word": "[translation needed for: applause]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011389,
-      "source_id": 8011390,
-      "target_id": 8011391,
       "source_word": "pressure",
       "target_word": "[translation needed for: pressure]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011392,
-      "source_id": 8011393,
-      "target_id": 8011394,
       "source_word": "fresh",
       "target_word": "[translation needed for: fresh]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011395,
-      "source_id": 8011396,
-      "target_id": 8011397,
       "source_word": "weapon",
       "target_word": "[translation needed for: weapon]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011398,
-      "source_id": 8011399,
-      "target_id": 8011400,
       "source_word": "sky",
       "target_word": "[translation needed for: sky]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011401,
-      "source_id": 8011402,
-      "target_id": 8011403,
       "source_word": "burn",
       "target_word": "[translation needed for: burn]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011404,
-      "source_id": 8011405,
-      "target_id": 8011406,
       "source_word": "crowd",
       "target_word": "[translation needed for: crowd]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011407,
-      "source_id": 8011408,
-      "target_id": 8011409,
       "source_word": "treat",
       "target_word": "[translation needed for: treat]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011410,
-      "source_id": 8011411,
-      "target_id": 8011412,
       "source_word": "roll",
       "target_word": "[translation needed for: roll]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011413,
-      "source_id": 8011414,
-      "target_id": 8011415,
       "source_word": "double",
       "target_word": "[translation needed for: double]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011416,
-      "source_id": 8011417,
-      "target_id": 8011418,
       "source_word": "danger",
       "target_word": "[translation needed for: danger]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011419,
-      "source_id": 8011420,
-      "target_id": 8011421,
       "source_word": "empty",
       "target_word": "[translation needed for: empty]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011422,
-      "source_id": 8011423,
-      "target_id": 8011424,
       "source_word": "memory",
       "target_word": "[translation needed for: memory]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011425,
-      "source_id": 8011426,
-      "target_id": 8011427,
       "source_word": "itself",
       "target_word": "[translation needed for: itself]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011428,
-      "source_id": 8011429,
-      "target_id": 8011430,
       "source_word": "apparently",
       "target_word": "[translation needed for: apparently]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011431,
-      "source_id": 8011432,
-      "target_id": 8011433,
       "source_word": "nature",
       "target_word": "[translation needed for: nature]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011434,
-      "source_id": 8011435,
-      "target_id": 8011436,
       "source_word": "raise",
       "target_word": "[translation needed for: raise]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011437,
-      "source_id": 8011438,
-      "target_id": 8011439,
       "source_word": "pop",
       "target_word": "[translation needed for: pop]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011440,
-      "source_id": 8011441,
-      "target_id": 8011442,
       "source_word": "client",
       "target_word": "[translation needed for: client]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011443,
-      "source_id": 8011444,
-      "target_id": 8011445,
       "source_word": "bomb",
       "target_word": "[translation needed for: bomb]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011446,
-      "source_id": 8011447,
-      "target_id": 8011448,
       "source_word": "neck",
       "target_word": "[translation needed for: neck]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011449,
-      "source_id": 8011450,
-      "target_id": 8011451,
       "source_word": "suspect",
       "target_word": "[translation needed for: suspect]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011452,
-      "source_id": 8011453,
-      "target_id": 8011454,
       "source_word": "heavy",
       "target_word": "[translation needed for: heavy]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011455,
-      "source_id": 8011456,
-      "target_id": 8011457,
       "source_word": "wild",
       "target_word": "[translation needed for: wild]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011458,
-      "source_id": 8011459,
-      "target_id": 8011460,
       "source_word": "ridiculous",
       "target_word": "[translation needed for: ridiculous]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011461,
-      "source_id": 8011462,
-      "target_id": 8011463,
       "source_word": "billy",
       "target_word": "[translation needed for: billy]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011464,
-      "source_id": 8011465,
-      "target_id": 8011466,
       "source_word": "shooting",
       "target_word": "[translation needed for: shooting]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011467,
-      "source_id": 8011468,
-      "target_id": 8011469,
       "source_word": "camp",
       "target_word": "[translation needed for: camp]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011470,
-      "source_id": 8011471,
-      "target_id": 8011472,
       "source_word": "whom",
       "target_word": "[translation needed for: whom]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011473,
-      "source_id": 8011474,
-      "target_id": 8011475,
       "source_word": "asleep",
       "target_word": "[translation needed for: asleep]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011476,
-      "source_id": 8011477,
-      "target_id": 8011478,
       "source_word": "beauty",
       "target_word": "[translation needed for: beauty]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011479,
-      "source_id": 8011480,
-      "target_id": 8011481,
       "source_word": "awful",
       "target_word": "[translation needed for: awful]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011482,
-      "source_id": 8011483,
-      "target_id": 8011484,
       "source_word": "deserve",
       "target_word": "[translation needed for: deserve]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011485,
-      "source_id": 8011486,
-      "target_id": 8011487,
       "source_word": "stone",
       "target_word": "[translation needed for: stone]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011488,
-      "source_id": 8011489,
-      "target_id": 8011490,
       "source_word": "lay",
       "target_word": "[translation needed for: lay]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011491,
-      "source_id": 8011492,
-      "target_id": 8011493,
       "source_word": "plenty",
       "target_word": "[translation needed for: plenty]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011494,
-      "source_id": 8011495,
-      "target_id": 8011496,
       "source_word": "willing",
       "target_word": "[translation needed for: willing]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011497,
-      "source_id": 8011498,
-      "target_id": 8011499,
       "source_word": "sweetheart",
       "target_word": "[translation needed for: sweetheart]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011500,
-      "source_id": 8011501,
-      "target_id": 8011502,
       "source_word": "skin",
       "target_word": "[translation needed for: skin]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011503,
-      "source_id": 8011504,
-      "target_id": 8011505,
       "source_word": "excellent",
       "target_word": "[translation needed for: excellent]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011506,
-      "source_id": 8011507,
-      "target_id": 8011508,
       "source_word": "faith",
       "target_word": "[translation needed for: faith]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011509,
-      "source_id": 8011510,
-      "target_id": 8011511,
       "source_word": "responsible",
       "target_word": "[translation needed for: responsible]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011512,
-      "source_id": 8011513,
-      "target_id": 8011514,
       "source_word": "opportunity",
       "target_word": "[translation needed for: opportunity]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011515,
-      "source_id": 8011516,
-      "target_id": 8011517,
       "source_word": "bottom",
       "target_word": "[translation needed for: bottom]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011518,
-      "source_id": 8011519,
-      "target_id": 8011520,
       "source_word": "whoever",
       "target_word": "[translation needed for: whoever]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011521,
-      "source_id": 8011522,
-      "target_id": 8011523,
       "source_word": "justice",
       "target_word": "[translation needed for: justice]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011524,
-      "source_id": 8011525,
-      "target_id": 8011526,
       "source_word": "knife",
       "target_word": "[translation needed for: knife]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011527,
-      "source_id": 8011528,
-      "target_id": 8011529,
       "source_word": "devil",
       "target_word": "[translation needed for: devil]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011530,
-      "source_id": 8011531,
-      "target_id": 8011532,
       "source_word": "necessary",
       "target_word": "[translation needed for: necessary]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011533,
-      "source_id": 8011534,
-      "target_id": 8011535,
       "source_word": "although",
       "target_word": "[translation needed for: although]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011536,
-      "source_id": 8011537,
-      "target_id": 8011538,
       "source_word": "princess",
       "target_word": "[translation needed for: princess]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011539,
-      "source_id": 8011540,
-      "target_id": 8011541,
       "source_word": "rose",
       "target_word": "[translation needed for: rose]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011542,
-      "source_id": 8011543,
-      "target_id": 8011544,
       "source_word": "clearly",
       "target_word": "[translation needed for: clearly]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011545,
-      "source_id": 8011546,
-      "target_id": 8011547,
       "source_word": "corner",
       "target_word": "[translation needed for: corner]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011548,
-      "source_id": 8011549,
-      "target_id": 8011550,
       "source_word": "code",
       "target_word": "[translation needed for: code]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011551,
-      "source_id": 8011552,
-      "target_id": 8011553,
       "source_word": "due",
       "target_word": "[translation needed for: due]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011554,
-      "source_id": 8011555,
-      "target_id": 8011556,
       "source_word": "apologize",
       "target_word": "[translation needed for: apologize]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     },
     {
-      "translation_id": 8011557,
-      "source_id": 8011558,
-      "target_id": 8011559,
       "source_word": "folk",
       "target_word": "[translation needed for: folk]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     }

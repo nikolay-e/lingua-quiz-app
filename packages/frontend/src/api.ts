@@ -16,14 +16,7 @@ const getServerAddress = (): string => {
   return '/api';
 };
 
-import type {
-  AuthResponse,
-  WordSet,
-  UserWordSet,
-  TTSResponse,
-  TTSLanguagesResponse,
-  WordSetWithWords,
-} from './api-types';
+import type { AuthResponse, WordList, WordPair, UserProgress, TTSResponse, TTSLanguagesResponse } from './api-types';
 
 const serverAddress = getServerAddress();
 
@@ -114,25 +107,30 @@ const api = {
   login: createApiMethod<AuthResponse, { username: string; password: string }>('/auth/login', 'POST', false),
   register: createApiMethod<AuthResponse, { username: string; password: string }>('/auth/register', 'POST', false),
 
-  fetchWordSets: createApiMethod<WordSet[]>('/word-sets'),
-  saveWordStatus: createApiMethod<void, { status: string; wordPairIds: number[] }>('/word-sets/user', 'POST'),
+  fetchWordLists: createApiMethod<WordList[]>('/word-lists'),
+
+  saveProgress: createApiMethod<
+    void,
+    { sourceText: string; sourceLang: string; level: number; correctCount: number; errorCount: number }
+  >('/user/progress', 'POST'),
 
   synthesizeSpeech: createApiMethod<TTSResponse, { text: string; language: string }>('/tts/synthesize', 'POST'),
   getTTSLanguages: createApiMethod<TTSLanguagesResponse>('/tts/languages'),
 
   deleteAccount: createApiMethod<void>('/auth/delete-account', 'DELETE'),
-  getCurrentLevel: createApiMethod<{ currentLevel: string }>('/user/current-level'),
-  updateCurrentLevel: createApiMethod<void, { currentLevel: string }>('/user/current-level', 'POST'),
 
-  async fetchUserWordSets(token: string, wordListName: string): Promise<UserWordSet[]> {
+  async fetchWordPairs(token: string, listName: string): Promise<WordPair[]> {
     return fetchWrapper(
-      `${serverAddress}/word-sets/user?word_list_name=${encodeURIComponent(wordListName)}`,
+      `${serverAddress}/word-pairs?list_name=${encodeURIComponent(listName)}`,
       withAuth(token, { method: 'GET' }),
     );
   },
 
-  async fetchWordSet(token: string, wordSetId: number): Promise<WordSetWithWords> {
-    return fetchWrapper(`${serverAddress}/word-sets/${wordSetId}`, withAuth(token, { method: 'GET' }));
+  async fetchUserProgress(token: string, listName?: string): Promise<UserProgress[]> {
+    const url = listName
+      ? `${serverAddress}/user/progress?list_name=${encodeURIComponent(listName)}`
+      : `${serverAddress}/user/progress`;
+    return fetchWrapper(url, withAuth(token, { method: 'GET' }));
   },
 };
 

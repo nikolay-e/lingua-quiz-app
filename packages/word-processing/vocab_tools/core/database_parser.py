@@ -1,13 +1,10 @@
-from dataclasses import dataclass
 import json
+from dataclasses import dataclass
 from pathlib import Path
 
 
 @dataclass
 class VocabularyEntry:
-    translation_id: int
-    source_word_id: int
-    target_word_id: int
     source_word: str
     target_word: str
     source_example: str
@@ -62,7 +59,7 @@ class VocabularyFileParser:
             with open(file_path, encoding="utf-8") as f:
                 data = json.load(f)
         except Exception as e:
-            raise ValueError(f"Error reading JSON file {filename}: {e}")
+            raise ValueError(f"Error reading JSON file {filename}: {e}") from e
 
         return self._extract_entries_from_json(data, filename)
 
@@ -75,9 +72,6 @@ class VocabularyFileParser:
         for word_pair in data["word_pairs"]:
             try:
                 entry = VocabularyEntry(
-                    translation_id=word_pair["translation_id"],
-                    source_word_id=word_pair["source_id"],
-                    target_word_id=word_pair["target_id"],
                     source_word=word_pair["source_word"],
                     target_word=word_pair["target_word"],
                     source_example=word_pair.get("source_example", ""),
@@ -85,6 +79,6 @@ class VocabularyFileParser:
                 )
                 entries.append(entry)
             except KeyError as e:
-                raise ValueError(f"JSON file {filename} has malformed word_pair missing field: {e}")
+                raise ValueError(f"JSON file {filename} has malformed word_pair missing field: {e}") from e
 
         return entries

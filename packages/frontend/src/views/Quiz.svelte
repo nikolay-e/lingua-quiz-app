@@ -53,7 +53,7 @@
   }
 
   // eslint-disable-next-line prefer-destructuring
-  $: wordSets = $quizStore.wordSets;
+  $: wordLists = $quizStore.wordLists;
   // eslint-disable-next-line prefer-destructuring
   $: selectedQuiz = $quizStore.selectedQuiz;
   // eslint-disable-next-line prefer-destructuring
@@ -201,9 +201,9 @@
       if ($authStore.token) {
         await ttsService.initializeLanguages($authStore.token);
         try {
-          await quizStore.loadWordSets($authStore.token);
+          await quizStore.loadWordLists($authStore.token);
         } catch (error) {
-          console.error('Failed to load word sets:', error);
+          console.error('Failed to load word lists:', error);
         }
       }
       await tick();
@@ -244,7 +244,7 @@
       {/if}
       <div class="stack">
         <QuizHeader
-          {wordSets}
+          {wordLists}
           {selectedQuiz}
           {loading}
           on:select={handleQuizSelect}

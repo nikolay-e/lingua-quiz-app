@@ -5,183 +5,122 @@
   "level_base_offset": 4010000,
   "word_pairs": [
     {
-      "translation_id": 4000227,
-      "source_id": 4000455,
-      "target_id": 4000456,
       "source_word": "hierro",
       "target_word": "железо",
       "source_example": "Esta mesa es de hierro.",
       "target_example": "Этот стол из железа."
     },
     {
-      "translation_id": 4000367,
-      "source_id": 4000735,
-      "target_id": 4000736,
       "source_word": "círculo",
       "target_word": "круг",
       "source_example": "Dibuja un círculo.",
       "target_example": "Нарисуй круг."
     },
     {
-      "translation_id": 4000406,
-      "source_id": 4000813,
-      "target_id": 4000814,
       "source_word": "aceite",
       "target_word": "масло",
       "source_example": "Necesito aceite de oliva.",
       "target_example": "Мне нужно оливковое масло."
     },
     {
-      "translation_id": 4000506,
-      "source_id": 4001013,
-      "target_id": 4001014,
       "source_word": "asegurar",
       "target_word": "(обеспечивать|гарантировать), уверять",
       "source_example": "Te aseguro que es verdad.",
       "target_example": "Я тебе гарантирую, что это правда."
     },
     {
-      "translation_id": 4000529,
-      "source_id": 4001059,
-      "target_id": 4001060,
       "source_word": "lago",
       "target_word": "озеро",
       "source_example": "El lago es profundo.",
       "target_example": "Озеро глубокое."
     },
     {
-      "translation_id": 4000561,
-      "source_id": 4001123,
-      "target_id": 4001124,
       "source_word": "distinto",
       "target_word": "различный|другой|иной",
       "source_example": "Son muy distintos.",
       "target_example": "Они очень разные."
     },
     {
-      "translation_id": 4000651,
-      "source_id": 4001303,
-      "target_id": 4001304,
       "source_word": "visitar",
       "target_word": "посещать",
       "source_example": "Quiero visitar España.",
       "target_example": "Я хочу посетить Испанию."
     },
     {
-      "translation_id": 4000665,
-      "source_id": 4001331,
-      "target_id": 4001332,
       "source_word": "celebrar",
       "target_word": "праздновать",
       "source_example": "Vamos a celebrar.",
       "target_example": "Давай праздновать."
     },
     {
-      "translation_id": 4000667,
-      "source_id": 4001335,
-      "target_id": 4001336,
       "source_word": "ofrecer",
       "target_word": "предлагать [предоставлять]",
       "source_example": "Te ofrezco mi ayuda.",
       "target_example": "Я предлагаю тебе помощь."
     },
     {
-      "translation_id": 4000750,
-      "source_id": 4001501,
-      "target_id": 4001502,
       "source_word": "crecer",
       "target_word": "расти",
       "source_example": "Los niños crecen rápido.",
       "target_example": "Дети растут быстро."
     },
     {
-      "translation_id": 4000751,
-      "source_id": 4001503,
-      "target_id": 4001504,
       "source_word": "gasto",
       "target_word": "расход",
       "source_example": "Tengo muchos gastos.",
       "target_example": "У меня большие расходы."
     },
     {
-      "translation_id": 4000845,
-      "source_id": 4001691,
-      "target_id": 4001692,
       "source_word": "risa",
       "target_word": "смех",
       "source_example": "Me gusta su risa.",
       "target_example": "Мне нравится его смех."
     },
     {
-      "translation_id": 4000877,
-      "source_id": 4001755,
-      "target_id": 4001756,
       "source_word": "vecino",
       "target_word": "сосед",
       "source_example": "Mi vecino es amable.",
       "target_example": "Мой сосед приветливый."
     },
     {
-      "translation_id": 4000983,
-      "source_id": 4001967,
-      "target_id": 4001968,
       "source_word": "aviso",
       "target_word": "уведомление",
       "source_example": "Te envié un aviso.",
       "target_example": "Я отправил тебе уведомление."
     },
     {
-      "translation_id": 4000987,
-      "source_id": 4001975,
-      "target_id": 4001976,
       "source_word": "esquina",
       "target_word": "угол",
       "source_example": "En la esquina.",
       "target_example": "На углу."
     },
     {
-      "translation_id": 4001072,
-      "source_id": 4002145,
-      "target_id": 4002146,
       "source_word": "puro",
       "target_word": "чистый [подлинный]",
       "source_example": "Oro puro.",
       "target_example": "Чистое золото."
     },
     {
-      "translation_id": 4001270,
-      "source_id": 4002541,
-      "target_id": 4002542,
       "source_word": "nacido",
       "target_word": "рождённый",
       "source_example": "Ha nacido un bebé.",
       "target_example": "Родился ребёнок."
     },
     {
-      "translation_id": 4001285,
-      "source_id": 4002571,
-      "target_id": 4002572,
       "source_word": "olor",
       "target_word": "запах",
       "source_example": "Me gusta el olor del café.",
       "target_example": "Мне нравится запах кофе."
     },
     {
-      "translation_id": 4000899,
-      "source_id": 4001799,
-      "target_id": 4001800,
       "source_word": "trabajadores",
       "target_word": "рабочие",
       "source_example": "Los trabajadores protestan.",
       "target_example": "Рабочие протестуют."
     },
     {
-      "translation_id": 4001286,
-      "source_id": 4001287,
-      "target_id": 4001288,
       "source_word": "mio",
       "target_word": "[translation needed for: mio]",
-      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     }

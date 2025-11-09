@@ -246,27 +246,18 @@ def test_migration_file_with_rare_words(tmp_path):
         "word_pairs": [
             # Common words (rank < 1000) - keep these
             {
-                "translation_id": 4000000,
-                "source_word_id": 4000001,
-                "target_word_id": 4000002,
                 "source_word": "casa",
                 "target_word": "дом",
                 "example_source": "Mi casa es grande",
                 "example_target": "Мой дом большой",
             },
             {
-                "translation_id": 4000003,
-                "source_word_id": 4000004,
-                "target_word_id": 4000005,
                 "source_word": "estar",
                 "target_word": "быть",
                 "example_source": "Estoy aquí",
                 "example_target": "Я здесь",
             },
             {
-                "translation_id": 4000006,
-                "source_word_id": 4000007,
-                "target_word_id": 4000008,
                 "source_word": "tener",
                 "target_word": "иметь",
                 "example_source": "Tengo un perro",
@@ -274,18 +265,12 @@ def test_migration_file_with_rare_words(tmp_path):
             },
             # Rare words (rank > 10000) - should be removed
             {
-                "translation_id": 4000009,
-                "source_word_id": 4000010,
-                "target_word_id": 4000011,
                 "source_word": "rareword1",
                 "target_word": "редкое1",
                 "example_source": "",
                 "example_target": "",
             },
             {
-                "translation_id": 4000012,
-                "source_word_id": 4000013,
-                "target_word_id": 4000014,
                 "source_word": "rareword2",
                 "target_word": "редкое2",
                 "example_source": "",
@@ -293,18 +278,12 @@ def test_migration_file_with_rare_words(tmp_path):
             },
             # More common words
             {
-                "translation_id": 4000015,
-                "source_word_id": 4000016,
-                "target_word_id": 4000017,
                 "source_word": "libro",
                 "target_word": "книга",
                 "example_source": "Leo un libro",
                 "example_target": "Я читаю книгу",
             },
             {
-                "translation_id": 4000018,
-                "source_word_id": 4000019,
-                "target_word_id": 4000020,
                 "source_word": "mesa",
                 "target_word": "стол",
                 "example_source": "La mesa es nueva",
@@ -312,9 +291,6 @@ def test_migration_file_with_rare_words(tmp_path):
             },
             # Additional rare word for testing low_priority (rank 8000-10000)
             {
-                "translation_id": 4000021,
-                "source_word_id": 4000022,
-                "target_word_id": 4000023,
                 "source_word": "lowpriority1",
                 "target_word": "низкий1",
                 "example_source": "",
