@@ -31,17 +31,17 @@ def load_analysis(lang_code: str, level: str, output_dir: Path) -> list | None:
     """Load analysis JSON for language/level."""
     analysis_file = output_dir / f"{lang_code}_vocabulary_detailed.json"
 
-    if not analysis_file.exists():
-        return None
+    if analysis_file.exists():
+        with open(analysis_file, encoding="utf-8") as f:
+            return json.load(f)
 
-    with open(analysis_file, encoding="utf-8") as f:
-        return json.load(f)
+    return None
 
 
 def get_rank_range(level: str) -> tuple[int, int]:
     """Get expected rank range for CEFR level."""
     rank_ranges = {"a1": (1, 1000), "a2": (1001, 2000), "b1": (2001, 4000), "b2": (4001, 6000), "c1": (6001, 12000)}
-    return rank_ranges.get(level, (1, 1000))
+    return rank_ranges.get(level.lower(), (1, 1000))
 
 
 def fill_missing_words(
@@ -61,7 +61,7 @@ def fill_missing_words(
         Dictionary with statistics about the operation
     """
     if output_dir is None:
-        output_dir = Path("/tmp") / f"analysis_{lang_code}_{level}"
+        output_dir = Path("/tmp")
 
     min_rank, max_rank = get_rank_range(level)
 

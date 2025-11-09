@@ -39,9 +39,9 @@ def fill_missing(
         console.print(f"[red]Error:[/red] {e}")
         raise typer.Exit(1) from None
 
-    # Default output directory
+    # Default output directory (same as analyze command)
     if output is None:
-        output = Path("/tmp") / f"analysis_{lang_code}_{level}"
+        output = Path("/tmp")
 
     # Show header
     console.print()

@@ -141,6 +141,50 @@ class LemmatizationService:
 
         return validated_lemma
 
+    def lemmatize_with_pos(self, word: str) -> list[tuple[str, str]]:
+        """
+        Lemmatize word and return lemma with POS tag.
+
+        Args:
+            word: Word to lemmatize
+
+        Returns:
+            List of (lemma, POS) tuples (usually single item, but can be multiple for compound words)
+        """
+        if not word:
+            return []
+
+        word_lower = word.lower()
+
+        # Load model if not loaded
+        self._load_model()
+
+        if self._nlp_model is None:
+            # No model available
+            return [(word_lower, "UNKNOWN")]
+
+        # Check if this is Stanza (has lemmatize_with_pos method)
+        is_stanza = hasattr(self._nlp_model, "lemmatize_with_pos")
+
+        if is_stanza:
+            try:
+                return self._nlp_model.lemmatize_with_pos(word_lower)
+            except Exception:
+                return [(word_lower, "UNKNOWN")]
+        else:
+            # spaCy fallback
+            try:
+                doc = self._nlp_model(word_lower)
+                results = []
+                for token in doc:
+                    lemma = token.lemma_.lower()
+                    pos = token.pos_
+                    validated_lemma = self._validate_lemma_with_wordfreq(word_lower, lemma)
+                    results.append((validated_lemma, pos))
+                return results if results else [(word_lower, "UNKNOWN")]
+            except Exception:
+                return [(word_lower, "UNKNOWN")]
+
     def lemmatize_batch(self, words: list[str]) -> list[str]:
         """
         Batch lemmatization for efficiency.

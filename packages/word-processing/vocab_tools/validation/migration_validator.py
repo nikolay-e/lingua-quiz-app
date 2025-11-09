@@ -115,29 +115,33 @@ class MigrationValidator:
         normalizer = self.normalizers[language]
         lemmatizer = self.lemmatizers[language]
 
-        seen_words: dict[str, list[str]] = defaultdict(list)
-        seen_words_original: dict[str, list[str]] = defaultdict(list)
+        seen_words: dict[str, list[tuple[str, str]]] = defaultdict(list)
 
         for entry in entries:
             entry_issues = self._validate_entry(entry, filename, normalizer)
             result.issues.extend(entry_issues)
 
-            # Use lemmatization for duplicate detection (same as frequency generation)
+            # Use lemmatization + POS for duplicate detection
             normalized_word = normalizer.normalize(entry.source_word)
-            lemmatized_word = lemmatizer.lemmatize(normalized_word)
-            seen_words[lemmatized_word].append(entry.source_word)
-            seen_words_original[lemmatized_word].append(entry.source_word)
+            lemma_with_pos = lemmatizer.lemmatize_with_pos(normalized_word)
 
-        duplicates = {word: words for word, words in seen_words.items() if len(words) > 1}
+            # Store lemma+POS as key to distinguish between same lemma but different POS
+            for lemma, pos in lemma_with_pos:
+                key = f"{lemma}:{pos}"
+                seen_words[key].append((entry.source_word, pos))
+
+        # Check for true duplicates (same lemma AND same POS)
+        duplicates = {key: words for key, words in seen_words.items() if len(words) > 1}
         if duplicates:
-            for lemmatized_word, words in duplicates.items():
-                original_variants = seen_words_original[lemmatized_word]
+            for key, word_pos_pairs in duplicates.items():
+                lemma, pos = key.split(":", 1)
+                original_variants = [word for word, _ in word_pos_pairs]
                 variants_str = ", ".join(f"'{v}'" for v in set(original_variants))
                 result.issues.append(
                     ValidationIssue(
                         severity="error",
                         category="duplicates",
-                        message=f"Duplicate word (lemma: '{lemmatized_word}', variants: {variants_str}) found {len(words)} times",
+                        message=f"Duplicate word (lemma: '{lemma}', POS: {pos}, variants: {variants_str}) found {len(word_pos_pairs)} times",
                         file_name=filename,
                     )
                 )

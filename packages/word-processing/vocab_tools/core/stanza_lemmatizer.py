@@ -1,5 +1,5 @@
-from typing import ClassVar, Literal
 import unicodedata
+from typing import ClassVar, Literal
 
 try:
     import stanza
@@ -19,7 +19,19 @@ STANZA_LANG_CODES = {
 
 
 class StanzaLemmatizer:
-    SPANISH_ENCLITIC_PRONOUNS: ClassVar[list[str]] = ["me", "te", "le", "lo", "la", "nos", "os", "les", "los", "las", "se"]
+    SPANISH_ENCLITIC_PRONOUNS: ClassVar[list[str]] = [
+        "me",
+        "te",
+        "le",
+        "lo",
+        "la",
+        "nos",
+        "os",
+        "les",
+        "los",
+        "las",
+        "se",
+    ]
 
     SPANISH_IRREGULAR_FORMS: ClassVar[dict[str, str]] = {
         "ve": "ir",
@@ -286,7 +298,11 @@ class StanzaLemmatizer:
 
         try:
             self._pipeline = stanza.Pipeline(
-                stanza_lang, processors="tokenize,pos,lemma", tokenize_pretokenized=True, verbose=False, download_method=None
+                stanza_lang,
+                processors="tokenize,pos,lemma",
+                tokenize_pretokenized=True,
+                verbose=False,
+                download_method=None,
             )
             print(f"Stanza lemmatizer loaded for {self.language}")
         except Exception as e:
@@ -321,6 +337,31 @@ class StanzaLemmatizer:
             pass
 
         return word.lower()
+
+    def lemmatize_with_pos(self, word: str) -> list[tuple[str, str]]:
+        if not self.is_available():
+            return [(word.lower(), "UNKNOWN")]
+
+        if not word:
+            return []
+
+        try:
+            # Stanza expects list of sentences, each sentence is list of tokens
+            doc = self._pipeline([[word]])
+            results = []
+            if doc.sentences and len(doc.sentences) > 0:
+                for word_obj in doc.sentences[0].words:
+                    lemma = word_obj.lemma.lower()
+                    pos = word_obj.upos
+
+                    # Post-process for Spanish with POS tags
+                    if self.language == "es":
+                        lemma = self._postprocess_spanish_lemma_with_pos(word, lemma, pos, word_obj.feats)
+
+                    results.append((lemma, pos))
+            return results if results else [(word.lower(), "UNKNOWN")]
+        except Exception:
+            return [(word.lower(), "UNKNOWN")]
 
     def lemmatize_batch(self, words: list[str]) -> list[str]:
         if not self.is_available():
