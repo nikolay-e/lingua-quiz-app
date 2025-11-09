@@ -5,8 +5,8 @@ from typing import Any
 
 from wordfreq import zipf_frequency
 
+from .migration_analyzer import MigrationAnalyzer
 from .transliteration_detector import TransliterationDetector
-from .vocabulary_analyzer import VocabularyAnalyzer
 
 
 class FullReportGenerator:
@@ -15,7 +15,7 @@ class FullReportGenerator:
 
         self.language_code = language_code
         self.migration_file_path = Path(migration_file_path)
-        self.analyzer = VocabularyAnalyzer(language_code, migration_file_path)
+        self.analyzer = MigrationAnalyzer(language_code, migration_file_path)
         self.config_loader = get_config_loader()
 
         self.level = self._get_level_from_filename()
@@ -78,11 +78,21 @@ class FullReportGenerator:
 
                 if not target or target == "[PLACEHOLDER]":
                     validation_errors.append(
-                        {"type": "empty_translation", "word": source, "message": f'Empty or placeholder translation for "{source}"'}
+                        {
+                            "type": "empty_translation",
+                            "word": source,
+                            "message": f'Empty or placeholder translation for "{source}"',
+                        }
                     )
 
                 if not source:
-                    validation_errors.append({"type": "empty_source", "word": target, "message": f'Empty source word for translation "{target}"'})
+                    validation_errors.append(
+                        {
+                            "type": "empty_source",
+                            "word": target,
+                            "message": f'Empty source word for translation "{target}"',
+                        }
+                    )
 
             source_words = [p.get("source_word", "") for p in word_pairs if p.get("source_word")]
             from collections import Counter
@@ -91,7 +101,13 @@ class FullReportGenerator:
             duplicates = {word: count for word, count in word_counts.items() if count > 1}
 
             for word, count in duplicates.items():
-                validation_errors.append({"type": "duplicate_word", "word": word, "message": f'Duplicate word "{word}" appears {count} times'})
+                validation_errors.append(
+                    {
+                        "type": "duplicate_word",
+                        "word": word,
+                        "message": f'Duplicate word "{word}" appears {count} times',
+                    }
+                )
 
         except Exception as e:
             validation_errors.append({"type": "file_error", "word": "N/A", "message": f"Error reading file: {e!s}"})
@@ -127,7 +143,9 @@ class FullReportGenerator:
             processor = VocabularyProcessor(self.language_code, silent=True)
             multiplier = self.config_loader.get_raw_frequency_multiplier(self.language_code)
             source = SubtitleFrequencySource(self.language_code, top_n=int(self.top_n * multiplier), lemmatize=False)
-            vocab = processor.process_words(source, filter_inflections=True, target_count=self.top_n, collect_stats=False)
+            vocab = processor.process_words(
+                source, filter_inflections=True, target_count=self.top_n, collect_stats=False
+            )
 
         lemma_to_real_rank = {word.lemma: rank for rank, word in enumerate(vocab.words, start=1)}
 
@@ -155,7 +173,9 @@ class FullReportGenerator:
         json_path = output_dir / f"{self.language_code}_vocabulary_detailed.json"
         csv_path = output_dir / f"{self.language_code}_vocabulary_analysis.csv"
 
-        self._generate_markdown_report(detailed_data, result, report_path, vocab_words, vocab_lemma_map, transliterations, validation_result)
+        self._generate_markdown_report(
+            detailed_data, result, report_path, vocab_words, vocab_lemma_map, transliterations, validation_result
+        )
 
         with open(json_path, "w", encoding="utf-8") as f:
             json.dump(detailed_data, f, ensure_ascii=False, indent=2)
@@ -214,7 +234,9 @@ class FullReportGenerator:
             return 4
         return 6
 
-    def _categorize_all_words(self, vocab_lemma_map: dict[str, list[str]], lemma_to_real_rank: dict[str, int]) -> list[dict[str, Any]]:
+    def _categorize_all_words(
+        self, vocab_lemma_map: dict[str, list[str]], lemma_to_real_rank: dict[str, int]
+    ) -> list[dict[str, Any]]:
         detailed_data = []
 
         for lemma, forms in vocab_lemma_map.items():
@@ -354,7 +376,9 @@ class FullReportGenerator:
 
             reason = "Только в EN корпусе" if target_zipf == 0.0 and en_zipf > 0.0 else f"EN частотнее на {diff:.1f}"
 
-            report += f"| {i} | {word['lemma']} | {forms} | {target_zipf:.2f} | {en_zipf:.2f} | +{diff:.1f} | {reason} |\n"
+            report += (
+                f"| {i} | {word['lemma']} | {forms} | {target_zipf:.2f} | {en_zipf:.2f} | +{diff:.1f} | {reason} |\n"
+            )
 
         report += f"""
 ### 2. Очень редкие слова (ранг > {very_rare_threshold:,})
@@ -369,7 +393,9 @@ class FullReportGenerator:
         for i, word in enumerate(rare_words, 1):
             forms = ", ".join(word["forms"])
             recommendation = "Слишком редкое"
-            report += f"| {i} | {word['lemma']} | {forms} | {word['rank']:,} | {word['zipf']:.2f} | {recommendation} |\n"
+            report += (
+                f"| {i} | {word['lemma']} | {forms} | {word['rank']:,} | {word['zipf']:.2f} | {recommendation} |\n"
+            )
 
         report += f"""
 ### 3. Транслитерации (переместить в A0)
@@ -460,7 +486,9 @@ class FullReportGenerator:
         low_priority = [x for x in detailed_data if moderate_threshold < x["rank"] <= range_end]
         for i, word in enumerate(low_priority, 1):
             forms = ", ".join(word["forms"])
-            report += f"| {i} | {word['lemma']} | {forms} | {word['rank']:,} | {word['zipf']:.2f} | ⚪ Низкий приоритет |\n"
+            report += (
+                f"| {i} | {word['lemma']} | {forms} | {word['rank']:,} | {word['zipf']:.2f} | ⚪ Низкий приоритет |\n"
+            )
 
         output_path.write_text(report, encoding="utf-8")
 

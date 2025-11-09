@@ -15,10 +15,12 @@ class TestAccentFiltering:
 
     @pytest.fixture(scope="class")
     def analyzer(self):
-        from vocab_tools.analysis.vocabulary_analyzer import VocabularyAnalyzer
+        from vocab_tools.analysis.migration_analyzer import MigrationAnalyzer
 
-        migration_file = Path("/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json")
-        return VocabularyAnalyzer("es", migration_file)
+        migration_file = Path(
+            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json"
+        )
+        return MigrationAnalyzer("es", migration_file)
 
     def test_remove_accents_function(self, analyzer):
         """Test accent removal utility function."""
@@ -59,7 +61,9 @@ class TestAccentFiltering:
         # "donde" should NOT be in missing list
         donde_lemma = analyzer.lemmatization_service.lemmatize("donde")
 
-        assert donde_lemma not in missing_lemmas, f"'donde' (lemma: {donde_lemma}) reported as missing, but A1 has 'dónde' which covers this concept"
+        assert donde_lemma not in missing_lemmas, (
+            f"'donde' (lemma: {donde_lemma}) reported as missing, but A1 has 'dónde' which covers this concept"
+        )
 
     def test_como_not_reported_when_cómo_in_a1(self, analyzer):
         """If A1 has "cómo", "como" should NOT be reported as missing."""
@@ -73,7 +77,9 @@ class TestAccentFiltering:
 
         como_lemma = analyzer.lemmatization_service.lemmatize("como")
 
-        assert como_lemma not in missing_lemmas, f"'como' (lemma: {como_lemma}) reported as missing, but A1 has 'cómo' which covers this concept"
+        assert como_lemma not in missing_lemmas, (
+            f"'como' (lemma: {como_lemma}) reported as missing, but A1 has 'cómo' which covers this concept"
+        )
 
     def test_quien_not_reported_when_quién_in_a1(self, analyzer):
         """If A1 has "quién", "quien" should NOT be reported as missing."""
@@ -87,7 +93,9 @@ class TestAccentFiltering:
 
         quien_lemma = analyzer.lemmatization_service.lemmatize("quien")
 
-        assert quien_lemma not in missing_lemmas, f"'quien' (lemma: {quien_lemma}) reported as missing, but A1 has 'quién' which covers this concept"
+        assert quien_lemma not in missing_lemmas, (
+            f"'quien' (lemma: {quien_lemma}) reported as missing, but A1 has 'quién' which covers this concept"
+        )
 
     def test_accent_filtering_is_bidirectional(self, analyzer):
         """
@@ -108,7 +116,9 @@ class TestAccentFiltering:
         cómo_lemma = analyzer.lemmatization_service.lemmatize("cómo")
 
         # If "como" is in A1, "cómo" should not be reported as missing
-        assert cómo_lemma not in missing_lemmas, f"'cómo' (lemma: {cómo_lemma}) reported as missing, but A1 has 'como' which covers this concept"
+        assert cómo_lemma not in missing_lemmas, (
+            f"'cómo' (lemma: {cómo_lemma}) reported as missing, but A1 has 'como' which covers this concept"
+        )
 
     def test_no_false_positive_critical_missing_words(self, analyzer):
         """
@@ -145,7 +155,9 @@ class TestAccentFiltering:
             if relative_lemma in critical_lemmas:
                 false_positives.append(f"{relative} (lemma: {relative_lemma}) - A1 has {interrogative}")
 
-        assert not false_positives, "Accent variants reported as critical missing:\n" + "\n".join(f"  - {fp}" for fp in false_positives)
+        assert not false_positives, "Accent variants reported as critical missing:\n" + "\n".join(
+            f"  - {fp}" for fp in false_positives
+        )
 
     def test_analysis_result_has_fewer_missing_after_filtering(self, analyzer):
         """

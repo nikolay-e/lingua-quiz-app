@@ -14,10 +14,12 @@ class TestLemmaMatching:
 
     @pytest.fixture(scope="class")
     def analyzer(self):
-        from vocab_tools.analysis.vocabulary_analyzer import VocabularyAnalyzer
+        from vocab_tools.analysis.migration_analyzer import MigrationAnalyzer
 
-        migration_file = Path("/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json")
-        return VocabularyAnalyzer("es", migration_file)
+        migration_file = Path(
+            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json"
+        )
+        return MigrationAnalyzer("es", migration_file)
 
     @pytest.fixture(scope="class")
     def subtitle_index(self):
@@ -50,7 +52,9 @@ class TestLemmaMatching:
         print(f"Lemma '{lemma}' rank in subtitle index: {lemma_rank}")
 
         # Both should return same rank
-        assert rank == lemma_rank, f"Ranks don't match!\n  Word '{word}' rank: {rank}\n  Lemma '{lemma}' rank: {lemma_rank}"
+        assert rank == lemma_rank, (
+            f"Ranks don't match!\n  Word '{word}' rank: {rank}\n  Lemma '{lemma}' rank: {lemma_rank}"
+        )
 
     def test_como_vs_cómo_lemmas(self, analyzer, subtitle_index):
         """

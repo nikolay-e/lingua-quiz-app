@@ -1,8 +1,8 @@
-from dataclasses import dataclass
 import json
+import unicodedata
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
-import unicodedata
 
 from ..config.config_loader import get_config_loader
 from ..config.constants import RANK_NOT_FOUND, RANK_VERY_RARE
@@ -13,7 +13,7 @@ from ..core.word_source import SubtitleFrequencySource
 
 
 @dataclass
-class VocabularyAnalysisResult:
+class MigrationAnalysisResult:
     language_code: str
     vocabulary_size: int
     frequency_size: int
@@ -28,7 +28,7 @@ class VocabularyAnalysisResult:
         return self.missing_from_vocabulary
 
 
-class VocabularyAnalyzer:
+class MigrationAnalyzer:
     def __init__(self, language_code: str, migration_file_path: str | Path):
         self.language_code = language_code
         self.migration_file_path = Path(migration_file_path)
@@ -119,7 +119,7 @@ class VocabularyAnalyzer:
 
         return []
 
-    def analyze(self, top_n: int | None = None) -> VocabularyAnalysisResult:
+    def analyze(self, top_n: int | None = None) -> MigrationAnalysisResult:
         if top_n is None:
             level = self._get_level_from_filename()
             if not level:
@@ -236,7 +236,7 @@ class VocabularyAnalyzer:
 
         rare_words = [item for item in missing_analysis if item["rank_estimate"] > RANK_VERY_RARE]
 
-        return VocabularyAnalysisResult(
+        return MigrationAnalysisResult(
             language_code=self.language_code,
             vocabulary_size=len(vocabulary_lemmas),
             frequency_size=len(freq_lemmas),
@@ -247,7 +247,7 @@ class VocabularyAnalyzer:
             rare_words_in_vocabulary=rare_words,
         )
 
-    def generate_report(self, result: VocabularyAnalysisResult, output_path: str | Path):
+    def generate_report(self, result: MigrationAnalysisResult, output_path: str | Path):
         output_path = Path(output_path)
 
         level = self._get_level_from_filename() or "UNKNOWN"
@@ -324,7 +324,9 @@ class VocabularyAnalyzer:
         report += "## РЕКОМЕНДАЦИИ\n\n"
         report += f"1. **Добавить {len([x for x in result.missing_from_vocabulary if x['rank_estimate'] <= 500])} базовых слов** (ранг < 500)\n"
         report += f"2. **Удалить {len(result.english_words_in_vocabulary)} английских слов**\n"
-        report += f"3. **Рассмотреть удаление {len(result.rare_words_in_vocabulary)} очень редких слов** (ранг > 10,000)\n"
+        report += (
+            f"3. **Рассмотреть удаление {len(result.rare_words_in_vocabulary)} очень редких слов** (ранг > 10,000)\n"
+        )
 
         output_path.write_text(report, encoding="utf-8")
 

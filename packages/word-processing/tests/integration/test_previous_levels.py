@@ -1,5 +1,5 @@
 """
-Integration tests for previous CEFR level handling in VocabularyAnalyzer.
+Integration tests for previous CEFR level handling in MigrationAnalyzer.
 
 Tests verify that vocabulary analysis correctly accounts for words from previous levels:
 - A1 should check A0
@@ -13,7 +13,8 @@ This prevents reporting words as "missing" when they already exist in earlier le
 from pathlib import Path
 
 import pytest
-from vocab_tools.analysis.vocabulary_analyzer import VocabularyAnalyzer
+
+from vocab_tools.analysis.migration_analyzer import MigrationAnalyzer
 
 
 class TestPreviousLevelMethods:
@@ -21,13 +22,17 @@ class TestPreviousLevelMethods:
 
     @pytest.fixture(scope="class")
     def a1_analyzer(self):
-        migration_file = Path("/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json")
-        return VocabularyAnalyzer("es", migration_file)
+        migration_file = Path(
+            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json"
+        )
+        return MigrationAnalyzer("es", migration_file)
 
     @pytest.fixture(scope="class")
     def a2_analyzer(self):
-        migration_file = Path("/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a2.json")
-        return VocabularyAnalyzer("es", migration_file)
+        migration_file = Path(
+            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a2.json"
+        )
+        return MigrationAnalyzer("es", migration_file)
 
     def test_get_level_from_filename_a1(self, a1_analyzer):
         """Test level extraction from A1 filename."""
@@ -68,7 +73,9 @@ class TestPreviousLevelMethods:
 
         for level, expected_previous in hierarchy_tests:
             previous = a1_analyzer._get_previous_levels(level)
-            assert previous == expected_previous, f"Failed for level {level}: expected {expected_previous}, got {previous}"
+            assert previous == expected_previous, (
+                f"Failed for level {level}: expected {expected_previous}, got {previous}"
+            )
 
     def test_load_previous_levels_vocabulary_a1(self, a1_analyzer):
         """A1 should load A0 vocabulary."""
@@ -107,13 +114,17 @@ class TestPreviousLevelsIntegration:
 
     @pytest.fixture(scope="class")
     def a1_analyzer(self):
-        migration_file = Path("/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json")
-        return VocabularyAnalyzer("es", migration_file)
+        migration_file = Path(
+            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json"
+        )
+        return MigrationAnalyzer("es", migration_file)
 
     @pytest.fixture(scope="class")
     def a2_analyzer(self):
-        migration_file = Path("/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a2.json")
-        return VocabularyAnalyzer("es", migration_file)
+        migration_file = Path(
+            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a2.json"
+        )
+        return MigrationAnalyzer("es", migration_file)
 
     def test_a1_analysis_excludes_a0_words(self, a1_analyzer):
         """
@@ -124,7 +135,9 @@ class TestPreviousLevelsIntegration:
         result = a1_analyzer.analyze(top_n=1500)
 
         # Get A0 vocabulary
-        a0_file = Path("/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a0.json")
+        a0_file = Path(
+            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a0.json"
+        )
         a0_words = a1_analyzer._load_vocabulary_from_file(a0_file)
         a0_lemmas = {a1_analyzer.lemmatization_service.lemmatize(w) for w in a0_words}
 
@@ -149,12 +162,16 @@ class TestPreviousLevelsIntegration:
         result = a2_analyzer.analyze(top_n=1500)
 
         # Get A0 vocabulary
-        a0_file = Path("/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a0.json")
+        a0_file = Path(
+            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a0.json"
+        )
         a0_words = a2_analyzer._load_vocabulary_from_file(a0_file)
         a0_lemmas = {a2_analyzer.lemmatization_service.lemmatize(w) for w in a0_words}
 
         # Get A1 vocabulary
-        a1_file = Path("/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json")
+        a1_file = Path(
+            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json"
+        )
         a1_words = a2_analyzer._load_vocabulary_from_file(a1_file)
         a1_lemmas = {a2_analyzer.lemmatization_service.lemmatize(w) for w in a1_words}
 
@@ -201,7 +218,9 @@ class TestPreviousLevelsIntegration:
         result = a2_analyzer.analyze(top_n=1500)
 
         # Load A1 to check for accent variants
-        a1_file = Path("/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json")
+        a1_file = Path(
+            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json"
+        )
         a1_words = a2_analyzer._load_vocabulary_from_file(a1_file)
 
         missing_lemmas = {item["lemma"] for item in result.missing_from_a1}
@@ -223,6 +242,7 @@ class TestPreviousLevelsIntegration:
                 if unaccented_lemma in missing_lemmas:
                     false_positives.append(f"{unaccented} (A1 has {accented})")
 
-        assert not false_positives, "Accent variants reported as missing even though previous level has them:\n" + "\n".join(
-            f"  - {fp}" for fp in false_positives
+        assert not false_positives, (
+            "Accent variants reported as missing even though previous level has them:\n"
+            + "\n".join(f"  - {fp}" for fp in false_positives)
         )

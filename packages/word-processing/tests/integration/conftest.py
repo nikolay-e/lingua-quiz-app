@@ -186,18 +186,18 @@ def stanza_ru_lemmatizer():
 
 @pytest.fixture(scope="session")
 def spanish_a1_analyzer(spanish_a1_migration_file):
-    """VocabularyAnalyzer for Spanish (session-scoped for performance)."""
-    from vocab_tools.analysis.vocabulary_analyzer import VocabularyAnalyzer
+    """MigrationAnalyzer for Spanish (session-scoped for performance)."""
+    from vocab_tools.analysis.migration_analyzer import MigrationAnalyzer
 
-    return VocabularyAnalyzer("es", spanish_a1_migration_file)
+    return MigrationAnalyzer("es", spanish_a1_migration_file)
 
 
 @pytest.fixture(scope="session")
 def spanish_a2_analyzer(spanish_a2_migration_file):
     """A2Analyzer for Spanish (session-scoped for performance)."""
-    from vocab_tools.analysis.vocabulary_analyzer import VocabularyAnalyzer
+    from vocab_tools.analysis.migration_analyzer import MigrationAnalyzer
 
-    return VocabularyAnalyzer("es", spanish_a2_migration_file)
+    return MigrationAnalyzer("es", spanish_a2_migration_file)
 
 
 @pytest.fixture(scope="session")

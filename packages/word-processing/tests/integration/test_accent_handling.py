@@ -26,7 +26,9 @@ class TestAccentDuplicates:
 
     @pytest.fixture(scope="class")
     def migration_file(self):
-        return Path("/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json")
+        return Path(
+            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json"
+        )
 
     def test_detect_interrogative_relative_pairs_in_a1(self, migration_file):
         """
@@ -37,9 +39,9 @@ class TestAccentDuplicates:
         - They may be intentional (teaching both forms)
         - Or may be duplicates that should be merged
         """
-        from vocab_tools.analysis.vocabulary_analyzer import VocabularyAnalyzer
+        from vocab_tools.analysis.migration_analyzer import MigrationAnalyzer
 
-        analyzer = VocabularyAnalyzer("es", migration_file)
+        analyzer = MigrationAnalyzer("es", migration_file)
         a1_words = analyzer._load_vocabulary()
 
         # Known interrogative/relative pairs
@@ -75,10 +77,12 @@ class TestFalsePositiveMissing:
 
     @pytest.fixture(scope="class")
     def analyzer(self):
-        from vocab_tools.analysis.vocabulary_analyzer import VocabularyAnalyzer
+        from vocab_tools.analysis.migration_analyzer import MigrationAnalyzer
 
-        migration_file = Path("/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json")
-        return VocabularyAnalyzer("es", migration_file)
+        migration_file = Path(
+            "/Users/nikolay/code/lingua-quiz/packages/backend/migrations/data/vocabulary/spanish-russian-a1.json"
+        )
+        return MigrationAnalyzer("es", migration_file)
 
     def test_words_in_a1_not_reported_as_missing(self, analyzer):
         """
