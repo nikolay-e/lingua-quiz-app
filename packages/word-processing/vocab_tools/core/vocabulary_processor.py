@@ -1,15 +1,22 @@
 from collections import defaultdict
 from dataclasses import dataclass
-import re
 
-from wordfreq import word_frequency
-
-from ..analysis.morphological_analyzer import MorphologicalAnalyzer
 from ..config.config_loader import get_config_loader
 from ..config.constants import get_pos_description
 from .base_normalizer import get_universal_normalizer
 from .lemmatization_service import get_lemmatization_service
 from .nlp_models import get_nlp_model
+from .processing_pipeline import ProcessingContext, ProcessingPipeline
+from .processing_stages import (
+    CategorizationStage,
+    FilteringStatsCollector,
+    InflectionFilteringStage,
+    LemmatizationStage,
+    NLPAnalysisStage,
+    NormalizationStage,
+    StatisticsCollectionStage,
+    ValidationStage,
+)
 from .word_source import WordSource
 from .word_validator import WordValidator
 
@@ -78,7 +85,6 @@ class VocabularyProcessor:
         }
         self.validator = WordValidator(validator_config)
 
-        self.morph_analyzer = MorphologicalAnalyzer(language_code)
         self._nlp_model = None
         self.lemmatization_service = get_lemmatization_service(language_code)
 
@@ -88,6 +94,27 @@ class VocabularyProcessor:
             model_preferences = self.config_loader.get_spacy_models(self.language_code)
             self._nlp_model = get_nlp_model(self.language_code, model_preferences, silent=self.silent)
         return self._nlp_model
+
+    def _build_pipeline(
+        self, existing_words: set[str], filter_inflections: bool, stats_collector: FilteringStatsCollector | None
+    ) -> ProcessingPipeline:
+        """Build processing pipeline with 7 stages."""
+        stages = [
+            NormalizationStage(self.normalizer),
+            ValidationStage(self.validator),
+            LemmatizationStage(self.lemmatization_service),
+            NLPAnalysisStage(self.nlp_model, self.language_code, self.ner_frequency_threshold),
+            InflectionFilteringStage(
+                self.language_code,
+                self.inflection_frequency_ratio,
+                self.inflection_patterns,
+                existing_words,
+                filter_inflections,
+            ),
+            CategorizationStage(self.pos_categories),
+            StatisticsCollectionStage(stats_collector),
+        ]
+        return ProcessingPipeline(stages)
 
     def process_words(
         self,
@@ -101,96 +128,47 @@ class VocabularyProcessor:
         if existing_words is None:
             existing_words = set()
 
+        stats_collector = FilteringStatsCollector() if collect_stats else None
+        pipeline = self._build_pipeline(existing_words, filter_inflections, stats_collector)
+
         processed_words = []
         filtered_count = 0
         categories = defaultdict(list)
         total_analyzed = 0
         seen_lemmas = {}
 
-        stats = (
-            FilteringStats(
-                total_analyzed=0,
-                total_filtered=0,
-                by_category={},
-                examples={},
-            )
-            if collect_stats
-            else None
-        )
-
         for word_obj in word_source.get_words():
             if target_count and len(processed_words) >= target_count:
                 break
 
             total_analyzed += 1
-            word = word_obj.text
-            normalized = self.normalizer.normalize(word)
+            context = ProcessingContext(word=word_obj.text, metadata=word_obj.metadata or {})
+            context = pipeline.process(context)
 
-            if not self._is_valid_word(word, normalized):
+            if context.should_filter:
                 filtered_count += 1
-                if collect_stats:
-                    category, _reason = self.validator.get_rejection_reason(word, normalized)
-                    stats.add_filtered(word, f"validation:{category}")
                 continue
 
-            processed, rejection_reason = self._analyze_word(word, word_obj.metadata or {}, existing_words, filter_inflections)
-
-            if processed is None:
+            if strict_lemma_only and context.word.lower() != context.lemma:
                 filtered_count += 1
-                if collect_stats and rejection_reason:
-                    stats.add_filtered(word, rejection_reason)
+                if stats_collector:
+                    stats_collector.add_filtered(context.word, f"strict_mode:inflection:{context.lemma}")
                 continue
 
-            if strict_lemma_only and processed.word.lower() != processed.lemma:
-                filtered_count += 1
-                if collect_stats:
-                    stats.add_filtered(word, f"strict_mode:inflection:{processed.lemma}")
-                continue
+            processed = self._context_to_processed_word(context)
 
             if processed.lemma in seen_lemmas:
-                existing_processed = seen_lemmas[processed.lemma]
-                should_replace = False
-                replacement_reason = ""
-
-                is_current_lemma = processed.word.lower() == processed.lemma
-                is_existing_lemma = existing_processed.word.lower() == existing_processed.lemma
-
-                if is_current_lemma and not is_existing_lemma:
-                    should_replace = True
-                    replacement_reason = f"replaced_by_lemma:{processed.lemma}"
-                elif not is_current_lemma and is_existing_lemma:
-                    filtered_count += 1
-                    if collect_stats:
-                        stats.add_filtered(word, f"duplicate:lemma_exists:{processed.lemma}")
+                filtered_count = self._handle_duplicate(
+                    processed, seen_lemmas, processed_words, categories, filtered_count, stats_collector
+                )
+                if processed.lemma not in seen_lemmas or seen_lemmas[processed.lemma] != processed:
                     continue
-                elif processed.frequency > existing_processed.frequency * 1.2:
-                    should_replace = True
-                    replacement_reason = f"replaced_by_higher_freq:{processed.lemma}:freq={processed.frequency:.6f}"
-                else:
-                    filtered_count += 1
-                    if collect_stats:
-                        stats.add_filtered(word, f"duplicate:lower_freq:{processed.lemma}")
-                    continue
-
-                if should_replace:
-                    processed_words = [w for w in processed_words if w.lemma != processed.lemma]
-                    categories[existing_processed.category] = [w for w in categories[existing_processed.category] if w.lemma != processed.lemma]
-
-                    processed_words.append(processed)
-                    categories[processed.category].append(processed)
-                    seen_lemmas[processed.lemma] = processed
-
-                    if collect_stats:
-                        stats.add_filtered(existing_processed.word, replacement_reason)
-                continue
 
             processed_words.append(processed)
             categories[processed.category].append(processed)
             seen_lemmas[processed.lemma] = processed
 
-        if stats:
-            stats.total_analyzed = total_analyzed
-            stats.total_filtered = filtered_count
+        stats = self._build_filtering_stats(stats_collector, total_analyzed, filtered_count) if collect_stats else None
 
         return ProcessedVocabulary(
             language_code=self.language_code,
@@ -201,89 +179,83 @@ class VocabularyProcessor:
             filtering_stats=stats,
         )
 
-    def _is_valid_word(self, word: str, normalized: str) -> bool:
-        return self.validator.is_valid(word, normalized)
-
-    def _analyze_word(self, word: str, metadata: dict, existing_words: set[str], filter_inflections: bool) -> tuple[ProcessedWord | None, str | None]:
-        doc = self.nlp_model(word)
-
-        if not doc or len(doc) == 0:
-            return None, "nlp:failed_parse"
-
-        token = doc[0]
-
-        lemma = self.lemmatization_service.lemmatize(word)
-
-        pos_tag = token.pos_
-        morphology = self._extract_morphology(token)
-
-        frequency = word_frequency(word, self.language_code)
-
-        if pos_tag == "PROPN":
-            return None, "nlp:proper_noun"
-
-        if token.ent_type_ and token.ent_type_ not in ["ORDINAL", "CARDINAL"] and frequency < self.ner_frequency_threshold:
-            return None, f"nlp:named_entity:{token.ent_type_}"
-
-        if filter_inflections:
-            if lemma != word.lower() and lemma in existing_words:
-                lemma_freq = word_frequency(lemma, self.language_code)
-                if lemma_freq > 0 and frequency < lemma_freq * self.inflection_frequency_ratio:
-                    freq_ratio = frequency / lemma_freq if lemma_freq > 0 else 0
-                    return None, f"inflection:existing_lemma:{lemma}:freq_ratio={freq_ratio:.2f}"
-
-            if self._is_likely_inflected(word, lemma, morphology):
-                lemma_freq = word_frequency(lemma, self.language_code)
-                if lemma_freq > 0 and frequency < lemma_freq * self.inflection_frequency_ratio:
-                    freq_ratio = frequency / lemma_freq if lemma_freq > 0 else 0
-                    return None, f"inflection:pattern_match:{lemma}:freq_ratio={freq_ratio:.2f}"
-
-        category = self._categorize_by_pos(pos_tag)
-        reason = self._generate_reason(word, lemma, pos_tag, morphology, metadata.get("rank"))
+    def _context_to_processed_word(self, context: ProcessingContext) -> ProcessedWord:
+        """Convert ProcessingContext to ProcessedWord."""
+        reason = self._generate_reason(
+            context.word, context.lemma, context.pos_tag, context.morphology, context.metadata.get("rank")
+        )
 
         return ProcessedWord(
-            word=word,
-            lemma=lemma,
-            pos_tag=pos_tag,
-            category=category,
-            frequency=frequency,
-            rank=metadata.get("rank"),
-            morphology=morphology,
+            word=context.word,
+            lemma=context.lemma,
+            pos_tag=context.pos_tag,
+            category=context.category,
+            frequency=context.frequency,
+            rank=context.metadata.get("rank"),
+            morphology=context.morphology,
             reason=reason,
-            metadata=metadata,
-        ), None
+            metadata=context.metadata,
+        )
 
-    def _extract_morphology(self, token) -> dict:
-        features = self.morph_analyzer.analyze_token(token)
-        morph_dict = features.to_dict()
+    def _handle_duplicate(
+        self,
+        processed: ProcessedWord,
+        seen_lemmas: dict,
+        processed_words: list,
+        categories: dict,
+        filtered_count: int,
+        stats_collector: FilteringStatsCollector | None,
+    ) -> int:
+        """Handle duplicate lemma logic."""
+        existing_processed = seen_lemmas[processed.lemma]
+        should_replace = False
+        replacement_reason = ""
 
-        morph_dict["_paradigm_slot"] = self.morph_analyzer.get_paradigm_slot(features)
-        morph_dict["_is_marked"] = self.morph_analyzer.is_marked_form(features)
-        morph_dict["_description"] = features.get_human_readable_description()
+        is_current_lemma = processed.word.lower() == processed.lemma
+        is_existing_lemma = existing_processed.word.lower() == existing_processed.lemma
 
-        if features.raw_features:
-            for key, value in features.raw_features.items():
-                if key not in morph_dict:
-                    morph_dict[key] = value
+        if is_current_lemma and not is_existing_lemma:
+            should_replace = True
+            replacement_reason = f"replaced_by_lemma:{processed.lemma}"
+        elif not is_current_lemma and is_existing_lemma:
+            filtered_count += 1
+            if stats_collector:
+                stats_collector.add_filtered(processed.word, f"duplicate:lemma_exists:{processed.lemma}")
+            return filtered_count
+        elif processed.frequency > existing_processed.frequency * 1.2:
+            should_replace = True
+            replacement_reason = f"replaced_by_higher_freq:{processed.lemma}:freq={processed.frequency:.6f}"
+        else:
+            filtered_count += 1
+            if stats_collector:
+                stats_collector.add_filtered(processed.word, f"duplicate:lower_freq:{processed.lemma}")
+            return filtered_count
 
-        return morph_dict
+        if should_replace:
+            processed_words[:] = [w for w in processed_words if w.lemma != processed.lemma]
+            categories[existing_processed.category] = [
+                w for w in categories[existing_processed.category] if w.lemma != processed.lemma
+            ]
 
-    def _is_likely_inflected(self, word: str, lemma: str, morphology: dict) -> bool:
-        if word.lower() == lemma:
-            return False
+            processed_words.append(processed)
+            categories[processed.category].append(processed)
+            seen_lemmas[processed.lemma] = processed
 
-        for _pattern_type, patterns in self.inflection_patterns.items():
-            for pattern in patterns:
-                if re.search(pattern, word):
-                    return True
+            if stats_collector:
+                stats_collector.add_filtered(existing_processed.word, replacement_reason)
 
-        return False
+        return filtered_count
 
-    def _categorize_by_pos(self, pos_tag: str) -> str:
-        for category, tags in self.pos_categories.items():
-            if pos_tag in tags:
-                return category
-        return "other"
+    def _build_filtering_stats(
+        self, stats_collector: FilteringStatsCollector, total_analyzed: int, filtered_count: int
+    ) -> FilteringStats:
+        """Build FilteringStats from stats_collector."""
+        return FilteringStats(
+            total_analyzed=total_analyzed,
+            total_filtered=filtered_count,
+            by_category=stats_collector.by_category,
+            examples=stats_collector.examples,
+        )
 
     def _generate_reason(self, word: str, lemma: str, pos_tag: str, morphology: dict, rank: int | None) -> str:
         parts = []
@@ -322,7 +294,9 @@ class VocabularyProcessor:
 
             if validation_cats:
                 total_validation = sum(validation_cats.values())
-                print(f"   • Validation filters: {total_validation:,} words ({total_validation / stats.total_filtered * 100:.1f}%)")
+                print(
+                    f"   • Validation filters: {total_validation:,} words ({total_validation / stats.total_filtered * 100:.1f}%)"
+                )
                 for cat, count in sorted(validation_cats.items(), key=lambda x: x[1], reverse=True):
                     cat_name = cat.replace("validation:", "")
                     print(f"      - {cat_name}: {count}")
@@ -336,7 +310,9 @@ class VocabularyProcessor:
 
             if inflection_cats:
                 total_inflection = sum(inflection_cats.values())
-                print(f"   • Inflection filters: {total_inflection:,} words ({total_inflection / stats.total_filtered * 100:.1f}%)")
+                print(
+                    f"   • Inflection filters: {total_inflection:,} words ({total_inflection / stats.total_filtered * 100:.1f}%)"
+                )
 
         if verbose >= 2 and stats.examples:
             print("\nExamples (first 10 per category):")
