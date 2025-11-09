@@ -2,7 +2,7 @@
   "source_language": "Spanish",
   "target_language": "Russian",
   "word_list_name": "Spanish Russian A0",
-  "word_pairs": [
+  "translations": [
     {
       "source_word": "playa",
       "target_word": "пляж",
@@ -182,12 +182,6 @@
       "target_word": "банк",
       "source_example": "Voy al banco.",
       "target_example": "Я иду в банк."
-    },
-    {
-      "source_word": "blog",
-      "target_word": "блог",
-      "source_example": "Leo su blog todos los días.",
-      "target_example": "Я читаю её блог каждый день."
     },
     {
       "source_word": "bloque",
@@ -482,12 +476,6 @@
       "target_word": "образование, формирование",
       "source_example": "Necesito formación profesional.",
       "target_example": "Мне нужно профессиональное образование."
-    },
-    {
-      "source_word": "foto",
-      "target_word": "фотография",
-      "source_example": "Una bonita foto.",
-      "target_example": "Красивая фотография."
     },
     {
       "source_word": "francés",
@@ -1436,6 +1424,167 @@
       "target_word": "серия, сериал",
       "source_example": "Veo una serie en Netflix.",
       "target_example": "Смотрю сериал на Netflix."
+    },
+    {
+      "source_word": "laura",
+      "target_word": "Лаура",
+      "cefr_level": "A2",
+      "source_example": "El laura está aquí.",
+      "target_example": "Объект Лаура здесь."
+    },
+    {
+      "source_word": "alan",
+      "target_word": "Алан",
+      "cefr_level": "A2",
+      "source_example": "Quiero comprar alan.",
+      "target_example": "Я хочу купить Алан."
+    },
+    {
+      "source_word": "bravo",
+      "target_word": "браво",
+      "cefr_level": "A2",
+      "source_example": "¿Tienes bravo?",
+      "target_example": "У тебя есть браво?"
+    },
+    {
+      "source_word": "piloto",
+      "target_word": "пилот",
+      "cefr_level": "A2",
+      "source_example": "Mi piloto es importante.",
+      "target_example": "Мой пилот важен."
+    },
+    {
+      "source_word": "moda",
+      "target_word": "мода",
+      "cefr_level": "A2",
+      "source_example": "El moda está aquí.",
+      "target_example": "Объект мода здесь."
+    },
+    {
+      "source_word": "park",
+      "target_word": "парк",
+      "cefr_level": "A2",
+      "source_example": "Este park es bueno.",
+      "target_example": "Этот парк хороший."
+    },
+    {
+      "source_word": "karen",
+      "target_word": "Карен",
+      "cefr_level": "A2",
+      "source_example": "El karen está aquí.",
+      "target_example": "Объект Карен здесь."
+    },
+    {
+      "source_word": "virus",
+      "target_word": "вирус",
+      "cefr_level": "A2",
+      "source_example": "El virus está aquí.",
+      "target_example": "Объект вирус здесь."
+    },
+    {
+      "source_word": "fred",
+      "target_word": "Фред",
+      "cefr_level": "A2",
+      "source_example": "El fred está aquí.",
+      "target_example": "Объект Фред здесь."
+    },
+    {
+      "source_word": "helen",
+      "target_word": "Хелен",
+      "cefr_level": "A2",
+      "source_example": "¿Tienes helen?",
+      "target_example": "У тебя есть Хелен?"
+    },
+    {
+      "source_word": "biblioteca",
+      "target_word": "библиотека",
+      "cefr_level": "A2",
+      "source_example": "Me gusta biblioteca.",
+      "target_example": "Мне нравится библиотека."
+    },
+    {
+      "source_word": "greg",
+      "target_word": "Грег",
+      "cefr_level": "A2",
+      "source_example": "Me gusta greg.",
+      "target_example": "Мне нравится Грег."
+    },
+    {
+      "source_word": "ricky",
+      "target_word": "Рикки",
+      "cefr_level": "A2",
+      "source_example": "Este ricky es bueno.",
+      "target_example": "Этот Рикки хороший."
+    },
+    {
+      "source_word": "betty",
+      "target_word": "Бетти",
+      "cefr_level": "A2",
+      "source_example": "¿Tienes betty?",
+      "target_example": "У тебя есть Бетти?"
+    },
+    {
+      "source_word": "ross",
+      "target_word": "Росс",
+      "cefr_level": "A2",
+      "source_example": "Voy a usar ross.",
+      "target_example": "Я буду использовать Росс."
+    },
+    {
+      "source_word": "metal",
+      "target_word": "металл",
+      "cefr_level": "A2",
+      "source_example": "¿Tienes metal?",
+      "target_example": "У тебя есть металл?"
+    },
+    {
+      "source_word": "eva",
+      "target_word": "Ева",
+      "cefr_level": "A2",
+      "source_example": "Me gusta eva.",
+      "target_example": "Мне нравится Ева."
+    },
+    {
+      "source_word": "mmm",
+      "target_word": "ммм",
+      "cefr_level": "A2",
+      "source_example": "Me gusta mmm.",
+      "target_example": "Мне нравится ммм."
+    },
+    {
+      "source_word": "concurso",
+      "target_word": "конкурс",
+      "cefr_level": "A2",
+      "source_example": "¿Dónde está concurso?",
+      "target_example": "Где конкурс?"
+    },
+    {
+      "source_word": "todd",
+      "target_word": "Тодд",
+      "cefr_level": "A2",
+      "source_example": "Esto es todd.",
+      "target_example": "Это Тодд."
+    },
+    {
+      "source_word": "toby",
+      "target_word": "Тоби",
+      "cefr_level": "A2",
+      "source_example": "¿Tienes toby?",
+      "target_example": "У тебя есть Тоби?"
+    },
+    {
+      "source_word": "derek",
+      "target_word": "Дерек",
+      "cefr_level": "A2",
+      "source_example": "Quiero comprar derek.",
+      "target_example": "Я хочу купить Дерек."
+    },
+    {
+      "source_word": "diana",
+      "target_word": "Диана",
+      "cefr_level": "A2",
+      "source_example": "Este diana es bueno.",
+      "target_example": "Этот Диана хороший."
     }
   ]
 }

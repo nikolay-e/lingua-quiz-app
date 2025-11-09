@@ -1,8 +1,8 @@
 """Replace rare words in vocabulary with high-frequency missing words."""
 
 import json
-from pathlib import Path
 import tempfile
+from pathlib import Path
 
 from ..analysis.full_report_generator import FullReportGenerator
 from ..config.config_loader import get_config_loader
@@ -25,7 +25,9 @@ class VocabularyReplacer:
         self.config = config_loader.config
 
         self.migration_file = migration_file or self._get_migration_file()
-        self.report_generator = FullReportGenerator(language_code=language_code, migration_file_path=self.migration_file)
+        self.report_generator = FullReportGenerator(
+            language_code=language_code, migration_file_path=self.migration_file
+        )
 
     def _get_migration_file(self) -> Path:
         """Get path to migration file."""
@@ -147,11 +149,13 @@ class VocabularyReplacer:
         with open(migration_file) as f:
             data = json.load(f)
 
-        word_pairs = data.get("word_pairs", [])
-        original_count = len(word_pairs)
+        translations = data.get("translations", [])
+        original_count = len(translations)
         words_to_remove = {w.lower() for w in plan["remove"]}
 
-        filtered_pairs = [entry for entry in word_pairs if entry.get("source_word", "").lower() not in words_to_remove]
+        filtered_pairs = [
+            entry for entry in translations if entry.get("source_word", "").lower() not in words_to_remove
+        ]
 
         removed_count = original_count - len(filtered_pairs)
 
@@ -183,7 +187,7 @@ class VocabularyReplacer:
 
         if not dry_run:
             output_path = output_file or migration_file
-            data["word_pairs"] = final_pairs
+            data["translations"] = final_pairs
             with open(output_path, "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
             result["output_file"] = str(output_path)

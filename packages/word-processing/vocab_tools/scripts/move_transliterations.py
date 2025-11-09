@@ -46,7 +46,7 @@ def move_transliterations(lang_name, from_level="a1"):
     with open(source_file, encoding="utf-8") as f:
         source_data = json.load(f)
 
-    source_entries = source_data["word_pairs"]
+    source_entries = source_data["translations"]
 
     # Find transliterations
     transliterations = []
@@ -74,22 +74,22 @@ def move_transliterations(lang_name, from_level="a1"):
     if a0_file.exists():
         with open(a0_file, encoding="utf-8") as f:
             a0_data = json.load(f)
-        a0_entries = a0_data["word_pairs"]
+        a0_entries = a0_data["translations"]
     else:
         a0_data = {
             "source_language": source_data.get("source_language", lang_name.capitalize()),
             "target_language": "Russian",
             "word_list_name": f"{lang_name.capitalize()} Russian A0",
-            "word_pairs": [],
+            "translations": [],
         }
         a0_entries = []
 
     # Add transliterations to A0
     a0_entries.extend(transliterations)
-    a0_data["word_pairs"] = a0_entries
+    a0_data["translations"] = a0_entries
 
     # Update source file
-    source_data["word_pairs"] = remaining_entries
+    source_data["translations"] = remaining_entries
 
     # Save files
     with open(a0_file, "w", encoding="utf-8") as f:

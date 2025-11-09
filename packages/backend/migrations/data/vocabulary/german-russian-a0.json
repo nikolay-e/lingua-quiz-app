@@ -2,7 +2,7 @@
   "source_language": "German",
   "target_language": "Russian",
   "word_list_name": "German Russian A0",
-  "word_pairs": [
+  "translations": [
     {
       "source_word": "abendessen",
       "target_word": "ужин",
@@ -80,12 +80,6 @@
       "target_word": "интернет",
       "source_example": "Ich suche Informationen im Internet.",
       "target_example": "Я ищу информацию в интернете."
-    },
-    {
-      "source_word": "das Problem [Problem]",
-      "target_word": "проблема",
-      "source_example": "Wir müssen das Problem lösen.",
-      "target_example": "Нам нужно решить проблему."
     },
     {
       "source_word": "doktor",

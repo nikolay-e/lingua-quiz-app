@@ -46,11 +46,11 @@ class FullReportGenerator:
         with open(self.migration_file_path, encoding="utf-8") as f:
             migration_data = json.load(f)
 
-        word_pairs = migration_data.get("word_pairs", [])
+        translations = migration_data.get("translations", [])
 
         pairs = [
             (pair.get("source_word", ""), pair.get("target_word", ""))
-            for pair in word_pairs
+            for pair in translations
             if pair.get("source_word") and pair.get("target_word") and pair.get("target_word") != "[PLACEHOLDER]"
         ]
 
@@ -70,9 +70,9 @@ class FullReportGenerator:
             with open(self.migration_file_path, encoding="utf-8") as f:
                 migration_data = json.load(f)
 
-            word_pairs = migration_data.get("word_pairs", [])
+            translations = migration_data.get("translations", [])
 
-            for pair in word_pairs:
+            for pair in translations:
                 source = pair.get("source_word", "")
                 target = pair.get("target_word", "")
 
@@ -94,7 +94,7 @@ class FullReportGenerator:
                         }
                     )
 
-            source_words = [p.get("source_word", "") for p in word_pairs if p.get("source_word")]
+            source_words = [p.get("source_word", "") for p in translations if p.get("source_word")]
             from collections import Counter
 
             word_counts = Counter(source_words)

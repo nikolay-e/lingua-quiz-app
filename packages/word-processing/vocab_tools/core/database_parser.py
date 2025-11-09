@@ -66,10 +66,10 @@ class VocabularyFileParser:
     def _extract_entries_from_json(self, data: dict, filename: str) -> list[VocabularyEntry]:
         entries = []
 
-        if "word_pairs" not in data:
-            raise ValueError(f"JSON file {filename} missing 'word_pairs' field")
+        if "translations" not in data:
+            raise ValueError(f"JSON file {filename} missing 'translations' field")
 
-        for word_pair in data["word_pairs"]:
+        for word_pair in data["translations"]:
             try:
                 entry = VocabularyEntry(
                     source_word=word_pair["source_word"],

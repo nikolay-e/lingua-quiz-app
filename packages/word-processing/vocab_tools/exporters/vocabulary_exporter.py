@@ -65,7 +65,7 @@ class VocabularyExporter:
             "source_language": language_name,
             "target_language": "Target Language",
             "word_list_name": f"{language_name} Frequency List",
-            "word_pairs": [
+            "translations": [
                 {
                     "source_word": w.word,
                     "target_word": "[NEEDS TRANSLATION]",

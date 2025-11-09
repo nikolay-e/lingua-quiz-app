@@ -10,11 +10,11 @@ def format_vocabulary_json(input_path: Path, output_path: Path | None = None, dr
     with open(input_path, encoding="utf-8") as f:
         data = json.load(f)
 
-    word_pairs = data.get("word_pairs", [])
+    translations = data.get("translations", [])
 
     stats = {
-        "original_count": len(word_pairs),
-        "final_count": len(word_pairs),
+        "original_count": len(translations),
+        "final_count": len(translations),
     }
 
     if not dry_run:

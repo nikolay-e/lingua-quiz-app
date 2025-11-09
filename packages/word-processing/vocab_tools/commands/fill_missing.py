@@ -23,7 +23,7 @@ def load_migration(lang_code: str, level: str) -> tuple[list, dict, Path]:
     with open(migration_file, encoding="utf-8") as f:
         original_data = json.load(f)
 
-    entries = original_data.get("word_pairs", original_data if isinstance(original_data, list) else [])
+    entries = original_data.get("translations", original_data if isinstance(original_data, list) else [])
     return entries, original_data, migration_file
 
 
@@ -42,6 +42,28 @@ def get_rank_range(level: str) -> tuple[int, int]:
     """Get expected rank range for CEFR level."""
     rank_ranges = {"a1": (1, 1000), "a2": (1001, 2000), "b1": (2001, 4000), "b2": (4001, 6000), "c1": (6001, 12000)}
     return rank_ranges.get(level.lower(), (1, 1000))
+
+
+def _load_previous_levels(lang_code: str, level: str) -> dict[str, list[str]]:
+    """Load vocabulary from all previous levels."""
+    level_hierarchy = ["a0", "a1", "a2", "b1", "b2", "c1", "c2"]
+    current_idx = level_hierarchy.index(level.lower()) if level.lower() in level_hierarchy else -1
+
+    if current_idx <= 0:
+        return {}
+
+    previous_levels = level_hierarchy[:current_idx]
+    result = {}
+
+    for prev_level in previous_levels:
+        try:
+            entries, _, _ = load_migration(lang_code, prev_level)
+            result[prev_level] = [entry["source_word"] for entry in entries]
+        except FileNotFoundError:
+            # Level doesn't exist, skip
+            continue
+
+    return result
 
 
 def fill_missing_words(
@@ -65,38 +87,53 @@ def fill_missing_words(
 
     min_rank, max_rank = get_rank_range(level)
 
-    # Load analysis
-    analysis = load_analysis(lang_code, level, output_dir)
-    if not analysis:
-        raise FileNotFoundError(
-            f"Analysis file not found. Run: vocab-tools analyze {lang_code}-{level} --format json --output {output_dir}"
-        )
+    # Load frequency list directly
+    from ..core.frequency_list_loader import find_frequency_list, load_frequency_list
+
+    freq_list_path = find_frequency_list(lang_code)
+    if not freq_list_path:
+        raise FileNotFoundError(f"Frequency list not found for language: {lang_code}")
+
+    freq_list = load_frequency_list(freq_list_path)
 
     # Load migration
     entries, original_data, migration_file = load_migration(lang_code, level)
 
-    # Find existing words
+    # Find existing words in THIS level
     existing_lemmas = {entry["source_word"].lower() for entry in entries}
 
-    # Get missing words within rank range
+    # Load previous levels to exclude them
+    previous_levels = _load_previous_levels(lang_code, level)
+    previous_lemmas = {word.lower() for words in previous_levels.values() for word in words}
+
+    # Get missing words within rank range (excluding previous levels)
     missing_words = []
-    for item in analysis:
-        if item["status"] == "MISSING":
-            lemma = item["lemma"]
-            rank = item.get("rank", 999999)
-            priority = item.get("priority", 999)
+    for rank, word_obj in enumerate(freq_list.words, start=1):
+        lemma = word_obj.lemma
 
-            # Skip if already exists
-            if lemma.lower() in existing_lemmas:
-                continue
+        # Filter by rank range for this level
+        if rank < min_rank or rank > max_rank:
+            continue
 
-            # Filter by rank range for this level
-            if rank < min_rank or rank > max_rank:
-                continue
+        # Skip if already exists in this level
+        if lemma.lower() in existing_lemmas:
+            continue
 
-            missing_words.append(
-                {"lemma": lemma, "rank": rank, "priority": priority, "forms": item.get("forms", [lemma])}
-            )
+        # Skip if exists in previous levels
+        if lemma.lower() in previous_lemmas:
+            continue
+
+        # Determine priority based on rank
+        if rank <= 100:
+            priority = 0  # Critical
+        elif rank <= 500:
+            priority = 1  # High
+        elif rank <= 1000:
+            priority = 2  # Medium
+        else:
+            priority = 3  # Low
+
+        missing_words.append({"lemma": lemma, "rank": rank, "priority": priority, "forms": [word_obj.word]})
 
     # Sort by priority and rank
     missing_words_sorted = sorted(missing_words, key=lambda x: (x["priority"], x["rank"]))
@@ -143,8 +180,8 @@ def fill_missing_words(
     all_entries = entries + new_entries
 
     # Save
-    if isinstance(original_data, dict) and "word_pairs" in original_data:
-        original_data["word_pairs"] = all_entries
+    if isinstance(original_data, dict) and "translations" in original_data:
+        original_data["translations"] = all_entries
         data_to_write = original_data
     else:
         data_to_write = all_entries

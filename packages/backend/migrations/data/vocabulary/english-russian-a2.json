@@ -2,7 +2,7 @@
   "source_language": "English",
   "target_language": "Russian",
   "word_list_name": "English Russian A2",
-  "word_pairs": [
+  "translations": [
     {
       "source_word": "ability",
       "target_word": "способность",
@@ -98,12 +98,6 @@
       "target_word": "плохо",
       "source_example": "He plays the piano badly.",
       "target_example": "Он плохо играет на пианино."
-    },
-    {
-      "source_word": "based",
-      "target_word": "основанный",
-      "source_example": "The film is based on a true story.",
-      "target_example": "Фильм основан на реальных событиях."
     },
     {
       "source_word": "beef",
@@ -232,12 +226,6 @@
       "target_example": "Он любит коллекционировать старые монеты."
     },
     {
-      "source_word": "community",
-      "target_word": "сообщество|община",
-      "source_example": "There is a strong sense of community in our neighborhood.",
-      "target_example": "В нашем районе сильное чувство общности."
-    },
-    {
       "source_word": "competition",
       "target_word": "соревнование|конкурс",
       "source_example": "She won the swimming competition.",
@@ -260,12 +248,6 @@
       "target_word": "преступник",
       "source_example": "The criminal was sent to prison.",
       "target_example": "Преступника отправили в тюрьму."
-    },
-    {
-      "source_word": "data",
-      "target_word": "данные",
-      "source_example": "We need to collect more data.",
-      "target_example": "Нам нужно собрать больше данных."
     },
     {
       "source_word": "degree",
@@ -368,12 +350,6 @@
       "target_word": "легко",
       "source_example": "He can solve the problem easily.",
       "target_example": "Он может легко решить проблему."
-    },
-    {
-      "source_word": "education",
-      "target_word": "образование",
-      "source_example": "Education is very important for the future.",
-      "target_example": "Образование очень важно для будущего."
     },
     {
       "source_word": "electricity",
@@ -508,12 +484,6 @@
       "target_example": "Пожалуйста, сосредоточьтесь на своей работе."
     },
     {
-      "source_word": "foreign",
-      "target_word": "иностранный",
-      "source_example": "I am learning a foreign language.",
-      "target_example": "Я изучаю иностранный язык."
-    },
-    {
       "source_word": "forest",
       "target_word": "лес",
       "source_example": "We went for a walk in the forest.",
@@ -524,12 +494,6 @@
       "target_word": "мусор",
       "source_example": "Please take out the garbage.",
       "target_example": "Пожалуйста, вынеси мусор."
-    },
-    {
-      "source_word": "goal",
-      "target_word": "цель",
-      "source_example": "My goal is to learn Spanish.",
-      "target_example": "Моя цель - выучить испанский."
     },
     {
       "source_word": "grass",
@@ -658,12 +622,6 @@
       "target_example": "Можешь помочь мне поднять эту коробку?"
     },
     {
-      "source_word": "likely",
-      "target_word": "вероятный",
-      "source_example": "It is likely to rain tomorrow.",
-      "target_example": "Вероятно, завтра будет дождь."
-    },
-    {
       "source_word": "link",
       "target_word": "ссылка",
       "source_example": "Click on the link to open the website.",
@@ -752,12 +710,6 @@
       "target_word": "нигде|никуда",
       "source_example": "I have nowhere to go.",
       "target_example": "Мне некуда идти."
-    },
-    {
-      "source_word": "oil",
-      "target_word": "масло|нефть",
-      "source_example": "I need to change the oil in my car.",
-      "target_example": "Мне нужно поменять масло в машине."
     },
     {
       "source_word": "onto",
@@ -880,22 +832,10 @@
       "target_example": "Этот завод производит автомобили."
     },
     {
-      "source_word": "provide",
-      "target_word": "предоставлять|обеспечивать",
-      "source_example": "The hotel provides free breakfast.",
-      "target_example": "Отель предоставляет бесплатный завтрак."
-    },
-    {
       "source_word": "purpose",
       "target_word": "цель",
       "source_example": "What is the purpose of your visit?",
       "target_example": "Какова цель вашего визита?"
-    },
-    {
-      "source_word": "quality",
-      "target_word": "качество",
-      "source_example": "The quality of this product is very good.",
-      "target_example": "Качество этого продукта очень хорошее."
     },
     {
       "source_word": "queen",
@@ -910,22 +850,10 @@
       "target_example": "Она говорила тихо."
     },
     {
-      "source_word": "rate",
-      "target_word": "тариф|ставка",
-      "source_example": "The hotel has a special rate for weekends.",
-      "target_example": "В отеле действует специальный тариф на выходные."
-    },
-    {
       "source_word": "receive",
       "target_word": "получать",
       "source_example": "Did you receive my email?",
       "target_example": "Вы получили мое письмо?"
-    },
-    {
-      "source_word": "recent",
-      "target_word": "недавний",
-      "source_example": "This is a recent photo of me.",
-      "target_example": "Это моя недавняя фотография."
     },
     {
       "source_word": "recently",
@@ -962,18 +890,6 @@
       "target_word": "просьба|запрос",
       "source_example": "I have a special request.",
       "target_example": "У меня есть особая просьба."
-    },
-    {
-      "source_word": "research",
-      "target_word": "исследование",
-      "source_example": "They are doing research on a new drug.",
-      "target_example": "Они проводят исследования нового лекарства."
-    },
-    {
-      "source_word": "response",
-      "target_word": "ответ|реакция",
-      "source_example": "I am still waiting for a response.",
-      "target_example": "Я все еще жду ответа."
     },
     {
       "source_word": "rise",
@@ -1078,18 +994,6 @@
       "target_example": "На ней было серебряное ожерелье."
     },
     {
-      "source_word": "site",
-      "target_word": "место|сайт",
-      "source_example": "This is a historical site.",
-      "target_example": "Это историческое место."
-    },
-    {
-      "source_word": "size",
-      "target_word": "размер",
-      "source_example": "What size do you wear?",
-      "target_example": "Какой размер вы носите?"
-    },
-    {
       "source_word": "slowly",
       "target_word": "медленно",
       "source_example": "Please speak more slowly.",
@@ -1100,18 +1004,6 @@
       "target_word": "курение",
       "source_example": "Smoking is bad for your health.",
       "target_example": "Курение вредно для вашего здоровья."
-    },
-    {
-      "source_word": "social",
-      "target_word": "социальный|общественный",
-      "source_example": "Humans are social beings.",
-      "target_example": "Люди - социальные существа."
-    },
-    {
-      "source_word": "society",
-      "target_word": "общество",
-      "source_example": "We live in a complex society.",
-      "target_example": "Мы живем в сложном обществе."
     },
     {
       "source_word": "soft",
@@ -1136,12 +1028,6 @@
       "target_word": "решать",
       "source_example": "I need to solve this puzzle.",
       "target_example": "Мне нужно решить эту головоломку."
-    },
-    {
-      "source_word": "source",
-      "target_word": "источник",
-      "source_example": "What is the source of this information?",
-      "target_example": "Каков источник этой информации?"
     },
     {
       "source_word": "specific",
@@ -1246,12 +1132,6 @@
       "target_example": "Ребенок играет с игрушкой."
     },
     {
-      "source_word": "training",
-      "target_word": "тренировка|обучение",
-      "source_example": "I have a training session tomorrow.",
-      "target_example": "У меня завтра тренировка."
-    },
-    {
       "source_word": "trash",
       "target_word": "мусор",
       "source_example": "Please take out the trash.",
@@ -1310,12 +1190,6 @@
       "target_word": "транспортное средство",
       "source_example": "A car is a type of vehicle.",
       "target_example": "Автомобиль - это вид транспортного средства."
-    },
-    {
-      "source_word": "view",
-      "target_word": "вид|мнение",
-      "source_example": "The view from the top is amazing.",
-      "target_example": "Вид с вершины потрясающий."
     },
     {
       "source_word": "wash",
@@ -1892,732 +1766,6 @@
       "target_word": "крыло",
       "source_example": "The bird spread its wings and flew away.",
       "target_example": "Птица расправила крылья и улетела."
-    },
-    {
-      "source_word": "cry",
-      "target_word": "плакать|кричать",
-      "source_example": "The baby started to cry when she woke up.",
-      "target_example": "Ребёнок начал плакать, когда проснулся."
-    },
-    {
-      "source_word": "impossible",
-      "target_word": "невозможный|невозможно",
-      "source_example": "It is impossible to finish this work today.",
-      "target_example": "Невозможно закончить эту работу сегодня."
-    },
-    {
-      "source_word": "obviously",
-      "target_word": "очевидно|явно",
-      "source_example": "She was obviously tired after the long trip.",
-      "target_example": "Она была явно уставшей после долгой поездки."
-    },
-    {
-      "source_word": "neither",
-      "target_word": "ни один|ни тот ни другой|тоже не",
-      "source_example": "Neither of them wanted to go to the party.",
-      "target_example": "Ни один из них не хотел идти на вечеринку."
-    },
-    {
-      "source_word": "accept",
-      "target_word": "принимать|соглашаться",
-      "source_example": "I accept your invitation to the wedding.",
-      "target_example": "Я принимаю твоё приглашение на свадьбу."
-    },
-    {
-      "source_word": "besides",
-      "target_word": "кроме того|к тому же",
-      "source_example": "Besides English, she also speaks French.",
-      "target_example": "Кроме английского, она также говорит по-французски."
-    },
-    {
-      "source_word": "sake",
-      "target_word": "ради",
-      "source_example": "I did it for your sake, not mine.",
-      "target_example": "Я сделал это ради тебя, не ради себя."
-    },
-    {
-      "source_word": "upset",
-      "target_word": "расстроенный|огорчённый|расстраивать",
-      "source_example": "He was very upset after losing the game.",
-      "target_example": "Он был очень расстроен после проигрыша в игре."
-    },
-    {
-      "source_word": "cute",
-      "target_word": "милый|симпатичный",
-      "source_example": "What a cute kitten you have!",
-      "target_example": "Какой милый котёнок у тебя!"
-    },
-    {
-      "source_word": "evil",
-      "target_word": "злой|зло",
-      "source_example": "The evil wizard lived in a dark castle.",
-      "target_example": "Злой волшебник жил в тёмном замке."
-    },
-    {
-      "source_word": "contact",
-      "target_word": "контакт|связь|связываться",
-      "source_example": "Please contact me if you have any questions.",
-      "target_example": "Пожалуйста, свяжись со мной, если есть вопросы."
-    },
-    {
-      "source_word": "cop",
-      "target_word": "коп|полицейский",
-      "source_example": "The cop stopped the car for speeding.",
-      "target_example": "Полицейский остановил машину за превышение скорости."
-    },
-    {
-      "source_word": "jail",
-      "target_word": "тюрьма|заключение",
-      "source_example": "The thief was sent to jail for two years.",
-      "target_example": "Вора отправили в тюрьму на два года."
-    },
-    {
-      "source_word": "lawyer",
-      "target_word": "адвокат|юрист",
-      "source_example": "She hired a lawyer to help with the case.",
-      "target_example": "Она наняла адвоката, чтобы помочь с делом."
-    },
-    {
-      "source_word": "doubt",
-      "target_word": "сомнение|сомневаться",
-      "source_example": "I have no doubt that you will succeed.",
-      "target_example": "Я не сомневаюсь, что ты добьёшься успеха."
-    },
-    {
-      "source_word": "appreciate",
-      "target_word": "ценить|быть благодарным",
-      "source_example": "I really appreciate your help with this project.",
-      "target_example": "Я очень ценю твою помощь с этим проектом."
-    },
-    {
-      "source_word": "congratulations",
-      "target_word": "поздравления|поздравляю",
-      "source_example": "Congratulations on passing your exams!",
-      "target_example": "Поздравляю с успешной сдачей экзаменов!"
-    },
-    {
-      "source_word": "village",
-      "target_word": "деревня|село",
-      "source_example": "She grew up in a small village.",
-      "target_example": "Она выросла в маленькой деревне."
-    },
-    {
-      "source_word": "quit",
-      "target_word": "бросать|уходить|прекращать",
-      "source_example": "He decided to quit his job last month.",
-      "target_example": "Он решил уволиться с работы в прошлом месяце."
-    },
-    {
-      "source_word": "sleeping",
-      "target_word": "спящий|сон",
-      "source_example": "The baby is sleeping peacefully in the crib.",
-      "target_example": "Ребёнок мирно спит в кроватке."
-    },
-    {
-      "source_word": "laughter",
-      "target_word": "смех|хохот",
-      "source_example": "The sound of children's laughter filled the room.",
-      "target_example": "Звук детского смеха наполнил комнату."
-    },
-    {
-      "source_word": "cash",
-      "target_word": "наличные|деньги",
-      "source_example": "Do you have enough cash to pay for this?",
-      "target_example": "У тебя достаточно наличных, чтобы заплатить за это?"
-    },
-    {
-      "source_word": "whose",
-      "target_word": "чей|чья|чьё",
-      "source_example": "Whose book is this on the table?",
-      "target_example": "Чья это книга на столе?"
-    },
-    {
-      "source_word": "push",
-      "target_word": "толкать",
-      "source_example": "Push the door to open it, do not pull.",
-      "target_example": "Толкни дверь, чтобы открыть её, не тяни."
-    },
-    {
-      "source_word": "gift",
-      "target_word": "подарок|дар",
-      "source_example": "She received a beautiful gift for her birthday.",
-      "target_example": "Она получила прекрасный подарок на день рождения."
-    },
-    {
-      "source_word": "grab",
-      "target_word": "хватать|схватить",
-      "source_example": "Grab your coat, we are leaving now!",
-      "target_example": "Хватай пальто, мы сейчас уходим!"
-    },
-    {
-      "source_word": "stuck",
-      "target_word": "застрявший|застрять",
-      "source_example": "The car got stuck in the mud yesterday.",
-      "target_example": "Машина застряла в грязи вчера."
-    },
-    {
-      "source_word": "magic",
-      "target_word": "магия|волшебство|волшебный",
-      "source_example": "The magician performed amazing magic tricks.",
-      "target_example": "Фокусник выполнил удивительные магические трюки."
-    },
-    {
-      "source_word": "grunt",
-      "target_word": "ворчание|ворчать|хрюкать",
-      "source_example": "He let out a grunt of pain.",
-      "target_example": "Он издал стон боли."
-    },
-    {
-      "source_word": "reach",
-      "target_word": "достигать",
-      "source_example": "Can you reach the top shelf for me?",
-      "target_example": "Можешь достать для меня верхнюю полку?"
-    },
-    {
-      "source_word": "wind",
-      "target_word": "ветер|заводить",
-      "source_example": "The wind blew the leaves across the street.",
-      "target_example": "Ветер разнёс листья по улице."
-    },
-    {
-      "source_word": "colonel",
-      "target_word": "полковник",
-      "source_example": "The colonel gave orders to his soldiers.",
-      "target_example": "Полковник отдал приказы своим солдатам."
-    },
-    {
-      "source_word": "immediately",
-      "target_word": "немедленно|сразу же",
-      "source_example": "You need to leave immediately, it is urgent.",
-      "target_example": "Тебе нужно уйти немедленно, это срочно."
-    },
-    {
-      "source_word": "cheer",
-      "target_word": "веселье|ура|подбодрить",
-      "source_example": "The crowd began to cheer for their team.",
-      "target_example": "Толпа начала болеть за свою команду."
-    },
-    {
-      "source_word": "victim",
-      "target_word": "жертва",
-      "source_example": "The victim of the accident was taken to hospital.",
-      "target_example": "Жертву несчастного случая отвезли в больницу."
-    },
-    {
-      "source_word": "upon",
-      "target_word": "на|по|после",
-      "source_example": "Once upon a time, there was a beautiful princess.",
-      "target_example": "Давным-давно жила прекрасная принцесса."
-    },
-    {
-      "source_word": "planet",
-      "target_word": "планета",
-      "source_example": "Earth is the third planet from the sun.",
-      "target_example": "Земля - третья планета от солнца."
-    },
-    {
-      "source_word": "search",
-      "target_word": "поиск|искать",
-      "source_example": "The police began to search for the missing child.",
-      "target_example": "Полиция начала искать пропавшего ребёнка."
-    },
-    {
-      "source_word": "arrest",
-      "target_word": "арест|арестовывать",
-      "source_example": "The police arrested the suspect last night.",
-      "target_example": "Полиция арестовала подозреваемого прошлой ночью."
-    },
-    {
-      "source_word": "suddenly",
-      "target_word": "внезапно|вдруг",
-      "source_example": "Suddenly, the lights went out in the building.",
-      "target_example": "Вдруг свет погас в здании."
-    },
-    {
-      "source_word": "er",
-      "target_word": "э|эм|эээ",
-      "source_example": "Er, I am not sure what to say.",
-      "target_example": "Э-э, я не уверен, что сказать."
-    },
-    {
-      "source_word": "jump",
-      "target_word": "прыгать|прыжок",
-      "source_example": "The cat can jump very high in the air.",
-      "target_example": "Кошка может прыгать очень высоко в воздух."
-    },
-    {
-      "source_word": "rid",
-      "target_word": "избавлять|освобождать",
-      "source_example": "I want to get rid of these old clothes.",
-      "target_example": "Я хочу избавиться от этой старой одежды."
-    },
-    {
-      "source_word": "knock",
-      "target_word": "стук|стучать|удар",
-      "source_example": "Someone is knocking on the front door.",
-      "target_example": "Кто-то стучит в переднюю дверь."
-    },
-    {
-      "source_word": "patient",
-      "target_word": "пациент|терпеливый",
-      "source_example": "The doctor examined the patient carefully.",
-      "target_example": "Врач тщательно осмотрел пациента."
-    },
-    {
-      "source_word": "escape",
-      "target_word": "побег|сбежать|спастись",
-      "source_example": "The prisoner tried to escape from the jail.",
-      "target_example": "Заключённый пытался сбежать из тюрьмы."
-    },
-    {
-      "source_word": "everywhere",
-      "target_word": "везде|повсюду",
-      "source_example": "I looked everywhere but could not find my keys.",
-      "target_example": "Я искал везде, но не мог найти ключи."
-    },
-    {
-      "source_word": "moon",
-      "target_word": "луна",
-      "source_example": "The moon was shining brightly last night.",
-      "target_example": "Луна ярко светила прошлой ночью."
-    },
-    {
-      "source_word": "ow",
-      "target_word": "ой|ауч",
-      "source_example": "Ow! That really hurt my finger.",
-      "target_example": "Ой! Это действительно повредило мой палец."
-    },
-    {
-      "source_word": "gasp",
-      "target_word": "вздох|задыхаться|ахать",
-      "source_example": "She let out a gasp of surprise.",
-      "target_example": "Она издала вздох удивления."
-    },
-    {
-      "source_word": "nervous",
-      "target_word": "нервный|нервничать",
-      "source_example": "I always feel nervous before big exams.",
-      "target_example": "Я всегда нервничаю перед большими экзаменами."
-    },
-    {
-      "source_word": "de",
-      "target_word": "де",
-      "source_example": "De facto, he is the leader of the group.",
-      "target_example": "Де-факто он лидер группы."
-    },
-    {
-      "source_word": "themselves",
-      "target_word": "себя|сами",
-      "source_example": "They prepared themselves for the difficult journey.",
-      "target_example": "Они подготовились к трудному путешествию."
-    },
-    {
-      "source_word": "mate",
-      "target_word": "товарищ|друг|партнёр",
-      "source_example": "He met his best mate at school.",
-      "target_example": "Он встретил своего лучшего друга в школе."
-    },
-    {
-      "source_word": "drinking",
-      "target_word": "питьё|выпивка|пьющий",
-      "source_example": "He was drinking coffee when I called him.",
-      "target_example": "Он пил кофе, когда я позвонил ему."
-    },
-    {
-      "source_word": "bother",
-      "target_word": "беспокоить|надоедать",
-      "source_example": "Please do not bother me while I work.",
-      "target_example": "Пожалуйста, не беспокой меня, пока я работаю."
-    },
-    {
-      "source_word": "blame",
-      "target_word": "вина|обвинять|винить",
-      "source_example": "Do not blame me for your mistakes.",
-      "target_example": "Не вини меня в своих ошибках."
-    },
-    {
-      "source_word": "drug",
-      "target_word": "наркотик|лекарство|препарат",
-      "source_example": "The doctor prescribed a new drug for the illness.",
-      "target_example": "Врач прописал новое лекарство от болезни."
-    },
-    {
-      "source_word": "mission",
-      "target_word": "миссия|задание",
-      "source_example": "Their mission was to explore the new territory.",
-      "target_example": "Их миссией было исследовать новую территорию."
-    },
-    {
-      "source_word": "'ii",
-      "target_word": "два|второй",
-      "source_example": "I will see you later this evening.",
-      "target_example": "Увижу тебя позже этим вечером."
-    },
-    {
-      "source_word": "otherwise",
-      "target_word": "иначе|в противном случае",
-      "source_example": "Hurry up, otherwise we will miss the train.",
-      "target_example": "Поторопись, иначе мы опоздаем на поезд."
-    },
-    {
-      "source_word": "fit",
-      "target_word": "подходить|годиться|форма",
-      "source_example": "These shoes do not fit me properly.",
-      "target_example": "Эти туфли мне не подходят по размеру."
-    },
-    {
-      "source_word": "smoke",
-      "target_word": "дым|курить|дымить",
-      "source_example": "I can smell smoke coming from the kitchen.",
-      "target_example": "Я чувствую запах дыма из кухни."
-    },
-    {
-      "source_word": "favor",
-      "target_word": "услуга|одолжение|благосклонность",
-      "source_example": "Can you do me a favor please?",
-      "target_example": "Можешь сделать мне одолжение, пожалуйста?"
-    },
-    {
-      "source_word": "notice",
-      "target_word": "замечать",
-      "source_example": "Did you notice anything strange about his behavior?",
-      "target_example": "Ты заметил что-нибудь странное в его поведении?"
-    },
-    {
-      "source_word": "smile",
-      "target_word": "улыбка|улыбаться",
-      "source_example": "She gave me a warm smile when I arrived.",
-      "target_example": "Она подарила мне тёплую улыбку, когда я прибыл."
-    },
-    {
-      "source_word": "guard",
-      "target_word": "охрана|охранник|охранять",
-      "source_example": "The guard checked everyone at the entrance.",
-      "target_example": "Охранник проверил всех на входе."
-    },
-    {
-      "source_word": "innocent",
-      "target_word": "невинный|невиновный",
-      "source_example": "The jury found him innocent of the crime.",
-      "target_example": "Присяжные признали его невиновным в преступлении."
-    },
-    {
-      "source_word": "narrator",
-      "target_word": "рассказчик|диктор",
-      "source_example": "The narrator told the story in a gentle voice.",
-      "target_example": "Рассказчик рассказал историю нежным голосом."
-    },
-    {
-      "source_word": "herself",
-      "target_word": "себя|сама",
-      "source_example": "She taught herself to play the piano.",
-      "target_example": "Она сама научилась играть на пианино."
-    },
-    {
-      "source_word": "enemy",
-      "target_word": "враг|противник",
-      "source_example": "He made many enemies during his career.",
-      "target_example": "Он нажил много врагов за свою карьеру."
-    },
-    {
-      "source_word": "battle",
-      "target_word": "битва|сражение|бороться",
-      "source_example": "The battle lasted for three long days.",
-      "target_example": "Битва длилась три долгих дня."
-    },
-    {
-      "source_word": "ourselves",
-      "target_word": "себя|сами",
-      "source_example": "We should be proud of ourselves for this achievement.",
-      "target_example": "Мы должны гордиться собой за это достижение."
-    },
-    {
-      "source_word": "gay",
-      "target_word": "гей|весёлый",
-      "source_example": "They celebrated at the gay pride parade.",
-      "target_example": "Они праздновали на параде гей-прайда."
-    },
-    {
-      "source_word": "guilty",
-      "target_word": "виновный|виноватый",
-      "source_example": "The judge found the man guilty of theft.",
-      "target_example": "Судья признал мужчину виновным в краже."
-    },
-    {
-      "source_word": "apart",
-      "target_word": "отдельно|врозь|в стороне",
-      "source_example": "The two cities are fifty miles apart.",
-      "target_example": "Два города находятся в пятидесяти милях друг от друга."
-    },
-    {
-      "source_word": "duty",
-      "target_word": "долг|обязанность",
-      "source_example": "It is my duty to protect my family.",
-      "target_example": "Моя обязанность - защищать свою семью."
-    },
-    {
-      "source_word": "suit",
-      "target_word": "костюм|подходить|устраивать",
-      "source_example": "This blue suit looks perfect on you.",
-      "target_example": "Этот синий костюм выглядит на тебе идеально."
-    },
-    {
-      "source_word": "hero",
-      "target_word": "герой",
-      "source_example": "The firefighter became a hero after saving the child.",
-      "target_example": "Пожарный стал героем после спасения ребёнка."
-    },
-    {
-      "source_word": "destroy",
-      "target_word": "разрушать|уничтожать",
-      "source_example": "The fire destroyed the old building completely.",
-      "target_example": "Пожар полностью уничтожил старое здание."
-    },
-    {
-      "source_word": "bunch",
-      "target_word": "куча|связка|гроздь",
-      "source_example": "She bought a bunch of fresh flowers.",
-      "target_example": "Она купила букет свежих цветов."
-    },
-    {
-      "source_word": "admit",
-      "target_word": "признавать|допускать",
-      "source_example": "He had to admit that he was wrong.",
-      "target_example": "Ему пришлось признать, что он был неправ."
-    },
-    {
-      "source_word": "witness",
-      "target_word": "свидетель|свидетельствовать",
-      "source_example": "The witness saw everything that happened.",
-      "target_example": "Свидетель видел всё, что произошло."
-    },
-    {
-      "source_word": "steal",
-      "target_word": "красть|воровать",
-      "source_example": "Someone tried to steal my bike last night.",
-      "target_example": "Кто-то пытался украсть мой велосипед прошлой ночью."
-    },
-    {
-      "source_word": "kick",
-      "target_word": "удар ногой|пинать|пинок",
-      "source_example": "He kicked the ball into the goal.",
-      "target_example": "Он забил мяч в ворота ударом ноги."
-    },
-    {
-      "source_word": "cross",
-      "target_word": "крест|пересекать|злой",
-      "source_example": "Be careful when you cross the busy street.",
-      "target_example": "Будь осторожен, когда переходишь оживлённую улицу."
-    },
-    {
-      "source_word": "sergeant",
-      "target_word": "сержант",
-      "source_example": "The sergeant trained the new police officers.",
-      "target_example": "Сержант обучал новых полицейских."
-    },
-    {
-      "source_word": "indeed",
-      "target_word": "действительно|в самом деле",
-      "source_example": "It was indeed a very strange situation.",
-      "target_example": "Это была действительно очень странная ситуация."
-    },
-    {
-      "source_word": "gas",
-      "target_word": "газ|бензин",
-      "source_example": "We need to stop for gas soon.",
-      "target_example": "Нам нужно скоро остановиться заправиться бензином."
-    },
-    {
-      "source_word": "pregnant",
-      "target_word": "беременная",
-      "source_example": "She is pregnant with her first child.",
-      "target_example": "Она беременна своим первым ребёнком."
-    },
-    {
-      "source_word": "waste",
-      "target_word": "отходы|тратить|расточать",
-      "source_example": "Do not waste your time on this project.",
-      "target_example": "Не трать своё время на этот проект."
-    },
-    {
-      "source_word": "taste",
-      "target_word": "вкус|пробовать",
-      "source_example": "This soup has a wonderful taste of herbs.",
-      "target_example": "У этого супа прекрасный вкус трав."
-    },
-    {
-      "source_word": "lock",
-      "target_word": "замок|запирать|локон",
-      "source_example": "Did you lock the door before leaving?",
-      "target_example": "Ты закрыл дверь на замок перед уходом?"
-    },
-    {
-      "source_word": "silly",
-      "target_word": "глупый|дурацкий",
-      "source_example": "That was a silly mistake to make.",
-      "target_example": "Это была глупая ошибка."
-    },
-    {
-      "source_word": "mention",
-      "target_word": "упоминание|упоминать",
-      "source_example": "He did not mention anything about the problem.",
-      "target_example": "Он не упомянул ничего о проблеме."
-    },
-    {
-      "source_word": "throat",
-      "target_word": "горло",
-      "source_example": "My throat hurts when I try to swallow.",
-      "target_example": "У меня болит горло, когда я пытаюсь глотать."
-    },
-    {
-      "source_word": "hole",
-      "target_word": "дыра|отверстие",
-      "source_example": "There is a big hole in my sock.",
-      "target_example": "В моём носке большая дыра."
-    },
-    {
-      "source_word": "track",
-      "target_word": "след|дорожка|отслеживать",
-      "source_example": "The train stayed on the track safely.",
-      "target_example": "Поезд безопасно оставался на рельсах."
-    },
-    {
-      "source_word": "engine",
-      "target_word": "двигатель|мотор",
-      "source_example": "The car engine stopped working suddenly.",
-      "target_example": "Двигатель машины внезапно перестал работать."
-    },
-    {
-      "source_word": "applause",
-      "target_word": "аплодисменты|овации",
-      "source_example": "The performance ended with loud applause.",
-      "target_example": "Представление закончилось громкими аплодисментами."
-    },
-    {
-      "source_word": "pressure",
-      "target_word": "давление|нажим",
-      "source_example": "He works well even under pressure.",
-      "target_example": "Он хорошо работает даже под давлением."
-    },
-    {
-      "source_word": "fresh",
-      "target_word": "свежий",
-      "source_example": "I love the smell of fresh bread.",
-      "target_example": "Я люблю запах свежего хлеба."
-    },
-    {
-      "source_word": "weapon",
-      "target_word": "оружие",
-      "source_example": "The police found a weapon at the crime scene.",
-      "target_example": "Полиция нашла оружие на месте преступления."
-    },
-    {
-      "source_word": "sky",
-      "target_word": "небо",
-      "source_example": "The sky was clear and blue today.",
-      "target_example": "Небо было чистым и голубым сегодня."
-    },
-    {
-      "source_word": "burn",
-      "target_word": "гореть|жечь|ожог",
-      "source_example": "Be careful not to burn yourself with hot water.",
-      "target_example": "Будь осторожен, не обожгись горячей водой."
-    },
-    {
-      "source_word": "crowd",
-      "target_word": "толпа|скопление людей",
-      "source_example": "A large crowd gathered in the city square.",
-      "target_example": "Большая толпа собралась на городской площади."
-    },
-    {
-      "source_word": "treat",
-      "target_word": "угощение|угощать|лечить",
-      "source_example": "My parents will treat us to dinner tonight.",
-      "target_example": "Мои родители угостят нас ужином сегодня вечером."
-    },
-    {
-      "source_word": "roll",
-      "target_word": "рулон|катать|вращать",
-      "source_example": "Roll the dough into a thin circle.",
-      "target_example": "Раскатай тесто в тонкий круг."
-    },
-    {
-      "source_word": "double",
-      "target_word": "двойной|вдвойне|удваивать",
-      "source_example": "The price has doubled in the last year.",
-      "target_example": "Цена удвоилась за последний год."
-    },
-    {
-      "source_word": "danger",
-      "target_word": "опасность",
-      "source_example": "There is no danger if you follow the rules.",
-      "target_example": "Нет опасности, если ты следуешь правилам."
-    },
-    {
-      "source_word": "empty",
-      "target_word": "пустой|опустошать",
-      "source_example": "The bottle is completely empty now.",
-      "target_example": "Бутылка теперь совершенно пуста."
-    },
-    {
-      "source_word": "memory",
-      "target_word": "память|воспоминание",
-      "source_example": "She has a very good memory for names.",
-      "target_example": "У неё очень хорошая память на имена."
-    },
-    {
-      "source_word": "itself",
-      "target_word": "себя|само",
-      "source_example": "The problem will solve itself over time.",
-      "target_example": "Проблема решится сама со временем."
-    },
-    {
-      "source_word": "apparently",
-      "target_word": "очевидно|по-видимому",
-      "source_example": "Apparently, the meeting was canceled yesterday.",
-      "target_example": "По-видимому, встреча была отменена вчера."
-    },
-    {
-      "source_word": "nature",
-      "target_word": "природа|натура",
-      "source_example": "Nature is beautiful in the spring season.",
-      "target_example": "Природа прекрасна весной."
-    },
-    {
-      "source_word": "raise",
-      "target_word": "поднимать|повышать|растить",
-      "source_example": "Please raise your hand if you have questions.",
-      "target_example": "Пожалуйста, подними руку, если есть вопросы."
-    },
-    {
-      "source_word": "pop",
-      "target_word": "хлопок|поп|популярный",
-      "source_example": "I heard a loud pop from the balloon.",
-      "target_example": "Я услышал громкий хлопок от воздушного шара."
-    },
-    {
-      "source_word": "client",
-      "target_word": "клиент",
-      "source_example": "The lawyer met with his client this morning.",
-      "target_example": "Адвокат встретился со своим клиентом этим утром."
-    },
-    {
-      "source_word": "bomb",
-      "target_word": "бомба|взрывать",
-      "source_example": "The bomb was safely removed by experts.",
-      "target_example": "Бомбу безопасно удалили специалисты."
-    },
-    {
-      "source_word": "neck",
-      "target_word": "шея",
-      "source_example": "She wore a beautiful necklace around her neck.",
-      "target_example": "Она носила красивое ожерелье на шее."
-    },
-    {
-      "source_word": "suspect",
-      "target_word": "подозреваемый|подозревать",
-      "source_example": "The police arrested the suspect last night.",
-      "target_example": "Полиция арестовала подозреваемого прошлой ночью."
     },
     {
       "source_word": "heavy",
@@ -3424,13 +2572,6 @@
       "target_example": "Мне нравится шоколад."
     },
     {
-      "source_word": "hm",
-      "target_word": "[translation needed for: hm]",
-      "cefr_level": "A2",
-      "source_example": "She bought a hm.",
-      "target_example": ""
-    },
-    {
       "source_word": "yourselves",
       "target_word": "вы сами|себя",
       "cefr_level": "A2",
@@ -3515,13 +2656,6 @@
       "target_example": "бабушка здесь."
     },
     {
-      "source_word": "whore",
-      "target_word": "[profanity]",
-      "cefr_level": "A2",
-      "source_example": "The whore is very interesting.",
-      "target_example": ""
-    },
-    {
       "source_word": "piano",
       "target_word": "пианино|фортепиано",
       "cefr_level": "A2",
@@ -3597,13 +2731,6 @@
       "cefr_level": "A2",
       "source_example": "The scoff is very interesting.",
       "target_example": "насмехаться здесь."
-    },
-    {
-      "source_word": "motherfucker",
-      "target_word": "[profanity]",
-      "cefr_level": "A2",
-      "source_example": "She bought a motherfucker.",
-      "target_example": ""
     },
     {
       "source_word": "loving",
@@ -3688,13 +2815,6 @@
       "cefr_level": "A2",
       "source_example": "They cleaning often.",
       "target_example": "Мне нравится уборка."
-    },
-    {
-      "source_word": "lf",
-      "target_word": "[translation needed for: lf]",
-      "cefr_level": "A2",
-      "source_example": "The lf is very interesting.",
-      "target_example": ""
     },
     {
       "source_word": "twenty",
@@ -3851,13 +2971,6 @@
       "target_example": "Это проклятие."
     },
     {
-      "source_word": "id",
-      "target_word": "[translation needed for: id]",
-      "cefr_level": "A2",
-      "source_example": "She bought a id.",
-      "target_example": ""
-    },
-    {
       "source_word": "customer",
       "target_word": "покупатель|клиент",
       "cefr_level": "A2",
@@ -3870,13 +2983,6 @@
       "cefr_level": "A2",
       "source_example": "Do you have a gunshot?",
       "target_example": "Это выстрел."
-    },
-    {
-      "source_word": "i-",
-      "target_word": "[translation needed for: i-]",
-      "cefr_level": "A2",
-      "source_example": "We need a new i-.",
-      "target_example": ""
     },
     {
       "source_word": "troops",
@@ -4166,13 +3272,6 @@
       "target_example": "Это трус."
     },
     {
-      "source_word": "'i",
-      "target_word": "[translation needed for: 'i]",
-      "cefr_level": "A2",
-      "source_example": "The 'i is very interesting.",
-      "target_example": ""
-    },
-    {
       "source_word": "cheating",
       "target_word": "обман|мошенничество",
       "cefr_level": "A2",
@@ -4206,13 +3305,6 @@
       "cefr_level": "A2",
       "source_example": "Do you have a lion?",
       "target_example": "Ты можешь лев?"
-    },
-    {
-      "source_word": "you-",
-      "target_word": "[translation needed for: you-]",
-      "cefr_level": "A2",
-      "source_example": "We need a new you-.",
-      "target_example": ""
     },
     {
       "source_word": "trail",
@@ -4500,6 +3592,2757 @@
       "cefr_level": "A2",
       "source_example": "Do you have a brad?",
       "target_example": "Мне нравится гвоздь."
+    },
+    {
+      "source_word": "bury",
+      "target_word": "[translation needed for: bury]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "yell",
+      "target_word": "[translation needed for: yell]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pity",
+      "target_word": "[translation needed for: pity]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "hm",
+      "target_word": "[translation needed for: hm]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "whore",
+      "target_word": "[translation needed for: whore]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "motherfucker",
+      "target_word": "[translation needed for: motherfucker]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lf",
+      "target_word": "[translation needed for: lf]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "stare",
+      "target_word": "[translation needed for: stare]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "circumstance",
+      "target_word": "[translation needed for: circumstance]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "id",
+      "target_word": "[translation needed for: id]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "i-",
+      "target_word": "[translation needed for: i-]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "robbery",
+      "target_word": "[translation needed for: robbery]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "whisper",
+      "target_word": "[translation needed for: whisper]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "coincidence",
+      "target_word": "[translation needed for: coincidence]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "threaten",
+      "target_word": "[translation needed for: threaten]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "impress",
+      "target_word": "[translation needed for: impress]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "'i",
+      "target_word": "[translation needed for: 'i]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "you-",
+      "target_word": "[translation needed for: you-]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "terribly",
+      "target_word": "[translation needed for: terribly]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "kidnap",
+      "target_word": "[translation needed for: kidnap]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "betray",
+      "target_word": "[translation needed for: betray]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "surround",
+      "target_word": "[translation needed for: surround]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "confession",
+      "target_word": "[translation needed for: confession]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fellow",
+      "target_word": "[translation needed for: fellow]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "blind",
+      "target_word": "[translation needed for: blind]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "nor",
+      "target_word": "[translation needed for: nor]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "beyond",
+      "target_word": "[translation needed for: beyond]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "inspector",
+      "target_word": "[translation needed for: inspector]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "trial",
+      "target_word": "[translation needed for: trial]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "somehow",
+      "target_word": "[translation needed for: somehow]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "hearing",
+      "target_word": "[translation needed for: hearing]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "file",
+      "target_word": "[translation needed for: file]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tape",
+      "target_word": "[translation needed for: tape]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "powerful",
+      "target_word": "[translation needed for: powerful]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "plus",
+      "target_word": "[translation needed for: plus]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "freedom",
+      "target_word": "[translation needed for: freedom]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "operation",
+      "target_word": "[translation needed for: operation]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "crew",
+      "target_word": "[translation needed for: crew]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "challenge",
+      "target_word": "[translation needed for: challenge]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "strength",
+      "target_word": "[translation needed for: strength]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "color",
+      "target_word": "[translation needed for: color]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "monster",
+      "target_word": "[translation needed for: monster]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "planning",
+      "target_word": "[translation needed for: planning]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "investigation",
+      "target_word": "[translation needed for: investigation]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "nonsense",
+      "target_word": "[translation needed for: nonsense]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "trick",
+      "target_word": "[translation needed for: trick]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "prepare",
+      "target_word": "[translation needed for: prepare]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "truly",
+      "target_word": "[translation needed for: truly]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "survive",
+      "target_word": "[translation needed for: survive]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fake",
+      "target_word": "[translation needed for: fake]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "suicide",
+      "target_word": "[translation needed for: suicide]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "remain",
+      "target_word": "[translation needed for: remain]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "concerned",
+      "target_word": "[translation needed for: concerned]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "chair",
+      "target_word": "[translation needed for: chair]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "strike",
+      "target_word": "[translation needed for: strike]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pretend",
+      "target_word": "[translation needed for: pretend]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pray",
+      "target_word": "[translation needed for: pray]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "universe",
+      "target_word": "[translation needed for: universe]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "command",
+      "target_word": "[translation needed for: command]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "proof",
+      "target_word": "[translation needed for: proof]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cream",
+      "target_word": "[translation needed for: cream]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "dumb",
+      "target_word": "[translation needed for: dumb]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "buck",
+      "target_word": "[translation needed for: buck]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "opening",
+      "target_word": "[translation needed for: opening]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "bullet",
+      "target_word": "[translation needed for: bullet]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lately",
+      "target_word": "[translation needed for: lately]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "joy",
+      "target_word": "[translation needed for: joy]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "responsibility",
+      "target_word": "[translation needed for: responsibility]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "settle",
+      "target_word": "[translation needed for: settle]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "gang",
+      "target_word": "[translation needed for: gang]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "surgery",
+      "target_word": "[translation needed for: surgery]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fate",
+      "target_word": "[translation needed for: fate]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "split",
+      "target_word": "[translation needed for: split]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "screw",
+      "target_word": "[translation needed for: screw]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "harm",
+      "target_word": "[translation needed for: harm]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "basically",
+      "target_word": "[translation needed for: basically]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "signal",
+      "target_word": "[translation needed for: signal]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "spare",
+      "target_word": "[translation needed for: spare]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "loose",
+      "target_word": "[translation needed for: loose]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "naked",
+      "target_word": "[translation needed for: naked]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "silence",
+      "target_word": "[translation needed for: silence]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "safety",
+      "target_word": "[translation needed for: safety]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fancy",
+      "target_word": "[translation needed for: fancy]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "contract",
+      "target_word": "[translation needed for: contract]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "dig",
+      "target_word": "[translation needed for: dig]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "chest",
+      "target_word": "[translation needed for: chest]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "detail",
+      "target_word": "[translation needed for: detail]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "reality",
+      "target_word": "[translation needed for: reality]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "theory",
+      "target_word": "[translation needed for: theory]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ruin",
+      "target_word": "[translation needed for: ruin]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "barely",
+      "target_word": "[translation needed for: barely]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "regret",
+      "target_word": "[translation needed for: regret]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "subject",
+      "target_word": "[translation needed for: subject]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mood",
+      "target_word": "[translation needed for: mood]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "revenge",
+      "target_word": "[translation needed for: revenge]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "connection",
+      "target_word": "[translation needed for: connection]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "rush",
+      "target_word": "[translation needed for: rush]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "rough",
+      "target_word": "[translation needed for: rough]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "obvious",
+      "target_word": "[translation needed for: obvious]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "goodness",
+      "target_word": "[translation needed for: goodness]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "genius",
+      "target_word": "[translation needed for: genius]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cancer",
+      "target_word": "[translation needed for: cancer]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "bless",
+      "target_word": "[translation needed for: bless]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "warning",
+      "target_word": "[translation needed for: warning]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "crash",
+      "target_word": "[translation needed for: crash]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "defense",
+      "target_word": "[translation needed for: defense]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "complicated",
+      "target_word": "[translation needed for: complicated]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cheap",
+      "target_word": "[translation needed for: cheap]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "romantic",
+      "target_word": "[translation needed for: romantic]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "giant",
+      "target_word": "[translation needed for: giant]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "insurance",
+      "target_word": "[translation needed for: insurance]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "scare",
+      "target_word": "[translation needed for: scare]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "repeat",
+      "target_word": "[translation needed for: repeat]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "suck",
+      "target_word": "[translation needed for: suck]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "proper",
+      "target_word": "[translation needed for: proper]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "hire",
+      "target_word": "[translation needed for: hire]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "map",
+      "target_word": "[translation needed for: map]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "horn",
+      "target_word": "[translation needed for: horn]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ashamed",
+      "target_word": "[translation needed for: ashamed]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "assume",
+      "target_word": "[translation needed for: assume]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "jury",
+      "target_word": "[translation needed for: jury]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "positive",
+      "target_word": "[translation needed for: positive]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "attorney",
+      "target_word": "[translation needed for: attorney]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "location",
+      "target_word": "[translation needed for: location]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "useless",
+      "target_word": "[translation needed for: useless]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "grant",
+      "target_word": "[translation needed for: grant]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "deliver",
+      "target_word": "[translation needed for: deliver]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "grave",
+      "target_word": "[translation needed for: grave]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "chase",
+      "target_word": "[translation needed for: chase]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "odd",
+      "target_word": "[translation needed for: odd]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "shock",
+      "target_word": "[translation needed for: shock]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "golden",
+      "target_word": "[translation needed for: golden]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sexual",
+      "target_word": "[translation needed for: sexual]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mercy",
+      "target_word": "[translation needed for: mercy]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "trap",
+      "target_word": "[translation needed for: trap]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mystery",
+      "target_word": "[translation needed for: mystery]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "wound",
+      "target_word": "[translation needed for: wound]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "courage",
+      "target_word": "[translation needed for: courage]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "hunt",
+      "target_word": "[translation needed for: hunt]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "rat",
+      "target_word": "[translation needed for: rat]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "appointment",
+      "target_word": "[translation needed for: appointment]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "crack",
+      "target_word": "[translation needed for: crack]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "threat",
+      "target_word": "[translation needed for: threat]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "nation",
+      "target_word": "[translation needed for: nation]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "victory",
+      "target_word": "[translation needed for: victory]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pure",
+      "target_word": "[translation needed for: pure]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "aside",
+      "target_word": "[translation needed for: aside]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "dawn",
+      "target_word": "[translation needed for: dawn]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "spell",
+      "target_word": "[translation needed for: spell]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "violence",
+      "target_word": "[translation needed for: violence]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "firm",
+      "target_word": "[translation needed for: firm]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "talent",
+      "target_word": "[translation needed for: talent]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "license",
+      "target_word": "[translation needed for: license]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "concern",
+      "target_word": "[translation needed for: concern]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "studio",
+      "target_word": "[translation needed for: studio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "desire",
+      "target_word": "[translation needed for: desire]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pride",
+      "target_word": "[translation needed for: pride]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pill",
+      "target_word": "[translation needed for: pill]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "miracle",
+      "target_word": "[translation needed for: miracle]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "swim",
+      "target_word": "[translation needed for: swim]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "hook",
+      "target_word": "[translation needed for: hook]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "protection",
+      "target_word": "[translation needed for: protection]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "treatment",
+      "target_word": "[translation needed for: treatment]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "grateful",
+      "target_word": "[translation needed for: grateful]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "treasure",
+      "target_word": "[translation needed for: treasure]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "rescue",
+      "target_word": "[translation needed for: rescue]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "capable",
+      "target_word": "[translation needed for: capable]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "passing",
+      "target_word": "[translation needed for: passing]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "governor",
+      "target_word": "[translation needed for: governor]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "literally",
+      "target_word": "[translation needed for: literally]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "deeply",
+      "target_word": "[translation needed for: deeply]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "illegal",
+      "target_word": "[translation needed for: illegal]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "curious",
+      "target_word": "[translation needed for: curious]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "load",
+      "target_word": "[translation needed for: load]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "boom",
+      "target_word": "[translation needed for: boom]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "former",
+      "target_word": "[translation needed for: former]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sue",
+      "target_word": "[translation needed for: sue]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "decent",
+      "target_word": "[translation needed for: decent]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "claim",
+      "target_word": "[translation needed for: claim]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "desperate",
+      "target_word": "[translation needed for: desperate]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "dramatic",
+      "target_word": "[translation needed for: dramatic]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "theme",
+      "target_word": "[translation needed for: theme]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cast",
+      "target_word": "[translation needed for: cast]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "hunting",
+      "target_word": "[translation needed for: hunting]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "silent",
+      "target_word": "[translation needed for: silent]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "punch",
+      "target_word": "[translation needed for: punch]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "intelligence",
+      "target_word": "[translation needed for: intelligence]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "convince",
+      "target_word": "[translation needed for: convince]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "stranger",
+      "target_word": "[translation needed for: stranger]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "presence",
+      "target_word": "[translation needed for: presence]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "therefore",
+      "target_word": "[translation needed for: therefore]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "wise",
+      "target_word": "[translation needed for: wise]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "precious",
+      "target_word": "[translation needed for: precious]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "beast",
+      "target_word": "[translation needed for: beast]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "drag",
+      "target_word": "[translation needed for: drag]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "creature",
+      "target_word": "[translation needed for: creature]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "shift",
+      "target_word": "[translation needed for: shift]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "darkness",
+      "target_word": "[translation needed for: darkness]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cure",
+      "target_word": "[translation needed for: cure]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "rare",
+      "target_word": "[translation needed for: rare]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "explosion",
+      "target_word": "[translation needed for: explosion]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sacrifice",
+      "target_word": "[translation needed for: sacrifice]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "effort",
+      "target_word": "[translation needed for: effort]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "youth",
+      "target_word": "[translation needed for: youth]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ambulance",
+      "target_word": "[translation needed for: ambulance]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "campaign",
+      "target_word": "[translation needed for: campaign]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "vision",
+      "target_word": "[translation needed for: vision]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "defend",
+      "target_word": "[translation needed for: defend]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "dump",
+      "target_word": "[translation needed for: dump]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "zone",
+      "target_word": "[translation needed for: zone]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "senior",
+      "target_word": "[translation needed for: senior]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "incident",
+      "target_word": "[translation needed for: incident]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sentence",
+      "target_word": "[translation needed for: sentence]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "engage",
+      "target_word": "[translation needed for: engage]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "charming",
+      "target_word": "[translation needed for: charming]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "anger",
+      "target_word": "[translation needed for: anger]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "spending",
+      "target_word": "[translation needed for: spending]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "spy",
+      "target_word": "[translation needed for: spy]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sharp",
+      "target_word": "[translation needed for: sharp]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "warrant",
+      "target_word": "[translation needed for: warrant]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sometime",
+      "target_word": "[translation needed for: sometime]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "attitude",
+      "target_word": "[translation needed for: attitude]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "negative",
+      "target_word": "[translation needed for: negative]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fully",
+      "target_word": "[translation needed for: fully]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "gorgeous",
+      "target_word": "[translation needed for: gorgeous]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "passion",
+      "target_word": "[translation needed for: passion]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "empire",
+      "target_word": "[translation needed for: empire]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "estate",
+      "target_word": "[translation needed for: estate]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "object",
+      "target_word": "[translation needed for: object]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "politics",
+      "target_word": "[translation needed for: politics]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "alcohol",
+      "target_word": "[translation needed for: alcohol]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "seek",
+      "target_word": "[translation needed for: seek]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "episode",
+      "target_word": "[translation needed for: episode]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "previously",
+      "target_word": "[translation needed for: previously]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "debt",
+      "target_word": "[translation needed for: debt]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "wire",
+      "target_word": "[translation needed for: wire]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "approach",
+      "target_word": "[translation needed for: approach]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "stock",
+      "target_word": "[translation needed for: stock]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "rape",
+      "target_word": "[translation needed for: rape]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tank",
+      "target_word": "[translation needed for: tank]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "authority",
+      "target_word": "[translation needed for: authority]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "failure",
+      "target_word": "[translation needed for: failure]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "nightmare",
+      "target_word": "[translation needed for: nightmare]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "glory",
+      "target_word": "[translation needed for: glory]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "agency",
+      "target_word": "[translation needed for: agency]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "reputation",
+      "target_word": "[translation needed for: reputation]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "confidence",
+      "target_word": "[translation needed for: confidence]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "beloved",
+      "target_word": "[translation needed for: beloved]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lack",
+      "target_word": "[translation needed for: lack]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "actual",
+      "target_word": "[translation needed for: actual]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mental",
+      "target_word": "[translation needed for: mental]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "flesh",
+      "target_word": "[translation needed for: flesh]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "secure",
+      "target_word": "[translation needed for: secure]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "federal",
+      "target_word": "[translation needed for: federal]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "emotional",
+      "target_word": "[translation needed for: emotional]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "setting",
+      "target_word": "[translation needed for: setting]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "reward",
+      "target_word": "[translation needed for: reward]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "entirely",
+      "target_word": "[translation needed for: entirely]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "extraordinary",
+      "target_word": "[translation needed for: extraordinary]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "alert",
+      "target_word": "[translation needed for: alert]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "panic",
+      "target_word": "[translation needed for: panic]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "agreement",
+      "target_word": "[translation needed for: agreement]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "solid",
+      "target_word": "[translation needed for: solid]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "intend",
+      "target_word": "[translation needed for: intend]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "custody",
+      "target_word": "[translation needed for: custody]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "naturally",
+      "target_word": "[translation needed for: naturally]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "attempt",
+      "target_word": "[translation needed for: attempt]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "guarantee",
+      "target_word": "[translation needed for: guarantee]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "violent",
+      "target_word": "[translation needed for: violent]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "bow",
+      "target_word": "[translation needed for: bow]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "revolution",
+      "target_word": "[translation needed for: revolution]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "demon",
+      "target_word": "[translation needed for: demon]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "identity",
+      "target_word": "[translation needed for: identity]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "impressive",
+      "target_word": "[translation needed for: impressive]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "potential",
+      "target_word": "[translation needed for: potential]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "committee",
+      "target_word": "[translation needed for: committee]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "dozen",
+      "target_word": "[translation needed for: dozen]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "delivery",
+      "target_word": "[translation needed for: delivery]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "advance",
+      "target_word": "[translation needed for: advance]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "swing",
+      "target_word": "[translation needed for: swing]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "deny",
+      "target_word": "[translation needed for: deny]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "urgent",
+      "target_word": "[translation needed for: urgent]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "assure",
+      "target_word": "[translation needed for: assure]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "unique",
+      "target_word": "[translation needed for: unique]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "slave",
+      "target_word": "[translation needed for: slave]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cruel",
+      "target_word": "[translation needed for: cruel]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "massive",
+      "target_word": "[translation needed for: massive]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "loan",
+      "target_word": "[translation needed for: loan]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "struggle",
+      "target_word": "[translation needed for: struggle]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "basement",
+      "target_word": "[translation needed for: basement]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "bind",
+      "target_word": "[translation needed for: bind]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "accuse",
+      "target_word": "[translation needed for: accuse]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "transfer",
+      "target_word": "[translation needed for: transfer]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "punishment",
+      "target_word": "[translation needed for: punishment]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "flash",
+      "target_word": "[translation needed for: flash]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "supply",
+      "target_word": "[translation needed for: supply]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sensitive",
+      "target_word": "[translation needed for: sensitive]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "hopefully",
+      "target_word": "[translation needed for: hopefully]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "demand",
+      "target_word": "[translation needed for: demand]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "unknown",
+      "target_word": "[translation needed for: unknown]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "suspicious",
+      "target_word": "[translation needed for: suspicious]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "steady",
+      "target_word": "[translation needed for: steady]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "joint",
+      "target_word": "[translation needed for: joint]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "package",
+      "target_word": "[translation needed for: package]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "civil",
+      "target_word": "[translation needed for: civil]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "miserable",
+      "target_word": "[translation needed for: miserable]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "assault",
+      "target_word": "[translation needed for: assault]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "recall",
+      "target_word": "[translation needed for: recall]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "accent",
+      "target_word": "[translation needed for: accent]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "nuclear",
+      "target_word": "[translation needed for: nuclear]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "impression",
+      "target_word": "[translation needed for: impression]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "reaction",
+      "target_word": "[translation needed for: reaction]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "gear",
+      "target_word": "[translation needed for: gear]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "diamond",
+      "target_word": "[translation needed for: diamond]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "defeat",
+      "target_word": "[translation needed for: defeat]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lane",
+      "target_word": "[translation needed for: lane]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "blast",
+      "target_word": "[translation needed for: blast]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ceremony",
+      "target_word": "[translation needed for: ceremony]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "crisis",
+      "target_word": "[translation needed for: crisis]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "commissioner",
+      "target_word": "[translation needed for: commissioner]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "rip",
+      "target_word": "[translation needed for: rip]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mysterious",
+      "target_word": "[translation needed for: mysterious]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tunnel",
+      "target_word": "[translation needed for: tunnel]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "comfort",
+      "target_word": "[translation needed for: comfort]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "surrender",
+      "target_word": "[translation needed for: surrender]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "crush",
+      "target_word": "[translation needed for: crush]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cave",
+      "target_word": "[translation needed for: cave]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "noble",
+      "target_word": "[translation needed for: noble]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "launch",
+      "target_word": "[translation needed for: launch]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "legend",
+      "target_word": "[translation needed for: legend]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "imagination",
+      "target_word": "[translation needed for: imagination]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "gross",
+      "target_word": "[translation needed for: gross]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "insist",
+      "target_word": "[translation needed for: insist]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "classic",
+      "target_word": "[translation needed for: classic]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "bat",
+      "target_word": "[translation needed for: bat]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "champion",
+      "target_word": "[translation needed for: champion]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "therapy",
+      "target_word": "[translation needed for: therapy]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lifetime",
+      "target_word": "[translation needed for: lifetime]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "throughout",
+      "target_word": "[translation needed for: throughout]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cheat",
+      "target_word": "[translation needed for: cheat]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "servant",
+      "target_word": "[translation needed for: servant]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "steel",
+      "target_word": "[translation needed for: steel]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "wipe",
+      "target_word": "[translation needed for: wipe]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "generation",
+      "target_word": "[translation needed for: generation]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cabin",
+      "target_word": "[translation needed for: cabin]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "bond",
+      "target_word": "[translation needed for: bond]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "deck",
+      "target_word": "[translation needed for: deck]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "script",
+      "target_word": "[translation needed for: script]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "brand",
+      "target_word": "[translation needed for: brand]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "religion",
+      "target_word": "[translation needed for: religion]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "influence",
+      "target_word": "[translation needed for: influence]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fuel",
+      "target_word": "[translation needed for: fuel]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "plain",
+      "target_word": "[translation needed for: plain]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sacred",
+      "target_word": "[translation needed for: sacred]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "robot",
+      "target_word": "[translation needed for: robot]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "confirm",
+      "target_word": "[translation needed for: confirm]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "division",
+      "target_word": "[translation needed for: division]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "scratch",
+      "target_word": "[translation needed for: scratch]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "contest",
+      "target_word": "[translation needed for: contest]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "distant",
+      "target_word": "[translation needed for: distant]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "motion",
+      "target_word": "[translation needed for: motion]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "seal",
+      "target_word": "[translation needed for: seal]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "inform",
+      "target_word": "[translation needed for: inform]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "status",
+      "target_word": "[translation needed for: status]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "construction",
+      "target_word": "[translation needed for: construction]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "trigger",
+      "target_word": "[translation needed for: trigger]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "frankly",
+      "target_word": "[translation needed for: frankly]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cancel",
+      "target_word": "[translation needed for: cancel]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "principal",
+      "target_word": "[translation needed for: principal]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "clinic",
+      "target_word": "[translation needed for: clinic]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "generous",
+      "target_word": "[translation needed for: generous]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "gain",
+      "target_word": "[translation needed for: gain]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "religious",
+      "target_word": "[translation needed for: religious]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "surveillance",
+      "target_word": "[translation needed for: surveillance]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "routine",
+      "target_word": "[translation needed for: routine]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tribe",
+      "target_word": "[translation needed for: tribe]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "deputy",
+      "target_word": "[translation needed for: deputy]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "headquarters",
+      "target_word": "[translation needed for: headquarters]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "equal",
+      "target_word": "[translation needed for: equal]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "base",
+      "target_word": "[translation needed for: base]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "draw",
+      "target_word": "[translation needed for: draw]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "divorce",
+      "target_word": "[translation needed for: divorce]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "reckon",
+      "target_word": "[translation needed for: reckon]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "incredibly",
+      "target_word": "[translation needed for: incredibly]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "chill",
+      "target_word": "[translation needed for: chill]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "makeup",
+      "target_word": "[translation needed for: makeup]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "bug",
+      "target_word": "[translation needed for: bug]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "nerve",
+      "target_word": "[translation needed for: nerve]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "stake",
+      "target_word": "[translation needed for: stake]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "port",
+      "target_word": "[translation needed for: port]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "doorbell",
+      "target_word": "[translation needed for: doorbell]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "proceed",
+      "target_word": "[translation needed for: proceed]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "landing",
+      "target_word": "[translation needed for: landing]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
     }
   ]
 }

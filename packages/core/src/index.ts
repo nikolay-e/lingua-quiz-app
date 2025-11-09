@@ -133,14 +133,14 @@ export class QuizManager {
       const existing = initialProgressMap.get(t.id);
       const progress: ProgressEntry = existing ?? {
         translationId: t.id,
-        status: 'LEVEL_0',
+        level: 'LEVEL_0',
         consecutiveCorrect: 0,
         recentHistory: [],
       };
 
       this.progress.set(t.id, progress);
       // Add to appropriate queue at the end
-      this.queues[progress.status].push(t.id);
+      this.queues[progress.level].push(t.id);
     });
 
     this.currentLevel = initialState?.currentLevel ?? 'LEVEL_1';
@@ -228,11 +228,11 @@ export class QuizManager {
 
     return {
       translationId: t.id,
-      questionText: direction === 'normal' ? t.sourceWord.text : t.targetWord.text,
+      questionText: direction === 'normal' ? t.sourceText : t.targetText,
       level: this.currentLevel,
       direction,
-      sourceLanguage: t.sourceWord.language,
-      targetLanguage: t.targetWord.language,
+      sourceLanguage: t.sourceLanguage,
+      targetLanguage: t.targetLanguage,
       questionType,
       usageExample: this.getUsageExample(questionType, direction, t),
     };
@@ -286,7 +286,7 @@ export class QuizManager {
     if (questionType !== 'usage') {
       return undefined;
     }
-    return direction === 'normal' ? translation.sourceWord.usageExample : translation.targetWord.usageExample;
+    return direction === 'normal' ? translation.sourceUsageExample : translation.targetUsageExample;
   };
 
   /**
@@ -339,7 +339,7 @@ export class QuizManager {
 
     // Determine correct answer based on current level's direction
     const direction = this.getLevelDirection(this.currentLevel);
-    const correctAnswerText = direction === 'normal' ? t.targetWord.text : t.sourceWord.text;
+    const correctAnswerText = direction === 'normal' ? t.targetText : t.sourceText;
     const isCorrect = checkAnswer(userAnswer, correctAnswerText);
 
     // Update recent history
@@ -352,7 +352,7 @@ export class QuizManager {
     const responseTimeMs = this.submissionStartTime ? Date.now() - this.submissionStartTime : undefined;
     this.submissionStartTime = null;
 
-    const oldStatus = p.status;
+    const oldStatus = p.level;
 
     // Update queue position based on answer
     this.updateQueuePosition(translationId, isCorrect);
@@ -367,7 +367,7 @@ export class QuizManager {
       correctAnswerText,
       submittedAnswerText: userAnswer,
       translation: t,
-      levelChange: oldStatus !== p.status ? { from: oldStatus, to: p.status } : undefined,
+      levelChange: oldStatus !== p.level ? { from: oldStatus, to: p.level } : undefined,
       responseTimeMs,
     };
   };
@@ -380,7 +380,7 @@ export class QuizManager {
     if (!p) return;
 
     // Remove from current queue
-    const currentQueue = this.queues[p.status];
+    const currentQueue = this.queues[p.level];
     const index = currentQueue.indexOf(translationId);
     if (index > -1) {
       currentQueue.splice(index, 1);
@@ -408,7 +408,7 @@ export class QuizManager {
   private checkLevelProgression = (p: ProgressEntry): void => {
     // Check advancement (3 consecutive correct)
     if (p.consecutiveCorrect >= this.opts.correctAnswersToLevelUp) {
-      const nextLevel = this.getNextLevel(p.status);
+      const nextLevel = this.getNextLevel(p.level);
       if (nextLevel) {
         this.moveWordToLevel(p.translationId, nextLevel);
         p.consecutiveCorrect = 0;
@@ -419,7 +419,7 @@ export class QuizManager {
     // Check degradation (3 mistakes in last 10 attempts)
     const recentMistakes = p.recentHistory.filter((h) => !h).length;
     if (recentMistakes >= this.opts.mistakesToLevelDown && p.recentHistory.length >= MIN_HISTORY_FOR_DEGRADATION) {
-      const prevLevel = this.getPreviousLevel(p.status);
+      const prevLevel = this.getPreviousLevel(p.level);
       if (prevLevel) {
         this.moveWordToLevel(p.translationId, prevLevel);
         p.recentHistory = [];
@@ -465,14 +465,14 @@ export class QuizManager {
     if (!p) return;
 
     // Remove from old queue
-    const oldQueue = this.queues[p.status];
+    const oldQueue = this.queues[p.level];
     const index = oldQueue.indexOf(translationId);
     if (index > -1) {
       oldQueue.splice(index, 1);
     }
 
     // Update status and add to new queue at the end
-    p.status = newLevel;
+    p.level = newLevel;
     this.queues[newLevel].push(translationId);
   };
 
@@ -505,8 +505,8 @@ export class QuizManager {
     if (!translation) return undefined;
 
     return {
-      source: formatForDisplay(translation.sourceWord.text),
-      target: formatForDisplay(translation.targetWord.text),
+      source: formatForDisplay(translation.sourceText),
+      target: formatForDisplay(translation.targetText),
     };
   };
 
@@ -539,11 +539,11 @@ export class QuizManager {
 
     if (this.opts.enableUsageExamples) {
       // With usage examples enabled, complete means all at LEVEL_5 (Fully Mastered)
-      return allProgress.every((p) => p.status === 'LEVEL_5');
+      return allProgress.every((p) => p.level === 'LEVEL_5');
     }
     // Without usage examples, complete means all at LEVEL_3 (Translation Mastered Both Ways)
     // LEVEL_3 completes basic translation mastery; LEVEL_4+ are for usage examples
-    return allProgress.every((p) => p.status === 'LEVEL_3');
+    return allProgress.every((p) => p.level === 'LEVEL_3');
   };
 
   /**
@@ -555,7 +555,7 @@ export class QuizManager {
     if (allProgress.length === 0) return 0;
 
     const targetLevel = this.opts.enableUsageExamples ? 'LEVEL_5' : 'LEVEL_3';
-    const completed = allProgress.filter((p) => p.status === targetLevel).length;
+    const completed = allProgress.filter((p) => p.level === targetLevel).length;
 
     return Math.round((completed / allProgress.length) * 100);
   };
@@ -581,7 +581,7 @@ export class QuizManager {
     };
 
     allProgress.forEach((p) => {
-      levelCounts[p.status]++;
+      levelCounts[p.level]++;
     });
 
     return {

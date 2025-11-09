@@ -3,7 +3,7 @@
   "target_language": "Russian",
   "word_list_name": "Spanish Russian A1",
   "level_base_offset": 4000000,
-  "word_pairs": [
+  "translations": [
     {
       "source_word": "eso",
       "target_word": "это",
@@ -5731,6 +5731,34 @@
       "target_word": "мой",
       "source_example": "Es mio.",
       "target_example": "Это моё."
+    },
+    {
+      "source_word": "te",
+      "target_word": "[translation needed for: te]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "donde",
+      "target_word": "[translation needed for: donde]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cuándo",
+      "target_word": "[translation needed for: cuándo]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "papa",
+      "target_word": "[translation needed for: papa]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     }
   ]
 }

@@ -5,18 +5,28 @@ describe('Core Functionality Tests', () => {
   const sampleTranslations: Translation[] = [
     {
       id: 1,
-      sourceWord: { text: 'hello', language: 'en', usageExample: 'Hello world!' },
-      targetWord: { text: 'привет', language: 'ru', usageExample: 'Привет мир!' },
+      sourceText: 'hello',
+      sourceLanguage: 'en',
+      sourceUsageExample: 'Hello world!',
+      targetText: 'привет',
+      targetLanguage: 'ru',
+      targetUsageExample: 'Привет мир!',
     },
     {
       id: 2,
-      sourceWord: { text: 'world', language: 'en', usageExample: 'Hello world!' },
-      targetWord: { text: 'мир', language: 'ru', usageExample: 'Привет мир!' },
+      sourceText: 'world',
+      sourceLanguage: 'en',
+      sourceUsageExample: 'Hello world!',
+      targetText: 'мир',
+      targetLanguage: 'ru',
+      targetUsageExample: 'Привет мир!',
     },
     {
       id: 3,
-      sourceWord: { text: 'cat', language: 'en' },
-      targetWord: { text: 'кот', language: 'ru' },
+      sourceText: 'cat',
+      sourceLanguage: 'en',
+      targetText: 'кот',
+      targetLanguage: 'ru',
     },
   ];
 
@@ -67,7 +77,7 @@ describe('Core Functionality Tests', () => {
       const zeroFocusQuiz = new QuizManager(sampleTranslations, {}, { maxFocusWords: 0 });
       const state = zeroFocusQuiz.getState();
 
-      const level1Count = state.progress.filter((p) => p.status === 'LEVEL_1').length;
+      const level1Count = state.progress.filter((p) => p.level === 'LEVEL_1').length;
       expect(level1Count).toBe(0);
     });
 
@@ -94,15 +104,17 @@ describe('Core Functionality Tests', () => {
         expect(submissionResult.isCorrect).toBe(true);
         expect(submissionResult.levelChange).toBeDefined();
         expect(progress?.consecutiveCorrect).toBe(0);
-        expect(progress?.status).toBe('LEVEL_2');
+        expect(progress?.level).toBe('LEVEL_2');
       }
     });
 
     it('should handle large numbers of translations efficiently', () => {
       const manyTranslations: Translation[] = Array.from({ length: 100 }, (_, i) => ({
         id: i + 1,
-        sourceWord: { text: `word${i}`, language: 'en' },
-        targetWord: { text: `слово${i}`, language: 'ru' },
+        sourceText: `word${i}`,
+        sourceLanguage: 'en',
+        targetText: `слово${i}`,
+        targetLanguage: 'ru',
       }));
 
       const startTime = Date.now();
@@ -172,7 +184,7 @@ describe('Core Functionality Tests', () => {
         expect(submissionResult?.isCorrect).toBe(true);
         expect(submissionResult?.levelChange).toBeDefined();
         expect(progress?.consecutiveCorrect).toBe(0);
-        expect(progress?.status).toBe('LEVEL_2');
+        expect(progress?.level).toBe('LEVEL_2');
       }
     });
 
@@ -201,7 +213,7 @@ describe('Core Functionality Tests', () => {
 
       expect(state.progress.length).toBe(3);
       state.progress.forEach((p) => {
-        expect(['LEVEL_0', 'LEVEL_1', 'LEVEL_2', 'LEVEL_3', 'LEVEL_4', 'LEVEL_5']).toContain(p.status);
+        expect(['LEVEL_0', 'LEVEL_1', 'LEVEL_2', 'LEVEL_3', 'LEVEL_4', 'LEVEL_5']).toContain(p.level);
         expect(p.consecutiveCorrect).toBeGreaterThanOrEqual(0);
       });
     });

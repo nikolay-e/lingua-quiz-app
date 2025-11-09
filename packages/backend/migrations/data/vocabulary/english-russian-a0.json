@@ -2,7 +2,7 @@
   "source_language": "English",
   "target_language": "Russian",
   "word_list_name": "English Russian A0",
-  "word_pairs": [
+  "translations": [
     {
       "source_word": "bank",
       "target_word": "банк",
@@ -1112,6 +1112,180 @@
       "target_word": "лично|персонально",
       "source_example": "Personally, I think the plan is a mistake.",
       "target_example": "Лично я считаю, что этот план — ошибка."
+    },
+    {
+      "source_word": "canal",
+      "target_word": "канал",
+      "source_example": "The city is famous for its canals.",
+      "target_example": "Город знаменит своими каналами."
+    },
+    {
+      "source_word": "colony",
+      "target_word": "колония",
+      "source_example": "Australia was a British colony.",
+      "target_example": "Австралия была британской колонией."
+    },
+    {
+      "source_word": "consultant",
+      "target_word": "консультант",
+      "source_example": "He works as a business consultant.",
+      "target_example": "Он работает бизнес-консультантом."
+    },
+    {
+      "source_word": "format",
+      "target_word": "формат",
+      "source_example": "What is the format of the file?",
+      "target_example": "Какой формат у файла?"
+    },
+    {
+      "source_word": "forum",
+      "target_word": "форум",
+      "source_example": "There is an online forum for students.",
+      "target_example": "Для студентов есть онлайн-форум."
+    },
+    {
+      "source_word": "infrastructure",
+      "target_word": "инфраструктура",
+      "source_example": "The country needs to improve its infrastructure.",
+      "target_example": "Стране необходимо улучшить свою инфраструктуру."
+    },
+    {
+      "source_word": "medal",
+      "target_word": "медаль",
+      "source_example": "She won a gold medal in the Olympics.",
+      "target_example": "Она выиграла золотую медаль на Олимпиаде."
+    },
+    {
+      "source_word": "operator",
+      "target_word": "оператор",
+      "source_example": "Please call the operator for assistance.",
+      "target_example": "Пожалуйста, позвоните оператору для помощи."
+    },
+    {
+      "source_word": "parade",
+      "target_word": "парад",
+      "source_example": "We watched the military parade.",
+      "target_example": "Мы смотрели военный парад."
+    },
+    {
+      "source_word": "scandal",
+      "target_word": "скандал",
+      "source_example": "The politician was involved in a scandal.",
+      "target_example": "Политик был замешан в скандале."
+    },
+    {
+      "source_word": "academy",
+      "target_word": "академия",
+      "source_example": "He is a student at the military academy.",
+      "target_example": "Он студент военной академии."
+    },
+    {
+      "source_word": "activist",
+      "target_word": "активист",
+      "source_example": "He is a human rights activist.",
+      "target_example": "Он активист по правам человека."
+    },
+    {
+      "source_word": "administrator",
+      "target_word": "администратор",
+      "source_example": "He is the school administrator.",
+      "target_example": "Он администратор школы."
+    },
+    {
+      "source_word": "angel",
+      "target_word": "ангел",
+      "source_example": "She is a real angel.",
+      "target_example": "Она настоящий ангел."
+    },
+    {
+      "source_word": "arena",
+      "target_word": "арена",
+      "source_example": "The concert was held in a large arena.",
+      "target_example": "Концерт прошел на большой арене."
+    },
+    {
+      "source_word": "commentary",
+      "target_word": "комментарий",
+      "source_example": "He provides commentary on football matches.",
+      "target_example": "Он комментирует футбольные матчи."
+    },
+    {
+      "source_word": "formula",
+      "target_word": "формула",
+      "source_example": "What is the formula for calculating the area of a circle?",
+      "target_example": "Какова формула для вычисления площади круга?"
+    },
+    {
+      "source_word": "ideology",
+      "target_word": "идеология",
+      "source_example": "A political ideology.",
+      "target_example": "Политическая идеология."
+    },
+    {
+      "source_word": "logic",
+      "target_word": "логика",
+      "source_example": "There is no logic in his argument.",
+      "target_example": "В его аргументе нет логики."
+    },
+    {
+      "source_word": "memorial",
+      "target_word": "мемориал",
+      "source_example": "A war memorial.",
+      "target_example": "Военный мемориал."
+    },
+    {
+      "source_word": "parliament",
+      "target_word": "парламент",
+      "source_example": "The British Parliament.",
+      "target_example": "Британский парламент."
+    },
+    {
+      "source_word": "pastor",
+      "target_word": "пастор",
+      "source_example": "The local pastor.",
+      "target_example": "Местный пастор."
+    },
+    {
+      "source_word": "patent",
+      "target_word": "патент",
+      "source_example": "He has a patent for his invention.",
+      "target_example": "У него есть патент на свое изобретение."
+    },
+    {
+      "source_word": "propaganda",
+      "target_word": "пропаганда",
+      "source_example": "Political propaganda.",
+      "target_example": "Политическая пропаганда."
+    },
+    {
+      "source_word": "protocol",
+      "target_word": "протокол",
+      "source_example": "A diplomatic protocol.",
+      "target_example": "Дипломатический протокол."
+    },
+    {
+      "source_word": "radar",
+      "target_word": "радар",
+      "source_example": "A radar screen.",
+      "target_example": "Радарный экран."
+    },
+    {
+      "source_word": "ritual",
+      "target_word": "ритуал",
+      "source_example": "A religious ritual.",
+      "target_example": "Религиозный ритуал."
+    },
+    {
+      "source_word": "spam",
+      "target_word": "спам",
+      "source_example": "I get a lot of spam.",
+      "target_example": "Я получаю много спама."
+    },
+    {
+      "source_word": "syndrome",
+      "target_word": "синдром",
+      "source_example": "Down's syndrome.",
+      "target_example": "Синдром Дауна."
     }
   ]
 }

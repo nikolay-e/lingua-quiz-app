@@ -789,3 +789,4 @@ See parent workspace:
 - `../private/SYSTEM_SETUP.md` - Workspace infrastructure
 - `../gitops/` - GitOps deployment manifests for this app
 - `../gitops/CLAUDE.md` - GitOps deployment guide
+- always fix root cause of unexpected behaviour in vocab tools

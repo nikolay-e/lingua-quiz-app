@@ -5,18 +5,24 @@ describe('Algorithm Parameter Validation', () => {
   const sampleTranslations: Translation[] = [
     {
       id: 1,
-      sourceWord: { text: 'hello', language: 'en' },
-      targetWord: { text: 'привет', language: 'ru' },
+      sourceText: 'hello',
+      sourceLanguage: 'en',
+      targetText: 'привет',
+      targetLanguage: 'ru',
     },
     {
       id: 2,
-      sourceWord: { text: 'world', language: 'en' },
-      targetWord: { text: 'мир', language: 'ru' },
+      sourceText: 'world',
+      sourceLanguage: 'en',
+      targetText: 'мир',
+      targetLanguage: 'ru',
     },
     {
       id: 3,
-      sourceWord: { text: 'good', language: 'en' },
-      targetWord: { text: 'хороший', language: 'ru' },
+      sourceText: 'good',
+      sourceLanguage: 'en',
+      targetText: 'хороший',
+      targetLanguage: 'ru',
     },
   ];
 
@@ -143,8 +149,10 @@ describe('Algorithm Parameter Validation', () => {
     it('should handle relationships between parameters correctly', () => {
       const translations = Array.from({ length: 20 }, (_, i) => ({
         id: i + 1,
-        sourceWord: { text: `word${i}`, language: 'en' },
-        targetWord: { text: `слово${i}`, language: 'ru' },
+        sourceText: `word${i}`,
+        sourceLanguage: 'en',
+        targetText: `слово${i}`,
+        targetLanguage: 'ru',
       }));
 
       const smallIncrement = new QuizManager(translations, {}, { queuePositionIncrement: 1 });
@@ -158,8 +166,10 @@ describe('Algorithm Parameter Validation', () => {
       const fewTranslations = sampleTranslations;
       const manyTranslations = Array.from({ length: 100 }, (_, i) => ({
         id: i + 1,
-        sourceWord: { text: `word${i}`, language: 'en' },
-        targetWord: { text: `слово${i}`, language: 'ru' },
+        sourceText: `word${i}`,
+        sourceLanguage: 'en',
+        targetText: `слово${i}`,
+        targetLanguage: 'ru',
       }));
 
       const quizWithFew = new QuizManager(fewTranslations, {}, { maxFocusWords: 50 });
@@ -174,8 +184,10 @@ describe('Algorithm Parameter Validation', () => {
     it('should validate queue position calculations', () => {
       const translations = Array.from({ length: 10 }, (_, i) => ({
         id: i + 1,
-        sourceWord: { text: `word${i}`, language: 'en' },
-        targetWord: { text: `слово${i}`, language: 'ru' },
+        sourceText: `word${i}`,
+        sourceLanguage: 'en',
+        targetText: `слово${i}`,
+        targetLanguage: 'ru',
       }));
 
       const quizManager = new QuizManager(translations);

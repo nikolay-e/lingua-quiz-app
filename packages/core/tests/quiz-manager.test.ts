@@ -5,28 +5,42 @@ describe('QuizManager Tests', () => {
   const sampleTranslations: Translation[] = [
     {
       id: 1,
-      sourceWord: { text: 'hello', language: 'en', usageExample: 'Hello world!' },
-      targetWord: { text: 'привет', language: 'ru', usageExample: 'Привет мир!' },
+      sourceText: 'hello',
+      sourceLanguage: 'en',
+      sourceUsageExample: 'Hello world!',
+      targetText: 'привет',
+      targetLanguage: 'ru',
+      targetUsageExample: 'Привет мир!',
     },
     {
       id: 2,
-      sourceWord: { text: 'world', language: 'en', usageExample: 'Hello world!' },
-      targetWord: { text: 'мир', language: 'ru', usageExample: 'Привет мир!' },
+      sourceText: 'world',
+      sourceLanguage: 'en',
+      sourceUsageExample: 'Hello world!',
+      targetText: 'мир',
+      targetLanguage: 'ru',
+      targetUsageExample: 'Привет мир!',
     },
     {
       id: 3,
-      sourceWord: { text: 'cat', language: 'en' },
-      targetWord: { text: 'кот', language: 'ru' },
+      sourceText: 'cat',
+      sourceLanguage: 'en',
+      targetText: 'кот',
+      targetLanguage: 'ru',
     },
     {
       id: 4,
-      sourceWord: { text: 'dog', language: 'en' },
-      targetWord: { text: 'собака', language: 'ru' },
+      sourceText: 'dog',
+      sourceLanguage: 'en',
+      targetText: 'собака',
+      targetLanguage: 'ru',
     },
     {
       id: 5,
-      sourceWord: { text: 'book', language: 'en' },
-      targetWord: { text: 'книга', language: 'ru' },
+      sourceText: 'book',
+      sourceLanguage: 'en',
+      targetText: 'книга',
+      targetLanguage: 'ru',
     },
   ];
 
@@ -61,7 +75,7 @@ describe('QuizManager Tests', () => {
       const translation = quizManager.getTranslation(translationId);
       expect(translation).toBeTruthy();
 
-      const submission = quizManager.submitAnswer(translationId, translation!.targetWord.text);
+      const submission = quizManager.submitAnswer(translationId, translation!.targetText);
 
       expect(submission.isCorrect).toBe(true);
       expect(submission.translation).toEqual(translation);
@@ -98,7 +112,7 @@ describe('QuizManager Tests', () => {
       for (let i = 0; i < correctAnswersNeeded; i++) {
         const nextResult = quizManager.getNextQuestion();
         if (nextResult.question?.translationId === translationId) {
-          lastSubmission = quizManager.submitAnswer(translationId, translation!.targetWord.text);
+          lastSubmission = quizManager.submitAnswer(translationId, translation!.targetText);
         }
       }
 
@@ -177,13 +191,17 @@ describe('QuizManager Tests', () => {
       const complexTranslations: Translation[] = [
         {
           id: 1,
-          sourceWord: { text: 'test', language: 'en' },
-          targetWord: { text: 'тест|испытание', language: 'ru' },
+          sourceText: 'test',
+          sourceLanguage: 'en',
+          targetText: 'тест|испытание',
+          targetLanguage: 'ru',
         },
         {
           id: 2,
-          sourceWord: { text: 'example', language: 'en' },
-          targetWord: { text: '(пример|образец), случай', language: 'ru' },
+          sourceText: 'example',
+          sourceLanguage: 'en',
+          targetText: '(пример|образец), случай',
+          targetLanguage: 'ru',
         },
       ];
       quizManager = new QuizManager(complexTranslations);
@@ -235,7 +253,7 @@ describe('QuizManager Tests', () => {
       const initialProgress = [
         {
           translationId: 1,
-          status: 'LEVEL_2' as const,
+          level: 'LEVEL_2' as const,
           consecutiveCorrect: 1,
           recentHistory: [true, false, true],
         },

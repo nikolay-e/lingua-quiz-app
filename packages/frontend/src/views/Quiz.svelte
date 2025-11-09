@@ -64,8 +64,8 @@
   $: username = $authStore.username;
 
   $: direction = currentQuestion?.direction ?? 'normal';
-  $: sourceLanguage = currentQuestion?.sourceLanguage ?? $quizStore.quizManager?.getState().translations[0]?.sourceWord.language ?? '';
-  $: targetLanguage = currentQuestion?.targetLanguage ?? $quizStore.quizManager?.getState().translations[0]?.targetWord.language ?? '';
+  $: sourceLanguage = currentQuestion?.sourceLanguage ?? $quizStore.quizManager?.getState().translations[0]?.sourceLanguage ?? '';
+  $: targetLanguage = currentQuestion?.targetLanguage ?? $quizStore.quizManager?.getState().translations[0]?.targetLanguage ?? '';
 
   let currentLevel: string = 'LEVEL_1';
   let lastCurrentLevel: string = 'LEVEL_1';
@@ -138,8 +138,8 @@
         feedback = result;
         if ('translation' in result && result.translation) {
           usageExamples = {
-            source: result.translation.sourceWord.usageExample || '',
-            target: result.translation.targetWord.usageExample || '',
+            source: result.translation.sourceUsageExample || '',
+            target: result.translation.targetUsageExample || '',
           };
         } else {
           usageExamples = null;

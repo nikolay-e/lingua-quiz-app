@@ -266,7 +266,7 @@ def fill_placeholders(migration_file: Path, missing_words_json: Path, output_fil
     with open(migration_file, encoding="utf-8") as f:
         data = json.load(f)
 
-    placeholders = [(i, pair) for i, pair in enumerate(data["word_pairs"]) if pair["source_word"] == "[PLACEHOLDER]"]
+    placeholders = [(i, pair) for i, pair in enumerate(data["translations"]) if pair["source_word"] == "[PLACEHOLDER]"]
 
     print(f"Найдено placeholders: {len(placeholders)}")
 
@@ -281,8 +281,8 @@ def fill_placeholders(migration_file: Path, missing_words_json: Path, output_fil
         spanish_word = missing["lemma"]
         russian_translation = get_translation(spanish_word)
 
-        data["word_pairs"][idx]["source_word"] = spanish_word
-        data["word_pairs"][idx]["target_word"] = russian_translation
+        data["translations"][idx]["source_word"] = spanish_word
+        data["translations"][idx]["target_word"] = russian_translation
 
         print(f"✓ {spanish_word} → {russian_translation} (ранг {missing['rank']:,})")
         filled_count += 1

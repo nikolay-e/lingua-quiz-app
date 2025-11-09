@@ -574,7 +574,7 @@ async def get_user_progress(list_name: str | None = None, current_user: dict = D
 
 
 @app.post("/api/user/progress", tags=["Progress"])
-async def update_user_progress(progress_data: ProgressUpdateRequest, current_user: dict = Depends(get_current_user)):
+async def save_user_progress(progress_data: ProgressUpdateRequest, current_user: dict = Depends(get_current_user)):
     try:
         execute_write_transaction(
             """INSERT INTO user_progress

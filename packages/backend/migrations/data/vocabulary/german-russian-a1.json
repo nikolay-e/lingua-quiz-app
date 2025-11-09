@@ -2,7 +2,7 @@
   "source_language": "German",
   "target_language": "Russian",
   "word_list_name": "German Russian A1",
-  "word_pairs": [
+  "translations": [
     {
       "source_word": "der Abend [Abende]",
       "target_word": "вечер",
@@ -64,12 +64,6 @@
       "target_example": "Я позвоню тебе позже."
     },
     {
-      "source_word": "die Arbeit [Arbeiten]",
-      "target_word": "работа",
-      "source_example": "Sie geht jeden Tag zur Arbeit.",
-      "target_example": "Она ходит на работу каждый день."
-    },
-    {
       "source_word": "auch",
       "target_word": "тоже",
       "source_example": "Ich komme auch zur Party.",
@@ -122,12 +116,6 @@
       "target_word": "оба",
       "source_example": "Beide Kinder spielen im Garten.",
       "target_example": "Оба ребенка играют в саду."
-    },
-    {
-      "source_word": "das Beispiel [Beispiele]",
-      "target_word": "пример",
-      "source_example": "Hier ist in gutes Beispiel.",
-      "target_example": "Вот хороший пример."
     },
     {
       "source_word": "bekommen",
@@ -674,12 +662,6 @@
       "target_word": "девять",
       "source_example": "Ich arbeite von neun bis fünf.",
       "target_example": "Я работаю с девяти до пяти."
-    },
-    {
-      "source_word": "Deutschland",
-      "target_word": "Германия",
-      "source_example": "Ich lebe in Deutschland.",
-      "target_example": "Я живу в Германии."
     },
     {
       "source_word": "groß",
@@ -2246,18 +2228,6 @@
       "target_word": "где-то",
       "source_example": "Ich habe es irgendwo gesehen.",
       "target_example": "Я это где-то видел."
-    },
-    {
-      "source_word": "das Unternehmen [Unternehmen]",
-      "target_word": "предприятие",
-      "source_example": "Er arbeitet in einem großen Unternehmen.",
-      "target_example": "Он работает в большой компании."
-    },
-    {
-      "source_word": "die Möglichkeit [Möglichkeiten]",
-      "target_word": "возможность",
-      "source_example": "Das ist eine gute Möglichkeit.",
-      "target_example": "Это хорошая возможность."
     },
     {
       "source_word": "deutlich",
@@ -5600,6 +5570,510 @@
       "target_word": "кольцо",
       "source_example": "Ich ring oft.",
       "target_example": "Я часто кольцо."
+    },
+    {
+      "source_word": "mann",
+      "target_word": "[translation needed for: mann]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "frau",
+      "target_word": "[translation needed for: frau]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "morgen",
+      "target_word": "[translation needed for: morgen]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "leute",
+      "target_word": "[translation needed for: leute]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "geld",
+      "target_word": "[translation needed for: geld]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "nacht",
+      "target_word": "[translation needed for: nacht]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "recht",
+      "target_word": "[translation needed for: recht]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "abend",
+      "target_word": "[translation needed for: abend]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "haus",
+      "target_word": "[translation needed for: haus]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "welt",
+      "target_word": "[translation needed for: welt]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "musik",
+      "target_word": "[translation needed for: musik]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "jahr",
+      "target_word": "[translation needed for: jahr]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "problem",
+      "target_word": "[translation needed for: problem]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "kind",
+      "target_word": "[translation needed for: kind]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "dank",
+      "target_word": "[translation needed for: dank]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "uhr",
+      "target_word": "[translation needed for: uhr]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "glück",
+      "target_word": "[translation needed for: glück]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "bisschen",
+      "target_word": "[translation needed for: bisschen]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tod",
+      "target_word": "[translation needed for: tod]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "he",
+      "target_word": "[translation needed for: he]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "wasser",
+      "target_word": "[translation needed for: wasser]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "woche",
+      "target_word": "[translation needed for: woche]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "land",
+      "target_word": "[translation needed for: land]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "teil",
+      "target_word": "[translation needed for: teil]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "eltern",
+      "target_word": "[translation needed for: eltern]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "luft",
+      "target_word": "[translation needed for: luft]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "zukunft",
+      "target_word": "[translation needed for: zukunft]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "nachrichten",
+      "target_word": "[translation needed for: nachrichten]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "klasse",
+      "target_word": "[translation needed for: klasse]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sinn",
+      "target_word": "[translation needed for: sinn]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sicherheit",
+      "target_word": "[translation needed for: sicherheit]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "nähe",
+      "target_word": "[translation needed for: nähe]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tanzen",
+      "target_word": "[translation needed for: tanzen]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "beispiel",
+      "target_word": "[translation needed for: beispiel]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "kirche",
+      "target_word": "[translation needed for: kirche]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "hoffnung",
+      "target_word": "[translation needed for: hoffnung]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "interessant",
+      "target_word": "[translation needed for: interessant]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "möglichkeit",
+      "target_word": "[translation needed for: möglichkeit]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "rennen",
+      "target_word": "[translation needed for: rennen]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "eiern",
+      "target_word": "[translation needed for: eiern]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fantastisch",
+      "target_word": "[translation needed for: fantastisch]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "drink",
+      "target_word": "[translation needed for: drink]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "insel",
+      "target_word": "[translation needed for: insel]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "zufällig",
+      "target_word": "[translation needed for: zufällig]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mitten",
+      "target_word": "[translation needed for: mitten]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "bullen",
+      "target_word": "[translation needed for: bullen]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "feind",
+      "target_word": "[translation needed for: feind]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "freunden",
+      "target_word": "[translation needed for: freunden]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "halb",
+      "target_word": "[translation needed for: halb]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "verpassen",
+      "target_word": "[translation needed for: verpassen]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "leise",
+      "target_word": "[translation needed for: leise]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "unternehmen",
+      "target_word": "[translation needed for: unternehmen]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "träumen",
+      "target_word": "[translation needed for: träumen]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "entlang",
+      "target_word": "[translation needed for: entlang]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "johnny",
+      "target_word": "[translation needed for: johnny]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tier",
+      "target_word": "[translation needed for: tier]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "freiheit",
+      "target_word": "[translation needed for: freiheit]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "unterhalten",
+      "target_word": "[translation needed for: unterhalten]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "schaden",
+      "target_word": "[translation needed for: schaden]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "beenden",
+      "target_word": "[translation needed for: beenden]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lächerlich",
+      "target_word": "[translation needed for: lächerlich]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "parken",
+      "target_word": "[translation needed for: parken]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "männern",
+      "target_word": "[translation needed for: männern]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "energie",
+      "target_word": "[translation needed for: energie]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fleisch",
+      "target_word": "[translation needed for: fleisch]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "besonderes",
+      "target_word": "[translation needed for: besonderes]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "zeitung",
+      "target_word": "[translation needed for: zeitung]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "worum",
+      "target_word": "[translation needed for: worum]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "nachdenken",
+      "target_word": "[translation needed for: nachdenken]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "betrunken",
+      "target_word": "[translation needed for: betrunken]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sowas",
+      "target_word": "[translation needed for: sowas]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "patient",
+      "target_word": "[translation needed for: patient]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     }
   ]
 }

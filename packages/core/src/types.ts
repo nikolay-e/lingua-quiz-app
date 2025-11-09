@@ -4,21 +4,17 @@
  */
 export interface Translation {
   id: number;
-  sourceWord: {
-    text: string;
-    language: string;
-    usageExample?: string;
-  };
-  targetWord: {
-    text: string;
-    language: string;
-    usageExample?: string;
-  };
+  sourceText: string;
+  sourceLanguage: string;
+  sourceUsageExample?: string;
+  targetText: string;
+  targetLanguage: string;
+  targetUsageExample?: string;
 }
 
 export interface ProgressEntry {
   translationId: number;
-  status: 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5';
+  level: 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5';
   consecutiveCorrect: number;
   recentHistory: boolean[];
   lastAskedAt?: string;

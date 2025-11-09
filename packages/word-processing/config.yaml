@@ -109,10 +109,10 @@ languages:
 
     blacklist:
       contractions: ["don't", "can't", "won't", "i'm", "you're", "it's", "i've", "doesn't", "didn't", "isn't", "aren't", "wasn't", "weren't", "we're", "they're", "haven't", "hasn't", "hadn't", "couldn't", "shouldn't", "wouldn't", "i'll", "you'll", "we'll", "he'll", "she'll", "that's", "what's", "who's", "there's", "here's", "we've", "you've", "they've", "it'll", "that'll", "would've", "could've", "should've"]
-      profanity: ["fuck", "fucking", "shit", "damn", "ass", "bullshit", "bitch", "asshole", "goddamn", "crap", "pussy", "bastard", "piss", "dick", "cock"]
-      abbreviations: ["mr", "mrs", "ms", "dr", "st", "co", "inc", "ltd", "etc", "vs", "pp", "tv", "http", "https", "www", "uk", "usa", "ii", "iii", "iv", "vi", "vii", "viii", "ix", "xix", "xx"]
-      interjections: ["oh", "ah", "uh", "um", "hmm", "haha", "ha", "huh", "ugh", "eh", "yo", "lol", "omg", "wtf", "yep", "nope", "yup", "yea"]
-      slang: ["dude", "bro", "buddy", "ain't", "gonna", "wanna", "gotta", "kinda", "sorta", "ya", "cos", "cuz", "dunno", "lemme", "gimme"]
+      profanity: ["fuck", "fucking", "shit", "damn", "ass", "bullshit", "bitch", "asshole", "goddamn", "crap", "pussy", "bastard", "piss", "dick", "cock", "whore", "motherfucker"]
+      abbreviations: ["mr", "mrs", "ms", "dr", "st", "co", "inc", "ltd", "etc", "vs", "pp", "tv", "http", "https", "www", "uk", "usa", "ii", "iii", "iv", "vi", "vii", "viii", "ix", "xix", "xx", "id", "lf"]
+      interjections: ["oh", "ah", "uh", "um", "hmm", "hm", "haha", "ha", "huh", "ugh", "eh", "yo", "lol", "omg", "wtf", "yep", "nope", "yup", "yea"]
+      slang: ["dude", "bro", "buddy", "ain't", "gonna", "wanna", "gotta", "kinda", "sorta", "ya", "cos", "cuz", "dunno", "lemme", "gimme", "'cause"]
       proper_nouns: ["america", "china", "india", "europe", "london", "paris", "york", "john", "james", "mary", "robert", "david", "michael", "william", "richard", "joseph", "thomas", "charles", "donald", "trump", "obama"]
       too_short: ["i", "a"]
 
@@ -123,10 +123,13 @@ languages:
       raw_frequency_multiplier: 2.0  # Multiplier for raw subtitle data (less inflections)
       test_whitelist: ["book", "table", "chair", "cat", "dog", "house", "eat", "run", "have"]  # For integration tests only
       exclude_patterns:
-        - "^\\w'\\w+"
-        - "^\\d+$"
-        - "^[A-Z]{2,}$"
-        - "^https?://"
+        - "^\\w'\\w+"        # Contractions like don't, can't
+        - "^'\\w+$"          # Fragments like 'i, 'cause
+        - "^\\w+-$"          # Incomplete fragments like i-, you-
+        - "^-\\w+$"          # Incomplete fragments like -ing
+        - "^\\d+$"           # Pure numbers
+        - "^[A-Z]{2,}$"      # All caps abbreviations
+        - "^https?://"       # URLs
 
     pos_categories:
       essential_nouns: ['NOUN', 'PROPN']

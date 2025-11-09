@@ -82,7 +82,7 @@ BEGIN
     list_name_text := vocabulary_json->>'word_list_name';
 
     -- Insert each translation
-    FOR word_pair IN SELECT * FROM jsonb_array_elements(vocabulary_json->'word_pairs')
+    FOR word_pair IN SELECT * FROM jsonb_array_elements(vocabulary_json->'translations')
     LOOP
         BEGIN
             INSERT INTO translations (

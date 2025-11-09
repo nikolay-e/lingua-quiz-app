@@ -181,11 +181,11 @@ class TransliterationDetector:
         return is_match, similarity
 
     def find_transliterations(
-        self, word_pairs: list[tuple[str, str]], source_lang: str = "es", target_lang: str = "ru"
+        self, translations: list[tuple[str, str]], source_lang: str = "es", target_lang: str = "ru"
     ) -> list[dict]:
         matches = []
 
-        for source_word, target_word in word_pairs:
+        for source_word, target_word in translations:
             is_trans, similarity = self.is_transliteration(source_word, target_word, source_lang, target_lang)
 
             if is_trans:

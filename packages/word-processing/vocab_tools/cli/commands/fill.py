@@ -1,9 +1,9 @@
-from datetime import datetime
 import json
+from datetime import datetime
 
+import typer
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn
-import typer
 
 from ...analysis.full_report_generator import FullReportGenerator
 from ..auto_config import (
@@ -60,7 +60,9 @@ def fill(
         with open(migration_file, encoding="utf-8") as f:
             migration_data = json.load(f)
 
-        placeholders = [(i, pair) for i, pair in enumerate(migration_data["word_pairs"]) if pair["source_word"] == "[PLACEHOLDER]"]
+        placeholders = [
+            (i, pair) for i, pair in enumerate(migration_data["translations"]) if pair["source_word"] == "[PLACEHOLDER]"
+        ]
 
         console.print(f"Found [cyan]{len(placeholders)}[/cyan] placeholder entries\n")
 
@@ -97,13 +99,13 @@ def fill(
 
     except ValueError as e:
         print_error(f"Invalid input: {e}")
-        raise typer.Exit(1)
+        raise typer.Exit(1) from e
     except FileNotFoundError as e:
         print_error(f"File not found: {e}")
-        raise typer.Exit(1)
+        raise typer.Exit(1) from e
     except Exception as e:
         print_error("Fill operation failed", e)
         import traceback
 
         console.print("[dim]" + traceback.format_exc() + "[/dim]")
-        raise typer.Exit(1)
+        raise typer.Exit(1) from e

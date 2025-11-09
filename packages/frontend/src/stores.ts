@@ -370,16 +370,12 @@ function createQuizStore(): QuizStore {
 
           const translationData = orderedTranslations.map((word, index) => ({
             id: index + 1,
-            sourceWord: {
-              text: word.sourceText,
-              language: word.sourceLanguage,
-              usageExample: word.sourceUsageExample ?? '',
-            },
-            targetWord: {
-              text: word.targetText,
-              language: word.targetLanguage,
-              usageExample: word.targetUsageExample ?? '',
-            },
+            sourceText: word.sourceText,
+            sourceLanguage: word.sourceLanguage,
+            sourceUsageExample: word.sourceUsageExample ?? '',
+            targetText: word.targetText,
+            targetLanguage: word.targetLanguage,
+            targetUsageExample: word.targetUsageExample ?? '',
           }));
 
           const progress = orderedTranslations.map((word, index) => {
@@ -390,7 +386,7 @@ function createQuizStore(): QuizStore {
 
             return {
               translationId: index + 1,
-              status: `LEVEL_${level}` as 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5',
+              level: `LEVEL_${level}` as 'LEVEL_0' | 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4' | 'LEVEL_5',
               queuePosition,
               consecutiveCorrect: 0,
               recentHistory: [] as boolean[],
@@ -398,6 +394,22 @@ function createQuizStore(): QuizStore {
           });
 
           progressMap.clear();
+
+          // Initialize progressMap with persisted counts from database
+          for (const [key, prog] of progressLookup.entries()) {
+            const translation = orderedTranslations.find(
+              (t) => `${t.sourceText}::${t.sourceLanguage}::${t.targetLanguage}` === key,
+            );
+            if (translation) {
+              progressMap.set(key, {
+                level: prog.level,
+                queuePosition: prog.queuePosition,
+                correctCount: prog.correctCount,
+                incorrectCount: prog.incorrectCount,
+                targetLanguage: translation.targetLanguage,
+              });
+            }
+          }
 
           const manager = new QuizManager(translationData, {
             progress,
@@ -445,16 +457,24 @@ function createQuizStore(): QuizStore {
         const { translationId } = state.currentQuestion;
         const translation = state.quizManager.getState().translations.find((t) => t.id === translationId);
         if (translation) {
-          const key = `${translation.sourceWord.text}::${translation.sourceWord.language}`;
+          const key = `${translation.sourceText}::${translation.sourceLanguage}::${translation.targetLanguage}`;
           const currentProgress = state.quizManager.getState().progress.find((p) => p.translationId === translationId);
           if (currentProgress) {
-            const level = parseInt(currentProgress.status.replace('LEVEL_', ''));
+            const level = parseInt(currentProgress.level.replace('LEVEL_', ''));
+            const existing = progressMap.get(key) ?? {
+              correctCount: 0,
+              incorrectCount: 0,
+              level: 0,
+              queuePosition: 0,
+              targetLanguage: translation.targetLanguage,
+            };
+
             progressMap.set(key, {
               level,
               queuePosition: currentProgress.queuePosition,
-              correctCount: currentProgress.consecutiveCorrect,
-              incorrectCount: 0,
-              targetLanguage: translation.targetWord.language,
+              correctCount: existing.correctCount + (feedback.isSuccess ? 1 : 0),
+              incorrectCount: existing.incorrectCount + (feedback.isSuccess ? 0 : 1),
+              targetLanguage: translation.targetLanguage,
             });
           }
         }

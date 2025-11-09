@@ -62,8 +62,8 @@ class MigrationAnalyzer:
             with open(file_path, encoding="utf-8") as f:
                 data = json.load(f)
 
-            if "word_pairs" in data:
-                return [pair["source_word"] for pair in data["word_pairs"]]
+            if "translations" in data:
+                return [pair["source_word"] for pair in data["translations"]]
         except (FileNotFoundError, json.JSONDecodeError, KeyError):
             pass
 
@@ -114,8 +114,8 @@ class MigrationAnalyzer:
         with open(self.migration_file_path, encoding="utf-8") as f:
             data = json.load(f)
 
-        if "word_pairs" in data:
-            return [pair["source_word"] for pair in data["word_pairs"]]
+        if "translations" in data:
+            return [pair["source_word"] for pair in data["translations"]]
 
         return []
 
@@ -190,8 +190,13 @@ class MigrationAnalyzer:
 
         missing_analysis.sort(key=lambda x: x["rank_estimate"])
 
+        # Missing words considering ALL levels (for cumulative coverage report)
         missing_from_vocabulary = sorted(freq_lemmas - combined_lemmas)
         missing_from_vocabulary_analysis = []
+
+        # Missing words for THIS LEVEL ONLY (for fill-missing command)
+        missing_this_level_only = sorted(freq_lemmas - vocabulary_lemmas)
+        missing_this_level_analysis = []
 
         for lemma in missing_from_vocabulary:
             freq = lemma_to_frequency.get(lemma, 0.0)
@@ -209,7 +214,29 @@ class MigrationAnalyzer:
                 }
             )
 
+        # Also populate missing for THIS level (excluding what's in previous levels)
+        for lemma in missing_this_level_only:
+            # Skip if already in previous levels
+            if lemma in previous_level_lemmas:
+                continue
+
+            freq = lemma_to_frequency.get(lemma, 0.0)
+            zipf = lemma_to_zipf.get(lemma, 0.0)
+            real_rank = lemma_to_real_rank.get(lemma, RANK_NOT_FOUND)
+
+            missing_this_level_analysis.append(
+                {
+                    "lemma": lemma,
+                    "word": freq_words_by_lemma.get(lemma, lemma),
+                    "frequency": freq,
+                    "zipf": zipf,
+                    "rank_estimate": real_rank,
+                    "status": "MISSING",  # For fill-missing compatibility
+                }
+            )
+
         missing_from_vocabulary_analysis.sort(key=lambda x: x["rank_estimate"])
+        missing_this_level_analysis.sort(key=lambda x: x["rank_estimate"])
 
         combined_normalized_map = {}
         for lemma in combined_lemmas:
