@@ -4,16 +4,76 @@
   "word_list_name": "German Russian A0",
   "word_pairs": [
     {
-      "source_word": "super",
-      "target_word": "супер",
-      "source_example": "Das Konzert war super.",
-      "target_example": "Концерт был супер."
+      "source_word": "abendessen",
+      "target_word": "ужин",
+      "source_example": "Das Abendessen ist fertig.",
+      "target_example": "Ужин готов."
     },
     {
-      "source_word": "Europa",
-      "target_word": "Европа",
-      "source_example": "Deutschland liegt in Europa.",
-      "target_example": "Германия находится в Европе."
+      "source_word": "agent",
+      "target_word": "агент",
+      "source_example": "Der Agent arbeitet hier.",
+      "target_example": "Агент работает здесь."
+    },
+    {
+      "source_word": "agent",
+      "target_word": "агент",
+      "source_example": "Der Agent arbeitet hier.",
+      "target_example": "Агент работает здесь."
+    },
+    {
+      "source_word": "aufgeben",
+      "target_word": "сдаваться",
+      "source_example": "Ich will nicht aufgeben.",
+      "target_example": "Я не хочу сдаваться."
+    },
+    {
+      "source_word": "bank",
+      "target_word": "банк",
+      "source_example": "Die Bank ist groß.",
+      "target_example": "Банк большой."
+    },
+    {
+      "source_word": "bank",
+      "target_word": "банк",
+      "source_example": "Die Bank ist groß.",
+      "target_example": "Банк большой."
+    },
+    {
+      "source_word": "bar",
+      "target_word": "бар",
+      "source_example": "Wir gehen in die Bar.",
+      "target_example": "Мы идём в бар."
+    },
+    {
+      "source_word": "bar",
+      "target_word": "бар",
+      "source_example": "Wir gehen in die Bar.",
+      "target_example": "Мы идём в бар."
+    },
+    {
+      "source_word": "ben",
+      "target_word": "Бен",
+      "source_example": "Ben ist mein Freund.",
+      "target_example": "Бен мой друг."
+    },
+    {
+      "source_word": "ben",
+      "target_word": "Бен",
+      "source_example": "Ben ist mein Freund.",
+      "target_example": "Бен мой друг."
+    },
+    {
+      "source_word": "benutzen",
+      "target_word": "пользоваться|использовать",
+      "source_example": "Du kannst meinen Stift benutzen.",
+      "target_example": "Ты можешь пользоваться моей ручкой."
+    },
+    {
+      "source_word": "bleiben",
+      "target_word": "оставаться",
+      "source_example": "Ich bleibe heute zu Hause.",
+      "target_example": "Я остаюсь сегодня дома."
     },
     {
       "source_word": "das Internet",
@@ -22,40 +82,118 @@
       "target_example": "Я ищу информацию в интернете."
     },
     {
-      "source_word": "interessant",
-      "target_word": "интересно|интересный|интересная",
-      "source_example": "Das Buch ist sehr interessant.",
-      "target_example": "Книга очень интересная."
+      "source_word": "das Problem [Problem]",
+      "target_word": "проблема",
+      "source_example": "Wir müssen das Problem lösen.",
+      "target_example": "Нам нужно решить проблему."
     },
     {
-      "source_word": "klasse",
-      "target_word": "классный",
-      "source_example": "Das Konzert war klasse!",
-      "target_example": "Концерт был классный!"
+      "source_word": "doktor",
+      "target_word": "доктор",
+      "source_example": "Der Doktor kommt bald.",
+      "target_example": "Доктор скоро придёт."
     },
     {
-      "source_word": "online",
-      "target_word": "онлайн",
-      "source_example": "Ich kaufe meine Bücher online.",
-      "target_example": "Я покупаю книги онлайн."
+      "source_word": "dollar",
+      "target_word": "доллар",
+      "source_example": "Das kostet zehn Dollar.",
+      "target_example": "Это стоит десять долларов."
     },
     {
-      "source_word": "die Polizei",
-      "target_word": "полиция",
-      "source_example": "Die Polizei hilft in Notfällen.",
-      "target_example": "Полиция помогает в чрезвычайных ситуациях."
+      "source_word": "firma",
+      "target_word": "фирма",
+      "source_example": "Die Firma ist international.",
+      "target_example": "Фирма международная."
     },
     {
-      "source_word": "tanzen",
-      "target_word": "танцевать",
-      "source_example": "Wir tanzen gerne auf Partys.",
-      "target_example": "Мы любим танцевать на вечеринках."
+      "source_word": "general",
+      "target_word": "генерал",
+      "source_example": "Der General gibt Befehle.",
+      "target_example": "Генерал отдаёт приказы."
     },
     {
-      "source_word": "die Politik",
-      "target_word": "политика",
-      "source_example": "Politik ist kompliziert.",
-      "target_example": "Политика сложна."
+      "source_word": "kamera",
+      "target_word": "камера",
+      "source_example": "Ich habe eine Kamera.",
+      "target_example": "У меня есть камера."
+    },
+    {
+      "source_word": "kontakt",
+      "target_word": "контакт",
+      "source_example": "Wir haben guten Kontakt.",
+      "target_example": "У нас хороший контакт."
+    },
+    {
+      "source_word": "madame",
+      "target_word": "мадам",
+      "source_example": "Guten Tag, Madame!",
+      "target_example": "Добрый день, мадам!"
+    },
+    {
+      "source_word": "mama",
+      "target_word": "мама",
+      "source_example": "Mama, ich liebe dich!",
+      "target_example": "Мама, я люблю тебя!"
+    },
+    {
+      "source_word": "million",
+      "target_word": "миллион",
+      "source_example": "Eine Million Menschen leben hier.",
+      "target_example": "Здесь живёт миллион человек."
+    },
+    {
+      "source_word": "moment",
+      "target_word": "момент",
+      "source_example": "Einen Moment, bitte!",
+      "target_example": "Момент, пожалуйста!"
+    },
+    {
+      "source_word": "monster",
+      "target_word": "монстр",
+      "source_example": "Das Monster ist groß.",
+      "target_example": "Монстр большой."
+    },
+    {
+      "source_word": "papa",
+      "target_word": "папа",
+      "source_example": "Papa kommt nach Hause.",
+      "target_example": "Папа приходит домой."
+    },
+    {
+      "source_word": "plan",
+      "target_word": "план",
+      "source_example": "Ich habe einen Plan.",
+      "target_example": "У меня есть план."
+    },
+    {
+      "source_word": "professor",
+      "target_word": "профессор",
+      "source_example": "Der Professor unterrichtet heute.",
+      "target_example": "Профессор преподаёт сегодня."
+    },
+    {
+      "source_word": "sex",
+      "target_word": "секс",
+      "source_example": "Sex ist ein Tabuthema.",
+      "target_example": "Секс — табуированная тема."
+    },
+    {
+      "source_word": "soldat",
+      "target_word": "солдат",
+      "source_example": "Der Soldat ist mutig.",
+      "target_example": "Солдат храбрый."
+    },
+    {
+      "source_word": "telefon",
+      "target_word": "телефон",
+      "source_example": "Das Telefon klingelt laut.",
+      "target_example": "Телефон громко звонит."
+    },
+    {
+      "source_word": "tom",
+      "target_word": "Том",
+      "source_example": "Tom ist sehr nett.",
+      "target_example": "Том очень милый."
     }
   ]
 }

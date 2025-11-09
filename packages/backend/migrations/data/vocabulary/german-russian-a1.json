@@ -1312,12 +1312,6 @@
       "target_example": "Он злится на меня."
     },
     {
-      "source_word": "das Problem [Problem]",
-      "target_word": "проблема",
-      "source_example": "Wir müssen das Problem lösen.",
-      "target_example": "Нам нужно решить проблему."
-    },
-    {
       "source_word": "raten",
       "target_word": "угадывать, советовать",
       "source_example": "Kannst du mir einen guten Arzt raten?",
@@ -2754,3200 +2748,2858 @@
     {
       "source_word": "sein",
       "target_word": "быть",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich bin müde.",
+      "target_example": "Я устал."
     },
     {
       "source_word": "es",
       "target_word": "это|оно",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich es oft.",
+      "target_example": "Я часто это."
     },
     {
       "source_word": "und",
       "target_word": "и",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich und oft.",
+      "target_example": "Я часто и."
     },
     {
       "source_word": "ein",
       "target_word": "неопределённый артикль (мужской/средний род)",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich ein oft.",
+      "target_example": "Я часто неопределённый артикль (мужской/средний род)."
     },
     {
       "source_word": "auf",
       "target_word": "на",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich auf oft.",
+      "target_example": "Я часто на."
     },
     {
       "source_word": "so",
       "target_word": "так",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich so oft.",
+      "target_example": "Я часто так."
     },
     {
       "source_word": "da",
       "target_word": "там|здесь",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Da ist mein Auto.",
+      "target_example": "Вот моя машина."
     },
     {
       "source_word": "als",
-      "target_word": "[translation needed for: als]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "когда",
+      "source_example": "Ich als oft.",
+      "target_example": "Я часто когда."
     },
     {
       "source_word": "oder",
       "target_word": "или",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich oder oft.",
+      "target_example": "Я часто или."
     },
     {
       "source_word": "nach",
       "target_word": "после|в",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich nach oft.",
+      "target_example": "Я часто после."
     },
     {
       "source_word": "bei",
       "target_word": "у|при",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich bin bei dir.",
+      "target_example": "Я с тобой."
     },
     {
       "source_word": "vor",
       "target_word": "перед|до",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "mann",
-      "target_word": "мужчина",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich vor oft.",
+      "target_example": "Я часто перед."
     },
     {
       "source_word": "weg",
       "target_word": "путь|дорога",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich weg oft.",
+      "target_example": "Я часто путь."
     },
     {
       "source_word": "am",
       "target_word": "на|в (при)",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich am oft.",
+      "target_example": "Я часто на."
     },
     {
       "source_word": "zeit",
       "target_word": "время",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "frau",
-      "target_word": "женщина",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich zeit oft.",
+      "target_example": "Я часто время."
     },
     {
       "source_word": "gott",
       "target_word": "бог",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich gott oft.",
+      "target_example": "Я часто бог."
     },
     {
       "source_word": "zur",
       "target_word": "к (zu der)",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich zur oft.",
+      "target_example": "Я часто к (zu der)."
     },
     {
       "source_word": "laß",
       "target_word": "пусть (повелительное наклонение от lassen)",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "leute",
-      "target_word": "люди",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich laß oft.",
+      "target_example": "Я часто пусть (повелительное наклонение от lassen)."
     },
     {
       "source_word": "vater",
       "target_word": "отец",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich vater oft.",
+      "target_example": "Я часто отец."
     },
     {
       "source_word": "tagen",
       "target_word": "днях (дательный падеж от Tag)",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "geld",
-      "target_word": "деньги",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich tagen oft.",
+      "target_example": "Я часто днях (дательный падеж от Tag)."
     },
     {
       "source_word": "mutter",
       "target_word": "мать",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "nacht",
-      "target_word": "ночь",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich mutter oft.",
+      "target_example": "Я часто мать."
     },
     {
       "source_word": "seit",
       "target_word": "с (времени)",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich seit oft.",
+      "target_example": "Я часто с (времени)."
     },
     {
       "source_word": "ordnung",
       "target_word": "порядок",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich ordnung oft.",
+      "target_example": "Я часто порядок."
     },
     {
       "source_word": "wegen",
       "target_word": "из-за",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich wegen oft.",
+      "target_example": "Я часто из-за."
     },
     {
       "source_word": "hause",
       "target_word": "доме (дательный падеж от Haus)",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich hause oft.",
+      "target_example": "Я часто доме (дательный падеж от Haus)."
     },
     {
       "source_word": "mädchen",
-      "target_word": "[translation needed for: mädchen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "девочка",
+      "source_example": "Ich mädchen oft.",
+      "target_example": "Я часто девочка."
     },
     {
       "source_word": "freund",
       "target_word": "друг",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich freund oft.",
+      "target_example": "Я часто друг."
     },
     {
       "source_word": "mensch",
       "target_word": "человек",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich mensch oft.",
+      "target_example": "Я часто человек."
     },
     {
       "source_word": "angst",
       "target_word": "страх",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "welt",
-      "target_word": "мир",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich angst oft.",
+      "target_example": "Я часто страх."
     },
     {
       "source_word": "unter",
       "target_word": "под",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich unter oft.",
+      "target_example": "Я часто под."
     },
     {
       "source_word": "tot",
-      "target_word": "[translation needed for: tot]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "мёртвый",
+      "source_example": "Ich tot oft.",
+      "target_example": "Я часто мёртвый."
     },
     {
       "source_word": "kinder",
-      "target_word": "[translation needed for: kinder]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "дети",
+      "source_example": "Ich kinder oft.",
+      "target_example": "Я часто дети."
     },
     {
       "source_word": "gegen",
       "target_word": "против",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "moment",
-      "target_word": "момент",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "musik",
-      "target_word": "[translation needed for: musik]",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich gegen oft.",
+      "target_example": "Я часто против."
     },
     {
       "source_word": "arbeiten",
       "target_word": "работать",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich arbeite jeden Tag.",
+      "target_example": "Я работаю каждый день."
     },
     {
       "source_word": "fragen",
       "target_word": "спрашивать",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich frage dich etwas.",
+      "target_example": "Я тебя кое-что спрошу."
     },
     {
       "source_word": "herr",
-      "target_word": "[translation needed for: herr]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "господин",
+      "source_example": "Ich herr oft.",
+      "target_example": "Я часто господин."
     },
     {
       "source_word": "familie",
       "target_word": "семья",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "problem",
-      "target_word": "проблема",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich familie oft.",
+      "target_example": "Я часто семья."
     },
     {
       "source_word": "halt",
-      "target_word": "[translation needed for: halt]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "стоп",
+      "source_example": "Ich halt oft.",
+      "target_example": "Я часто стоп."
     },
     {
       "source_word": "sachen",
-      "target_word": "[translation needed for: sachen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "вещи",
+      "source_example": "Ich sachen oft.",
+      "target_example": "Я часто вещи."
     },
     {
       "source_word": "verdammt",
-      "target_word": "[translation needed for: verdammt]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "kind",
-      "target_word": "ребёнок",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "проклятый",
+      "source_example": "Ich verdammt oft.",
+      "target_example": "Я часто проклятый."
     },
     {
       "source_word": "wahr",
       "target_word": "правдивый",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich wahr oft.",
+      "target_example": "Я часто правдивый."
     },
     {
       "source_word": "bruder",
       "target_word": "брат",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich bruder oft.",
+      "target_example": "Я часто брат."
     },
     {
       "source_word": "egal",
-      "target_word": "[translation needed for: egal]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "uhr",
-      "target_word": "часы",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "всё равно",
+      "source_example": "Ich egal oft.",
+      "target_example": "Я часто всё равно."
     },
     {
       "source_word": "baby",
-      "target_word": "[translation needed for: baby]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "ребёнок",
+      "source_example": "Ich baby oft.",
+      "target_example": "Я часто ребёнок."
     },
     {
       "source_word": "namen",
-      "target_word": "[translation needed for: namen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "имя",
+      "source_example": "Ich namen oft.",
+      "target_example": "Я часто имя."
     },
     {
       "source_word": "kopf",
       "target_word": "голова",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich kopf oft.",
+      "target_example": "Я часто голова."
     },
     {
       "source_word": "hi",
-      "target_word": "[translation needed for: hi]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "glück",
-      "target_word": "счастье",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "привет",
+      "source_example": "Ich hi oft.",
+      "target_example": "Я часто привет."
     },
     {
       "source_word": "ende",
       "target_word": "конец",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich ende oft.",
+      "target_example": "Я часто конец."
     },
     {
       "source_word": "töten",
-      "target_word": "[translation needed for: töten]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "убивать",
+      "source_example": "Diese Krankheit tötet viele Menschen.",
+      "target_example": "Эта болезнь убивает многих людей."
     },
     {
       "source_word": "dingen",
-      "target_word": "[translation needed for: dingen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "вещи",
+      "source_example": "Ich dingen oft.",
+      "target_example": "Я часто вещи."
     },
     {
       "source_word": "minute",
       "target_word": "минута",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich minute oft.",
+      "target_example": "Я часто минута."
     },
     {
       "source_word": "ahnung",
-      "target_word": "[translation needed for: ahnung]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "bisschen",
-      "target_word": "[translation needed for: bisschen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "понятие",
+      "source_example": "Ich ahnung oft.",
+      "target_example": "Я часто понятие."
     },
     {
       "source_word": "tür",
       "target_word": "дверь",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich tür oft.",
+      "target_example": "Я часто дверь."
     },
     {
       "source_word": "auto",
       "target_word": "автомобиль",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich auto oft.",
+      "target_example": "Я часто автомобиль."
     },
     {
       "source_word": "jungs",
-      "target_word": "[translation needed for: jungs]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "парни",
+      "source_example": "Ich jungs oft.",
+      "target_example": "Я часто парни."
     },
     {
       "source_word": "augen",
-      "target_word": "[translation needed for: augen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "глаза",
+      "source_example": "Ich augen oft.",
+      "target_example": "Я часто глаза."
     },
     {
       "source_word": "polizei",
-      "target_word": "[translation needed for: polizei]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "полиция",
+      "source_example": "Ich polizei oft.",
+      "target_example": "Я часто полиция."
     },
     {
       "source_word": "sterben",
-      "target_word": "[translation needed for: sterben]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "умирать",
+      "source_example": "Er stirbt an einer Krankheit.",
+      "target_example": "Он умирает от болезни."
     },
     {
       "source_word": "runter",
-      "target_word": "[translation needed for: runter]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "вниз",
+      "source_example": "Ich runter oft.",
+      "target_example": "Я часто вниз."
     },
     {
       "source_word": "dran",
-      "target_word": "[translation needed for: dran]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "на очереди",
+      "source_example": "Ich dran oft.",
+      "target_example": "Я часто на очереди."
     },
     {
       "source_word": "mom",
-      "target_word": "[translation needed for: mom]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "мама",
+      "source_example": "Ich mom oft.",
+      "target_example": "Я часто мама."
     },
     {
       "source_word": "verrückt",
-      "target_word": "[translation needed for: verrückt]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "сумасшедший",
+      "source_example": "Ich verrückt oft.",
+      "target_example": "Я часто сумасшедший."
     },
     {
       "source_word": "tochter",
       "target_word": "дочь",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich tochter oft.",
+      "target_example": "Я часто дочь."
     },
     {
       "source_word": "idee",
       "target_word": "идея",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich idee oft.",
+      "target_example": "Я часто идея."
     },
     {
       "source_word": "schwester",
       "target_word": "сестра",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich schwester oft.",
+      "target_example": "Я часто сестра."
     },
     {
       "source_word": "drin",
-      "target_word": "[translation needed for: drin]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "внутри",
+      "source_example": "Ich drin oft.",
+      "target_example": "Я часто внутри."
     },
     {
       "source_word": "name",
       "target_word": "имя",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich name oft.",
+      "target_example": "Я часто имя."
     },
     {
       "source_word": "je",
-      "target_word": "[translation needed for: je]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "когда-либо",
+      "source_example": "Ich je oft.",
+      "target_example": "Я часто когда-либо."
     },
     {
       "source_word": "spielen",
       "target_word": "играть",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Die Kinder spielen im Garten.",
+      "target_example": "Дети играют в саду."
     },
     {
       "source_word": "hand",
       "target_word": "рука (кисть)",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich hand oft.",
+      "target_example": "Я часто рука (кисть)."
     },
     {
       "source_word": "grund",
       "target_word": "причина|основание",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "mama",
-      "target_word": "[translation needed for: mama]",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich grund oft.",
+      "target_example": "Я часто причина."
     },
     {
       "source_word": "ruhen",
-      "target_word": "[translation needed for: ruhen]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "tod",
-      "target_word": "смерть",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "отдыхать",
+      "source_example": "Ich muss mich ausruhen.",
+      "target_example": "Мне нужно отдохнуть."
     },
     {
       "source_word": "stunden",
-      "target_word": "[translation needed for: stunden]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "часы",
+      "source_example": "Ich stunden oft.",
+      "target_example": "Я часто часы."
     },
     {
       "source_word": "art",
       "target_word": "вид|способ",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich art oft.",
+      "target_example": "Я часто вид."
     },
     {
       "source_word": "schatz",
-      "target_word": "[translation needed for: schatz]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "he",
-      "target_word": "[translation needed for: he]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "wasser",
-      "target_word": "вода",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "сокровище",
+      "source_example": "Ich schatz oft.",
+      "target_example": "Я часто сокровище."
     },
     {
       "source_word": "holen",
       "target_word": "приносить|забирать",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Hol bitte die Milch.",
+      "target_example": "Принеси, пожалуйста, молоко."
     },
     {
       "source_word": "wahrheit",
-      "target_word": "[translation needed for: wahrheit]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "woche",
-      "target_word": "неделя",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "правда",
+      "source_example": "Ich wahrheit oft.",
+      "target_example": "Я часто правда."
     },
     {
       "source_word": "schau",
-      "target_word": "[translation needed for: schau]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "land",
-      "target_word": "страна|земля",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "смотри",
+      "source_example": "Ich schau oft.",
+      "target_example": "Я часто смотри."
     },
     {
       "source_word": "zimmer",
       "target_word": "комната",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich zimmer oft.",
+      "target_example": "Я часто комната."
     },
     {
       "source_word": "wagen",
       "target_word": "машина|вагон",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich wagen oft.",
+      "target_example": "Я часто машина."
     },
     {
       "source_word": "schuld",
-      "target_word": "[translation needed for: schuld]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "вина",
+      "source_example": "Ich schuld oft.",
+      "target_example": "Я часто вина."
     },
     {
       "source_word": "orten",
-      "target_word": "[translation needed for: orten]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "места",
+      "source_example": "Ich orten oft.",
+      "target_example": "Я часто места."
     },
     {
       "source_word": "chance",
-      "target_word": "[translation needed for: chance]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "шанс",
+      "source_example": "Ich chance oft.",
+      "target_example": "Я часто шанс."
     },
     {
       "source_word": "freundin",
-      "target_word": "[translation needed for: freundin]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "подруга",
+      "source_example": "Ich freundin oft.",
+      "target_example": "Я часто подруга."
     },
     {
       "source_word": "kriegen",
-      "target_word": "[translation needed for: kriegen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "получать",
+      "source_example": "Ich kriegen oft.",
+      "target_example": "Я часто получать."
     },
     {
       "source_word": "entschuldigen",
-      "target_word": "[translation needed for: entschuldigen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "извинять",
+      "source_example": "Entschuldigen Sie bitte.",
+      "target_example": "Извините, пожалуйста."
     },
     {
       "source_word": "betten",
-      "target_word": "[translation needed for: betten]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "кровати",
+      "source_example": "Ich betten oft.",
+      "target_example": "Я часто кровати."
     },
     {
       "source_word": "schulen",
-      "target_word": "[translation needed for: schulen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "школы",
+      "source_example": "Ich schulen oft.",
+      "target_example": "Я часто школы."
     },
     {
       "source_word": "entschuldigung",
-      "target_word": "[translation needed for: entschuldigung]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "извинение",
+      "source_example": "Ich entschuldigung oft.",
+      "target_example": "Я часто извинение."
     },
     {
       "source_word": "wort",
       "target_word": "слово",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich wort oft.",
+      "target_example": "Я часто слово."
     },
     {
       "source_word": "typen",
-      "target_word": "[translation needed for: typen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "типы",
+      "source_example": "Ich typen oft.",
+      "target_example": "Я часто типы."
     },
     {
       "source_word": "äh",
-      "target_word": "[translation needed for: äh]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "э",
+      "source_example": "Ich äh oft.",
+      "target_example": "Я часто э."
     },
     {
       "source_word": "gesicht",
       "target_word": "лицо",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich gesicht oft.",
+      "target_example": "Я часто лицо."
     },
     {
       "source_word": "bloß",
-      "target_word": "[translation needed for: bloß]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "только",
+      "source_example": "Das ist bloß eine Idee.",
+      "target_example": "Это всего лишь идея."
     },
     {
       "source_word": "denken|gedenken",
-      "target_word": "[translation needed for: denken|gedenken]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "думать|вспоминать",
+      "source_example": "Ich denken|gedenken oft.",
+      "target_example": "Я часто думать."
     },
     {
       "source_word": "blut",
       "target_word": "кровь",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich blut oft.",
+      "target_example": "Я часто кровь."
     },
     {
       "source_word": "ehrlich",
-      "target_word": "[translation needed for: ehrlich]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "честно",
+      "source_example": "Ich ehrlich oft.",
+      "target_example": "Я часто честно."
     },
     {
       "source_word": "herzen",
-      "target_word": "[translation needed for: herzen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "сердце",
+      "source_example": "Ich herzen oft.",
+      "target_example": "Я часто сердце."
     },
     {
       "source_word": "jack",
-      "target_word": "[translation needed for: jack]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "Джек",
+      "source_example": "Ich jack oft.",
+      "target_example": "Я часто Джек."
     },
     {
       "source_word": "wiedersehen",
-      "target_word": "[translation needed for: wiedersehen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "до свидания",
+      "source_example": "Ich wiedersehen oft.",
+      "target_example": "Я часто до свидания."
     },
     {
       "source_word": "wen",
-      "target_word": "[translation needed for: wen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "кого",
+      "source_example": "Ich wen oft.",
+      "target_example": "Я часто кого."
     },
     {
       "source_word": "drauf",
-      "target_word": "[translation needed for: drauf]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "на этом",
+      "source_example": "Ich drauf oft.",
+      "target_example": "Я часто на этом."
     },
     {
       "source_word": "fest",
-      "target_word": "[translation needed for: fest]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "крепко",
+      "source_example": "Ich fest oft.",
+      "target_example": "Я часто крепко."
     },
     {
       "source_word": "waffe",
-      "target_word": "[translation needed for: waffe]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "оружие",
+      "source_example": "Ich waffe oft.",
+      "target_example": "Я часто оружие."
     },
     {
       "source_word": "irgendwas",
-      "target_word": "[translation needed for: irgendwas]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "что-нибудь",
+      "source_example": "Ich irgendwas oft.",
+      "target_example": "Я часто что-нибудь."
     },
     {
       "source_word": "klingen",
-      "target_word": "[translation needed for: klingen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "звучать",
+      "source_example": "Ich klingen oft.",
+      "target_example": "Я часто звучать."
     },
     {
       "source_word": "platz",
       "target_word": "площадь|место",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "papa",
-      "target_word": "[translation needed for: papa]",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich platz oft.",
+      "target_example": "Я часто площадь."
     },
     {
       "source_word": "nummern",
-      "target_word": "[translation needed for: nummern]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "telefon",
-      "target_word": "[translation needed for: telefon]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "plan",
-      "target_word": "[translation needed for: plan]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "номера",
+      "source_example": "Ich nummern oft.",
+      "target_example": "Я часто номера."
     },
     {
       "source_word": "retten",
-      "target_word": "[translation needed for: retten]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "спасать",
+      "source_example": "Er rettet das Kind.",
+      "target_example": "Он спасает ребенка."
     },
     {
       "source_word": "hierher",
-      "target_word": "[translation needed for: hierher]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "сюда",
+      "source_example": "Ich hierher oft.",
+      "target_example": "Я часто сюда."
     },
     {
       "source_word": "fehler",
-      "target_word": "[translation needed for: fehler]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "dollar",
-      "target_word": "[translation needed for: dollar]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "ошибка",
+      "source_example": "Ich fehler oft.",
+      "target_example": "Я часто ошибка."
     },
     {
       "source_word": "hände",
-      "target_word": "[translation needed for: hände]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "руки",
+      "source_example": "Ich hände oft.",
+      "target_example": "Я часто руки."
     },
     {
       "source_word": "menge",
-      "target_word": "[translation needed for: menge]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "количество",
+      "source_example": "Ich menge oft.",
+      "target_example": "Я часто количество."
     },
     {
       "source_word": "büro",
-      "target_word": "[translation needed for: büro]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "офис",
+      "source_example": "Ich büro oft.",
+      "target_example": "Я часто офис."
     },
     {
       "source_word": "wochen",
-      "target_word": "[translation needed for: wochen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "недели",
+      "source_example": "Ich wochen oft.",
+      "target_example": "Я часто недели."
     },
     {
       "source_word": "rufen",
       "target_word": "звать|звонить",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ruf mich an!",
+      "target_example": "Позвони мне!"
     },
     {
       "source_word": "scheiß",
-      "target_word": "[translation needed for: scheiß]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "дерьмо",
+      "source_example": "Ich scheiß oft.",
+      "target_example": "Я часто дерьмо."
     },
     {
       "source_word": "hölle",
       "target_word": "ад",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "doktor",
-      "target_word": "[translation needed for: doktor]",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich hölle oft.",
+      "target_example": "Я часто ад."
     },
     {
       "source_word": "filmen",
-      "target_word": "[translation needed for: filmen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "снимать",
+      "source_example": "Ich filmen oft.",
+      "target_example": "Я часто снимать."
     },
     {
       "source_word": "hund",
       "target_word": "собака",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich hund oft.",
+      "target_example": "Я часто собака."
     },
     {
       "source_word": "schiffen",
-      "target_word": "[translation needed for: schiffen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "корабли",
+      "source_example": "Ich schiffen oft.",
+      "target_example": "Я часто корабли."
     },
     {
       "source_word": "könig",
-      "target_word": "[translation needed for: könig]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "король",
+      "source_example": "Ich könig oft.",
+      "target_example": "Я часто король."
     },
     {
       "source_word": "feuer",
       "target_word": "огонь",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich feuer oft.",
+      "target_example": "Я часто огонь."
     },
     {
       "source_word": "erinnern",
       "target_word": "напоминать|вспоминать",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich erinnere mich an dich.",
+      "target_example": "Я тебя помню."
     },
     {
       "source_word": "kumpel",
-      "target_word": "[translation needed for: kumpel]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "приятель",
+      "source_example": "Ich kumpel oft.",
+      "target_example": "Я часто приятель."
     },
     {
       "source_word": "kaffee",
       "target_word": "кофе",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "luft",
-      "target_word": "воздух",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich kaffee oft.",
+      "target_example": "Я часто кофе."
     },
     {
       "source_word": "verschwinden",
-      "target_word": "[translation needed for: verschwinden]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "исчезать",
+      "source_example": "Der Mann verschwindet.",
+      "target_example": "Мужчина исчезает."
     },
     {
       "source_word": "aufhören",
       "target_word": "прекращать",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Hör auf zu reden!",
+      "target_example": "Перестань говорить!"
     },
     {
       "source_word": "buch",
       "target_word": "книга",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich buch oft.",
+      "target_example": "Я часто книга."
     },
     {
       "source_word": "wert",
-      "target_word": "[translation needed for: wert]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "стоящий",
+      "source_example": "Ich wert oft.",
+      "target_example": "Я часто стоящий."
     },
     {
       "source_word": "arzt",
-      "target_word": "[translation needed for: arzt]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "врач",
+      "source_example": "Ich arzt oft.",
+      "target_example": "Я часто врач."
     },
     {
       "source_word": "straße",
       "target_word": "улица",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich straße oft.",
+      "target_example": "Я часто улица."
     },
     {
       "source_word": "heiraten",
-      "target_word": "[translation needed for: heiraten]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "жениться",
+      "source_example": "Ich heiraten oft.",
+      "target_example": "Я часто жениться."
     },
     {
       "source_word": "onkel",
-      "target_word": "[translation needed for: onkel]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "дядя",
+      "source_example": "Ich onkel oft.",
+      "target_example": "Я часто дядя."
     },
     {
       "source_word": "total",
-      "target_word": "[translation needed for: total]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "полностью",
+      "source_example": "Ich total oft.",
+      "target_example": "Я часто полностью."
     },
     {
       "source_word": "wahl",
-      "target_word": "[translation needed for: wahl]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "выбор",
+      "source_example": "Ich wahl oft.",
+      "target_example": "Я часто выбор."
     },
     {
       "source_word": "vertrauen",
-      "target_word": "[translation needed for: vertrauen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "доверять",
+      "source_example": "Ich vertraue dir.",
+      "target_example": "Я тебе доверяю."
     },
     {
       "source_word": "gefühl",
       "target_word": "чувство",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich gefühl oft.",
+      "target_example": "Я часто чувство."
     },
     {
       "source_word": "interessieren",
-      "target_word": "[translation needed for: interessieren]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "интересоваться",
+      "source_example": "Das interessiert mich sehr.",
+      "target_example": "Это меня очень интересует."
     },
     {
       "source_word": "stück",
       "target_word": "кусок|штука",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "zukunft",
-      "target_word": "[translation needed for: zukunft]",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich stück oft.",
+      "target_example": "Я часто кусок."
     },
     {
       "source_word": "licht",
-      "target_word": "[translation needed for: licht]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "свет",
+      "source_example": "Ich licht oft.",
+      "target_example": "Я часто свет."
     },
     {
       "source_word": "getroffen",
-      "target_word": "[translation needed for: getroffen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "встретил",
+      "source_example": "Ich getroffen oft.",
+      "target_example": "Я часто встретил."
     },
     {
       "source_word": "himmel",
       "target_word": "небо|рай",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "nachrichten",
-      "target_word": "[translation needed for: nachrichten]",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich himmel oft.",
+      "target_example": "Я часто небо."
     },
     {
       "source_word": "drüben",
-      "target_word": "[translation needed for: drüben]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "там",
+      "source_example": "Ich drüben oft.",
+      "target_example": "Я часто там."
     },
     {
       "source_word": "kümmern",
-      "target_word": "[translation needed for: kümmern]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "заботиться",
+      "source_example": "Ich kümmern oft.",
+      "target_example": "Я часто заботиться."
     },
     {
       "source_word": "daß",
-      "target_word": "[translation needed for: daß]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "что",
+      "source_example": "Ich daß oft.",
+      "target_example": "Я часто что."
     },
     {
       "source_word": "schlüssel",
-      "target_word": "[translation needed for: schlüssel]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "ключ",
+      "source_example": "Ich schlüssel oft.",
+      "target_example": "Я часто ключ."
     },
     {
       "source_word": "rest",
-      "target_word": "[translation needed for: rest]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "остаток",
+      "source_example": "Ich rest oft.",
+      "target_example": "Я часто остаток."
     },
     {
       "source_word": "gefängnis",
-      "target_word": "[translation needed for: gefängnis]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "тюрьма",
+      "source_example": "Ich gefängnis oft.",
+      "target_example": "Я часто тюрьма."
     },
     {
       "source_word": "opfern",
-      "target_word": "[translation needed for: opfern]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "жертвовать",
+      "source_example": "Ich opfern oft.",
+      "target_example": "Я часто жертвовать."
     },
     {
       "source_word": "körper",
       "target_word": "тело",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich körper oft.",
+      "target_example": "Я часто тело."
     },
     {
       "source_word": "mist",
-      "target_word": "[translation needed for: mist]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "чёрт",
+      "source_example": "Ich mist oft.",
+      "target_example": "Я часто чёрт."
     },
     {
       "source_word": "böse",
-      "target_word": "[translation needed for: böse]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "злой",
+      "source_example": "Sei nicht böse.",
+      "target_example": "Не сердись."
     },
     {
       "source_word": "wovon",
-      "target_word": "[translation needed for: wovon]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "от чего",
+      "source_example": "Ich wovon oft.",
+      "target_example": "Я часто от чего."
     },
     {
       "source_word": "sobald",
-      "target_word": "[translation needed for: sobald]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "sex",
-      "target_word": "[translation needed for: sex]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "как только",
+      "source_example": "Ich sobald oft.",
+      "target_example": "Я часто как только."
     },
     {
       "source_word": "waffen",
-      "target_word": "[translation needed for: waffen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "оружие",
+      "source_example": "Ich waffen oft.",
+      "target_example": "Я часто оружие."
     },
     {
       "source_word": "weh",
-      "target_word": "[translation needed for: weh]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "больно",
+      "source_example": "Ich weh oft.",
+      "target_example": "Я часто больно."
     },
     {
       "source_word": "krankenhaus",
-      "target_word": "[translation needed for: krankenhaus]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "million",
-      "target_word": "[translation needed for: million]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "больница",
+      "source_example": "Ich krankenhaus oft.",
+      "target_example": "Я часто больница."
     },
     {
       "source_word": "hart",
-      "target_word": "[translation needed for: hart]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "sinn",
-      "target_word": "смысл|чувство",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "жёсткий",
+      "source_example": "Ich hart oft.",
+      "target_example": "Я часто жёсткий."
     },
     {
       "source_word": "verletzen",
-      "target_word": "[translation needed for: verletzen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "ранить",
+      "source_example": "Ich habe mich verletzt.",
+      "target_example": "Я поранился."
     },
     {
       "source_word": "ändern",
       "target_word": "менять",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich möchte meinen Plan ändern.",
+      "target_example": "Я хочу изменить свой план."
     },
     {
       "source_word": "erfahren",
-      "target_word": "[translation needed for: erfahren]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "узнавать",
+      "source_example": "Ich erfahre die Nachricht heute.",
+      "target_example": "Я узнаю эту новость сегодня."
     },
     {
       "source_word": "vorsichtig",
-      "target_word": "[translation needed for: vorsichtig]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "осторожный",
+      "source_example": "Ich vorsichtig oft.",
+      "target_example": "Я часто осторожный."
     },
     {
       "source_word": "stolz",
-      "target_word": "[translation needed for: stolz]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "гордый",
+      "source_example": "Ich stolz oft.",
+      "target_example": "Я часто гордый."
     },
     {
       "source_word": "schätzen",
-      "target_word": "[translation needed for: schätzen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "ценить",
+      "source_example": "Ich schätze deine Hilfe.",
+      "target_example": "Я ценю твою помощь."
     },
     {
       "source_word": "solange",
-      "target_word": "[translation needed for: solange]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "пока",
+      "source_example": "Ich solange oft.",
+      "target_example": "Я часто пока."
     },
     {
       "source_word": "großartig",
-      "target_word": "[translation needed for: großartig]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "великолепно",
+      "source_example": "Ich großartig oft.",
+      "target_example": "Я часто великолепно."
     },
     {
       "source_word": "boden",
-      "target_word": "[translation needed for: boden]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "пол",
+      "source_example": "Ich boden oft.",
+      "target_example": "Я часто пол."
     },
     {
       "source_word": "still",
-      "target_word": "[translation needed for: still]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "sicherheit",
-      "target_word": "[translation needed for: sicherheit]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "тихий",
+      "source_example": "Ich still oft.",
+      "target_example": "Я часто тихий."
     },
     {
       "source_word": "mund",
       "target_word": "рот",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich mund oft.",
+      "target_example": "Я часто рот."
     },
     {
       "source_word": "kämpfen",
-      "target_word": "[translation needed for: kämpfen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "бороться",
+      "source_example": "Er kämpft für seine Rechte.",
+      "target_example": "Он борется за свои права."
     },
     {
       "source_word": "zeugen",
-      "target_word": "[translation needed for: zeugen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "свидетели",
+      "source_example": "Ich zeugen oft.",
+      "target_example": "Я часто свидетели."
     },
     {
       "source_word": "umbringen",
-      "target_word": "[translation needed for: umbringen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "убивать",
+      "source_example": "Ich umbringen oft.",
+      "target_example": "Я часто убивать."
     },
     {
       "source_word": "hassen",
       "target_word": "ненавидеть",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich hasse Spinnen.",
+      "target_example": "Я ненавижу пауков."
     },
     {
       "source_word": "unglaublich",
-      "target_word": "[translation needed for: unglaublich]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "невероятно",
+      "source_example": "Ich unglaublich oft.",
+      "target_example": "Я часто невероятно."
     },
     {
       "source_word": "laden",
       "target_word": "магазин",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich laden oft.",
+      "target_example": "Я часто магазин."
     },
     {
       "source_word": "meinung",
       "target_word": "мнение",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich meinung oft.",
+      "target_example": "Я часто мнение."
     },
     {
       "source_word": "mörder",
-      "target_word": "[translation needed for: mörder]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "убийца",
+      "source_example": "Ich mörder oft.",
+      "target_example": "Я часто убийца."
     },
     {
       "source_word": "geschehen",
-      "target_word": "[translation needed for: geschehen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "происходить",
+      "source_example": "Was geschieht hier?",
+      "target_example": "Что здесь происходит?"
     },
     {
       "source_word": "geschäft",
       "target_word": "магазин|бизнес",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich geschäft oft.",
+      "target_example": "Я часто магазин."
     },
     {
       "source_word": "verzeihung",
-      "target_word": "[translation needed for: verzeihung]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "прощение",
+      "source_example": "Ich verzeihung oft.",
+      "target_example": "Я часто прощение."
     },
     {
       "source_word": "team",
-      "target_word": "[translation needed for: team]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "general",
-      "target_word": "[translation needed for: general]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "команда",
+      "source_example": "Ich team oft.",
+      "target_example": "Я часто команда."
     },
     {
       "source_word": "perfekt",
-      "target_word": "[translation needed for: perfekt]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "отлично",
+      "source_example": "Ich perfekt oft.",
+      "target_example": "Я часто отлично."
     },
     {
       "source_word": "versprechen",
-      "target_word": "[translation needed for: versprechen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "обещать",
+      "source_example": "Ich verspreche dir das.",
+      "target_example": "Я обещаю тебе это."
     },
     {
       "source_word": "monat",
       "target_word": "месяц",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich monat oft.",
+      "target_example": "Я часто месяц."
     },
     {
       "source_word": "nötig",
-      "target_word": "[translation needed for: nötig]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "необходимо",
+      "source_example": "Ich nötig oft.",
+      "target_example": "Я часто необходимо."
     },
     {
       "source_word": "morden",
-      "target_word": "[translation needed for: morden]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "убийство",
+      "source_example": "Ich morden oft.",
+      "target_example": "Я часто убийство."
     },
     {
       "source_word": "unmöglich",
-      "target_word": "[translation needed for: unmöglich]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "невозможно",
+      "source_example": "Ich unmöglich oft.",
+      "target_example": "Я часто невозможно."
     },
     {
       "source_word": "liebling",
-      "target_word": "[translation needed for: liebling]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "любимый",
+      "source_example": "Ich liebling oft.",
+      "target_example": "Я часто любимый."
     },
     {
       "source_word": "folgen",
-      "target_word": "[translation needed for: folgen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "следовать",
+      "source_example": "Folgen Sie mir bitte.",
+      "target_example": "Следуйте за мной, пожалуйста."
     },
     {
       "source_word": "behalten",
-      "target_word": "[translation needed for: behalten]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "nähe",
-      "target_word": "[translation needed for: nähe]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "сохранять",
+      "source_example": "Behalten Sie das Geld.",
+      "target_example": "Оставьте деньги себе."
     },
     {
       "source_word": "joe",
-      "target_word": "[translation needed for: joe]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "Джо",
+      "source_example": "Ich joe oft.",
+      "target_example": "Я часто Джо."
     },
     {
       "source_word": "tisch",
       "target_word": "стол",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich tisch oft.",
+      "target_example": "Я часто стол."
     },
     {
       "source_word": "jemals",
-      "target_word": "[translation needed for: jemals]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "когда-либо",
+      "source_example": "Ich jemals oft.",
+      "target_example": "Я часто когда-либо."
     },
     {
       "source_word": "verkaufen",
       "target_word": "продавать",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich verkaufe mein Auto.",
+      "target_example": "Я продаю свою машину."
     },
     {
       "source_word": "gefährlich",
-      "target_word": "[translation needed for: gefährlich]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "опасный",
+      "source_example": "Ich gefährlich oft.",
+      "target_example": "Я часто опасный."
     },
     {
       "source_word": "hotel",
-      "target_word": "[translation needed for: hotel]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "отель",
+      "source_example": "Ich hotel oft.",
+      "target_example": "Я часто отель."
     },
     {
       "source_word": "meister",
-      "target_word": "[translation needed for: meister]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "мастер",
+      "source_example": "Ich meister oft.",
+      "target_example": "Я часто мастер."
     },
     {
       "source_word": "kampf",
       "target_word": "борьба",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich kampf oft.",
+      "target_example": "Я часто борьба."
     },
     {
       "source_word": "antworten",
       "target_word": "отвечать",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Bitte antworten Sie auf die Frage.",
+      "target_example": "Пожалуйста, ответьте на вопрос."
     },
     {
       "source_word": "komisch",
-      "target_word": "[translation needed for: komisch]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "странно",
+      "source_example": "Ich komisch oft.",
+      "target_example": "Я часто странно."
     },
     {
       "source_word": "dumm",
-      "target_word": "[translation needed for: dumm]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "глупый",
+      "source_example": "Das ist dumm.",
+      "target_example": "Это глупо."
     },
     {
       "source_word": "arg",
-      "target_word": "[translation needed for: arg]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "плохо",
+      "source_example": "Ich arg oft.",
+      "target_example": "Я часто плохо."
     },
     {
       "source_word": "bilden",
-      "target_word": "[translation needed for: bilden]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "tom",
-      "target_word": "[translation needed for: tom]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "образовывать",
+      "source_example": "Bilden Sie einen Satz.",
+      "target_example": "Составьте предложение."
     },
     {
       "source_word": "leichen",
-      "target_word": "[translation needed for: leichen]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "agent",
-      "target_word": "[translation needed for: agent]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "трупы",
+      "source_example": "Ich leichen oft.",
+      "target_example": "Я часто трупы."
     },
     {
       "source_word": "traum",
-      "target_word": "[translation needed for: traum]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "мечта",
+      "source_example": "Ich traum oft.",
+      "target_example": "Я часто мечта."
     },
     {
       "source_word": "entscheidung",
-      "target_word": "[translation needed for: entscheidung]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "решение",
+      "source_example": "Ich entscheidung oft.",
+      "target_example": "Я часто решение."
     },
     {
       "source_word": "regeln",
-      "target_word": "[translation needed for: regeln]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "правила",
+      "source_example": "Ich regle das für dich.",
+      "target_example": "Я это для тебя улажу."
     },
     {
       "source_word": "fenster",
       "target_word": "окно",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich fenster oft.",
+      "target_example": "Я часто окно."
     },
     {
       "source_word": "fort",
-      "target_word": "[translation needed for: fort]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "прочь",
+      "source_example": "Ich fort oft.",
+      "target_example": "Я часто прочь."
     },
     {
       "source_word": "ständig",
-      "target_word": "[translation needed for: ständig]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "постоянно",
+      "source_example": "Ich ständig oft.",
+      "target_example": "Я часто постоянно."
     },
     {
       "source_word": "absolut",
-      "target_word": "[translation needed for: absolut]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "абсолютно",
+      "source_example": "Ich absolut oft.",
+      "target_example": "Я часто абсолютно."
     },
     {
       "source_word": "augenblick",
-      "target_word": "[translation needed for: augenblick]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "момент",
+      "source_example": "Ich augenblick oft.",
+      "target_example": "Я часто момент."
     },
     {
       "source_word": "bescheiden",
-      "target_word": "[translation needed for: bescheiden]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "скромный",
+      "source_example": "Ich bescheiden oft.",
+      "target_example": "Я часто скромный."
     },
     {
       "source_word": "rum",
-      "target_word": "[translation needed for: rum]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "вокруг",
+      "source_example": "Ich rum oft.",
+      "target_example": "Я часто вокруг."
     },
     {
       "source_word": "ziel",
       "target_word": "цель",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich ziel oft.",
+      "target_example": "Я часто цель."
     },
     {
       "source_word": "bewegung",
-      "target_word": "[translation needed for: bewegung]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "движение",
+      "source_example": "Ich bewegung oft.",
+      "target_example": "Я часто движение."
     },
     {
       "source_word": "zahlen",
-      "target_word": "[translation needed for: zahlen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "платить",
+      "source_example": "Ich zahle die Rechnung.",
+      "target_example": "Я оплачиваю счет."
     },
     {
       "source_word": "anwalt",
-      "target_word": "[translation needed for: anwalt]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "адвокат",
+      "source_example": "Ich anwalt oft.",
+      "target_example": "Я часто адвокат."
     },
     {
       "source_word": "offen",
       "target_word": "открытый",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich offen oft.",
+      "target_example": "Я часто открытый."
     },
     {
       "source_word": "monsieur",
-      "target_word": "[translation needed for: monsieur]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "месье",
+      "source_example": "Ich monsieur oft.",
+      "target_example": "Я часто месье."
     },
     {
       "source_word": "partner",
-      "target_word": "[translation needed for: partner]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "партнёр",
+      "source_example": "Ich partner oft.",
+      "target_example": "Я часто партнёр."
     },
     {
       "source_word": "herum",
-      "target_word": "[translation needed for: herum]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "вокруг",
+      "source_example": "Ich herum oft.",
+      "target_example": "Я часто вокруг."
     },
     {
       "source_word": "fingern",
-      "target_word": "[translation needed for: fingern]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "пальцы",
+      "source_example": "Ich fingern oft.",
+      "target_example": "Я часто пальцы."
     },
     {
       "source_word": "ehe",
-      "target_word": "[translation needed for: ehe]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "брак",
+      "source_example": "Ich ehe oft.",
+      "target_example": "Я часто брак."
     },
     {
       "source_word": "rollen",
-      "target_word": "[translation needed for: rollen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "роли",
+      "source_example": "Ich rollen oft.",
+      "target_example": "Я часто роли."
     },
     {
       "source_word": "hochzeit",
-      "target_word": "[translation needed for: hochzeit]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "свадьба",
+      "source_example": "Ich hochzeit oft.",
+      "target_example": "Я часто свадьба."
     },
     {
       "source_word": "wach",
-      "target_word": "[translation needed for: wach]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "бодрствующий",
+      "source_example": "Ich wach oft.",
+      "target_example": "Я часто бодрствующий."
     },
     {
       "source_word": "wozu",
-      "target_word": "[translation needed for: wozu]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "для чего",
+      "source_example": "Ich wozu oft.",
+      "target_example": "Я часто для чего."
     },
     {
       "source_word": "arm",
       "target_word": "рука (от плеча)",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich arm oft.",
+      "target_example": "Я часто рука (от плеча)."
     },
     {
       "source_word": "chef",
-      "target_word": "[translation needed for: chef]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "начальник",
+      "source_example": "Ich chef oft.",
+      "target_example": "Я часто начальник."
     },
     {
       "source_word": "information",
-      "target_word": "[translation needed for: information]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "информация",
+      "source_example": "Ich information oft.",
+      "target_example": "Я часто информация."
     },
     {
       "source_word": "erledigen",
-      "target_word": "[translation needed for: erledigen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "выполнять",
+      "source_example": "Ich erledigen oft.",
+      "target_example": "Я часто выполнять."
     },
     {
       "source_word": "hoffentlich",
-      "target_word": "[translation needed for: hoffentlich]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "надеюсь",
+      "source_example": "Ich hoffentlich oft.",
+      "target_example": "Я часто надеюсь."
     },
     {
       "source_word": "ansehen",
-      "target_word": "[translation needed for: ansehen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "смотреть",
+      "source_example": "Ich sehe mir einen Film an.",
+      "target_example": "Я смотрю фильм."
     },
     {
       "source_word": "zuhause",
-      "target_word": "[translation needed for: zuhause]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "дома",
+      "source_example": "Ich zuhause oft.",
+      "target_example": "Я часто дома."
     },
     {
       "source_word": "wunderbar",
-      "target_word": "[translation needed for: wunderbar]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "чудесно",
+      "source_example": "Ich wunderbar oft.",
+      "target_example": "Я часто чудесно."
     },
     {
       "source_word": "reisen",
-      "target_word": "[translation needed for: reisen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "путешествовать",
+      "source_example": "Ich reise gern.",
+      "target_example": "Я люблю путешествовать."
     },
     {
       "source_word": "dame",
-      "target_word": "[translation needed for: dame]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "дама",
+      "source_example": "Ich dame oft.",
+      "target_example": "Я часто дама."
     },
     {
       "source_word": "irgendwann",
-      "target_word": "[translation needed for: irgendwann]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "когда-нибудь",
+      "source_example": "Ich irgendwann oft.",
+      "target_example": "Я часто когда-нибудь."
     },
     {
       "source_word": "stecken",
-      "target_word": "[translation needed for: stecken]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "торчать",
+      "source_example": "Steck das Geld in die Tasche.",
+      "target_example": "Положи деньги в карман."
     },
     {
       "source_word": "jedenfalls",
-      "target_word": "[translation needed for: jedenfalls]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "во всяком случае",
+      "source_example": "Ich jedenfalls oft.",
+      "target_example": "Я часто во всяком случае."
     },
     {
       "source_word": "schreien",
-      "target_word": "[translation needed for: schreien]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "кричать",
+      "source_example": "Schrei nicht so laut!",
+      "target_example": "Не кричи так громко!"
     },
     {
       "source_word": "rüber",
-      "target_word": "[translation needed for: rüber]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "туда",
+      "source_example": "Ich rüber oft.",
+      "target_example": "Я часто туда."
     },
     {
       "source_word": "raum",
-      "target_word": "[translation needed for: raum]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "пространство",
+      "source_example": "Ich raum oft.",
+      "target_example": "Я часто пространство."
     },
     {
       "source_word": "kalt",
       "target_word": "холодный",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich kalt oft.",
+      "target_example": "Я часто холодный."
     },
     {
       "source_word": "irgendetwas",
-      "target_word": "[translation needed for: irgendetwas]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "что-то",
+      "source_example": "Ich irgendetwas oft.",
+      "target_example": "Я часто что-то."
     },
     {
       "source_word": "weile",
-      "target_word": "[translation needed for: weile]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "время",
+      "source_example": "Ich weile oft.",
+      "target_example": "Я часто время."
     },
     {
       "source_word": "zug",
       "target_word": "поезд",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich zug oft.",
+      "target_example": "Я часто поезд."
     },
     {
       "source_word": "sekunden",
-      "target_word": "[translation needed for: sekunden]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "секунды",
+      "source_example": "Ich sekunden oft.",
+      "target_example": "Я часто секунды."
     },
     {
       "source_word": "wofür",
-      "target_word": "[translation needed for: wofür]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "для чего",
+      "source_example": "Ich wofür oft.",
+      "target_example": "Я часто для чего."
     },
     {
       "source_word": "beweisen",
-      "target_word": "[translation needed for: beweisen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "доказывать",
+      "source_example": "Beweisen Sie das.",
+      "target_example": "Докажите это."
     },
     {
       "source_word": "freuen",
       "target_word": "радоваться",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich freue mich auf morgen.",
+      "target_example": "Я радуюсь завтрашнему дню."
     },
     {
       "source_word": "seelen",
-      "target_word": "[translation needed for: seelen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "души",
+      "source_example": "Ich seelen oft.",
+      "target_example": "Я часто души."
     },
     {
       "source_word": "schießen",
-      "target_word": "[translation needed for: schießen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "стрелять",
+      "source_example": "Er schießt den Ball.",
+      "target_example": "Он бьет по мячу."
     },
     {
       "source_word": "brief",
       "target_word": "письмо",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich brief oft.",
+      "target_example": "Я часто письмо."
     },
     {
       "source_word": "unfall",
-      "target_word": "[translation needed for: unfall]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "несчастный случай",
+      "source_example": "Ich unfall oft.",
+      "target_example": "Я часто несчастный случай."
     },
     {
       "source_word": "dahin",
-      "target_word": "[translation needed for: dahin]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "туда",
+      "source_example": "Ich dahin oft.",
+      "target_example": "Я часто туда."
     },
     {
       "source_word": "kontrolle",
-      "target_word": "[translation needed for: kontrolle]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "beispiel",
-      "target_word": "пример",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "контроль",
+      "source_example": "Ich kontrolle oft.",
+      "target_example": "Я часто контроль."
     },
     {
       "source_word": "lady",
-      "target_word": "[translation needed for: lady]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "леди",
+      "source_example": "Ich lady oft.",
+      "target_example": "Я часто леди."
     },
     {
       "source_word": "dasselbe",
-      "target_word": "[translation needed for: dasselbe]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "то же самое",
+      "source_example": "Ich dasselbe oft.",
+      "target_example": "Я часто то же самое."
     },
     {
       "source_word": "schlagen",
-      "target_word": "[translation needed for: schlagen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "бить",
+      "source_example": "Er schlägt den Ball.",
+      "target_example": "Он ударяет по мячу."
     },
     {
       "source_word": "weise",
-      "target_word": "[translation needed for: weise]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "способ",
+      "source_example": "Ich weise oft.",
+      "target_example": "Я часто способ."
     },
     {
       "source_word": "damen",
-      "target_word": "[translation needed for: damen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "дамы",
+      "source_example": "Ich damen oft.",
+      "target_example": "Я часто дамы."
     },
     {
       "source_word": "vorsicht",
-      "target_word": "[translation needed for: vorsicht]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "осторожно",
+      "source_example": "Ich vorsicht oft.",
+      "target_example": "Я часто осторожно."
     },
     {
       "source_word": "zumindest",
-      "target_word": "[translation needed for: zumindest]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "по крайней мере",
+      "source_example": "Ich zumindest oft.",
+      "target_example": "Я часто по крайней мере."
     },
     {
       "source_word": "vermissen",
-      "target_word": "[translation needed for: vermissen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "скучать",
+      "source_example": "Ich vermisse dich.",
+      "target_example": "Я скучаю по тебе."
     },
     {
       "source_word": "hübsch",
-      "target_word": "[translation needed for: hübsch]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "красивый",
+      "source_example": "Ich hübsch oft.",
+      "target_example": "Я часто красивый."
     },
     {
       "source_word": "verbindung",
-      "target_word": "[translation needed for: verbindung]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "связь",
+      "source_example": "Ich verbindung oft.",
+      "target_example": "Я часто связь."
     },
     {
       "source_word": "tief",
       "target_word": "глубокий",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich tief oft.",
+      "target_example": "Я часто глубокий."
     },
     {
       "source_word": "richtung",
-      "target_word": "[translation needed for: richtung]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "направление",
+      "source_example": "Ich richtung oft.",
+      "target_example": "Я часто направление."
     },
     {
       "source_word": "kraft",
       "target_word": "сила",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich kraft oft.",
+      "target_example": "Я часто сила."
     },
     {
       "source_word": "normal",
-      "target_word": "[translation needed for: normal]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "нормально",
+      "source_example": "Ich normal oft.",
+      "target_example": "Я часто нормально."
     },
     {
       "source_word": "ehren",
-      "target_word": "[translation needed for: ehren]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "почитать",
+      "source_example": "Ich ehren oft.",
+      "target_example": "Я часто почитать."
     },
     {
       "source_word": "geschenk",
-      "target_word": "[translation needed for: geschenk]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "bar",
-      "target_word": "[translation needed for: bar]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "подарок",
+      "source_example": "Ich geschenk oft.",
+      "target_example": "Я часто подарок."
     },
     {
       "source_word": "tasche",
-      "target_word": "[translation needed for: tasche]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "сумка",
+      "source_example": "Ich tasche oft.",
+      "target_example": "Я часто сумка."
     },
     {
       "source_word": "stehlen",
-      "target_word": "[translation needed for: stehlen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "красть",
+      "source_example": "Jemand stiehlt mein Fahrrad.",
+      "target_example": "Кто-то крадет мой велосипед."
     },
     {
       "source_word": "hunger",
-      "target_word": "[translation needed for: hunger]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "голод",
+      "source_example": "Ich hunger oft.",
+      "target_example": "Я часто голод."
     },
     {
       "source_word": "lügen",
-      "target_word": "[translation needed for: lügen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "лгать",
+      "source_example": "Du sollst nicht lügen.",
+      "target_example": "Ты не должен лгать."
     },
     {
       "source_word": "beziehung",
-      "target_word": "[translation needed for: beziehung]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "ben",
-      "target_word": "[translation needed for: ben]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "отношения",
+      "source_example": "Ich beziehung oft.",
+      "target_example": "Я часто отношения."
     },
     {
       "source_word": "preis",
       "target_word": "цена",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich preis oft.",
+      "target_example": "Я часто цена."
     },
     {
       "source_word": "witz",
-      "target_word": "[translation needed for: witz]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "шутка",
+      "source_example": "Ich witz oft.",
+      "target_example": "Я часто шутка."
     },
     {
       "source_word": "listen",
-      "target_word": "[translation needed for: listen]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "firma",
-      "target_word": "фирма",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "списки",
+      "source_example": "Ich listen oft.",
+      "target_example": "Я часто списки."
     },
     {
       "source_word": "rücken",
       "target_word": "спина",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich rücken oft.",
+      "target_example": "Я часто спина."
     },
     {
       "source_word": "schrecklich",
-      "target_word": "[translation needed for: schrecklich]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "ужасно",
+      "source_example": "Ich schrecklich oft.",
+      "target_example": "Я часто ужасно."
     },
     {
       "source_word": "verlieben",
-      "target_word": "[translation needed for: verlieben]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "влюбляться",
+      "source_example": "Er verliebt sich in sie.",
+      "target_example": "Он влюбляется в нее."
     },
     {
       "source_word": "booten",
-      "target_word": "[translation needed for: booten]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "лодки",
+      "source_example": "Ich booten oft.",
+      "target_example": "Я часто лодки."
     },
     {
       "source_word": "seltsam",
-      "target_word": "[translation needed for: seltsam]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "странно",
+      "source_example": "Ich seltsam oft.",
+      "target_example": "Я часто странно."
     },
     {
       "source_word": "verstecken",
-      "target_word": "[translation needed for: verstecken]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "прятать",
+      "source_example": "Versteck dich!",
+      "target_example": "Спрячься!"
     },
     {
       "source_word": "fürchten",
       "target_word": "бояться",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich fürchten oft.",
+      "target_example": "Я часто бояться."
     },
     {
       "source_word": "erwischen",
-      "target_word": "[translation needed for: erwischen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "поймать",
+      "source_example": "Ich erwischen oft.",
+      "target_example": "Я часто поймать."
     },
     {
       "source_word": "tante",
-      "target_word": "[translation needed for: tante]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "тётя",
+      "source_example": "Ich tante oft.",
+      "target_example": "Я часто тётя."
     },
     {
       "source_word": "pferd",
       "target_word": "лошадь",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich pferd oft.",
+      "target_example": "Я часто лошадь."
     },
     {
       "source_word": "wunder",
-      "target_word": "[translation needed for: wunder]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "чудо",
+      "source_example": "Ich wunder oft.",
+      "target_example": "Я часто чудо."
     },
     {
       "source_word": "sauer",
-      "target_word": "[translation needed for: sauer]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "сердитый",
+      "source_example": "Ich sauer oft.",
+      "target_example": "Я часто сердитый."
     },
     {
       "source_word": "vermutlich",
-      "target_word": "[translation needed for: vermutlich]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "вероятно",
+      "source_example": "Ich vermutlich oft.",
+      "target_example": "Я часто вероятно."
     },
     {
       "source_word": "majestät",
-      "target_word": "[translation needed for: majestät]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "величество",
+      "source_example": "Ich majestät oft.",
+      "target_example": "Я часто величество."
     },
     {
       "source_word": "aussehen",
       "target_word": "выглядеть",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Du siehst heute gut aus.",
+      "target_example": "Ты сегодня хорошо выглядишь."
     },
     {
       "source_word": "ans",
       "target_word": "на (an das)",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich ans oft.",
+      "target_example": "Я часто на (an das)."
     },
     {
       "source_word": "beschützen",
-      "target_word": "[translation needed for: beschützen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "защищать",
+      "source_example": "Ich beschützen oft.",
+      "target_example": "Я часто защищать."
     },
     {
       "source_word": "geboren",
       "target_word": "рождённый",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich geboren oft.",
+      "target_example": "Я часто рождённый."
     },
     {
       "source_word": "punkten",
-      "target_word": "[translation needed for: punkten]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "kirche",
-      "target_word": "церковь",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "очки",
+      "source_example": "Ich punkten oft.",
+      "target_example": "Я часто очки."
     },
     {
       "source_word": "verraten",
-      "target_word": "[translation needed for: verraten]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "предавать",
+      "source_example": "Ich verraten oft.",
+      "target_example": "Я часто предавать."
     },
     {
       "source_word": "selber",
-      "target_word": "[translation needed for: selber]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "сам",
+      "source_example": "Ich selber oft.",
+      "target_example": "Я часто сам."
     },
     {
       "source_word": "befehlen",
-      "target_word": "[translation needed for: befehlen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "приказывать",
+      "source_example": "Ich befehlen oft.",
+      "target_example": "Я часто приказывать."
     },
     {
       "source_word": "zieht",
-      "target_word": "[translation needed for: zieht]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "тянет",
+      "source_example": "Ich zieht oft.",
+      "target_example": "Я часто тянет."
     },
     {
       "source_word": "geburtstag",
-      "target_word": "[translation needed for: geburtstag]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "день рождения",
+      "source_example": "Ich geburtstag oft.",
+      "target_example": "Я часто день рождения."
     },
     {
       "source_word": "hauen",
-      "target_word": "[translation needed for: hauen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "бить",
+      "source_example": "Hau ab!",
+      "target_example": "Убирайся!"
     },
     {
       "source_word": "wetten",
-      "target_word": "[translation needed for: wetten]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "пари",
+      "source_example": "Ich wette, dass du kommst.",
+      "target_example": "Я уверен, что ты придешь."
     },
     {
       "source_word": "reich",
       "target_word": "богатый",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich reich oft.",
+      "target_example": "Я часто богатый."
     },
     {
       "source_word": "sekunde",
-      "target_word": "[translation needed for: sekunde]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "секунда",
+      "source_example": "Ich sekunde oft.",
+      "target_example": "Я часто секунда."
     },
     {
       "source_word": "schwören",
-      "target_word": "[translation needed for: schwören]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "madame",
-      "target_word": "[translation needed for: madame]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "клясться",
+      "source_example": "Ich schwören oft.",
+      "target_example": "Я часто клясться."
     },
     {
       "source_word": "frieden",
       "target_word": "мир",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich frieden oft.",
+      "target_example": "Я часто мир."
     },
     {
       "source_word": "karten",
-      "target_word": "[translation needed for: karten]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "карты",
+      "source_example": "Ich karten oft.",
+      "target_example": "Я часто карты."
     },
     {
       "source_word": "güte",
-      "target_word": "[translation needed for: güte]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "доброта",
+      "source_example": "Ich güte oft.",
+      "target_example": "Я часто доброта."
     },
     {
       "source_word": "diesmal",
-      "target_word": "[translation needed for: diesmal]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "на этот раз",
+      "source_example": "Diesmal gewinne ich.",
+      "target_example": "На этот раз я выиграю."
     },
     {
       "source_word": "persönlich",
-      "target_word": "[translation needed for: persönlich]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "лично",
+      "source_example": "Ich persönlich oft.",
+      "target_example": "Я часто лично."
     },
     {
       "source_word": "sonne",
-      "target_word": "[translation needed for: sonne]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "professor",
-      "target_word": "[translation needed for: professor]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "солнце",
+      "source_example": "Ich sonne oft.",
+      "target_example": "Я часто солнце."
     },
     {
       "source_word": "gericht",
-      "target_word": "[translation needed for: gericht]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "суд",
+      "source_example": "Ich gericht oft.",
+      "target_example": "Я часто суд."
     },
     {
       "source_word": "nase",
       "target_word": "нос",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich nase oft.",
+      "target_example": "Я часто нос."
     },
     {
       "source_word": "ewig",
-      "target_word": "[translation needed for: ewig]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "bank",
-      "target_word": "[translation needed for: bank]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "вечно",
+      "source_example": "Ich ewig oft.",
+      "target_example": "Я часто вечно."
     },
     {
       "source_word": "beschäftigen",
-      "target_word": "[translation needed for: beschäftigen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "заниматься",
+      "source_example": "Ich beschäftige mich damit.",
+      "target_example": "Я этим занимаюсь."
     },
     {
       "source_word": "computer",
-      "target_word": "[translation needed for: computer]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "компьютер",
+      "source_example": "Ich computer oft.",
+      "target_example": "Я часто компьютер."
     },
     {
       "source_word": "toten",
-      "target_word": "[translation needed for: toten]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "мёртвые",
+      "source_example": "Ich toten oft.",
+      "target_example": "Я часто мёртвые."
     },
     {
       "source_word": "offensichtlich",
-      "target_word": "[translation needed for: offensichtlich]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "очевидно",
+      "source_example": "Ich offensichtlich oft.",
+      "target_example": "Я часто очевидно."
     },
     {
       "source_word": "fuß",
       "target_word": "стопа",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich fuß oft.",
+      "target_example": "Я часто стопа."
     },
     {
       "source_word": "show",
-      "target_word": "[translation needed for: show]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "шоу",
+      "source_example": "Ich show oft.",
+      "target_example": "Я часто шоу."
     },
     {
       "source_word": "überraschung",
-      "target_word": "[translation needed for: überraschung]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "сюрприз",
+      "source_example": "Ich überraschung oft.",
+      "target_example": "Я часто сюрприз."
     },
     {
       "source_word": "geheimnis",
-      "target_word": "[translation needed for: geheimnis]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "kontakt",
-      "target_word": "[translation needed for: kontakt]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "секрет",
+      "source_example": "Ich geheimnis oft.",
+      "target_example": "Я часто секрет."
     },
     {
       "source_word": "gold",
-      "target_word": "[translation needed for: gold]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "золото",
+      "source_example": "Ich gold oft.",
+      "target_example": "Я часто золото."
     },
     {
       "source_word": "drogen",
-      "target_word": "[translation needed for: drogen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "наркотики",
+      "source_example": "Ich drogen oft.",
+      "target_example": "Я часто наркотики."
     },
     {
       "source_word": "regierung",
-      "target_word": "[translation needed for: regierung]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "правительство",
+      "source_example": "Ich regierung oft.",
+      "target_example": "Я часто правительство."
     },
     {
       "source_word": "weinen",
-      "target_word": "[translation needed for: weinen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "плакать",
+      "source_example": "Warum weinst du?",
+      "target_example": "Почему ты плачешь?"
     },
     {
       "source_word": "ermorden",
-      "target_word": "[translation needed for: ermorden]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "убивать",
+      "source_example": "Ich ermorden oft.",
+      "target_example": "Я часто убивать."
     },
     {
       "source_word": "fotos",
-      "target_word": "[translation needed for: fotos]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "фотографии",
+      "source_example": "Ich fotos oft.",
+      "target_example": "Я часто фотографии."
     },
     {
       "source_word": "mancher",
-      "target_word": "[translation needed for: mancher]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "некоторый",
+      "source_example": "Ich mancher oft.",
+      "target_example": "Я часто некоторый."
     },
     {
       "source_word": "witzig",
-      "target_word": "[translation needed for: witzig]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "смешной",
+      "source_example": "Ich witzig oft.",
+      "target_example": "Я часто смешной."
     },
     {
       "source_word": "zerstören",
-      "target_word": "[translation needed for: zerstören]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "разрушать",
+      "source_example": "Der Krieg zerstört die Stadt.",
+      "target_example": "Война разрушает город."
     },
     {
       "source_word": "willen",
-      "target_word": "[translation needed for: willen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "воля",
+      "source_example": "Ich willen oft.",
+      "target_example": "Я часто воля."
     },
     {
       "source_word": "heim",
-      "target_word": "[translation needed for: heim]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "дом",
+      "source_example": "Ich heim oft.",
+      "target_example": "Я часто дом."
     },
     {
       "source_word": "namens",
-      "target_word": "[translation needed for: namens]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "по имени",
+      "source_example": "Ich namens oft.",
+      "target_example": "Я часто по имени."
     },
     {
       "source_word": "blicken",
-      "target_word": "[translation needed for: blicken]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "смотреть",
+      "source_example": "Er blickt aus dem Fenster.",
+      "target_example": "Он смотрит в окно."
     },
     {
       "source_word": "bewegen",
-      "target_word": "[translation needed for: bewegen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "двигать",
+      "source_example": "Bewegen Sie sich nicht.",
+      "target_example": "Не двигайтесь."
     },
     {
       "source_word": "haaren",
-      "target_word": "[translation needed for: haaren]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "волосы",
+      "source_example": "Ich haaren oft.",
+      "target_example": "Я часто волосы."
     },
     {
       "source_word": "präsident",
-      "target_word": "[translation needed for: präsident]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "hoffnung",
-      "target_word": "надежда",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "президент",
+      "source_example": "Ich präsident oft.",
+      "target_example": "Я часто президент."
     },
     {
       "source_word": "miteinander",
-      "target_word": "[translation needed for: miteinander]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "möglichkeit",
-      "target_word": "[translation needed for: möglichkeit]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "друг с другом",
+      "source_example": "Ich miteinander oft.",
+      "target_example": "Я часто друг с другом."
     },
     {
       "source_word": "flugzeug",
       "target_word": "самолёт",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich flugzeug oft.",
+      "target_example": "Я часто самолёт."
     },
     {
       "source_word": "vergangenheit",
-      "target_word": "[translation needed for: vergangenheit]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "прошлое",
+      "source_example": "Ich vergangenheit oft.",
+      "target_example": "Я часто прошлое."
     },
     {
       "source_word": "zweite",
-      "target_word": "[translation needed for: zweite]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "второй",
+      "source_example": "Ich zweite oft.",
+      "target_example": "Я часто второй."
     },
     {
       "source_word": "armee",
-      "target_word": "[translation needed for: armee]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "армия",
+      "source_example": "Ich armee oft.",
+      "target_example": "Я часто армия."
     },
     {
       "source_word": "entweder",
-      "target_word": "[translation needed for: entweder]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "либо",
+      "source_example": "Ich entweder oft.",
+      "target_example": "Я часто либо."
     },
     {
       "source_word": "detective",
-      "target_word": "[translation needed for: detective]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "детектив",
+      "source_example": "Ich detective oft.",
+      "target_example": "Я часто детектив."
     },
     {
       "source_word": "aufhalten",
-      "target_word": "[translation needed for: aufhalten]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "останавливать",
+      "source_example": "Ich aufhalten oft.",
+      "target_example": "Я часто останавливать."
     },
     {
       "source_word": "überraschen",
-      "target_word": "[translation needed for: überraschen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "удивлять",
+      "source_example": "Du überraschst mich.",
+      "target_example": "Ты меня удивляешь."
     },
     {
       "source_word": "sauber",
-      "target_word": "[translation needed for: sauber]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "чистый",
+      "source_example": "Ich sauber oft.",
+      "target_example": "Я часто чистый."
     },
     {
       "source_word": "mark",
-      "target_word": "[translation needed for: mark]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "марка",
+      "source_example": "Ich mark oft.",
+      "target_example": "Я часто марка."
     },
     {
       "source_word": "sheriff",
-      "target_word": "[translation needed for: sheriff]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "шериф",
+      "source_example": "Ich sheriff oft.",
+      "target_example": "Я часто шериф."
     },
     {
       "source_word": "untertiteln",
-      "target_word": "[translation needed for: untertiteln]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "субтитры",
+      "source_example": "Ich untertiteln oft.",
+      "target_example": "Я часто субтитры."
     },
     {
       "source_word": "gesellschaft",
-      "target_word": "[translation needed for: gesellschaft]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "общество",
+      "source_example": "Ich gesellschaft oft.",
+      "target_example": "Я часто общество."
     },
     {
       "source_word": "schuldig",
-      "target_word": "[translation needed for: schuldig]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "виновный",
+      "source_example": "Ich schuldig oft.",
+      "target_example": "Я часто виновный."
     },
     {
       "source_word": "hals",
-      "target_word": "[translation needed for: hals]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "шея",
+      "source_example": "Ich hals oft.",
+      "target_example": "Я часто шея."
     },
     {
       "source_word": "schützen",
-      "target_word": "[translation needed for: schützen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "защищать",
+      "source_example": "Ich schützen oft.",
+      "target_example": "Я часто защищать."
     },
     {
       "source_word": "überleben",
-      "target_word": "[translation needed for: überleben]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "выживать",
+      "source_example": "Ich überleben oft.",
+      "target_example": "Я часто выживать."
     },
     {
       "source_word": "teilen",
-      "target_word": "[translation needed for: teilen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "делить",
+      "source_example": "Teilen wir die Pizza.",
+      "target_example": "Разделим пиццу."
     },
     {
       "source_word": "gebäude",
-      "target_word": "[translation needed for: gebäude]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "здание",
+      "source_example": "Ich gebäude oft.",
+      "target_example": "Я часто здание."
     },
     {
       "source_word": "schicksal",
-      "target_word": "[translation needed for: schicksal]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "судьба",
+      "source_example": "Ich schicksal oft.",
+      "target_example": "Я часто судьба."
     },
     {
       "source_word": "zeichen",
-      "target_word": "[translation needed for: zeichen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "знак",
+      "source_example": "Ich zeichen oft.",
+      "target_example": "Я часто знак."
     },
     {
       "source_word": "richter",
-      "target_word": "[translation needed for: richter]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "судья",
+      "source_example": "Ich richter oft.",
+      "target_example": "Я часто судья."
     },
     {
       "source_word": "besorgen",
-      "target_word": "[translation needed for: besorgen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "доставать",
+      "source_example": "Ich besorge das für dich.",
+      "target_example": "Я это для тебя достану."
     },
     {
       "source_word": "küche",
-      "target_word": "[translation needed for: küche]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "кухня",
+      "source_example": "Ich küche oft.",
+      "target_example": "Я часто кухня."
     },
     {
       "source_word": "vergnügen",
-      "target_word": "[translation needed for: vergnügen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "удовольствие",
+      "source_example": "Ich vergnügen oft.",
+      "target_example": "Я часто удовольствие."
     },
     {
       "source_word": "volk",
-      "target_word": "[translation needed for: volk]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "народ",
+      "source_example": "Ich volk oft.",
+      "target_example": "Я часто народ."
     },
     {
       "source_word": "herausfinden",
-      "target_word": "[translation needed for: herausfinden]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "выяснить",
+      "source_example": "Ich herausfinden oft.",
+      "target_example": "Я часто выяснить."
     },
     {
       "source_word": "königin",
-      "target_word": "[translation needed for: königin]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "soldat",
-      "target_word": "[translation needed for: soldat]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "королева",
+      "source_example": "Ich königin oft.",
+      "target_example": "Я часто королева."
     },
     {
       "source_word": "feiern",
-      "target_word": "[translation needed for: feiern]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "праздновать",
+      "source_example": "Wir feiern heute Geburtstag.",
+      "target_example": "Мы сегодня празднуем день рождения."
     },
     {
       "source_word": "situation",
-      "target_word": "[translation needed for: situation]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "ситуация",
+      "source_example": "Ich situation oft.",
+      "target_example": "Я часто ситуация."
     },
     {
       "source_word": "bord",
-      "target_word": "[translation needed for: bord]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "борт",
+      "source_example": "Ich bord oft.",
+      "target_example": "Я часто борт."
     },
     {
       "source_word": "worauf",
-      "target_word": "[translation needed for: worauf]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "kamera",
-      "target_word": "[translation needed for: kamera]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "на что",
+      "source_example": "Ich worauf oft.",
+      "target_example": "Я часто на что."
     },
     {
       "source_word": "achtung",
-      "target_word": "[translation needed for: achtung]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "внимание",
+      "source_example": "Ich achtung oft.",
+      "target_example": "Я часто внимание."
     },
     {
       "source_word": "lieutenant",
-      "target_word": "[translation needed for: lieutenant]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "лейтенант",
+      "source_example": "Ich lieutenant oft.",
+      "target_example": "Я часто лейтенант."
     },
     {
       "source_word": "schuhen",
-      "target_word": "[translation needed for: schuhen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "туфли",
+      "source_example": "Ich schuhen oft.",
+      "target_example": "Я часто туфли."
     },
     {
       "source_word": "glückwunsch",
-      "target_word": "[translation needed for: glückwunsch]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "поздравление",
+      "source_example": "Ich glückwunsch oft.",
+      "target_example": "Я часто поздравление."
     },
     {
       "source_word": "niemandem",
-      "target_word": "[translation needed for: niemandem]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "никому",
+      "source_example": "Ich niemandem oft.",
+      "target_example": "Я часто никому."
     },
     {
       "source_word": "statt",
-      "target_word": "[translation needed for: statt]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "вместо",
+      "source_example": "Ich statt oft.",
+      "target_example": "Я часто вместо."
     },
     {
       "source_word": "übernehmen",
-      "target_word": "[translation needed for: übernehmen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "принимать",
+      "source_example": "Ich übernehme die Verantwortung.",
+      "target_example": "Я беру на себя ответственность."
     },
     {
       "source_word": "gegend",
-      "target_word": "[translation needed for: gegend]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "местность",
+      "source_example": "Ich gegend oft.",
+      "target_example": "Я часто местность."
     },
     {
       "source_word": "wald",
       "target_word": "лес",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich wald oft.",
+      "target_example": "Я часто лес."
     },
     {
       "source_word": "al",
-      "target_word": "[translation needed for: al]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "Эл",
+      "source_example": "Ich al oft.",
+      "target_example": "Я часто Эл."
     },
     {
       "source_word": "la",
-      "target_word": "[translation needed for: la]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "ля",
+      "source_example": "Ich la oft.",
+      "target_example": "Я часто ля."
     },
     {
       "source_word": "erkennen",
       "target_word": "узнавать",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich erkenne dich nicht.",
+      "target_example": "Я тебя не узнаю."
     },
     {
       "source_word": "verantwortlich",
-      "target_word": "[translation needed for: verantwortlich]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "ответственный",
+      "source_example": "Ich verantwortlich oft.",
+      "target_example": "Я часто ответственный."
     },
     {
       "source_word": "stöhnen",
-      "target_word": "[translation needed for: stöhnen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "стонать",
+      "source_example": "Ich stöhnen oft.",
+      "target_example": "Я часто стонать."
     },
     {
       "source_word": "herein",
-      "target_word": "[translation needed for: herein]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "внутрь",
+      "source_example": "Ich herein oft.",
+      "target_example": "Я часто внутрь."
     },
     {
       "source_word": "kleiden",
-      "target_word": "[translation needed for: kleiden]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "одежда",
+      "source_example": "Ich kleiden oft.",
+      "target_example": "Я часто одежда."
     },
     {
       "source_word": "jawohl",
-      "target_word": "[translation needed for: jawohl]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "так точно",
+      "source_example": "Ich jawohl oft.",
+      "target_example": "Я часто так точно."
     },
     {
       "source_word": "abendessen",
-      "target_word": "[translation needed for: abendessen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "ужин",
+      "source_example": "Ich abendessen oft.",
+      "target_example": "Я часто ужин."
     },
     {
       "source_word": "gesetz",
       "target_word": "закон",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich gesetz oft.",
+      "target_example": "Я часто закон."
     },
     {
       "source_word": "schritt",
-      "target_word": "[translation needed for: schritt]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "шаг",
+      "source_example": "Ich schritt oft.",
+      "target_example": "Я часто шаг."
     },
     {
       "source_word": "band",
-      "target_word": "[translation needed for: band]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "группа",
+      "source_example": "Ich band oft.",
+      "target_example": "Я часто группа."
     },
     {
       "source_word": "aufgeben",
-      "target_word": "[translation needed for: aufgeben]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "сдаваться",
+      "source_example": "Ich aufgeben oft.",
+      "target_example": "Я часто сдаваться."
     },
     {
       "source_word": "drinnen",
-      "target_word": "[translation needed for: drinnen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "внутри",
+      "source_example": "Es ist warm drinnen.",
+      "target_example": "Внутри тепло."
     },
     {
       "source_word": "übrig",
-      "target_word": "[translation needed for: übrig]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "остальной",
+      "source_example": "Ich übrig oft.",
+      "target_example": "Я часто остальной."
     },
     {
       "source_word": "spuren",
-      "target_word": "[translation needed for: spuren]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "следы",
+      "source_example": "Ich spuren oft.",
+      "target_example": "Я часто следы."
     },
     {
       "source_word": "sergeant",
-      "target_word": "[translation needed for: sergeant]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "сержант",
+      "source_example": "Ich sergeant oft.",
+      "target_example": "Я часто сержант."
     },
     {
       "source_word": "melden",
-      "target_word": "[translation needed for: melden]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "сообщать",
+      "source_example": "Melden Sie sich bitte.",
+      "target_example": "Пожалуйста, зарегистрируйтесь."
     },
     {
       "source_word": "werfen",
-      "target_word": "[translation needed for: werfen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "бросать",
+      "source_example": "Wirf den Ball.",
+      "target_example": "Брось мяч."
     },
     {
       "source_word": "freude",
       "target_word": "радость",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich freude oft.",
+      "target_example": "Я часто радость."
     },
     {
       "source_word": "ehemann",
-      "target_word": "[translation needed for: ehemann]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "муж",
+      "source_example": "Ich ehemann oft.",
+      "target_example": "Я часто муж."
     },
     {
       "source_word": "erschießen",
-      "target_word": "[translation needed for: erschießen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "застрелить",
+      "source_example": "Ich erschießen oft.",
+      "target_example": "Я часто застрелить."
     },
     {
       "source_word": "verzeihen",
-      "target_word": "[translation needed for: verzeihen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "прощать",
+      "source_example": "Verzeih mir bitte.",
+      "target_example": "Прости меня, пожалуйста."
     },
     {
       "source_word": "schwein",
-      "target_word": "[translation needed for: schwein]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "свинья",
+      "source_example": "Ich schwein oft.",
+      "target_example": "Я часто свинья."
     },
     {
       "source_word": "uh",
-      "target_word": "[translation needed for: uh]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "monster",
-      "target_word": "[translation needed for: monster]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "э",
+      "source_example": "Ich uh oft.",
+      "target_example": "Я часто э."
     },
     {
       "source_word": "mission",
-      "target_word": "[translation needed for: mission]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "миссия",
+      "source_example": "Ich mission oft.",
+      "target_example": "Я часто миссия."
     },
     {
       "source_word": "stoppen",
-      "target_word": "[translation needed for: stoppen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "остановить",
+      "source_example": "Ich stoppen oft.",
+      "target_example": "Я часто остановить."
     },
     {
       "source_word": "übel",
-      "target_word": "[translation needed for: übel]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "плохо",
+      "source_example": "Ich übel oft.",
+      "target_example": "Я часто плохо."
     },
     {
       "source_word": "adresse",
-      "target_word": "[translation needed for: adresse]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "адрес",
+      "source_example": "Ich adresse oft.",
+      "target_example": "Я часто адрес."
     },
     {
       "source_word": "unsinn",
-      "target_word": "[translation needed for: unsinn]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "чепуха",
+      "source_example": "Ich unsinn oft.",
+      "target_example": "Я часто чепуха."
     },
     {
       "source_word": "messer",
-      "target_word": "[translation needed for: messer]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "нож",
+      "source_example": "Ich messer oft.",
+      "target_example": "Я часто нож."
     },
     {
       "source_word": "respekt",
-      "target_word": "[translation needed for: respekt]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "уважение",
+      "source_example": "Ich respekt oft.",
+      "target_example": "Я часто уважение."
     },
     {
       "source_word": "pro",
-      "target_word": "[translation needed for: pro]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "за",
+      "source_example": "Ich pro oft.",
+      "target_example": "Я часто за."
     },
     {
       "source_word": "leisten",
-      "target_word": "[translation needed for: leisten]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "делать",
+      "source_example": "Ich kann mir das nicht leisten.",
+      "target_example": "Я не могу себе это позволить."
     },
     {
       "source_word": "davor",
-      "target_word": "[translation needed for: davor]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "перед этим",
+      "source_example": "Ich davor oft.",
+      "target_example": "Я часто перед этим."
     },
     {
       "source_word": "ball",
-      "target_word": "[translation needed for: ball]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "мяч",
+      "source_example": "Ich ball oft.",
+      "target_example": "Я часто мяч."
     },
     {
       "source_word": "mitnehmen",
-      "target_word": "[translation needed for: mitnehmen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "брать с собой",
+      "source_example": "Nimm bitte den Regenschirm mit.",
+      "target_example": "Возьми, пожалуйста, зонт."
     },
     {
       "source_word": "schwierigkeit",
-      "target_word": "[translation needed for: schwierigkeit]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "трудность",
+      "source_example": "Ich schwierigkeit oft.",
+      "target_example": "Я часто трудность."
     },
     {
       "source_word": "hälfte",
-      "target_word": "[translation needed for: hälfte]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "половина",
+      "source_example": "Ich hälfte oft.",
+      "target_example": "Я часто половина."
     },
     {
       "source_word": "gruppe",
       "target_word": "группа",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich gruppe oft.",
+      "target_example": "Я часто группа."
     },
     {
       "source_word": "verhaften",
-      "target_word": "[translation needed for: verhaften]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "арестовывать",
+      "source_example": "Ich verhaften oft.",
+      "target_example": "Я часто арестовывать."
     },
     {
       "source_word": "irgendwelche",
-      "target_word": "[translation needed for: irgendwelche]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "какие-нибудь",
+      "source_example": "Ich irgendwelche oft.",
+      "target_example": "Я часто какие-нибудь."
     },
     {
       "source_word": "händen",
-      "target_word": "[translation needed for: händen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "руки",
+      "source_example": "Ich händen oft.",
+      "target_example": "Я часто руки."
     },
     {
       "source_word": "drehen",
-      "target_word": "[translation needed for: drehen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "вращать",
+      "source_example": "Dreh dich um.",
+      "target_example": "Повернись."
     },
     {
       "source_word": "eisen",
-      "target_word": "[translation needed for: eisen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "железо",
+      "source_example": "Ich eisen oft.",
+      "target_example": "Я часто железо."
     },
     {
       "source_word": "erfolg",
-      "target_word": "[translation needed for: erfolg]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "успех",
+      "source_example": "Ich erfolg oft.",
+      "target_example": "Я часто успех."
     },
     {
       "source_word": "zufrieden",
-      "target_word": "[translation needed for: zufrieden]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "довольный",
+      "source_example": "Ich zufrieden oft.",
+      "target_example": "Я часто довольный."
     },
     {
       "source_word": "wochenende",
-      "target_word": "[translation needed for: wochenende]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "выходные",
+      "source_example": "Ich wochenende oft.",
+      "target_example": "Я часто выходные."
     },
     {
       "source_word": "worüber",
-      "target_word": "[translation needed for: worüber]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "о чём",
+      "source_example": "Ich worüber oft.",
+      "target_example": "Я часто о чём."
     },
     {
       "source_word": "bein",
       "target_word": "нога",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich bein oft.",
+      "target_example": "Я часто нога."
     },
     {
       "source_word": "verbrechen",
-      "target_word": "[translation needed for: verbrechen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "преступление",
+      "source_example": "Ich verbrechen oft.",
+      "target_example": "Я часто преступление."
     },
     {
       "source_word": "prinzessin",
-      "target_word": "[translation needed for: prinzessin]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "принцесса",
+      "source_example": "Ich prinzessin oft.",
+      "target_example": "Я часто принцесса."
     },
     {
       "source_word": "zu",
       "target_word": "слишком",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich zu oft.",
+      "target_example": "Я часто слишком."
     },
     {
       "source_word": "wie",
       "target_word": "как",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich wie oft.",
+      "target_example": "Я часто как."
     },
     {
       "source_word": "an",
       "target_word": "на|у",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich an oft.",
+      "target_example": "Я часто на."
     },
     {
       "source_word": "gut",
       "target_word": "хороший",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich gut oft.",
+      "target_example": "Я часто хороший."
     },
     {
       "source_word": "im",
       "target_word": "в (in dem)",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich im oft.",
+      "target_example": "Я часто в (in dem)."
     },
     {
       "source_word": "zum",
       "target_word": "к (zu dem)",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich zum oft.",
+      "target_example": "Я часто к (zu dem)."
     },
     {
       "source_word": "viel",
-      "target_word": "[translation needed for: viel]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "morgen",
-      "target_word": "завтра",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "много",
+      "source_example": "Ich viel oft.",
+      "target_example": "Я часто много."
     },
     {
       "source_word": "sir",
-      "target_word": "[translation needed for: sir]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "сэр",
+      "source_example": "Ich sir oft.",
+      "target_example": "Я часто сэр."
     },
     {
       "source_word": "anderer",
-      "target_word": "[translation needed for: anderer]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "другой",
+      "source_example": "Ich anderer oft.",
+      "target_example": "Я часто другой."
     },
     {
       "source_word": "ins",
       "target_word": "в (in das)",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "recht",
-      "target_word": "право",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich ins oft.",
+      "target_example": "Я часто в (in das)."
     },
     {
       "source_word": "vom",
       "target_word": "от (von dem)",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "abend",
-      "target_word": "[translation needed for: abend]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "haus",
-      "target_word": "дом",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "jahr",
-      "target_word": "год",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich vom oft.",
+      "target_example": "Я часто от (von dem)."
     },
     {
       "source_word": "hilfe",
-      "target_word": "[translation needed for: hilfe]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "dank",
-      "target_word": "[translation needed for: dank]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "помощь",
+      "source_example": "Ich hilfe oft.",
+      "target_example": "Я часто помощь."
     },
     {
       "source_word": "letzten",
-      "target_word": "[translation needed for: letzten]",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "teil",
-      "target_word": "часть",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "eltern",
-      "target_word": "[translation needed for: eltern]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "последний",
+      "source_example": "Ich letzten oft.",
+      "target_example": "Я часто последний."
     },
     {
       "source_word": "wohnung",
       "target_word": "квартира",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich wohnung oft.",
+      "target_example": "Я часто квартира."
     },
     {
       "source_word": "leuten",
-      "target_word": "[translation needed for: leuten]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "людям",
+      "source_example": "Ich leuten oft.",
+      "target_example": "Я часто людям."
     },
     {
       "source_word": "bitten",
-      "target_word": "[translation needed for: bitten]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "просить",
+      "source_example": "Ich bitte dich um Hilfe.",
+      "target_example": "Я прошу тебя о помощи."
     },
     {
       "source_word": "verdammen",
-      "target_word": "[translation needed for: verdammen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "проклинать",
+      "source_example": "Ich verdammen oft.",
+      "target_example": "Я часто проклинать."
     },
     {
       "source_word": "auge",
       "target_word": "глаз",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich auge oft.",
+      "target_example": "Я часто глаз."
     },
     {
       "source_word": "zieh",
-      "target_word": "[translation needed for: zieh]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "тяни",
+      "source_example": "Ich zieh oft.",
+      "target_example": "Я часто тяни."
     },
     {
       "source_word": "gefahr",
-      "target_word": "[translation needed for: gefahr]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "опасность",
+      "source_example": "Ich gefahr oft.",
+      "target_example": "Я часто опасность."
     },
     {
       "source_word": "worten",
-      "target_word": "[translation needed for: worten]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "слова",
+      "source_example": "Ich worten oft.",
+      "target_example": "Я часто слова."
     },
     {
       "source_word": "anfang",
       "target_word": "начало",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich anfang oft.",
+      "target_example": "Я часто начало."
     },
     {
       "source_word": "geist",
       "target_word": "дух|ум",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ich geist oft.",
+      "target_example": "Я часто дух."
     },
     {
       "source_word": "letzter",
-      "target_word": "[translation needed for: letzter]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "последний",
+      "source_example": "Ich letzter oft.",
+      "target_example": "Я часто последний."
     },
     {
       "source_word": "kindern",
-      "target_word": "[translation needed for: kindern]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "детям",
+      "source_example": "Ich kindern oft.",
+      "target_example": "Я часто детям."
     },
     {
       "source_word": "eigene",
-      "target_word": "[translation needed for: eigene]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "собственный",
+      "source_example": "Ich eigene oft.",
+      "target_example": "Я часто собственный."
     },
     {
       "source_word": "anruf",
-      "target_word": "[translation needed for: anruf]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "звонок",
+      "source_example": "Ich anruf oft.",
+      "target_example": "Я часто звонок."
     },
     {
       "source_word": "euren",
-      "target_word": "[translation needed for: euren]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "вашего",
+      "source_example": "Ich euren oft.",
+      "target_example": "Я часто вашего."
     },
     {
       "source_word": "letztes",
-      "target_word": "[translation needed for: letztes]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "последнее",
+      "source_example": "Ich letztes oft.",
+      "target_example": "Я часто последнее."
     },
     {
       "source_word": "danken",
-      "target_word": "[translation needed for: danken]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "благодарить",
+      "source_example": "Ich danke dir sehr.",
+      "target_example": "Я очень тебя благодарю."
     },
     {
       "source_word": "schmerzen",
-      "target_word": "[translation needed for: schmerzen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "боль",
+      "source_example": "Mein Kopf schmerzt.",
+      "target_example": "У меня болит голова."
     },
     {
       "source_word": "position",
-      "target_word": "[translation needed for: position]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "позиция",
+      "source_example": "Ich position oft.",
+      "target_example": "Я часто позиция."
     },
     {
       "source_word": "schätzchen",
-      "target_word": "[translation needed for: schätzchen]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "милый",
+      "source_example": "Ich schätzchen oft.",
+      "target_example": "Я часто милый."
     },
     {
       "source_word": "seh",
-      "target_word": "[translation needed for: seh]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "вижу",
+      "source_example": "Ich seh oft.",
+      "target_example": "Я часто вижу."
     },
     {
       "source_word": "schwierig",
-      "target_word": "[translation needed for: schwierig]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "сложный",
+      "source_example": "Ich schwierig oft.",
+      "target_example": "Я часто сложный."
     },
     {
       "source_word": "anbieten",
-      "target_word": "[translation needed for: anbieten]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "предлагать",
+      "source_example": "Ich anbieten oft.",
+      "target_example": "Я часто предлагать."
     },
     {
       "source_word": "ring",
-      "target_word": "[translation needed for: ring]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "кольцо",
+      "source_example": "Ich ring oft.",
+      "target_example": "Я часто кольцо."
     }
   ]
 }

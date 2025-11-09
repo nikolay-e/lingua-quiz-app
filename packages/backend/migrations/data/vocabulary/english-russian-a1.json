@@ -4152,1130 +4152,1130 @@
     {
       "source_word": "the",
       "target_word": "определённый артикль",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "The sky is blue.",
+      "target_example": "Небо голубое."
     },
     {
       "source_word": "to",
       "target_word": "к|в",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "I want to go.",
+      "target_example": "Я хочу пойти."
     },
     {
       "source_word": "it",
       "target_word": "это|оно",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "I like it.",
+      "target_example": "Мне это нравится."
     },
     {
       "source_word": "and",
       "target_word": "и",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "You and me.",
+      "target_example": "Ты и я."
     },
     {
       "source_word": "'t",
       "target_word": "не (сокращение)",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "I don't know.",
+      "target_example": "Я не знаю."
     },
     {
       "source_word": "of",
       "target_word": "из|от",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "A cup of tea.",
+      "target_example": "Чашка чая."
     },
     {
       "source_word": "in",
       "target_word": "в",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "I am in the room.",
+      "target_example": "Я в комнате."
     },
     {
       "source_word": "we",
       "target_word": "мы",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "We are friends.",
+      "target_example": "Мы друзья."
     },
     {
       "source_word": "my",
       "target_word": "мой|моя|моё",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "This is my house.",
+      "target_example": "Это мой дом."
     },
     {
       "source_word": "on",
       "target_word": "на",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "The book is on the table.",
+      "target_example": "Книга на столе."
     },
     {
       "source_word": "have",
       "target_word": "иметь",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "I have a cat.",
+      "target_example": "У меня есть кошка."
     },
     {
       "source_word": "no",
       "target_word": "нет|не",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "No, thank you.",
+      "target_example": "Нет, спасибо."
     },
     {
       "source_word": "so",
       "target_word": "так|поэтому",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "I am so happy.",
+      "target_example": "Я так счастлив."
     },
     {
       "source_word": "like",
       "target_word": "нравиться|любить",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "I like coffee.",
+      "target_example": "Я люблю кофе."
     },
     {
       "source_word": "up",
       "target_word": "вверх|наверху",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Wake up!",
+      "target_example": "Просыпайся!"
     },
     {
       "source_word": "at",
       "target_word": "в|у|на",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "I am at home.",
+      "target_example": "Я дома."
     },
     {
       "source_word": "okay",
       "target_word": "ладно|хорошо",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Okay, I agree.",
+      "target_example": "Хорошо, я согласен."
     },
     {
       "source_word": "or",
       "target_word": "или",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Tea or coffee?",
+      "target_example": "Чай или кофе?"
     },
     {
       "source_word": "last",
       "target_word": "последний",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "This is the last one.",
+      "target_example": "Это последний."
     },
     {
       "source_word": "kind",
       "target_word": "вид|род",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "You are very kind.",
+      "target_example": "Ты очень добрый."
     },
     {
       "source_word": "ok",
       "target_word": "ладно|хорошо",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ok, let's go.",
+      "target_example": "Ладно, пойдём."
     },
     {
       "source_word": "might",
       "target_word": "мог бы",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "I might come.",
+      "target_example": "Я, возможно, приду."
     },
     {
       "source_word": "next",
       "target_word": "следующий",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Next time.",
+      "target_example": "В следующий раз."
     },
     {
       "source_word": "hi",
       "target_word": "привет",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Hi, how are you?",
+      "target_example": "Привет, как дела?"
     },
     {
       "source_word": "wasn",
       "target_word": "не (was not)",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "I wasn't there.",
+      "target_example": "Меня там не было."
     },
     {
       "source_word": "wouldn",
       "target_word": "не (would not)",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "I wouldn't do that.",
+      "target_example": "Я бы этого не сделал."
     },
     {
       "source_word": "already",
       "target_word": "уже",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "I already know this.",
+      "target_example": "Я уже знаю это."
     },
     {
       "source_word": "such",
       "target_word": "такой",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Such a nice day.",
+      "target_example": "Такой прекрасный день."
     },
     {
       "source_word": "haven",
       "target_word": "не (have not)",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "I haven't seen it.",
+      "target_example": "Я этого не видел."
     },
     {
       "source_word": "yet",
       "target_word": "ещё|уже",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Not yet.",
+      "target_example": "Ещё нет."
     },
     {
       "source_word": "whole",
       "target_word": "целый|весь",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "The whole world.",
+      "target_example": "Весь мир."
     },
     {
       "source_word": "while",
       "target_word": "пока|в то время как",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Wait a while.",
+      "target_example": "Подожди немного."
     },
     {
       "source_word": "since",
       "target_word": "с|с тех пор как",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Since yesterday.",
+      "target_example": "Со вчерашнего дня."
     },
     {
       "source_word": "alone",
-      "target_word": "[translation needed for: alone]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "один|одна|одинокий",
+      "source_example": "I want to be alone.",
+      "target_example": "Я хочу побыть один."
     },
     {
       "source_word": "myself",
-      "target_word": "[translation needed for: myself]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "я сам|сам|себя",
+      "source_example": "I did it myself.",
+      "target_example": "Я сделал это сам."
     },
     {
       "source_word": "excuse",
-      "target_word": "[translation needed for: excuse]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "извинение|предлог|оправдание",
+      "source_example": "Excuse me.",
+      "target_example": "Извините."
     },
     {
       "source_word": "worry",
       "target_word": "беспокоиться",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Don't worry.",
+      "target_example": "Не волнуйся."
     },
     {
       "source_word": "second",
-      "target_word": "[translation needed for: second]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "секунда|второй",
+      "source_example": "Wait a second.",
+      "target_example": "Подожди секунду."
     },
     {
       "source_word": "whatever",
-      "target_word": "[translation needed for: whatever]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "что угодно|всё равно что|какой бы ни",
+      "source_example": "Whatever you say.",
+      "target_example": "Что бы ты ни сказал."
     },
     {
       "source_word": "shut",
-      "target_word": "[translation needed for: shut]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "закрывать|закрыть|заткнуться",
+      "source_example": "Shut the door.",
+      "target_example": "Закрой дверь."
     },
     {
       "source_word": "aren",
       "target_word": "не (are not)",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "We aren't ready.",
+      "target_example": "Мы не готовы."
     },
     {
       "source_word": "means",
-      "target_word": "[translation needed for: means]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "средства|способы|значит",
+      "source_example": "This means yes.",
+      "target_example": "Это означает да."
     },
     {
       "source_word": "anyway",
-      "target_word": "[translation needed for: anyway]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "в любом случае|всё равно|так или иначе",
+      "source_example": "Anyway, let's go.",
+      "target_example": "В любом случае, пойдём."
     },
     {
       "source_word": "ain",
-      "target_word": "[translation needed for: ain]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "не|нет",
+      "source_example": "I ain't going.",
+      "target_example": "Я не пойду."
     },
     {
       "source_word": "against",
-      "target_word": "[translation needed for: against]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "против|напротив",
+      "source_example": "Against the wall.",
+      "target_example": "У стены."
     },
     {
       "source_word": "shall",
-      "target_word": "[translation needed for: shall]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "должен|следует",
+      "source_example": "Shall we go?",
+      "target_example": "Пойдём?"
     },
     {
       "source_word": "least",
-      "target_word": "[translation needed for: least]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "наименьший|меньше всего|хотя бы",
+      "source_example": "At least try.",
+      "target_example": "Хотя бы попробуй."
     },
     {
       "source_word": "waiting",
-      "target_word": "[translation needed for: waiting]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "ожидание|ждать",
+      "source_example": "I am waiting.",
+      "target_example": "Я жду."
     },
     {
       "source_word": "hurt",
-      "target_word": "[translation needed for: hurt]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "боль|ранить|причинять боль",
+      "source_example": "My leg hurts.",
+      "target_example": "Моя нога болит."
     },
     {
       "source_word": "side",
       "target_word": "сторона",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "On this side.",
+      "target_example": "С этой стороны."
     },
     {
       "source_word": "though",
-      "target_word": "[translation needed for: though]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "хотя|однако|всё же",
+      "source_example": "Though I try.",
+      "target_example": "Хотя я стараюсь."
     },
     {
       "source_word": "suppose",
-      "target_word": "[translation needed for: suppose]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "полагать|предполагать|думать",
+      "source_example": "I suppose so.",
+      "target_example": "Полагаю, да."
     },
     {
       "source_word": "almost",
       "target_word": "почти",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Almost ready.",
+      "target_example": "Почти готов."
     },
     {
       "source_word": "anymore",
-      "target_word": "[translation needed for: anymore]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "больше не|уже не",
+      "source_example": "Not anymore.",
+      "target_example": "Больше нет."
     },
     {
       "source_word": "trouble",
-      "target_word": "[translation needed for: trouble]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "проблема|беда|неприятность|затруднение",
+      "source_example": "No trouble.",
+      "target_example": "Нет проблем."
     },
     {
       "source_word": "wow",
-      "target_word": "[translation needed for: wow]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "ого|вау",
+      "source_example": "Wow, that's great!",
+      "target_example": "Вау, это здорово!"
     },
     {
       "source_word": "either",
-      "target_word": "[translation needed for: either]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "либо|тоже|также|любой из двух",
+      "source_example": "Either one is fine.",
+      "target_example": "Любой подойдёт."
     },
     {
       "source_word": "seem",
       "target_word": "казаться",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "You seem happy.",
+      "target_example": "Ты кажешься счастливым."
     },
     {
       "source_word": "whoa",
-      "target_word": "[translation needed for: whoa]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "стоп|эй|ого",
+      "source_example": "Whoa, slow down!",
+      "target_example": "Ого, помедленнее!"
     },
     {
       "source_word": "honey",
-      "target_word": "[translation needed for: honey]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "дорогой|дорогая|мёд",
+      "source_example": "Hello, honey.",
+      "target_example": "Привет, дорогой."
     },
     {
       "source_word": "stupid",
-      "target_word": "[translation needed for: stupid]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "глупый|тупой|глупость",
+      "source_example": "Don't be stupid.",
+      "target_example": "Не будь глупым."
     },
     {
       "source_word": "hurry",
-      "target_word": "[translation needed for: hurry]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "спешить|торопиться|спешка",
+      "source_example": "Hurry up!",
+      "target_example": "Поторопись!"
     },
     {
       "source_word": "along",
-      "target_word": "[translation needed for: along]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "вдоль|с собой|вместе",
+      "source_example": "Come along.",
+      "target_example": "Пойдём со мной."
     },
     {
       "source_word": "captain",
-      "target_word": "[translation needed for: captain]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "капитан",
+      "source_example": "Yes, captain.",
+      "target_example": "Да, капитан."
     },
     {
       "source_word": "alive",
-      "target_word": "[translation needed for: alive]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "живой|живущий",
+      "source_example": "I am alive.",
+      "target_example": "Я живой."
     },
     {
       "source_word": "ahead",
-      "target_word": "[translation needed for: ahead]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "вперёд|впереди",
+      "source_example": "Go ahead.",
+      "target_example": "Проходите."
     },
     {
       "source_word": "sigh",
-      "target_word": "[translation needed for: sigh]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "вздох|вздыхать",
+      "source_example": "He let out a sigh.",
+      "target_example": "Он вздохнул."
     },
     {
       "source_word": "sort",
       "target_word": "вид|сорт",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "What sort is it?",
+      "target_example": "Какого это типа?"
     },
     {
       "source_word": "shouldn",
       "target_word": "не (should not)",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "You shouldn't do that.",
+      "target_example": "Тебе не следует так делать."
     },
     {
       "source_word": "running",
-      "target_word": "[translation needed for: running]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "бег|бегущий|работающий",
+      "source_example": "I am running.",
+      "target_example": "Я бегу."
     },
     {
       "source_word": "boss",
-      "target_word": "[translation needed for: boss]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "босс|начальник|шеф",
+      "source_example": "My boss is kind.",
+      "target_example": "Мой босс добрый."
     },
     {
       "source_word": "alright",
-      "target_word": "[translation needed for: alright]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "хорошо|нормально|ладно",
+      "source_example": "Alright, let's start.",
+      "target_example": "Хорошо, давай начнём."
     },
     {
       "source_word": "promise",
-      "target_word": "[translation needed for: promise]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "обещание|обещать",
+      "source_example": "I promise.",
+      "target_example": "Я обещаю."
     },
     {
       "source_word": "anybody",
-      "target_word": "[translation needed for: anybody]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "кто-нибудь|любой",
+      "source_example": "Is anybody home?",
+      "target_example": "Кто-нибудь дома?"
     },
     {
       "source_word": "'cause",
-      "target_word": "[translation needed for: 'cause]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "потому что|так как",
+      "source_example": "I'm leaving 'cause I'm tired.",
+      "target_example": "Я ухожу, потому что устал."
     },
     {
       "source_word": "himself",
-      "target_word": "[translation needed for: himself]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "себя|сам|он сам",
+      "source_example": "He did it himself.",
+      "target_example": "Он сделал это сам."
     },
     {
       "source_word": "perhaps",
       "target_word": "возможно",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Perhaps tomorrow.",
+      "target_example": "Возможно, завтра."
     },
     {
       "source_word": "serious",
-      "target_word": "[translation needed for: serious]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "серьёзный|важный",
+      "source_example": "This is serious.",
+      "target_example": "Это серьёзно."
     },
     {
       "source_word": "scared",
-      "target_word": "[translation needed for: scared]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "испуганный|напуганный",
+      "source_example": "I am scared.",
+      "target_example": "Я напуган."
     },
     {
       "source_word": "shoot",
-      "target_word": "[translation needed for: shoot]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "стрелять|снимать|застрелить",
+      "source_example": "Don't shoot!",
+      "target_example": "Не стреляй!"
     },
     {
       "source_word": "touch",
-      "target_word": "[translation needed for: touch]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "трогать|касаться|прикосновение",
+      "source_example": "Don't touch it.",
+      "target_example": "Не трогай это."
     },
     {
       "source_word": "top",
-      "target_word": "[translation needed for: top]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "верх|верхушка|вершина|лучший",
+      "source_example": "At the top.",
+      "target_example": "Наверху."
     },
     {
       "source_word": "glad",
-      "target_word": "[translation needed for: glad]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "рад|радостный",
+      "source_example": "I am glad to see you.",
+      "target_example": "Я рад тебя видеть."
     },
     {
       "source_word": "luck",
-      "target_word": "[translation needed for: luck]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "удача|везение",
+      "source_example": "Good luck!",
+      "target_example": "Удачи!"
     },
     {
       "source_word": "murder",
-      "target_word": "[translation needed for: murder]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "убийство|убивать",
+      "source_example": "This is a murder case.",
+      "target_example": "Это дело об убийстве."
     },
     {
       "source_word": "daddy",
-      "target_word": "[translation needed for: daddy]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "папа|папочка",
+      "source_example": "Where is daddy?",
+      "target_example": "Где папа?"
     },
     {
       "source_word": "chuckle",
-      "target_word": "[translation needed for: chuckle]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "хихикать|смеяться|усмешка",
+      "source_example": "He gave a chuckle.",
+      "target_example": "Он хихикнул."
     },
     {
       "source_word": "hang",
-      "target_word": "[translation needed for: hang]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "висеть|вешать|повесить",
+      "source_example": "Hang on a second.",
+      "target_example": "Подожди секунду."
     },
     {
       "source_word": "till",
-      "target_word": "[translation needed for: till]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "до|пока не|касса",
+      "source_example": "Wait till tomorrow.",
+      "target_example": "Жди до завтра."
     },
     {
       "source_word": "catch",
       "target_word": "ловить",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Catch the ball!",
+      "target_example": "Лови мяч!"
     },
     {
       "source_word": "master",
-      "target_word": "[translation needed for: master]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "мастер|хозяин|осваивать",
+      "source_example": "He is the master.",
+      "target_example": "Он мастер."
     },
     {
       "source_word": "dream",
-      "target_word": "[translation needed for: dream]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "мечта|сон|мечтать|сниться",
+      "source_example": "I have a dream.",
+      "target_example": "У меня есть мечта."
     },
     {
       "source_word": "sweet",
-      "target_word": "[translation needed for: sweet]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "сладкий|милый|сладость",
+      "source_example": "This is sweet.",
+      "target_example": "Это сладкое."
     },
     {
       "source_word": "rather",
-      "target_word": "[translation needed for: rather]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "скорее|довольно|лучше",
+      "source_example": "I would rather stay.",
+      "target_example": "Я предпочёл бы остаться."
     },
     {
       "source_word": "lucky",
-      "target_word": "[translation needed for: lucky]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "счастливый|удачливый|везучий",
+      "source_example": "You are lucky.",
+      "target_example": "Тебе повезло."
     },
     {
       "source_word": "somewhere",
-      "target_word": "[translation needed for: somewhere]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "где-то|куда-то",
+      "source_example": "Somewhere far.",
+      "target_example": "Где-то далеко."
     },
     {
       "source_word": "calling",
-      "target_word": "[translation needed for: calling]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "призвание|звонок|зовущий",
+      "source_example": "Someone is calling.",
+      "target_example": "Кто-то звонит."
     },
     {
       "source_word": "less",
       "target_word": "меньше",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Less is more.",
+      "target_example": "Меньше значит больше."
     },
     {
       "source_word": "pull",
       "target_word": "тянуть",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Pull the door.",
+      "target_example": "Потяни дверь."
     },
     {
       "source_word": "beat",
-      "target_word": "[translation needed for: beat]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "бить|побеждать|удар|ритм",
+      "source_example": "Don't beat him!",
+      "target_example": "Не бей его!"
     },
     {
       "source_word": "careful",
-      "target_word": "[translation needed for: careful]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "осторожный|внимательный|аккуратный",
+      "source_example": "Be careful!",
+      "target_example": "Будь осторожен!"
     },
     {
       "source_word": "secret",
-      "target_word": "[translation needed for: secret]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "секрет|тайна|секретный",
+      "source_example": "I have a secret.",
+      "target_example": "У меня есть секрет."
     },
     {
       "source_word": "ooh",
-      "target_word": "[translation needed for: ooh]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "ох|о|ого",
+      "source_example": "Ooh, that's nice!",
+      "target_example": "О, это здорово!"
     },
     {
       "source_word": "gentleman",
-      "target_word": "[translation needed for: gentleman]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "джентльмен|господин",
+      "source_example": "He is a gentleman.",
+      "target_example": "Он джентльмен."
     },
     {
       "source_word": "calm",
-      "target_word": "[translation needed for: calm]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "спокойный|спокойствие|успокаивать",
+      "source_example": "Please calm down.",
+      "target_example": "Пожалуйста, успокойся."
     },
     {
       "source_word": "mad",
-      "target_word": "[translation needed for: mad]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "сумасшедший|безумный|злой",
+      "source_example": "Are you mad?",
+      "target_example": "Ты злишься?"
     },
     {
       "source_word": "drop",
-      "target_word": "[translation needed for: drop]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "капля|бросать|ронять|падать",
+      "source_example": "Don't drop it!",
+      "target_example": "Не урони это!"
     },
     {
       "source_word": "absolutely",
-      "target_word": "[translation needed for: absolutely]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "абсолютно|совершенно",
+      "source_example": "Absolutely right!",
+      "target_example": "Абсолютно верно!"
     },
     {
       "source_word": "throw",
       "target_word": "бросать",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Throw the ball.",
+      "target_example": "Брось мяч."
     },
     {
       "source_word": "wonder",
-      "target_word": "[translation needed for: wonder]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "чудо|удивляться|задаваться вопросом",
+      "source_example": "I wonder why.",
+      "target_example": "Интересно, почему."
     },
     {
       "source_word": "darling",
-      "target_word": "[translation needed for: darling]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "дорогой|дорогая|любимый",
+      "source_example": "Hello, darling.",
+      "target_example": "Привет, дорогая."
     },
     {
       "source_word": "president",
-      "target_word": "[translation needed for: president]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "президент",
+      "source_example": "The president speaks.",
+      "target_example": "Президент говорит."
     },
     {
       "source_word": "none",
-      "target_word": "[translation needed for: none]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "никто|ни один|никакой|ничто",
+      "source_example": "None of them.",
+      "target_example": "Никто из них."
     },
     {
       "source_word": "weird",
-      "target_word": "[translation needed for: weird]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "странный|необычный|чудной",
+      "source_example": "This is weird.",
+      "target_example": "Это странно."
     },
     {
       "source_word": "worried",
-      "target_word": "[translation needed for: worried]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "обеспокоенный|взволнованный",
+      "source_example": "I am worried.",
+      "target_example": "Я волнуюсь."
     },
     {
       "source_word": "missing",
-      "target_word": "[translation needed for: missing]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "отсутствующий|пропавший|не хватает",
+      "source_example": "My dog is missing.",
+      "target_example": "Моя собака пропала."
     },
     {
       "source_word": "wedding",
-      "target_word": "[translation needed for: wedding]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "свадьба|бракосочетание",
+      "source_example": "I go to a wedding.",
+      "target_example": "Я иду на свадьбу."
     },
     {
       "source_word": "strange",
-      "target_word": "[translation needed for: strange]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "странный|необычный|чужой",
+      "source_example": "This is strange.",
+      "target_example": "Это странно."
     },
     {
       "source_word": "'am",
-      "target_word": "[translation needed for: 'am]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "есть|являюсь",
+      "source_example": "I'am here.",
+      "target_example": "Я здесь."
     },
     {
       "source_word": "kiss",
-      "target_word": "[translation needed for: kiss]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "поцелуй|целовать",
+      "source_example": "Give me a kiss.",
+      "target_example": "Поцелуй меня."
     },
     {
       "source_word": "ship",
-      "target_word": "[translation needed for: ship]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "корабль|судно|отправлять",
+      "source_example": "A big ship.",
+      "target_example": "Большой корабль."
     },
     {
       "source_word": "completely",
-      "target_word": "[translation needed for: completely]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "полностью|совершенно|целиком",
+      "source_example": "Completely finished.",
+      "target_example": "Полностью закончено."
     },
     {
       "source_word": "totally",
-      "target_word": "[translation needed for: totally]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "совершенно|полностью|абсолютно",
+      "source_example": "Totally agree.",
+      "target_example": "Полностью согласен."
     },
     {
       "source_word": "forgive",
-      "target_word": "[translation needed for: forgive]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "прощать|простить",
+      "source_example": "Please forgive me.",
+      "target_example": "Пожалуйста, прости меня."
     },
     {
       "source_word": "definitely",
-      "target_word": "[translation needed for: definitely]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "определённо|несомненно|точно",
+      "source_example": "Definitely yes.",
+      "target_example": "Определённо да."
     },
     {
       "source_word": "certainly",
-      "target_word": "[translation needed for: certainly]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "конечно|несомненно|безусловно",
+      "source_example": "Certainly, sir.",
+      "target_example": "Конечно, сэр."
     },
     {
       "source_word": "unless",
-      "target_word": "[translation needed for: unless]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "если не|пока не|разве что",
+      "source_example": "Unless you try.",
+      "target_example": "Если только ты не попробуешь."
     },
     {
       "source_word": "hasn",
       "target_word": "не (has not)",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "He hasn't arrived.",
+      "target_example": "Он не прибыл."
     },
     {
       "source_word": "expect",
       "target_word": "ожидать",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "I expect you tomorrow.",
+      "target_example": "Я жду тебя завтра."
     },
     {
       "source_word": "seriously",
-      "target_word": "[translation needed for: seriously]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "серьёзно|всерьёз",
+      "source_example": "Seriously?",
+      "target_example": "Серьёзно?"
     },
     {
       "source_word": "forever",
-      "target_word": "[translation needed for: forever]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "навсегда|вечно|всегда",
+      "source_example": "I love you forever.",
+      "target_example": "Я люблю тебя вечно."
     },
     {
       "source_word": "except",
-      "target_word": "[translation needed for: except]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "кроме|за исключением",
+      "source_example": "Everyone except me.",
+      "target_example": "Все, кроме меня."
     },
     {
       "source_word": "rock",
-      "target_word": "[translation needed for: rock]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "скала|камень|качать|рок",
+      "source_example": "A big rock.",
+      "target_example": "Большой камень."
     },
     {
       "source_word": "lovely",
-      "target_word": "[translation needed for: lovely]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "милый|прекрасный|чудесный",
+      "source_example": "What a lovely day.",
+      "target_example": "Какой прекрасный день."
     },
     {
       "source_word": "handle",
-      "target_word": "[translation needed for: handle]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "ручка|рукоятка|обращаться|справляться",
+      "source_example": "I can handle it.",
+      "target_example": "Я справлюсь с этим."
     },
     {
       "source_word": "protect",
-      "target_word": "[translation needed for: protect]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "защищать|охранять|оберегать",
+      "source_example": "I protect you.",
+      "target_example": "Я защищаю тебя."
     },
     {
       "source_word": "swear",
-      "target_word": "[translation needed for: swear]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "клясться|ругаться|присягать",
+      "source_example": "I swear it's true.",
+      "target_example": "Клянусь, это правда."
     },
     {
       "source_word": "ring",
-      "target_word": "[translation needed for: ring]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "кольцо|звонок|звонить|звенеть",
+      "source_example": "The phone rings.",
+      "target_example": "Телефон звонит."
     },
     {
       "source_word": "anywhere",
-      "target_word": "[translation needed for: anywhere]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "где-нибудь|куда-нибудь|везде",
+      "source_example": "I can go anywhere.",
+      "target_example": "Я могу пойти куда угодно."
     },
     {
       "source_word": "fair",
-      "target_word": "[translation needed for: fair]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "справедливый|честный|ярмарка|светлый",
+      "source_example": "That's not fair.",
+      "target_example": "Это нечестно."
     },
     {
       "source_word": "fool",
-      "target_word": "[translation needed for: fool]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "дурак|глупец|обманывать|дурачить",
+      "source_example": "Don't be a fool.",
+      "target_example": "Не будь дураком."
     },
     {
       "source_word": "marriage",
-      "target_word": "[translation needed for: marriage]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "брак|женитьба|замужество",
+      "source_example": "A happy marriage.",
+      "target_example": "Счастливый брак."
     },
     {
       "source_word": "fear",
-      "target_word": "[translation needed for: fear]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "страх|бояться|опасаться",
+      "source_example": "I have no fear.",
+      "target_example": "У меня нет страха."
     },
     {
       "source_word": "peace",
-      "target_word": "[translation needed for: peace]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "мир|покой|спокойствие",
+      "source_example": "I want peace.",
+      "target_example": "Я хочу мира."
     },
     {
       "source_word": "normal",
-      "target_word": "[translation needed for: normal]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "нормальный|обычный",
+      "source_example": "This is normal.",
+      "target_example": "Это нормально."
     },
     {
       "source_word": "crime",
-      "target_word": "[translation needed for: crime]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "преступление|криминал",
+      "source_example": "This is a crime.",
+      "target_example": "Это преступление."
     },
     {
       "source_word": "count",
-      "target_word": "[translation needed for: count]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "считать|счёт|подсчёт|граф",
+      "source_example": "Count to ten.",
+      "target_example": "Посчитай до десяти."
     },
     {
       "source_word": "charge",
-      "target_word": "[translation needed for: charge]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "заряд|обвинение|цена|заряжать|обвинять",
+      "source_example": "Who is in charge?",
+      "target_example": "Кто главный?"
     },
     {
       "source_word": "honor",
-      "target_word": "[translation needed for: honor]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "честь|почёт|почитать",
+      "source_example": "It's an honor.",
+      "target_example": "Это честь."
     },
     {
       "source_word": "idiot",
-      "target_word": "[translation needed for: idiot]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "идиот|дурак",
+      "source_example": "Don't be an idiot.",
+      "target_example": "Не будь идиотом."
     },
     {
       "source_word": "surprise",
-      "target_word": "[translation needed for: surprise]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "сюрприз|удивление|удивлять",
+      "source_example": "What a surprise!",
+      "target_example": "Какой сюрприз!"
     },
     {
       "source_word": "tom",
-      "target_word": "[translation needed for: tom]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "Том",
+      "source_example": "Tom is my friend.",
+      "target_example": "Том мой друг."
     },
     {
       "source_word": "accident",
-      "target_word": "[translation needed for: accident]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "авария|несчастный случай|случайность",
+      "source_example": "It was an accident.",
+      "target_example": "Это был несчастный случай."
     },
     {
       "source_word": "detective",
-      "target_word": "[translation needed for: detective]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "детектив|сыщик",
+      "source_example": "He is a detective.",
+      "target_example": "Он детектив."
     },
     {
       "source_word": "prison",
-      "target_word": "[translation needed for: prison]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "тюрьма|заключение",
+      "source_example": "He is in prison.",
+      "target_example": "Он в тюрьме."
     },
     {
       "source_word": "hide",
-      "target_word": "[translation needed for: hide]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "прятать|скрывать|прятаться|шкура",
+      "source_example": "Don't hide from me.",
+      "target_example": "Не прячься от меня."
     },
     {
       "source_word": "whether",
-      "target_word": "[translation needed for: whether]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "ли|будь то|является ли",
+      "source_example": "Whether you like it.",
+      "target_example": "Нравится тебе это или нет."
     },
     {
       "source_word": "brain",
-      "target_word": "[translation needed for: brain]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "мозг|ум",
+      "source_example": "Use your brain.",
+      "target_example": "Используй свой мозг."
     },
     {
       "source_word": "fix",
-      "target_word": "[translation needed for: fix]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "чинить|исправлять|фиксировать",
+      "source_example": "I can fix it.",
+      "target_example": "Я могу починить это."
     },
     {
       "source_word": "proud",
-      "target_word": "[translation needed for: proud]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "гордый|горд|гордиться",
+      "source_example": "I am proud of you.",
+      "target_example": "Я горжусь тобой."
     },
     {
       "source_word": "scream",
-      "target_word": "[translation needed for: scream]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "крик|кричать|вопить",
+      "source_example": "Don't scream!",
+      "target_example": "Не кричи!"
     },
     {
       "source_word": "soul",
-      "target_word": "[translation needed for: soul]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "душа|человек",
+      "source_example": "A kind soul.",
+      "target_example": "Добрая душа."
     },
     {
       "source_word": "fighting",
-      "target_word": "[translation needed for: fighting]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "борьба|бой|сражение",
+      "source_example": "Stop fighting!",
+      "target_example": "Прекратите драться!"
     },
     {
       "source_word": "agent",
-      "target_word": "[translation needed for: agent]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "агент|представитель",
+      "source_example": "He is an agent.",
+      "target_example": "Он агент."
     },
     {
       "source_word": "blow",
-      "target_word": "[translation needed for: blow]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "удар|дуть|взрыв|взрывать",
+      "source_example": "Blow out the candles.",
+      "target_example": "Задуй свечи."
     },
     {
       "source_word": "scene",
-      "target_word": "[translation needed for: scene]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "сцена|место|зрелище",
+      "source_example": "A beautiful scene.",
+      "target_example": "Красивая сцена."
     },
     {
       "source_word": "standing",
-      "target_word": "[translation needed for: standing]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "стояние|положение|стоящий",
+      "source_example": "I am standing.",
+      "target_example": "Я стою."
     },
     {
       "source_word": "killer",
-      "target_word": "[translation needed for: killer]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "убийца|киллер",
+      "source_example": "He is a killer.",
+      "target_example": "Он убийца."
     },
     {
       "source_word": "ice",
-      "target_word": "[translation needed for: ice]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "лёд|мороженое|ледяной",
+      "source_example": "The ice is cold.",
+      "target_example": "Лёд холодный."
     },
     {
       "source_word": "mess",
-      "target_word": "[translation needed for: mess]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "беспорядок|путаница|столовая|портить",
+      "source_example": "What a mess!",
+      "target_example": "Какой беспорядок!"
     },
     {
       "source_word": "tough",
-      "target_word": "[translation needed for: tough]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "жёсткий|трудный|крепкий",
+      "source_example": "This is tough.",
+      "target_example": "Это трудно."
     },
     {
       "source_word": "cell",
-      "target_word": "[translation needed for: cell]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "клетка|камера|ячейка",
+      "source_example": "A prison cell.",
+      "target_example": "Тюремная камера."
     },
     {
       "source_word": "drunk",
-      "target_word": "[translation needed for: drunk]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "пьяный|выпивший",
+      "source_example": "He is drunk.",
+      "target_example": "Он пьян."
     },
     {
       "source_word": "within",
-      "target_word": "[translation needed for: within]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "в|внутри|в течение",
+      "source_example": "Within the city.",
+      "target_example": "В пределах города."
     },
     {
       "source_word": "smell",
-      "target_word": "[translation needed for: smell]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "запах|нюхать|пахнуть",
+      "source_example": "A good smell.",
+      "target_example": "Хороший запах."
     },
     {
       "source_word": "mum",
-      "target_word": "[translation needed for: mum]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "мама|мамочка",
+      "source_example": "My mum is kind.",
+      "target_example": "Моя мама добрая."
     },
     {
       "source_word": "honest",
-      "target_word": "[translation needed for: honest]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "честный|правдивый|откровенный",
+      "source_example": "Be honest with me.",
+      "target_example": "Будь честен со мной."
     },
     {
       "source_word": "judge",
-      "target_word": "[translation needed for: judge]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "судья|судить|оценивать",
+      "source_example": "The judge speaks.",
+      "target_example": "Судья говорит."
     },
     {
       "source_word": "dare",
-      "target_word": "[translation needed for: dare]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "сметь|осмеливаться|вызов",
+      "source_example": "I dare you.",
+      "target_example": "Я тебе бросаю вызов."
     },
     {
       "source_word": "prove",
-      "target_word": "[translation needed for: prove]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "доказывать|подтверждать|оказываться",
+      "source_example": "Prove it to me.",
+      "target_example": "Докажи мне это."
     },
     {
       "source_word": "seat",
-      "target_word": "[translation needed for: seat]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "место|сиденье|усаживать",
+      "source_example": "Take a seat.",
+      "target_example": "Садись."
     },
     {
       "source_word": "i-i",
-      "target_word": "[translation needed for: i-i]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "я-я",
+      "source_example": "I-I don't know.",
+      "target_example": "Я-я не знаю."
     },
     {
       "source_word": "lieutenant",
-      "target_word": "[translation needed for: lieutenant]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "лейтенант",
+      "source_example": "Yes, lieutenant.",
+      "target_example": "Да, лейтенант."
     },
     {
       "source_word": "realize",
       "target_word": "осознавать|понимать",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "I realize it now.",
+      "target_example": "Я понимаю это сейчас."
     },
     {
       "source_word": "lt",
-      "target_word": "[translation needed for: lt]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "лейтенант",
+      "source_example": "Lt. Smith is here.",
+      "target_example": "Лейтенант Смит здесь."
     },
     {
       "source_word": "walking",
-      "target_word": "[translation needed for: walking]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "ходьба|прогулка|идущий",
+      "source_example": "I am walking.",
+      "target_example": "Я иду."
     },
     {
       "source_word": "pleasure",
-      "target_word": "[translation needed for: pleasure]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "удовольствие|радость",
+      "source_example": "It's a pleasure.",
+      "target_example": "Это удовольствие."
     },
     {
       "source_word": "bloody",
-      "target_word": "[translation needed for: bloody]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "кровавый|чёртов|проклятый",
+      "source_example": "This is bloody awful.",
+      "target_example": "Это чертовски ужасно."
     }
   ]
 }

@@ -67,8 +67,8 @@
     {
       "source_word": "o",
       "target_word": "или",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "¿Café o té?",
+      "target_example": "Кофе или чай?"
     },
     {
       "source_word": "desarrollo",
@@ -895,8 +895,8 @@
     {
       "source_word": "si",
       "target_word": "если, да",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Si quieres, vamos.",
+      "target_example": "Если хочешь, пойдём."
     },
     {
       "source_word": "natural",
@@ -1123,8 +1123,8 @@
     {
       "source_word": "ir",
       "target_word": "идти",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Voy a casa.",
+      "target_example": "Я иду домой."
     },
     {
       "source_word": "evitar",
@@ -1231,8 +1231,8 @@
     {
       "source_word": "a",
       "target_word": "к, в, на",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Voy a Madrid.",
+      "target_example": "Я еду в Мадрид."
     },
     {
       "source_word": "cada",
@@ -3541,8 +3541,8 @@
     {
       "source_word": "ya",
       "target_word": "уже, уже да",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ya está listo.",
+      "target_example": "Уже готово."
     },
     {
       "source_word": "ocurrido",
@@ -3865,8 +3865,8 @@
     {
       "source_word": "yo",
       "target_word": "я",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Yo soy estudiante.",
+      "target_example": "Я студент."
     },
     {
       "source_word": "lengua",
@@ -4111,8 +4111,8 @@
     {
       "source_word": "del",
       "target_word": "из (de + el)",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "El libro del profesor.",
+      "target_example": "Книга преподавателя."
     },
     {
       "source_word": "cabo",
@@ -4159,8 +4159,8 @@
     {
       "source_word": "en",
       "target_word": "в, на",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Vivo en Barcelona.",
+      "target_example": "Я живу в Барселоне."
     },
     {
       "source_word": "encima",
@@ -4309,8 +4309,8 @@
     {
       "source_word": "y",
       "target_word": "и",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Tú y yo.",
+      "target_example": "Ты и я."
     },
     {
       "source_word": "maravilloso",
@@ -4393,8 +4393,8 @@
     {
       "source_word": "no",
       "target_word": "нет, не",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "No, gracias.",
+      "target_example": "Нет, спасибо."
     },
     {
       "source_word": "herir",
@@ -4435,8 +4435,8 @@
     {
       "source_word": "para",
       "target_word": "для, чтобы",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Es para ti.",
+      "target_example": "Это для тебя."
     },
     {
       "source_word": "pasado",
@@ -4549,8 +4549,8 @@
     {
       "source_word": "pues",
       "target_word": "ну, итак",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Pues, no sé.",
+      "target_example": "Ну, не знаю."
     },
     {
       "source_word": "que",
@@ -4705,8 +4705,8 @@
     {
       "source_word": "tu",
       "target_word": "твой, твоя",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "¿Dónde está tu libro?",
+      "target_example": "Где твоя книга?"
     },
     {
       "source_word": "través",
@@ -4819,14 +4819,14 @@
     {
       "source_word": "al",
       "target_word": "к, в [a + el]",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Voy al mercado.",
+      "target_example": "Я иду на рынок."
     },
     {
       "source_word": "alma",
       "target_word": "душа",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Un alma pura.",
+      "target_example": "Чистая душа."
     },
     {
       "source_word": "almuerzo",
@@ -4963,8 +4963,8 @@
     {
       "source_word": "corte",
       "target_word": "суд, разрез",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "El corte de pelo.",
+      "target_example": "Стрижка."
     },
     {
       "source_word": "crimen",
@@ -5083,14 +5083,14 @@
     {
       "source_word": "el",
       "target_word": "определённый артикль (мужской род)",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "El libro está aquí.",
+      "target_example": "Книга здесь."
     },
     {
       "source_word": "embargo",
       "target_word": "однако (sin embargo - тем не менее)",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Sin embargo, es posible.",
+      "target_example": "Тем не менее, это возможно."
     },
     {
       "source_word": "emergencia",
@@ -5107,8 +5107,8 @@
     {
       "source_word": "encuentro",
       "target_word": "встреча",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Tengo un encuentro mañana.",
+      "target_example": "У меня встреча завтра."
     },
     {
       "source_word": "enfermera",
@@ -5336,8 +5336,8 @@
     {
       "source_word": "mediante",
       "target_word": "посредством",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Mediante este método.",
+      "target_example": "Посредством этого метода."
     },
     {
       "source_word": "mentir",
@@ -5456,8 +5456,8 @@
     {
       "source_word": "premio",
       "target_word": "приз, награда",
-      "source_example": "",
-      "target_example": ""
+      "source_example": "Ganó un premio.",
+      "target_example": "Он выиграл приз."
     },
     {
       "source_word": "preocupado",
@@ -5728,9 +5728,9 @@
     },
     {
       "source_word": "mio",
-      "target_word": "[translation needed for: mio]",
-      "source_example": "",
-      "target_example": ""
+      "target_word": "мой",
+      "source_example": "Es mio.",
+      "target_example": "Это моё."
     }
   ]
 }

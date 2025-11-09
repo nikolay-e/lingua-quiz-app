@@ -46,12 +46,6 @@
       "target_example": "Администрация университета ввела новое правило."
     },
     {
-      "source_word": "admire",
-      "target_word": "восхищаться",
-      "source_example": "I admire her for her bravery.",
-      "target_example": "Я восхищаюсь ею за ее храбрость."
-    },
-    {
       "source_word": "admit",
       "target_word": "признавать|допускать",
       "source_example": "He admitted his mistake.",
@@ -124,28 +118,10 @@
       "target_example": "Он не пьет алкоголь."
     },
     {
-      "source_word": "alcoholic",
-      "target_word": "алкогольный",
-      "source_example": "Wine and beer are alcoholic drinks.",
-      "target_example": "Вино и пиво - алкогольные напитки."
-    },
-    {
       "source_word": "alternative",
       "target_word": "альтернативный",
       "source_example": "Is there an alternative route?",
       "target_example": "Есть ли альтернативный маршрут?"
-    },
-    {
-      "source_word": "amazed",
-      "target_word": "изумлённый",
-      "source_example": "I was amazed at the result.",
-      "target_example": "Я был изумлен результатом."
-    },
-    {
-      "source_word": "ambition",
-      "target_word": "амбиция|стремление",
-      "source_example": "His ambition was to become a doctor.",
-      "target_example": "Его амбицией было стать врачом."
     },
     {
       "source_word": "analysis",
@@ -164,18 +140,6 @@
       "target_word": "объявление",
       "source_example": "The president made an important announcement.",
       "target_example": "Президент сделал важное объявление."
-    },
-    {
-      "source_word": "annoy",
-      "target_word": "раздражать|надоедать",
-      "source_example": "His constant complaints annoy me.",
-      "target_example": "Его постоянные жалобы меня раздражают."
-    },
-    {
-      "source_word": "annoyed",
-      "target_word": "раздражённый",
-      "source_example": "I was annoyed by the loud noise.",
-      "target_example": "Я был раздражен громким шумом."
     },
     {
       "source_word": "annoying",
@@ -250,12 +214,6 @@
       "target_example": "В отеле дружелюбная атмосфера."
     },
     {
-      "source_word": "attach",
-      "target_word": "прикреплять",
-      "source_example": "Please attach the file to the email.",
-      "target_example": "Пожалуйста, прикрепите файл к письму."
-    },
-    {
       "source_word": "attitude",
       "target_word": "отношение|позиция",
       "source_example": "He has a positive attitude towards his work.",
@@ -308,18 +266,6 @@
       "target_word": "осведомлённый",
       "source_example": "Are you aware of the problem?",
       "target_example": "Вы осведомлены о проблеме?"
-    },
-    {
-      "source_word": "backward",
-      "target_word": "назад",
-      "source_example": "He took a step backward.",
-      "target_example": "Он сделал шаг назад."
-    },
-    {
-      "source_word": "bake",
-      "target_word": "печь",
-      "source_example": "I like to bake cakes.",
-      "target_example": "Я люблю печь торты."
     },
     {
       "source_word": "balance",
@@ -490,12 +436,6 @@
       "target_example": "Дети пускают мыльные пузыри."
     },
     {
-      "source_word": "bury",
-      "target_word": "хоронить|закапывать",
-      "source_example": "The dog buried its bone in the garden.",
-      "target_example": "Собака закопала кость в саду."
-    },
-    {
       "source_word": "by",
       "target_word": "мимо|рядом",
       "source_example": "He walked by without saying hello.",
@@ -536,12 +476,6 @@
       "target_word": "капитан",
       "source_example": "He is the captain of the team.",
       "target_example": "Он капитан команды."
-    },
-    {
-      "source_word": "careless",
-      "target_word": "неосторожный|небрежный",
-      "source_example": "It was careless of him to lose the keys.",
-      "target_example": "С его стороны было неосторожно потерять ключи."
     },
     {
       "source_word": "category",
@@ -628,12 +562,6 @@
       "target_example": "Он обманщик."
     },
     {
-      "source_word": "cheerful",
-      "target_word": "весёлый|радостный",
-      "source_example": "She has a cheerful personality.",
-      "target_example": "У нее веселый характер."
-    },
-    {
       "source_word": "chemical",
       "target_word": "химикат [adj: химический]",
       "source_example": "The factory produces dangerous chemicals.",
@@ -656,12 +584,6 @@
       "target_word": "утверждение|претензия [verb: утверждать]",
       "source_example": "His claim was not supported by evidence.",
       "target_example": "Его утверждение не было подкреплено доказательствами."
-    },
-    {
-      "source_word": "clause",
-      "target_word": "пункт (договора)|предложение (в грамматике)",
-      "source_example": "This is the main clause of the sentence.",
-      "target_example": "Это главное предложение."
     },
     {
       "source_word": "clear",
@@ -778,12 +700,6 @@
       "target_example": "Он очень конкурентоспособный человек."
     },
     {
-      "source_word": "competitor",
-      "target_word": "конкурент|соперник",
-      "source_example": "They are our main competitors.",
-      "target_example": "Они наши главные конкуренты."
-    },
-    {
       "source_word": "complaint",
       "target_word": "жалоба",
       "source_example": "I want to make a complaint.",
@@ -800,12 +716,6 @@
       "target_word": "концентрироваться|сосредоточиваться",
       "source_example": "I can't concentrate with all this noise.",
       "target_example": "Я не могу сосредоточиться из-за всего этого шума."
-    },
-    {
-      "source_word": "conclude",
-      "target_word": "заключать|делать вывод",
-      "source_example": "What can you conclude from the evidence?",
-      "target_example": "Какой вывод вы можете сделать из улик?"
     },
     {
       "source_word": "conclusion",
@@ -826,12 +736,6 @@
       "target_example": "Пожалуйста, подтвердите ваше бронирование."
     },
     {
-      "source_word": "confuse",
-      "target_word": "путать",
-      "source_example": "Don't confuse me with your brother.",
-      "target_example": "Не путай меня со своим братом."
-    },
-    {
       "source_word": "confused",
       "target_word": "сбитый с толку|запутавшийся",
       "source_example": "I am confused about what to do.",
@@ -848,18 +752,6 @@
       "target_word": "последствие|результат",
       "source_example": "You must accept the consequences of your actions.",
       "target_example": "Вы должны принять последствия своих действий."
-    },
-    {
-      "source_word": "consist",
-      "target_word": "состоять (из)",
-      "source_example": "The team consists of five players.",
-      "target_example": "Команда состоит из пяти игроков."
-    },
-    {
-      "source_word": "consume",
-      "target_word": "потреблять",
-      "source_example": "This car consumes a lot of fuel.",
-      "target_example": "Эта машина потребляет много топлива."
     },
     {
       "source_word": "consumer",
@@ -940,12 +832,6 @@
       "target_example": "Окончательный подсчет составил 100."
     },
     {
-      "source_word": "countryside",
-      "target_word": "сельская местность|деревня",
-      "source_example": "I love walking in the countryside.",
-      "target_example": "Я люблю гулять по сельской местности."
-    },
-    {
       "source_word": "court",
       "target_word": "суд|корт",
       "source_example": "The case will be heard in court.",
@@ -982,12 +868,6 @@
       "target_example": "В городе много культурных мероприятий."
     },
     {
-      "source_word": "cupboard",
-      "target_word": "шкаф для посуды|буфет",
-      "source_example": "The plates are in the cupboard.",
-      "target_example": "Тарелки в шкафу для посуды."
-    },
-    {
       "source_word": "currency",
       "target_word": "валюта",
       "source_example": "What is the local currency?",
@@ -1004,12 +884,6 @@
       "target_word": "в настоящее время",
       "source_example": "He is currently working abroad.",
       "target_example": "В настоящее время он работает за границей."
-    },
-    {
-      "source_word": "curtain",
-      "target_word": "занавеска|штора",
-      "source_example": "Please close the curtains.",
-      "target_example": "Пожалуйста, задерните шторы."
     },
     {
       "source_word": "custom",
@@ -1060,12 +934,6 @@
       "target_example": "Можете определить это слово?"
     },
     {
-      "source_word": "definite",
-      "target_word": "определённый|точный",
-      "source_example": "I need a definite answer.",
-      "target_example": "Мне нужен точный ответ."
-    },
-    {
       "source_word": "definition",
       "target_word": "определение",
       "source_example": "What is the definition of this word?",
@@ -1082,12 +950,6 @@
       "target_word": "отправление|отъезд",
       "source_example": "What is the departure time?",
       "target_example": "Какое время отправления?"
-    },
-    {
-      "source_word": "despite [prep.]",
-      "target_word": "несмотря на",
-      "source_example": "He went out despite the rain.",
-      "target_example": "Он вышел на улицу, несмотря на дождь."
     },
     {
       "source_word": "destination",
@@ -1112,12 +974,6 @@
       "target_word": "развитие|разработка",
       "source_example": "The development of new technologies is important.",
       "target_example": "Развитие новых технологий важно."
-    },
-    {
-      "source_word": "diagram",
-      "target_word": "диаграмма|схема",
-      "source_example": "The diagram shows how the machine works.",
-      "target_example": "Диаграмма показывает, как работает машина."
     },
     {
       "source_word": "diamond",
@@ -1150,12 +1006,6 @@
       "target_example": "На его ботинках была грязь."
     },
     {
-      "source_word": "disadvantage",
-      "target_word": "недостаток",
-      "source_example": "What are the disadvantages of this plan?",
-      "target_example": "Каковы недостатки этого плана?"
-    },
-    {
       "source_word": "disappointed",
       "target_word": "разочарованный",
       "source_example": "I was disappointed with the result.",
@@ -1172,12 +1022,6 @@
       "target_word": "скидка [verb: делать скидку]",
       "source_example": "I got a discount on the price.",
       "target_example": "Я получил скидку на цену."
-    },
-    {
-      "source_word": "dislike",
-      "target_word": "неприязнь [verb: не любить]",
-      "source_example": "He has a strong dislike of spiders.",
-      "target_example": "У него сильная неприязнь к паукам."
     },
     {
       "source_word": "district",
@@ -1294,12 +1138,6 @@
       "target_example": "Она редактор модного журнала."
     },
     {
-      "source_word": "educate",
-      "target_word": "обучать|воспитывать",
-      "source_example": "It is important to educate children about the environment.",
-      "target_example": "Важно просвещать детей по вопросам окружающей среды."
-    },
-    {
       "source_word": "educational",
       "target_word": "образовательный",
       "source_example": "This is an educational program for children.",
@@ -1396,12 +1234,6 @@
       "target_example": "Он изучает инженерное дело в университете."
     },
     {
-      "source_word": "entertain",
-      "target_word": "развлекать",
-      "source_example": "He entertained the children with magic tricks.",
-      "target_example": "Он развлекал детей фокусами."
-    },
-    {
       "source_word": "entertainment",
       "target_word": "развлечение",
       "source_example": "There is a lot of entertainment in the city.",
@@ -1468,12 +1300,6 @@
       "target_example": "Врач осмотрел пациента."
     },
     {
-      "source_word": "except [conj.]",
-      "target_word": "кроме как|если не",
-      "source_example": "I would go, except I am tired.",
-      "target_example": "Я бы пошел, если бы не устал."
-    },
-    {
       "source_word": "exchange",
       "target_word": "обмен [verb: обменивать]",
       "source_example": "I would like to make an exchange.",
@@ -1520,12 +1346,6 @@
       "target_word": "экспериментировать",
       "source_example": "Scientists are experimenting with new drugs.",
       "target_example": "Ученые экспериментируют с новыми лекарствами."
-    },
-    {
-      "source_word": "explode",
-      "target_word": "взрываться",
-      "source_example": "The bomb exploded.",
-      "target_example": "Бомба взорвалась."
     },
     {
       "source_word": "explore",
@@ -1586,18 +1406,6 @@
       "target_word": "увлекательный|очаровательный",
       "source_example": "It was a fascinating story.",
       "target_example": "Это была увлекательная история."
-    },
-    {
-      "source_word": "fashionable",
-      "target_word": "модный",
-      "source_example": "She always wears fashionable clothes.",
-      "target_example": "Она всегда носит модную одежду."
-    },
-    {
-      "source_word": "fasten",
-      "target_word": "застёгивать|пристёгивать",
-      "source_example": "Fasten your seatbelt.",
-      "target_example": "Пристегните ремень безопасности."
     },
     {
       "source_word": "favor",
@@ -1738,24 +1546,6 @@
       "target_example": "Их дружба длилась много лет."
     },
     {
-      "source_word": "frighten",
-      "target_word": "пугать",
-      "source_example": "Don't frighten the birds.",
-      "target_example": "Не пугайте птиц."
-    },
-    {
-      "source_word": "frightening",
-      "target_word": "пугающий",
-      "source_example": "It was a frightening experience.",
-      "target_example": "Это был пугающий опыт."
-    },
-    {
-      "source_word": "fry",
-      "target_word": "жарить",
-      "source_example": "I like to fry eggs for breakfast.",
-      "target_example": "Я люблю жарить яйца на завтрак."
-    },
-    {
       "source_word": "fuel",
       "target_word": "топливо|горючее [verb: заправлять]",
       "source_example": "The car is low on fuel.",
@@ -1844,12 +1634,6 @@
       "target_word": "глобальный|всемирный",
       "source_example": "Global warming is a serious problem.",
       "target_example": "Глобальное потепление — серьезная проблема."
-    },
-    {
-      "source_word": "glove",
-      "target_word": "перчатка",
-      "source_example": "I need a pair of gloves.",
-      "target_example": "Мне нужна пара перчаток."
     },
     {
       "source_word": "go",
@@ -2062,12 +1846,6 @@
       "target_example": "Парковка здесь запрещена."
     },
     {
-      "source_word": "imaginary",
-      "target_word": "воображаемый",
-      "source_example": "The story is about an imaginary world.",
-      "target_example": "История о воображаемом мире."
-    },
-    {
       "source_word": "immediate",
       "target_word": "немедленный",
       "source_example": "We need an immediate response.",
@@ -2152,28 +1930,10 @@
       "target_example": "У нас есть крытый бассейн."
     },
     {
-      "source_word": "indoors",
-      "target_word": "внутри|в помещении",
-      "source_example": "Let's go indoors, it's cold outside.",
-      "target_example": "Давайте зайдем внутрь, на улице холодно."
-    },
-    {
       "source_word": "influence",
       "target_word": "влияние [verb: влиять]",
       "source_example": "He has a strong influence on his friends.",
       "target_example": "Он имеет сильное влияние на своих друзей."
-    },
-    {
-      "source_word": "ingredient",
-      "target_word": "ингредиент",
-      "source_example": "What are the ingredients of this cake?",
-      "target_example": "Каковы ингредиенты этого торта?"
-    },
-    {
-      "source_word": "injure",
-      "target_word": "ранить|травмировать",
-      "source_example": "He injured his leg while playing football.",
-      "target_example": "Он повредил ногу, играя в футбол."
     },
     {
       "source_word": "injured",
@@ -2356,12 +2116,6 @@
       "target_example": "Это законно?"
     },
     {
-      "source_word": "leisure",
-      "target_word": "досуг|свободное время",
-      "source_example": "What do you do in your leisure time?",
-      "target_example": "Что вы делаете в свободное время?"
-    },
-    {
       "source_word": "length",
       "target_word": "длина",
       "source_example": "What is the length of the river?",
@@ -2420,12 +2174,6 @@
       "target_word": "местный житель",
       "source_example": "The locals are very friendly.",
       "target_example": "Местные жители очень дружелюбны."
-    },
-    {
-      "source_word": "locate",
-      "target_word": "находить|определять местоположение",
-      "source_example": "We are trying to locate the source of the problem.",
-      "target_example": "Мы пытаемся определить источник проблемы."
     },
     {
       "source_word": "location",
@@ -2626,28 +2374,10 @@
       "target_example": "Естественно, я был рад услышать эту новость."
     },
     {
-      "source_word": "neat",
-      "target_word": "аккуратный|опрятный",
-      "source_example": "Her room is always neat and tidy.",
-      "target_example": "Ее комната всегда аккуратная и опрятная."
-    },
-    {
       "source_word": "necessarily",
       "target_word": "обязательно|непременно",
       "source_example": "That is not necessarily true.",
       "target_example": "Это не обязательно правда."
-    },
-    {
-      "source_word": "need [modal v.]",
-      "target_word": "нужно|надо",
-      "source_example": "You need not worry.",
-      "target_example": "Вам не нужно беспокоиться."
-    },
-    {
-      "source_word": "needle",
-      "target_word": "игла",
-      "source_example": "I need a needle and thread.",
-      "target_example": "Мне нужны иголка и нитка."
     },
     {
       "source_word": "neither",
@@ -2692,12 +2422,6 @@
       "target_example": "Обратите внимание, что библиотека закрыта по воскресеньям."
     },
     {
-      "source_word": "now [conj.]",
-      "target_word": "теперь, когда",
-      "source_example": "Now that you're here, we can start.",
-      "target_example": "Теперь, когда ты здесь, мы можем начать."
-    },
-    {
       "source_word": "nuclear",
       "target_word": "ядерный",
       "source_example": "Nuclear energy can be dangerous.",
@@ -2740,18 +2464,6 @@
       "target_example": "Правительственный чиновник приехал с инспекцией на фабрику."
     },
     {
-      "source_word": "old-fashioned",
-      "target_word": "старомодный",
-      "source_example": "He has very old-fashioned ideas.",
-      "target_example": "У него очень старомодные идеи."
-    },
-    {
-      "source_word": "once [conj.]",
-      "target_word": "как только",
-      "source_example": "Once you finish your homework, you can watch TV.",
-      "target_example": "Как только закончишь домашнее задание, можешь смотреть телевизор."
-    },
-    {
       "source_word": "operation",
       "target_word": "операция",
       "source_example": "He had a successful operation on his heart.",
@@ -2762,12 +2474,6 @@
       "target_word": "организованный",
       "source_example": "She is a very organized person.",
       "target_example": "Она очень организованный человек."
-    },
-    {
-      "source_word": "organizer",
-      "target_word": "организатор",
-      "source_example": "The organizer of the event did a great job.",
-      "target_example": "Организатор мероприятия проделал отличную работу."
     },
     {
       "source_word": "original",
@@ -2782,28 +2488,10 @@
       "target_example": "Изначально мы планировали пойти на пляж."
     },
     {
-      "source_word": "ought [modal v.]",
-      "target_word": "следует|должен",
-      "source_example": "You ought to apologize.",
-      "target_example": "Тебе следует извиниться."
-    },
-    {
-      "source_word": "ours [pron.]",
-      "target_word": "наш",
-      "source_example": "This house is ours.",
-      "target_example": "Этот дом наш."
-    },
-    {
       "source_word": "outdoor",
       "target_word": "на открытом воздухе|уличный",
       "source_example": "We have an outdoor swimming pool.",
       "target_example": "У нас есть открытый бассейн."
-    },
-    {
-      "source_word": "outdoors",
-      "target_word": "на открытом воздухе|на улице",
-      "source_example": "Let's eat outdoors.",
-      "target_example": "Давайте поедим на улице."
     },
     {
       "source_word": "overseas",
@@ -2908,12 +2596,6 @@
       "target_example": "Лично я считаю, что это плохая идея."
     },
     {
-      "source_word": "persuade",
-      "target_word": "убеждать|уговаривать",
-      "source_example": "I persuaded him to come with us.",
-      "target_example": "Я уговорил его пойти с нами."
-    },
-    {
       "source_word": "photographer",
       "target_word": "фотограф",
       "source_example": "She is a professional photographer.",
@@ -2962,12 +2644,6 @@
       "target_example": "Было приятно познакомиться с вами."
     },
     {
-      "source_word": "plenty [pron.]",
-      "target_word": "много|изобилие",
-      "source_example": "We have plenty of time.",
-      "target_example": "У нас много времени."
-    },
-    {
       "source_word": "plot",
       "target_word": "сюжет [verb: замышлять]",
       "source_example": "The plot of the movie was very exciting.",
@@ -3008,12 +2684,6 @@
       "target_word": "яд [verb: отравлять]",
       "source_example": "The snake's bite contains poison.",
       "target_example": "Укус змеи содержит яд."
-    },
-    {
-      "source_word": "poisonous",
-      "target_word": "ядовитый",
-      "source_example": "Some mushrooms are poisonous.",
-      "target_example": "Некоторые грибы ядовиты."
     },
     {
       "source_word": "policy",
@@ -3104,12 +2774,6 @@
       "target_word": "молитва",
       "source_example": "He said a prayer for the sick.",
       "target_example": "Он помолился за больных."
-    },
-    {
-      "source_word": "prediction",
-      "target_word": "предсказание|прогноз",
-      "source_example": "His prediction came true.",
-      "target_example": "Его предсказание сбылось."
     },
     {
       "source_word": "prepared",
@@ -3280,12 +2944,6 @@
       "target_example": "Дерните за веревку."
     },
     {
-      "source_word": "punish",
-      "target_word": "наказывать",
-      "source_example": "He was punished for his mistake.",
-      "target_example": "Его наказали за ошибку."
-    },
-    {
       "source_word": "punishment",
       "target_word": "наказание",
       "source_example": "What was his punishment?",
@@ -3296,12 +2954,6 @@
       "target_word": "толчок",
       "source_example": "He gave me a push.",
       "target_example": "Он меня толкнул."
-    },
-    {
-      "source_word": "qualification",
-      "target_word": "квалификация",
-      "source_example": "He has the right qualifications for the job.",
-      "target_example": "У него есть необходимая квалификация для этой работы."
     },
     {
       "source_word": "qualified",
@@ -3320,12 +2972,6 @@
       "target_word": "увольняться|бросать",
       "source_example": "He quit his job.",
       "target_example": "Он уволился с работы."
-    },
-    {
-      "source_word": "quotation",
-      "target_word": "цитата",
-      "source_example": "This is a quotation from Shakespeare.",
-      "target_example": "Это цитата из Шекспира."
     },
     {
       "source_word": "quote",
@@ -3380,12 +3026,6 @@
       "target_word": "реальность|действительность",
       "source_example": "You need to face reality.",
       "target_example": "Тебе нужно взглянуть в лицо реальности."
-    },
-    {
-      "source_word": "receipt",
-      "target_word": "чек|квитанция",
-      "source_example": "Please keep your receipt.",
-      "target_example": "Пожалуйста, сохраните свой чек."
     },
     {
       "source_word": "recommendation",
@@ -3446,12 +3086,6 @@
       "target_word": "расслабленный",
       "source_example": "I feel very relaxed after my vacation.",
       "target_example": "Я чувствую себя очень расслабленным после отпуска."
-    },
-    {
-      "source_word": "relaxing",
-      "target_word": "расслабляющий",
-      "source_example": "A hot bath is very relaxing.",
-      "target_example": "Горячая ванна очень расслабляет."
     },
     {
       "source_word": "release",
@@ -3532,12 +3166,6 @@
       "target_example": "Эта работа требует большого опыта."
     },
     {
-      "source_word": "reservation",
-      "target_word": "бронирование|резервация",
-      "source_example": "I have a reservation at the hotel.",
-      "target_example": "У меня забронирован номер в отеле."
-    },
-    {
       "source_word": "resource",
       "target_word": "ресурс",
       "source_example": "The country is rich in natural resources.",
@@ -3572,12 +3200,6 @@
       "target_word": "уходить на пенсию",
       "source_example": "He is going to retire next year.",
       "target_example": "В следующем году он выходит на пенсию."
-    },
-    {
-      "source_word": "revise",
-      "target_word": "повторять|пересматривать",
-      "source_example": "I need to revise for my exam.",
-      "target_example": "Мне нужно повторить материал к экзамену."
     },
     {
       "source_word": "ring",
@@ -3652,12 +3274,6 @@
       "target_example": "У лодки два паруса."
     },
     {
-      "source_word": "sailor",
-      "target_word": "моряк",
-      "source_example": "He is a brave sailor.",
-      "target_example": "Он храбрый моряк."
-    },
-    {
       "source_word": "sample",
       "target_word": "образец [verb: пробовать]",
       "source_example": "Can I have a free sample?",
@@ -3688,12 +3304,6 @@
       "target_example": "Он написал сценарий для фильма."
     },
     {
-      "source_word": "sculpture",
-      "target_word": "скульптура",
-      "source_example": "This is a famous sculpture.",
-      "target_example": "Это известная скульптура."
-    },
-    {
       "source_word": "secondary",
       "target_word": "вторичный|средний (о школе)",
       "source_example": "He goes to secondary school.",
@@ -3710,12 +3320,6 @@
       "target_word": "семя",
       "source_example": "I planted some seeds in the garden.",
       "target_example": "Я посадил семена в саду."
-    },
-    {
-      "source_word": "sensible",
-      "target_word": "разумный|здравомыслящий",
-      "source_example": "That was a sensible decision.",
-      "target_example": "Это было разумное решение."
     },
     {
       "source_word": "separate",
@@ -3802,12 +3406,6 @@
       "target_example": "Солнце светит."
     },
     {
-      "source_word": "shiny",
-      "target_word": "блестящий",
-      "source_example": "She has shiny black hair.",
-      "target_example": "У нее блестящие черные волосы."
-    },
-    {
       "source_word": "shoot",
       "target_word": "стрелять|снимать (фильм)",
       "source_example": "He shot the bird with a gun.",
@@ -3842,12 +3440,6 @@
       "target_word": "глупый",
       "source_example": "That was a silly thing to do.",
       "target_example": "Это был глупый поступок."
-    },
-    {
-      "source_word": "similarity",
-      "target_word": "сходство",
-      "source_example": "There is a similarity between the two pictures.",
-      "target_example": "Между этими двумя картинами есть сходство."
     },
     {
       "source_word": "similarly",
@@ -3946,12 +3538,6 @@
       "target_example": "Государственные расходы в этом году увеличились."
     },
     {
-      "source_word": "spicy",
-      "target_word": "острый|пряный",
-      "source_example": "I like spicy food.",
-      "target_example": "Я люблю острую еду."
-    },
-    {
       "source_word": "spirit",
       "target_word": "дух|настроение",
       "source_example": "He is in good spirits.",
@@ -4004,12 +3590,6 @@
       "target_word": "утверждать|заявлять [adj: государственный]",
       "source_example": "Please state your name and address.",
       "target_example": "Пожалуйста, назовите свое имя и адрес."
-    },
-    {
-      "source_word": "statistic",
-      "target_word": "статистика|статистический показатель",
-      "source_example": "The latest statistics show a decrease in crime.",
-      "target_example": "Последние статистические данные показывают снижение преступности."
     },
     {
       "source_word": "statue",
@@ -4108,12 +3688,6 @@
       "target_example": "Этот фильм не подходит для детей."
     },
     {
-      "source_word": "summarize",
-      "target_word": "суммировать|кратко излагать",
-      "source_example": "Please summarize the main points of the article.",
-      "target_example": "Пожалуйста, кратко изложите основные моменты статьи."
-    },
-    {
       "source_word": "summary",
       "target_word": "краткое изложение|резюме",
       "source_example": "Give me a summary of the report.",
@@ -4160,12 +3734,6 @@
       "target_word": "переключатель|выключатель [verb: переключать]",
       "source_example": "Where is the light switch?",
       "target_example": "Где выключатель света?"
-    },
-    {
-      "source_word": "symptom",
-      "target_word": "симптом",
-      "source_example": "Fever is a symptom of the illness.",
-      "target_example": "Лихорадка — это симптом болезни."
     },
     {
       "source_word": "tail",
@@ -4228,12 +3796,6 @@
       "target_example": "Я настолько устал, что заснул в кресле."
     },
     {
-      "source_word": "theirs [pron.]",
-      "target_word": "их",
-      "source_example": "The house is theirs.",
-      "target_example": "Этот дом — их."
-    },
-    {
       "source_word": "theme",
       "target_word": "тема",
       "source_example": "The main theme of the book is love.",
@@ -4280,12 +3842,6 @@
       "target_word": "тугой|тесный",
       "source_example": "These shoes are too tight.",
       "target_example": "Эти туфли слишком тесные."
-    },
-    {
-      "source_word": "till [prep.]",
-      "target_word": "до [conj: пока не]",
-      "source_example": "I will be here till noon.",
-      "target_example": "Я буду здесь до полудня."
     },
     {
       "source_word": "tiny",
@@ -4366,12 +3922,6 @@
       "target_example": "Мой личный тренер помогает мне с упражнениями."
     },
     {
-      "source_word": "translate",
-      "target_word": "переводить",
-      "source_example": "Can you translate this for me?",
-      "target_example": "Можешь перевести это для меня?"
-    },
-    {
       "source_word": "translation",
       "target_word": "перевод",
       "source_example": "I need a translation of this document.",
@@ -4450,18 +4000,6 @@
       "target_example": "Этот стул очень неудобный."
     },
     {
-      "source_word": "underwear",
-      "target_word": "нижнее бельё",
-      "source_example": "I need to buy some new underwear.",
-      "target_example": "Мне нужно купить новое нижнее белье."
-    },
-    {
-      "source_word": "unemployed",
-      "target_word": "безработный",
-      "source_example": "He has been unemployed for six months.",
-      "target_example": "Он безработный уже шесть месяцев."
-    },
-    {
       "source_word": "unemployment",
       "target_word": "безработица",
       "source_example": "Unemployment is a serious problem.",
@@ -4480,18 +4018,6 @@
       "target_example": "Он член профсоюза."
     },
     {
-      "source_word": "unless [conj.]",
-      "target_word": "если не|пока не",
-      "source_example": "You won't pass the exam unless you study.",
-      "target_example": "Ты не сдашь экзамен, если не будешь учиться."
-    },
-    {
-      "source_word": "unlike [prep.]",
-      "target_word": "в отличие от",
-      "source_example": "Unlike his brother, he is very tall.",
-      "target_example": "В отличие от своего брата, он очень высокий."
-    },
-    {
       "source_word": "unlikely",
       "target_word": "маловероятный",
       "source_example": "It is unlikely to rain today.",
@@ -4504,22 +4030,10 @@
       "target_example": "Не нужно приносить подарок."
     },
     {
-      "source_word": "unpleasant",
-      "target_word": "неприятный",
-      "source_example": "There was an unpleasant smell.",
-      "target_example": "Был неприятный запах."
-    },
-    {
       "source_word": "update",
       "target_word": "обновление [verb: обновлять]",
       "source_example": "There is a new update for the app.",
       "target_example": "Для приложения вышло новое обновление."
-    },
-    {
-      "source_word": "upon [prep.]",
-      "target_word": "на",
-      "source_example": "Once upon a time...",
-      "target_example": "Давным-давно..."
     },
     {
       "source_word": "upset",
@@ -4568,12 +4082,6 @@
       "target_word": "рассматривать|смотреть",
       "source_example": "He viewed the painting with interest.",
       "target_example": "Он с интересом рассматривал картину."
-    },
-    {
-      "source_word": "viewer",
-      "target_word": "зритель",
-      "source_example": "The show has millions of viewers.",
-      "target_example": "У шоу миллионы зрителей."
     },
     {
       "source_word": "violent",
@@ -4636,34 +4144,10 @@
       "target_example": "Полиция нашла орудие убийства."
     },
     {
-      "source_word": "weigh",
-      "target_word": "весить|взвешивать",
-      "source_example": "How much do you weigh?",
-      "target_example": "Сколько вы весите?"
-    },
-    {
       "source_word": "western",
       "target_word": "западный",
       "source_example": "We visited the western coast of the country.",
       "target_example": "Мы посетили западное побережье страны."
-    },
-    {
-      "source_word": "whatever [pron.]",
-      "target_word": "что бы ни [det: какой бы ни]",
-      "source_example": "I will do whatever you want.",
-      "target_example": "Я сделаю все, что ты захочешь."
-    },
-    {
-      "source_word": "whenever [conj.]",
-      "target_word": "когда бы ни",
-      "source_example": "Come whenever you like.",
-      "target_example": "Приходи, когда захочешь."
-    },
-    {
-      "source_word": "whether [conj.]",
-      "target_word": "ли",
-      "source_example": "I don't know whether he will come.",
-      "target_example": "Я не знаю, придет ли он."
     },
     {
       "source_word": "while",
@@ -4696,22 +4180,10 @@
       "target_example": "У птицы сломано крыло."
     },
     {
-      "source_word": "within [prep.]",
-      "target_word": "внутри|в течение",
-      "source_example": "Please reply within two days.",
-      "target_example": "Пожалуйста, ответьте в течение двух дней."
-    },
-    {
       "source_word": "wonder",
       "target_word": "чудо [verb: удивляться]",
       "source_example": "The Grand Canyon is a natural wonder.",
       "target_example": "Гранд-Каньон — это чудо природы."
-    },
-    {
-      "source_word": "wool",
-      "target_word": "шерсть",
-      "source_example": "This sweater is made of wool.",
-      "target_example": "Этот свитер сделан из шерсти."
     },
     {
       "source_word": "worldwide",
@@ -4768,12 +4240,6 @@
       "target_example": "Его поведение было неприемлемым."
     },
     {
-      "source_word": "accompany",
-      "target_word": "сопровождать",
-      "source_example": "I will accompany you to the station.",
-      "target_example": "Я провожу вас до вокзала."
-    },
-    {
       "source_word": "account for",
       "target_word": "объяснять|составлять [noun: счет]",
       "source_example": "These factors account for the difference in results.",
@@ -4784,12 +4250,6 @@
       "target_word": "точный",
       "source_example": "The information is accurate.",
       "target_example": "Информация точна."
-    },
-    {
-      "source_word": "accuse",
-      "target_word": "обвинять",
-      "source_example": "He was accused of theft.",
-      "target_example": "Его обвинили в краже."
     },
     {
       "source_word": "acknowledge",
@@ -4808,12 +4268,6 @@
       "target_word": "фактический|реальный",
       "source_example": "What is the actual cost?",
       "target_example": "Какова фактическая стоимость?"
-    },
-    {
-      "source_word": "adapt",
-      "target_word": "адаптироваться|приспосабливать",
-      "source_example": "We need to adapt to the new situation.",
-      "target_example": "Нам нужно адаптироваться к новой ситуации."
     },
     {
       "source_word": "additional",
@@ -4844,12 +4298,6 @@
       "target_word": "дело|роман",
       "source_example": "He had an affair with his secretary.",
       "target_example": "У него был роман со своей секретаршей."
-    },
-    {
-      "source_word": "afterward",
-      "target_word": "впоследствии|позже",
-      "source_example": "We had dinner and went to the cinema afterward.",
-      "target_example": "Мы поужинали и после пошли в кино."
     },
     {
       "source_word": "agency",
@@ -4964,12 +4412,6 @@
       "target_word": "одобрять",
       "source_example": "My parents don't approve of my boyfriend.",
       "target_example": "Мои родители не одобряют моего парня."
-    },
-    {
-      "source_word": "arise",
-      "target_word": "возникать",
-      "source_example": "A problem has arisen.",
-      "target_example": "Возникла проблема."
     },
     {
       "source_word": "armed",
@@ -5110,12 +4552,6 @@
       "target_example": "Человек — сложное существо."
     },
     {
-      "source_word": "bent",
-      "target_word": "согнутый",
-      "source_example": "The wire was bent out of shape.",
-      "target_example": "Проволока была деформирована."
-    },
-    {
       "source_word": "bet",
       "target_word": "пари|ставка [verb: держать пари]",
       "source_example": "He won his bet.",
@@ -5212,18 +4648,6 @@
       "target_example": "В саду растет розовый куст."
     },
     {
-      "source_word": "but [prep.]",
-      "target_word": "кроме",
-      "source_example": "Everyone but me was invited.",
-      "target_example": "Пригласили всех, кроме меня."
-    },
-    {
-      "source_word": "calculate",
-      "target_word": "вычислять|подсчитывать",
-      "source_example": "Can you calculate the cost?",
-      "target_example": "Можете подсчитать стоимость?"
-    },
-    {
       "source_word": "cancel",
       "target_word": "отменять",
       "source_example": "I need to cancel my appointment.",
@@ -5278,12 +4702,6 @@
       "target_example": "Он председатель комитета."
     },
     {
-      "source_word": "characteristic",
-      "target_word": "характеристика|особенность [adj: характерный]",
-      "source_example": "What are the main characteristics of this product?",
-      "target_example": "Каковы основные характеристики этого продукта?"
-    },
-    {
       "source_word": "chart",
       "target_word": "составлять карту|наносить на график",
       "source_example": "We need to chart our progress.",
@@ -5294,18 +4712,6 @@
       "target_word": "вождь|начальник [adj: главный]",
       "source_example": "He is the chief of the police department.",
       "target_example": "Он начальник полицейского управления."
-    },
-    {
-      "source_word": "circumstance",
-      "target_word": "обстоятельство",
-      "source_example": "Under the circumstances, we have no choice.",
-      "target_example": "В данных обстоятельствах у нас нет выбора."
-    },
-    {
-      "source_word": "cite",
-      "target_word": "цитировать|ссылаться",
-      "source_example": "He cited several sources in his report.",
-      "target_example": "Он сослался на несколько источников в своем отчете."
     },
     {
       "source_word": "citizen",
@@ -5488,12 +4894,6 @@
       "target_example": "Он постоянно жалуется."
     },
     {
-      "source_word": "construct",
-      "target_word": "строить",
-      "source_example": "They are constructing a new bridge.",
-      "target_example": "Они строят новый мост."
-    },
-    {
       "source_word": "construction",
       "target_word": "строительство",
       "source_example": "The construction of the new building will take two years.",
@@ -5602,18 +5002,6 @@
       "target_example": "Страна находится в экономическом кризисе."
     },
     {
-      "source_word": "criterion",
-      "target_word": "критерий",
-      "source_example": "What are the criteria for success?",
-      "target_example": "Каковы критерии успеха?"
-    },
-    {
-      "source_word": "critic",
-      "target_word": "критик",
-      "source_example": "He is a famous art critic.",
-      "target_example": "Он известный искусствовед."
-    },
-    {
       "source_word": "critical",
       "target_word": "критический|важный",
       "source_example": "This is a critical moment.",
@@ -5624,12 +5012,6 @@
       "target_word": "критика",
       "source_example": "He received a lot of criticism for his decision.",
       "target_example": "Он получил много критики за свое решение."
-    },
-    {
-      "source_word": "criticize",
-      "target_word": "критиковать",
-      "source_example": "Don't criticize my work.",
-      "target_example": "Не критикуйте мою работу."
     },
     {
       "source_word": "crop",
@@ -5660,12 +5042,6 @@
       "target_word": "изгиб|кривая [verb: изгибаться]",
       "source_example": "There is a sharp curve in the road.",
       "target_example": "На дороге резкий поворот."
-    },
-    {
-      "source_word": "curved",
-      "target_word": "изогнутый",
-      "source_example": "The knife has a curved blade.",
-      "target_example": "У ножа изогнутое лезвие."
     },
     {
       "source_word": "date",
@@ -5704,18 +5080,6 @@
       "target_example": "Произошло снижение продаж."
     },
     {
-      "source_word": "decorate",
-      "target_word": "украшать",
-      "source_example": "We decorated the house for Christmas.",
-      "target_example": "Мы украсили дом к Рождеству."
-    },
-    {
-      "source_word": "decoration",
-      "target_word": "украшение",
-      "source_example": "We put up Christmas decorations.",
-      "target_example": "Мы повесили рождественские украшения."
-    },
-    {
       "source_word": "decrease",
       "target_word": "уменьшение [verb: уменьшать]",
       "source_example": "There has been a decrease in the number of students.",
@@ -5752,12 +5116,6 @@
       "target_example": "Была долгая задержка."
     },
     {
-      "source_word": "deliberate",
-      "target_word": "умышленный|намеренный",
-      "source_example": "It was a deliberate act of cruelty.",
-      "target_example": "Это был умышленный акт жестокости."
-    },
-    {
       "source_word": "deliberately",
       "target_word": "умышленно|намеренно",
       "source_example": "He deliberately broke the window.",
@@ -5792,12 +5150,6 @@
       "target_word": "подавленный|в депрессии",
       "source_example": "She has been feeling depressed lately.",
       "target_example": "В последнее время она чувствует себя подавленной."
-    },
-    {
-      "source_word": "depressing",
-      "target_word": "угнетающий|депрессивный",
-      "source_example": "The news was very depressing.",
-      "target_example": "Новости были очень удручающими."
     },
     {
       "source_word": "depth",
@@ -5860,34 +5212,16 @@
       "target_example": "В школе строгая дисциплина."
     },
     {
-      "source_word": "dishonest",
-      "target_word": "нечестный",
-      "source_example": "He is a dishonest person.",
-      "target_example": "Он нечестный человек."
-    },
-    {
       "source_word": "disk",
       "target_word": "диск",
       "source_example": "I saved the file on a disk.",
       "target_example": "Я сохранил файл на диске."
     },
     {
-      "source_word": "dismiss",
-      "target_word": "увольнять|отклонять",
-      "source_example": "He was dismissed from his job.",
-      "target_example": "Его уволили с работы."
-    },
-    {
       "source_word": "display",
       "target_word": "дисплей|выставка [verb: показывать]",
       "source_example": "The computer has a large display.",
       "target_example": "У компьютера большой дисплей."
-    },
-    {
-      "source_word": "distribute",
-      "target_word": "распространять|распределять",
-      "source_example": "They distributed food to the poor.",
-      "target_example": "Они раздавали еду бедным."
     },
     {
       "source_word": "distribution",
@@ -5912,18 +5246,6 @@
       "target_word": "домашний|внутренний",
       "source_example": "This is a domestic flight.",
       "target_example": "Это внутренний рейс."
-    },
-    {
-      "source_word": "dominate",
-      "target_word": "доминировать|преобладать",
-      "source_example": "He dominates the conversation.",
-      "target_example": "Он доминирует в разговоре."
-    },
-    {
-      "source_word": "downward",
-      "target_word": "вниз [adj: нисходящий]",
-      "source_example": "The path goes downward.",
-      "target_example": "Тропа идет вниз."
     },
     {
       "source_word": "dozen",
@@ -5986,12 +5308,6 @@
       "target_example": "Давай пойдем куда-нибудь еще."
     },
     {
-      "source_word": "emerge",
-      "target_word": "появляться|возникать",
-      "source_example": "A new problem has emerged.",
-      "target_example": "Возникла новая проблема."
-    },
-    {
       "source_word": "emotional",
       "target_word": "эмоциональный",
       "source_example": "She is a very emotional person.",
@@ -6002,12 +5318,6 @@
       "target_word": "акцент|особое внимание",
       "source_example": "The emphasis is on quality.",
       "target_example": "Акцент делается на качестве."
-    },
-    {
-      "source_word": "emphasize",
-      "target_word": "подчёркивать|акцентировать",
-      "source_example": "He emphasized the importance of safety.",
-      "target_example": "Он подчеркнул важность безопасности."
     },
     {
       "source_word": "enable",
@@ -6038,12 +5348,6 @@
       "target_word": "энтузиазм|воодушевление",
       "source_example": "He has a lot of enthusiasm for his work.",
       "target_example": "Он с большим энтузиазмом относится к своей работе."
-    },
-    {
-      "source_word": "enthusiastic",
-      "target_word": "восторженный|полный энтузиазма",
-      "source_example": "He is very enthusiastic about the new project.",
-      "target_example": "Он с большим энтузиазмом относится к новому проекту."
     },
     {
       "source_word": "entire",
@@ -6130,12 +5434,6 @@
       "target_example": "Вы верите в существование привидений?"
     },
     {
-      "source_word": "expectation",
-      "target_word": "ожидание",
-      "source_example": "The results exceeded my expectations.",
-      "target_example": "Результаты превзошли мои ожидания."
-    },
-    {
       "source_word": "expense",
       "target_word": "расход|затраты",
       "source_example": "We need to reduce our expenses.",
@@ -6146,12 +5444,6 @@
       "target_word": "исследование",
       "source_example": "The exploration of space.",
       "target_example": "Исследование космоса."
-    },
-    {
-      "source_word": "expose",
-      "target_word": "подвергать воздействию|разоблачать",
-      "source_example": "Don't expose your skin to the sun for too long.",
-      "target_example": "Не подвергайте кожу воздействию солнца слишком долго."
     },
     {
       "source_word": "extend",
@@ -6206,12 +5498,6 @@
       "target_word": "вина|ошибка",
       "source_example": "It was my fault.",
       "target_example": "Это была моя вина."
-    },
-    {
-      "source_word": "feather",
-      "target_word": "перо",
-      "source_example": "The bird has beautiful feathers.",
-      "target_example": "У птицы красивые перья."
     },
     {
       "source_word": "fee",
@@ -6284,12 +5570,6 @@
       "target_word": "гибкий",
       "source_example": "I have a flexible schedule.",
       "target_example": "У меня гибкий график."
-    },
-    {
-      "source_word": "float",
-      "target_word": "плавать (на поверхности)",
-      "source_example": "A boat was floating on the water.",
-      "target_example": "Лодка плыла по воде."
     },
     {
       "source_word": "forgive",
@@ -6394,12 +5674,6 @@
       "target_example": "Магазин продает разнообразные товары."
     },
     {
-      "source_word": "govern",
-      "target_word": "управлять|править",
-      "source_example": "The country is governed by a president.",
-      "target_example": "Страной управляет президент."
-    },
-    {
       "source_word": "governor",
       "target_word": "губернатор",
       "source_example": "He is the governor of the state.",
@@ -6448,12 +5722,6 @@
       "target_example": "Шторм причинил большой вред."
     },
     {
-      "source_word": "harmful",
-      "target_word": "вредный",
-      "source_example": "Smoking is harmful to your health.",
-      "target_example": "Курение вредно для вашего здоровья."
-    },
-    {
       "source_word": "hearing",
       "target_word": "слух|слушание (в суде)",
       "source_example": "He has poor hearing.",
@@ -6466,22 +5734,10 @@
       "target_example": "Он верит, что попадет в рай, когда умрет."
     },
     {
-      "source_word": "heel",
-      "target_word": "пятка|каблук",
-      "source_example": "She wore high heels.",
-      "target_example": "Она носила высокие каблуки."
-    },
-    {
       "source_word": "hell",
       "target_word": "ад",
       "source_example": "War is hell.",
       "target_example": "Война — это ад."
-    },
-    {
-      "source_word": "hesitate",
-      "target_word": "колебаться|сомневаться",
-      "source_example": "Don't hesitate to ask for help.",
-      "target_example": "Не стесняйтесь просить о помощи."
     },
     {
       "source_word": "high",
@@ -6494,12 +5750,6 @@
       "target_word": "захват|удержание",
       "source_example": "He has a strong hold.",
       "target_example": "У него сильный захват."
-    },
-    {
-      "source_word": "hollow",
-      "target_word": "полый|пустой",
-      "source_example": "The tree is hollow inside.",
-      "target_example": "Дерево внутри пустое."
     },
     {
       "source_word": "holy",
@@ -6538,12 +5788,6 @@
       "target_example": "У него отличное чувство юмора."
     },
     {
-      "source_word": "humorous",
-      "target_word": "юмористический|смешной",
-      "source_example": "It was a humorous story.",
-      "target_example": "Это была смешная история."
-    },
-    {
       "source_word": "hunting",
       "target_word": "охота",
       "source_example": "Hunting is popular in this area.",
@@ -6562,46 +5806,10 @@
       "target_example": "Она мой идеал красоты."
     },
     {
-      "source_word": "illustrate",
-      "target_word": "иллюстрировать",
-      "source_example": "The book is illustrated with beautiful pictures.",
-      "target_example": "Книга иллюстрирована красивыми картинками."
-    },
-    {
-      "source_word": "illustration",
-      "target_word": "иллюстрация",
-      "source_example": "The book has many colorful illustrations.",
-      "target_example": "В книге много красочных иллюстраций."
-    },
-    {
       "source_word": "imagination",
       "target_word": "воображение",
       "source_example": "He has a vivid imagination.",
       "target_example": "У него живое воображение."
-    },
-    {
-      "source_word": "impatient",
-      "target_word": "нетерпеливый",
-      "source_example": "Don't be so impatient.",
-      "target_example": "Не будь таким нетерпеливым."
-    },
-    {
-      "source_word": "imply",
-      "target_word": "подразумевать|намекать",
-      "source_example": "What are you implying?",
-      "target_example": "На что вы намекаете?"
-    },
-    {
-      "source_word": "impose",
-      "target_word": "навязывать|облагать",
-      "source_example": "The government imposed a new tax.",
-      "target_example": "Правительство ввело новый налог."
-    },
-    {
-      "source_word": "impress",
-      "target_word": "впечатлять",
-      "source_example": "He impressed me with his knowledge.",
-      "target_example": "Он впечатлил меня своими знаниями."
     },
     {
       "source_word": "inch",
@@ -6736,18 +5944,6 @@
       "target_example": "Компания провела внутреннее расследование."
     },
     {
-      "source_word": "interpret",
-      "target_word": "интерпретировать|толковать",
-      "source_example": "How do you interpret this poem?",
-      "target_example": "Как вы интерпретируете это стихотворение?"
-    },
-    {
-      "source_word": "interrupt",
-      "target_word": "прерывать|перебивать",
-      "source_example": "Please don't interrupt me while I'm speaking.",
-      "target_example": "Пожалуйста, не перебивайте меня, когда я говорю."
-    },
-    {
       "source_word": "investigation",
       "target_word": "расследование",
       "source_example": "The police have launched an investigation into the robbery.",
@@ -6854,12 +6050,6 @@
       "target_word": "выстраивать(ся) в линию",
       "source_example": "People were lining up to buy tickets.",
       "target_example": "Люди выстраивались в очередь за билетами."
-    },
-    {
-      "source_word": "lively",
-      "target_word": "оживлённый",
-      "source_example": "It was a lively party.",
-      "target_example": "Это была оживленная вечеринка."
     },
     {
       "source_word": "load",
@@ -6988,12 +6178,6 @@
       "target_example": "Каковы размеры комнаты?"
     },
     {
-      "source_word": "melt",
-      "target_word": "таять",
-      "source_example": "The ice is melting.",
-      "target_example": "Лед тает."
-    },
-    {
       "source_word": "military",
       "target_word": "вооружённые силы [adj: военный]",
       "source_example": "He joined the military.",
@@ -7048,12 +6232,6 @@
       "target_example": "Она работает моделью для известного модного бренда."
     },
     {
-      "source_word": "modify",
-      "target_word": "модифицировать|изменять",
-      "source_example": "We need to modify the plan.",
-      "target_example": "Нам нужно изменить план."
-    },
-    {
       "source_word": "monitor",
       "target_word": "монитор [verb: наблюдать]",
       "source_example": "I need a new computer monitor.",
@@ -7082,12 +6260,6 @@
       "target_word": "многочисленный|множественный",
       "source_example": "He has multiple injuries.",
       "target_example": "У него множественные травмы."
-    },
-    {
-      "source_word": "multiply",
-      "target_word": "умножать",
-      "source_example": "What do you get if you multiply 6 by 10?",
-      "target_example": "Что получится, если умножить 6 на 10?"
     },
     {
       "source_word": "mysterious",
@@ -7144,12 +6316,6 @@
       "target_example": "У него многочисленные друзья."
     },
     {
-      "source_word": "obey",
-      "target_word": "подчиняться|слушаться",
-      "source_example": "You must obey the rules.",
-      "target_example": "Вы должны подчиняться правилам."
-    },
-    {
       "source_word": "object",
       "target_word": "возражать",
       "source_example": "I object to your proposal.",
@@ -7192,12 +6358,6 @@
       "target_example": "Я вижу его изредка."
     },
     {
-      "source_word": "offend",
-      "target_word": "обижать|оскорблять",
-      "source_example": "I didn't mean to offend you.",
-      "target_example": "Я не хотел вас обидеть."
-    },
-    {
       "source_word": "offense",
       "target_word": "обида|правонарушение",
       "source_example": "He took offense at my comment.",
@@ -7226,12 +6386,6 @@
       "target_word": "оппонент|противник",
       "source_example": "He defeated his opponent in the final match.",
       "target_example": "Он победил своего соперника в финальном матче."
-    },
-    {
-      "source_word": "oppose",
-      "target_word": "противостоять|возражать",
-      "source_example": "I oppose the new law.",
-      "target_example": "Я против нового закона."
     },
     {
       "source_word": "opposition",
@@ -7270,12 +6424,6 @@
       "target_example": "Внешний слой кожи."
     },
     {
-      "source_word": "outline",
-      "target_word": "контур|план [verb: наметить в общих чертах]",
-      "source_example": "I need an outline of your presentation.",
-      "target_example": "Мне нужен план вашей презентации."
-    },
-    {
       "source_word": "overall",
       "target_word": "в целом [adj: общий]",
       "source_example": "Overall, the project was a success.",
@@ -7298,12 +6446,6 @@
       "target_word": "панель|комиссия",
       "source_example": "A panel of experts will decide.",
       "target_example": "Решение примет комиссия экспертов."
-    },
-    {
-      "source_word": "participant",
-      "target_word": "участник",
-      "source_example": "All participants will receive a certificate.",
-      "target_example": "Все участники получат сертификат."
     },
     {
       "source_word": "partly",
@@ -7546,12 +6688,6 @@
       "target_example": "Он сделал предложение руки и сердца."
     },
     {
-      "source_word": "propose",
-      "target_word": "предлагать",
-      "source_example": "I propose that we start a new project.",
-      "target_example": "Я предлагаю начать новый проект."
-    },
-    {
       "source_word": "prospect",
       "target_word": "перспектива|шанс",
       "source_example": "There is a good prospect of success.",
@@ -7562,12 +6698,6 @@
       "target_word": "защита",
       "source_example": "This cream offers protection from the sun.",
       "target_example": "Этот крем обеспечивает защиту от солнца."
-    },
-    {
-      "source_word": "psychologist",
-      "target_word": "психолог",
-      "source_example": "She is seeing a psychologist.",
-      "target_example": "Она ходит к психологу."
     },
     {
       "source_word": "psychology",
@@ -7720,12 +6850,6 @@
       "target_example": "Ты можешь на меня положиться."
     },
     {
-      "source_word": "remark",
-      "target_word": "замечание|высказывание [verb: замечать]",
-      "source_example": "He made a rude remark.",
-      "target_example": "Он сделал грубое замечание."
-    },
-    {
       "source_word": "representative",
       "target_word": "представитель [adj: представительный]",
       "source_example": "He is a representative of the company.",
@@ -7840,12 +6964,6 @@
       "target_example": "Это была просто обычная проверка."
     },
     {
-      "source_word": "rub",
-      "target_word": "тереть",
-      "source_example": "She rubbed her hands together to warm them.",
-      "target_example": "Она потерла руки, чтобы согреть их."
-    },
-    {
       "source_word": "rubber",
       "target_word": "резина|ластик [adj: резиновый]",
       "source_example": "These shoes are made of rubber.",
@@ -7874,12 +6992,6 @@
       "target_word": "удовлетворённый",
       "source_example": "Are you satisfied with the result?",
       "target_example": "Вы удовлетворены результатом?"
-    },
-    {
-      "source_word": "satisfy",
-      "target_word": "удовлетворять",
-      "source_example": "The food did not satisfy my hunger.",
-      "target_example": "Еда не утолила мой голод."
     },
     {
       "source_word": "saving",
@@ -8026,12 +7138,6 @@
       "target_example": "Он увидел свою тень на стене."
     },
     {
-      "source_word": "shall [modal v.]",
-      "target_word": "должен (формально)",
-      "source_example": "I shall be there at 8 o'clock.",
-      "target_example": "Я буду там в 8 часов."
-    },
-    {
       "source_word": "shallow",
       "target_word": "мелкий|поверхностный",
       "source_example": "The river is shallow here.",
@@ -8110,12 +7216,6 @@
       "target_example": "Платье сделано из шелка."
     },
     {
-      "source_word": "sincere",
-      "target_word": "искренний",
-      "source_example": "He is a very sincere person.",
-      "target_example": "Он очень искренний человек."
-    },
-    {
       "source_word": "slide",
       "target_word": "горка|слайд [verb: скользить]",
       "source_example": "Let's go on the water slide.",
@@ -8132,12 +7232,6 @@
       "target_word": "поскользнуться",
       "source_example": "Be careful not to slip on the ice.",
       "target_example": "Осторожно, не поскользнись на льду."
-    },
-    {
-      "source_word": "slope",
-      "target_word": "склон [verb: наклоняться]",
-      "source_example": "The house is on a steep slope.",
-      "target_example": "Дом стоит на крутом склоне."
     },
     {
       "source_word": "solar",
@@ -8212,12 +7306,6 @@
       "target_example": "Какова ваша позиция по этому вопросу?"
     },
     {
-      "source_word": "stare",
-      "target_word": "пристально смотреть|пялиться",
-      "source_example": "It's rude to stare.",
-      "target_example": "Невежливо пялиться."
-    },
-    {
       "source_word": "status",
       "target_word": "статус|положение",
       "source_example": "What is your marital status?",
@@ -8236,28 +7324,10 @@
       "target_example": "Мост сделан из стали."
     },
     {
-      "source_word": "steep",
-      "target_word": "крутой",
-      "source_example": "The road is very steep.",
-      "target_example": "Дорога очень крутая."
-    },
-    {
       "source_word": "step",
       "target_word": "шагать",
       "source_example": "Please step this way.",
       "target_example": "Пожалуйста, пройдите сюда."
-    },
-    {
-      "source_word": "sticky",
-      "target_word": "липкий",
-      "source_example": "My hands are sticky.",
-      "target_example": "У меня липкие руки."
-    },
-    {
-      "source_word": "stiff",
-      "target_word": "жёсткий|тугой",
-      "source_example": "My neck is stiff.",
-      "target_example": "У меня затекла шея."
     },
     {
       "source_word": "stock",
@@ -8326,12 +7396,6 @@
       "target_example": "Ему нужна операция на колене."
     },
     {
-      "source_word": "surround",
-      "target_word": "окружать",
-      "source_example": "The house is surrounded by trees.",
-      "target_example": "Дом окружен деревьями."
-    },
-    {
       "source_word": "survey",
       "target_word": "опрашивать|проводить опрос",
       "source_example": "We surveyed 1,000 people.",
@@ -8348,12 +7412,6 @@
       "target_word": "клясться|ругаться",
       "source_example": "I swear I didn't do it.",
       "target_example": "Клянусь, я этого не делал."
-    },
-    {
-      "source_word": "sweep",
-      "target_word": "подметать",
-      "source_example": "Please sweep the floor.",
-      "target_example": "Пожалуйста, подмети пол."
     },
     {
       "source_word": "sympathy",
@@ -8408,12 +7466,6 @@
       "target_word": "угроза",
       "source_example": "He is a threat to our safety.",
       "target_example": "Он представляет угрозу нашей безопасности."
-    },
-    {
-      "source_word": "threaten",
-      "target_word": "угрожать",
-      "source_example": "He threatened to call the police.",
-      "target_example": "Он угрожал вызвать полицию."
     },
     {
       "source_word": "thus",
@@ -8530,12 +7582,6 @@
       "target_example": "В конечном счете, решение за вами."
     },
     {
-      "source_word": "unconscious",
-      "target_word": "бессознательный",
-      "source_example": "He was unconscious for three days.",
-      "target_example": "Он был без сознания три дня."
-    },
-    {
       "source_word": "unexpected",
       "target_word": "неожиданный",
       "source_example": "It was an unexpected visit.",
@@ -8564,12 +7610,6 @@
       "target_word": "верхний",
       "source_example": "The upper floor of the house.",
       "target_example": "Верхний этаж дома."
-    },
-    {
-      "source_word": "upward",
-      "target_word": "вверх",
-      "source_example": "The path goes upward.",
-      "target_example": "Тропа идет вверх."
     },
     {
       "source_word": "urban",
@@ -8612,12 +7652,6 @@
       "target_word": "тот самый|именно",
       "source_example": "This is the very book I was looking for.",
       "target_example": "Это та самая книга, которую я искал."
-    },
-    {
-      "source_word": "via [prep.]",
-      "target_word": "через",
-      "source_example": "We flew to London via Paris.",
-      "target_example": "Мы летели в Лондон через Париж."
     },
     {
       "source_word": "victory",
@@ -8698,30 +7732,6 @@
       "target_example": "Он богатый человек."
     },
     {
-      "source_word": "whereas [conj.]",
-      "target_word": "в то время как|тогда как",
-      "source_example": "He is tall, whereas his brother is short.",
-      "target_example": "Он высокий, в то время как его брат низкий."
-    },
-    {
-      "source_word": "wherever [conj.]",
-      "target_word": "где бы ни|куда бы ни",
-      "source_example": "Sit wherever you like.",
-      "target_example": "Садись, где хочешь."
-    },
-    {
-      "source_word": "whisper",
-      "target_word": "шёпот [verb: шептать]",
-      "source_example": "He spoke in a whisper.",
-      "target_example": "Он говорил шепотом."
-    },
-    {
-      "source_word": "whom [pron.]",
-      "target_word": "кого|кому",
-      "source_example": "To whom did you give the book?",
-      "target_example": "Кому вы дали книгу?"
-    },
-    {
       "source_word": "widely",
       "target_word": "широко",
       "source_example": "He is a widely respected author.",
@@ -8792,12 +7802,6 @@
       "target_word": "неправота|зло [adv: неправильно]",
       "source_example": "He knows the difference between right and wrong.",
       "target_example": "Он знает разницу между добром и злом."
-    },
-    {
-      "source_word": "yet [conj.]",
-      "target_word": "но|однако",
-      "source_example": "He is old, yet he is very strong.",
-      "target_example": "Он стар, но очень силен."
     },
     {
       "source_word": "zone",

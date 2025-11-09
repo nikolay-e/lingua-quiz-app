@@ -120,7 +120,6412 @@
     },
     {
       "source_word": "mio",
-      "target_word": "[translation needed for: mio]",
+      "target_word": "мой",
+      "source_example": "Es mio.",
+      "target_example": "Это моё."
+    },
+    {
+      "source_word": "grandioso",
+      "target_word": "[translation needed for: grandioso]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ciento",
+      "target_word": "[translation needed for: ciento]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tormenta",
+      "target_word": "[translation needed for: tormenta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "relájate",
+      "target_word": "[translation needed for: relájate]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "chocolate",
+      "target_word": "[translation needed for: chocolate]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pedazo",
+      "target_word": "[translation needed for: pedazo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tomo",
+      "target_word": "[translation needed for: tomo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ciencia",
+      "target_word": "[translation needed for: ciencia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "salón",
+      "target_word": "[translation needed for: salón]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sucio",
+      "target_word": "[translation needed for: sucio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "firma",
+      "target_word": "[translation needed for: firma]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "bebida",
+      "target_word": "[translation needed for: bebida]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lluvia",
+      "target_word": "[translation needed for: lluvia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "recién",
+      "target_word": "[translation needed for: recién]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "complicado",
+      "target_word": "[translation needed for: complicado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "visión",
+      "target_word": "[translation needed for: visión]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "llego",
+      "target_word": "[translation needed for: llego]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "americano",
+      "target_word": "[translation needed for: americano]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "diversión",
+      "target_word": "[translation needed for: diversión]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "libra",
+      "target_word": "[translation needed for: libra]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "disco",
+      "target_word": "[translation needed for: disco]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "probable",
+      "target_word": "[translation needed for: probable]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "parecido",
+      "target_word": "[translation needed for: parecido]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "it",
+      "target_word": "[translation needed for: it]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "corto",
+      "target_word": "[translation needed for: corto]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lunes",
+      "target_word": "[translation needed for: lunes]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "efectivo",
+      "target_word": "[translation needed for: efectivo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cura",
+      "target_word": "[translation needed for: cura]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cáncer",
+      "target_word": "[translation needed for: cáncer]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "funeral",
+      "target_word": "[translation needed for: funeral]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "jodido",
+      "target_word": "[translation needed for: jodido]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "artista",
+      "target_word": "[translation needed for: artista]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "favorito",
+      "target_word": "[translation needed for: favorito]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "entrevista",
+      "target_word": "[translation needed for: entrevista]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pintura",
+      "target_word": "[translation needed for: pintura]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "quieto",
+      "target_word": "[translation needed for: quieto]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "falso",
+      "target_word": "[translation needed for: falso]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "indio",
+      "target_word": "[translation needed for: indio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "destruir",
+      "target_word": "[translation needed for: destruir]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "helado",
+      "target_word": "[translation needed for: helado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "camioneta",
+      "target_word": "[translation needed for: camioneta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "aparte",
+      "target_word": "[translation needed for: aparte]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "rock",
+      "target_word": "[translation needed for: rock]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tumba",
+      "target_word": "[translation needed for: tumba]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tarea",
+      "target_word": "[translation needed for: tarea]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "móvil",
+      "target_word": "[translation needed for: móvil]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "responder",
+      "target_word": "[translation needed for: responder]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "vacío",
+      "target_word": "[translation needed for: vacío]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "felicitación",
+      "target_word": "[translation needed for: felicitación]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "computadora",
+      "target_word": "[translation needed for: computadora]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "construir",
+      "target_word": "[translation needed for: construir]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "solución",
+      "target_word": "[translation needed for: solución]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "famoso",
+      "target_word": "[translation needed for: famoso]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tecnología",
+      "target_word": "[translation needed for: tecnología]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "condición",
+      "target_word": "[translation needed for: condición]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "dudo",
+      "target_word": "[translation needed for: dudo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "laura",
+      "target_word": "[translation needed for: laura]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "rápidamente",
+      "target_word": "[translation needed for: rápidamente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "bordo",
+      "target_word": "[translation needed for: bordo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "nieve",
+      "target_word": "[translation needed for: nieve]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cortar",
+      "target_word": "[translation needed for: cortar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fortuna",
+      "target_word": "[translation needed for: fortuna]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "imaginar",
+      "target_word": "[translation needed for: imaginar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "archivo",
+      "target_word": "[translation needed for: archivo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "presencia",
+      "target_word": "[translation needed for: presencia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "aventura",
+      "target_word": "[translation needed for: aventura]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "gira",
+      "target_word": "[translation needed for: gira]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "alan",
+      "target_word": "[translation needed for: alan]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cero",
+      "target_word": "[translation needed for: cero]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "convertido",
+      "target_word": "[translation needed for: convertido]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pieza",
+      "target_word": "[translation needed for: pieza]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "legal",
+      "target_word": "[translation needed for: legal]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "alegría",
+      "target_word": "[translation needed for: alegría]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "barrio",
+      "target_word": "[translation needed for: barrio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "esfuerzo",
+      "target_word": "[translation needed for: esfuerzo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "empleo",
+      "target_word": "[translation needed for: empleo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cirugía",
+      "target_word": "[translation needed for: cirugía]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "clave",
+      "target_word": "[translation needed for: clave]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "aparentemente",
+      "target_word": "[translation needed for: aparentemente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "bravo",
+      "target_word": "[translation needed for: bravo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ed",
+      "target_word": "[translation needed for: ed]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "controlar",
+      "target_word": "[translation needed for: controlar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mostrar",
+      "target_word": "[translation needed for: mostrar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "piloto",
+      "target_word": "[translation needed for: piloto]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "respirar",
+      "target_word": "[translation needed for: respirar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "aparecer",
+      "target_word": "[translation needed for: aparecer]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "amistad",
+      "target_word": "[translation needed for: amistad]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "corriente",
+      "target_word": "[translation needed for: corriente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "hueso",
+      "target_word": "[translation needed for: hueso]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "planta",
+      "target_word": "[translation needed for: planta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "caído",
+      "target_word": "[translation needed for: caído]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "motor",
+      "target_word": "[translation needed for: motor]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ruego",
+      "target_word": "[translation needed for: ruego]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "aburrido",
+      "target_word": "[translation needed for: aburrido]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "paquete",
+      "target_word": "[translation needed for: paquete]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "combate",
+      "target_word": "[translation needed for: combate]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "útil",
+      "target_word": "[translation needed for: útil]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "muchísimo",
+      "target_word": "[translation needed for: muchísimo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "asistente",
+      "target_word": "[translation needed for: asistente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "salgan",
+      "target_word": "[translation needed for: salgan]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tirar",
+      "target_word": "[translation needed for: tirar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "honesto",
+      "target_word": "[translation needed for: honesto]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "carro",
+      "target_word": "[translation needed for: carro]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "venta",
+      "target_word": "[translation needed for: venta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "huir",
+      "target_word": "[translation needed for: huir]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "compromiso",
+      "target_word": "[translation needed for: compromiso]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ira",
+      "target_word": "[translation needed for: ira]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "promesa",
+      "target_word": "[translation needed for: promesa]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "decirselo",
+      "target_word": "[translation needed for: decirselo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "compra",
+      "target_word": "[translation needed for: compra]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "importancia",
+      "target_word": "[translation needed for: importancia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "personalmente",
+      "target_word": "[translation needed for: personalmente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "bolsillo",
+      "target_word": "[translation needed for: bolsillo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "enojar",
+      "target_word": "[translation needed for: enojar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "desgracia",
+      "target_word": "[translation needed for: desgracia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "labio",
+      "target_word": "[translation needed for: labio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cola",
+      "target_word": "[translation needed for: cola]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "taza",
+      "target_word": "[translation needed for: taza]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "chaqueta",
+      "target_word": "[translation needed for: chaqueta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "interesado",
+      "target_word": "[translation needed for: interesado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "atrapado",
+      "target_word": "[translation needed for: atrapado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "obvio",
+      "target_word": "[translation needed for: obvio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "entrenamiento",
+      "target_word": "[translation needed for: entrenamiento]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pescado",
+      "target_word": "[translation needed for: pescado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "encontrarlo",
+      "target_word": "[translation needed for: encontrarlo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "alice",
+      "target_word": "[translation needed for: alice]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lucy",
+      "target_word": "[translation needed for: lucy]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "estudiar",
+      "target_word": "[translation needed for: estudiar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cobarde",
+      "target_word": "[translation needed for: cobarde]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "secundario",
+      "target_word": "[translation needed for: secundario]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "descubierto",
+      "target_word": "[translation needed for: descubierto]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "convertir",
+      "target_word": "[translation needed for: convertir]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "charla",
+      "target_word": "[translation needed for: charla]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "celular",
+      "target_word": "[translation needed for: celular]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "rose",
+      "target_word": "[translation needed for: rose]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "susan",
+      "target_word": "[translation needed for: susan]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "veinte",
+      "target_word": "[translation needed for: veinte]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "encargo",
+      "target_word": "[translation needed for: encargo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "matarte",
+      "target_word": "[translation needed for: matarte]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "palacio",
+      "target_word": "[translation needed for: palacio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ja",
+      "target_word": "[translation needed for: ja]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "firme",
+      "target_word": "[translation needed for: firme]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "phil",
+      "target_word": "[translation needed for: phil]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sorprender",
+      "target_word": "[translation needed for: sorprender]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "alemán",
+      "target_word": "[translation needed for: alemán]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "milagro",
+      "target_word": "[translation needed for: milagro]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "soportar",
+      "target_word": "[translation needed for: soportar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "moda",
+      "target_word": "[translation needed for: moda]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "despacho",
+      "target_word": "[translation needed for: despacho]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "vaso",
+      "target_word": "[translation needed for: vaso]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "dejarte",
+      "target_word": "[translation needed for: dejarte]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "explosión",
+      "target_word": "[translation needed for: explosión]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "viajar",
+      "target_word": "[translation needed for: viajar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cadena",
+      "target_word": "[translation needed for: cadena]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fábrica",
+      "target_word": "[translation needed for: fábrica]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fumar",
+      "target_word": "[translation needed for: fumar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "encantador",
+      "target_word": "[translation needed for: encantador]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "madera",
+      "target_word": "[translation needed for: madera]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "grado",
+      "target_word": "[translation needed for: grado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tratamiento",
+      "target_word": "[translation needed for: tratamiento]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "comisario",
+      "target_word": "[translation needed for: comisario]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cumplir",
+      "target_word": "[translation needed for: cumplir]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "aléjate",
+      "target_word": "[translation needed for: aléjate]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lío",
+      "target_word": "[translation needed for: lío]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "agencia",
+      "target_word": "[translation needed for: agencia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "humanidad",
+      "target_word": "[translation needed for: humanidad]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "usado",
+      "target_word": "[translation needed for: usado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "parada",
+      "target_word": "[translation needed for: parada]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "odiar",
+      "target_word": "[translation needed for: odiar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "escalera",
+      "target_word": "[translation needed for: escalera]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "salvaje",
+      "target_word": "[translation needed for: salvaje]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ambulancia",
+      "target_word": "[translation needed for: ambulancia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "traducción",
+      "target_word": "[translation needed for: traducción]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "básicamente",
+      "target_word": "[translation needed for: básicamente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tratado",
+      "target_word": "[translation needed for: tratado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "parado",
+      "target_word": "[translation needed for: parado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mentiroso",
+      "target_word": "[translation needed for: mentiroso]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "conocimiento",
+      "target_word": "[translation needed for: conocimiento]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lobo",
+      "target_word": "[translation needed for: lobo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ciertamente",
+      "target_word": "[translation needed for: ciertamente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "uniforme",
+      "target_word": "[translation needed for: uniforme]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "suave",
+      "target_word": "[translation needed for: suave]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "asqueroso",
+      "target_word": "[translation needed for: asqueroso]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "conductor",
+      "target_word": "[translation needed for: conductor]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "arena",
+      "target_word": "[translation needed for: arena]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "park",
+      "target_word": "[translation needed for: park]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "espejo",
+      "target_word": "[translation needed for: espejo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "coincidencia",
+      "target_word": "[translation needed for: coincidencia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "revisar",
+      "target_word": "[translation needed for: revisar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "acusado",
+      "target_word": "[translation needed for: acusado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "conciencia",
+      "target_word": "[translation needed for: conciencia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pesadilla",
+      "target_word": "[translation needed for: pesadilla]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "saltar",
+      "target_word": "[translation needed for: saltar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "elegido",
+      "target_word": "[translation needed for: elegido]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "divorcio",
+      "target_word": "[translation needed for: divorcio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "dilo",
+      "target_word": "[translation needed for: dilo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "salí",
+      "target_word": "[translation needed for: salí]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "particular",
+      "target_word": "[translation needed for: particular]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "frontera",
+      "target_word": "[translation needed for: frontera]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "alerta",
+      "target_word": "[translation needed for: alerta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "revista",
+      "target_word": "[translation needed for: revista]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "echo",
+      "target_word": "[translation needed for: echo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "anteriormente",
+      "target_word": "[translation needed for: anteriormente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "vigilancia",
+      "target_word": "[translation needed for: vigilancia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cuerda",
+      "target_word": "[translation needed for: cuerda]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "seguido",
+      "target_word": "[translation needed for: seguido]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "despierto",
+      "target_word": "[translation needed for: despierto]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "gobernador",
+      "target_word": "[translation needed for: gobernador]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sección",
+      "target_word": "[translation needed for: sección]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "casarme",
+      "target_word": "[translation needed for: casarme]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "karen",
+      "target_word": "[translation needed for: karen]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "oso",
+      "target_word": "[translation needed for: oso]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "curiosidad",
+      "target_word": "[translation needed for: curiosidad]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "vd.",
+      "target_word": "[translation needed for: vd.]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "hank",
+      "target_word": "[translation needed for: hank]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "impresión",
+      "target_word": "[translation needed for: impresión]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pez",
+      "target_word": "[translation needed for: pez]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "torre",
+      "target_word": "[translation needed for: torre]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pasillo",
+      "target_word": "[translation needed for: pasillo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "soltar",
+      "target_word": "[translation needed for: soltar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "arresto",
+      "target_word": "[translation needed for: arresto]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sencillo",
+      "target_word": "[translation needed for: sencillo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "apuesta",
+      "target_word": "[translation needed for: apuesta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "vinieron",
+      "target_word": "[translation needed for: vinieron]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "presentar",
+      "target_word": "[translation needed for: presentar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "virus",
+      "target_word": "[translation needed for: virus]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "identidad",
+      "target_word": "[translation needed for: identidad]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "caza",
+      "target_word": "[translation needed for: caza]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "muchacha",
+      "target_word": "[translation needed for: muchacha]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "permanecer",
+      "target_word": "[translation needed for: permanecer]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "vernos",
+      "target_word": "[translation needed for: vernos]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "julie",
+      "target_word": "[translation needed for: julie]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "orgullo",
+      "target_word": "[translation needed for: orgullo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "serlo",
+      "target_word": "[translation needed for: serlo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cuanta",
+      "target_word": "[translation needed for: cuanta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "enfadado",
+      "target_word": "[translation needed for: enfadado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "altura",
+      "target_word": "[translation needed for: altura]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fred",
+      "target_word": "[translation needed for: fred]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fácilmente",
+      "target_word": "[translation needed for: fácilmente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "criatura",
+      "target_word": "[translation needed for: criatura]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "saco",
+      "target_word": "[translation needed for: saco]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "precisamente",
+      "target_word": "[translation needed for: precisamente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ilegal",
+      "target_word": "[translation needed for: ilegal]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "incendio",
+      "target_word": "[translation needed for: incendio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "preferir",
+      "target_word": "[translation needed for: preferir]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "gritar",
+      "target_word": "[translation needed for: gritar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "concierto",
+      "target_word": "[translation needed for: concierto]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "casualidad",
+      "target_word": "[translation needed for: casualidad]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "excusa",
+      "target_word": "[translation needed for: excusa]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "rodilla",
+      "target_word": "[translation needed for: rodilla]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cómodo",
+      "target_word": "[translation needed for: cómodo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "encantadora",
+      "target_word": "[translation needed for: encantadora]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sombra",
+      "target_word": "[translation needed for: sombra]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "firmar",
+      "target_word": "[translation needed for: firmar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "escritorio",
+      "target_word": "[translation needed for: escritorio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "muñeca",
+      "target_word": "[translation needed for: muñeca]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "gigante",
+      "target_word": "[translation needed for: gigante]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pájaro",
+      "target_word": "[translation needed for: pájaro]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "recompensa",
+      "target_word": "[translation needed for: recompensa]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "doce",
+      "target_word": "[translation needed for: doce]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "actitud",
+      "target_word": "[translation needed for: actitud]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "salsa",
+      "target_word": "[translation needed for: salsa]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "personaje",
+      "target_word": "[translation needed for: personaje]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "jackie",
+      "target_word": "[translation needed for: jackie]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "voto",
+      "target_word": "[translation needed for: voto]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "entrega",
+      "target_word": "[translation needed for: entrega]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "comercial",
+      "target_word": "[translation needed for: comercial]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tribu",
+      "target_word": "[translation needed for: tribu]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "poderoso",
+      "target_word": "[translation needed for: poderoso]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fresco",
+      "target_word": "[translation needed for: fresco]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "guardar",
+      "target_word": "[translation needed for: guardar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "hagámoslo",
+      "target_word": "[translation needed for: hagámoslo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "senador",
+      "target_word": "[translation needed for: senador]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "campeón",
+      "target_word": "[translation needed for: campeón]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "adorable",
+      "target_word": "[translation needed for: adorable]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ciego",
+      "target_word": "[translation needed for: ciego]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "jo",
+      "target_word": "[translation needed for: jo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "bestia",
+      "target_word": "[translation needed for: bestia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "alteza",
+      "target_word": "[translation needed for: alteza]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "episodio",
+      "target_word": "[translation needed for: episodio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "celda",
+      "target_word": "[translation needed for: celda]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "llevarlo",
+      "target_word": "[translation needed for: llevarlo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "aguantar",
+      "target_word": "[translation needed for: aguantar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "jueves",
+      "target_word": "[translation needed for: jueves]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pensamiento",
+      "target_word": "[translation needed for: pensamiento]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "medianoche",
+      "target_word": "[translation needed for: medianoche]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "garganta",
+      "target_word": "[translation needed for: garganta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sesión",
+      "target_word": "[translation needed for: sesión]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "identificación",
+      "target_word": "[translation needed for: identificación]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "circunstancia",
+      "target_word": "[translation needed for: circunstancia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "preguntado",
+      "target_word": "[translation needed for: preguntado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "veneno",
+      "target_word": "[translation needed for: veneno]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "primavera",
+      "target_word": "[translation needed for: primavera]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "martes",
+      "target_word": "[translation needed for: martes]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "feo",
+      "target_word": "[translation needed for: feo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "distrito",
+      "target_word": "[translation needed for: distrito]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "socorro",
+      "target_word": "[translation needed for: socorro]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "castigo",
+      "target_word": "[translation needed for: castigo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "dígale",
+      "target_word": "[translation needed for: dígale]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "límite",
+      "target_word": "[translation needed for: límite]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "junta",
+      "target_word": "[translation needed for: junta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "helen",
+      "target_word": "[translation needed for: helen]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "nacer",
+      "target_word": "[translation needed for: nacer]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "jugador",
+      "target_word": "[translation needed for: jugador]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "hmm",
+      "target_word": "[translation needed for: hmm]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "humo",
+      "target_word": "[translation needed for: humo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "explicación",
+      "target_word": "[translation needed for: explicación]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "competencia",
+      "target_word": "[translation needed for: competencia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mantén",
+      "target_word": "[translation needed for: mantén]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "biblioteca",
+      "target_word": "[translation needed for: biblioteca]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fila",
+      "target_word": "[translation needed for: fila]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ésto",
+      "target_word": "[translation needed for: ésto]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "misterio",
+      "target_word": "[translation needed for: misterio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ganador",
+      "target_word": "[translation needed for: ganador]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "vehículo",
+      "target_word": "[translation needed for: vehículo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lograr",
+      "target_word": "[translation needed for: lograr]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "patio",
+      "target_word": "[translation needed for: patio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pecado",
+      "target_word": "[translation needed for: pecado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "comprado",
+      "target_word": "[translation needed for: comprado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "emocionante",
+      "target_word": "[translation needed for: emocionante]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "rescate",
+      "target_word": "[translation needed for: rescate]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "adivino",
+      "target_word": "[translation needed for: adivino]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "exterior",
+      "target_word": "[translation needed for: exterior]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pasión",
+      "target_word": "[translation needed for: pasión]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "demostrar",
+      "target_word": "[translation needed for: demostrar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "elegante",
+      "target_word": "[translation needed for: elegante]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "asegúrate",
+      "target_word": "[translation needed for: asegúrate]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "dean",
+      "target_word": "[translation needed for: dean]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ambiente",
+      "target_word": "[translation needed for: ambiente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "conde",
+      "target_word": "[translation needed for: conde]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "urgente",
+      "target_word": "[translation needed for: urgente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "impuesto",
+      "target_word": "[translation needed for: impuesto]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "leyendo",
+      "target_word": "[translation needed for: leyendo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "adecuado",
+      "target_word": "[translation needed for: adecuado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "abandonar",
+      "target_word": "[translation needed for: abandonar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "apesta",
+      "target_word": "[translation needed for: apesta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "detenido",
+      "target_word": "[translation needed for: detenido]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "curioso",
+      "target_word": "[translation needed for: curioso]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "teta",
+      "target_word": "[translation needed for: teta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "asco",
+      "target_word": "[translation needed for: asco]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "decirnos",
+      "target_word": "[translation needed for: decirnos]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "enseñar",
+      "target_word": "[translation needed for: enseñar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mírate",
+      "target_word": "[translation needed for: mírate]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "debiste",
+      "target_word": "[translation needed for: debiste]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "nuevamente",
+      "target_word": "[translation needed for: nuevamente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pagado",
+      "target_word": "[translation needed for: pagado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "federal",
+      "target_word": "[translation needed for: federal]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cuán",
+      "target_word": "[translation needed for: cuán]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "terapia",
+      "target_word": "[translation needed for: terapia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lágrima",
+      "target_word": "[translation needed for: lágrima]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "terreno",
+      "target_word": "[translation needed for: terreno]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "autoridad",
+      "target_word": "[translation needed for: autoridad]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "superficie",
+      "target_word": "[translation needed for: superficie]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cubierto",
+      "target_word": "[translation needed for: cubierto]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "hierba",
+      "target_word": "[translation needed for: hierba]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mental",
+      "target_word": "[translation needed for: mental]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "extranjero",
+      "target_word": "[translation needed for: extranjero]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lento",
+      "target_word": "[translation needed for: lento]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "dirigir",
+      "target_word": "[translation needed for: dirigir]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "meta",
+      "target_word": "[translation needed for: meta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "suelto",
+      "target_word": "[translation needed for: suelto]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "despedido",
+      "target_word": "[translation needed for: despedido]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sucedido",
+      "target_word": "[translation needed for: sucedido]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pasta",
+      "target_word": "[translation needed for: pasta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cristal",
+      "target_word": "[translation needed for: cristal]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "parir",
+      "target_word": "[translation needed for: parir]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "literalmente",
+      "target_word": "[translation needed for: literalmente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "aprecio",
+      "target_word": "[translation needed for: aprecio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fotografía",
+      "target_word": "[translation needed for: fotografía]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "desafío",
+      "target_word": "[translation needed for: desafío]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "asombroso",
+      "target_word": "[translation needed for: asombroso]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "experto",
+      "target_word": "[translation needed for: experto]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "desagradable",
+      "target_word": "[translation needed for: desagradable]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "anuncio",
+      "target_word": "[translation needed for: anuncio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ma",
+      "target_word": "[translation needed for: ma]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fiebre",
+      "target_word": "[translation needed for: fiebre]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "compañera",
+      "target_word": "[translation needed for: compañera]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "desgraciado",
+      "target_word": "[translation needed for: desgraciado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mina",
+      "target_word": "[translation needed for: mina]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "honestamente",
+      "target_word": "[translation needed for: honestamente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "deuda",
+      "target_word": "[translation needed for: deuda]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cocinar",
+      "target_word": "[translation needed for: cocinar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "delicioso",
+      "target_word": "[translation needed for: delicioso]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "greg",
+      "target_word": "[translation needed for: greg]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "dirás",
+      "target_word": "[translation needed for: dirás]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "nadar",
+      "target_word": "[translation needed for: nadar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "admitir",
+      "target_word": "[translation needed for: admitir]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "adios",
+      "target_word": "[translation needed for: adios]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "quitar",
+      "target_word": "[translation needed for: quitar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mate",
+      "target_word": "[translation needed for: mate]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "piano",
+      "target_word": "[translation needed for: piano]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "amén",
+      "target_word": "[translation needed for: amén]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "s.",
+      "target_word": "[translation needed for: s.]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "arrestado",
+      "target_word": "[translation needed for: arrestado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ricky",
+      "target_word": "[translation needed for: ricky]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cruzar",
+      "target_word": "[translation needed for: cruzar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "guía",
+      "target_word": "[translation needed for: guía]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "conferencia",
+      "target_word": "[translation needed for: conferencia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "galleta",
+      "target_word": "[translation needed for: galleta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "atacar",
+      "target_word": "[translation needed for: atacar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "museo",
+      "target_word": "[translation needed for: museo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "rueda",
+      "target_word": "[translation needed for: rueda]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "recientemente",
+      "target_word": "[translation needed for: recientemente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "violación",
+      "target_word": "[translation needed for: violación]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sufrir",
+      "target_word": "[translation needed for: sufrir]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "disponible",
+      "target_word": "[translation needed for: disponible]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "práctica",
+      "target_word": "[translation needed for: práctica]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "maestra",
+      "target_word": "[translation needed for: maestra]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cable",
+      "target_word": "[translation needed for: cable]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "nacimiento",
+      "target_word": "[translation needed for: nacimiento]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "consciente",
+      "target_word": "[translation needed for: consciente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "alcance",
+      "target_word": "[translation needed for: alcance]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "alquiler",
+      "target_word": "[translation needed for: alquiler]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ordenador",
+      "target_word": "[translation needed for: ordenador]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "incidente",
+      "target_word": "[translation needed for: incidente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "maleta",
+      "target_word": "[translation needed for: maleta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "condado",
+      "target_word": "[translation needed for: condado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "kilo",
+      "target_word": "[translation needed for: kilo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "renunciar",
+      "target_word": "[translation needed for: renunciar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "actuación",
+      "target_word": "[translation needed for: actuación]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "refugio",
+      "target_word": "[translation needed for: refugio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "reacción",
+      "target_word": "[translation needed for: reacción]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "paliza",
+      "target_word": "[translation needed for: paliza]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "chef",
+      "target_word": "[translation needed for: chef]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "amanecer",
+      "target_word": "[translation needed for: amanecer]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "celoso",
+      "target_word": "[translation needed for: celoso]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "utilizar",
+      "target_word": "[translation needed for: utilizar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "prácticamente",
+      "target_word": "[translation needed for: prácticamente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "collar",
+      "target_word": "[translation needed for: collar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "golf",
+      "target_word": "[translation needed for: golf]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "betty",
+      "target_word": "[translation needed for: betty]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cercano",
+      "target_word": "[translation needed for: cercano]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ross",
+      "target_word": "[translation needed for: ross]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "montar",
+      "target_word": "[translation needed for: montar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "moto",
+      "target_word": "[translation needed for: moto]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "instrucción",
+      "target_word": "[translation needed for: instrucción]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "treinta",
+      "target_word": "[translation needed for: treinta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "emperador",
+      "target_word": "[translation needed for: emperador]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "do",
+      "target_word": "[translation needed for: do]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "metal",
+      "target_word": "[translation needed for: metal]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cierre",
+      "target_word": "[translation needed for: cierre]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "eva",
+      "target_word": "[translation needed for: eva]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "botón",
+      "target_word": "[translation needed for: botón]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "empleado",
+      "target_word": "[translation needed for: empleado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ruso",
+      "target_word": "[translation needed for: ruso]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "crema",
+      "target_word": "[translation needed for: crema]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "contestar",
+      "target_word": "[translation needed for: contestar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "casarte",
+      "target_word": "[translation needed for: casarte]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mandar",
+      "target_word": "[translation needed for: mandar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "prisionero",
+      "target_word": "[translation needed for: prisionero]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "trajiste",
+      "target_word": "[translation needed for: trajiste]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "flota",
+      "target_word": "[translation needed for: flota]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mmm",
+      "target_word": "[translation needed for: mmm]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cometido",
+      "target_word": "[translation needed for: cometido]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "igualmente",
+      "target_word": "[translation needed for: igualmente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ayudante",
+      "target_word": "[translation needed for: ayudante]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "hombro",
+      "target_word": "[translation needed for: hombro]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "bota",
+      "target_word": "[translation needed for: bota]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "adorar",
+      "target_word": "[translation needed for: adorar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "biblia",
+      "target_word": "[translation needed for: biblia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "saludo",
+      "target_word": "[translation needed for: saludo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "adulto",
+      "target_word": "[translation needed for: adulto]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "serpiente",
+      "target_word": "[translation needed for: serpiente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "romántico",
+      "target_word": "[translation needed for: romántico]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "posiblemente",
+      "target_word": "[translation needed for: posiblemente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "adivinar",
+      "target_word": "[translation needed for: adivinar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "enfrente",
+      "target_word": "[translation needed for: enfrente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "aliento",
+      "target_word": "[translation needed for: aliento]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "placa",
+      "target_word": "[translation needed for: placa]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "rata",
+      "target_word": "[translation needed for: rata]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cuadro",
+      "target_word": "[translation needed for: cuadro]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "afortunado",
+      "target_word": "[translation needed for: afortunado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "división",
+      "target_word": "[translation needed for: división]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "subtítulo",
+      "target_word": "[translation needed for: subtítulo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "bicicleta",
+      "target_word": "[translation needed for: bicicleta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pesado",
+      "target_word": "[translation needed for: pesado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sugiero",
+      "target_word": "[translation needed for: sugiero]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "espacial",
+      "target_word": "[translation needed for: espacial]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mejorar",
+      "target_word": "[translation needed for: mejorar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "concurso",
+      "target_word": "[translation needed for: concurso]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "comisaría",
+      "target_word": "[translation needed for: comisaría]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sincero",
+      "target_word": "[translation needed for: sincero]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "centavo",
+      "target_word": "[translation needed for: centavo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "naturalmente",
+      "target_word": "[translation needed for: naturalmente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "esperado",
+      "target_word": "[translation needed for: esperado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "raza",
+      "target_word": "[translation needed for: raza]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ceremonia",
+      "target_word": "[translation needed for: ceremonia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "almacén",
+      "target_word": "[translation needed for: almacén]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sabor",
+      "target_word": "[translation needed for: sabor]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "on",
+      "target_word": "[translation needed for: on]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "frankie",
+      "target_word": "[translation needed for: frankie]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "encanto",
+      "target_word": "[translation needed for: encanto]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "escondido",
+      "target_word": "[translation needed for: escondido]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pusiste",
+      "target_word": "[translation needed for: pusiste]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "punta",
+      "target_word": "[translation needed for: punta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cinturón",
+      "target_word": "[translation needed for: cinturón]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "chiste",
+      "target_word": "[translation needed for: chiste]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "consecuencia",
+      "target_word": "[translation needed for: consecuencia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sinceramente",
+      "target_word": "[translation needed for: sinceramente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "vaca",
+      "target_word": "[translation needed for: vaca]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "investigar",
+      "target_word": "[translation needed for: investigar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "chloe",
+      "target_word": "[translation needed for: chloe]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "apellido",
+      "target_word": "[translation needed for: apellido]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "instante",
+      "target_word": "[translation needed for: instante]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sacaste",
+      "target_word": "[translation needed for: sacaste]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "traiga",
+      "target_word": "[translation needed for: traiga]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "emoción",
+      "target_word": "[translation needed for: emoción]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "dormitorio",
+      "target_word": "[translation needed for: dormitorio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "atreverse",
+      "target_word": "[translation needed for: atreverse]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "excelencia",
+      "target_word": "[translation needed for: excelencia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "moral",
+      "target_word": "[translation needed for: moral]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "decente",
+      "target_word": "[translation needed for: decente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "asustar",
+      "target_word": "[translation needed for: asustar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "doug",
+      "target_word": "[translation needed for: doug]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "combustible",
+      "target_word": "[translation needed for: combustible]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "discusión",
+      "target_word": "[translation needed for: discusión]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pata",
+      "target_word": "[translation needed for: pata]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "requiere",
+      "target_word": "[translation needed for: requiere]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "manzana",
+      "target_word": "[translation needed for: manzana]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sed",
+      "target_word": "[translation needed for: sed]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tio",
+      "target_word": "[translation needed for: tio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "noble",
+      "target_word": "[translation needed for: noble]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "letra",
+      "target_word": "[translation needed for: letra]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sacerdote",
+      "target_word": "[translation needed for: sacerdote]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "resistencia",
+      "target_word": "[translation needed for: resistencia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "arroz",
+      "target_word": "[translation needed for: arroz]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "desconocido",
+      "target_word": "[translation needed for: desconocido]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mínimo",
+      "target_word": "[translation needed for: mínimo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "disparado",
+      "target_word": "[translation needed for: disparado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "bandera",
+      "target_word": "[translation needed for: bandera]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "faltar",
+      "target_word": "[translation needed for: faltar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "planeado",
+      "target_word": "[translation needed for: planeado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "periodista",
+      "target_word": "[translation needed for: periodista]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "comprobar",
+      "target_word": "[translation needed for: comprobar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "merecer",
+      "target_word": "[translation needed for: merecer]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "forense",
+      "target_word": "[translation needed for: forense]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tensión",
+      "target_word": "[translation needed for: tensión]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "involucrado",
+      "target_word": "[translation needed for: involucrado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "abandonado",
+      "target_word": "[translation needed for: abandonado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cole",
+      "target_word": "[translation needed for: cole]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "grito",
+      "target_word": "[translation needed for: grito]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pinta",
+      "target_word": "[translation needed for: pinta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "helicóptero",
+      "target_word": "[translation needed for: helicóptero]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ooh",
+      "target_word": "[translation needed for: ooh]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "apúrate",
+      "target_word": "[translation needed for: apúrate]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "entregar",
+      "target_word": "[translation needed for: entregar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "escape",
+      "target_word": "[translation needed for: escape]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "limpieza",
+      "target_word": "[translation needed for: limpieza]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "querrás",
+      "target_word": "[translation needed for: querrás]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "jessica",
+      "target_word": "[translation needed for: jessica]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "magnífico",
+      "target_word": "[translation needed for: magnífico]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ejercicio",
+      "target_word": "[translation needed for: ejercicio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lealtad",
+      "target_word": "[translation needed for: lealtad]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "diamante",
+      "target_word": "[translation needed for: diamante]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "leyenda",
+      "target_word": "[translation needed for: leyenda]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "gilipollas",
+      "target_word": "[translation needed for: gilipollas]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "costumbre",
+      "target_word": "[translation needed for: costumbre]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cabaña",
+      "target_word": "[translation needed for: cabaña]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lentamente",
+      "target_word": "[translation needed for: lentamente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ensayo",
+      "target_word": "[translation needed for: ensayo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "gimnasio",
+      "target_word": "[translation needed for: gimnasio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "negativo",
+      "target_word": "[translation needed for: negativo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lenguaje",
+      "target_word": "[translation needed for: lenguaje]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "garaje",
+      "target_word": "[translation needed for: garaje]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "león",
+      "target_word": "[translation needed for: león]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "incluir",
+      "target_word": "[translation needed for: incluir]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "dragón",
+      "target_word": "[translation needed for: dragón]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "generación",
+      "target_word": "[translation needed for: generación]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "apetece",
+      "target_word": "[translation needed for: apetece]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fingir",
+      "target_word": "[translation needed for: fingir]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "miércoles",
+      "target_word": "[translation needed for: miércoles]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "escritor",
+      "target_word": "[translation needed for: escritor]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "solitario",
+      "target_word": "[translation needed for: solitario]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "publicidad",
+      "target_word": "[translation needed for: publicidad]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "temporal",
+      "target_word": "[translation needed for: temporal]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "antecedente",
+      "target_word": "[translation needed for: antecedente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "probado",
+      "target_word": "[translation needed for: probado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "todd",
+      "target_word": "[translation needed for: todd]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "atractivo",
+      "target_word": "[translation needed for: atractivo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "váyase",
+      "target_word": "[translation needed for: váyase]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "barra",
+      "target_word": "[translation needed for: barra]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "aniversario",
+      "target_word": "[translation needed for: aniversario]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "niñera",
+      "target_word": "[translation needed for: niñera]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "quince",
+      "target_word": "[translation needed for: quince]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "muro",
+      "target_word": "[translation needed for: muro]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lucir",
+      "target_word": "[translation needed for: lucir]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "prima",
+      "target_word": "[translation needed for: prima]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "reír",
+      "target_word": "[translation needed for: reír]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "producto",
+      "target_word": "[translation needed for: producto]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "abrazo",
+      "target_word": "[translation needed for: abrazo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "gafas",
+      "target_word": "[translation needed for: gafas]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "arreglarlo",
+      "target_word": "[translation needed for: arreglarlo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sobrino",
+      "target_word": "[translation needed for: sobrino]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "demanda",
+      "target_word": "[translation needed for: demanda]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "buscado",
+      "target_word": "[translation needed for: buscado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "perfil",
+      "target_word": "[translation needed for: perfil]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "actriz",
+      "target_word": "[translation needed for: actriz]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "repetir",
+      "target_word": "[translation needed for: repetir]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "razonable",
+      "target_word": "[translation needed for: razonable]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "gerente",
+      "target_word": "[translation needed for: gerente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sensible",
+      "target_word": "[translation needed for: sensible]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ríe",
+      "target_word": "[translation needed for: ríe]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "izquierdo",
+      "target_word": "[translation needed for: izquierdo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "personalidad",
+      "target_word": "[translation needed for: personalidad]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "secretario",
+      "target_word": "[translation needed for: secretario]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sorprendido",
+      "target_word": "[translation needed for: sorprendido]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "profundamente",
+      "target_word": "[translation needed for: profundamente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "grano",
+      "target_word": "[translation needed for: grano]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "moneda",
+      "target_word": "[translation needed for: moneda]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "piedad",
+      "target_word": "[translation needed for: piedad]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tocado",
+      "target_word": "[translation needed for: tocado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ciudadano",
+      "target_word": "[translation needed for: ciudadano]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "creado",
+      "target_word": "[translation needed for: creado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "encerrado",
+      "target_word": "[translation needed for: encerrado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "borde",
+      "target_word": "[translation needed for: borde]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "toby",
+      "target_word": "[translation needed for: toby]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "profesora",
+      "target_word": "[translation needed for: profesora]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "expresión",
+      "target_word": "[translation needed for: expresión]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "nervio",
+      "target_word": "[translation needed for: nervio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "oficialmente",
+      "target_word": "[translation needed for: oficialmente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "perdedor",
+      "target_word": "[translation needed for: perdedor]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "rumbo",
+      "target_word": "[translation needed for: rumbo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "valle",
+      "target_word": "[translation needed for: valle]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "juventud",
+      "target_word": "[translation needed for: juventud]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "preocupación",
+      "target_word": "[translation needed for: preocupación]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "desnudo",
+      "target_word": "[translation needed for: desnudo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "guión",
+      "target_word": "[translation needed for: guión]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sophie",
+      "target_word": "[translation needed for: sophie]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tirado",
+      "target_word": "[translation needed for: tirado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "heroína",
+      "target_word": "[translation needed for: heroína]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "estupidez",
+      "target_word": "[translation needed for: estupidez]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "derek",
+      "target_word": "[translation needed for: derek]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sorprendente",
+      "target_word": "[translation needed for: sorprendente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "egoísta",
+      "target_word": "[translation needed for: egoísta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "verdaderamente",
+      "target_word": "[translation needed for: verdaderamente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "casey",
+      "target_word": "[translation needed for: casey]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ánimo",
+      "target_word": "[translation needed for: ánimo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lujo",
+      "target_word": "[translation needed for: lujo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "nate",
+      "target_word": "[translation needed for: nate]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "despejado",
+      "target_word": "[translation needed for: despejado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "miserable",
+      "target_word": "[translation needed for: miserable]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "wayne",
+      "target_word": "[translation needed for: wayne]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "dispositivo",
+      "target_word": "[translation needed for: dispositivo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mencionar",
+      "target_word": "[translation needed for: mencionar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "inmunidad",
+      "target_word": "[translation needed for: inmunidad]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "grabación",
+      "target_word": "[translation needed for: grabación]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "nuclear",
+      "target_word": "[translation needed for: nuclear]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "clima",
+      "target_word": "[translation needed for: clima]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "buscarlo",
+      "target_word": "[translation needed for: buscarlo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "prostituta",
+      "target_word": "[translation needed for: prostituta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "máscara",
+      "target_word": "[translation needed for: máscara]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "alegre",
+      "target_word": "[translation needed for: alegre]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "volviste",
+      "target_word": "[translation needed for: volviste]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "positivo",
+      "target_word": "[translation needed for: positivo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "desafortunadamente",
+      "target_word": "[translation needed for: desafortunadamente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "estrategia",
+      "target_word": "[translation needed for: estrategia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "vinimos",
+      "target_word": "[translation needed for: vinimos]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "poli",
+      "target_word": "[translation needed for: poli]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "elena",
+      "target_word": "[translation needed for: elena]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "discúlpame",
+      "target_word": "[translation needed for: discúlpame]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "prohibido",
+      "target_word": "[translation needed for: prohibido]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "caray",
+      "target_word": "[translation needed for: caray]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "arruinar",
+      "target_word": "[translation needed for: arruinar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "existencia",
+      "target_word": "[translation needed for: existencia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "industria",
+      "target_word": "[translation needed for: industria]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "colección",
+      "target_word": "[translation needed for: colección]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fatal",
+      "target_word": "[translation needed for: fatal]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "expediente",
+      "target_word": "[translation needed for: expediente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "petición",
+      "target_word": "[translation needed for: petición]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ayudado",
+      "target_word": "[translation needed for: ayudado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "coraje",
+      "target_word": "[translation needed for: coraje]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "rubio",
+      "target_word": "[translation needed for: rubio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "almorzar",
+      "target_word": "[translation needed for: almorzar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "caridad",
+      "target_word": "[translation needed for: caridad]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "capítulo",
+      "target_word": "[translation needed for: capítulo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "disculparme",
+      "target_word": "[translation needed for: disculparme]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "quédese",
+      "target_word": "[translation needed for: quédese]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tarta",
+      "target_word": "[translation needed for: tarta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "acero",
+      "target_word": "[translation needed for: acero]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "alicia",
+      "target_word": "[translation needed for: alicia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "camarada",
+      "target_word": "[translation needed for: camarada]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "coartada",
+      "target_word": "[translation needed for: coartada]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "payaso",
+      "target_word": "[translation needed for: payaso]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "condenado",
+      "target_word": "[translation needed for: condenado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "convencido",
+      "target_word": "[translation needed for: convencido]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "italiano",
+      "target_word": "[translation needed for: italiano]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "camiseta",
+      "target_word": "[translation needed for: camiseta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "extraño",
+      "target_word": "[translation needed for: extraño]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "impacto",
+      "target_word": "[translation needed for: impacto]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "equipaje",
+      "target_word": "[translation needed for: equipaje]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "adolescente",
+      "target_word": "[translation needed for: adolescente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "soltero",
+      "target_word": "[translation needed for: soltero]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "descubrí",
+      "target_word": "[translation needed for: descubrí]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "influencia",
+      "target_word": "[translation needed for: influencia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "oxígeno",
+      "target_word": "[translation needed for: oxígeno]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "experimento",
+      "target_word": "[translation needed for: experimento]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "absurdo",
+      "target_word": "[translation needed for: absurdo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "propuesta",
+      "target_word": "[translation needed for: propuesta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tómalo",
+      "target_word": "[translation needed for: tómalo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cantante",
+      "target_word": "[translation needed for: cantante]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "traición",
+      "target_word": "[translation needed for: traición]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cementerio",
+      "target_word": "[translation needed for: cementerio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pozo",
+      "target_word": "[translation needed for: pozo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "patrulla",
+      "target_word": "[translation needed for: patrulla]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "planear",
+      "target_word": "[translation needed for: planear]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ann",
+      "target_word": "[translation needed for: ann]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tragedia",
+      "target_word": "[translation needed for: tragedia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ethan",
+      "target_word": "[translation needed for: ethan]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "procedimiento",
+      "target_word": "[translation needed for: procedimiento]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fantasía",
+      "target_word": "[translation needed for: fantasía]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "billete",
+      "target_word": "[translation needed for: billete]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "secuestro",
+      "target_word": "[translation needed for: secuestro]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sabrás",
+      "target_word": "[translation needed for: sabrás]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "prestado",
+      "target_word": "[translation needed for: prestado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "conejo",
+      "target_word": "[translation needed for: conejo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pregúntale",
+      "target_word": "[translation needed for: pregúntale]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "díselo",
+      "target_word": "[translation needed for: díselo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "significado",
+      "target_word": "[translation needed for: significado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cincuenta",
+      "target_word": "[translation needed for: cincuenta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "apropiado",
+      "target_word": "[translation needed for: apropiado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "robot",
+      "target_word": "[translation needed for: robot]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "considerado",
+      "target_word": "[translation needed for: considerado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "alcanzar",
+      "target_word": "[translation needed for: alcanzar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "patata",
+      "target_word": "[translation needed for: patata]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "continuación",
+      "target_word": "[translation needed for: continuación]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tradición",
+      "target_word": "[translation needed for: tradición]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ocultar",
+      "target_word": "[translation needed for: ocultar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "electricidad",
+      "target_word": "[translation needed for: electricidad]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "aldea",
+      "target_word": "[translation needed for: aldea]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ellen",
+      "target_word": "[translation needed for: ellen]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "permitido",
+      "target_word": "[translation needed for: permitido]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cima",
+      "target_word": "[translation needed for: cima]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "éi",
+      "target_word": "[translation needed for: éi]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "once",
+      "target_word": "[translation needed for: once]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "terrorista",
+      "target_word": "[translation needed for: terrorista]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "término",
+      "target_word": "[translation needed for: término]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "revés",
+      "target_word": "[translation needed for: revés]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "explotar",
+      "target_word": "[translation needed for: explotar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "encargar",
+      "target_word": "[translation needed for: encargar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "terror",
+      "target_word": "[translation needed for: terror]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "keith",
+      "target_word": "[translation needed for: keith]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sacrificio",
+      "target_word": "[translation needed for: sacrificio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "destrucción",
+      "target_word": "[translation needed for: destrucción]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "porno",
+      "target_word": "[translation needed for: porno]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "olvido",
+      "target_word": "[translation needed for: olvido]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "colina",
+      "target_word": "[translation needed for: colina]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "musical",
+      "target_word": "[translation needed for: musical]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pastor",
+      "target_word": "[translation needed for: pastor]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "naranja",
+      "target_word": "[translation needed for: naranja]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "batería",
+      "target_word": "[translation needed for: batería]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sue",
+      "target_word": "[translation needed for: sue]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "caramba",
+      "target_word": "[translation needed for: caramba]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "callejón",
+      "target_word": "[translation needed for: callejón]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "notar",
+      "target_word": "[translation needed for: notar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "maquillaje",
+      "target_word": "[translation needed for: maquillaje]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lanzar",
+      "target_word": "[translation needed for: lanzar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cubrir",
+      "target_word": "[translation needed for: cubrir]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "liz",
+      "target_word": "[translation needed for: liz]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "policial",
+      "target_word": "[translation needed for: policial]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fase",
+      "target_word": "[translation needed for: fase]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "gus",
+      "target_word": "[translation needed for: gus]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "armado",
+      "target_word": "[translation needed for: armado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "porquería",
+      "target_word": "[translation needed for: porquería]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mickey",
+      "target_word": "[translation needed for: mickey]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "superar",
+      "target_word": "[translation needed for: superar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sueldo",
+      "target_word": "[translation needed for: sueldo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "piénsalo",
+      "target_word": "[translation needed for: piénsalo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "testimonio",
+      "target_word": "[translation needed for: testimonio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "costado",
+      "target_word": "[translation needed for: costado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "apagar",
+      "target_word": "[translation needed for: apagar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "diana",
+      "target_word": "[translation needed for: diana]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pasaporte",
+      "target_word": "[translation needed for: pasaporte]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "infancia",
+      "target_word": "[translation needed for: infancia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "suele",
+      "target_word": "[translation needed for: suele]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "reverendo",
+      "target_word": "[translation needed for: reverendo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "destruido",
+      "target_word": "[translation needed for: destruido]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "reconocer",
+      "target_word": "[translation needed for: reconocer]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "plástico",
+      "target_word": "[translation needed for: plástico]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "barba",
+      "target_word": "[translation needed for: barba]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mago",
+      "target_word": "[translation needed for: mago]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "hoja",
+      "target_word": "[translation needed for: hoja]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "conocerla",
+      "target_word": "[translation needed for: conocerla]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "hallar",
+      "target_word": "[translation needed for: hallar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mantequilla",
+      "target_word": "[translation needed for: mantequilla]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lidiar",
+      "target_word": "[translation needed for: lidiar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sentencia",
+      "target_word": "[translation needed for: sentencia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ideal",
+      "target_word": "[translation needed for: ideal]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "dámelo",
+      "target_word": "[translation needed for: dámelo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "residencia",
+      "target_word": "[translation needed for: residencia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "francamente",
+      "target_word": "[translation needed for: francamente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ayudo",
+      "target_word": "[translation needed for: ayudo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sigamos",
+      "target_word": "[translation needed for: sigamos]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "engañar",
+      "target_word": "[translation needed for: engañar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "guante",
+      "target_word": "[translation needed for: guante]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "recepción",
+      "target_word": "[translation needed for: recepción]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "logrado",
+      "target_word": "[translation needed for: logrado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sufrido",
+      "target_word": "[translation needed for: sufrido]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cometer",
+      "target_word": "[translation needed for: cometer]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "docena",
+      "target_word": "[translation needed for: docena]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "averiguarlo",
+      "target_word": "[translation needed for: averiguarlo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lanzamiento",
+      "target_word": "[translation needed for: lanzamiento]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ho",
+      "target_word": "[translation needed for: ho]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "falla",
+      "target_word": "[translation needed for: falla]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "técnicamente",
+      "target_word": "[translation needed for: técnicamente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "multitud",
+      "target_word": "[translation needed for: multitud]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "potencial",
+      "target_word": "[translation needed for: potencial]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "rutina",
+      "target_word": "[translation needed for: rutina]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fascinante",
+      "target_word": "[translation needed for: fascinante]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ensalada",
+      "target_word": "[translation needed for: ensalada]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tubo",
+      "target_word": "[translation needed for: tubo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "is",
+      "target_word": "[translation needed for: is]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "interrumpir",
+      "target_word": "[translation needed for: interrumpir]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "representar",
+      "target_word": "[translation needed for: representar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "novela",
+      "target_word": "[translation needed for: novela]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "herramienta",
+      "target_word": "[translation needed for: herramienta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "apostar",
+      "target_word": "[translation needed for: apostar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "auxilio",
+      "target_word": "[translation needed for: auxilio]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fracaso",
+      "target_word": "[translation needed for: fracaso]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "spencer",
+      "target_word": "[translation needed for: spencer]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fíjate",
+      "target_word": "[translation needed for: fíjate]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "votar",
+      "target_word": "[translation needed for: votar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "infantil",
+      "target_word": "[translation needed for: infantil]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "estacionamiento",
+      "target_word": "[translation needed for: estacionamiento]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sentarte",
+      "target_word": "[translation needed for: sentarte]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "esclavo",
+      "target_word": "[translation needed for: esclavo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "probarlo",
+      "target_word": "[translation needed for: probarlo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "viuda",
+      "target_word": "[translation needed for: viuda]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "reportar",
+      "target_word": "[translation needed for: reportar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "rob",
+      "target_word": "[translation needed for: rob]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "advertencia",
+      "target_word": "[translation needed for: advertencia]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "jugo",
+      "target_word": "[translation needed for: jugo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pico",
+      "target_word": "[translation needed for: pico]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "amarillo",
+      "target_word": "[translation needed for: amarillo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "encargado",
+      "target_word": "[translation needed for: encargado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "so",
+      "target_word": "[translation needed for: so]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "as",
+      "target_word": "[translation needed for: as]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "drama",
+      "target_word": "[translation needed for: drama]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "confundido",
+      "target_word": "[translation needed for: confundido]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "olvídate",
+      "target_word": "[translation needed for: olvídate]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "inconsciente",
+      "target_word": "[translation needed for: inconsciente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "estadounidense",
+      "target_word": "[translation needed for: estadounidense]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "informado",
+      "target_word": "[translation needed for: informado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "matemático",
+      "target_word": "[translation needed for: matemático]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "eliminar",
+      "target_word": "[translation needed for: eliminar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "causar",
+      "target_word": "[translation needed for: causar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "vigilar",
+      "target_word": "[translation needed for: vigilar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "solar",
+      "target_word": "[translation needed for: solar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lectura",
+      "target_word": "[translation needed for: lectura]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "camarero",
+      "target_word": "[translation needed for: camarero]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cabina",
+      "target_word": "[translation needed for: cabina]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "deporte",
+      "target_word": "[translation needed for: deporte]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fuga",
+      "target_word": "[translation needed for: fuga]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ala",
+      "target_word": "[translation needed for: ala]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "champán",
+      "target_word": "[translation needed for: champán]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "formar",
+      "target_word": "[translation needed for: formar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "entenderlo",
+      "target_word": "[translation needed for: entenderlo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "oreja",
+      "target_word": "[translation needed for: oreja]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "obligado",
+      "target_word": "[translation needed for: obligado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "extremadamente",
+      "target_word": "[translation needed for: extremadamente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "casco",
+      "target_word": "[translation needed for: casco]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "aceptado",
+      "target_word": "[translation needed for: aceptado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fabuloso",
+      "target_word": "[translation needed for: fabuloso]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "llores",
+      "target_word": "[translation needed for: llores]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "arruinado",
+      "target_word": "[translation needed for: arruinado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "enterar",
+      "target_word": "[translation needed for: enterar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "realizar",
+      "target_word": "[translation needed for: realizar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "hechizo",
+      "target_word": "[translation needed for: hechizo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "respiración",
+      "target_word": "[translation needed for: respiración]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "extremo",
+      "target_word": "[translation needed for: extremo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "historial",
+      "target_word": "[translation needed for: historial]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "yeah",
+      "target_word": "[translation needed for: yeah]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "tigre",
+      "target_word": "[translation needed for: tigre]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "fianza",
+      "target_word": "[translation needed for: fianza]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "auténtico",
+      "target_word": "[translation needed for: auténtico]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "miente",
+      "target_word": "[translation needed for: miente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "matthew",
+      "target_word": "[translation needed for: matthew]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "increíblemente",
+      "target_word": "[translation needed for: increíblemente]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ví",
+      "target_word": "[translation needed for: ví]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "seco",
+      "target_word": "[translation needed for: seco]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "sagrado",
+      "target_word": "[translation needed for: sagrado]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "monte",
+      "target_word": "[translation needed for: monte]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "juguete",
+      "target_word": "[translation needed for: juguete]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "ali",
+      "target_word": "[translation needed for: ali]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "debilidad",
+      "target_word": "[translation needed for: debilidad]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "cazar",
+      "target_word": "[translation needed for: cazar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "convencer",
+      "target_word": "[translation needed for: convencer]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "rollo",
+      "target_word": "[translation needed for: rollo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pescar",
+      "target_word": "[translation needed for: pescar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "mezcla",
+      "target_word": "[translation needed for: mezcla]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "condicional",
+      "target_word": "[translation needed for: condicional]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "giro",
+      "target_word": "[translation needed for: giro]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "molestar",
+      "target_word": "[translation needed for: molestar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "gris",
+      "target_word": "[translation needed for: gris]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "zoe",
+      "target_word": "[translation needed for: zoe]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "refuerzo",
+      "target_word": "[translation needed for: refuerzo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "colgar",
+      "target_word": "[translation needed for: colgar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "arreglo",
+      "target_word": "[translation needed for: arreglo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "plazo",
+      "target_word": "[translation needed for: plazo]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "elliot",
+      "target_word": "[translation needed for: elliot]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "gravedad",
+      "target_word": "[translation needed for: gravedad]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "importe",
+      "target_word": "[translation needed for: importe]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "lata",
+      "target_word": "[translation needed for: lata]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "vela",
+      "target_word": "[translation needed for: vela]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "reconocimiento",
+      "target_word": "[translation needed for: reconocimiento]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "conducta",
+      "target_word": "[translation needed for: conducta]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "am",
+      "target_word": "[translation needed for: am]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "participar",
+      "target_word": "[translation needed for: participar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "vendedor",
+      "target_word": "[translation needed for: vendedor]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "pudiéramos",
+      "target_word": "[translation needed for: pudiéramos]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "diane",
+      "target_word": "[translation needed for: diane]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "césar",
+      "target_word": "[translation needed for: césar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "they",
+      "target_word": "[translation needed for: they]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "horario",
+      "target_word": "[translation needed for: horario]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "identificar",
+      "target_word": "[translation needed for: identificar]",
+      "cefr_level": "A2",
+      "source_example": "",
+      "target_example": ""
+    },
+    {
+      "source_word": "alfombra",
+      "target_word": "[translation needed for: alfombra]",
+      "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
     }
