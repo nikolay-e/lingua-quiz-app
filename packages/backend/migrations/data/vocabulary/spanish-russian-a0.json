@@ -572,15 +572,6 @@
       "target_example": "Это стоит сто долларов."
     },
     {
-      "translation_id": 4020045,
-      "source_id": 4020091,
-      "target_id": 4020092,
-      "source_word": "dólares",
-      "target_word": "доллары",
-      "source_example": "Cuesta veinte dólares.",
-      "target_example": "Это стоит двадцать долларов."
-    },
-    {
       "translation_id": 4020046,
       "source_id": 4020093,
       "target_id": 4020094,
@@ -1308,15 +1299,6 @@
       "target_word": "полиция",
       "source_example": "Llamar a la policía.",
       "target_example": "Вызвать полицию."
-    },
-    {
-      "translation_id": 4020127,
-      "source_id": 4020255,
-      "target_id": 4020256,
-      "source_word": "política",
-      "target_word": "политика",
-      "source_example": "No me interesa la política.",
-      "target_example": "Меня не интересует политика."
     },
     {
       "translation_id": 4020128,

@@ -222,7 +222,7 @@ def run_interactive_mode():
                     console.print()
                     from .commands.analyze import analyze
 
-                    analyze(language_level=lang_level)
+                    analyze(language_level=lang_level, format="all", top_n=None, output_dir=None)
 
             elif command == "generate":
                 language = prompt_language("generate")

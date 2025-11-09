@@ -155,8 +155,8 @@ def fill_missing_words(
 
         new_entry = {
             "translation_id": next_id,
-            "source_word_id": next_id + 1,
-            "target_word_id": next_id + 2,
+            "source_id": next_id + 1,
+            "target_id": next_id + 2,
             "source_word": lemma,
             "target_word": f"[translation needed for: {lemma}]",
             "cefr_level": level.upper(),
