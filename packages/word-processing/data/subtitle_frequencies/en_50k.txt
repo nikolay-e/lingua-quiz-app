@@ -3126,7 +3126,6 @@ confession 12702
 trigger 12698
 cells 12693
 frankly 12691
-ali 12691
 exit 12688
 response 12684
 cancel 12681

@@ -1648,13 +1648,6 @@
       "cefr_level": "A2",
       "source_example": "Esto es drama.",
       "target_example": "Это драма."
-    },
-    {
-      "source_word": "ali",
-      "target_word": "Али",
-      "cefr_level": "A2",
-      "source_example": "Voy a usar ali.",
-      "target_example": "Я буду использовать Али."
     }
   ]
 }

@@ -199,12 +199,42 @@ class MigrationValidator:
                 )
             )
 
+        if "[translation needed" in entry.target_word.lower():
+            issues.append(
+                ValidationIssue(
+                    severity="error",
+                    category="data_integrity",
+                    message=f"Translation needed for word: '{entry.source_word}'",
+                    file_name=filename,
+                )
+            )
+
         if len(entry.source_word) > 100:
             issues.append(
                 ValidationIssue(
                     severity="warning",
                     category="data_quality",
                     message=f"Unusually long word: '{entry.source_word[:50]}...'",
+                    file_name=filename,
+                )
+            )
+
+        if not entry.source_example or not entry.source_example.strip():
+            issues.append(
+                ValidationIssue(
+                    severity="error",
+                    category="data_integrity",
+                    message=f"Empty source_example for word: '{entry.source_word}'",
+                    file_name=filename,
+                )
+            )
+
+        if not entry.target_example or not entry.target_example.strip():
+            issues.append(
+                ValidationIssue(
+                    severity="error",
+                    category="data_integrity",
+                    message=f"Empty target_example for word: '{entry.source_word}'",
                     file_name=filename,
                 )
             )
