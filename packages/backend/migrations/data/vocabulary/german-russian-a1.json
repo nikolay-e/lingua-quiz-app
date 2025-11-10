@@ -4,10 +4,245 @@
   "word_list_name": "German Russian A1",
   "translations": [
     {
-      "source_word": "der Abend [Abende]",
-      "target_word": "вечер",
-      "source_example": "Am Abend gehe ich oft spazieren.",
-      "target_example": "Вечером я часто гуляю."
+      "source_word": "alles",
+      "target_word": "всё",
+      "source_example": "Alles ist bereit für die Party.",
+      "target_example": "Всё готово для вечеринки."
+    },
+    {
+      "source_word": "der andere [anderen]",
+      "target_word": "другой",
+      "source_example": "Die andere Seite des Flusses ist schöner.",
+      "target_example": "Другая сторона реки красивее."
+    },
+    {
+      "source_word": "beide",
+      "target_word": "оба",
+      "source_example": "Beide Kinder spielen im Garten.",
+      "target_example": "Оба ребенка играют в саду."
+    },
+    {
+      "source_word": "unser",
+      "target_word": "наш",
+      "source_example": "Unser Haus ist groß.",
+      "target_example": "Наш дом большой."
+    },
+    {
+      "source_word": "dein",
+      "target_word": "твой",
+      "source_example": "Ist das dein Buch?",
+      "target_example": "Это твоя книга?"
+    },
+    {
+      "source_word": "dieser",
+      "target_word": "этот",
+      "source_example": "Dieser Tisch ist neu.",
+      "target_example": "Этот стол новый."
+    },
+    {
+      "source_word": "dir",
+      "target_word": "тебе",
+      "source_example": "Ich gebe dir in Geschenk.",
+      "target_example": "Я дарю тебе подарок."
+    },
+    {
+      "source_word": "einige",
+      "target_word": "несколько",
+      "source_example": "Ich habe einige Bücher gelesen.",
+      "target_example": "Я прочитал несколько книг."
+    },
+    {
+      "source_word": "etwas",
+      "target_word": "что-то",
+      "source_example": "Ich möchte etwas trinken.",
+      "target_example": "Я хочу что-то попить."
+    },
+    {
+      "source_word": "euch",
+      "target_word": "вам",
+      "source_example": "Ich habe euch in Geschenk gekauft.",
+      "target_example": "Я купил вам подарок."
+    },
+    {
+      "source_word": "ich",
+      "target_word": "я",
+      "source_example": "Ich liebe dich.",
+      "target_example": "Я тебя люблю."
+    },
+    {
+      "source_word": "ihm",
+      "target_word": "ему",
+      "source_example": "Ich gebe ihm das Buch.",
+      "target_example": "Я даю ему книгу."
+    },
+    {
+      "source_word": "Ihnen",
+      "target_word": "Вам",
+      "source_example": "Kann ich Ihnen helfen?",
+      "target_example": "Могу я вам помочь?"
+    },
+    {
+      "source_word": "jeder",
+      "target_word": "каждый",
+      "source_example": "Jeder kann teilnehmen.",
+      "target_example": "Каждый может участвовать."
+    },
+    {
+      "source_word": "kein",
+      "target_word": "нет, никакой",
+      "source_example": "Ich habe keine Zeit.",
+      "target_example": "У меня нет времени."
+    },
+    {
+      "source_word": "welche",
+      "target_word": "какой, какая, какие",
+      "source_example": "Welche Farbe magst du?",
+      "target_example": "Какой цвет тебе нравится?"
+    },
+    {
+      "source_word": "man",
+      "target_word": "неопределенно личное",
+      "source_example": "Man sollte immer ehrlich sein.",
+      "target_example": "Нужно всегда быть честным."
+    },
+    {
+      "source_word": "mein",
+      "target_word": "мой",
+      "source_example": "Das ist mein Buch.",
+      "target_example": "Это моя книга."
+    },
+    {
+      "source_word": "nichts",
+      "target_word": "ничего",
+      "source_example": "Ich habe nichts zu sagen.",
+      "target_example": "У меня нечего сказать."
+    },
+    {
+      "source_word": "sich",
+      "target_word": "себя",
+      "source_example": "Er kümmert sich um sich selbst.",
+      "target_example": "Он заботится о себе."
+    },
+    {
+      "source_word": "was",
+      "target_word": "что",
+      "source_example": "Was machst du heute?",
+      "target_example": "Что ты делаешь сегодня?"
+    },
+    {
+      "source_word": "wer",
+      "target_word": "кто",
+      "source_example": "Wer ist das?",
+      "target_example": "Кто это?"
+    },
+    {
+      "source_word": "wir",
+      "target_word": "мы",
+      "source_example": "Wir gehen ins Kino.",
+      "target_example": "Мы идем в кино."
+    },
+    {
+      "source_word": "wenig",
+      "target_word": "мало",
+      "source_example": "Ich habe wenig Zeit.",
+      "target_example": "У меня мало времени."
+    },
+    {
+      "source_word": "niemand",
+      "target_word": "никто",
+      "source_example": "Niemand ist zu Hause.",
+      "target_example": "Никого нет дома."
+    },
+    {
+      "source_word": "dessen",
+      "target_word": "чей",
+      "source_example": "Das ist in Mann, dessen Frau Ärztin ist.",
+      "target_example": "Это мужчина, жена которого врач."
+    },
+    {
+      "source_word": "solche",
+      "target_word": "такие",
+      "source_example": "Solche Problem kenne ich.",
+      "target_example": "Такие проблемы я знаю."
+    },
+    {
+      "source_word": "jemand",
+      "target_word": "кто-то",
+      "source_example": "Jemand hat angerufen.",
+      "target_example": "Кто-то звонил."
+    },
+    {
+      "source_word": "es",
+      "target_word": "это|оно",
+      "source_example": "Ich es oft.",
+      "target_example": "Я часто это."
+    },
+    {
+      "source_word": "ein",
+      "target_word": "неопределённый артикль (мужской/средний род)",
+      "source_example": "Ich ein oft.",
+      "target_example": "Я часто неопределённый артикль (мужской/средний род)."
+    },
+    {
+      "source_word": "irgendwas",
+      "target_word": "что-нибудь",
+      "source_example": "Ich irgendwas oft.",
+      "target_example": "Я часто что-нибудь."
+    },
+    {
+      "source_word": "irgendetwas",
+      "target_word": "что-то",
+      "source_example": "Ich irgendetwas oft.",
+      "target_example": "Я часто что-то."
+    },
+    {
+      "source_word": "dasselbe",
+      "target_word": "то же самое",
+      "source_example": "Ich dasselbe oft.",
+      "target_example": "Я часто то же самое."
+    },
+    {
+      "source_word": "selber",
+      "target_word": "сам",
+      "source_example": "Ich selber oft.",
+      "target_example": "Я часто сам."
+    },
+    {
+      "source_word": "mancher",
+      "target_word": "некоторый",
+      "source_example": "Ich mancher oft.",
+      "target_example": "Я часто некоторый."
+    },
+    {
+      "source_word": "niemandem",
+      "target_word": "никому",
+      "source_example": "Ich niemandem oft.",
+      "target_example": "Я часто никому."
+    },
+    {
+      "source_word": "irgendwelche",
+      "target_word": "какие-нибудь",
+      "source_example": "Ich irgendwelche oft.",
+      "target_example": "Я часто какие-нибудь."
+    },
+    {
+      "source_word": "viel",
+      "target_word": "много",
+      "source_example": "Ich viel oft.",
+      "target_example": "Я часто много."
+    },
+    {
+      "source_word": "anderer",
+      "target_word": "другой",
+      "source_example": "Ich anderer oft.",
+      "target_example": "Я часто другой."
+    },
+    {
+      "source_word": "abend",
+      "target_word": "[translation needed for: abend]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
       "source_word": "aber",
@@ -28,12 +263,6 @@
       "target_example": "Он часто остается один дома."
     },
     {
-      "source_word": "alles",
-      "target_word": "всё",
-      "source_example": "Alles ist bereit für die Party.",
-      "target_example": "Всё готово для вечеринки."
-    },
-    {
       "source_word": "also",
       "target_word": "итак|так что",
       "source_example": "Also, was machen wir heute Abend?",
@@ -44,12 +273,6 @@
       "target_word": "старый",
       "source_example": "Das alte Gebäude wurde renoviert.",
       "target_example": "Старое здание было отреставрировано."
-    },
-    {
-      "source_word": "der andere [anderen]",
-      "target_word": "другой",
-      "source_example": "Die andere Seite des Flusses ist schöner.",
-      "target_example": "Другая сторона реки красивее."
     },
     {
       "source_word": "anfangen",
@@ -112,12 +335,6 @@
       "target_example": "Нас четыре человека."
     },
     {
-      "source_word": "beide",
-      "target_word": "оба",
-      "source_example": "Beide Kinder spielen im Garten.",
-      "target_example": "Оба ребенка играют в саду."
-    },
-    {
       "source_word": "bekommen",
       "target_word": "получать",
       "source_example": "Ich habe in Geschenk bekommen.",
@@ -140,12 +357,6 @@
       "target_word": "особенно",
       "source_example": "Das Essen schmeckt besonders gut.",
       "target_example": "Еда особенно вкусная."
-    },
-    {
-      "source_word": "unser",
-      "target_word": "наш",
-      "source_example": "Unser Haus ist groß.",
-      "target_example": "Наш дом большой."
     },
     {
       "source_word": "bestimmt",
@@ -184,10 +395,11 @@
       "target_example": "Мы остаемся до вечера."
     },
     {
-      "source_word": "ein bisschen",
-      "target_word": "немного",
-      "source_example": "Kannst du mir ein bisschen helfen?",
-      "target_example": "Ты можешь мне немного помочь?"
+      "source_word": "bisschen",
+      "target_word": "[translation needed for: bisschen]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
       "source_word": "bitte",
@@ -256,10 +468,11 @@
       "target_example": "Мы пойдем есть, а потом в кино."
     },
     {
-      "source_word": "der Dank [Danke]",
-      "target_word": "благодарность",
-      "source_example": "Ich möchte meinen Dank aussprechen.",
-      "target_example": "Я хочу выразить свою благодарность."
+      "source_word": "dank",
+      "target_word": "[translation needed for: dank]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
       "source_word": "danke",
@@ -292,12 +505,6 @@
       "target_example": "Я возьму кофе и к нему пирожное."
     },
     {
-      "source_word": "dein",
-      "target_word": "твой",
-      "source_example": "Ist das dein Buch?",
-      "target_example": "Это твоя книга?"
-    },
-    {
       "source_word": "denken",
       "target_word": "думать",
       "source_example": "Ich denke oft an dich.",
@@ -308,18 +515,6 @@
       "target_word": "поэтому",
       "source_example": "Es regnet, deshalb bleibe ich zu Hause.",
       "target_example": "Идет дождь, поэтому я остаюсь дома."
-    },
-    {
-      "source_word": "dieser",
-      "target_word": "этот",
-      "source_example": "Dieser Tisch ist neu.",
-      "target_example": "Этот стол новый."
-    },
-    {
-      "source_word": "dir",
-      "target_word": "тебе",
-      "source_example": "Ich gebe dir in Geschenk.",
-      "target_example": "Я дарю тебе подарок."
     },
     {
       "source_word": "direkt",
@@ -370,12 +565,6 @@
       "target_example": "Задача проста."
     },
     {
-      "source_word": "einige",
-      "target_word": "несколько",
-      "source_example": "Ich habe einige Bücher gelesen.",
-      "target_example": "Я прочитал несколько книг."
-    },
-    {
       "source_word": "einladen",
       "target_word": "приглашать",
       "source_example": "Ich möchte dich zu meiner Party einladen.",
@@ -400,10 +589,11 @@
       "target_example": "Простите? Я вас не понял."
     },
     {
-      "source_word": "die Eltern",
-      "target_word": "родители",
-      "source_example": "Meine Eltern wohnen in München.",
-      "target_example": "Мои родители живут в Мюнхене."
+      "source_word": "eltern",
+      "target_word": "[translation needed for: eltern]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
       "source_word": "endlich",
@@ -434,18 +624,6 @@
       "target_word": "кушать|есть",
       "source_example": "Ich esse gerne Pizza.",
       "target_example": "Я люблю есть пиццу."
-    },
-    {
-      "source_word": "etwas",
-      "target_word": "что-то",
-      "source_example": "Ich möchte etwas trinken.",
-      "target_example": "Я хочу что-то попить."
-    },
-    {
-      "source_word": "euch",
-      "target_word": "вам",
-      "source_example": "Ich habe euch in Geschenk gekauft.",
-      "target_example": "Я купил вам подарок."
     },
     {
       "source_word": "euer",
@@ -508,16 +686,17 @@
       "target_example": "Ты можешь найти мои ключи?"
     },
     {
-      "source_word": "die Frage [Fragen]",
-      "target_word": "вопрос",
-      "source_example": "Hast du eine Frage?",
-      "target_example": "У тебя есть вопрос?"
+      "source_word": "fragen",
+      "target_word": "спрашивать",
+      "source_example": "Ich frage dich etwas.",
+      "target_example": "Я тебя кое-что спрошу."
     },
     {
-      "source_word": "die Frau [Frauen]",
-      "target_word": "женщина, жена, госпожа",
-      "source_example": "Die Frau ist sehr freundlich.",
-      "target_example": "Женщина очень дружелюбная."
+      "source_word": "frau",
+      "target_word": "[translation needed for: frau]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
       "source_word": "frei",
@@ -592,10 +771,11 @@
       "target_example": "Мы идем сегодня вечером в кино."
     },
     {
-      "source_word": "das Geld [Gelder]",
-      "target_word": "деньги",
-      "source_example": "Ich habe kein Geld dabei.",
-      "target_example": "У меня нет с собой денег."
+      "source_word": "geld",
+      "target_word": "[translation needed for: geld]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
       "source_word": "gemeinsam",
@@ -676,10 +856,11 @@
       "target_example": "Мы смотрим фильм."
     },
     {
-      "source_word": "die Welt",
-      "target_word": "мир",
-      "source_example": "Die Welt ist groß.",
-      "target_example": "Мир большой."
+      "source_word": "welt",
+      "target_word": "[translation needed for: welt]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
       "source_word": "halten",
@@ -760,24 +941,6 @@
       "target_example": "Я люблю слушать музыку."
     },
     {
-      "source_word": "ich",
-      "target_word": "я",
-      "source_example": "Ich liebe dich.",
-      "target_example": "Я тебя люблю."
-    },
-    {
-      "source_word": "ihm",
-      "target_word": "ему",
-      "source_example": "Ich gebe ihm das Buch.",
-      "target_example": "Я даю ему книгу."
-    },
-    {
-      "source_word": "Ihnen",
-      "target_word": "Вам",
-      "source_example": "Kann ich Ihnen helfen?",
-      "target_example": "Могу я вам помочь?"
-    },
-    {
       "source_word": "weil",
       "target_word": "потому что",
       "source_example": "Ich lerne Deutsch, weil ich in Deutschland arbeite.",
@@ -814,22 +977,17 @@
       "target_example": "Да, я с удовольствием приду."
     },
     {
-      "source_word": "das Jahr [Jahre]",
-      "target_word": "год",
-      "source_example": "Im Jahr 2024 haben wir viel erreicht.",
-      "target_example": "В 2024 году мы многого достигли."
+      "source_word": "jahr",
+      "target_word": "[translation needed for: jahr]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
       "source_word": "traurig",
       "target_word": "грустный",
       "source_example": "Sie ist heute sehr traurig.",
       "target_example": "Она сегодня очень грустная."
-    },
-    {
-      "source_word": "jeder",
-      "target_word": "каждый",
-      "source_example": "Jeder kann teilnehmen.",
-      "target_example": "Каждый может участвовать."
     },
     {
       "source_word": "jetzt",
@@ -868,22 +1026,17 @@
       "target_example": "Я пытаюсь учить немецкий."
     },
     {
-      "source_word": "kein",
-      "target_word": "нет, никакой",
-      "source_example": "Ich habe keine Zeit.",
-      "target_example": "У меня нет времени."
-    },
-    {
       "source_word": "kennen",
       "target_word": "знать, быть знакомым с",
       "source_example": "Ich kenne diesen Film.",
       "target_example": "Я знаю этот фильм."
     },
     {
-      "source_word": "das Kind [Kinder]",
-      "target_word": "ребенок",
-      "source_example": "Das Kind spielt im Garten.",
-      "target_example": "Ребенок играет в саду."
+      "source_word": "kind",
+      "target_word": "[translation needed for: kind]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
       "source_word": "klar",
@@ -902,12 +1055,6 @@
       "target_word": "звонить в звонок",
       "source_example": "Mein Telefon klingelt ständig.",
       "target_example": "Мой телефон постоянно звонит."
-    },
-    {
-      "source_word": "welche",
-      "target_word": "какой, какая, какие",
-      "source_example": "Welche Farbe magst du?",
-      "target_example": "Какой цвет тебе нравится?"
     },
     {
       "source_word": "kommen",
@@ -946,10 +1093,11 @@
       "target_example": "Дети много смеются."
     },
     {
-      "source_word": "das Land [Länder]",
-      "target_word": "страна, сельская местность, земля [федеральная]",
-      "source_example": "Deutschland ist in schönes Land.",
-      "target_example": "Германия — красивая страна."
+      "source_word": "land",
+      "target_word": "[translation needed for: land]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
       "source_word": "lang",
@@ -1006,10 +1154,11 @@
       "target_example": "Это последняя страница."
     },
     {
-      "source_word": "die Leute",
-      "target_word": "люди",
-      "source_example": "Die Leute sind freundlich.",
-      "target_example": "Люди дружелюбные."
+      "source_word": "leute",
+      "target_word": "[translation needed for: leute]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
       "source_word": "lieber",
@@ -1048,12 +1197,6 @@
       "target_example": "Что ты делаешь сегодня вечером?"
     },
     {
-      "source_word": "man",
-      "target_word": "неопределенно личное",
-      "source_example": "Man sollte immer ehrlich sein.",
-      "target_example": "Нужно всегда быть честным."
-    },
-    {
       "source_word": "manchmal",
       "target_word": "иногда",
       "source_example": "Manchmal gehe ich spazieren.",
@@ -1070,12 +1213,6 @@
       "target_word": "больше [по количеству]",
       "source_example": "Ich möchte mehr Kaffee, bitte.",
       "target_example": "Я хочу больше кофе, пожалуйста."
-    },
-    {
-      "source_word": "mein",
-      "target_word": "мой",
-      "source_example": "Das ist mein Buch.",
-      "target_example": "Это моя книга."
     },
     {
       "source_word": "am meisten",
@@ -1114,10 +1251,11 @@
       "target_example": "У меня двое детей."
     },
     {
-      "source_word": "der Morgen [Morgen]",
-      "target_word": "утро",
-      "source_example": "Der Morgen ist frisch und klar.",
-      "target_example": "Утро свежее и ясное."
+      "source_word": "morgen",
+      "target_word": "[translation needed for: morgen]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
       "source_word": "müde",
@@ -1126,10 +1264,11 @@
       "target_example": "После работы я устал."
     },
     {
-      "source_word": "die Musik",
-      "target_word": "музыка",
-      "source_example": "Ich höre gerne klassische Musik.",
-      "target_example": "Я люблю слушать классическую музыку."
+      "source_word": "musik",
+      "target_word": "[translation needed for: musik]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
       "source_word": "müssen",
@@ -1144,10 +1283,11 @@
       "target_example": "Ты станешь хорошим врачом."
     },
     {
-      "source_word": "die Nacht [Nächte]",
-      "target_word": "ночь",
-      "source_example": "In der Nacht ist es ruhig.",
-      "target_example": "Ночью тихо."
+      "source_word": "nacht",
+      "target_word": "[translation needed for: nacht]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
       "source_word": "nachts",
@@ -1196,12 +1336,6 @@
       "target_word": "не",
       "source_example": "Ich verstehe das nicht.",
       "target_example": "Я этого не понимаю."
-    },
-    {
-      "source_word": "nichts",
-      "target_word": "ничего",
-      "source_example": "Ich habe nichts zu sagen.",
-      "target_example": "У меня нечего сказать."
     },
     {
       "source_word": "nie",
@@ -1432,12 +1566,6 @@
       "target_example": "Я сажу ребенка на стул."
     },
     {
-      "source_word": "sich",
-      "target_word": "себя",
-      "source_example": "Er kümmert sich um sich selbst.",
-      "target_example": "Он заботится о себе."
-    },
-    {
       "source_word": "sicher",
       "target_word": "уверенный",
       "source_example": "Ich bin sicher, dass es klappt.",
@@ -1534,10 +1662,10 @@
       "target_example": "Печенье сладкое."
     },
     {
-      "source_word": "der Tag [Tage]",
-      "target_word": "день",
-      "source_example": "Heute ist in schöner Tag.",
-      "target_example": "Сегодня хороший день."
+      "source_word": "tagen",
+      "target_word": "днях (дательный падеж от Tag)",
+      "source_example": "Ich tagen oft.",
+      "target_example": "Я часто днях (дательный падеж от Tag)."
     },
     {
       "source_word": "toll",
@@ -1588,10 +1716,11 @@
       "target_example": "У меня вообще нет понятия."
     },
     {
-      "source_word": "die Uhr [Uhren]",
-      "target_word": "часы",
-      "source_example": "Meine Uhr ist kaputt.",
-      "target_example": "Мои часы сломаны."
+      "source_word": "uhr",
+      "target_word": "[translation needed for: uhr]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
       "source_word": "um",
@@ -1696,12 +1825,6 @@
       "target_example": "Почему ты опоздал?"
     },
     {
-      "source_word": "was",
-      "target_word": "что",
-      "source_example": "Was machst du heute?",
-      "target_example": "Что ты делаешь сегодня?"
-    },
-    {
       "source_word": "das Wasser [Wasser]",
       "target_word": "вода",
       "source_example": "Ich trinke gerne kaltes Wasser.",
@@ -1732,12 +1855,6 @@
       "target_example": "Если будет дождь, мы останемся дома."
     },
     {
-      "source_word": "wer",
-      "target_word": "кто",
-      "source_example": "Wer ist das?",
-      "target_example": "Кто это?"
-    },
-    {
       "source_word": "wichtig",
       "target_word": "важный",
       "source_example": "Es ist wichtig, pünktlich zu sein.",
@@ -1762,12 +1879,6 @@
       "target_example": "Добро пожаловать в наш дом!"
     },
     {
-      "source_word": "wir",
-      "target_word": "мы",
-      "source_example": "Wir gehen ins Kino.",
-      "target_example": "Мы идем в кино."
-    },
-    {
       "source_word": "wissen",
       "target_word": "знать",
       "source_example": "Ich weiß die Antwort.",
@@ -1780,10 +1891,11 @@
       "target_example": "Где вокзал?"
     },
     {
-      "source_word": "die Woche [Wochen]",
-      "target_word": "неделя",
-      "source_example": "Ich arbeite fünf Tage die Woche.",
-      "target_example": "Я работаю пять дней в неделю."
+      "source_word": "woche",
+      "target_word": "[translation needed for: woche]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
       "source_word": "woher",
@@ -1880,12 +1992,6 @@
       "target_word": "хотя",
       "source_example": "Obwohl es regnet, gehen wir spazieren.",
       "target_example": "Хотя дождь, мы идем гулять."
-    },
-    {
-      "source_word": "wenig",
-      "target_word": "мало",
-      "source_example": "Ich habe wenig Zeit.",
-      "target_example": "У меня мало времени."
     },
     {
       "source_word": "allerdings",
@@ -2092,12 +2198,6 @@
       "target_example": "Я никогда это не забуду."
     },
     {
-      "source_word": "niemand",
-      "target_word": "никто",
-      "source_example": "Niemand ist zu Hause.",
-      "target_example": "Никого нет дома."
-    },
-    {
       "source_word": "oben",
       "target_word": "вверху",
       "source_example": "Das Buch liegt oben.",
@@ -2170,12 +2270,6 @@
       "target_example": "Я ничего об этом не знаю."
     },
     {
-      "source_word": "dessen",
-      "target_word": "чей",
-      "source_example": "Das ist in Mann, dessen Frau Ärztin ist.",
-      "target_example": "Это мужчина, жена которого врач."
-    },
-    {
       "source_word": "erhalten",
       "target_word": "получать, сохранять [в хорошем состоянии]",
       "source_example": "Ich erhalte einen Brief.",
@@ -2204,18 +2298,6 @@
       "target_word": "выигрывать",
       "source_example": "Wer gewinnt das Spiel?",
       "target_example": "Кто выигрывает игру?"
-    },
-    {
-      "source_word": "solche",
-      "target_word": "такие",
-      "source_example": "Solche Problem kenne ich.",
-      "target_example": "Такие проблемы я знаю."
-    },
-    {
-      "source_word": "jemand",
-      "target_word": "кто-то",
-      "source_example": "Jemand hat angerufen.",
-      "target_example": "Кто-то звонил."
     },
     {
       "source_word": "jünger",
@@ -2302,10 +2384,11 @@
       "target_example": "Следующий раз будет лучше."
     },
     {
-      "source_word": "die Sicherheit",
-      "target_word": "безопасность",
-      "source_example": "Die Sicherheit ist wichtig.",
-      "target_example": "Безопасность важна."
+      "source_word": "sicherheit",
+      "target_word": "[translation needed for: sicherheit]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
       "source_word": "ziehen",
@@ -2314,16 +2397,18 @@
       "target_example": "Потяни дверь!"
     },
     {
-      "source_word": "der Teil [Teile]",
-      "target_word": "часть",
-      "source_example": "Das ist in wichtiger Teil.",
-      "target_example": "Это важная часть."
+      "source_word": "teil",
+      "target_word": "[translation needed for: teil]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
-      "source_word": "die Zukunft",
-      "target_word": "будущее",
-      "source_example": "Die Zukunft ist ungewiss.",
-      "target_example": "Будущее неопределенно."
+      "source_word": "zukunft",
+      "target_word": "[translation needed for: zukunft]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
       "source_word": "verschiedene",
@@ -2362,10 +2447,11 @@
       "target_example": "Он наверное дома."
     },
     {
-      "source_word": "das Recht [Rechte]",
-      "target_word": "право",
-      "source_example": "Jeder hat das Recht zu sprechen.",
-      "target_example": "Каждый имеет право говорить."
+      "source_word": "recht",
+      "target_word": "[translation needed for: recht]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
       "source_word": "gerne",
@@ -2470,10 +2556,11 @@
       "target_example": "Это единственный путь."
     },
     {
-      "source_word": "der Tod",
-      "target_word": "смерть",
-      "source_example": "Der Tod ist Teil des Lebens.",
-      "target_example": "Смерть - часть жизни."
+      "source_word": "tod",
+      "target_word": "[translation needed for: tod]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
       "source_word": "die Mitte",
@@ -2638,10 +2725,11 @@
       "target_example": "Воздух свежий."
     },
     {
-      "source_word": "die Nachrichten",
-      "target_word": "новости",
-      "source_example": "Hast du die Nachrichten gesehen?",
-      "target_example": "Ты видел новости?"
+      "source_word": "nachrichten",
+      "target_word": "[translation needed for: nachrichten]",
+      "cefr_level": "A1",
+      "source_example": "",
+      "target_example": ""
     },
     {
       "source_word": "häufig",
@@ -2722,22 +2810,10 @@
       "target_example": "Я устал."
     },
     {
-      "source_word": "es",
-      "target_word": "это|оно",
-      "source_example": "Ich es oft.",
-      "target_example": "Я часто это."
-    },
-    {
       "source_word": "und",
       "target_word": "и",
       "source_example": "Ich und oft.",
       "target_example": "Я часто и."
-    },
-    {
-      "source_word": "ein",
-      "target_word": "неопределённый артикль (мужской/средний род)",
-      "source_example": "Ich ein oft.",
-      "target_example": "Я часто неопределённый артикль (мужской/средний род)."
     },
     {
       "source_word": "auf",
@@ -2830,12 +2906,6 @@
       "target_example": "Я часто отец."
     },
     {
-      "source_word": "tagen",
-      "target_word": "днях (дательный падеж от Tag)",
-      "source_example": "Ich tagen oft.",
-      "target_example": "Я часто днях (дательный падеж от Tag)."
-    },
-    {
       "source_word": "mutter",
       "target_word": "мать",
       "source_example": "Ich mutter oft.",
@@ -2918,12 +2988,6 @@
       "target_word": "работать",
       "source_example": "Ich arbeite jeden Tag.",
       "target_example": "Я работаю каждый день."
-    },
-    {
-      "source_word": "fragen",
-      "target_word": "спрашивать",
-      "source_example": "Ich frage dich etwas.",
-      "target_example": "Я тебя кое-что спрошу."
     },
     {
       "source_word": "herr",
@@ -3338,12 +3402,6 @@
       "target_word": "оружие",
       "source_example": "Ich waffe oft.",
       "target_example": "Я часто оружие."
-    },
-    {
-      "source_word": "irgendwas",
-      "target_word": "что-нибудь",
-      "source_example": "Ich irgendwas oft.",
-      "target_example": "Я часто что-нибудь."
     },
     {
       "source_word": "klingen",
@@ -4192,12 +4250,6 @@
       "target_example": "Я часто холодный."
     },
     {
-      "source_word": "irgendetwas",
-      "target_word": "что-то",
-      "source_example": "Ich irgendetwas oft.",
-      "target_example": "Я часто что-то."
-    },
-    {
       "source_word": "weile",
       "target_word": "время",
       "source_example": "Ich weile oft.",
@@ -4274,12 +4326,6 @@
       "target_word": "леди",
       "source_example": "Ich lady oft.",
       "target_example": "Я часто леди."
-    },
-    {
-      "source_word": "dasselbe",
-      "target_word": "то же самое",
-      "source_example": "Ich dasselbe oft.",
-      "target_example": "Я часто то же самое."
     },
     {
       "source_word": "schlagen",
@@ -4534,12 +4580,6 @@
       "target_example": "Я часто предавать."
     },
     {
-      "source_word": "selber",
-      "target_word": "сам",
-      "source_example": "Ich selber oft.",
-      "target_example": "Я часто сам."
-    },
-    {
       "source_word": "befehlen",
       "target_word": "приказывать",
       "source_example": "Ich befehlen oft.",
@@ -4724,12 +4764,6 @@
       "target_word": "фотографии",
       "source_example": "Ich fotos oft.",
       "target_example": "Я часто фотографии."
-    },
-    {
-      "source_word": "mancher",
-      "target_word": "некоторый",
-      "source_example": "Ich mancher oft.",
-      "target_example": "Я часто некоторый."
     },
     {
       "source_word": "witzig",
@@ -5008,12 +5042,6 @@
       "target_example": "Я часто поздравление."
     },
     {
-      "source_word": "niemandem",
-      "target_word": "никому",
-      "source_example": "Ich niemandem oft.",
-      "target_example": "Я часто никому."
-    },
-    {
       "source_word": "statt",
       "target_word": "вместо",
       "source_example": "Ich statt oft.",
@@ -5284,12 +5312,6 @@
       "target_example": "Я часто арестовывать."
     },
     {
-      "source_word": "irgendwelche",
-      "target_word": "какие-нибудь",
-      "source_example": "Ich irgendwelche oft.",
-      "target_example": "Я часто какие-нибудь."
-    },
-    {
       "source_word": "händen",
       "target_word": "руки",
       "source_example": "Ich händen oft.",
@@ -5386,22 +5408,10 @@
       "target_example": "Я часто к (zu dem)."
     },
     {
-      "source_word": "viel",
-      "target_word": "много",
-      "source_example": "Ich viel oft.",
-      "target_example": "Я часто много."
-    },
-    {
       "source_word": "sir",
       "target_word": "сэр",
       "source_example": "Ich sir oft.",
       "target_example": "Я часто сэр."
-    },
-    {
-      "source_word": "anderer",
-      "target_word": "другой",
-      "source_example": "Ich anderer oft.",
-      "target_example": "Я часто другой."
     },
     {
       "source_word": "ins",
@@ -5420,12 +5430,6 @@
       "target_word": "помощь",
       "source_example": "Ich hilfe oft.",
       "target_example": "Я часто помощь."
-    },
-    {
-      "source_word": "letzten",
-      "target_word": "последний",
-      "source_example": "Ich letzten oft.",
-      "target_example": "Я часто последний."
     },
     {
       "source_word": "wohnung",
@@ -5486,12 +5490,6 @@
       "target_word": "дух|ум",
       "source_example": "Ich geist oft.",
       "target_example": "Я часто дух."
-    },
-    {
-      "source_word": "letzter",
-      "target_word": "последний",
-      "source_example": "Ich letzter oft.",
-      "target_example": "Я часто последний."
     },
     {
       "source_word": "kindern",
@@ -5572,90 +5570,6 @@
       "target_example": "Я часто кольцо."
     },
     {
-      "source_word": "mann",
-      "target_word": "[translation needed for: mann]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "frau",
-      "target_word": "[translation needed for: frau]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "morgen",
-      "target_word": "[translation needed for: morgen]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "leute",
-      "target_word": "[translation needed for: leute]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "geld",
-      "target_word": "[translation needed for: geld]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "nacht",
-      "target_word": "[translation needed for: nacht]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "recht",
-      "target_word": "[translation needed for: recht]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "abend",
-      "target_word": "[translation needed for: abend]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "haus",
-      "target_word": "[translation needed for: haus]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "welt",
-      "target_word": "[translation needed for: welt]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "musik",
-      "target_word": "[translation needed for: musik]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "jahr",
-      "target_word": "[translation needed for: jahr]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
       "source_word": "problem",
       "target_word": "[translation needed for: problem]",
       "cefr_level": "A1",
@@ -5663,134 +5577,8 @@
       "target_example": ""
     },
     {
-      "source_word": "kind",
-      "target_word": "[translation needed for: kind]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "dank",
-      "target_word": "[translation needed for: dank]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "uhr",
-      "target_word": "[translation needed for: uhr]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "glück",
-      "target_word": "[translation needed for: glück]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "bisschen",
-      "target_word": "[translation needed for: bisschen]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "tod",
-      "target_word": "[translation needed for: tod]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "he",
-      "target_word": "[translation needed for: he]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "wasser",
-      "target_word": "[translation needed for: wasser]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "woche",
-      "target_word": "[translation needed for: woche]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "land",
-      "target_word": "[translation needed for: land]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "teil",
-      "target_word": "[translation needed for: teil]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "eltern",
-      "target_word": "[translation needed for: eltern]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "luft",
-      "target_word": "[translation needed for: luft]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "zukunft",
-      "target_word": "[translation needed for: zukunft]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "nachrichten",
-      "target_word": "[translation needed for: nachrichten]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
       "source_word": "klasse",
       "target_word": "[translation needed for: klasse]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "sinn",
-      "target_word": "[translation needed for: sinn]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "sicherheit",
-      "target_word": "[translation needed for: sicherheit]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "nähe",
-      "target_word": "[translation needed for: nähe]",
       "cefr_level": "A1",
       "source_example": "",
       "target_example": ""

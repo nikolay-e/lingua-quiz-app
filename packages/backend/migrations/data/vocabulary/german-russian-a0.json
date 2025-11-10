@@ -182,12 +182,6 @@
       "target_word": "телефон",
       "source_example": "Das Telefon klingelt laut.",
       "target_example": "Телефон громко звонит."
-    },
-    {
-      "source_word": "tom",
-      "target_word": "Том",
-      "source_example": "Tom ist sehr nett.",
-      "target_example": "Том очень милый."
     }
   ]
 }

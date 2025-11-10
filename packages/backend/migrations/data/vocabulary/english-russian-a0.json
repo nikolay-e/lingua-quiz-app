@@ -1286,6 +1286,126 @@
       "target_word": "синдром",
       "source_example": "Down's syndrome.",
       "target_example": "Синдром Дауна."
+    },
+    {
+      "source_word": "candidate",
+      "target_word": "кандидат",
+      "source_example": "He is a candidate for the job.",
+      "target_example": "Он кандидат на эту должность."
+    },
+    {
+      "source_word": "category",
+      "target_word": "категория",
+      "source_example": "This book falls into the category of fiction.",
+      "target_example": "Эта книга относится к категории художественной литературы."
+    },
+    {
+      "source_word": "flag",
+      "target_word": "флаг",
+      "source_example": "The flag is flying at half-mast.",
+      "target_example": "Флаг приспущен."
+    },
+    {
+      "source_word": "immigrant",
+      "target_word": "иммигрант",
+      "source_example": "He is an immigrant from Mexico.",
+      "target_example": "Он иммигрант из Мексики."
+    },
+    {
+      "source_word": "laboratory",
+      "target_word": "лаборатория",
+      "source_example": "The scientists are working in the laboratory.",
+      "target_example": "Ученые работают в лаборатории."
+    },
+    {
+      "source_word": "literature",
+      "target_word": "литература",
+      "source_example": "I am studying English literature.",
+      "target_example": "Я изучаю английскую литературу."
+    },
+    {
+      "source_word": "marketing",
+      "target_word": "маркетинг",
+      "source_example": "She works in the marketing department.",
+      "target_example": "Она работает в отделе маркетинга."
+    },
+    {
+      "source_word": "original",
+      "target_word": "оригинал",
+      "source_example": "This is the original painting.",
+      "target_example": "Это оригинал картины."
+    },
+    {
+      "source_word": "port",
+      "target_word": "порт",
+      "source_example": "The ship is in the port.",
+      "target_example": "Корабль в порту."
+    },
+    {
+      "source_word": "congress",
+      "target_word": "конгресс",
+      "source_example": "Congress passed a new law.",
+      "target_example": "Конгресс принял новый закон."
+    },
+    {
+      "source_word": "disk",
+      "target_word": "диск",
+      "source_example": "I saved the file on a disk.",
+      "target_example": "Я сохранил файл на диске."
+    },
+    {
+      "source_word": "ideal",
+      "target_word": "идеал",
+      "source_example": "She is my ideal of beauty.",
+      "target_example": "Она мой идеал красоты."
+    },
+    {
+      "source_word": "institute",
+      "target_word": "институт",
+      "source_example": "He works at a research institute.",
+      "target_example": "Он работает в научно-исследовательском институте."
+    },
+    {
+      "source_word": "minister",
+      "target_word": "министр",
+      "source_example": "He is the Minister of Finance.",
+      "target_example": "Он министр финансов."
+    },
+    {
+      "source_word": "organ",
+      "target_word": "орган",
+      "source_example": "The heart is a vital organ.",
+      "target_example": "Сердце — жизненно важный орган."
+    },
+    {
+      "source_word": "philosophy",
+      "target_word": "философия",
+      "source_example": "He is studying philosophy at university.",
+      "target_example": "Он изучает философию в университете."
+    },
+    {
+      "source_word": "professional",
+      "target_word": "профессионал",
+      "source_example": "He is a true professional in his field.",
+      "target_example": "Он настоящий профессионал в своем деле."
+    },
+    {
+      "source_word": "senate",
+      "target_word": "сенат",
+      "source_example": "The Senate approved the new law.",
+      "target_example": "Сенат одобрил новый закон."
+    },
+    {
+      "source_word": "senator",
+      "target_word": "сенатор",
+      "source_example": "He is a senator from California.",
+      "target_example": "Он сенатор от Калифорнии."
+    },
+    {
+      "source_word": "vitamin",
+      "target_word": "витамин",
+      "source_example": "You need to take your vitamins.",
+      "target_example": "Тебе нужно принимать витамины."
     }
   ]
 }

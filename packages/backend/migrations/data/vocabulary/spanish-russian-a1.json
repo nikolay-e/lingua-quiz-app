@@ -17,6 +17,261 @@
       "target_example": "Она врач."
     },
     {
+      "source_word": "todo",
+      "target_word": "весь",
+      "source_example": "Todo el mundo lo sabe.",
+      "target_example": "Весь мир это знает."
+    },
+    {
+      "source_word": "usted",
+      "target_word": "Вы",
+      "source_example": "¿Usted habla español?",
+      "target_example": "Вы говорите по-испански?"
+    },
+    {
+      "source_word": "bastante",
+      "target_word": "достаточно",
+      "source_example": "Ya es bastante tarde.",
+      "target_example": "Уже достаточно поздно."
+    },
+    {
+      "source_word": "otro",
+      "target_word": "другой",
+      "source_example": "Necesito otro libro.",
+      "target_example": "Мне нужна другая книга."
+    },
+    {
+      "source_word": "cada",
+      "target_word": "каждый",
+      "source_example": "Viene cada día.",
+      "target_example": "Он приходит каждый день."
+    },
+    {
+      "source_word": "cual",
+      "target_word": "который",
+      "source_example": "¿Cuál prefieres?",
+      "target_example": "Который ты предпочитаешь?"
+    },
+    {
+      "source_word": "alguien",
+      "target_word": "кто-то",
+      "source_example": "Alguien llamó a la puerta.",
+      "target_example": "Кто-то постучал в дверь."
+    },
+    {
+      "source_word": "poco",
+      "target_word": "мало",
+      "source_example": "Hay poco tiempo.",
+      "target_example": "Осталось мало времени."
+    },
+    {
+      "source_word": "ninguno",
+      "target_word": "никакой",
+      "source_example": "No hay ningún problema.",
+      "target_example": "Нет никаких проблем."
+    },
+    {
+      "source_word": "nadie",
+      "target_word": "никто",
+      "source_example": "No hay nadie aquí.",
+      "target_example": "Здесь никого нет."
+    },
+    {
+      "source_word": "nada",
+      "target_word": "ничего",
+      "source_example": "No pasa nada.",
+      "target_example": "Ничего не случилось."
+    },
+    {
+      "source_word": "uno",
+      "target_word": "один",
+      "source_example": "Solo tengo uno.",
+      "target_example": "У меня только один."
+    },
+    {
+      "source_word": "demás",
+      "target_word": "остальные",
+      "source_example": "Los demás ya llegaron.",
+      "target_example": "Остальные уже пришли."
+    },
+    {
+      "source_word": "demasiado",
+      "target_word": "слишком",
+      "source_example": "Es demasiado tarde.",
+      "target_example": "Слишком поздно."
+    },
+    {
+      "source_word": "tal",
+      "target_word": "такой",
+      "source_example": "Tal vez mañana.",
+      "target_example": "Может быть завтра."
+    },
+    {
+      "source_word": "aquel",
+      "target_word": "тот далеко",
+      "source_example": "Aquel hombre.",
+      "target_example": "Тот человек."
+    },
+    {
+      "source_word": "algo",
+      "target_word": "что-то",
+      "source_example": "Algo pasa.",
+      "target_example": "Что-то происходит."
+    },
+    {
+      "source_word": "yo",
+      "target_word": "я",
+      "source_example": "Yo soy estudiante.",
+      "target_example": "Я студент."
+    },
+    {
+      "source_word": "alguno",
+      "target_word": "некоторый",
+      "source_example": "Alguno de ustedes debe saberlo.",
+      "target_example": "Кто-то из вас должен это знать."
+    },
+    {
+      "source_word": "cualquiera",
+      "target_word": "любой",
+      "source_example": "Cualquiera puede hacerlo.",
+      "target_example": "Любой может это сделать."
+    },
+    {
+      "source_word": "cuál",
+      "target_word": "какой",
+      "source_example": "¿Cuál es tu color favorito?",
+      "target_example": "Какой твой любимый цвет?"
+    },
+    {
+      "source_word": "este",
+      "target_word": "этот",
+      "source_example": "Este coche es mío.",
+      "target_example": "Этот автомобиль - мой."
+    },
+    {
+      "source_word": "mi",
+      "target_word": "мой",
+      "source_example": "Mi casa es pequeña.",
+      "target_example": "Мой дом маленький."
+    },
+    {
+      "source_word": "nuestro",
+      "target_word": "наш",
+      "source_example": "Este es nuestro coche.",
+      "target_example": "Это наша машина."
+    },
+    {
+      "source_word": "quien",
+      "target_word": "кто",
+      "source_example": "La persona quien llamó.",
+      "target_example": "Человек, который звонил."
+    },
+    {
+      "source_word": "qué",
+      "target_word": "что",
+      "source_example": "¿Qué estás haciendo?",
+      "target_example": "Что ты делаешь?"
+    },
+    {
+      "source_word": "su",
+      "target_word": "его, её, их",
+      "source_example": "Su casa es grande.",
+      "target_example": "Его дом большой."
+    },
+    {
+      "source_word": "tu",
+      "target_word": "твой, твоя",
+      "source_example": "¿Dónde está tu libro?",
+      "target_example": "Где твоя книга?"
+    },
+    {
+      "source_word": "tanto",
+      "target_word": "столько",
+      "source_example": "Tanto trabajo y tan poco tiempo.",
+      "target_example": "Столько работы и так мало времени."
+    },
+    {
+      "source_word": "cómo",
+      "target_word": "как",
+      "source_example": "¿Cómo estás?",
+      "target_example": "Как дела?"
+    },
+    {
+      "source_word": "el",
+      "target_word": "определённый артикль (мужской род)",
+      "source_example": "El libro está aquí.",
+      "target_example": "Книга здесь."
+    },
+    {
+      "source_word": "lo",
+      "target_word": "это, его",
+      "example_source": "",
+      "example_target": "",
+      "metadata": {
+        "rank": 9,
+        "zipf": 7.045757490560675,
+        "forms": ["lo"]
+      },
+      "source_example": "Lo siento.",
+      "target_example": "Извини."
+    },
+    {
+      "source_word": "quién",
+      "target_word": "кто",
+      "source_example": "¿Quién es esa persona?",
+      "target_example": "Кто этот человек?"
+    },
+    {
+      "source_word": "se",
+      "target_word": "себя, -ся",
+      "example_source": "",
+      "example_target": "",
+      "metadata": {
+        "rank": 15,
+        "zipf": 6.823908740944319,
+        "forms": ["se"]
+      },
+      "source_example": "Se llama Juan.",
+      "target_example": "Его зовут Хуан."
+    },
+    {
+      "source_word": "suyo",
+      "target_word": "его|её",
+      "source_example": "Este libro es suyo.",
+      "target_example": "Эта книга его."
+    },
+    {
+      "source_word": "un",
+      "target_word": "один, некий",
+      "example_source": "",
+      "example_target": "",
+      "metadata": {
+        "rank": 10,
+        "zipf": 7.0,
+        "forms": ["un"]
+      },
+      "source_example": "Un día feliz.",
+      "target_example": "Счастливый день."
+    },
+    {
+      "source_word": "varios",
+      "target_word": "несколько, (разные|различные)",
+      "source_example": "Hay varias opciones.",
+      "target_example": "Есть несколько вариантов."
+    },
+    {
+      "source_word": "vuestro",
+      "target_word": "ваш",
+      "source_example": "Este es vuestro coche.",
+      "target_example": "Это ваша машина."
+    },
+    {
+      "source_word": "te",
+      "target_word": "тебя; тебе",
+      "source_example": "Te quiero.",
+      "target_example": "Я тебя люблю."
+    },
+    {
       "source_word": "inglés",
       "target_word": "английский язык",
       "source_example": "Estudio inglés todos los días.",
@@ -219,12 +474,6 @@
       "target_word": "водить",
       "source_example": "Me gusta conducir mi coche.",
       "target_example": "Мне нравится водить мою машину."
-    },
-    {
-      "source_word": "todo",
-      "target_word": "весь",
-      "source_example": "Todo el mundo lo sabe.",
-      "target_example": "Весь мир это знает."
     },
     {
       "source_word": "viento",
@@ -455,12 +704,6 @@
       "target_example": "Можно войти?"
     },
     {
-      "source_word": "usted",
-      "target_word": "Вы",
-      "source_example": "¿Usted habla español?",
-      "target_example": "Вы говорите по-испански?"
-    },
-    {
       "source_word": "elegir",
       "target_word": "выбирать",
       "source_example": "No puedo elegir entre los dos.",
@@ -587,10 +830,10 @@
       "target_example": "Я люблю готовить ужин."
     },
     {
-      "source_word": "encanta",
-      "target_word": "очень нравится",
-      "source_example": "Me encanta la música.",
-      "target_example": "Мне очень нравится музыка."
+      "source_word": "encantar",
+      "target_word": "нравиться, восхищать",
+      "source_example": "Me encanta bailar.",
+      "target_example": "Мне нравится танцевать."
     },
     {
       "source_word": "civil",
@@ -821,12 +1064,6 @@
       "target_example": "Это мой дом."
     },
     {
-      "source_word": "bastante",
-      "target_word": "достаточно",
-      "source_example": "Ya es bastante tarde.",
-      "target_example": "Уже достаточно поздно."
-    },
-    {
       "source_word": "conseguir",
       "target_word": "(получать|добывать), (достигать|добиваться)",
       "source_example": "Quiero conseguir buenos resultados.",
@@ -843,12 +1080,6 @@
       "target_word": "друг",
       "source_example": "Es mi mejor amigo.",
       "target_example": "Это мой лучший друг."
-    },
-    {
-      "source_word": "otro",
-      "target_word": "другой",
-      "source_example": "Necesito otro libro.",
-      "target_example": "Мне нужна другая книга."
     },
     {
       "source_word": "pensar",
@@ -1229,12 +1460,6 @@
       "target_example": "Я еду в Мадрид."
     },
     {
-      "source_word": "cada",
-      "target_word": "каждый",
-      "source_example": "Viene cada día.",
-      "target_example": "Он приходит каждый день."
-    },
-    {
       "source_word": "parecer",
       "target_word": "казаться",
       "source_example": "Me parece bien.",
@@ -1301,12 +1526,6 @@
       "target_example": "Да, мне очень нравится."
     },
     {
-      "source_word": "verás",
-      "target_word": "увидишь",
-      "source_example": "Ya verás.",
-      "target_example": "Вот увидишь."
-    },
-    {
       "source_word": "fin",
       "target_word": "конец",
       "source_example": "Es el fin de la película.",
@@ -1347,12 +1566,6 @@
       "target_word": "познакомиться с тобой",
       "source_example": "Quiero conocerte.",
       "target_example": "Хочу познакомиться с тобой."
-    },
-    {
-      "source_word": "cual",
-      "target_word": "который",
-      "source_example": "¿Cuál prefieres?",
-      "target_example": "Который ты предпочитаешь?"
     },
     {
       "source_word": "bonito",
@@ -1401,12 +1614,6 @@
       "target_word": "кроме",
       "source_example": "Todos excepto Juan.",
       "target_example": "Все, кроме Хуана."
-    },
-    {
-      "source_word": "alguien",
-      "target_word": "кто-то",
-      "source_example": "Alguien llamó a la puerta.",
-      "target_example": "Кто-то постучал в дверь."
     },
     {
       "source_word": "campamento",
@@ -1521,12 +1728,6 @@
       "target_word": "маленький",
       "source_example": "Es un perro pequeño.",
       "target_example": "Это маленькая собака."
-    },
-    {
-      "source_word": "poco",
-      "target_word": "мало",
-      "source_example": "Hay poco tiempo.",
-      "target_example": "Осталось мало времени."
     },
     {
       "source_word": "madre",
@@ -1799,28 +2000,10 @@
       "target_example": "Цена очень низкая."
     },
     {
-      "source_word": "ninguno",
-      "target_word": "никакой",
-      "source_example": "No hay ningún problema.",
-      "target_example": "Нет никаких проблем."
-    },
-    {
       "source_word": "nunca",
       "target_word": "никогда [ни разу]",
       "source_example": "Nunca he estado allí.",
       "target_example": "Я никогда там не был."
-    },
-    {
-      "source_word": "nadie",
-      "target_word": "никто",
-      "source_example": "No hay nadie aquí.",
-      "target_example": "Здесь никого нет."
-    },
-    {
-      "source_word": "nada",
-      "target_word": "ничего",
-      "source_example": "No pasa nada.",
-      "target_example": "Ничего не случилось."
     },
     {
       "source_word": "pero",
@@ -1931,12 +2114,6 @@
       "target_example": "Это огромное здание."
     },
     {
-      "source_word": "uno",
-      "target_word": "один",
-      "source_example": "Solo tengo uno.",
-      "target_example": "У меня только один."
-    },
-    {
       "source_word": "sólo",
       "target_word": "только",
       "source_example": "Sólo quiero ayudarte.",
@@ -2001,12 +2178,6 @@
       "target_word": "оставлять, (позволять|разрешать)",
       "source_example": "No me dejes solo.",
       "target_example": "Не оставляй меня одного."
-    },
-    {
-      "source_word": "demás",
-      "target_word": "остальные",
-      "source_example": "Los demás ya llegaron.",
-      "target_example": "Остальные уже пришли."
     },
     {
       "source_word": "detener",
@@ -2097,12 +2268,6 @@
       "target_word": "приказываю",
       "source_example": "Tiene gran alcance.",
       "target_example": "Имеет большой охват."
-    },
-    {
-      "source_word": "encantar",
-      "target_word": "нравиться, восхищать",
-      "source_example": "Me encanta bailar.",
-      "target_example": "Мне нравится танцевать."
     },
     {
       "source_word": "error",
@@ -2999,12 +3164,6 @@
       "target_example": "Следующий, пожалуйста."
     },
     {
-      "source_word": "demasiado",
-      "target_word": "слишком",
-      "source_example": "Es demasiado tarde.",
-      "target_example": "Слишком поздно."
-    },
-    {
       "source_word": "palabra",
       "target_word": "слово",
       "source_example": "Una palabra nueva.",
@@ -3051,12 +3210,6 @@
       "target_word": "случай [ситуация]",
       "source_example": "En este caso.",
       "target_example": "В этом случае."
-    },
-    {
-      "source_word": "necesito",
-      "target_word": "мне нужно",
-      "source_example": "En otra ocasión.",
-      "target_example": "В другой раз."
     },
     {
       "source_word": "suceder",
@@ -3365,12 +3518,6 @@
       "target_example": "Я тоже."
     },
     {
-      "source_word": "tal",
-      "target_word": "такой",
-      "source_example": "Tal vez mañana.",
-      "target_example": "Может быть завтра."
-    },
-    {
       "source_word": "ahí",
       "target_word": "там рядом с тобой",
       "source_example": "Está ahí.",
@@ -3447,12 +3594,6 @@
       "target_word": "тогда",
       "source_example": "¿Entonces qué?",
       "target_example": "Тогда что?"
-    },
-    {
-      "source_word": "aquel",
-      "target_word": "тот далеко",
-      "source_example": "Aquel hombre.",
-      "target_example": "Тот человек."
     },
     {
       "source_word": "punto",
@@ -3785,12 +3926,6 @@
       "target_example": "Член клуба."
     },
     {
-      "source_word": "algo",
-      "target_word": "что-то",
-      "source_example": "Algo pasa.",
-      "target_example": "Что-то происходит."
-    },
-    {
       "source_word": "sentir",
       "target_word": "чувствовать",
       "source_example": "¿Qué sientes?",
@@ -3857,12 +3992,6 @@
       "target_example": "На первом этаже."
     },
     {
-      "source_word": "yo",
-      "target_word": "я",
-      "source_example": "Yo soy estudiante.",
-      "target_example": "Я студент."
-    },
-    {
       "source_word": "lengua",
       "target_word": "язык [часть тела]",
       "source_example": "Me mordí la lengua.",
@@ -3909,12 +4038,6 @@
       "target_word": "внутрь",
       "source_example": "El gato está adentro.",
       "target_example": "Кошка внутри."
-    },
-    {
-      "source_word": "alguno",
-      "target_word": "некоторый",
-      "source_example": "Alguno de ustedes debe saberlo.",
-      "target_example": "Кто-то из вас должен это знать."
     },
     {
       "source_word": "allá",
@@ -4067,12 +4190,6 @@
       "target_example": "Стоимость слишком высока."
     },
     {
-      "source_word": "cualquiera",
-      "target_word": "любой",
-      "source_example": "Cualquiera puede hacerlo.",
-      "target_example": "Любой может это сделать."
-    },
-    {
       "source_word": "cuidado",
       "target_word": "осторожность",
       "source_example": "Ten cuidado al cruzar la calle.",
@@ -4083,12 +4200,6 @@
       "target_word": "день рождения",
       "source_example": "Es mi cumpleaños hoy.",
       "target_example": "Сегодня мой день рождения."
-    },
-    {
-      "source_word": "cuál",
-      "target_word": "какой",
-      "source_example": "¿Cuál es tu color favorito?",
-      "target_example": "Какой твой любимый цвет?"
     },
     {
       "source_word": "cárcel",
@@ -4205,12 +4316,6 @@
       "target_example": "Что касается этого."
     },
     {
-      "source_word": "este",
-      "target_word": "этот",
-      "source_example": "Este coche es mío.",
-      "target_example": "Этот автомобиль - мой."
-    },
-    {
       "source_word": "estúpido",
       "target_word": "тупой",
       "source_example": "Fue un error estúpido.",
@@ -4227,12 +4332,6 @@
       "target_word": "мировой",
       "source_example": "Es un problema mundial.",
       "target_example": "Это мировая проблема."
-    },
-    {
-      "source_word": "gracias",
-      "target_word": "спасибо|благодарю",
-      "source_example": "Muchas gracias por tu ayuda.",
-      "target_example": "Большое спасибо за твою помощь."
     },
     {
       "source_word": "gracioso",
@@ -4331,12 +4430,6 @@
       "target_example": "Я часто посещаю этот парк."
     },
     {
-      "source_word": "mi",
-      "target_word": "мой",
-      "source_example": "Mi casa es pequeña.",
-      "target_example": "Мой дом маленький."
-    },
-    {
       "source_word": "mil",
       "target_word": "тысяча",
       "source_example": "Mil gracias por tu ayuda.",
@@ -4373,12 +4466,6 @@
       "target_example": "Рождество близко."
     },
     {
-      "source_word": "necesita",
-      "target_word": "нуждается",
-      "source_example": "Él necesita ayuda.",
-      "target_example": "Он нуждается в помощи."
-    },
-    {
       "source_word": "niña",
       "target_word": "девочка",
       "source_example": "La niña juega en el parque.",
@@ -4395,12 +4482,6 @@
       "target_word": "ранить",
       "source_example": "Mi novio vendrá a cenar.",
       "target_example": "Мой парень придёт на ужин."
-    },
-    {
-      "source_word": "nuestro",
-      "target_word": "наш",
-      "source_example": "Este es nuestro coche.",
-      "target_example": "Это наша машина."
     },
     {
       "source_word": "ocupado",
@@ -4559,22 +4640,10 @@
       "target_example": "Мой дорогой друг."
     },
     {
-      "source_word": "quien",
-      "target_word": "кто",
-      "source_example": "La persona quien llamó.",
-      "target_example": "Человек, который звонил."
-    },
-    {
       "source_word": "quizá",
       "target_word": "возможно|может быть",
       "source_example": "Quizá venga mañana.",
       "target_example": "Возможно, он придёт завтра."
-    },
-    {
-      "source_word": "qué",
-      "target_word": "что",
-      "source_example": "¿Qué estás haciendo?",
-      "target_example": "Что ты делаешь?"
     },
     {
       "source_word": "realmente",
@@ -4685,22 +4754,10 @@
       "target_example": "Я не хочу даже думать об этом."
     },
     {
-      "source_word": "su",
-      "target_word": "его, её, их",
-      "source_example": "Su casa es grande.",
-      "target_example": "Его дом большой."
-    },
-    {
       "source_word": "suficiente",
       "target_word": "достаточно | достаточный",
       "source_example": "Tengo suficiente dinero.",
       "target_example": "У меня достаточно денег."
-    },
-    {
-      "source_word": "tu",
-      "target_word": "твой, твоя",
-      "source_example": "¿Dónde está tu libro?",
-      "target_example": "Где твоя книга?"
     },
     {
       "source_word": "través",
@@ -4725,12 +4782,6 @@
       "target_word": "задний, зад",
       "source_example": "La parte trasera.",
       "target_example": "Задняя часть."
-    },
-    {
-      "source_word": "tanto",
-      "target_word": "столько",
-      "source_example": "Tanto trabajo y tan poco tiempo.",
-      "target_example": "Столько работы и так мало времени."
     },
     {
       "source_word": "temporada",
@@ -4979,12 +5030,6 @@
       "target_example": "Напиши код здесь."
     },
     {
-      "source_word": "cómo",
-      "target_word": "как",
-      "source_example": "¿Cómo estás?",
-      "target_example": "Как дела?"
-    },
-    {
       "source_word": "debajo",
       "target_word": "под",
       "source_example": "El libro está debajo de la mesa.",
@@ -5073,12 +5118,6 @@
       "target_word": "где",
       "source_example": "¿Dónde está el banco?",
       "target_example": "Где находится банк?"
-    },
-    {
-      "source_word": "el",
-      "target_word": "определённый артикль (мужской род)",
-      "source_example": "El libro está aquí.",
-      "target_example": "Книга здесь."
     },
     {
       "source_word": "embargo",
@@ -5291,19 +5330,6 @@
       "target_example": "Я уберу дом."
     },
     {
-      "source_word": "lo",
-      "target_word": "это, его",
-      "example_source": "",
-      "example_target": "",
-      "metadata": {
-        "rank": 9,
-        "zipf": 7.045757490560675,
-        "forms": ["lo"]
-      },
-      "source_example": "Lo siento.",
-      "target_example": "Извини."
-    },
-    {
       "source_word": "locura",
       "target_word": "безумие",
       "source_example": "¡Es una locura!",
@@ -5490,25 +5516,6 @@
       "target_example": "Люблю сыр."
     },
     {
-      "source_word": "quiero",
-      "target_word": "хочу",
-      "example_source": "",
-      "example_target": "",
-      "metadata": {
-        "rank": 52,
-        "zipf": 6.2839966563652006,
-        "forms": ["quiero"]
-      },
-      "source_example": "Quiero comer.",
-      "target_example": "Я хочу есть."
-    },
-    {
-      "source_word": "quién",
-      "target_word": "кто",
-      "source_example": "¿Quién es esa persona?",
-      "target_example": "Кто этот человек?"
-    },
-    {
       "source_word": "rayo",
       "target_word": "молния, луч",
       "source_example": "Vi un rayo en el cielo.",
@@ -5587,19 +5594,6 @@
       "target_example": "Сержант приказывает."
     },
     {
-      "source_word": "se",
-      "target_word": "себя, -ся",
-      "example_source": "",
-      "example_target": "",
-      "metadata": {
-        "rank": 15,
-        "zipf": 6.823908740944319,
-        "forms": ["se"]
-      },
-      "source_example": "Se llama Juan.",
-      "target_example": "Его зовут Хуан."
-    },
-    {
       "source_word": "sensación",
       "target_word": "ощущение",
       "source_example": "Tengo una sensación extraña.",
@@ -5642,12 +5636,6 @@
       "target_example": "Едет на юг."
     },
     {
-      "source_word": "suyo",
-      "target_word": "его|её",
-      "source_example": "Este libro es suyo.",
-      "target_example": "Эта книга его."
-    },
-    {
       "source_word": "teniente",
       "target_word": "лейтенант",
       "source_example": "El teniente da órdenes.",
@@ -5666,19 +5654,6 @@
       "target_example": "Выпей глоток."
     },
     {
-      "source_word": "un",
-      "target_word": "один, некий",
-      "example_source": "",
-      "example_target": "",
-      "metadata": {
-        "rank": 10,
-        "zipf": 7.0,
-        "forms": ["un"]
-      },
-      "source_example": "Un día feliz.",
-      "target_example": "Счастливый день."
-    },
-    {
       "source_word": "vacaciones",
       "target_word": "каникулы",
       "source_example": "Voy de vacaciones.",
@@ -5689,12 +5664,6 @@
       "target_word": "храбрый",
       "source_example": "Es una persona valiente.",
       "target_example": "Это храбрый человек."
-    },
-    {
-      "source_word": "varios",
-      "target_word": "несколько, (разные|различные)",
-      "source_example": "Hay varias opciones.",
-      "target_example": "Есть несколько вариантов."
     },
     {
       "source_word": "voluntad",
@@ -5709,12 +5678,6 @@
       "target_example": "Рейс вылетает в три."
     },
     {
-      "source_word": "vuestro",
-      "target_word": "ваш",
-      "source_example": "Este es vuestro coche.",
-      "target_example": "Это ваша машина."
-    },
-    {
       "source_word": "víctima",
       "target_word": "жертва",
       "source_example": "La víctima fue llevada al hospital.",
@@ -5725,12 +5688,6 @@
       "target_word": "мой",
       "source_example": "Es mio.",
       "target_example": "Это моё."
-    },
-    {
-      "source_word": "te",
-      "target_word": "тебя; тебе",
-      "source_example": "Te quiero.",
-      "target_example": "Я тебя люблю."
     },
     {
       "source_word": "donde",

@@ -5038,12 +5038,6 @@
       "target_example": "Какой сюрприз!"
     },
     {
-      "source_word": "tom",
-      "target_word": "Том",
-      "source_example": "Tom is my friend.",
-      "target_example": "Том мой друг."
-    },
-    {
       "source_word": "accident",
       "target_word": "авария|несчастный случай|случайность",
       "source_example": "It was an accident.",

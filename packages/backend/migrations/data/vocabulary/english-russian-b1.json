@@ -250,18 +250,6 @@
       "target_example": "Телевизор подключен кабелем."
     },
     {
-      "source_word": "candidate",
-      "target_word": "кандидат",
-      "source_example": "He is a candidate for the job.",
-      "target_example": "Он кандидат на эту должность."
-    },
-    {
-      "source_word": "category",
-      "target_word": "категория",
-      "source_example": "This book falls into the category of fiction.",
-      "target_example": "Эта книга относится к категории художественной литературы."
-    },
-    {
       "source_word": "ceiling",
       "target_word": "потолок",
       "source_example": "The room has a high ceiling.",
@@ -778,12 +766,6 @@
       "target_example": "Цена фиксированная."
     },
     {
-      "source_word": "flag",
-      "target_word": "флаг",
-      "source_example": "The flag is flying at half-mast.",
-      "target_example": "Флаг приспущен."
-    },
-    {
       "source_word": "flood",
       "target_word": "наводнение|потоп [verb: затоплять]",
       "source_example": "The flood caused a lot of damage.",
@@ -940,12 +922,6 @@
       "target_example": "Нам нужен немедленный ответ."
     },
     {
-      "source_word": "immigrant",
-      "target_word": "иммигрант",
-      "source_example": "He is an immigrant from Mexico.",
-      "target_example": "Он иммигрант из Мексики."
-    },
-    {
       "source_word": "impact",
       "target_word": "влияние|воздействие [verb: влиять]",
       "source_example": "The new law will have a big impact on our lives.",
@@ -1042,12 +1018,6 @@
       "target_example": "Прочитайте этикетку на бутылке."
     },
     {
-      "source_word": "laboratory",
-      "target_word": "лаборатория",
-      "source_example": "The scientists are working in the laboratory.",
-      "target_example": "Ученые работают в лаборатории."
-    },
-    {
       "source_word": "latest",
       "target_word": "последние новости [adj: последний]",
       "source_example": "What's the latest?",
@@ -1096,12 +1066,6 @@
       "target_example": "Вода — это жидкость."
     },
     {
-      "source_word": "literature",
-      "target_word": "литература",
-      "source_example": "I am studying English literature.",
-      "target_example": "Я изучаю английскую литературу."
-    },
-    {
       "source_word": "luxury",
       "target_word": "роскошь|предмет роскоши",
       "source_example": "A private jet is a luxury.",
@@ -1112,12 +1076,6 @@
       "target_word": "в основном|главным образом",
       "source_example": "The audience was mainly young people.",
       "target_example": "Аудитория состояла в основном из молодежи."
-    },
-    {
-      "source_word": "marketing",
-      "target_word": "маркетинг",
-      "source_example": "She works in the marketing department.",
-      "target_example": "Она работает в отделе маркетинга."
     },
     {
       "source_word": "meanwhile",
@@ -1220,12 +1178,6 @@
       "target_word": "организованный",
       "source_example": "She is a very organized person.",
       "target_example": "Она очень организованный человек."
-    },
-    {
-      "source_word": "original",
-      "target_word": "оригинал",
-      "source_example": "This is the original painting.",
-      "target_example": "Это оригинал картины."
     },
     {
       "source_word": "originally",
@@ -1358,12 +1310,6 @@
       "target_word": "политик",
       "source_example": "He is a famous politician.",
       "target_example": "Он известный политик."
-    },
-    {
-      "source_word": "port",
-      "target_word": "порт",
-      "source_example": "The ship is in the port.",
-      "target_example": "Корабль в порту."
     },
     {
       "source_word": "portrait",
@@ -2410,12 +2356,6 @@
       "target_example": "Инструкции были непонятными."
     },
     {
-      "source_word": "congress",
-      "target_word": "конгресс",
-      "source_example": "Congress passed a new law.",
-      "target_example": "Конгресс принял новый закон."
-    },
-    {
       "source_word": "conscious",
       "target_word": "сознательный|осознающий",
       "source_example": "He was conscious of being watched.",
@@ -2612,12 +2552,6 @@
       "target_word": "дисциплина",
       "source_example": "The school has strict discipline.",
       "target_example": "В школе строгая дисциплина."
-    },
-    {
-      "source_word": "disk",
-      "target_word": "диск",
-      "source_example": "I saved the file on a disk.",
-      "target_example": "Я сохранил файл на диске."
     },
     {
       "source_word": "display",
@@ -2956,12 +2890,6 @@
       "target_example": "У него отличное чувство юмора."
     },
     {
-      "source_word": "ideal",
-      "target_word": "идеал",
-      "source_example": "She is my ideal of beauty.",
-      "target_example": "Она мой идеал красоты."
-    },
-    {
       "source_word": "inch",
       "target_word": "дюйм",
       "source_example": "The screen is 15 inches wide.",
@@ -3044,12 +2972,6 @@
       "target_word": "пример|случай",
       "source_example": "For instance, you could take a taxi.",
       "target_example": "Например, вы могли бы взять такси."
-    },
-    {
-      "source_word": "institute",
-      "target_word": "институт",
-      "source_example": "He works at a research institute.",
-      "target_example": "Он работает в научно-исследовательском институте."
     },
     {
       "source_word": "institution",
@@ -3214,12 +3136,6 @@
       "target_example": "Температура упадет до минимума в 10 градусов."
     },
     {
-      "source_word": "minister",
-      "target_word": "министр",
-      "source_example": "He is the Minister of Finance.",
-      "target_example": "Он министр финансов."
-    },
-    {
       "source_word": "minor",
       "target_word": "незначительный|второстепенный",
       "source_example": "It was a minor problem.",
@@ -3370,12 +3286,6 @@
       "target_example": "Было много возражений против нового плана."
     },
     {
-      "source_word": "organ",
-      "target_word": "орган",
-      "source_example": "The heart is a vital organ.",
-      "target_example": "Сердце — жизненно важный орган."
-    },
-    {
       "source_word": "origin",
       "target_word": "происхождение",
       "source_example": "What is the origin of this word?",
@@ -3460,12 +3370,6 @@
       "target_example": "Северное сияние — это природное явление."
     },
     {
-      "source_word": "philosophy",
-      "target_word": "философия",
-      "source_example": "He is studying philosophy at university.",
-      "target_example": "Он изучает философию в университете."
-    },
-    {
       "source_word": "pile",
       "target_word": "куча|стопка [verb: складывать в кучу]",
       "source_example": "There was a pile of books on the floor.",
@@ -3548,12 +3452,6 @@
       "target_word": "обрабатывать",
       "source_example": "It will take a week to process your application.",
       "target_example": "Обработка вашего заявления займет неделю."
-    },
-    {
-      "source_word": "professional",
-      "target_word": "профессионал",
-      "source_example": "He is a true professional in his field.",
-      "target_example": "Он настоящий профессионал в своем деле."
     },
     {
       "source_word": "progress",
@@ -3824,18 +3722,6 @@
       "target_word": "выбор",
       "source_example": "We have a wide selection of books.",
       "target_example": "У нас большой выбор книг."
-    },
-    {
-      "source_word": "senate",
-      "target_word": "сенат",
-      "source_example": "The Senate approved the new law.",
-      "target_example": "Сенат одобрил новый закон."
-    },
-    {
-      "source_word": "senator",
-      "target_word": "сенатор",
-      "source_example": "He is a senator from California.",
-      "target_example": "Он сенатор от Калифорнии."
     },
     {
       "source_word": "sequence",
@@ -4142,12 +4028,6 @@
       "target_word": "жизненно важный",
       "source_example": "Water is vital for life.",
       "target_example": "Вода жизненно важна для жизни."
-    },
-    {
-      "source_word": "vitamin",
-      "target_word": "витамин",
-      "source_example": "You need to take your vitamins.",
-      "target_example": "Тебе нужно принимать витамины."
     },
     {
       "source_word": "volume",

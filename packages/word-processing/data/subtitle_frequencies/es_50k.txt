@@ -845,7 +845,6 @@ sean 43979
 tendrá 43656
 barco 43597
 blanco 43530
-tom 43467
 profesor 43370
 servicio 43358
 muchacho 43295
@@ -1099,7 +1098,6 @@ compañero 32947
 llevó 32910
 banco 32880
 existe 32874
-ben 32858
 zona 32787
 destino 32785
 base 32757

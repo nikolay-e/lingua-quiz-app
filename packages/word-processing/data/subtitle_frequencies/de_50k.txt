@@ -944,7 +944,6 @@ bezahlen 13651
 dagegen 13607
 seien 13594
 starb 13560
-tom 13560
 monaten 13557
 leiche 13500
 niemanden 13495
@@ -1116,7 +1115,6 @@ hunger 11083
 leg 11081
 lügen 11069
 beziehung 11054
-ben 11045
 verschwunden 11033
 steh 10978
 nächstes 10971

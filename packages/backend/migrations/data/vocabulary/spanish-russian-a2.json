@@ -4500,13 +4500,6 @@
       "target_example": "Я буду использовать искать его."
     },
     {
-      "source_word": "prostituta",
-      "target_word": "проститутка",
-      "cefr_level": "A2",
-      "source_example": "Voy a usar prostituta.",
-      "target_example": "Я буду использовать проститутка."
-    },
-    {
       "source_word": "máscara",
       "target_word": "маска",
       "cefr_level": "A2",
@@ -4561,13 +4554,6 @@
       "cefr_level": "A2",
       "source_example": "El poli está aquí.",
       "target_example": "Объект полицейский здесь."
-    },
-    {
-      "source_word": "elena",
-      "target_word": "Елена",
-      "cefr_level": "A2",
-      "source_example": "El elena está aquí.",
-      "target_example": "Объект Елена здесь."
     },
     {
       "source_word": "discúlpame",
@@ -4997,13 +4983,6 @@
       "target_example": "Где подходящий?"
     },
     {
-      "source_word": "robot",
-      "target_word": "робот",
-      "cefr_level": "A2",
-      "source_example": "Mi robot es importante.",
-      "target_example": "Мой робот важен."
-    },
-    {
       "source_word": "considerado",
       "target_word": "внимательный|рассматриваемый",
       "cefr_level": "A2",
@@ -5095,13 +5074,6 @@
       "target_example": "Я буду использовать одиннадцать."
     },
     {
-      "source_word": "terrorista",
-      "target_word": "террорист",
-      "cefr_level": "A2",
-      "source_example": "Esto es terrorista.",
-      "target_example": "Это террорист."
-    },
-    {
       "source_word": "término",
       "target_word": "термин|конец",
       "cefr_level": "A2",
@@ -5156,13 +5128,6 @@
       "cefr_level": "A2",
       "source_example": "Este destrucción es bueno.",
       "target_example": "Этот разрушение хороший."
-    },
-    {
-      "source_word": "porno",
-      "target_word": "порно",
-      "cefr_level": "A2",
-      "source_example": "¿Tienes porno?",
-      "target_example": "У тебя есть порно?"
     },
     {
       "source_word": "olvido",
@@ -5256,13 +5221,6 @@
       "target_example": "Это покрывать."
     },
     {
-      "source_word": "liz",
-      "target_word": "Лиз",
-      "cefr_level": "A2",
-      "source_example": "¿Tienes liz?",
-      "target_example": "У тебя есть Лиз?"
-    },
-    {
       "source_word": "policial",
       "target_word": "полицейский",
       "cefr_level": "A2",
@@ -5296,13 +5254,6 @@
       "cefr_level": "A2",
       "source_example": "Voy a usar porquería.",
       "target_example": "Я буду использовать дрянь."
-    },
-    {
-      "source_word": "mickey",
-      "target_word": "Микки",
-      "cefr_level": "A2",
-      "source_example": "El mickey está aquí.",
-      "target_example": "Объект Микки здесь."
     },
     {
       "source_word": "superar",
@@ -5739,13 +5690,6 @@
       "target_example": "Мне нравится сообщать."
     },
     {
-      "source_word": "rob",
-      "target_word": "Роб",
-      "cefr_level": "A2",
-      "source_example": "¿Tienes rob?",
-      "target_example": "У тебя есть Роб?"
-    },
-    {
       "source_word": "advertencia",
       "target_word": "предупреждение",
       "cefr_level": "A2",
@@ -5779,13 +5723,6 @@
       "cefr_level": "A2",
       "source_example": "Quiero comprar encargado.",
       "target_example": "Я хочу купить ответственный."
-    },
-    {
-      "source_word": "drama",
-      "target_word": "драма",
-      "cefr_level": "A2",
-      "source_example": "Esto es drama.",
-      "target_example": "Это драма."
     },
     {
       "source_word": "confundido",
@@ -6103,13 +6040,6 @@
       "target_example": "Мне нравится игрушка."
     },
     {
-      "source_word": "ali",
-      "target_word": "Али",
-      "cefr_level": "A2",
-      "source_example": "Voy a usar ali.",
-      "target_example": "Я буду использовать Али."
-    },
-    {
       "source_word": "debilidad",
       "target_word": "слабость",
       "cefr_level": "A2",
@@ -6327,13 +6257,6 @@
       "target_example": "Мне нравится ковёр."
     },
     {
-      "source_word": "it",
-      "target_word": "[translation needed for: it]",
-      "cefr_level": "A2",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
       "source_word": "adonde",
       "target_word": "[translation needed for: adonde]",
       "cefr_level": "A2",
@@ -6348,13 +6271,6 @@
       "target_example": ""
     },
     {
-      "source_word": "on",
-      "target_word": "[translation needed for: on]",
-      "cefr_level": "A2",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
       "source_word": "mío",
       "target_word": "[translation needed for: mío]",
       "cefr_level": "A2",
@@ -6364,34 +6280,6 @@
     {
       "source_word": "policia",
       "target_word": "[translation needed for: policia]",
-      "cefr_level": "A2",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "is",
-      "target_word": "[translation needed for: is]",
-      "cefr_level": "A2",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "so",
-      "target_word": "[translation needed for: so]",
-      "cefr_level": "A2",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "as",
-      "target_word": "[translation needed for: as]",
-      "cefr_level": "A2",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "they",
-      "target_word": "[translation needed for: they]",
       "cefr_level": "A2",
       "source_example": "",
       "target_example": ""
