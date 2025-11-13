@@ -53,7 +53,7 @@ CMD ["./start.sh"]
 # FRONTEND BUILDER STAGE
 # ======================================================================================
 # Pinned to specific version for reproducible builds
-FROM --platform=linux/amd64 node:25.1.0-slim AS frontend-builder
+FROM --platform=linux/amd64 node:25.2.0-slim AS frontend-builder
 
 # Build arguments for version and environment
 ARG APP_VERSION=dev
