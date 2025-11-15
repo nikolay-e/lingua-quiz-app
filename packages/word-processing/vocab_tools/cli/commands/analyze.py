@@ -1,9 +1,9 @@
 from pathlib import Path
 
+import typer
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich.table import Table
-import typer
 
 from ...analysis.full_report_generator import FullReportGenerator
 from ...validation.migration_validator import MigrationValidator
@@ -116,16 +116,16 @@ def analyze(
 
     except ValueError as e:
         print_error(f"Invalid input: {e}")
-        raise typer.Exit(1)
+        raise typer.Exit(1) from e
     except FileNotFoundError as e:
         print_error(f"File not found: {e}")
-        raise typer.Exit(1)
+        raise typer.Exit(1) from e
     except Exception as e:
         print_error("Analysis failed", e)
         import traceback
 
         console.print("[dim]" + traceback.format_exc() + "[/dim]")
-        raise typer.Exit(1)
+        raise typer.Exit(1) from e
 
 
 def _print_validation_summary(validation_result) -> None:
