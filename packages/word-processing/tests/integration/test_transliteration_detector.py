@@ -175,4 +175,6 @@ class TestTransliterationDetector:
         for source, target in examples:
             _is_trans, similarity = detector.is_transliteration(source, target)
             # These should have high similarity (even if not perfect)
-            assert similarity >= 0.5, f"Expected '{source}' -> '{target}' to have similarity >= 0.5 (got {similarity:.2f})"
+            assert similarity >= 0.5, (
+                f"Expected '{source}' -> '{target}' to have similarity >= 0.5 (got {similarity:.2f})"
+            )

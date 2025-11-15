@@ -14,6 +14,7 @@ Tests verify the 7-stage pipeline:
 from collections.abc import Iterator
 
 import pytest
+
 from vocab_tools.core.vocabulary_processor import VocabularyProcessor
 from vocab_tools.core.word_source import Word, WordSource
 
@@ -88,7 +89,9 @@ class TestVocabularyProcessorBasic:
         result = processor.process_words(word_source, strict_lemma_only=True, target_count=10)
 
         for word in result.words:
-            assert word.word.lower() == word.lemma, f"Strict mode should only have lemmas, found inflection: {word.word} (lemma: {word.lemma})"
+            assert word.word.lower() == word.lemma, (
+                f"Strict mode should only have lemmas, found inflection: {word.word} (lemma: {word.lemma})"
+            )
 
     def test_target_count_limits_output(self, stanza_es_lemmatizer):
         """Verify target_count parameter limits number of words processed."""

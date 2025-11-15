@@ -418,7 +418,7 @@ flowchart TB
     subgraph Analysis["📊 ANALYSIS & VALIDATION"]
         direction TB
         A1["A1Analyzer<br/>Compare vocabulary vs<br/>frequency top-N"]
-        A2["FullReportGenerator<br/>Categorize ALL words:<br/>• ENGLISH (delete)<br/>• HIGH_FREQ (<500)<br/>• LEGITIMATE (<5k)<br/>• VERY_RARE (>10k)"]
+        A2["FullReportGenerator<br/>Categorize by frequency:<br/>ENGLISH, HIGH_FREQ,<br/>LEGITIMATE, VERY_RARE"]
         A3["MigrationValidator<br/>• Check duplicates<br/>• Validate ID schema<br/>• Cross-file validation"]
 
         A1 --> A2

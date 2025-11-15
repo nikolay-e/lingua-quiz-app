@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from pydantic import ValidationError
 import yaml
+from pydantic import ValidationError
 
 from .models import Config
 

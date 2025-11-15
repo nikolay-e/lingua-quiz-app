@@ -10,7 +10,9 @@ console = Console()
 
 
 def print_header(title: str, subtitle: str = "") -> None:
-    text = f"[bold white]{title}[/bold white]\n[dim]{subtitle}[/dim]" if subtitle else f"[bold white]{title}[/bold white]"
+    text = (
+        f"[bold white]{title}[/bold white]\n[dim]{subtitle}[/dim]" if subtitle else f"[bold white]{title}[/bold white]"
+    )
     console.print(Panel(text, border_style="blue", expand=False))
 
 

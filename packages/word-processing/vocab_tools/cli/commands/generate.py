@@ -1,9 +1,9 @@
 from pathlib import Path
 
+import typer
 from rich.console import Console
 from rich.progress import BarColumn, Progress, SpinnerColumn, TextColumn
 from rich.table import Table
-import typer
 
 from ...core.vocabulary_processor import VocabularyProcessor
 from ...core.word_source import SubtitleFrequencySource
@@ -26,7 +26,7 @@ def _generate_impl(
         except ValueError:
             print_error(f"Unknown language: {language}")
             console.print("\n[yellow]Available:[/yellow] en, es, de, ru\n")
-            raise typer.Exit(1)
+            raise typer.Exit(1) from None
     else:
         languages = ["en", "de", "es", "ru"]
 

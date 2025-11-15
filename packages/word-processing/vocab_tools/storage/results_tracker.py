@@ -5,9 +5,9 @@ Stores all analysis results in a single JSON file for historical tracking
 and trend analysis.
 """
 
-from dataclasses import dataclass
 import datetime
 import json
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 

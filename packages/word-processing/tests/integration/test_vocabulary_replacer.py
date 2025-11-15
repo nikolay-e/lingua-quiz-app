@@ -1,11 +1,12 @@
 """Integration tests for VocabularyReplacer."""
 
 import json
-from pathlib import Path
 import tempfile
+from pathlib import Path
 from unittest.mock import patch
 
 import pytest
+
 from vocab_tools.maintenance.vocabulary_replacer import VocabularyReplacer
 
 
@@ -124,7 +125,9 @@ class TestVocabularyReplacer:
 
     def test_initialize_replacer(self, test_migration_file_with_rare_words):
         """Test initializing replacer with valid language and level."""
-        replacer = VocabularyReplacer(language_code="es", level="a1", migration_file=test_migration_file_with_rare_words)
+        replacer = VocabularyReplacer(
+            language_code="es", level="a1", migration_file=test_migration_file_with_rare_words
+        )
 
         assert replacer.language_code == "es"
         assert replacer.level == "A1"
@@ -132,7 +135,9 @@ class TestVocabularyReplacer:
 
     def test_identify_rare_words_spanish_a1(self, test_migration_file_with_rare_words, mock_analysis_data):
         """Test identifying rare words in Spanish A1."""
-        replacer = VocabularyReplacer(language_code="es", level="a1", migration_file=test_migration_file_with_rare_words)
+        replacer = VocabularyReplacer(
+            language_code="es", level="a1", migration_file=test_migration_file_with_rare_words
+        )
 
         with patch.object(replacer, "_get_detailed_analysis", return_value=mock_analysis_data):
             rare_words = replacer.identify_rare_words(min_rank=10000, additional_threshold=8000)
@@ -147,7 +152,9 @@ class TestVocabularyReplacer:
 
     def test_identify_missing_words_spanish_a1(self, test_migration_file_with_rare_words, mock_analysis_data):
         """Test identifying missing high-frequency words in Spanish A1."""
-        replacer = VocabularyReplacer(language_code="es", level="a1", migration_file=test_migration_file_with_rare_words)
+        replacer = VocabularyReplacer(
+            language_code="es", level="a1", migration_file=test_migration_file_with_rare_words
+        )
 
         with patch.object(replacer, "_get_detailed_analysis", return_value=mock_analysis_data):
             missing_words = replacer.identify_missing_words(max_rank=1000)
@@ -166,7 +173,9 @@ class TestVocabularyReplacer:
 
     def test_missing_words_include_critical(self, test_migration_file_with_rare_words, mock_analysis_data):
         """Test that critical missing words (lo, un, se, quiero) are identified."""
-        replacer = VocabularyReplacer(language_code="es", level="a1", migration_file=test_migration_file_with_rare_words)
+        replacer = VocabularyReplacer(
+            language_code="es", level="a1", migration_file=test_migration_file_with_rare_words
+        )
 
         with patch.object(replacer, "_get_detailed_analysis", return_value=mock_analysis_data):
             missing_words = replacer.identify_missing_words(max_rank=100)
@@ -180,7 +189,9 @@ class TestVocabularyReplacer:
 
     def test_generate_replacement_plan(self, test_migration_file_with_rare_words, mock_analysis_data):
         """Test generating complete replacement plan."""
-        replacer = VocabularyReplacer(language_code="es", level="a1", migration_file=test_migration_file_with_rare_words)
+        replacer = VocabularyReplacer(
+            language_code="es", level="a1", migration_file=test_migration_file_with_rare_words
+        )
 
         with patch.object(replacer, "_get_detailed_analysis", return_value=mock_analysis_data):
             plan = replacer.generate_replacement_plan(remove_rank=10000, add_rank=1000)
@@ -201,7 +212,9 @@ class TestVocabularyReplacer:
 
     def test_replacement_plan_no_duplicates_in_remove(self, test_migration_file_with_rare_words, mock_analysis_data):
         """Test that removal list has no duplicates."""
-        replacer = VocabularyReplacer(language_code="es", level="a1", migration_file=test_migration_file_with_rare_words)
+        replacer = VocabularyReplacer(
+            language_code="es", level="a1", migration_file=test_migration_file_with_rare_words
+        )
 
         with patch.object(replacer, "_get_detailed_analysis", return_value=mock_analysis_data):
             plan = replacer.generate_replacement_plan()
@@ -212,7 +225,9 @@ class TestVocabularyReplacer:
 
     def test_execute_replacement_dry_run(self, test_migration_file_with_rare_words, mock_analysis_data):
         """Test executing replacement in dry-run mode (no file changes)."""
-        replacer = VocabularyReplacer(language_code="es", level="a1", migration_file=test_migration_file_with_rare_words)
+        replacer = VocabularyReplacer(
+            language_code="es", level="a1", migration_file=test_migration_file_with_rare_words
+        )
 
         with patch.object(replacer, "_get_detailed_analysis", return_value=mock_analysis_data):
             plan = replacer.generate_replacement_plan(remove_rank=10000, add_rank=100)
@@ -225,7 +240,9 @@ class TestVocabularyReplacer:
 
     def test_execute_replacement_with_output_file(self, test_migration_file_with_rare_words, mock_analysis_data):
         """Test executing replacement with custom output file."""
-        replacer = VocabularyReplacer(language_code="es", level="a1", migration_file=test_migration_file_with_rare_words)
+        replacer = VocabularyReplacer(
+            language_code="es", level="a1", migration_file=test_migration_file_with_rare_words
+        )
 
         with patch.object(replacer, "_get_detailed_analysis", return_value=mock_analysis_data):
             plan = replacer.generate_replacement_plan(remove_rank=10000, add_rank=50)
@@ -254,7 +271,9 @@ class TestVocabularyReplacer:
 
     def test_replacement_adds_metadata(self, test_migration_file_with_rare_words, mock_analysis_data):
         """Test that new entries include metadata (rank, zipf, forms)."""
-        replacer = VocabularyReplacer(language_code="es", level="a1", migration_file=test_migration_file_with_rare_words)
+        replacer = VocabularyReplacer(
+            language_code="es", level="a1", migration_file=test_migration_file_with_rare_words
+        )
 
         with patch.object(replacer, "_get_detailed_analysis", return_value=mock_analysis_data):
             plan = replacer.generate_replacement_plan(remove_rank=10000, add_rank=50)
@@ -282,7 +301,9 @@ class TestVocabularyReplacer:
 
     def test_replacement_preserves_existing_entries(self, test_migration_file_with_rare_words, mock_analysis_data):
         """Test that replacement preserves non-removed entries."""
-        replacer = VocabularyReplacer(language_code="es", level="a1", migration_file=test_migration_file_with_rare_words)
+        replacer = VocabularyReplacer(
+            language_code="es", level="a1", migration_file=test_migration_file_with_rare_words
+        )
 
         with open(test_migration_file_with_rare_words) as f:
             original_json = json.load(f)
@@ -294,7 +315,9 @@ class TestVocabularyReplacer:
 
         words_to_remove = {w.lower() for w in plan["remove"]}
 
-        expected_preserved = [entry for entry in original_pairs if entry.get("source_word", "").lower() not in words_to_remove]
+        expected_preserved = [
+            entry for entry in original_pairs if entry.get("source_word", "").lower() not in words_to_remove
+        ]
 
         with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False) as tmp:
             output_file = Path(tmp.name)

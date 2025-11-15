@@ -166,7 +166,9 @@ class Config(BaseModel):
         for level in standard_order:
             if level in v:
                 if v[level] < prev_count:
-                    raise ValueError(f"CEFR cumulative totals must be non-decreasing: {level}={v[level]} < previous={prev_count}")
+                    raise ValueError(
+                        f"CEFR cumulative totals must be non-decreasing: {level}={v[level]} < previous={prev_count}"
+                    )
                 prev_count = v[level]
 
         return v

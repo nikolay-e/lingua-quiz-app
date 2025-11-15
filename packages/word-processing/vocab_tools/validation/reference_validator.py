@@ -31,7 +31,9 @@ class ReferenceValidator:
             if file_path.exists():
                 return self._parse_reference_file(file_path)
 
-        raise FileNotFoundError(f"No reference list found for language '{self.language_code}'. Searched: {possible_files}")
+        raise FileNotFoundError(
+            f"No reference list found for language '{self.language_code}'. Searched: {possible_files}"
+        )
 
     def _parse_reference_file(self, file_path: Path) -> set[str]:
         words = set()

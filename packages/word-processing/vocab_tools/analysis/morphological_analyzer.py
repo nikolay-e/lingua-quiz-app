@@ -112,10 +112,15 @@ class MorphologicalAnalyzer:
 
     def is_marked_form(self, features: MorphologicalFeatures) -> bool:
         if features.pos == "NOUN":
-            return features.raw_features.get("Number") == "Plur" or features.raw_features.get("Case") not in [None, "Nom"]
+            return features.raw_features.get("Number") == "Plur" or features.raw_features.get("Case") not in [
+                None,
+                "Nom",
+            ]
 
         if features.pos == "VERB":
-            return features.raw_features.get("Tense") not in [None, "Pres"] or features.raw_features.get("VerbForm") not in [None, "Fin", "Inf"]
+            return features.raw_features.get("Tense") not in [None, "Pres"] or features.raw_features.get(
+                "VerbForm"
+            ) not in [None, "Fin", "Inf"]
 
         if features.pos == "ADJ":
             return features.raw_features.get("Degree") not in [None, "Pos"]

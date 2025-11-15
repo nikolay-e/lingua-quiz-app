@@ -45,7 +45,9 @@ class SubtitleFrequencyIndex:
         freq_file = self._data_dir / f"{self.language_code}_50k.txt"
 
         if not freq_file.exists():
-            raise FileNotFoundError(f"Subtitle frequency file not found: {freq_file}\nDownload from: https://github.com/hermitdave/FrequencyWords")
+            raise FileNotFoundError(
+                f"Subtitle frequency file not found: {freq_file}\nDownload from: https://github.com/hermitdave/FrequencyWords"
+            )
 
         # Fast path: use pre-lemmatized CSV if available
         if csv_file.exists():

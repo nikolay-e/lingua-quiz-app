@@ -13,6 +13,7 @@ import json
 from pathlib import Path
 
 import pytest
+
 from vocab_tools.validation.migration_validator import MigrationValidator
 
 

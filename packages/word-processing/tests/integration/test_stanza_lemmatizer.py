@@ -1,4 +1,5 @@
 import pytest
+
 from vocab_tools.core.stanza_lemmatizer import StanzaLemmatizer, get_stanza_lemmatizer
 
 

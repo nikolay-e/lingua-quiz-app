@@ -48,20 +48,35 @@ class DependencyAnalyzer:
     def _register_patterns(self):
         passive_pattern = [
             {"RIGHT_ID": "verb", "RIGHT_ATTRS": {"POS": "VERB"}},
-            {"LEFT_ID": "verb", "REL_OP": ">", "RIGHT_ID": "aux", "RIGHT_ATTRS": {"DEP": {"IN": ["aux:pass", "auxpass"]}}},
+            {
+                "LEFT_ID": "verb",
+                "REL_OP": ">",
+                "RIGHT_ID": "aux",
+                "RIGHT_ATTRS": {"DEP": {"IN": ["aux:pass", "auxpass"]}},
+            },
         ]
         self._matcher.add("PASSIVE", [passive_pattern])
 
         svo_pattern = [
             {"RIGHT_ID": "verb", "RIGHT_ATTRS": {"POS": "VERB"}},
-            {"LEFT_ID": "verb", "REL_OP": ">", "RIGHT_ID": "subject", "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}}},
+            {
+                "LEFT_ID": "verb",
+                "REL_OP": ">",
+                "RIGHT_ID": "subject",
+                "RIGHT_ATTRS": {"DEP": {"IN": ["nsubj", "nsubjpass"]}},
+            },
             {"LEFT_ID": "verb", "REL_OP": ">", "RIGHT_ID": "object", "RIGHT_ATTRS": {"DEP": {"IN": ["obj", "dobj"]}}},
         ]
         self._matcher.add("SVO", [svo_pattern])
 
         subordinate_pattern = [
             {"RIGHT_ID": "main_verb", "RIGHT_ATTRS": {"POS": "VERB"}},
-            {"LEFT_ID": "main_verb", "REL_OP": ">", "RIGHT_ID": "sub_verb", "RIGHT_ATTRS": {"DEP": {"IN": ["ccomp", "xcomp", "advcl"]}}},
+            {
+                "LEFT_ID": "main_verb",
+                "REL_OP": ">",
+                "RIGHT_ID": "sub_verb",
+                "RIGHT_ATTRS": {"DEP": {"IN": ["ccomp", "xcomp", "advcl"]}},
+            },
         ]
         self._matcher.add("SUBORDINATE", [subordinate_pattern])
 
@@ -137,7 +152,9 @@ class DependencyAnalyzer:
             return "B2"
         return "C1-C2"
 
-    def extract_patterns_from_corpus(self, texts: list[str], min_complexity: float = 0.0, max_complexity: float = 1.0) -> list[GrammarPattern]:
+    def extract_patterns_from_corpus(
+        self, texts: list[str], min_complexity: float = 0.0, max_complexity: float = 1.0
+    ) -> list[GrammarPattern]:
         all_patterns = []
 
         for text in texts:

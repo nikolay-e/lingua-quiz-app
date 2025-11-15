@@ -28,7 +28,11 @@ class WordFamily:
             self.members.add(self.base_form)
 
         sequence = [self.base_form]
-        others = sorted([w for w in self.members if w != self.base_form], key=lambda w: zipf_frequency(w, language_code), reverse=True)
+        others = sorted(
+            [w for w in self.members if w != self.base_form],
+            key=lambda w: zipf_frequency(w, language_code),
+            reverse=True,
+        )
         sequence.extend(others)
         return sequence
 
@@ -83,7 +87,9 @@ class MorphyNetLoader:
 
                     if base_word not in families:
                         base_freq = zipf_frequency(base_word, language)
-                        families[base_word] = WordFamily(base_form=base_word, base_frequency=base_freq, language=language)
+                        families[base_word] = WordFamily(
+                            base_form=base_word, base_frequency=base_freq, language=language
+                        )
 
                     families[base_word].add_member(base_word, "base")
                     families[base_word].add_member(derived_word, relation_type)

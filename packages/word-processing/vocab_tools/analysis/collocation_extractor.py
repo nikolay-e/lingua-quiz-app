@@ -3,8 +3,8 @@ from dataclasses import dataclass
 from typing import Literal
 
 try:
-    from nltk.collocations import BigramCollocationFinder, TrigramCollocationFinder
-    from nltk.metrics import BigramAssocMeasures, TrigramAssocMeasures
+    from nltk.collocations import BigramCollocationFinder
+    from nltk.metrics import BigramAssocMeasures
 
     NLTK_AVAILABLE = True
 except ImportError:
@@ -34,7 +34,9 @@ class CollocationExtractor:
         if not NLTK_AVAILABLE:
             print("⚠️  NLTK not available. Install with: pip install nltk")
 
-    def extract_from_corpus(self, texts: list[str], min_freq: int = 5, top_n: int = 100, validate: bool = True) -> list[Collocation]:
+    def extract_from_corpus(
+        self, texts: list[str], min_freq: int = 5, top_n: int = 100, validate: bool = True
+    ) -> list[Collocation]:
         if not NLTK_AVAILABLE:
             return []
 
@@ -62,14 +64,32 @@ class CollocationExtractor:
             cefr_level = self._assign_cefr_level(word1, word2)
 
             collocation = Collocation(
-                words=(word1, word2), collocation_type="bigram", score=score, frequency=freq, cefr_level=cefr_level, dependency_validated=False
+                words=(word1, word2),
+                collocation_type="bigram",
+                score=score,
+                frequency=freq,
+                cefr_level=cefr_level,
+                dependency_validated=False,
             )
             collocations.append(collocation)
 
         return collocations
 
     def _validate_with_dependencies(self, collocations: list[Collocation], texts: list[str]) -> list[Collocation]:
-        valid_deps = {"nsubj", "obj", "iobj", "amod", "advmod", "compound", "prt", "prep", "dobj", "nmod", "case", "obl"}
+        valid_deps = {
+            "nsubj",
+            "obj",
+            "iobj",
+            "amod",
+            "advmod",
+            "compound",
+            "prt",
+            "prep",
+            "dobj",
+            "nmod",
+            "case",
+            "obl",
+        }
 
         validated = []
 
@@ -94,7 +114,11 @@ class CollocationExtractor:
                                 colloc.example_sentence = text
                                 break
 
-                    if token.lemma_.lower() == word2 and token.head.lemma_.lower() == word1 and token.dep_ in valid_deps:
+                    if (
+                        token.lemma_.lower() == word2
+                        and token.head.lemma_.lower() == word1
+                        and token.dep_ in valid_deps
+                    ):
                         found_count += 1
                         colloc.example_sentence = text
                         break

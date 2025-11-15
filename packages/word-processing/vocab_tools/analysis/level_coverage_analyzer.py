@@ -1,7 +1,7 @@
+import re
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-import re
 from typing import Any
 
 from ..config.constants import SUPPORTED_LANGUAGES
@@ -264,7 +264,9 @@ class LevelCoverageAnalyzer:
                 results[filename] = result
 
                 if show_progress:
-                    print(f"   Coverage: {result.coverage_percentage:.1f}% ({result.words_in_range}/{result.total_words} words in correct range)")
+                    print(
+                        f"   Coverage: {result.coverage_percentage:.1f}% ({result.words_in_range}/{result.total_words} words in correct range)"
+                    )
                     if result.words_out_of_range > 0:
                         print(f"   ⚠️  {result.words_out_of_range} words out of range")
 

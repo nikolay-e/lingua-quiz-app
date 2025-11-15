@@ -15,7 +15,9 @@ def load_frequency_list(file_path: Path | str) -> ProcessedVocabulary:
 
     # Validate format
     if "language" not in data or "words" not in data:
-        raise ValueError(f"Invalid frequency list format in {file_path}. Expected JSON with 'language' and 'words' fields.")
+        raise ValueError(
+            f"Invalid frequency list format in {file_path}. Expected JSON with 'language' and 'words' fields."
+        )
 
     # Convert JSON words to ProcessedWord objects
     processed_words = []
