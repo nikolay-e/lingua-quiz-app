@@ -1,4 +1,6 @@
 #!/bin/sh
+set -e # Exit immediately if a command exits with a non-zero status
+
 echo "Waiting for database at ${DB_HOST}:${DB_PORT}..."
 while ! nc -z ${DB_HOST} ${DB_PORT}; do
   echo "Database not ready, waiting..."
@@ -8,12 +10,20 @@ echo "Database is ready!"
 sleep 2
 
 MIGRATE="${MIGRATE:-false}"
+echo "MIGRATE variable is set to: $MIGRATE"
+
 if [ "$MIGRATE" = "true" ]; then
   echo "Running Alembic migrations..."
-  alembic upgrade head
+  alembic upgrade head || {
+    echo "ERROR: Alembic migration failed"
+    exit 1
+  }
 
   echo "Loading vocabulary data..."
-  python load_vocabulary.py
+  python load_vocabulary.py || {
+    echo "ERROR: Vocabulary loading failed"
+    exit 1
+  }
 fi
 
 if [ -n "$UVICORN_WORKERS" ]; then
