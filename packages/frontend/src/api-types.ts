@@ -3,10 +3,13 @@ import type { LevelConfigItem } from './lib/config/levelConfig';
 export interface User {
   id: number;
   username: string;
+  isAdmin?: boolean;
 }
 
 export interface AuthResponse {
   token: string;
+  refresh_token: string;
+  expires_in: string;
   user: User;
 }
 
@@ -26,14 +29,27 @@ export interface Translation {
 }
 
 export interface UserProgress {
-  sourceText: string;
-  sourceLanguage: string;
-  targetLanguage: string;
+  vocabularyItemId: string;
   level: number;
   queuePosition: number;
   correctCount: number;
   incorrectCount: number;
+  consecutiveCorrect: number;
   lastPracticed?: string;
+}
+
+export interface VocabularyItem {
+  id: string;
+  sourceText: string;
+  sourceLanguage: string;
+  targetText: string;
+  targetLanguage: string;
+  listName: string;
+  sourceUsageExample?: string;
+  targetUsageExample?: string;
+  isActive?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface TTSResponse {
@@ -71,4 +87,10 @@ export interface AppError {
   message: string;
   code?: string;
   details?: unknown;
+}
+
+export interface ContentVersion {
+  versionId: number;
+  versionName: string;
+  isActive: boolean;
 }

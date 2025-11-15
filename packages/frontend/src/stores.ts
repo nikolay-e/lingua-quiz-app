@@ -102,6 +102,7 @@ interface AuthState {
   token: string | null;
   username: string | null;
   isAuthenticated: boolean;
+  isAdmin: boolean;
 }
 
 interface AuthStore {
@@ -118,25 +119,71 @@ function createAuthStore(): AuthStore {
     token: null,
     username: null,
     isAuthenticated: false,
+    isAdmin: false,
   });
+
+  let refreshTimer: NodeJS.Timeout | null = null;
+
+  async function refreshAccessToken() {
+    const refreshToken = safeStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN);
+    if (!refreshToken) {
+      logoutUser();
+      return;
+    }
+
+    try {
+      const data = await api.refreshToken({ refresh_token: refreshToken });
+      const currentState = get({ subscribe });
+      setUser({
+        token: data.token,
+        username: currentState.username ?? data.user.username,
+        refreshToken: data.refresh_token,
+      });
+    } catch (error) {
+      console.error('Token refresh failed:', error);
+      logoutUser();
+    }
+  }
+
+  function scheduleTokenRefresh() {
+    if (refreshTimer) {
+      clearTimeout(refreshTimer);
+      refreshTimer = null;
+    }
+
+    const expirationStr = safeStorage.getItem(STORAGE_KEYS.TOKEN_EXPIRATION);
+    if (!expirationStr) return;
+
+    const expirationMs = parseInt(expirationStr, 10);
+    const now = Date.now();
+    const timeUntilExpiry = expirationMs - now;
+    const refreshBeforeMs = 2 * 60 * 1000;
+    const refreshIn = Math.max(0, timeUntilExpiry - refreshBeforeMs);
+
+    refreshTimer = setTimeout(() => {
+      void refreshAccessToken();
+    }, refreshIn);
+  }
 
   function checkToken() {
     const token = safeStorage.getItem(STORAGE_KEYS.TOKEN);
 
     if (!token) {
-      set({ token: null, username: null, isAuthenticated: false });
+      set({ token: null, username: null, isAuthenticated: false, isAdmin: false });
       return;
     }
 
     try {
-      const payload = jwtDecode<{ exp: number; username?: string; sub?: string }>(token);
+      const payload = jwtDecode<{ exp: number; username?: string; sub?: string; isAdmin?: boolean }>(token);
       const isExpired = payload.exp * 1000 < Date.now();
 
       if (isExpired) {
-        logoutUser();
+        void refreshAccessToken();
       } else {
         const username = payload.username ?? payload.sub ?? 'Unknown User';
-        set({ token, username, isAuthenticated: true });
+        const isAdmin = payload.isAdmin ?? false;
+        set({ token, username, isAuthenticated: true, isAdmin });
+        scheduleTokenRefresh();
       }
     } catch {
       console.error('Invalid token found, logging out.');
@@ -144,23 +191,34 @@ function createAuthStore(): AuthStore {
     }
   }
 
-  function setUser(data: { token: string; username: string }) {
+  function setUser(data: { token: string; username: string; refreshToken?: string }) {
     safeStorage.setItem(STORAGE_KEYS.TOKEN, data.token);
+    if (data.refreshToken) {
+      safeStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, data.refreshToken);
+    }
 
     try {
-      const payload = jwtDecode<{ exp: number }>(data.token);
+      const payload = jwtDecode<{ exp: number; isAdmin?: boolean }>(data.token);
       const expirationMs = payload.exp * 1000;
       safeStorage.setItem(STORAGE_KEYS.TOKEN_EXPIRATION, expirationMs.toString());
+      const isAdmin = payload.isAdmin ?? false;
+      set({ token: data.token, username: data.username, isAuthenticated: true, isAdmin });
+      scheduleTokenRefresh();
     } catch (e) {
       console.error('Failed to parse token expiration:', e);
+      set({ token: data.token, username: data.username, isAuthenticated: true, isAdmin: false });
     }
-    set({ token: data.token, username: data.username, isAuthenticated: true });
   }
 
   function logoutUser() {
     safeStorage.removeItem(STORAGE_KEYS.TOKEN);
+    safeStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
     safeStorage.removeItem(STORAGE_KEYS.TOKEN_EXPIRATION);
-    set({ token: null, username: null, isAuthenticated: false });
+    if (refreshTimer) {
+      clearTimeout(refreshTimer);
+      refreshTimer = null;
+    }
+    set({ token: null, username: null, isAuthenticated: false, isAdmin: false });
   }
 
   if (typeof window !== 'undefined') {
@@ -171,7 +229,7 @@ function createAuthStore(): AuthStore {
     subscribe,
     login: async (username: string, password: string) => {
       const data = await api.login({ username, password });
-      setUser({ token: data.token, username: data.user.username });
+      setUser({ token: data.token, username: data.user.username, refreshToken: data.refresh_token });
       return data;
     },
     logout: async () => {
@@ -188,7 +246,7 @@ function createAuthStore(): AuthStore {
     logoutUser,
     register: async (username: string, password: string) => {
       const data = await api.register({ username, password });
-      setUser({ token: data.token, username: data.user.username });
+      setUser({ token: data.token, username: data.user.username, refreshToken: data.refresh_token });
       return data;
     },
     deleteAccount: async () => {
@@ -327,6 +385,24 @@ function createQuizStore(): QuizStore {
 
     loadWordLists: async (token: string) => {
       update((state) => ({ ...state, loading: true, error: null }));
+
+      const versionChanged = await withAuth401Handling(async () => {
+        const currentVersion = await api.fetchContentVersion(token);
+        const savedVersion = safeStorage.getItem(STORAGE_KEYS.CONTENT_VERSION);
+
+        if (savedVersion && parseInt(savedVersion) !== currentVersion.versionId) {
+          console.info(`Content version changed: ${savedVersion} -> ${currentVersion.versionId}. Clearing cache.`);
+          return true;
+        }
+
+        safeStorage.setItem(STORAGE_KEYS.CONTENT_VERSION, currentVersion.versionId.toString());
+        return false;
+      });
+
+      if (versionChanged) {
+        progressMap.clear();
+      }
+
       const result = await withAuth401Handling(
         () => api.fetchWordLists(token),
         (error) => update((state) => ({ ...state, error: error as string, loading: false })),

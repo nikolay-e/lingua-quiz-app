@@ -16,7 +16,15 @@ const getServerAddress = (): string => {
   return '/api';
 };
 
-import type { AuthResponse, WordList, Translation, UserProgress, TTSResponse, TTSLanguagesResponse } from './api-types';
+import type {
+  AuthResponse,
+  WordList,
+  Translation,
+  UserProgress,
+  TTSResponse,
+  TTSLanguagesResponse,
+  ContentVersion,
+} from './api-types';
 
 const serverAddress = getServerAddress();
 
@@ -106,6 +114,7 @@ const createApiMethod = <TResponse, TParams = void>(endpoint: string, method = '
 const api = {
   login: createApiMethod<AuthResponse, { username: string; password: string }>('/auth/login', 'POST', false),
   register: createApiMethod<AuthResponse, { username: string; password: string }>('/auth/register', 'POST', false),
+  refreshToken: createApiMethod<AuthResponse, { refresh_token: string }>('/auth/refresh', 'POST', false),
 
   fetchWordLists: createApiMethod<WordList[]>('/word-lists'),
 
@@ -139,6 +148,10 @@ const api = {
       ? `${serverAddress}/user/progress?list_name=${encodeURIComponent(listName)}`
       : `${serverAddress}/user/progress`;
     return fetchWrapper(url, withAuth(token, { method: 'GET' }));
+  },
+
+  async fetchContentVersion(token: string): Promise<ContentVersion> {
+    return fetchWrapper(`${serverAddress}/content-version`, withAuth(token, { method: 'GET' }));
   },
 };
 

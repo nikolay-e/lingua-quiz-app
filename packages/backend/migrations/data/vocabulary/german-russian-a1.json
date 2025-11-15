@@ -238,13 +238,6 @@
       "target_example": "Я часто другой."
     },
     {
-      "source_word": "abend",
-      "target_word": "[translation needed for: abend]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
       "source_word": "aber",
       "target_word": "но",
       "source_example": "Ich möchte kommen, aber ich bin beschäftigt.",
@@ -395,13 +388,6 @@
       "target_example": "Мы остаемся до вечера."
     },
     {
-      "source_word": "bisschen",
-      "target_word": "[translation needed for: bisschen]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
       "source_word": "bitte",
       "target_word": "пожалуйста",
       "source_example": "Bitte kommen Sie herein.",
@@ -466,13 +452,6 @@
       "target_word": "после этого",
       "source_example": "Wir gehen essen und danach ins Kino.",
       "target_example": "Мы пойдем есть, а потом в кино."
-    },
-    {
-      "source_word": "dank",
-      "target_word": "[translation needed for: dank]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
     },
     {
       "source_word": "danke",
@@ -589,13 +568,6 @@
       "target_example": "Простите? Я вас не понял."
     },
     {
-      "source_word": "eltern",
-      "target_word": "[translation needed for: eltern]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
       "source_word": "endlich",
       "target_word": "наконец-то",
       "source_example": "Endlich ist der Sommer da.",
@@ -692,13 +664,6 @@
       "target_example": "Я тебя кое-что спрошу."
     },
     {
-      "source_word": "frau",
-      "target_word": "[translation needed for: frau]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
       "source_word": "frei",
       "target_word": "свободный",
       "source_example": "Ich habe heute frei.",
@@ -769,13 +734,6 @@
       "target_word": "идти",
       "source_example": "Wir gehen heute Abend ins Kino.",
       "target_example": "Мы идем сегодня вечером в кино."
-    },
-    {
-      "source_word": "geld",
-      "target_word": "[translation needed for: geld]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
     },
     {
       "source_word": "gemeinsam",
@@ -854,13 +812,6 @@
       "target_word": "смотреть|взглянуть",
       "source_example": "Wir gucken einen Film.",
       "target_example": "Мы смотрим фильм."
-    },
-    {
-      "source_word": "welt",
-      "target_word": "[translation needed for: welt]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
     },
     {
       "source_word": "halten",
@@ -977,13 +928,6 @@
       "target_example": "Да, я с удовольствием приду."
     },
     {
-      "source_word": "jahr",
-      "target_word": "[translation needed for: jahr]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
       "source_word": "traurig",
       "target_word": "грустный",
       "source_example": "Sie ist heute sehr traurig.",
@@ -1030,13 +974,6 @@
       "target_word": "знать, быть знакомым с",
       "source_example": "Ich kenne diesen Film.",
       "target_example": "Я знаю этот фильм."
-    },
-    {
-      "source_word": "kind",
-      "target_word": "[translation needed for: kind]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
     },
     {
       "source_word": "klar",
@@ -1093,13 +1030,6 @@
       "target_example": "Дети много смеются."
     },
     {
-      "source_word": "land",
-      "target_word": "[translation needed for: land]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
       "source_word": "lang",
       "target_word": "длинный",
       "source_example": "Der Fluss ist sehr lang.",
@@ -1152,13 +1082,6 @@
       "target_word": "последний",
       "source_example": "Das ist die letzte Seite.",
       "target_example": "Это последняя страница."
-    },
-    {
-      "source_word": "leute",
-      "target_word": "[translation needed for: leute]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
     },
     {
       "source_word": "lieber",
@@ -1251,24 +1174,10 @@
       "target_example": "У меня двое детей."
     },
     {
-      "source_word": "morgen",
-      "target_word": "[translation needed for: morgen]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
       "source_word": "müde",
       "target_word": "усталый",
       "source_example": "Nach der Arbeit bin ich müde.",
       "target_example": "После работы я устал."
-    },
-    {
-      "source_word": "musik",
-      "target_word": "[translation needed for: musik]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
     },
     {
       "source_word": "müssen",
@@ -1281,13 +1190,6 @@
       "target_word": "станешь",
       "source_example": "Du wirst in guter Arzt.",
       "target_example": "Ты станешь хорошим врачом."
-    },
-    {
-      "source_word": "nacht",
-      "target_word": "[translation needed for: nacht]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
     },
     {
       "source_word": "nachts",
@@ -1716,13 +1618,6 @@
       "target_example": "У меня вообще нет понятия."
     },
     {
-      "source_word": "uhr",
-      "target_word": "[translation needed for: uhr]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
       "source_word": "um",
       "target_word": "вокруг, в",
       "source_example": "Wir treffen uns um drei Uhr.",
@@ -1889,13 +1784,6 @@
       "target_word": "где",
       "source_example": "Wo ist der Bahnhof?",
       "target_example": "Где вокзал?"
-    },
-    {
-      "source_word": "woche",
-      "target_word": "[translation needed for: woche]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
     },
     {
       "source_word": "woher",
@@ -2384,31 +2272,10 @@
       "target_example": "Следующий раз будет лучше."
     },
     {
-      "source_word": "sicherheit",
-      "target_word": "[translation needed for: sicherheit]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
       "source_word": "ziehen",
       "target_word": "тянуть, переезжать",
       "source_example": "Zieh an der Tür!",
       "target_example": "Потяни дверь!"
-    },
-    {
-      "source_word": "teil",
-      "target_word": "[translation needed for: teil]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "zukunft",
-      "target_word": "[translation needed for: zukunft]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
     },
     {
       "source_word": "verschiedene",
@@ -2445,13 +2312,6 @@
       "target_word": "наверное",
       "source_example": "Er ist wohl zu Hause.",
       "target_example": "Он наверное дома."
-    },
-    {
-      "source_word": "recht",
-      "target_word": "[translation needed for: recht]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
     },
     {
       "source_word": "gerne",
@@ -2554,13 +2414,6 @@
       "target_word": "единственный",
       "source_example": "Das ist der einzige Weg.",
       "target_example": "Это единственный путь."
-    },
-    {
-      "source_word": "tod",
-      "target_word": "[translation needed for: tod]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
     },
     {
       "source_word": "die Mitte",
@@ -2723,13 +2576,6 @@
       "target_word": "воздух",
       "source_example": "Die Luft ist frisch.",
       "target_example": "Воздух свежий."
-    },
-    {
-      "source_word": "nachrichten",
-      "target_word": "[translation needed for: nachrichten]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
     },
     {
       "source_word": "häufig",
@@ -5568,300 +5414,6 @@
       "target_word": "кольцо",
       "source_example": "Ich ring oft.",
       "target_example": "Я часто кольцо."
-    },
-    {
-      "source_word": "problem",
-      "target_word": "[translation needed for: problem]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "klasse",
-      "target_word": "[translation needed for: klasse]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "tanzen",
-      "target_word": "[translation needed for: tanzen]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "beispiel",
-      "target_word": "[translation needed for: beispiel]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "kirche",
-      "target_word": "[translation needed for: kirche]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "hoffnung",
-      "target_word": "[translation needed for: hoffnung]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "interessant",
-      "target_word": "[translation needed for: interessant]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "möglichkeit",
-      "target_word": "[translation needed for: möglichkeit]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "rennen",
-      "target_word": "[translation needed for: rennen]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "eiern",
-      "target_word": "[translation needed for: eiern]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "fantastisch",
-      "target_word": "[translation needed for: fantastisch]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "drink",
-      "target_word": "[translation needed for: drink]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "insel",
-      "target_word": "[translation needed for: insel]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "zufällig",
-      "target_word": "[translation needed for: zufällig]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "mitten",
-      "target_word": "[translation needed for: mitten]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "bullen",
-      "target_word": "[translation needed for: bullen]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "feind",
-      "target_word": "[translation needed for: feind]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "freunden",
-      "target_word": "[translation needed for: freunden]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "halb",
-      "target_word": "[translation needed for: halb]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "verpassen",
-      "target_word": "[translation needed for: verpassen]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "leise",
-      "target_word": "[translation needed for: leise]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "unternehmen",
-      "target_word": "[translation needed for: unternehmen]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "träumen",
-      "target_word": "[translation needed for: träumen]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "entlang",
-      "target_word": "[translation needed for: entlang]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "johnny",
-      "target_word": "[translation needed for: johnny]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "tier",
-      "target_word": "[translation needed for: tier]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "freiheit",
-      "target_word": "[translation needed for: freiheit]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "unterhalten",
-      "target_word": "[translation needed for: unterhalten]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "schaden",
-      "target_word": "[translation needed for: schaden]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "beenden",
-      "target_word": "[translation needed for: beenden]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "lächerlich",
-      "target_word": "[translation needed for: lächerlich]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "parken",
-      "target_word": "[translation needed for: parken]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "männern",
-      "target_word": "[translation needed for: männern]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "energie",
-      "target_word": "[translation needed for: energie]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "fleisch",
-      "target_word": "[translation needed for: fleisch]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "besonderes",
-      "target_word": "[translation needed for: besonderes]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "zeitung",
-      "target_word": "[translation needed for: zeitung]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "worum",
-      "target_word": "[translation needed for: worum]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "nachdenken",
-      "target_word": "[translation needed for: nachdenken]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "betrunken",
-      "target_word": "[translation needed for: betrunken]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "sowas",
-      "target_word": "[translation needed for: sowas]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
-    },
-    {
-      "source_word": "patient",
-      "target_word": "[translation needed for: patient]",
-      "cefr_level": "A1",
-      "source_example": "",
-      "target_example": ""
     }
   ]
 }

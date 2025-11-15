@@ -1,6 +1,7 @@
 export const PAGES = {
   LOGIN: 'login',
   REGISTER: 'register',
+  ADMIN: 'admin',
 } as const;
 
 export type PageType = (typeof PAGES)[keyof typeof PAGES];
@@ -37,10 +38,12 @@ export const API_ENDPOINTS = {
 
 export const STORAGE_KEYS = {
   TOKEN: 'token',
+  REFRESH_TOKEN: 'refreshToken',
   USERNAME: 'username',
   TOKEN_EXPIRATION: 'tokenExpiration',
   THEME: 'theme',
   FOLDED_LISTS: 'foldedLists',
+  CONTENT_VERSION: 'contentVersion',
 } as const;
 
 export const THEMES = {

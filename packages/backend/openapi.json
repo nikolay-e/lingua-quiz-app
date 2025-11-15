@@ -1,0 +1,1330 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "LinguaQuiz API",
+    "description": "Language learning quiz backend with automated spaced repetition",
+    "version": "4.0.0"
+  },
+  "paths": {
+    "/api/auth/register": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Register User",
+        "operationId": "register_user_api_auth_register_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegistration"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Login User",
+        "operationId": "login_user_api_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLogin"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/delete-account": {
+      "delete": {
+        "tags": ["Authentication"],
+        "summary": "Delete Account",
+        "operationId": "delete_account_api_auth_delete_account_delete",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/auth/profile": {
+      "get": {
+        "tags": ["Authentication"],
+        "summary": "Get User Profile",
+        "operationId": "get_user_profile_api_auth_profile_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/word-lists": {
+      "get": {
+        "tags": ["Vocabulary"],
+        "summary": "Get Word Lists",
+        "operationId": "get_word_lists_api_word_lists_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/WordListResponse"
+                  },
+                  "type": "array",
+                  "title": "Response Get Word Lists Api Word Lists Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/translations": {
+      "get": {
+        "tags": ["Vocabulary"],
+        "summary": "Get Translations",
+        "operationId": "get_translations_api_translations_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "list_name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "List Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VocabularyItemResponse"
+                  },
+                  "title": "Response Get Translations Api Translations Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/progress": {
+      "get": {
+        "tags": ["Progress"],
+        "summary": "Get User Progress",
+        "operationId": "get_user_progress_api_user_progress_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "list_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "List Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserProgressResponse"
+                  },
+                  "title": "Response Get User Progress Api User Progress Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Progress"],
+        "summary": "Save User Progress",
+        "operationId": "save_user_progress_api_user_progress_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProgressUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tts/synthesize": {
+      "post": {
+        "tags": ["Text-to-Speech"],
+        "summary": "Synthesize Speech",
+        "operationId": "synthesize_speech_api_tts_synthesize_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TTSRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TTSResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/tts/languages": {
+      "get": {
+        "tags": ["Text-to-Speech"],
+        "summary": "Get Tts Languages",
+        "operationId": "get_tts_languages_api_tts_languages_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TTSLanguagesResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/admin/vocabulary/search": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Search Vocabulary",
+        "operationId": "search_vocabulary_api_admin_vocabulary_search_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100,
+              "title": "Query"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VocabularyItemDetailResponse"
+                  },
+                  "title": "Response Search Vocabulary Api Admin Vocabulary Search Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/vocabulary/{item_id}": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get Vocabulary Item",
+        "operationId": "get_vocabulary_item_api_admin_vocabulary__item_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VocabularyItemDetailResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Admin"],
+        "summary": "Update Vocabulary Item",
+        "operationId": "update_vocabulary_item_api_admin_vocabulary__item_id__put",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VocabularyItemUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Admin"],
+        "summary": "Delete Vocabulary Item",
+        "operationId": "delete_vocabulary_item_api_admin_vocabulary__item_id__delete",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "item_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Item Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/vocabulary": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Create Vocabulary Item",
+        "operationId": "create_vocabulary_item_api_admin_vocabulary_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VocabularyItemCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Admin"],
+        "summary": "List Vocabulary",
+        "operationId": "list_vocabulary_api_admin_vocabulary_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "list_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "List Name"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 1000,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VocabularyItemDetailResponse"
+                  },
+                  "title": "Response List Vocabulary Api Admin Vocabulary Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/health": {
+      "get": {
+        "tags": ["Health"],
+        "summary": "Health Check",
+        "operationId": "health_check_api_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/version": {
+      "get": {
+        "tags": ["Health"],
+        "summary": "Get Version",
+        "operationId": "get_version_api_version_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VersionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HealthResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "database": {
+            "type": "string",
+            "title": "Database"
+          },
+          "timestamp": {
+            "type": "string",
+            "title": "Timestamp"
+          }
+        },
+        "type": "object",
+        "required": ["status", "database", "timestamp"],
+        "title": "HealthResponse"
+      },
+      "ProgressUpdateRequest": {
+        "properties": {
+          "vocabularyItemId": {
+            "type": "string",
+            "title": "Vocabularyitemid"
+          },
+          "level": {
+            "type": "integer",
+            "maximum": 5.0,
+            "minimum": 0.0,
+            "title": "Level"
+          },
+          "queuePosition": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Queueposition"
+          },
+          "correctCount": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Correctcount"
+          },
+          "incorrectCount": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Incorrectcount"
+          },
+          "consecutiveCorrect": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Consecutivecorrect"
+          }
+        },
+        "type": "object",
+        "required": [
+          "vocabularyItemId",
+          "level",
+          "queuePosition",
+          "correctCount",
+          "incorrectCount",
+          "consecutiveCorrect"
+        ],
+        "title": "ProgressUpdateRequest"
+      },
+      "TTSLanguagesResponse": {
+        "properties": {
+          "available": {
+            "type": "boolean",
+            "title": "Available"
+          },
+          "supportedLanguages": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Supportedlanguages"
+          }
+        },
+        "type": "object",
+        "required": ["available", "supportedLanguages"],
+        "title": "TTSLanguagesResponse"
+      },
+      "TTSRequest": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Text"
+          },
+          "language": {
+            "type": "string",
+            "pattern": "^(en|de|ru|es)$",
+            "title": "Language"
+          }
+        },
+        "type": "object",
+        "required": ["text", "language"],
+        "title": "TTSRequest"
+      },
+      "TTSResponse": {
+        "properties": {
+          "audioData": {
+            "type": "string",
+            "title": "Audiodata"
+          },
+          "contentType": {
+            "type": "string",
+            "title": "Contenttype",
+            "default": "audio/mpeg"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "language": {
+            "type": "string",
+            "title": "Language"
+          }
+        },
+        "type": "object",
+        "required": ["audioData", "text", "language"],
+        "title": "TTSResponse"
+      },
+      "TokenResponse": {
+        "properties": {
+          "token": {
+            "type": "string",
+            "title": "Token"
+          },
+          "expires_in": {
+            "type": "string",
+            "title": "Expires In",
+            "default": "24h"
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserResponse"
+          }
+        },
+        "type": "object",
+        "required": ["token", "user"],
+        "title": "TokenResponse"
+      },
+      "UserLogin": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 3,
+            "title": "Username"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": ["username", "password"],
+        "title": "UserLogin"
+      },
+      "UserProgressResponse": {
+        "properties": {
+          "vocabularyItemId": {
+            "type": "string",
+            "title": "Vocabularyitemid"
+          },
+          "level": {
+            "type": "integer",
+            "title": "Level"
+          },
+          "queuePosition": {
+            "type": "integer",
+            "title": "Queueposition"
+          },
+          "correctCount": {
+            "type": "integer",
+            "title": "Correctcount"
+          },
+          "incorrectCount": {
+            "type": "integer",
+            "title": "Incorrectcount"
+          },
+          "consecutiveCorrect": {
+            "type": "integer",
+            "title": "Consecutivecorrect"
+          },
+          "lastPracticed": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lastpracticed"
+          }
+        },
+        "type": "object",
+        "required": [
+          "vocabularyItemId",
+          "level",
+          "queuePosition",
+          "correctCount",
+          "incorrectCount",
+          "consecutiveCorrect",
+          "lastPracticed"
+        ],
+        "title": "UserProgressResponse"
+      },
+      "UserRegistration": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "maxLength": 50,
+            "minLength": 3,
+            "title": "Username"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 8,
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": ["username", "password"],
+        "title": "UserRegistration"
+      },
+      "UserResponse": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "is_admin": {
+            "type": "boolean",
+            "title": "Is Admin",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": ["id", "username"],
+        "title": "UserResponse"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": ["loc", "msg", "type"],
+        "title": "ValidationError"
+      },
+      "VersionResponse": {
+        "properties": {
+          "version": {
+            "type": "string",
+            "title": "Version"
+          }
+        },
+        "type": "object",
+        "required": ["version"],
+        "title": "VersionResponse"
+      },
+      "VocabularyItemCreate": {
+        "properties": {
+          "sourceText": {
+            "type": "string",
+            "title": "Sourcetext"
+          },
+          "sourceLanguage": {
+            "type": "string",
+            "title": "Sourcelanguage"
+          },
+          "targetText": {
+            "type": "string",
+            "title": "Targettext"
+          },
+          "targetLanguage": {
+            "type": "string",
+            "title": "Targetlanguage"
+          },
+          "listName": {
+            "type": "string",
+            "title": "Listname"
+          },
+          "difficultyLevel": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Difficultylevel"
+          },
+          "sourceUsageExample": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sourceusageexample"
+          },
+          "targetUsageExample": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Targetusageexample"
+          }
+        },
+        "type": "object",
+        "required": ["sourceText", "sourceLanguage", "targetText", "targetLanguage", "listName"],
+        "title": "VocabularyItemCreate"
+      },
+      "VocabularyItemDetailResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "sourceText": {
+            "type": "string",
+            "title": "Sourcetext"
+          },
+          "sourceLanguage": {
+            "type": "string",
+            "title": "Sourcelanguage"
+          },
+          "targetText": {
+            "type": "string",
+            "title": "Targettext"
+          },
+          "targetLanguage": {
+            "type": "string",
+            "title": "Targetlanguage"
+          },
+          "listName": {
+            "type": "string",
+            "title": "Listname"
+          },
+          "difficultyLevel": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Difficultylevel"
+          },
+          "sourceUsageExample": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sourceusageexample"
+          },
+          "targetUsageExample": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Targetusageexample"
+          },
+          "isActive": {
+            "type": "boolean",
+            "title": "Isactive"
+          },
+          "createdAt": {
+            "type": "string",
+            "title": "Createdat"
+          },
+          "updatedAt": {
+            "type": "string",
+            "title": "Updatedat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "sourceText",
+          "sourceLanguage",
+          "targetText",
+          "targetLanguage",
+          "listName",
+          "difficultyLevel",
+          "sourceUsageExample",
+          "targetUsageExample",
+          "isActive",
+          "createdAt",
+          "updatedAt"
+        ],
+        "title": "VocabularyItemDetailResponse"
+      },
+      "VocabularyItemResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "sourceText": {
+            "type": "string",
+            "title": "Sourcetext"
+          },
+          "sourceLanguage": {
+            "type": "string",
+            "title": "Sourcelanguage"
+          },
+          "targetText": {
+            "type": "string",
+            "title": "Targettext"
+          },
+          "targetLanguage": {
+            "type": "string",
+            "title": "Targetlanguage"
+          },
+          "listName": {
+            "type": "string",
+            "title": "Listname"
+          },
+          "sourceUsageExample": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sourceusageexample"
+          },
+          "targetUsageExample": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Targetusageexample"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "sourceText",
+          "sourceLanguage",
+          "targetText",
+          "targetLanguage",
+          "listName",
+          "sourceUsageExample",
+          "targetUsageExample"
+        ],
+        "title": "VocabularyItemResponse"
+      },
+      "VocabularyItemUpdate": {
+        "properties": {
+          "sourceText": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sourcetext"
+          },
+          "targetText": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Targettext"
+          },
+          "sourceUsageExample": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sourceusageexample"
+          },
+          "targetUsageExample": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Targetusageexample"
+          },
+          "isActive": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Isactive"
+          }
+        },
+        "type": "object",
+        "title": "VocabularyItemUpdate"
+      },
+      "WordListResponse": {
+        "properties": {
+          "listName": {
+            "type": "string",
+            "title": "Listname"
+          },
+          "wordCount": {
+            "type": "integer",
+            "title": "Wordcount"
+          }
+        },
+        "type": "object",
+        "required": ["listName", "wordCount"],
+        "title": "WordListResponse"
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}
