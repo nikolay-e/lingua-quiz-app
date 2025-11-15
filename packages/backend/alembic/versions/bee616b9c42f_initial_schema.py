@@ -27,12 +27,10 @@ def upgrade() -> None:
             description TEXT,
             created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
             created_by TEXT,
-            is_active BOOLEAN NOT NULL DEFAULT FALSE,
-            CONSTRAINT only_one_active EXCLUDE USING gist (
-                is_active WITH =
-            ) WHERE (is_active)
+            is_active BOOLEAN NOT NULL DEFAULT FALSE
         )
     """)
+    op.execute("CREATE UNIQUE INDEX idx_only_one_active ON content_versions ((true)) WHERE is_active")
     op.execute("CREATE INDEX idx_content_versions_active ON content_versions (is_active) WHERE is_active")
 
     op.execute("""
