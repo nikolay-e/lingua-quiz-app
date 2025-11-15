@@ -83,14 +83,14 @@ class TestAuthentication:
 
     def test_protected_endpoint_without_token(self, api_client):
         """Test accessing protected endpoint without token."""
-        response = api_client.get(f"{API_URL}/user/profile")
+        response = api_client.get(f"{API_URL}/auth/profile")
         # Should be 401 (Unauthorized) or 403 (Forbidden) for missing auth
         assert response.status_code in [401, 403]
 
     def test_protected_endpoint_with_invalid_token(self, api_client):
         """Test accessing protected endpoint with invalid token."""
         headers = {"Authorization": "Bearer invalid_token"}
-        response = api_client.get(f"{API_URL}/user/profile", headers=headers)
+        response = api_client.get(f"{API_URL}/auth/profile", headers=headers)
         # Should be 401 (Unauthorized) or 403 (Forbidden) for invalid auth
         assert response.status_code in [401, 403]
 
@@ -101,7 +101,7 @@ class TestUserProfile:
 
     def test_get_user_profile(self, authenticated_api_client, test_user):
         """Test getting user profile."""
-        response = authenticated_api_client.get(f"{API_URL}/user/profile")
+        response = authenticated_api_client.get(f"{API_URL}/auth/profile")
 
         assert response.status_code == 200
         data = response.json()
@@ -112,7 +112,7 @@ class TestUserProfile:
         """Test updating user profile."""
         new_display_name = "Updated Test User"
 
-        response = authenticated_api_client.put(f"{API_URL}/user/profile", json={"display_name": new_display_name})
+        response = authenticated_api_client.put(f"{API_URL}/auth/profile", json={"display_name": new_display_name})
 
         if response.status_code == 200:
             data = response.json()
