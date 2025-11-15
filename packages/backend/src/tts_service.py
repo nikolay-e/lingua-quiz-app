@@ -49,11 +49,12 @@ class TTSService:
     def _get_from_cache(self, text: str, language: str) -> bytes | None:
         conn = None
         try:
+            cache_key = self.get_cache_key(text, language)
             conn = self.db_pool.getconn()
             with conn.cursor(cursor_factory=RealDictCursor) as cur:
                 cur.execute(
-                    "SELECT audio_data FROM tts_cache WHERE text = %s AND language = %s",
-                    (text, language),
+                    "SELECT audio_data FROM tts_cache WHERE cache_key = %s",
+                    (cache_key,),
                 )
                 result = cur.fetchone()
 
@@ -70,15 +71,17 @@ class TTSService:
     def _save_to_cache(self, text: str, language: str, audio_content: bytes) -> bool:
         conn = None
         try:
+            cache_key = self.get_cache_key(text, language)
             conn = self.db_pool.getconn()
             with conn.cursor() as cur:
                 cur.execute(
-                    """INSERT INTO tts_cache (text, language, audio_data)
-                       VALUES (%s, %s, %s)
-                       ON CONFLICT (text, language)
+                    """INSERT INTO tts_cache (cache_key, text, language, audio_data)
+                       VALUES (%s, %s, %s, %s)
+                       ON CONFLICT (cache_key)
                        DO UPDATE SET audio_data = EXCLUDED.audio_data,
-                                     created_at = CURRENT_TIMESTAMP""",
-                    (text, language, audio_content),
+                                     created_at = CURRENT_TIMESTAMP,
+                                     last_accessed_at = CURRENT_TIMESTAMP""",
+                    (cache_key, text, language, audio_content),
                 )
                 conn.commit()
                 return True

@@ -26,7 +26,8 @@ async def get_user_progress(list_name: str | None = None, current_user: dict = D
             progress = query_db(
                 """SELECT up.vocabulary_item_id, up.level, up.queue_position,
                           up.correct_count, up.incorrect_count, up.consecutive_correct,
-                          up.last_practiced_at as last_practiced
+                          up.last_practiced_at as last_practiced,
+                          vi.source_text, vi.source_language, vi.target_language
                    FROM user_progress up
                    JOIN vocabulary_items vi ON up.vocabulary_item_id = vi.id
                    WHERE up.user_id = %s AND vi.list_name = %s AND vi.version_id = %s AND vi.is_active = TRUE
@@ -35,12 +36,14 @@ async def get_user_progress(list_name: str | None = None, current_user: dict = D
             )
         else:
             progress = query_db(
-                """SELECT vocabulary_item_id, level, queue_position,
-                          correct_count, incorrect_count, consecutive_correct,
-                          last_practiced_at as last_practiced
-                   FROM user_progress
-                   WHERE user_id = %s
-                   ORDER BY last_practiced_at DESC""",
+                """SELECT up.vocabulary_item_id, up.level, up.queue_position,
+                          up.correct_count, up.incorrect_count, up.consecutive_correct,
+                          up.last_practiced_at as last_practiced,
+                          vi.source_text, vi.source_language, vi.target_language
+                   FROM user_progress up
+                   JOIN vocabulary_items vi ON up.vocabulary_item_id = vi.id
+                   WHERE up.user_id = %s
+                   ORDER BY up.last_practiced_at DESC""",
                 (current_user["user_id"],),
             )
 
@@ -67,6 +70,31 @@ async def get_user_progress(list_name: str | None = None, current_user: dict = D
 @router.post("/progress")
 async def save_user_progress(progress_data: ProgressUpdateRequest, current_user: dict = Depends(get_current_user)):
     try:
+        active_version_id = query_db("SELECT get_active_version_id()", one=True)
+        if not active_version_id:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="No active content version found",
+            )
+
+        version_id = active_version_id["get_active_version_id"]
+
+        vocab_item = query_db(
+            """SELECT id FROM vocabulary_items
+               WHERE source_text = %s AND source_language = %s AND target_language = %s
+               AND version_id = %s AND is_active = TRUE""",
+            (progress_data.source_text, progress_data.source_language, progress_data.target_language, version_id),
+            one=True,
+        )
+
+        if not vocab_item:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Vocabulary item not found: {progress_data.source_text}",
+            )
+
+        vocabulary_item_id = vocab_item["id"]
+
         execute_write_transaction(
             """INSERT INTO user_progress
                (user_id, vocabulary_item_id, level, queue_position, correct_count, incorrect_count, consecutive_correct, last_practiced_at)
@@ -81,7 +109,7 @@ async def save_user_progress(progress_data: ProgressUpdateRequest, current_user:
                    last_practiced_at = EXCLUDED.last_practiced_at""",
             (
                 current_user["user_id"],
-                progress_data.vocabulary_item_id,
+                vocabulary_item_id,
                 progress_data.level,
                 progress_data.queue_position,
                 progress_data.correct_count,
@@ -92,6 +120,8 @@ async def save_user_progress(progress_data: ProgressUpdateRequest, current_user:
 
         return {"message": "Progress updated successfully"}
 
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Error updating progress: {e}")
         raise HTTPException(

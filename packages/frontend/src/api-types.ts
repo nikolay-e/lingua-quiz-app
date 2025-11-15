@@ -30,6 +30,9 @@ export interface Translation {
 
 export interface UserProgress {
   vocabularyItemId: string;
+  sourceText: string;
+  sourceLanguage: string;
+  targetLanguage: string;
   level: number;
   queuePosition: number;
   correctCount: number;

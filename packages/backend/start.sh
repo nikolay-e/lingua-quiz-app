@@ -9,8 +9,11 @@ sleep 2
 
 MIGRATE="${MIGRATE:-false}"
 if [ "$MIGRATE" = "true" ]; then
-  echo "Running migrations..."
-  python migrate.py
+  echo "Running Alembic migrations..."
+  alembic upgrade head
+
+  echo "Loading vocabulary data..."
+  python load_vocabulary.py
 fi
 
 if [ -n "$UVICORN_WORKERS" ]; then
