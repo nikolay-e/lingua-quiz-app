@@ -531,29 +531,37 @@ function createQuizStore(): QuizStore {
         const feedback = state.quizManager.submitAnswer(state.currentQuestion.translationId, answer);
 
         const { translationId } = state.currentQuestion;
-        const translation = state.quizManager.getState().translations.find((t) => t.id === translationId);
-        if (translation) {
-          const key = `${translation.sourceText}::${translation.sourceLanguage}::${translation.targetLanguage}`;
-          const currentProgress = state.quizManager.getState().progress.find((p) => p.translationId === translationId);
-          if (currentProgress) {
-            const level = parseInt(currentProgress.level.replace('LEVEL_', ''));
-            const existing = progressMap.get(key) ?? {
-              correctCount: 0,
-              incorrectCount: 0,
-              level: 0,
-              queuePosition: 0,
-              targetLanguage: translation.targetLanguage,
-            };
-
-            progressMap.set(key, {
-              level,
-              queuePosition: currentProgress.queuePosition,
-              correctCount: existing.correctCount + (feedback.isSuccess ? 1 : 0),
-              incorrectCount: existing.incorrectCount + (feedback.isSuccess ? 0 : 1),
-              targetLanguage: translation.targetLanguage,
-            });
-          }
+        const translation = state.quizManager.getTranslation(translationId);
+        if (!translation) {
+          console.error(`Translation not found for ID ${translationId}`);
+          return feedback;
         }
+
+        const key = `${translation.sourceText}::${translation.sourceLanguage}::${translation.targetLanguage}`;
+        const quizState = state.quizManager.getState();
+        const currentProgress = quizState.progress.find((p) => p.translationId === translationId);
+
+        if (!currentProgress) {
+          console.error(`Progress not found for translation ID ${translationId}`);
+          return feedback;
+        }
+
+        const level = parseInt(currentProgress.level.replace('LEVEL_', ''));
+        const existing = progressMap.get(key) ?? {
+          correctCount: 0,
+          incorrectCount: 0,
+          level: 0,
+          queuePosition: 0,
+          targetLanguage: translation.targetLanguage,
+        };
+
+        progressMap.set(key, {
+          level,
+          queuePosition: currentProgress.queuePosition,
+          correctCount: existing.correctCount + (feedback.isSuccess ? 1 : 0),
+          incorrectCount: existing.incorrectCount + (feedback.isSuccess ? 0 : 1),
+          targetLanguage: translation.targetLanguage,
+        });
 
         debouncedBulkSave(token);
 

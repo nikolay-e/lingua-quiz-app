@@ -46,6 +46,7 @@ export interface SubmissionResult {
 }
 
 export interface QuizState {
+  translations: Translation[];
   progress: ProgressEntry[];
   currentLevel: 'LEVEL_1' | 'LEVEL_2' | 'LEVEL_3' | 'LEVEL_4';
   queues: {
@@ -184,26 +185,26 @@ export class QuizManager {
       case 'LEVEL_1':
         // LEVEL_1 practices words from LEVEL_0 and LEVEL_1 queues (prioritize LEVEL_1)
         if (this.queues.LEVEL_1.length > 0) {
-          candidateId = this.queues.LEVEL_1[0];
+          candidateId = this.queues.LEVEL_1[0] ?? null;
         } else if (this.queues.LEVEL_0.length > 0) {
-          candidateId = this.queues.LEVEL_0[0];
+          candidateId = this.queues.LEVEL_0[0] ?? null;
         }
         break;
       case 'LEVEL_2':
         // LEVEL_2 practices words from LEVEL_2 queue
         if (this.queues.LEVEL_2.length > 0) {
-          candidateId = this.queues.LEVEL_2[0];
+          candidateId = this.queues.LEVEL_2[0] ?? null;
         }
         break;
       case 'LEVEL_3':
       case 'LEVEL_4':
         // LEVEL_3 and LEVEL_4 practice words from LEVEL_3+ queues (prioritize LEVEL_3)
         if (this.queues.LEVEL_3.length > 0) {
-          candidateId = this.queues.LEVEL_3[0];
+          candidateId = this.queues.LEVEL_3[0] ?? null;
         } else if (this.queues.LEVEL_4.length > 0) {
-          candidateId = this.queues.LEVEL_4[0];
+          candidateId = this.queues.LEVEL_4[0] ?? null;
         } else if (this.queues.LEVEL_5.length > 0) {
-          candidateId = this.queues.LEVEL_5[0];
+          candidateId = this.queues.LEVEL_5[0] ?? null;
         }
         break;
     }
@@ -481,6 +482,7 @@ export class QuizManager {
    * @returns Current quiz state
    */
   getState = (): QuizState => ({
+    translations: Array.from(this.translations.values()),
     progress: Array.from(this.progress.values()),
     currentLevel: this.currentLevel,
     queues: this.queues,
@@ -581,7 +583,8 @@ export class QuizManager {
     };
 
     allProgress.forEach((p) => {
-      levelCounts[p.level]++;
+      const currentCount = levelCounts[p.level] ?? 0;
+      levelCounts[p.level] = currentCount + 1;
     });
 
     return {

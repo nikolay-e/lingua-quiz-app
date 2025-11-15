@@ -23,10 +23,10 @@ const typescriptRules = {
   ],
   '@typescript-eslint/no-explicit-any': 'error',
   '@typescript-eslint/explicit-function-return-type': 'off', // TypeScript inference is usually sufficient
-  '@typescript-eslint/no-non-null-assertion': 'warn',
+  '@typescript-eslint/no-non-null-assertion': 'error', // STRICT: Prevent runtime errors from null/undefined
   '@typescript-eslint/no-inferrable-types': 'error',
-  '@typescript-eslint/prefer-nullish-coalescing': 'warn',
-  '@typescript-eslint/prefer-optional-chain': 'warn',
+  '@typescript-eslint/prefer-nullish-coalescing': 'warn', // TODO: Upgrade to 'error' after fixing all warnings
+  '@typescript-eslint/prefer-optional-chain': 'error', // STRICT: Use ?. instead of && chains
   '@typescript-eslint/consistent-type-imports': [
     'warn',
     {
@@ -63,6 +63,29 @@ const typescriptRules = {
       checksVoidReturn: false,
     },
   ],
+  '@typescript-eslint/strict-boolean-expressions': [
+    'warn', // TODO: Upgrade to 'error' after fixing all warnings
+    {
+      allowString: false,
+      allowNumber: false,
+      allowNullableObject: false,
+      allowNullableBoolean: false,
+      allowNullableString: false,
+      allowNullableNumber: false,
+      allowAny: false,
+    },
+  ],
+  '@typescript-eslint/no-unnecessary-condition': [
+    'warn',
+    {
+      allowConstantLoopConditions: true,
+    },
+  ],
+  '@typescript-eslint/no-unsafe-member-access': 'warn', // TODO: Upgrade to 'error' after fixing all warnings
+  '@typescript-eslint/no-unsafe-call': 'warn', // TODO: Upgrade to 'error' after fixing all warnings
+  '@typescript-eslint/no-unsafe-assignment': 'warn', // TODO: Upgrade to 'error' after fixing all warnings
+  '@typescript-eslint/no-unsafe-return': 'warn', // TODO: Upgrade to 'error' after fixing all warnings
+  '@typescript-eslint/no-unsafe-argument': 'warn', // TODO: Upgrade to 'error' after fixing all warnings
   // Disable base rules that TypeScript handles
   'no-unused-vars': 'off',
   'no-undef': 'off',

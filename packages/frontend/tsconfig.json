@@ -16,9 +16,11 @@
     "allowJs": true,
     "checkJs": true,
     "strict": true,
+    "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true
   },
   "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte", "src/app.d.ts"],
   "exclude": ["node_modules", "**/.svelte2tsx-language-server-files"],

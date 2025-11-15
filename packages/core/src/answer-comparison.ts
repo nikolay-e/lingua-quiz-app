@@ -134,7 +134,7 @@ export const formatForDisplay = (input: string): string => {
   // 3. For any remaining standalone pipes, keep only the segment before the
   //    first one.
   if (text.includes('|')) {
-    text = text.split('|')[0].trim();
+    text = (text.split('|')[0] ?? '').trim();
   }
 
   // 4. Unmask bracket pipes and tidy up whitespace / commas.
@@ -244,7 +244,9 @@ export const checkAnswer = (userAnswer: string, correctAnswer: string): boolean 
 
   // If pattern has only one group & no commas, we can treat pipes/brackets only.
   if (correctGroups.length === 1) {
-    return correctGroups[0].has(normalize(userAnswer));
+    const firstGroup = correctGroups[0];
+    if (!firstGroup) return false;
+    return firstGroup.has(normalize(userAnswer));
   }
 
   // Multi‑meaning answer – user must supply same number of comma parts in any order.
@@ -256,7 +258,9 @@ export const checkAnswer = (userAnswer: string, correctAnswer: string): boolean 
     let matched = false;
     for (let i = 0; i < correctGroups.length; i++) {
       if (used.has(i)) continue;
-      if (correctGroups[i].has(token)) {
+      const group = correctGroups[i];
+      if (!group) continue;
+      if (group.has(token)) {
         used.add(i);
         matched = true;
         break;
